@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2C3B338A1C1175CE00738166"
-               BuildableName = "CuriosText.app"
-               BlueprintName = "CuriosText"
-               ReferencedContainer = "container:CuriosText.xcodeproj">
+               BlueprintIdentifier = "2C3B33C51C1176D000738166"
+               BuildableName = "CuriosTextApp.app"
+               BlueprintName = "CuriosTextApp"
+               ReferencedContainer = "container:CuriosTextApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,30 +32,30 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2C3B339E1C1175CE00738166"
-               BuildableName = "CuriosTextTests.xctest"
-               BlueprintName = "CuriosTextTests"
-               ReferencedContainer = "container:CuriosText.xcodeproj">
+               BlueprintIdentifier = "2C3B33D91C1176D000738166"
+               BuildableName = "CuriosTextAppTests.xctest"
+               BlueprintName = "CuriosTextAppTests"
+               ReferencedContainer = "container:CuriosTextApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2C3B33A91C1175CE00738166"
-               BuildableName = "CuriosTextUITests.xctest"
-               BlueprintName = "CuriosTextUITests"
-               ReferencedContainer = "container:CuriosText.xcodeproj">
+               BlueprintIdentifier = "2C3B33E41C1176D000738166"
+               BuildableName = "CuriosTextAppUITests.xctest"
+               BlueprintName = "CuriosTextAppUITests"
+               ReferencedContainer = "container:CuriosTextApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2C3B338A1C1175CE00738166"
-            BuildableName = "CuriosText.app"
-            BlueprintName = "CuriosText"
-            ReferencedContainer = "container:CuriosText.xcodeproj">
+            BlueprintIdentifier = "2C3B33C51C1176D000738166"
+            BuildableName = "CuriosTextApp.app"
+            BlueprintName = "CuriosTextApp"
+            ReferencedContainer = "container:CuriosTextApp.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -75,10 +75,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2C3B338A1C1175CE00738166"
-            BuildableName = "CuriosText.app"
-            BlueprintName = "CuriosText"
-            ReferencedContainer = "container:CuriosText.xcodeproj">
+            BlueprintIdentifier = "2C3B33C51C1176D000738166"
+            BuildableName = "CuriosTextApp.app"
+            BlueprintName = "CuriosTextApp"
+            ReferencedContainer = "container:CuriosTextApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -94,10 +94,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2C3B338A1C1175CE00738166"
-            BuildableName = "CuriosText.app"
-            BlueprintName = "CuriosText"
-            ReferencedContainer = "container:CuriosText.xcodeproj">
+            BlueprintIdentifier = "2C3B33C51C1176D000738166"
+            BuildableName = "CuriosTextApp.app"
+            BlueprintName = "CuriosTextApp"
+            ReferencedContainer = "container:CuriosTextApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -1,15 +1,15 @@
 //
-//  CuriosTextTests.swift
-//  CuriosTextTests
+//  CuriosTextAppTests.swift
+//  CuriosTextAppTests
 //
 //  Created by Emiaostein on 12/4/15.
 //  Copyright © 2015 botai. All rights reserved.
 //
 
 import XCTest
-@testable import CuriosText
+@testable import CuriosTextApp
 
-class CuriosTextTests: XCTestCase {
+class CuriosTextAppTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
