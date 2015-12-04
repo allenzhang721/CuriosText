@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B5D0EFEF4877E30863415FC /* Pods_CuriosTextApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B57FF0060B89C9884AE99217 /* Pods_CuriosTextApp.framework */; };
 		2C3B33CA1C1176D000738166 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33C91C1176D000738166 /* AppDelegate.swift */; };
 		2C3B33CC1C1176D000738166 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33CB1C1176D000738166 /* ViewController.swift */; };
 		2C3B33CF1C1176D000738166 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C3B33CD1C1176D000738166 /* Main.storyboard */; };
@@ -17,6 +18,11 @@
 		2C3B33F91C11775E00738166 /* CTABaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33F81C11775E00738166 /* CTABaseRequest.swift */; };
 		2C3B33FC1C11798F00738166 /* CTANetworkAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33FB1C11798F00738166 /* CTANetworkAgent.swift */; };
 		2C3B33FE1C117C8000738166 /* CTANetworkConig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33FD1C117C8000738166 /* CTANetworkConig.swift */; };
+		2C3B34001C118DB300738166 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3B33FF1C118DB300738166 /* Alamofire.framework */; };
+		2C3B34021C119DA600738166 /* CTARequestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B34011C119DA600738166 /* CTARequestResult.swift */; };
+		2C3B34041C11A23700738166 /* CTARequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B34031C11A23700738166 /* CTARequestResponse.swift */; };
+		2C3B34061C11B4F900738166 /* CTARequestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B34051C11B4F900738166 /* CTARequestConstants.swift */; };
+		2C3B34081C11B8BA00738166 /* CTAPhoneRegisterAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B34071C11B8BA00738166 /* CTAPhoneRegisterAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +59,14 @@
 		2C3B33F81C11775E00738166 /* CTABaseRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTABaseRequest.swift; sourceTree = "<group>"; };
 		2C3B33FB1C11798F00738166 /* CTANetworkAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTANetworkAgent.swift; sourceTree = "<group>"; };
 		2C3B33FD1C117C8000738166 /* CTANetworkConig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTANetworkConig.swift; sourceTree = "<group>"; };
+		2C3B33FF1C118DB300738166 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Debug-iphoneos/Alamofire.framework"; sourceTree = "<group>"; };
+		2C3B34011C119DA600738166 /* CTARequestResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTARequestResult.swift; sourceTree = "<group>"; };
+		2C3B34031C11A23700738166 /* CTARequestResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTARequestResponse.swift; sourceTree = "<group>"; };
+		2C3B34051C11B4F900738166 /* CTARequestConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTARequestConstants.swift; sourceTree = "<group>"; };
+		2C3B34071C11B8BA00738166 /* CTAPhoneRegisterAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPhoneRegisterAPI.swift; sourceTree = "<group>"; };
+		942BE59E5A421D0CB32A58EB /* Pods-CuriosTextApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CuriosTextApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CuriosTextApp/Pods-CuriosTextApp.debug.xcconfig"; sourceTree = "<group>"; };
+		B57FF0060B89C9884AE99217 /* Pods_CuriosTextApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CuriosTextApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEA1095AC8443011149CF7A8 /* Pods-CuriosTextApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CuriosTextApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-CuriosTextApp/Pods-CuriosTextApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +74,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C3B34001C118DB300738166 /* Alamofire.framework in Frameworks */,
+				0B5D0EFEF4877E30863415FC /* Pods_CuriosTextApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +96,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03F562127B9340BB0C7224EC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				942BE59E5A421D0CB32A58EB /* Pods-CuriosTextApp.debug.xcconfig */,
+				FEA1095AC8443011149CF7A8 /* Pods-CuriosTextApp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		2C3B33BD1C1176D000738166 = {
 			isa = PBXGroup;
 			children = (
@@ -87,6 +112,8 @@
 				2C3B33DD1C1176D000738166 /* CuriosTextAppTests */,
 				2C3B33E81C1176D000738166 /* CuriosTextAppUITests */,
 				2C3B33C71C1176D000738166 /* Products */,
+				03F562127B9340BB0C7224EC /* Pods */,
+				3971561C9A2A856DEC31B599 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -137,6 +164,8 @@
 			isa = PBXGroup;
 			children = (
 				2C3B33F81C11775E00738166 /* CTABaseRequest.swift */,
+				2C3B34011C119DA600738166 /* CTARequestResult.swift */,
+				2C3B34031C11A23700738166 /* CTARequestResponse.swift */,
 				2C3B33FB1C11798F00738166 /* CTANetworkAgent.swift */,
 				2C3B33FD1C117C8000738166 /* CTANetworkConig.swift */,
 			);
@@ -146,8 +175,19 @@
 		2C3B33FA1C11778700738166 /* CTARequestAPI */ = {
 			isa = PBXGroup;
 			children = (
+				2C3B34051C11B4F900738166 /* CTARequestConstants.swift */,
+				2C3B34071C11B8BA00738166 /* CTAPhoneRegisterAPI.swift */,
 			);
 			name = CTARequestAPI;
+			sourceTree = "<group>";
+		};
+		3971561C9A2A856DEC31B599 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2C3B33FF1C118DB300738166 /* Alamofire.framework */,
+				B57FF0060B89C9884AE99217 /* Pods_CuriosTextApp.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,9 +197,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2C3B33EE1C1176D000738166 /* Build configuration list for PBXNativeTarget "CuriosTextApp" */;
 			buildPhases = (
+				3867709E5EB6085DB4347EC7 /* Check Pods Manifest.lock */,
 				2C3B33C21C1176D000738166 /* Sources */,
 				2C3B33C31C1176D000738166 /* Frameworks */,
 				2C3B33C41C1176D000738166 /* Resources */,
+				9E1AC4641DF89E7AA4D24E85 /* Embed Pods Frameworks */,
+				4D1CC23582CD9EAC7A85B178 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -276,6 +319,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3867709E5EB6085DB4347EC7 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		4D1CC23582CD9EAC7A85B178 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CuriosTextApp/Pods-CuriosTextApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9E1AC4641DF89E7AA4D24E85 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CuriosTextApp/Pods-CuriosTextApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2C3B33C21C1176D000738166 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -283,9 +374,13 @@
 			files = (
 				2C3B33FC1C11798F00738166 /* CTANetworkAgent.swift in Sources */,
 				2C3B33FE1C117C8000738166 /* CTANetworkConig.swift in Sources */,
+				2C3B34061C11B4F900738166 /* CTARequestConstants.swift in Sources */,
 				2C3B33CC1C1176D000738166 /* ViewController.swift in Sources */,
+				2C3B34081C11B8BA00738166 /* CTAPhoneRegisterAPI.swift in Sources */,
 				2C3B33F91C11775E00738166 /* CTABaseRequest.swift in Sources */,
 				2C3B33CA1C1176D000738166 /* AppDelegate.swift in Sources */,
+				2C3B34021C119DA600738166 /* CTARequestResult.swift in Sources */,
+				2C3B34041C11A23700738166 /* CTARequestResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,8 +520,13 @@
 		};
 		2C3B33EF1C1176D000738166 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 942BE59E5A421D0CB32A58EB /* Pods-CuriosTextApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = CuriosTextApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -437,8 +537,13 @@
 		};
 		2C3B33F01C1176D000738166 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FEA1095AC8443011149CF7A8 /* Pods-CuriosTextApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = CuriosTextApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -514,6 +619,7 @@
 				2C3B33F01C1176D000738166 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2C3B33F11C1176D000738166 /* Build configuration list for PBXNativeTarget "CuriosTextAppTests" */ = {
 			isa = XCConfigurationList;
@@ -522,6 +628,7 @@
 				2C3B33F31C1176D000738166 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2C3B33F41C1176D000738166 /* Build configuration list for PBXNativeTarget "CuriosTextAppUITests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +637,7 @@
 				2C3B33F61C1176D000738166 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
