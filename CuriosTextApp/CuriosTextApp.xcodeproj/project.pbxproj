@@ -14,6 +14,9 @@
 		2C3B33D41C1176D000738166 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C3B33D21C1176D000738166 /* LaunchScreen.storyboard */; };
 		2C3B33DF1C1176D000738166 /* CuriosTextAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33DE1C1176D000738166 /* CuriosTextAppTests.swift */; };
 		2C3B33EA1C1176D000738166 /* CuriosTextAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33E91C1176D000738166 /* CuriosTextAppUITests.swift */; };
+		2C3B33F91C11775E00738166 /* CTABaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33F81C11775E00738166 /* CTABaseRequest.swift */; };
+		2C3B33FC1C11798F00738166 /* CTANetworkAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33FB1C11798F00738166 /* CTANetworkAgent.swift */; };
+		2C3B33FE1C117C8000738166 /* CTANetworkConig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33FD1C117C8000738166 /* CTANetworkConig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		2C3B33E51C1176D000738166 /* CuriosTextAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CuriosTextAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C3B33E91C1176D000738166 /* CuriosTextAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuriosTextAppUITests.swift; sourceTree = "<group>"; };
 		2C3B33EB1C1176D000738166 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2C3B33F81C11775E00738166 /* CTABaseRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTABaseRequest.swift; sourceTree = "<group>"; };
+		2C3B33FB1C11798F00738166 /* CTANetworkAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTANetworkAgent.swift; sourceTree = "<group>"; };
+		2C3B33FD1C117C8000738166 /* CTANetworkConig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTANetworkConig.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +103,8 @@
 		2C3B33C81C1176D000738166 /* CuriosTextApp */ = {
 			isa = PBXGroup;
 			children = (
+				2C3B33FA1C11778700738166 /* CTARequestAPI */,
+				2C3B33F71C11772400738166 /* CTARequest */,
 				2C3B33C91C1176D000738166 /* AppDelegate.swift */,
 				2C3B33CB1C1176D000738166 /* ViewController.swift */,
 				2C3B33CD1C1176D000738166 /* Main.storyboard */,
@@ -123,6 +131,23 @@
 				2C3B33EB1C1176D000738166 /* Info.plist */,
 			);
 			path = CuriosTextAppUITests;
+			sourceTree = "<group>";
+		};
+		2C3B33F71C11772400738166 /* CTARequest */ = {
+			isa = PBXGroup;
+			children = (
+				2C3B33F81C11775E00738166 /* CTABaseRequest.swift */,
+				2C3B33FB1C11798F00738166 /* CTANetworkAgent.swift */,
+				2C3B33FD1C117C8000738166 /* CTANetworkConig.swift */,
+			);
+			name = CTARequest;
+			sourceTree = "<group>";
+		};
+		2C3B33FA1C11778700738166 /* CTARequestAPI */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = CTARequestAPI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,7 +281,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C3B33FC1C11798F00738166 /* CTANetworkAgent.swift in Sources */,
+				2C3B33FE1C117C8000738166 /* CTANetworkConig.swift in Sources */,
 				2C3B33CC1C1176D000738166 /* ViewController.swift in Sources */,
+				2C3B33F91C11775E00738166 /* CTABaseRequest.swift in Sources */,
 				2C3B33CA1C1176D000738166 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
