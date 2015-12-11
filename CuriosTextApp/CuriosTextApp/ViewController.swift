@@ -13,8 +13,17 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
-    
-   let request = CTAPhoneRegister.init(phone: "10045647891", areaCode: "102208", password: "123123")
+   
+    var list:Array<AnyObject> = Array<AnyObject>();
+    let a = [
+    "key":"qhjsklajkl"
+    ];
+    let b = [
+    "key":"111222333"
+    ]
+    list.append(a);
+    list.append(b);
+    let request = CTAPublishUpTokenRequest.init(list: list);
     
     request.startWithCompletionBlockWithSuccess { (response) -> Void in
       
@@ -22,11 +31,11 @@ class ViewController: UIViewController {
       case .Success(let JSON):
         print(JSON)
       case .Failure(let networkError):
-        ()
+        print(networkError)
       }
     }
   }
-
+    
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.

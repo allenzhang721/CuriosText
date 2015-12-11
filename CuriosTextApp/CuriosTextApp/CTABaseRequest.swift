@@ -72,7 +72,27 @@ class CTABaseRequest {
   }
   
   func requestParameters() -> [String: AnyObject]? {
-    return nil
+    let para = parameter()
+    
+    return [key(.Data): para]
+  }
+    
+  func parameter() ->String{
+   return "";
+  }
+    
+  func getParameterString(dic: AnyObject, errorMessage:String) ->String{
+    do {
+        let data = try NSJSONSerialization.dataWithJSONObject(dic, options: NSJSONWritingOptions(rawValue: 0))
+            
+        return NSString(data: data, encoding: NSUTF8StringEncoding) as! String
+            
+    } catch let error {
+            
+        print("\(errorMessage) is error, error message \(error)")
+            
+        return ""
+    }
   }
   
   func requestTimeoutInterval() -> CFTimeInterval {

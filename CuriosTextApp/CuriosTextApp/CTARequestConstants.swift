@@ -20,7 +20,7 @@ enum CTARequestHost: CustomStringConvertible {
     case .Test:
       return "http://182.92.150.178/CuriosTextServices"
     case .Debug:
-      return ""
+      return "http://192.168.1.102:8080/CuriosTextServices"
     case .Production:
       return ""
     }
@@ -28,30 +28,175 @@ enum CTARequestHost: CustomStringConvertible {
 }
 
 enum CTARequestUrl: CustomStringConvertible {
-  case PhoneRegister
+  case GetUserID,Login
+  case PhoneRegister, WeixinRegister, WeiboRegister
+  case UpdateUserInfo, UpdateUserNikename, UpdateUserDesc, UpdateUserIconURL, UpdateUserAddress, UpdateUserSex
+  case BindingPhone, BindingWeixinID, UnbindingWeixinID, BingingWeiboID, UnbindingWeiboID
+  case CheckPassword, UpdatePassword, ForgetPassword, UserDetail
+    
+  case GetPublishID, CreatePublish, DeletePublish
+  case UserPublishList, UserLikePublishList, UserRebuildPublishList, UserFollowPublishList, NewPubulishList, HotPublishList
+  case LikePublish, UnLikePublish, RebuildPublish, SharePublish
+  case FollowUser, UnFollowUser, BlockUser, UnBlockUser, UserFollowList, UserBeFollowList
+  case UserUpToken, PublishUpToken, UploadFilePath
   
   var description: String {
     switch self {
+    case .GetUserID:
+        return "/user/getUserID"
+    case .Login:
+        return "/user/login"
     case .PhoneRegister:
       return "/user/register"
+    case .WeixinRegister:
+        return "/user/weixinRegister"
+    case .WeiboRegister:
+        return "/user/weiboRegister"
+    case .UpdateUserInfo:
+        return "/user/updateUserInfo"
+    case .UpdateUserNikename:
+        return "/user/updateUserNikename"
+    case .UpdateUserDesc:
+        return "/user/updateUserDesc"
+    case .UpdateUserIconURL:
+        return "/user/updateUserIconURL"
+    case .UpdateUserAddress:
+        return "/user/updateUserAddress"
+    case .UpdateUserSex:
+        return "/user/updateUserSex"
+    case .BindingPhone:
+        return "/user/bindingPhone"
+    case .BindingWeixinID:
+        return "/user/bindingWeixinID"
+    case .UnbindingWeixinID:
+        return "/user/unbindingWeixinID"
+    case .BingingWeiboID:
+        return "/user/bindingWeiboID"
+    case .UnbindingWeiboID:
+        return "/user/unbindingWeiboID"
+    case .CheckPassword:
+        return "/user/checkPassword"
+    case .UpdatePassword:
+        return "/user/updatePassword"
+    case .ForgetPassword:
+        return "/user/forgetPassword"
+    case .UserDetail:
+        return "/user/userDetail"
+    case .GetPublishID:
+        return "/publish/getPublishID"
+    case .CreatePublish:
+        return "/publish/createPublishFile"
+    case .DeletePublish:
+        return "/publish/deletePublishFile"
+    case .UserPublishList:
+        return "/publish/userPublishList"
+    case .UserLikePublishList:
+        return "/publish/userLikePublishList"
+    case .UserRebuildPublishList:
+        return "/publish/userRebuildPublishList"
+    case .UserFollowPublishList:
+        return "/publish/userFollowPublishList"
+    case .NewPubulishList:
+        return "/publish/newPublishList"
+    case .HotPublishList:
+        return "/publish/hotPublishList"
+    case .LikePublish:
+        return "/publish/likePublish"
+    case .UnLikePublish:
+        return "/publish/unLikePublish"
+    case .RebuildPublish:
+        return "/publish/rebuildPublish"
+    case .SharePublish:
+        return "/publish/sharePublish"
+    case .FollowUser:
+        return "/relation/followUser"
+    case .UnFollowUser:
+        return "/relation/unFollowUser"
+    case .BlockUser:
+        return "/relation/blockUser"
+    case .UnBlockUser:
+        return "/relation/unBlockUser"
+    case .UserFollowList:
+        return "/relation/userFollowList"
+    case .UserBeFollowList:
+        return "/relation/userBeFollowList"
+    case .UserUpToken:
+        return "/upload/userUpToken"
+    case .PublishUpToken:
+        return "/upload/publishUpToken"
+    case .UploadFilePath:
+        return "/upload/uploadFilePath"
     }
   }
 }
 
 enum CTARequestParameterKey: CustomStringConvertible {
   case Data
-  case Phone, AreaCode, Password
+  case UserID, NikeName, UserDesc, UserIconURL, Sex, Email, Phone, AreaCode, Password, WeixinID, WeiboID, CountryID, ProvinceID, CityID, NewPassword
+  case BeUserID, Start, Size, SharePlatform, List
+  case PublishID, Title, PublishDesc, PublishIconURL, PreviewIconURL, PublishURL
+  case RelationType, RelationUserID
   
   var description: String {
     switch self {
     case .Data:
       return "data"
+    case .UserID:
+        return "userID"
+    case .NikeName:
+        return "nikeName"
+    case .UserDesc:
+        return "userDesc"
+    case .UserIconURL:
+        return "userIconURL"
+    case .Sex:
+        return "sex"
+    case .Email:
+        return "email"
     case .Phone:
       return "phone"
     case .AreaCode:
       return "areaCode"
     case .Password:
       return "password"
+    case .WeixinID:
+        return "weixinID"
+    case .WeiboID:
+        return "weiboID"
+    case .CountryID:
+        return "countryID"
+    case .ProvinceID:
+        return "provinceID"
+    case .CityID:
+        return "cityID"
+    case .NewPassword:
+        return "newPassword"
+    case .BeUserID:
+        return "beUserID"
+    case .Start:
+        return "start"
+    case .Size:
+        return "size"
+    case .SharePlatform:
+        return "sharePlatform"
+    case .List:
+        return "list"
+    case .PublishID:
+        return "publishID"
+    case .Title:
+        return "title"
+    case .PublishDesc:
+        return "publishDesc"
+    case .PublishIconURL:
+        return "publishIconURL"
+    case .PreviewIconURL:
+        return "previewIconURL"
+    case .PublishURL:
+        return "publishURL"
+    case .RelationType:
+        return "relationType"
+    case .RelationUserID:
+        return "relationUserID"
     }
   }
 }
