@@ -34,6 +34,15 @@ class ViewController: UIViewController {
         print(networkError)
       }
     }
+    
+    CTAUserDomain.phoneRegister("15501005475", areaCode: "102208", passwd: "123123") { (userModel, error) -> Void in
+        
+        if let userModel = userModel {
+            print("userModel = \(userModel)")
+        } else {
+            print("error: \(error)")
+        }
+    }
   }
     
   override func didReceiveMemoryWarning() {
