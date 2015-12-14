@@ -19,9 +19,16 @@
 		2C3B33FC1C11798F00738166 /* CTANetworkAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33FB1C11798F00738166 /* CTANetworkAgent.swift */; };
 		2C3B33FE1C117C8000738166 /* CTANetworkConig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33FD1C117C8000738166 /* CTANetworkConig.swift */; };
 		2C3B34001C118DB300738166 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3B33FF1C118DB300738166 /* Alamofire.framework */; };
-		2C3B34021C119DA600738166 /* CTARequestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B34011C119DA600738166 /* CTARequestResult.swift */; };
 		2C3B34041C11A23700738166 /* CTARequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B34031C11A23700738166 /* CTARequestResponse.swift */; };
 		2C3B34061C11B4F900738166 /* CTARequestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B34051C11B4F900738166 /* CTARequestConstants.swift */; };
+		2C9706C11C1E6EC200FA2E17 /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */; };
+		2C9706C21C1E6EC200FA2E17 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9706C01C1E6EC200FA2E17 /* SwiftyJSON.framework */; };
+		2C9706C51C1E6EE900FA2E17 /* CTABaseDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9706C41C1E6EE900FA2E17 /* CTABaseDomain.swift */; };
+		2C9706C71C1E6FE100FA2E17 /* CTAUserDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9706C61C1E6FE100FA2E17 /* CTAUserDomain.swift */; };
+		2C9706C91C1E710F00FA2E17 /* CTAUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9706C81C1E710F00FA2E17 /* CTAUserModel.swift */; };
+		2C9706CB1C1E713A00FA2E17 /* CTABaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9706CA1C1E713A00FA2E17 /* CTABaseModel.swift */; };
+		2C9706CD1C1E794B00FA2E17 /* CTAError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9706CC1C1E794B00FA2E17 /* CTAError.swift */; };
+		2C9706D11C1E805D00FA2E17 /* CTARequestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9706D01C1E805D00FA2E17 /* CTARequestResult.swift */; };
 		66A072A91C156D1C0046C72F /* CTAUserRequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A072A81C156D1C0046C72F /* CTAUserRequestAPI.swift */; };
 		66A072AB1C1811810046C72F /* CTAPublishRequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A072AA1C1811810046C72F /* CTAPublishRequestAPI.swift */; };
 		66A072AD1C186EFF0046C72F /* CTARelationRequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A072AC1C186EFF0046C72F /* CTARelationRequestAPI.swift */; };
@@ -63,9 +70,16 @@
 		2C3B33FB1C11798F00738166 /* CTANetworkAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTANetworkAgent.swift; sourceTree = "<group>"; };
 		2C3B33FD1C117C8000738166 /* CTANetworkConig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTANetworkConig.swift; sourceTree = "<group>"; };
 		2C3B33FF1C118DB300738166 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Debug-iphoneos/Alamofire.framework"; sourceTree = "<group>"; };
-		2C3B34011C119DA600738166 /* CTARequestResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTARequestResult.swift; sourceTree = "<group>"; };
 		2C3B34031C11A23700738166 /* CTARequestResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTARequestResponse.swift; sourceTree = "<group>"; };
 		2C3B34051C11B4F900738166 /* CTARequestConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTARequestConstants.swift; sourceTree = "<group>"; };
+		2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Locksmith.framework; path = "Pods/../build/Debug-iphoneos/Locksmith.framework"; sourceTree = "<group>"; };
+		2C9706C01C1E6EC200FA2E17 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "Pods/../build/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
+		2C9706C41C1E6EE900FA2E17 /* CTABaseDomain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTABaseDomain.swift; sourceTree = "<group>"; };
+		2C9706C61C1E6FE100FA2E17 /* CTAUserDomain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUserDomain.swift; sourceTree = "<group>"; };
+		2C9706C81C1E710F00FA2E17 /* CTAUserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUserModel.swift; sourceTree = "<group>"; };
+		2C9706CA1C1E713A00FA2E17 /* CTABaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTABaseModel.swift; sourceTree = "<group>"; };
+		2C9706CC1C1E794B00FA2E17 /* CTAError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAError.swift; sourceTree = "<group>"; };
+		2C9706D01C1E805D00FA2E17 /* CTARequestResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTARequestResult.swift; sourceTree = "<group>"; };
 		66A072A81C156D1C0046C72F /* CTAUserRequestAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUserRequestAPI.swift; sourceTree = "<group>"; };
 		66A072AA1C1811810046C72F /* CTAPublishRequestAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishRequestAPI.swift; sourceTree = "<group>"; };
 		66A072AC1C186EFF0046C72F /* CTARelationRequestAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTARelationRequestAPI.swift; sourceTree = "<group>"; };
@@ -80,6 +94,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C9706C11C1E6EC200FA2E17 /* Locksmith.framework in Frameworks */,
+				2C9706C21C1E6EC200FA2E17 /* SwiftyJSON.framework in Frameworks */,
 				2C3B34001C118DB300738166 /* Alamofire.framework in Frameworks */,
 				0B5D0EFEF4877E30863415FC /* Pods_CuriosTextApp.framework in Frameworks */,
 			);
@@ -136,6 +152,8 @@
 		2C3B33C81C1176D000738166 /* CuriosTextApp */ = {
 			isa = PBXGroup;
 			children = (
+				2C9706D21C1E855000FA2E17 /* Model */,
+				2C9706C31C1E6ED200FA2E17 /* Domain */,
 				2C3B33FA1C11778700738166 /* CTARequestAPI */,
 				2C3B33F71C11772400738166 /* CTARequest */,
 				2C3B33C91C1176D000738166 /* AppDelegate.swift */,
@@ -170,7 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				2C3B33F81C11775E00738166 /* CTABaseRequest.swift */,
-				2C3B34011C119DA600738166 /* CTARequestResult.swift */,
+				2C9706D01C1E805D00FA2E17 /* CTARequestResult.swift */,
 				2C3B34031C11A23700738166 /* CTARequestResponse.swift */,
 				2C3B33FB1C11798F00738166 /* CTANetworkAgent.swift */,
 				2C3B33FD1C117C8000738166 /* CTANetworkConig.swift */,
@@ -190,9 +208,30 @@
 			name = CTARequestAPI;
 			sourceTree = "<group>";
 		};
+		2C9706C31C1E6ED200FA2E17 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				2C9706C41C1E6EE900FA2E17 /* CTABaseDomain.swift */,
+				2C9706C61C1E6FE100FA2E17 /* CTAUserDomain.swift */,
+			);
+			name = Domain;
+			sourceTree = "<group>";
+		};
+		2C9706D21C1E855000FA2E17 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2C9706CA1C1E713A00FA2E17 /* CTABaseModel.swift */,
+				2C9706C81C1E710F00FA2E17 /* CTAUserModel.swift */,
+				2C9706CC1C1E794B00FA2E17 /* CTAError.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		3971561C9A2A856DEC31B599 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */,
+				2C9706C01C1E6EC200FA2E17 /* SwiftyJSON.framework */,
 				2C3B33FF1C118DB300738166 /* Alamofire.framework */,
 				B57FF0060B89C9884AE99217 /* Pods_CuriosTextApp.framework */,
 			);
@@ -382,17 +421,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				66A072AF1C18713F0046C72F /* CTAUploadRequestAPI.swift in Sources */,
+				2C9706CB1C1E713A00FA2E17 /* CTABaseModel.swift in Sources */,
 				66A072AD1C186EFF0046C72F /* CTARelationRequestAPI.swift in Sources */,
 				2C3B33FC1C11798F00738166 /* CTANetworkAgent.swift in Sources */,
 				2C3B33FE1C117C8000738166 /* CTANetworkConig.swift in Sources */,
+				2C9706CD1C1E794B00FA2E17 /* CTAError.swift in Sources */,
 				2C3B34061C11B4F900738166 /* CTARequestConstants.swift in Sources */,
+				2C9706C91C1E710F00FA2E17 /* CTAUserModel.swift in Sources */,
 				2C3B33CC1C1176D000738166 /* ViewController.swift in Sources */,
 				2C3B33F91C11775E00738166 /* CTABaseRequest.swift in Sources */,
 				66A072AB1C1811810046C72F /* CTAPublishRequestAPI.swift in Sources */,
+				2C9706D11C1E805D00FA2E17 /* CTARequestResult.swift in Sources */,
 				66A072A91C156D1C0046C72F /* CTAUserRequestAPI.swift in Sources */,
 				2C3B33CA1C1176D000738166 /* AppDelegate.swift in Sources */,
-				2C3B34021C119DA600738166 /* CTARequestResult.swift in Sources */,
+				2C9706C51C1E6EE900FA2E17 /* CTABaseDomain.swift in Sources */,
 				2C3B34041C11A23700738166 /* CTARequestResponse.swift in Sources */,
+				2C9706C71C1E6FE100FA2E17 /* CTAUserDomain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

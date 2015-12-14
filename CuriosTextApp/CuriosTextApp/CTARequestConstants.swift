@@ -12,6 +12,14 @@ func key(key: CTARequestParameterKey) -> String {
   return key.description
 }
 
+struct CTARequestResultKey {
+    
+    static let result = "result"
+    static let resultIndex = "resultIndex"
+    static let success = "success"
+}
+
+
 enum CTARequestHost: CustomStringConvertible {
   case Test, Debug, Production
   
