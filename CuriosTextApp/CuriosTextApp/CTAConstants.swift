@@ -8,17 +8,23 @@
 
 import Foundation
 
-func key(key: CTARequestParameterKey) -> String {
+func key(key: CTAParameterKey) -> String {
   return key.description
 }
 
 struct CTARequestResultKey {
     
-    static let result = "result"
+    static let result = "resultType"
     static let resultIndex = "resultIndex"
     static let success = "success"
+    static let fail = "fail"
 }
 
+struct CTAFilePath {
+
+    static var userFilePath = ""//"https://dn-tu-curiosapp.qbox.me"
+    static var publishFilePath = ""//"https://dn-tp-curiosapp.qbox.me"
+}
 
 enum CTARequestHost: CustomStringConvertible {
   case Test, Debug, Production
@@ -40,7 +46,7 @@ enum CTARequestUrl: CustomStringConvertible {
   case PhoneRegister, WeixinRegister, WeiboRegister
   case UpdateUserInfo, UpdateUserNikename, UpdateUserDesc, UpdateUserIconURL, UpdateUserAddress, UpdateUserSex
   case BindingPhone, BindingWeixinID, UnbindingWeixinID, BingingWeiboID, UnbindingWeiboID
-  case CheckPassword, UpdatePassword, ForgetPassword, UserDetail
+  case CheckPassword, UpdatePassword, ResetPassword, UserDetail
     
   case GetPublishID, CreatePublish, DeletePublish
   case UserPublishList, UserLikePublishList, UserRebuildPublishList, UserFollowPublishList, NewPubulishList, HotPublishList
@@ -86,8 +92,8 @@ enum CTARequestUrl: CustomStringConvertible {
         return "/user/checkPassword"
     case .UpdatePassword:
         return "/user/updatePassword"
-    case .ForgetPassword:
-        return "/user/forgetPassword"
+    case .ResetPassword:
+        return "/user/resetPassword"
     case .UserDetail:
         return "/user/userDetail"
     case .GetPublishID:
@@ -138,12 +144,13 @@ enum CTARequestUrl: CustomStringConvertible {
   }
 }
 
-enum CTARequestParameterKey: CustomStringConvertible {
+enum CTAParameterKey: CustomStringConvertible {
   case Data
   case UserID, NikeName, UserDesc, UserIconURL, Sex, Email, Phone, AreaCode, Password, WeixinID, WeiboID, CountryID, ProvinceID, CityID, NewPassword
   case BeUserID, Start, Size, SharePlatform, List
   case PublishID, Title, PublishDesc, PublishIconURL, PreviewIconURL, PublishURL
-  case RelationType, RelationUserID
+  case RelationType, RelationUserID, FollowCount, BeFollowCount, PublishCount
+  case PublishFilePath, UserFilePath
   
   var description: String {
     switch self {
@@ -205,6 +212,16 @@ enum CTARequestParameterKey: CustomStringConvertible {
         return "relationType"
     case .RelationUserID:
         return "relationUserID"
+    case .FollowCount:
+        return "followCount"
+    case .BeFollowCount:
+        return "beFollowCount"
+    case .PublishCount:
+        return "publishCount"
+    case .PublishFilePath:
+        return "publishFilePath"
+    case .UserFilePath:
+        return "userFilePath"
     }
   }
 }

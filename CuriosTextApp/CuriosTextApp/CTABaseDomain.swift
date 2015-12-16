@@ -7,8 +7,16 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-protocol CTABaseDomain: class {
+class CTABaseDomain {
     
-//    var request: CTABaseRequest { get }
+    static func checkJsonResult(json: JSON) -> Bool{
+        let reslut = json[CTARequestResultKey.result].string
+        if reslut == CTARequestResultKey.success {
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
