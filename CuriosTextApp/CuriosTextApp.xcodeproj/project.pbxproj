@@ -21,6 +21,9 @@
 		2C3B34001C118DB300738166 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3B33FF1C118DB300738166 /* Alamofire.framework */; };
 		2C3B34041C11A23700738166 /* CTARequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B34031C11A23700738166 /* CTARequestResponse.swift */; };
 		2C3B34061C11B4F900738166 /* CTAConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B34051C11B4F900738166 /* CTAConstants.swift */; };
+		2C3E0ADF1C2156B200450B2C /* Qiniu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3E0ADE1C2156B200450B2C /* Qiniu.framework */; };
+		2C3E0AE11C21578400450B2C /* UploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3E0AE01C21578400450B2C /* UploadTests.swift */; };
+		2C3E0AE31C2157B800450B2C /* Qiniu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3E0AE21C2157B800450B2C /* Qiniu.framework */; };
 		2C9706C11C1E6EC200FA2E17 /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */; };
 		2C9706C21C1E6EC200FA2E17 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9706C01C1E6EC200FA2E17 /* SwiftyJSON.framework */; };
 		2C9706C51C1E6EE900FA2E17 /* CTABaseDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9706C41C1E6EE900FA2E17 /* CTABaseDomain.swift */; };
@@ -75,6 +78,9 @@
 		2C3B33FF1C118DB300738166 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Debug-iphoneos/Alamofire.framework"; sourceTree = "<group>"; };
 		2C3B34031C11A23700738166 /* CTARequestResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTARequestResponse.swift; sourceTree = "<group>"; };
 		2C3B34051C11B4F900738166 /* CTAConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAConstants.swift; sourceTree = "<group>"; };
+		2C3E0ADE1C2156B200450B2C /* Qiniu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qiniu.framework; path = "Pods/../build/Debug-iphoneos/Qiniu.framework"; sourceTree = "<group>"; };
+		2C3E0AE01C21578400450B2C /* UploadTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadTests.swift; sourceTree = "<group>"; };
+		2C3E0AE21C2157B800450B2C /* Qiniu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qiniu.framework; path = "Pods/../build/Debug-iphoneos/Qiniu.framework"; sourceTree = "<group>"; };
 		2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Locksmith.framework; path = "Pods/../build/Debug-iphoneos/Locksmith.framework"; sourceTree = "<group>"; };
 		2C9706C01C1E6EC200FA2E17 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "Pods/../build/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
 		2C9706C41C1E6EE900FA2E17 /* CTABaseDomain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTABaseDomain.swift; sourceTree = "<group>"; };
@@ -100,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C3E0ADF1C2156B200450B2C /* Qiniu.framework in Frameworks */,
 				2C9706C11C1E6EC200FA2E17 /* Locksmith.framework in Frameworks */,
 				2C9706C21C1E6EC200FA2E17 /* SwiftyJSON.framework in Frameworks */,
 				2C3B34001C118DB300738166 /* Alamofire.framework in Frameworks */,
@@ -111,6 +118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C3E0AE31C2157B800450B2C /* Qiniu.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,6 +183,7 @@
 		2C3B33DD1C1176D000738166 /* CuriosTextAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				2C3E0AE01C21578400450B2C /* UploadTests.swift */,
 				2C3B33DE1C1176D000738166 /* CuriosTextAppTests.swift */,
 				2C3B33E01C1176D000738166 /* Info.plist */,
 			);
@@ -239,6 +248,8 @@
 		3971561C9A2A856DEC31B599 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2C3E0AE21C2157B800450B2C /* Qiniu.framework */,
+				2C3E0ADE1C2156B200450B2C /* Qiniu.framework */,
 				2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */,
 				2C9706C01C1E6EC200FA2E17 /* SwiftyJSON.framework */,
 				2C3B33FF1C118DB300738166 /* Alamofire.framework */,
@@ -456,6 +467,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C3E0AE11C21578400450B2C /* UploadTests.swift in Sources */,
 				2C3B33DF1C1176D000738166 /* CuriosTextAppTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -624,6 +636,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = CuriosTextAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosTextAppTests;
@@ -636,6 +652,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = CuriosTextAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosTextAppTests;

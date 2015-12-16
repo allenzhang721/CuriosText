@@ -4,7 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>AFNetworking.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Alamofire.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>HappyDNS.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -19,6 +29,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Qiniu.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SwiftyJSON.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,22 +42,37 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>2DB6C2CD7957113C2BEC554CE594753F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>316D7A4FB175D87EC476B4B3D1243FBA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>432ECC54282C84882B482CCB4CF227FC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>4878C70B21CA37D7CB8A476BF986741B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>491D31454F605938BDA5BBDC26006D18</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>571725459733CD65984D1C28E97136F4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>92943306EC8070DF9CD02ECD505D2CD5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>9E07B47386FECE80D671181E22293977</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F9D19E1F3A2246EE476BD7885FC15E3A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

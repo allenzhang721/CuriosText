@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '71942C2CDD4F5335DDB0CB0A'
+               BlueprintIdentifier = 'BAB51537CAC2E00376961C92'
                BlueprintName = 'Locksmith'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Locksmith.framework'>
