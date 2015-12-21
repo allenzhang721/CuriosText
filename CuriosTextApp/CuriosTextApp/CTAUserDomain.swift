@@ -13,6 +13,30 @@ import SwiftyJSON
 
 class CTAUserDomain: CTABaseDomain {
     
+    static func userID(compelecationBlock: (String?) -> Void)  {
+        
+        CTAUserIDRequest.init().startWithCompletionBlockWithSuccess { (response) -> Void in
+            
+            var uuid:String!;
+            switch response.result{
+            case .Success(let json):
+                let json:JSON = JSON(json)
+                let result = checkJsonResult(json)
+                if result{
+                    let data = json[key(.Data)].string
+                    compelecationBlock(data)
+                } else{
+                    uuid = NSUUID().UUIDString
+                    uuid = changeUUID(uuid)
+                    compelecationBlock(uuid)
+                }
+            case .Failure( _):
+                uuid = NSUUID().UUIDString
+                uuid = changeUUID(uuid)
+                compelecationBlock(uuid)
+            }
+        }
+    }
     
     static func login(phone: String, areaCode: String, passwd: String, compelecationBlock: (CTAUserModel?, ErrorType?) -> Void)  {
         

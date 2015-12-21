@@ -76,7 +76,7 @@ class CTAUserPublishListRequest: CTABaseRequest {
     let start:Int;
     let size:Int;
     
-    init(userID:String, beUserID:String, start:Int, size:Int = 10) {
+    init(userID:String, beUserID:String, start:Int, size:Int = 20) {
         self.userID   = userID;
         self.beUserID = beUserID
         self.start    = start;
@@ -104,7 +104,7 @@ class CTAUserLikePublishListRequest: CTABaseRequest {
     let start:Int;
     let size:Int;
     
-    init(userID:String, beUserID:String, start:Int, size:Int = 10) {
+    init(userID:String, beUserID:String, start:Int, size:Int = 20) {
         self.userID   = userID;
         self.beUserID = beUserID
         self.start    = start;
@@ -132,7 +132,7 @@ class CTAUserRebuildPublishListRequest: CTABaseRequest {
     let start:Int;
     let size:Int;
     
-    init(userID:String, beUserID:String, start:Int, size:Int = 10) {
+    init(userID:String, beUserID:String, start:Int, size:Int = 20) {
         self.userID   = userID;
         self.beUserID = beUserID
         self.start    = start;
@@ -160,7 +160,7 @@ class CTAUserFollowPublishListRequest: CTABaseRequest {
     let start:Int;
     let size:Int;
     
-    init(userID:String, beUserID:String, start:Int, size:Int = 10) {
+    init(userID:String, beUserID:String, start:Int, size:Int = 20) {
         self.userID   = userID;
         self.beUserID = beUserID
         self.start    = start;
@@ -187,7 +187,7 @@ class CTANewPublishListRequest: CTABaseRequest {
     let start:Int;
     let size:Int;
     
-    init(userID:String, start:Int, size:Int = 10) {
+    init(userID:String, start:Int, size:Int = 20) {
         self.userID   = userID;
         self.start    = start;
         self.size     = size;
@@ -212,7 +212,7 @@ class CTAHotPublishListRequest: CTABaseRequest {
     let start:Int;
     let size:Int;
     
-    init(userID:String, start:Int, size:Int = 10) {
+    init(userID:String, start:Int, size:Int = 20) {
         self.userID   = userID;
         self.start    = start;
         self.size     = size;

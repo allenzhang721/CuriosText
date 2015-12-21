@@ -19,4 +19,13 @@ class CTABaseDomain {
             return false;
         }
     }
+    
+    static func changeUUID(uuid:String) ->String{
+        var newID:String = uuid;
+        while  newID.rangeOfString("-") != nil{
+            let range = newID.rangeOfString("-")
+            newID.replaceRange(range!, with: "")
+        }
+        return newID;
+    }
 }

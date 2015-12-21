@@ -16,9 +16,9 @@ class CTAUploadFileRequest: CTABaseRequest {
 
 class CTAUserUpTokenRequest: CTABaseRequest {
     
-    let list:Array<AnyObject>;
+    let list:Array<CTAUpTokenModel>;
     
-    init(list:Array<AnyObject>) {
+    init(list:Array<CTAUpTokenModel>) {
         self.list = list;
     }
     
@@ -27,8 +27,13 @@ class CTAUserUpTokenRequest: CTABaseRequest {
     }
     
     override func parameter() -> String {
+        var keyArray:Array<AnyObject> = [];
+        for var i=0; i < list.count; i++ {
+            let upTokeModel:CTAUpTokenModel = list[i]
+            keyArray.append(upTokeModel.data)
+        }
         let dic:Dictionary<String, AnyObject> = [
-            key(.List): list
+            key(.List): keyArray
         ];
         return self.getParameterString(dic, errorMessage: "CTAUserUpTokenRequest");
     }
@@ -36,9 +41,9 @@ class CTAUserUpTokenRequest: CTABaseRequest {
 
 class CTAPublishUpTokenRequest: CTABaseRequest {
     
-    let list:Array<AnyObject>;
+    let list:Array<CTAUpTokenModel>;
     
-    init(list:Array<AnyObject>) {
+    init(list:Array<CTAUpTokenModel>) {
         self.list = list;
     }
     
@@ -47,8 +52,13 @@ class CTAPublishUpTokenRequest: CTABaseRequest {
     }
     
     override func parameter() -> String {
+        var keyArray:Array<AnyObject> = [];
+        for var i=0; i < list.count; i++ {
+            let upTokeModel:CTAUpTokenModel = list[i]
+            keyArray.append(upTokeModel.data)
+        }
         let dic:Dictionary<String, AnyObject> = [
-            key(.List): list
+            key(.List): keyArray
         ];
         return self.getParameterString(dic, errorMessage: "CTAPublishUpTokenRequest");
     }

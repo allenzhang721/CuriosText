@@ -236,3 +236,107 @@ enum CTAUserDetailError:Int, ErrorType{
 9:数据为空
 
 */
+
+enum CTAPublishDeleteError:Int, ErrorType{
+    
+    case PublishIDEmpty = 1
+    case PublishIDNotExist = 2
+    case UserIDEmpty = 3
+    case UserNotCompare = 4
+    case NeedContactWithService = 8
+    case DataIsEmpty = 9
+    
+}
+
+/*
+
+1:发布id为空
+2:发布不存在
+3:用户id 为空
+4:用户和发布用户不匹配
+8:请联系客服
+9:数据为空
+
+*/
+
+enum CTAPublishListError:Int, ErrorType{
+    
+    case UserIDEmpty = 1
+    case UserIDNotExist = 2
+    case BeUserIDEmpty = 3
+    case BeUserIDNotExist = 4
+    case NeedContactWithService = 8
+    case DataIsEmpty = 9
+    
+}
+
+/*
+
+1:userID为空
+2:userID不存在
+3:beuserID 为空
+4:beuserID不存在
+8:请联系客服
+9:数据为空
+
+*/
+
+enum CTAUserPublishError:Int, ErrorType{
+    
+    case UserIDEmpty = 1
+    case UserIDNotExist = 2
+    case PublishIDNotExist = 3
+    case NeedContactWithService = 8
+    case DataIsEmpty = 9
+    
+}
+
+/*
+
+1:userID为空
+2:userID不存在
+3:发布文件不存在
+8:请联系客服
+9:数据为空
+
+*/
+
+enum CTAUserRelationError:Int, ErrorType{
+    
+    case RelationUserIDEmpty = 1
+    case UserIDNotExist = 2
+    case RelationUserIDNotExist = 3
+    case UserIDSame = 4
+    case NeedContactWithService = 8
+    case DataIsEmpty = 9
+    
+}
+
+/*
+
+1:userID为空
+2:userID不存在
+3:关系userID不存在
+4:userID 和 关系userID一样
+8:请联系客服
+9:数据为空
+
+*/
+
+enum CTAUserRelationListError:Int, ErrorType{
+    
+    case BeUserIDEmpty = 1
+    case BeUserNotExist = 2
+    case NeedContactWithService = 8
+    case DataIsEmpty = 9
+    
+}
+
+/*
+
+1:beUserID为空
+2:beUserID不存在
+8:请联系客服
+9:数据为空
+
+*/

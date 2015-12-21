@@ -14,47 +14,41 @@ class ViewController: UIViewController {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
    
-//    var list:Array<AnyObject> = Array<AnyObject>();
-//    let a = [
-//    "key":"qhjsklajkl"
-//    ];
-//    let b = [
-//    "key":"111222333"
-//    ]
-//    list.append(a);
-//    list.append(b);
-//    let request = CTAPublishUpTokenRequest.init(list: list);
-//    
-//    request.startWithCompletionBlockWithSuccess { (response) -> Void in
-//      
-//      switch response.result {
-//      case .Success(let JSON):
-//        print(JSON)
-//      case .Failure(let networkError):
-//        print(networkError)
-//      }
+    var list:Array<CTAUpTokenModel> = Array<CTAUpTokenModel>();
+    let a = CTAUpTokenModel.init(upTokenKey: "aaaaa/aa.png")
+    let b = CTAUpTokenModel.init(upTokenKey: "bbbbb/bb.png")
+    list.append(a);
+    list.append(b);
+    CTAUploadDomain.userUpToken(list) { (upTokenList, ErrorType) -> Void in
+        
+        print(upTokenList);
+    }
+//    CTAUploadDomain.uploadFilePath(){(dic, error) -> Void in
+//        if ((error as? CTARequestSuccess) != nil) {
+//            let publishFilePath = dic![key(.PublishFilePath)]
+//            let userFilePath    = dic![key(.UserFilePath)]
+//            CTAFilePath.userFilePath = String(userFilePath)
+//            CTAFilePath.publishFilePath = String(publishFilePath)
+//        }else {
+//            print("error: \(error)")
+//        }
+//    }
+//
+//    CTAUserDomain.login("15501005475", areaCode: "102208", passwd: "222222") { (userModel, error) -> Void in
+//        
+//        if ((error as? CTARequestSuccess) != nil) {
+//            print("userModel = \(userModel)")
+//            
+//        }else if let error = error as? CTAUserLoginError {
+//            print("error: \(error)")
+//        }
 //    }
     
-    CTAUploadDomain.uploadFilePath(){(dic, error) -> Void in
-        if ((error as? CTARequestSuccess) != nil) {
-            let publishFilePath = dic![key(.PublishFilePath)]
-            let userFilePath    = dic![key(.UserFilePath)]
-            CTAFilePath.userFilePath = String(userFilePath)
-            CTAFilePath.publishFilePath = String(publishFilePath)
-        }else {
-            print("error: \(error)")
-        }
-    }
-    
-    CTAUserDomain.login("15501005475", areaCode: "102208", passwd: "222222") { (userModel, error) -> Void in
-        
-        if ((error as? CTARequestSuccess) != nil) {
-            print("userModel = \(userModel)")
-            
-        }else if let error = error as? CTAUserLoginError {
-            print("error: \(error)")
-        }
-    }
+//    CTAPublishDomain .newPublishList("", start: 0) { (publishList, ErrorType) -> Void in
+//        
+//        print(publishList);
+//        
+//    }
   }
     
   override func didReceiveMemoryWarning() {
