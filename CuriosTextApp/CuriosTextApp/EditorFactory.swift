@@ -48,9 +48,9 @@ class EditorFactory {
     class func generateRandomPage() -> CTAPage {
         
         var containers = [CTAContainer]()
-        for i in 0..<5 {
+        for _ in 0..<5 {
             
-           let con = self.generateTextContainer(Double(30 + 20 * i), y: Double(50 ), pageWidth: 512.0, pageHeigh: 512.0, text: "Emiaostein", attributes: defaultTextAttributes)
+           let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "Emiaostein \nWhat can i do for you ?", attributes: CTATextAttributes())
             containers += [con]
         }
         
@@ -244,27 +244,20 @@ extension EditorFactory {
 extension EditorFactory {
     
     class func generateTextContainer(
-        x: Double,
-        y: Double,
         pageWidth: Double,
         pageHeigh: Double,
         text: String,
-        attributes: [String: AnyObject])
+        attributes: CTATextAttributes)
         -> CTAContainer {
             
-            let textElement = CTATextElement(text: "Emiaostein", x: -50, y: 0, width: 300, height: 100)
-            
-            func textBounds() -> CGSize {
-                return CGSize(width: 200, height: 100)
-            }
-            
-            let size = textBounds()
+            let textElement = CTATextElement(text: text, attributes: attributes)
+            let textSize = textElement.textSizeWithConstraintSize(CGSize(width: pageWidth, height: pageHeigh * 2))
             
             return CTAContainer(
-                x: x,
-                y: y,
-                width: Double(size.width),
-                height: Double(size.height),
+                x: pageWidth / 2.0,
+                y: pageHeigh / 2.0,
+                width: Double(textSize.width),
+                height: Double(textSize.height),
                 rotation: 0.0,
                 alpha: 1.0,
                 scale: 1.0,

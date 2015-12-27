@@ -208,7 +208,7 @@ final class CTATextAttributes:NSObject, NSCoding {
 }
 
 
-final class CTATextElement: NSObject, CTAElement, TextModifiable, viewPropertiesModifiable {
+final class CTATextElement: NSObject, CTAElement, TextModifiable {
     
     private struct SerialKeys {
         static private let prefix = "com.botai.curiosText.TextElment."
@@ -221,10 +221,10 @@ final class CTATextElement: NSObject, CTAElement, TextModifiable, viewProperties
     }
     
 //    private(set) var attributeString: NSAttributedString!
-    private(set) var x = 0.0
-    private(set) var y = 0.0
-    private(set) var width = 0.0
-    private(set) var height = 0.0
+//    private(set) var x = 0.0
+//    private(set) var y = 0.0
+//    private(set) var width = 0.0
+//    private(set) var height = 0.0
     private(set) var text = ""
     var attributes = CTATextAttributes()
     
@@ -235,74 +235,75 @@ final class CTATextElement: NSObject, CTAElement, TextModifiable, viewProperties
     required init?(coder aDecoder: NSCoder) {
         text = aDecoder.decodeObjectForKey(SerialKeys.text) as! String
         attributes = aDecoder.decodeObjectForKey(SerialKeys.attributes) as! CTATextAttributes
-        x = aDecoder.decodeDoubleForKey(SerialKeys.x)
-        y = aDecoder.decodeDoubleForKey(SerialKeys.y)
-        width = aDecoder.decodeDoubleForKey(SerialKeys.width)
-        height = aDecoder.decodeDoubleForKey(SerialKeys.height)
+//        x = aDecoder.decodeDoubleForKey(SerialKeys.x)
+//        y = aDecoder.decodeDoubleForKey(SerialKeys.y)
+//        width = aDecoder.decodeDoubleForKey(SerialKeys.width)
+//        height = aDecoder.decodeDoubleForKey(SerialKeys.height)
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(text, forKey: SerialKeys.text)
         aCoder.encodeObject(attributes, forKey: SerialKeys.attributes)
-        aCoder.encodeDouble(x, forKey: SerialKeys.x)
-        aCoder.encodeDouble(y, forKey: SerialKeys.y)
-        aCoder.encodeDouble(width, forKey: SerialKeys.width)
-        aCoder.encodeDouble(height, forKey: SerialKeys.height)
+//        aCoder.encodeDouble(x, forKey: SerialKeys.x)
+//        aCoder.encodeDouble(y, forKey: SerialKeys.y)
+//        aCoder.encodeDouble(width, forKey: SerialKeys.width)
+//        aCoder.encodeDouble(height, forKey: SerialKeys.height)
         
     }
     
     init(
         text: String,
-        attributes: CTATextAttributes = CTATextAttributes(),
-        x: Double,
-        y: Double,
-        width: Double,
-        height: Double) {
+        attributes: CTATextAttributes = CTATextAttributes()
+//        x: Double,
+//        y: Double,
+//        width: Double,
+//        height: Double
+        ) {
         
         self.text = text
         self.attributes = attributes
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
+//        self.x = x
+//        self.y = y
+//        self.width = width
+//        self.height = height
     }
 }
 
 // MARK: - ViewPropertiesModifiable
-extension CTATextElement {
-    var position: (x: Double, y: Double) {
-        
-        get {
-            return (x: x, y: y)
-        }
-     
-        set {
-            self.x = newValue.x
-            self.y = newValue.y
-        }
-    }
-    var size: (width: Double, height: Double) {
-     
-        get {
-            return (width: width, height: height)
-        }
-        
-        set {
-            self.width = newValue.width
-            self.height = newValue.height
-        }
-    }
-    
-    var radius: Double {
-        get {
-            return 0.0
-        }
-        
-        set {
-            ()
-        }
-    }
-}
+//extension CTATextElement {
+//    var position: (x: Double, y: Double) {
+//        
+//        get {
+//            return (x: x, y: y)
+//        }
+//     
+//        set {
+//            self.x = newValue.x
+//            self.y = newValue.y
+//        }
+//    }
+//    var size: (width: Double, height: Double) {
+//     
+//        get {
+//            return (width: width, height: height)
+//        }
+//        
+//        set {
+//            self.width = newValue.width
+//            self.height = newValue.height
+//        }
+//    }
+//    
+//    var radius: Double {
+//        get {
+//            return 0.0
+//        }
+//        
+//        set {
+//            ()
+//        }
+//    }
+//}
 
 // MARK: - TextModify
 extension CTATextElement {

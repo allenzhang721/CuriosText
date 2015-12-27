@@ -132,11 +132,30 @@ class EditViewController: UIViewController, CanvasViewDataSource, CanvasViewDele
         }
     }
     
-    @IBAction func reloadCavas(sender: AnyObject) {
+    @IBAction func reloadCavas(sender: AnyObject? = nil) {
         
         selContainerView = nil
         selCotainerVM = nil
         canvasView.reloadData()
+    }
+    
+    @IBAction func add(sender: AnyObject) {
+        
+       let container = EditorFactory.generateTextContainer(320.0, pageHeigh: 320.0, text: "My name is Chen Xingyu", attributes: CTATextAttributes())
+        
+        page.append(container)
+        reloadCavas()
+    }
+    
+    @IBAction func del(sender: AnyObject) {
+        
+        guard let selContainer = selCotainerVM as? CTAContainer,
+            let index = (page.containerVMs.indexOf{$0.iD == selContainer.iD}) else {
+            return
+        }
+        
+        page.removeAt(index)
+        reloadCavas()
     }
 }
 
