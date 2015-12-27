@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImageElement: UIImageView, TextElementProtocol {
+class ImageView: UIImageView, ImageElement {
 
     /*
     // Only override drawRect: if you perform custom drawing.

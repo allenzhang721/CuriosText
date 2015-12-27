@@ -10,12 +10,17 @@ import UIKit
 
 class ContainerTextView: ContainerView {
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    var textView: TextView!
+    
+    override func updateContents(contents: AnyObject, contentSize size: CGSize, drawInsets inset: CGPoint) {
+        
+        guard let contents = contents as? NSAttributedString else {
+            fatalError("The contents is not AttributeString")
+        }
+        
+        textView.bounds.size = size
+        textView.insets = inset
+        textView.frame.origin = CGPoint(x: 0 - inset.x, y: 0 - inset.y)
+        textView.attributedText = contents
     }
-    */
-
 }

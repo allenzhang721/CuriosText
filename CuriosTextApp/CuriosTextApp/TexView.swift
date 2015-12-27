@@ -8,14 +8,17 @@
 
 import UIKit
 
-class TextElement: UILabel, TextElementProtocol {
+class TextView: UILabel, TextElement {
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    var insets: CGPoint = CGPoint.zero
+    
+    override func drawTextInRect(rect: CGRect) {
+        
+        let context = UIGraphicsGetCurrentContext()
+        CGContextSaveGState(context)
+        CGContextTranslateCTM(context, insets.x, insets.y)
+        attributedText?.drawInRect(CGRect(origin: rect.origin, size: CGSize(width: rect.size.width - insets.x * 2, height: rect.size.height - insets.y * 2)))
+        CGContextRestoreGState(context)
     }
-    */
 
 }

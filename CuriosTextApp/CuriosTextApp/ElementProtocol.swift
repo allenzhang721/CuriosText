@@ -7,3 +7,20 @@
 //
 
 import Foundation
+import UIKit
+
+protocol Element: class {
+    
+}
+
+protocol TextElement: Element {
+    
+}
+
+protocol ImageElement: Element {
+    
+}
+
+extension UIView: Element {
+    
+}

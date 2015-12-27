@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class CTAPage:NSObject, NSCoding {
+final class CTAPage:NSObject, NSCoding, PageVMProtocol {
     
     let containerQueue = dispatch_queue_create("com.botai.CuriosText.pageUpdateQueue", DISPATCH_QUEUE_SERIAL)
     
@@ -18,8 +18,8 @@ final class CTAPage:NSObject, NSCoding {
         static let containers = "containers"
     }
     
-    private(set) var width = 512.0
-    private(set) var height = 512.0
+    private(set) var width = 320.0
+    private(set) var height = 320.0
     private var containers = [CTAContainer]()
     
     required init?(coder aDecoder: NSCoder) {
@@ -34,7 +34,9 @@ final class CTAPage:NSObject, NSCoding {
         aCoder.encodeObject(containers, forKey: SerialKeys.containers)
     }
     
-    override init() {
+    init(containers: [CTAContainer]) {
+        self.containers = containers
+        super.init()
     }
     
     subscript(idx: Int) -> CTAContainer {
@@ -58,5 +60,12 @@ final class CTAPage:NSObject, NSCoding {
         dispatch_sync(containerQueue) {
             self.containers = [CTAContainer]()
         }
+    }
+}
+
+extension CTAPage {
+    
+    var containerVMs: [ContainerVMProtocol] {
+        return containers.map{$0 as ContainerVMProtocol}
     }
 }

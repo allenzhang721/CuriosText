@@ -10,12 +10,14 @@ import UIKit
 
 class ContainerView: UIView {
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    var iD: String = ""
+    
+    func addID(id: String) {
+        self.iD = id
     }
-    */
+    
+    func updateContents(contents: AnyObject, contentSize size: CGSize, drawInsets inset: CGPoint) {
+        
+    }
 
 }

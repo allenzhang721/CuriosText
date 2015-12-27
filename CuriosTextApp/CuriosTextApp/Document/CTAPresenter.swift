@@ -10,7 +10,7 @@ import Foundation
 
 final class CTAPresenter: CTADocumentAccesser {
     
-    var page = CTAPage()
+    var page = CTAPage(containers: [CTAContainer]())
     
     internal var pageData: NSData {
         return NSKeyedArchiver.archivedDataWithRootObject(page)
