@@ -19,10 +19,17 @@ class ViewController: UIViewController {
     let b = CTAUpTokenModel.init(upTokenKey: "bbbbb/bb.png")
     list.append(a);
     list.append(b);
-    CTAUploadDomain.userUpToken(list) { (upTokenList, ErrorType) -> Void in
+    CTAUpTokenDomain.getInstance().userUpToken(list) { (domainInfo) -> Void in
         
-        print(upTokenList);
+        if domainInfo.result {
+            let upTokenList:Array = domainInfo.modelArray!
+            for var i=0; i < upTokenList.count; i++ {
+                print(upTokenList[i])
+            }
+        }
     }
+    
+    
 //    CTAUploadDomain.uploadFilePath(){(dic, error) -> Void in
 //        if ((error as? CTARequestSuccess) != nil) {
 //            let publishFilePath = dic![key(.PublishFilePath)]

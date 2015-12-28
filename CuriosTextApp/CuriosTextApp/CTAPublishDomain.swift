@@ -7,20 +7,22 @@
 //
 
 import Foundation
-import Qiniu
 import SwiftyJSON
 
 class CTAPublishDomain: CTABaseDomain {
     
-    func tokensForKeys(keys: [String], completedBlock:(tokenList: [[String: AnyObject]]) -> Void) {
-        
+    static var _instance:CTAUpTokenDomain?;
+    
+    static func getInstance() -> CTAUpTokenDomain{
+        if _instance == nil{
+            _instance = CTAUpTokenDomain.init();
+        }
+        return _instance!
     }
     
-    func upload(data: NSData, key: String, token: String, completedBlock:((QNResponseInfo, key: String, response:[String: AnyObject]) -> Void)?) {
-        
-    }
+    var protocolID:String = "";
     
-    static func publishID(compelecationBlock: (String?) -> Void)  {
+    func publishID(compelecationBlock: (String?) -> Void)  {
         
         CTAPublishIDRequest.init().startWithCompletionBlockWithSuccess { (response) -> Void in
             
@@ -28,172 +30,172 @@ class CTAPublishDomain: CTABaseDomain {
             switch response.result{
             case .Success(let json):
                 let json:JSON = JSON(json)
-                let result = checkJsonResult(json)
+                let result = self.checkJsonResult(json)
                 if result{
                     let data = json[key(.Data)].string
                     compelecationBlock(data)
                 } else{
                     uuid = NSUUID().UUIDString
-                    uuid = changeUUID(uuid);
+                    uuid = self.changeUUID(uuid);
                     compelecationBlock(uuid)
                 }
             case .Failure( _):
                 uuid = NSUUID().UUIDString
-                uuid = changeUUID(uuid);
+                uuid = self.changeUUID(uuid);
                 compelecationBlock(uuid)
             }
         }
     }
     
-    static func createPublishFile(phone: String, areaCode: String, passwd: String, compelecationBlock: (CTAPublishModel?, ErrorType?) -> Void)  {
+    func createPublishFile(phone: String, areaCode: String, passwd: String, compelecationBlock: (CTAPublishModel?, ErrorType?) -> Void)  {
         
     }
     
-    static func deletePublishFile(publishID:String, compelecationBlock: (ErrorType?) -> Void){
+    func deletePublishFile(publishID:String, compelecationBlock: (CTADomainInfo!) -> Void){
         
         CTADeletePublishRequest.init(publishID: publishID).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
             case .Success(let json):
                 let json:JSON = JSON(json)
-                let resultindex = json[CTARequestResultKey.resultIndex].int!
-                let result = checkJsonResult(json)
+                let resultIndex = json[CTARequestResultKey.resultIndex].int!
+                let result = self.checkJsonResult(json)
                 if result {
-                    compelecationBlock(CTARequestSuccess(rawValue: resultindex)!)
+                    compelecationBlock(CTADomainInfo.init(result: true, successType: resultIndex))
                 } else{
-                    compelecationBlock(CTAPublishDeleteError(rawValue: resultindex)!)
+                    compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAPublishDeleteError(rawValue: resultIndex)!))
                 }
             case .Failure( _):
-                compelecationBlock(CTAInternetError(rawValue: 10)!)
+                compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
     
-    static func userPublishList(userID:String, beUserID:String, start:Int, size:Int = 20, compelecationBlock: (Array<CTAPublishModel>?, ErrorType?) -> Void){
+    func userPublishList(userID:String, beUserID:String, start:Int, size:Int = 20, compelecationBlock: (CTADomainListInfo!) -> Void){
     
         CTAUserPublishListRequest.init(userID: userID, beUserID: beUserID, start: start, size:size).startWithCompletionBlockWithSuccess { (response) -> Void in
             
             switch response.result{
             case .Success(let json):
                 let json:JSON = JSON(json)
-                let resultindex = json[CTARequestResultKey.resultIndex].int!
-                let result = checkJsonResult(json)
+                let resultIndex = json[CTARequestResultKey.resultIndex].int!
+                let result = self.checkJsonResult(json)
                 if result {
-                    let publishArray = publishListResult(json)
-                    compelecationBlock(publishArray, CTARequestSuccess(rawValue: resultindex)!)
+                    let publishArray = self.publishListResult(json)
+                    compelecationBlock(CTADomainListInfo.init(result: true, modelArray: publishArray, successType: resultIndex))
                 } else{
-                    compelecationBlock(nil, CTAPublishListError(rawValue: resultindex)!)
+                    compelecationBlock(CTADomainListInfo.init(result: false, errorType: CTAPublishListError(rawValue: resultIndex)!))
                 }
             case .Failure( _):
-                compelecationBlock(nil, CTAInternetError(rawValue: 10)!)
+                compelecationBlock(CTADomainListInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
     
-    static func userLikePublishList(userID:String, beUserID:String, start:Int, size:Int = 20, compelecationBlock: (Array<CTAPublishModel>?, ErrorType?) -> Void){
+    func userLikePublishList(userID:String, beUserID:String, start:Int, size:Int = 20, compelecationBlock: (CTADomainListInfo!) -> Void){
         
         CTAUserLikePublishListRequest.init(userID: userID, beUserID: beUserID, start: start, size:size).startWithCompletionBlockWithSuccess { (response) -> Void in
             
             switch response.result{
             case .Success(let json):
                 let json:JSON = JSON(json)
-                let resultindex = json[CTARequestResultKey.resultIndex].int!
-                let result = checkJsonResult(json)
+                let resultIndex = json[CTARequestResultKey.resultIndex].int!
+                let result = self.checkJsonResult(json)
                 if result {
-                    let publishArray = publishListResult(json)
-                    compelecationBlock(publishArray, CTARequestSuccess(rawValue: resultindex)!)
+                    let publishArray = self.publishListResult(json)
+                    compelecationBlock(CTADomainListInfo.init(result: true, modelArray: publishArray, successType: resultIndex))
                 } else{
-                    compelecationBlock(nil, CTAPublishListError(rawValue: resultindex)!)
+                    compelecationBlock(CTADomainListInfo.init(result: false, errorType: CTAPublishListError(rawValue: resultIndex)!))
                 }
             case .Failure( _):
-                compelecationBlock(nil, CTAInternetError(rawValue: 10)!)
+                compelecationBlock(CTADomainListInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
     
-    static func userRebuildPublishList(userID:String, beUserID:String, start:Int, size:Int = 20, compelecationBlock: (Array<CTAPublishModel>?, ErrorType?) -> Void){
+    func userRebuildPublishList(userID:String, beUserID:String, start:Int, size:Int = 20, compelecationBlock: (CTADomainListInfo!) -> Void){
         
         CTAUserRebuildPublishListRequest.init(userID: userID, beUserID: beUserID, start: start, size:size).startWithCompletionBlockWithSuccess { (response) -> Void in
             
             switch response.result{
             case .Success(let json):
                 let json:JSON = JSON(json)
-                let resultindex = json[CTARequestResultKey.resultIndex].int!
-                let result = checkJsonResult(json)
+                let resultIndex = json[CTARequestResultKey.resultIndex].int!
+                let result = self.checkJsonResult(json)
                 if result {
-                    let publishArray = publishListResult(json)
-                    compelecationBlock(publishArray, CTARequestSuccess(rawValue: resultindex)!)
+                    let publishArray = self.publishListResult(json)
+                    compelecationBlock(CTADomainListInfo.init(result: true, modelArray: publishArray, successType: resultIndex))
                 } else{
-                    compelecationBlock(nil, CTAPublishListError(rawValue: resultindex)!)
+                    compelecationBlock(CTADomainListInfo.init(result: false, errorType: CTAPublishListError(rawValue: resultIndex)!))
                 }
             case .Failure( _):
-                compelecationBlock(nil, CTAInternetError(rawValue: 10)!)
+                compelecationBlock(CTADomainListInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
     
-    static func userFollowPublishList(userID:String, beUserID:String, start:Int, size:Int = 20, compelecationBlock: (Array<CTAPublishModel>?, ErrorType?) -> Void){
+    func userFollowPublishList(userID:String, beUserID:String, start:Int, size:Int = 20, compelecationBlock: (CTADomainListInfo!) -> Void){
         
         CTAUserFollowPublishListRequest.init(userID: userID, beUserID: beUserID, start: start, size:size).startWithCompletionBlockWithSuccess { (response) -> Void in
             
             switch response.result{
             case .Success(let json):
                 let json:JSON = JSON(json)
-                let resultindex = json[CTARequestResultKey.resultIndex].int!
-                let result = checkJsonResult(json)
+                let resultIndex = json[CTARequestResultKey.resultIndex].int!
+                let result = self.checkJsonResult(json)
                 if result {
-                    let publishArray = publishListResult(json)
-                    compelecationBlock(publishArray, CTARequestSuccess(rawValue: resultindex)!)
+                    let publishArray = self.publishListResult(json)
+                    compelecationBlock(CTADomainListInfo.init(result: true, modelArray: publishArray, successType: resultIndex))
                 } else{
-                    compelecationBlock(nil, CTAPublishListError(rawValue: resultindex)!)
+                    compelecationBlock(CTADomainListInfo.init(result: false, errorType: CTAPublishListError(rawValue: resultIndex)!))
                 }
             case .Failure( _):
-                compelecationBlock(nil, CTAInternetError(rawValue: 10)!)
+                compelecationBlock(CTADomainListInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
     
-    static func newPublishList(userID:String, start:Int, size:Int = 20, compelecationBlock: (Array<CTAPublishModel>?, ErrorType?) -> Void){
+    func newPublishList(userID:String, start:Int, size:Int = 20, compelecationBlock: (CTADomainListInfo!) -> Void){
         
         CTANewPublishListRequest.init(userID: userID, start: start, size:size).startWithCompletionBlockWithSuccess { (response) -> Void in
             switch response.result{
             case .Success(let json):
                 let json:JSON = JSON(json)
-                let resultindex = json[CTARequestResultKey.resultIndex].int!
-                let result = checkJsonResult(json)
+                let resultIndex = json[CTARequestResultKey.resultIndex].int!
+                let result = self.checkJsonResult(json)
                 if result {
-                    let publishArray = publishListResult(json)
-                    compelecationBlock(publishArray, CTARequestSuccess(rawValue: resultindex)!)
+                    let publishArray = self.publishListResult(json)
+                    compelecationBlock(CTADomainListInfo.init(result: true, modelArray: publishArray, successType: resultIndex))
                 } else{
-                    compelecationBlock(nil, CTAPublishListError(rawValue: resultindex)!)
+                    compelecationBlock(CTADomainListInfo.init(result: false, errorType: CTAPublishListError(rawValue: resultIndex)!))
                 }
             case .Failure( _):
-                compelecationBlock(nil, CTAInternetError(rawValue: 10)!)
+                compelecationBlock(CTADomainListInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
     
-    static func hotPublishList(userID:String, start:Int, size:Int = 20, compelecationBlock: (Array<CTAPublishModel>?, ErrorType?) -> Void){
+    func hotPublishList(userID:String, start:Int, size:Int = 20, compelecationBlock: (CTADomainListInfo!) -> Void){
         
         CTAHotPublishListRequest.init(userID: userID, start: start, size:size).startWithCompletionBlockWithSuccess { (response) -> Void in
             switch response.result{
             case .Success(let json):
                 let json:JSON = JSON(json)
-                let resultindex = json[CTARequestResultKey.resultIndex].int!
-                let result = checkJsonResult(json)
+                let resultIndex = json[CTARequestResultKey.resultIndex].int!
+                let result = self.checkJsonResult(json)
                 if result {
-                    let publishArray = publishListResult(json)
-                    compelecationBlock(publishArray, CTARequestSuccess(rawValue: resultindex)!)
+                    let publishArray = self.publishListResult(json)
+                    compelecationBlock(CTADomainListInfo.init(result: true, modelArray: publishArray, successType: resultIndex))
                 } else{
-                    compelecationBlock(nil, CTAPublishListError(rawValue: resultindex)!)
+                    compelecationBlock(CTADomainListInfo.init(result: false, errorType: CTAPublishListError(rawValue: resultIndex)!))
                 }
             case .Failure( _):
-                compelecationBlock(nil, CTAInternetError(rawValue: 10)!)
+                compelecationBlock(CTADomainListInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
     
-    static func publishListResult(json:JSON) -> Array<CTAPublishModel>{
+    func publishListResult(json:JSON) -> Array<CTAPublishModel>{
         let listArray = json[key(.List)].array;
         var publishArray: Array<CTAPublishModel> = [];
         if listArray != nil{
@@ -206,82 +208,82 @@ class CTAPublishDomain: CTABaseDomain {
         return publishArray
     }
     
-    static func likePublish(userID:String, publishID:String, compelecationBlock: (ErrorType?) -> Void){
+    func likePublish(userID:String, publishID:String, compelecationBlock: (CTADomainInfo!) -> Void){
         
         CTALikePublishRequest.init(userID: userID, publishID: publishID).startWithCompletionBlockWithSuccess { (response) -> Void in
             
             switch response.result{
             case .Success(let json):
                 let json:JSON = JSON(json)
-                let resultindex = json[CTARequestResultKey.resultIndex].int!
-                let result = checkJsonResult(json)
+                let resultIndex = json[CTARequestResultKey.resultIndex].int!
+                let result = self.checkJsonResult(json)
                 if result {
-                    compelecationBlock(CTARequestSuccess(rawValue: resultindex)!)
+                    compelecationBlock(CTADomainInfo.init(result: true, successType: resultIndex))
                 } else{
-                    compelecationBlock(CTAUserPublishError(rawValue: resultindex)!)
+                    compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAUserPublishError(rawValue: resultIndex)!))
                 }
             case .Failure( _):
-                compelecationBlock(CTAInternetError(rawValue: 10)!)
+                compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
     
-    static func unLikePublish(userID:String, publishID:String, compelecationBlock: (ErrorType?) -> Void){
+    func unLikePublish(userID:String, publishID:String, compelecationBlock: (CTADomainInfo!) -> Void){
         
         CTAUnLikePublishRequest.init(userID: userID, publishID: publishID).startWithCompletionBlockWithSuccess { (response) -> Void in
             
             switch response.result{
             case .Success(let json):
                 let json:JSON = JSON(json)
-                let resultindex = json[CTARequestResultKey.resultIndex].int!
-                let result = checkJsonResult(json)
+                let resultIndex = json[CTARequestResultKey.resultIndex].int!
+                let result = self.checkJsonResult(json)
                 if result {
-                    compelecationBlock(CTARequestSuccess(rawValue: resultindex)!)
+                    compelecationBlock(CTADomainInfo.init(result: true, successType: resultIndex))
                 } else{
-                    compelecationBlock(CTAUserPublishError(rawValue: resultindex)!)
+                    compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAUserPublishError(rawValue: resultIndex)!))
                 }
             case .Failure( _):
-                compelecationBlock(CTAInternetError(rawValue: 10)!)
+                compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
     
-    static func rebuildPublish(userID:String, publishID:String, compelecationBlock: (ErrorType?) -> Void){
+    func rebuildPublish(userID:String, publishID:String, compelecationBlock: (CTADomainInfo!) -> Void){
         
         CTARebuildPublishRequest.init(userID: userID, publishID: publishID).startWithCompletionBlockWithSuccess { (response) -> Void in
             
             switch response.result{
             case .Success(let json):
                 let json:JSON = JSON(json)
-                let resultindex = json[CTARequestResultKey.resultIndex].int!
-                let result = checkJsonResult(json)
+                let resultIndex = json[CTARequestResultKey.resultIndex].int!
+                let result = self.checkJsonResult(json)
                 if result {
-                    compelecationBlock(CTARequestSuccess(rawValue: resultindex)!)
+                    compelecationBlock(CTADomainInfo.init(result: true, successType: resultIndex))
                 } else{
-                    compelecationBlock(CTAUserPublishError(rawValue: resultindex)!)
+                    compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAUserPublishError(rawValue: resultIndex)!))
                 }
             case .Failure( _):
-                compelecationBlock(CTAInternetError(rawValue: 10)!)
+                compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
     
-    static func sharePublish(userID:String, publishID:String, sharePlatform:Int,compelecationBlock: (ErrorType?) -> Void){
+    func sharePublish(userID:String, publishID:String, sharePlatform:Int,compelecationBlock: (CTADomainInfo?) -> Void){
         
         CTASharePublishRequest.init(userID: userID, publishID: publishID, sharePlatform:sharePlatform).startWithCompletionBlockWithSuccess { (response) -> Void in
             
             switch response.result{
             case .Success(let json):
                 let json:JSON = JSON(json)
-                let resultindex = json[CTARequestResultKey.resultIndex].int!
-                let result = checkJsonResult(json)
+                let resultIndex = json[CTARequestResultKey.resultIndex].int!
+                let result = self.checkJsonResult(json)
                 if result {
-                    compelecationBlock(CTARequestSuccess(rawValue: resultindex)!)
+                    compelecationBlock(CTADomainInfo.init(result: true, successType: resultIndex))
                 } else{
-                    compelecationBlock(CTAUserPublishError(rawValue: resultindex)!)
+                    compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAUserPublishError(rawValue: resultIndex)!))
                 }
             case .Failure( _):
-                compelecationBlock(CTAInternetError(rawValue: 10)!)
+                compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }

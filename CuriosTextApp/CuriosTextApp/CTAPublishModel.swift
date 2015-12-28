@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-final class CTAPublishModel: CTABaseDomain {
+final class CTAPublishModel: CTABaseModel{
     
     let publishID:String;
     let title:String;

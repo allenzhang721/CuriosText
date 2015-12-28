@@ -8,12 +8,12 @@
 
 import Foundation
 
-enum CTAInternetError:Int, ErrorType{
-    case connectFail = 10
+enum CTAUploadError:Int, ErrorType{
+    case ConnectFail = 10
 }
 
-enum CTARequestSuccess: Int, ErrorType{
-    case Success = 0
+enum CTAInternetError:Int, ErrorType{
+    case ConnectFail = 10
 }
 
 enum CTAUserLoginError: Int, ErrorType{
