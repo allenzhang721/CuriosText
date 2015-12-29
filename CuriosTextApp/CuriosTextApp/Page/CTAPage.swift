@@ -50,14 +50,9 @@ final class CTAPage:NSObject, NSCoding, PageVMProtocol {
     }
     
     func append(container: CTAContainer) {
+        
         dispatch_sync(containerQueue) {
             self.containers += [container]
-        }
-    }
-    
-    func removeAt(index: Int) {
-        dispatch_sync(containerQueue) {
-            self.containers.removeAtIndex(index)
         }
     }
     
