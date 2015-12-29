@@ -69,7 +69,7 @@ class EditViewController: UIViewController, CanvasViewDataSource, CanvasViewDele
             let nextPosition = CGPoint(x: beginPosition.x + translation.x, y: beginPosition.y + translation.y)
             selContainer.position = (Double(nextPosition.x), Double(nextPosition.y))
         default:
-            ()   
+            ()
         }
     }
     
@@ -115,12 +115,12 @@ class EditViewController: UIViewController, CanvasViewDataSource, CanvasViewDele
         case .Changed:
             let nextfontSize = beginScale * scale
             let r = selContainer.textElement.textResultWithScale(
-                        nextfontSize,
-                        constraintSzie: CGSize(width: 320, height: 568 * 2))
+                nextfontSize,
+                constraintSzie: CGSize(width: 320, height: 568 * 2))
             
             selContainerView.bounds.size = r.1
             selContainerView.updateContents(r.3, contentSize: r.2.size, drawInsets: r.0)
-
+            
         case .Ended:
             let nextfontSize = beginScale * scale
             let size = selContainerView.bounds.size
@@ -132,11 +132,30 @@ class EditViewController: UIViewController, CanvasViewDataSource, CanvasViewDele
         }
     }
     
-    @IBAction func reloadCavas(sender: AnyObject) {
+    @IBAction func reloadCavas(sender: AnyObject? = nil) {
         
         selContainerView = nil
         selCotainerVM = nil
         canvasView.reloadData()
+    }
+    
+    @IBAction func add(sender: AnyObject) {
+        
+        let container = EditorFactory.generateTextContainer(320.0, pageHeigh: 320.0, text: "My name is Chen Xingyu", attributes: CTATextAttributes())
+        
+        page.append(container)
+        reloadCavas()
+    }
+    
+    @IBAction func del(sender: AnyObject) {
+        
+        guard let selContainer = selCotainerVM as? CTAContainer,
+            let index = (page.containerVMs.indexOf{$0.iD == selContainer.iD}) else {
+                return
+        }
+        
+        page.removeAt(index)
+        reloadCavas()
     }
 }
 
