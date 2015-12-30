@@ -49,7 +49,6 @@ class CTAUpTokenDomain: CTABaseDomain {
         CTAUserUpTokenRequest.init(list: list).startWithCompletionBlockWithSuccess { (response) -> Void in
             switch response.result {
             case .Success(let json):
-                print(json)
                 let json:JSON = JSON(json)
                 let result = self.checkJsonResult(json)
                 if result {

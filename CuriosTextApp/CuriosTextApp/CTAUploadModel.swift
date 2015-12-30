@@ -12,24 +12,16 @@ class CTAUploadModel {
     
     let key:String;
     let token:String;
-    let upProtocolID:String;
-    var filePath:String?;
-    var fileData:NSData?;
+    let filePath:String;
+    var uploadID:String = "";
     var isUploading:Bool = false;
- 
+    var uploadProgress:Float = 0.0;
+    var uploadComplete:Bool = false;
     
-    init(key:String, token:String, upProtocolID:String, filePath:String){
+    init(key:String, token:String, filePath:String){
         self.key          = key;
         self.token        = token;
-        self.upProtocolID = upProtocolID;
         self.filePath     = filePath;
-    }
-    
-    init(key:String, token:String, upProtocolID:String, fileData:NSData){
-        self.key          = key;
-        self.token        = token;
-        self.upProtocolID = upProtocolID;
-        self.fileData     = fileData;
     }
     
 }

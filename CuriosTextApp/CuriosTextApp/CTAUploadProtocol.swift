@@ -9,10 +9,8 @@
 import Foundation
 
 protocol CTAUploadProtocol{
-
-    func getProtocolID() -> String;
-    func uploadStart(fileKey:String)
-    func uploadProgress(fileKey:String, progress:Float)
-    func uploadComplete(fileKey:String)
-    func uploadError(fileKey:String, error:ErrorType)
+    func uploadStart(uploadModel:CTAUploadModel)
+    func uploadProgress(uploadModel:CTAUploadModel, progress:Float)
+    func uploadComplete(uploadModel:CTAUploadModel)
+    func uploadError(uploadModel:CTAUploadModel, error:ErrorType)
 }

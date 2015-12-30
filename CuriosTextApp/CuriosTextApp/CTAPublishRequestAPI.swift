@@ -17,6 +17,7 @@ class CTAPublishIDRequest: CTABaseRequest {
 
 class CTACreatePublishRequest: CTABaseRequest {
     
+    let publishID:String;
     let userID:String;
     let title:String;
     let publishDesc:String;
@@ -24,13 +25,14 @@ class CTACreatePublishRequest: CTABaseRequest {
     let previewIconURL:String;
     let publishURL:String;
     
-    init(userID:String, title:String, desc:String, iconURL:String, previewURL:String, pulishURL:String) {
+    init(publishID:String, userID:String, title:String, publishDesc:String, publishIconURL:String, previewIconURL:String, publishURL:String) {
+        self.publishID      = publishID;
         self.userID         = userID;
         self.title          = title;
-        self.publishDesc    = desc;
-        self.publishIconURL = iconURL;
-        self.previewIconURL = previewURL;
-        self.publishURL     = pulishURL;
+        self.publishDesc    = publishDesc;
+        self.publishIconURL = publishIconURL;
+        self.previewIconURL = previewIconURL;
+        self.publishURL     = publishURL;
     }
     
     override func requestUrl() -> String {
@@ -40,6 +42,7 @@ class CTACreatePublishRequest: CTABaseRequest {
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
+            key(.PublishID)     : publishID,
             key(.UserID)        : userID,
             key(.Title)         : title,
             key(.PublishDesc)   : publishDesc,

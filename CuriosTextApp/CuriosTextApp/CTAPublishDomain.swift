@@ -47,8 +47,23 @@ class CTAPublishDomain: CTABaseDomain {
         }
     }
     
-    func createPublishFile(phone: String, areaCode: String, passwd: String, compelecationBlock: (CTAPublishModel?, ErrorType?) -> Void)  {
-        
+    func createPublishFile(publishID:String, userID:String, title:String, publishDesc:String, publishIconURL:String, previewIconURL:String, publishURL:String, compelecationBlock: (CTADomainInfo!) -> Void)  {
+        CTACreatePublishRequest.init(publishID: publishID, userID: userID, title: title, publishDesc: publishDesc, publishIconURL: publishIconURL, previewIconURL: previewIconURL, publishURL: publishURL).startWithCompletionBlockWithSuccess { (response) -> Void in
+            
+            switch response.result{
+            case .Success(let json):
+                let json:JSON = JSON(json)
+                let resultIndex = json[CTARequestResultKey.resultIndex].int!
+                let result = self.checkJsonResult(json)
+                if result {
+                    compelecationBlock(CTADomainInfo.init(result: true, successType: resultIndex))
+                } else{
+                    compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAPublishDeleteError(rawValue: resultIndex)!))
+                }
+            case .Failure( _):
+                compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            }
+        }
     }
     
     func deletePublishFile(publishID:String, compelecationBlock: (CTADomainInfo!) -> Void){

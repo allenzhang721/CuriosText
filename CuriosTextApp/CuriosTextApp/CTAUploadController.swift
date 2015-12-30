@@ -13,16 +13,16 @@ class CTAUploadController {
     
     init(){
         self.uploadArray = [];
-        self.uploadDelegateArray = [];
+        self.uploadManager = QNUploadManager();
     }
     
     static var _instance:CTAUploadController?;
     
-    var uploadArray:Array<CTAUploadModel>?;
+    var delegate:CTAUploadProtocol?;
+
+    var uploadArray:Array<CTAUploadModel>;
     
-    var uploadDelegateArray:Array<CTAUploadProtocol>?;
-    
-    let uploadManager = QNUploadManager();
+    let uploadManager:QNUploadManager;
     
     static func getInstance() -> CTAUploadController{
         if _instance == nil {
@@ -33,48 +33,59 @@ class CTAUploadController {
     
     func uploadFile(uploadModel:CTAUploadModel) {
         if !checkUploadModel(uploadModel) {
-            self.uploadArray!.append(uploadModel)
+            self.uploadArray.append(uploadModel)
         }
-        self.uploadAction();
+        self.uploadAction(uploadModel.uploadID);
     }
     
     func uploadFileArray(uploadModelArray:Array<CTAUploadModel>){
-        for var i=0; i < uploadModelArray.count; i++ {
-            let uploadModel = uploadModelArray[i]
-            if !checkUploadModel(uploadModel) {
-                self.uploadArray!.append(uploadModel)
+        if uploadModelArray.count > 0{
+            for var i=0; i < uploadModelArray.count; i++ {
+                let uploadModel = uploadModelArray[i]
+                if !checkUploadModel(uploadModel) {
+                    self.uploadArray.append(uploadModel)
+                }
             }
-        }
-        self.uploadAction();
-    }
-    
-    func addDelegate(delegate:CTAUploadProtocol) {
-        if !checkProtocol(delegate) {
-            self.uploadDelegateArray!.append(delegate);
+            let uploadModel:CTAUploadModel = uploadModelArray[0]
+            self.uploadAction(uploadModel.uploadID);
         }
     }
     
-    func uploadAction(){
-        if self.getUploadingCount() < 5{
-            var uploadModel:CTAUploadModel!;
-            for var i = 0; i < self.uploadArray!.count; i++ {
-                let oldModel:CTAUploadModel = self.uploadArray![i]
-                if !oldModel.isUploading{
+    func getUnUploadModel(uploadID:String = "") -> CTAUploadModel?{
+        var uploadModel:CTAUploadModel?
+        for var i = 0; i < self.uploadArray.count; i++ {
+            let oldModel:CTAUploadModel = self.uploadArray[i]
+            if !oldModel.isUploading{
+                if uploadID != "" {
+                    if(oldModel.uploadID == uploadID){
+                        uploadModel = oldModel
+                        break;
+                    }
+                }else {
                     uploadModel = oldModel
                     break;
                 }
             }
-            
-            if uploadModel != nil {
+        }
+        return uploadModel
+    }
+    
+    func uploadAction(uploadID:String){
+        if self.getUploadingCount() < 4{
+            var uploadModel:CTAUploadModel? = self.getUnUploadModel(uploadID);
+            if uploadModel == nil{
+                uploadModel = self.getUnUploadModel();
+            }
+            if let uploadModel = uploadModel {
+                self.uploadStart(uploadModel.key)
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-                    CTAUploadController.init().uploadStart(uploadModel.key)
                     let option = QNUploadOption(mime: nil, progressHandler: { (fileKey, progress) -> Void in
-                        CTAUploadController.init().uploadProgress(fileKey, progress: progress)
+                        CTAUploadController.getInstance().uploadProgress(fileKey, progress: progress)
                         }, params: nil, checkCrc: true, cancellationSignal: nil)
                     var ainfo: QNResponseInfo!
                     var afileKey: String!
                     var aresponse:  [NSObject : AnyObject]?
-                    self.uploadManager.putFile(uploadModel.filePath!, key: uploadModel.key, token: uploadModel.token, complete: { (info, fileKey, response) -> Void in
+                    self.uploadManager.putFile(uploadModel.filePath, key: uploadModel.key, token: uploadModel.token, complete: { (info, fileKey, response) -> Void in
                         ainfo = info
                         afileKey = fileKey
                         aresponse = response
@@ -92,9 +103,8 @@ class CTAUploadController {
         let uploadModel = self.getUploadModelByKey(fileKey)
         if uploadModel != nil {
             uploadModel!.isUploading = true
-            let delegate = self.getProtocolByID(uploadModel!.upProtocolID)
-            if delegate != nil {
-                delegate!.uploadStart(fileKey)
+            if let delegate = self.delegate {
+                delegate.uploadStart(uploadModel!)
             }
         }
     }
@@ -102,83 +112,53 @@ class CTAUploadController {
     func uploadProgress(fileKey:String, progress:Float){
         let uploadModel = self.getUploadModelByKey(fileKey)
         if uploadModel != nil {
-            let delegate = self.getProtocolByID(uploadModel!.upProtocolID)
-            if delegate != nil {
-                delegate!.uploadProgress(fileKey, progress: progress)
+            if let delegate = self.delegate {
+                delegate.uploadProgress(uploadModel!, progress: progress)
             }
         }
     }
     
     func uploadCompleted(info: QNResponseInfo!, filekey: String!, response: [NSObject : AnyObject]?) {
         let uploadModel = self.getUploadModelByKey(filekey)
-        var delegate:CTAUploadProtocol?
         if uploadModel != nil {
             uploadModel!.isUploading = false
-            delegate = self.getProtocolByID(uploadModel!.upProtocolID)
-        }
-        if delegate != nil {
             let isUploadOk = info.ok && response != nil
             if isUploadOk {
-                delegate!.uploadComplete(filekey)
+                uploadModel!.uploadComplete = true
+                if let delegate = self.delegate {
+                    delegate.uploadComplete(uploadModel!)
+                }
                 self.uploadModelComplete(uploadModel!)
             } else {
-                delegate!.uploadError(filekey, error: CTAUploadError(rawValue: 10)!)
+                uploadModel!.uploadComplete = false
+                if let delegate = self.delegate {
+                    delegate.uploadError(uploadModel!, error: CTAUploadError(rawValue: 10)!)
+                }
             }
         }
     }
     
     func uploadModelComplete(uploadModel:CTAUploadModel) {
         var index:Int = -1
-        var upProtocolCount = 0
-        for var i=0; i < self.uploadArray!.count; i++ {
-            let oldModel:CTAUploadModel = self.uploadArray![i];
+        for var i=0; i < self.uploadArray.count; i++ {
+            let oldModel:CTAUploadModel = self.uploadArray[i];
             if oldModel.key == uploadModel.key {
                 index = i;
             }
-            if oldModel.upProtocolID == uploadModel.upProtocolID {
-                upProtocolCount++
-            }
         }
         if index != -1{
-            self.uploadArray!.removeAtIndex(index)
+            self.uploadArray.removeAtIndex(index)
         }
-        if upProtocolCount <= 1{
-            for var j=0; j < self.uploadDelegateArray!.count; j++ {
-                let oldDelegate:CTAUploadProtocol = self.uploadDelegateArray![j];
-                if oldDelegate.getProtocolID() == uploadModel.upProtocolID {
-                    self.uploadDelegateArray!.removeAtIndex(j)
-                    break
-                }
-            }
+        if self.uploadArray.count == 0{
+            self.delegate = nil;
+        }else {
+            self.uploadAction(uploadModel.uploadID);
         }
-        self.uploadAction();
-    }
-    
-    func checkProtocol(delegate:CTAUploadProtocol) -> Bool{
-        for var i=0; i < self.uploadDelegateArray!.count; i++ {
-            let oldDelegate:CTAUploadProtocol = self.uploadDelegateArray![i];
-            if oldDelegate.getProtocolID() == delegate.getProtocolID() {
-                return true
-            }
-        }
-        return false
-    }
-    
-    func getProtocolByID(protocolID:String) -> CTAUploadProtocol? {
-        var delegate:CTAUploadProtocol?
-        for var i=0; i < self.uploadDelegateArray!.count; i++ {
-            let oldDelegate:CTAUploadProtocol = self.uploadDelegateArray![i];
-            if oldDelegate.getProtocolID() == protocolID {
-                delegate = oldDelegate
-                break
-            }
-        }
-        return delegate
     }
     
     func checkUploadModel(uploadModel:CTAUploadModel) -> Bool{
-        for var i=0; i < self.uploadArray!.count; i++ {
-            let oldModel:CTAUploadModel = self.uploadArray![i];
+        for var i=0; i < self.uploadArray.count; i++ {
+            let oldModel:CTAUploadModel = self.uploadArray[i];
             if oldModel.key == uploadModel.key {
                 return true
             }
@@ -188,8 +168,8 @@ class CTAUploadController {
     
     func getUploadModelByKey(fileKey:String) -> CTAUploadModel? {
         var uploadModel:CTAUploadModel?;
-        for var i=0; i < self.uploadArray!.count; i++ {
-            let oldModel:CTAUploadModel = self.uploadArray![i]
+        for var i=0; i < self.uploadArray.count; i++ {
+            let oldModel:CTAUploadModel = self.uploadArray[i]
             if oldModel.key == fileKey {
                 uploadModel = oldModel
                 break
@@ -200,8 +180,8 @@ class CTAUploadController {
     
     func getUploadingCount() -> Int {
         var count:Int = 0
-        for var i=0; i < self.uploadArray!.count; i++ {
-            let oldModel:CTAUploadModel = self.uploadArray![i]
+        for var i=0; i < self.uploadArray.count; i++ {
+            let oldModel:CTAUploadModel = self.uploadArray[i]
             if oldModel.isUploading {
                 count++
             }

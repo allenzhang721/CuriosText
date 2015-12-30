@@ -48,6 +48,113 @@ class UploadTests: XCTestCase {
         }
     }
     
+    func testPublishUpload(){
+        uploadPubilshFile()
+    }
+    
+}
+
+extension UploadTests {
+    
+    func upTokenRequest(){
+        let publishID = self.changeUUID(NSUUID().UUIDString)
+        
+        let publishIconURL = generateTempFileBy(1024*1024)
+        let publishIconKey = publishID+"/icon.jpg"
+        
+        let previewIconURL = generateTempFileBy(2048*1024)
+        let previewIconKey = publishID+"/preview.jpg"
+        
+        let publishJsonURL = generateTempFileBy(10*1024)
+        let publishJsonKey = publishID+"/publish.json"
+        
+        let publishImageURL = generateTempFileBy(800*1024)
+        let publishImageKey = publishID+"/publish.jpg"
+        
+        var upTokenArray:Array<CTAUpTokenModel> = []
+        upTokenArray.append(CTAUpTokenModel.init(upTokenKey: publishIconKey))
+        upTokenArray.append(CTAUpTokenModel.init(upTokenKey: previewIconKey))
+        upTokenArray.append(CTAUpTokenModel.init(upTokenKey: publishJsonKey))
+        upTokenArray.append(CTAUpTokenModel.init(upTokenKey: publishImageKey))
+        
+        var uploadArray:Array<CTAUploadModel> = []
+        
+        let expecation = self.expectationWithDescription("Async upload waiting")
+        CTAUpTokenDomain.getInstance().publishUpToken(upTokenArray) { (listInfo) -> Void in
+            if listInfo.result {
+                let modelArray = listInfo.modelArray;
+                if modelArray != nil {
+                    
+                    var uploadModel:CTAUploadModel?;
+                    for var i=0 ; i < modelArray!.count; i++ {
+                        let uptokenModel:CTAUpTokenModel = modelArray![i] as! CTAUpTokenModel
+                        switch uptokenModel.upTokenKey {
+                        case publishIconKey:
+                            uploadModel = CTAUploadModel.init(key: uptokenModel.upTokenKey, token: uptokenModel.upToken, filePath: publishIconURL.path!)
+                        case previewIconKey:
+                            uploadModel = CTAUploadModel.init(key: uptokenModel.upTokenKey, token: uptokenModel.upToken, filePath: previewIconURL.path!)
+                        case publishJsonKey:
+                            uploadModel = CTAUploadModel.init(key: uptokenModel.upTokenKey, token: uptokenModel.upToken, filePath: publishJsonURL.path!)
+                        case publishImageKey:
+                            uploadModel = CTAUploadModel.init(key: uptokenModel.upTokenKey, token: uptokenModel.upToken, filePath: publishImageURL.path!)
+                        default:
+                            uploadModel = nil;
+                        }
+                        if uploadModel != nil {
+                            uploadArray.append(uploadModel!)
+                        }
+                    }
+                }
+            }
+            expecation.fulfill()
+        }
+        
+        self.waitForExpectationsWithTimeout(20) { (error) -> Void in
+            for var i = 0; i < uploadArray.count ; i++ {
+                let model:CTAUploadModel = uploadArray[i]
+                print("index = \(i+1) key = \(model.key) token = \(model.token)")
+            }
+        }
+    }
+    
+    func changeUUID(uuid:String) ->String{
+        var newID:String = uuid;
+        while  newID.rangeOfString("-") != nil{
+            let range = newID.rangeOfString("-")
+            newID.replaceRange(range!, with: "")
+        }
+        return newID;
+    }
+}
+
+extension UploadTests {
+    func uploadPubilshFile(){
+        let publishID = "7CF67EE53E1742B686E1CAB0D53B81CC"
+        
+        let publishIconURL = generateTempFileBy(1024*1024)
+        let publishIconKey = publishID+"/icon.jpg"
+        let publishIconToken  = "zXqNlKjpzQpFzydm6OCcngSa76aVNp-SwmqG-kUy:btAuExeNs-YYCLktkquBPZ9MhVE=:eyJzY29wZSI6ImN1cmlvc3RleHRwdWJsaXNoOjdDRjY3RUU1M0UxNzQyQjY4NkUxQ0FCMEQ1M0I4MUNDL2ljb24uanBnIiwiZGVhZGxpbmUiOjE0NTE0NjUzMTd9"
+        
+        let previewIconURL = generateTempFileBy(2048*1024)
+        let previewIconKey = publishID+"/preview.jpg"
+        let previewIconToken = "zXqNlKjpzQpFzydm6OCcngSa76aVNp-SwmqG-kUy:M_0v8ep1B6JjFTG4Qcy8Xt2KZ0w=:eyJzY29wZSI6ImN1cmlvc3RleHRwdWJsaXNoOjdDRjY3RUU1M0UxNzQyQjY4NkUxQ0FCMEQ1M0I4MUNDL3ByZXZpZXcuanBnIiwiZGVhZGxpbmUiOjE0NTE0NjUzMTd9"
+        
+        let publishJsonURL = generateTempFileBy(10*1024)
+        let publishJsonKey = publishID+"/publish.json"
+        let publishJsonToken = "zXqNlKjpzQpFzydm6OCcngSa76aVNp-SwmqG-kUy:TLfCQM0wH9LM6etmCbJNUYwy_98=:eyJzY29wZSI6ImN1cmlvc3RleHRwdWJsaXNoOjdDRjY3RUU1M0UxNzQyQjY4NkUxQ0FCMEQ1M0I4MUNDL3B1Ymxpc2guanNvbiIsImRlYWRsaW5lIjoxNDUxNDY1MzE3fQ=="
+        
+        let publishImageURL = generateTempFileBy(800*1024)
+        let publishImageKey = publishID+"/publish.jpg"
+        let publishImageToken = "zXqNlKjpzQpFzydm6OCcngSa76aVNp-SwmqG-kUy:wLHd2RDZ0LueSL8KwDTNiqkcJ9o=:eyJzY29wZSI6ImN1cmlvc3RleHRwdWJsaXNoOjdDRjY3RUU1M0UxNzQyQjY4NkUxQ0FCMEQ1M0I4MUNDL3B1Ymxpc2guanBnIiwiZGVhZGxpbmUiOjE0NTE0NjUzMTd9"
+        
+        var uploadArray:Array<CTAUploadModel> = []
+        uploadArray.append(CTAUploadModel.init(key: publishIconKey, token: publishIconToken, filePath: publishIconURL.path!))
+        uploadArray.append(CTAUploadModel.init(key: previewIconKey, token: previewIconToken, filePath: previewIconURL.path!))
+        uploadArray.append(CTAUploadModel.init(key: publishJsonKey, token: publishJsonToken, filePath: publishJsonURL.path!))
+        uploadArray.append(CTAUploadModel.init(key: publishImageKey, token: publishImageToken, filePath: publishImageURL.path!))
+        
+       
+    }
 }
 
 extension UploadTests {
@@ -93,10 +200,7 @@ extension UploadTests {
             
         }
         
-        self.waitForExpectationsWithTimeout(20) { (error) -> Void in
-            
-            uploadCompleted(ainfo, filekey: afileKey, response: aresponse)
-        }
+        
         
         
     }
