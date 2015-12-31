@@ -30,62 +30,69 @@ class ViewController: UIViewController {
     func publishFile() -> String {
         let publishID = self.changeUUID(NSUUID().UUIDString)
         
-        let publishIconURL = generateTempFileBy(1024*1024)
+        let publishIconURL = "/Users/horner/1.png"//generateTempFileBy(1024*1024)
         let publishIconKey = publishID+"/icon.jpg"
         
-        let previewIconURL = generateTempFileBy(2048*1024)
-        let previewIconKey = publishID+"/preview.jpg"
-        
-        let publishJsonURL = generateTempFileBy(10*1024)
-        let publishJsonKey = publishID+"/publish.json"
-        
-        let publishImageURL = generateTempFileBy(800*1024)
-        let publishImageKey = publishID+"/publish.jpg"
+//        let previewIconURL = generateTempFileBy(2048*1024)
+//        let previewIconKey = publishID+"/preview.jpg"
+//        
+//        let publishJsonURL = generateTempFileBy(10*1024)
+//        let publishJsonKey = publishID+"/publish.json"
+//        
+//        let publishImageURL = generateTempFileBy(800*1024)
+//        let publishImageKey = publishID+"/publish.jpg"
         
         var upTokenArray:Array<CTAUpTokenModel> = []
         
         upTokenArray.append(CTAUpTokenModel.init(upTokenKey: publishIconKey))
-        upTokenArray.append(CTAUpTokenModel.init(upTokenKey: publishJsonKey))
-        upTokenArray.append(CTAUpTokenModel.init(upTokenKey: publishImageKey))
-        upTokenArray.append(CTAUpTokenModel.init(upTokenKey: previewIconKey))
+//        upTokenArray.append(CTAUpTokenModel.init(upTokenKey: publishJsonKey))
+//        upTokenArray.append(CTAUpTokenModel.init(upTokenKey: publishImageKey))
+//        upTokenArray.append(CTAUpTokenModel.init(upTokenKey: previewIconKey))
         
-        var uploadArray:Array<CTAUploadModel> = []
+//        var uploadArray:Array<CTAUploadModel> = []
+        var uploadModel:CTAUploadModel?;
         CTAUpTokenDomain.getInstance().publishUpToken(upTokenArray) { (listInfo) -> Void in
             if listInfo.result {
                 let modelArray = listInfo.modelArray;
                 if modelArray != nil {
-                    
-                    var uploadModel:CTAUploadModel?;
                     for var i=0 ; i < modelArray!.count; i++ {
                         let uptokenModel:CTAUpTokenModel = modelArray![i] as! CTAUpTokenModel
                         switch uptokenModel.upTokenKey {
                         case publishIconKey:
-                            uploadModel = CTAUploadModel.init(key: uptokenModel.upTokenKey, token: uptokenModel.upToken, filePath: publishIconURL.path!)
-                        case previewIconKey:
-                            uploadModel = CTAUploadModel.init(key: uptokenModel.upTokenKey, token: uptokenModel.upToken, filePath: previewIconURL.path!)
-                        case publishJsonKey:
-                            uploadModel = CTAUploadModel.init(key: uptokenModel.upTokenKey, token: uptokenModel.upToken, filePath: publishJsonURL.path!)
-                        case publishImageKey:
-                            uploadModel = CTAUploadModel.init(key: uptokenModel.upTokenKey, token: uptokenModel.upToken, filePath: publishImageURL.path!)
+                            uploadModel = CTAUploadModel.init(key: uptokenModel.upTokenKey, token: uptokenModel.upToken, filePath: publishIconURL)
+//                        case previewIconKey:
+//                            uploadModel = CTAUploadModel.init(key: uptokenModel.upTokenKey, token: uptokenModel.upToken, filePath: previewIconURL.path!)
+//                        case publishJsonKey:
+//                            uploadModel = CTAUploadModel.init(key: uptokenModel.upTokenKey, token: uptokenModel.upToken, filePath: publishJsonURL.path!)
+//                        case publishImageKey:
+//                            uploadModel = CTAUploadModel.init(key: uptokenModel.upTokenKey, token: uptokenModel.upToken, filePath: publishImageURL.path!)
                         default:
                             uploadModel = nil;
                         }
-                        if uploadModel != nil {
-                            uploadArray.append(uploadModel!)
-                        }
+//                        if uploadModel != nil {
+//                            uploadArray.append(uploadModel!)
+//                        }
                     }
-                    let a:NSDate = NSDate();
-                    print("upload Begin \(a)");
             
-                    CTAUploadAction.getInstance().uploadFileArray(publishID, uploadArray: uploadArray, progress: { (progressInfo) -> Void in
-                          print("upload File = \(progressInfo.uploadID) progress = \(progressInfo.progress)")
+                    if uploadModel != nil {
+                        CTAUploadAction.getInstance().uploadFile(publishID, uploadModel: uploadModel!, progress: { (progressInfo) -> Void in
+                            print("upload File = \(progressInfo.uploadID) progress = \(progressInfo.progress)")
                             }, complete: { (info) -> Void in
-                            if info.result{
-                                print("upload File = \(info.uploadID) complete")
-                                let b:NSDate = NSDate();
-                                print("upload Complete \(b)");
-                            }
+                                if info.result{
+                                    print("upload File = \(info.uploadID) complete")
+                                }
                         })
+                    }
+                    
+                    
+                    
+//                    CTAUploadAction.getInstance().uploadFileArray(publishID, uploadArray: uploadArray, progress: { (progressInfo) -> Void in
+//                          print("upload File = \(progressInfo.uploadID) progress = \(progressInfo.progress)")
+//                            }, complete: { (info) -> Void in
+//                            if info.result{
+//                                print("upload File = \(info.uploadID) complete")
+//                            }
+//                        })
                 }
             }
         }

@@ -126,9 +126,19 @@ class CTAUploadAction: CTAUploadProtocol {
             let uploadMode:CTAUploadModel = uploadArray[i]
             uploadMode.uploadID = uploadID
         }
-        uploadQueue.append(CTAUploadActionModel.init(uploadID: uploadID, uploadArray: uploadArray, progress: progressHandle, complete: completeHandle))
+        self.uploadQueue.append(CTAUploadActionModel.init(uploadID: uploadID, uploadArray: uploadArray, progress: progressHandle, complete: completeHandle))
         CTAUploadController.getInstance().delegate = self
         CTAUploadController.getInstance().uploadFileArray(uploadArray)
+    }
+    
+    func uploadFile(uploadID:String, uploadModel:CTAUploadModel, progress progressHandle:(CTAUploadProgressInfo!) -> Void, complete completeHandle:(CTAUploadInfo!) -> Void){
+        
+        uploadModel.uploadID = uploadID
+        var uploadArray:Array<CTAUploadModel> = []
+        uploadArray.append(uploadModel)
+        self.uploadQueue.append(CTAUploadActionModel.init(uploadID: uploadID, uploadArray: uploadArray, progress: progressHandle, complete: completeHandle))
+        CTAUploadController.getInstance().delegate = self
+        CTAUploadController.getInstance().uploadFile(uploadModel)
     }
 }
 
