@@ -8,24 +8,45 @@
 
 import UIKit
 
-class EditViewController: UIViewController, CanvasViewDataSource, CanvasViewDelegate {
+class EditViewController: UIViewController, CanvasViewDataSource, CanvasViewDelegate, UICollectionViewDataSource, LineFlowLayoutDelegate {
+    
+    @IBOutlet weak var scrollBarCollectionView: UICollectionView!
+    var canvasView: CanvasView!
+    
+    @IBOutlet weak var seletectorsView: CTASelectorCollectionView!
     
     let page = EditorFactory.generateRandomPage()
     
-    var canvasView: CanvasView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
+        setup()
+        
+    }
+    
+    func setup() {
+        
+        // canvas
         canvasView = EditorFactory.canvasBy(page)
-        canvasView.frame.origin = CGPoint(x: 0, y: 64)
+        canvasView.frame.origin.y = 64
+        canvasView.center.x = CGRectGetMidX(view.bounds)
         
         canvasView.backgroundColor = UIColor.lightGrayColor()
         
         canvasView.dataSource = self
         canvasView.delegate = self
         
+        // scrollBarCollectView
+        let flowLayout = CTALineFlowLayout()
+        flowLayout.delegate = self
+        flowLayout.scrollDirection = .Horizontal
+        flowLayout.minimumLineSpacing = 0
+        flowLayout.itemSize = CGSize(width: 320 / 4, height: CGRectGetHeight(scrollBarCollectionView.bounds))
+        scrollBarCollectionView.setCollectionViewLayout(flowLayout, animated: false)
+        scrollBarCollectionView.dataSource = self
+        scrollBarCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
+        
+        // gesture
         let tap = UITapGestureRecognizer(target: canvasView, action: "tap:")
         self.view.addGestureRecognizer(tap)
         
@@ -39,6 +60,7 @@ class EditViewController: UIViewController, CanvasViewDataSource, CanvasViewDele
         self.view.addGestureRecognizer(pinch)
         
         self.view.layer.addSublayer(canvasView.layer)
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -46,6 +68,11 @@ class EditViewController: UIViewController, CanvasViewDataSource, CanvasViewDele
         canvasView.reloadData()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        
+//        self.scrollBarCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 5, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: false)
+    }
+
     var selContainerView: ContainerView?
     var selCotainerVM: ContainerVMProtocol?
     var beginPosition: CGPoint!
@@ -157,6 +184,35 @@ class EditViewController: UIViewController, CanvasViewDataSource, CanvasViewDele
         page.removeAt(index)
         reloadCavas()
     }
+}
+
+
+
+extension EditViewController {
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return 10
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ScrollBarCell", forIndexPath: indexPath)
+        
+//        cell.backgroundColor = UIColor.lightGrayColor()
+        return cell
+    }
+    
+}
+
+// MARK: - FlowLayoutDelegate
+extension EditViewController {
+    
+    func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
+
+        seletectorsView.changeTo(.Size)
+    }
+    
 }
 
 
