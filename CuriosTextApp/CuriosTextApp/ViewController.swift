@@ -9,9 +9,22 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    private let pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
+    
+    private let pageControllers = CTAPageControllers()
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    addChildViewController(pageViewController)
+    view.addSubview(pageViewController.view)
+    
+    pageViewController.view.backgroundColor = UIColor.lightGrayColor()
+    pageViewController.dataSource = pageControllers
+
+    pageViewController.setViewControllers([pageControllers.controllers[0]], direction: .Forward, animated: false, completion: nil)
+    
     // Do any additional setup after loading the view, typically from a nib.
    
     var id = self.publishFile();
@@ -24,7 +37,6 @@ class ViewController: UIViewController {
         id = self.publishFile();
         print("index = \(2) id = \(id)")
     }
-    
   }
     
     func publishFile() -> String {
