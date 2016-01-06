@@ -281,12 +281,15 @@ final class CTATextElement: NSObject, CTAElement, TextModifiable {
         }
     }
     
+    
     func resultWithScale(scale: CGFloat, constraintSzie: CGSize) -> (inset: CGPoint, size: CGSize) {
         
-        let inset = CGPoint(x: 50.0 / 17.0 * fontSize * scale, y: 0)
+        let inset = CGPoint(x: 20.0 / 17.0 * fontSize * scale, y: 0)
         let str = attributeStringWithFontScale(scale)
         let textSize = str.boundingRectWithSize(constraintSzie, options: .UsesLineFragmentOrigin, context: nil).size
-        let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y + 2 + shadowOffset.y + shadowBlurRadius)
+        let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
+        
+        print("need TextSize = \(textSize)")
         
         return (inset, size)
     }

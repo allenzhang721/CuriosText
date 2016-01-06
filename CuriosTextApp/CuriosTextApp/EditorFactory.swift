@@ -50,7 +50,7 @@ class EditorFactory {
         var containers = [CTAContainer]()
         for _ in 0..<1 {
             
-            let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "Emiaostein \nWhat can i do for you ?", attributes: CTATextAttributes())
+            let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "我叫陈星宇 \nWhat can i do for you ?", attributes: CTATextAttributes())
             containers += [con]
         }
         
