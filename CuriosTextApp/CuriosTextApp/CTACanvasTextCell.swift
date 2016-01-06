@@ -16,7 +16,7 @@ class CTACanvasTextCell: CTACanvasCell {
         self.textView = TextView()
         super.init(frame: frame)
         
-//        textView.backgroundColor = UIColor.yellowColor()
+        textView.backgroundColor = UIColor.yellowColor()
         textView.text = "EMiaostein"
         textView.layer.drawsAsynchronously = true
         textView.frame = CGRect(x: 0, y: 0, width: bounds.size.width, height: bounds.size.height)
@@ -34,6 +34,8 @@ class CTACanvasTextCell: CTACanvasCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         textView.insets = contentInset
-        textView.frame = CGRect(x: 0 - contentInset.x, y: 0 - contentInset.y, width: bounds.size.width + 2 * contentInset.x, height: bounds.size.height + 2 * contentInset.y)
+//        CGRect(x: 0 - contentInset.x, y: 0 - contentInset.y, width: bounds.size.width + 2 * contentInset.x, height: bounds.size.height + 2 * contentInset.y)
+        textView.bounds.size = CGSize(width: CGRectGetWidth(contentView.bounds) + 2 * contentInset.x , height: CGRectGetHeight(contentView.bounds) + 2 * contentInset.y)
+        textView.center = contentView.center
     }
 }
