@@ -17,6 +17,7 @@ class TextView: UILabel, TextElement {
         let context = UIGraphicsGetCurrentContext()
         CGContextSaveGState(context)
         CGContextTranslateCTM(context, insets.x, insets.y)
+//        (text! as! NSString).drawInRect(CGRect(origin: rect.origin, size: CGSize(width: rect.size.width - insets.x * 2, height: rect.size.height - insets.y * 2)), withAttributes: nil)
         attributedText?.drawInRect(CGRect(origin: rect.origin, size: CGSize(width: rect.size.width - insets.x * 2, height: rect.size.height - insets.y * 2)))
         CGContextRestoreGState(context)
     }

@@ -7,12 +7,16 @@
 //
 
 import Foundation
+import UIKit
 
 protocol CTAElement: class, NSCoding {
     
     var resourceName: String { get }
+    var scale: CGFloat { get set }
     //    var x: Double { get }
     //    var y: Double { get }
     //    var width: Double { get }
     //    var height: Double { get }
+    
+    func resultWithScale(scale: CGFloat, constraintSzie: CGSize) -> (inset: CGPoint, size: CGSize)
 }

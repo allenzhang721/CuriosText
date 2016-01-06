@@ -114,7 +114,12 @@ final class CTATextAttributes:NSObject, NSCoding {
         
         let textColor: UIColor = {
             
+<<<<<<< b97d14f3a42dd4e55b3f5f286f46bf3c0b1fb541
             return UIColor.whiteColor()
+=======
+            return UIColor.blackColor()
+//            return UIColor(red: CGFloat(random() % 255) / 255.0, green: CGFloat(random() % 255) / 255.0, blue: CGFloat(random() % 255) / 255.0, alpha: 1)
+>>>>>>> Mod - 'Container' - calculate layout infomation
         }()
         
         return [
@@ -164,8 +169,6 @@ final class CTATextAttributes:NSObject, NSCoding {
             NSForegroundColorAttributeName: textColor,
             NSKernAttributeName: NSNumber(double: textKern)
         ]
-        
-        
     }
     
     
@@ -267,43 +270,27 @@ final class CTATextElement: NSObject, CTAElement, TextModifiable {
             //        self.width = width
             //        self.height = height
     }
+    
+    var scale: CGFloat {
+        set {
+            fontScale = newValue
+        }
+        
+        get {
+            return fontScale
+        }
+    }
+    
+    func resultWithScale(scale: CGFloat, constraintSzie: CGSize) -> (inset: CGPoint, size: CGSize) {
+        
+        let inset = CGPoint(x: 50.0 / 17.0 * fontSize * scale, y: 0)
+        let str = attributeStringWithFontScale(scale)
+        let textSize = str.boundingRectWithSize(constraintSzie, options: .UsesLineFragmentOrigin, context: nil).size
+        let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y + 2 + shadowOffset.y + shadowBlurRadius)
+        
+        return (inset, size)
+    }
 }
-
-// MARK: - ViewPropertiesModifiable
-//extension CTATextElement {
-//    var position: (x: Double, y: Double) {
-//
-//        get {
-//            return (x: x, y: y)
-//        }
-//
-//        set {
-//            self.x = newValue.x
-//            self.y = newValue.y
-//        }
-//    }
-//    var size: (width: Double, height: Double) {
-//
-//        get {
-//            return (width: width, height: height)
-//        }
-//
-//        set {
-//            self.width = newValue.width
-//            self.height = newValue.height
-//        }
-//    }
-//
-//    var radius: Double {
-//        get {
-//            return 0.0
-//        }
-//
-//        set {
-//            ()
-//        }
-//    }
-//}
 
 // MARK: - TextModify
 extension CTATextElement {

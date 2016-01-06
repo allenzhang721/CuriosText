@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		0B5D0EFEF4877E30863415FC /* Pods_CuriosTextApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B57FF0060B89C9884AE99217 /* Pods_CuriosTextApp.framework */; };
 		2C1B2AAC1C3520160053BE5E /* CTASelectorsReuseableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B2AAB1C3520160053BE5E /* CTASelectorsReuseableView.swift */; };
+		2C1F01581C3BD5960033CED8 /* CTASelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1F01571C3BD5960033CED8 /* CTASelectorCell.swift */; };
+		2C1F015A1C3BD7400033CED8 /* CTASelectorSizeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */; };
+		2C1F015C1C3CE3770033CED8 /* CTACanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1F015B1C3CE3770033CED8 /* CTACanvasCell.swift */; };
 		2C3B33CA1C1176D000738166 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33C91C1176D000738166 /* AppDelegate.swift */; };
 		2C3B33CC1C1176D000738166 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33CB1C1176D000738166 /* ViewController.swift */; };
 		2C3B33CF1C1176D000738166 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C3B33CD1C1176D000738166 /* Main.storyboard */; };
@@ -111,6 +114,9 @@
 
 /* Begin PBXFileReference section */
 		2C1B2AAB1C3520160053BE5E /* CTASelectorsReuseableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorsReuseableView.swift; sourceTree = "<group>"; };
+		2C1F01571C3BD5960033CED8 /* CTASelectorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorCell.swift; sourceTree = "<group>"; };
+		2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorSizeCell.swift; sourceTree = "<group>"; };
+		2C1F015B1C3CE3770033CED8 /* CTACanvasCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACanvasCell.swift; sourceTree = "<group>"; };
 		2C3B33C61C1176D000738166 /* CuriosTextApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CuriosTextApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C3B33C91C1176D000738166 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2C3B33CB1C1176D000738166 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -179,7 +185,7 @@
 		2CAEAC981C323F4300C9F9AC /* ContainerImgView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerImgView.swift; sourceTree = "<group>"; };
 		2CAEAC991C323F4300C9F9AC /* ContainerTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerTextView.swift; sourceTree = "<group>"; };
 		2CAEAC9A1C323F4300C9F9AC /* ContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
-		2CAEACA01C323F9700C9F9AC /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		2CAEACA01C323F9700C9F9AC /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Protocols.swift; path = ../Protocols.swift; sourceTree = "<group>"; };
 		2CAEACA11C323F9700C9F9AC /* TexView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TexView.swift; sourceTree = "<group>"; };
 		661D29F01C2A8FC30073FC0E /* CTAUploadModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUploadModel.swift; sourceTree = "<group>"; };
 		661D29F31C2A97060073FC0E /* CTAUploadProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUploadProtocol.swift; sourceTree = "<group>"; };
@@ -240,6 +246,17 @@
 				FEA1095AC8443011149CF7A8 /* Pods-CuriosTextApp.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		2C1F01561C3BD5540033CED8 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				2C1F015B1C3CE3770033CED8 /* CTACanvasCell.swift */,
+				2CFD92A91C3B93B9000DA0E3 /* CTACanvasTextCell.swift */,
+				2C1F01571C3BD5960033CED8 /* CTASelectorCell.swift */,
+				2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 		2C3B33BD1C1176D000738166 = {
@@ -355,6 +372,7 @@
 		2C3CAD101C21825900D8DE4B /* Page */ = {
 			isa = PBXGroup;
 			children = (
+				2CAEACA01C323F9700C9F9AC /* Protocols.swift */,
 				2C3CAD111C21825900D8DE4B /* CTAContainer.swift */,
 				2C3CAD121C21825900D8DE4B /* CTAElement.swift */,
 				2C3CAD131C21825900D8DE4B /* CTAImageElement.swift */,
@@ -425,7 +443,11 @@
 		2CAEAC8B1C323ED900C9F9AC /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< b97d14f3a42dd4e55b3f5f286f46bf3c0b1fb541
 				2CAEACA01C323F9700C9F9AC /* Protocols.swift */,
+=======
+				2C1F01561C3BD5540033CED8 /* Cells */,
+>>>>>>> Mod - 'Container' - calculate layout infomation
 				2CAEACA11C323F9700C9F9AC /* TexView.swift */,
 				2CAEAC961C323F4300C9F9AC /* CanvasView.swift */,
 				2CAEAC971C323F4300C9F9AC /* CanvasViewProtocol.swift */,
@@ -690,6 +712,7 @@
 				66ADD74F1C28011B00FD9BAF /* CTAUpTokenModel.swift in Sources */,
 				2CAEACA21C323F9700C9F9AC /* Protocols.swift in Sources */,
 				2C7A95251C3A520B005B0EAE /* CTASettingViewController.swift in Sources */,
+				2C1F015C1C3CE3770033CED8 /* CTACanvasCell.swift in Sources */,
 				2C6C67FF1C350A4800CCE81C /* CTALineFlowLayout.swift in Sources */,
 				2CAEACA31C323F9700C9F9AC /* TexView.swift in Sources */,
 				2CAEAC9B1C323F4300C9F9AC /* CanvasView.swift in Sources */,
@@ -707,7 +730,13 @@
 				2C3CAD221C21826800D8DE4B /* CTACanvasView.swift in Sources */,
 				2C3B34041C11A23700738166 /* CTARequestResponse.swift in Sources */,
 				2C3CAD0D1C21825100D8DE4B /* CTADocumentAccesser.swift in Sources */,
+<<<<<<< b97d14f3a42dd4e55b3f5f286f46bf3c0b1fb541
+=======
+				2C1F015A1C3BD7400033CED8 /* CTASelectorSizeCell.swift in Sources */,
+				2CB39AD21C3A106E00D96E90 /* CanvasLayout.swift in Sources */,
+>>>>>>> Mod - 'Container' - calculate layout infomation
 				2C3CAD191C21825900D8DE4B /* CTAPage.swift in Sources */,
+				2C1F01581C3BD5960033CED8 /* CTASelectorCell.swift in Sources */,
 				2C7A959F1C3A6A4F005B0EAE /* CTAPageControllers.swift in Sources */,
 				6667FF661C327ADE004CDBDB /* CTAUploadAction.swift in Sources */,
 				2C7A95211C3A51D6005B0EAE /* CTAUserInfoViewController.swift in Sources */,

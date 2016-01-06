@@ -7,8 +7,7 @@
 //
 
 import Foundation
-
-
+import UIKit
 
 final class CTAContainer: NSObject, NSCoding, ContainerVMProtocol {
     
@@ -19,7 +18,7 @@ final class CTAContainer: NSObject, NSCoding, ContainerVMProtocol {
         static let height = "height"
         static let rotation = "rotation"
         static let alpha = "alpha"
-        static let scale = "scale"
+        static let scale = "contentScale"
         static let element = "element"
         static let iD = "iD"
     }
@@ -30,7 +29,8 @@ final class CTAContainer: NSObject, NSCoding, ContainerVMProtocol {
     private(set) var height = 50.0
     private(set) var rotation = 0.0
     private(set) var alpha = 1.0
-    private(set) var scale = 1.0
+    private(set) var contentScale = 1.0
+    private(set) var contentInset = CGPoint.zero
     private(set) var element: CTAElement?
     let iD: String
     
@@ -41,7 +41,7 @@ final class CTAContainer: NSObject, NSCoding, ContainerVMProtocol {
         height = aDecoder.decodeDoubleForKey(SerialKeys.height)
         rotation = aDecoder.decodeDoubleForKey(SerialKeys.rotation)
         alpha = aDecoder.decodeDoubleForKey(SerialKeys.alpha)
-        scale = aDecoder.decodeDoubleForKey(SerialKeys.scale)
+        contentScale = aDecoder.decodeDoubleForKey(SerialKeys.scale)
         element = aDecoder.decodeObjectForKey(SerialKeys.element) as? CTAElement
         iD = aDecoder.decodeObjectForKey(SerialKeys.iD) as! String
     }
@@ -53,20 +53,21 @@ final class CTAContainer: NSObject, NSCoding, ContainerVMProtocol {
         aCoder.encodeDouble(height, forKey: SerialKeys.height)
         aCoder.encodeDouble(rotation, forKey: SerialKeys.rotation)
         aCoder.encodeDouble(alpha, forKey: SerialKeys.alpha)
-        aCoder.encodeDouble(scale, forKey: SerialKeys.scale)
+        aCoder.encodeDouble(contentScale, forKey: SerialKeys.scale)
         aCoder.encodeObject(element, forKey: SerialKeys.element)
         aCoder.encodeObject(iD, forKey: SerialKeys.iD)
     }
     
-    init(x: Double, y: Double, width: Double, height: Double, rotation: Double, alpha: Double, scale: Double, element: CTAElement?) {
+    init(x: Double, y: Double, width: Double, height: Double, rotation: Double, alpha: Double, scale: Double, inset: CGPoint, element: CTAElement?) {
         self.x = x
         self.y = y
         self.width = width
         self.height = height
         self.rotation = rotation
         self.alpha = alpha
-        self.scale = scale
+        self.contentScale = scale
         self.element = element
+        self.contentInset = inset
         self.iD = CTAIDGenerator.generateID()
     }
 }
@@ -79,13 +80,89 @@ extension CTAContainer {
     
         case is CTATextElement:
             return .Text
-//        case is CTAImageElement:
-//            return .Image
+            
         default:
             return .Empty
         }
     }
+}
+
+// MARK: - ContainerViewModel
+extension CTAContainer {
     
+    var center: CGPoint {
+        get {
+            return CGPoint(x: x, y: y)
+        }
+        
+        set {
+            x = Double(newValue.x)
+            y = Double(newValue.y)
+        }
+    }
+    
+    var size: CGSize {
+        
+        get {
+            return CGSize(width: width, height: height)
+        }
+        
+        set {
+<<<<<<< b97d14f3a42dd4e55b3f5f286f46bf3c0b1fb541
+            x = newValue.x
+            y = newValue.y
+            
+            print("x = \(x), y = \(y)")
+=======
+            width = Double(newValue.width)
+            height = Double(newValue.height)
+>>>>>>> Mod - 'Container' - calculate layout infomation
+        }
+        
+    }
+    
+    var radius: CGFloat {
+     
+        get {
+            return CGFloat(rotation)
+        }
+        
+        set {
+            rotation = Double(newValue)
+        }
+    }
+    
+    var scale: CGFloat {
+        
+        get {
+            return CGFloat(contentScale)
+        }
+        
+        set {
+            
+            contentScale = Double(newValue)
+            
+            
+        }
+    }
+    
+    var inset: CGPoint {
+        return contentInset
+    }
+    
+    func updateWithScale(ascale: CGFloat, constraintSzie: CGSize) {
+        
+        scale = ascale
+        element!.scale = ascale
+        let newResult = element!.resultWithScale(ascale, constraintSzie: constraintSzie)
+        let contentSize = newResult.size
+        let inset = newResult.inset
+        // new content size
+        let nextSize = CGSize(width: contentSize.width - 2 * contentInset.x, height: contentSize.height - 2 * contentInset.y)
+        
+        size = nextSize
+        contentInset = inset
+    }
 }
 
 
@@ -101,41 +178,4 @@ extension CTAContainer: TextContainerVMProtocol {
     }
     
     // TODO: CTAContainer, Calculate the position and origion if occur rotation -- Emiaostein; 2015-12-18-14:49
-    var position: (x: Double, y: Double) {
-        get {
-            return (x: x, y: y)
-        }
-        
-        set {
-            x = newValue.x
-            y = newValue.y
-            
-            print("x = \(x), y = \(y)")
-        }
-    }
-    
-    var size: (width: Double, height: Double) {
-        
-        get {
-            return (width: width, height: height)
-        }
-        
-        set {
-            width = newValue.width
-            height = newValue.height
-        }
-    }
-    
-    var radius: Double {
-     
-        get {
-            return rotation
-        }
-        
-        set {
-            rotation = newValue
-        }
-        
-    }
-    
 }

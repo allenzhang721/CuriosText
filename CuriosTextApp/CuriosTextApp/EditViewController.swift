@@ -15,6 +15,7 @@ class EditViewController: UIViewController, CanvasViewDataSource, CanvasViewDele
     
     @IBOutlet weak var seletectorsView: CTASelectorCollectionView!
     
+<<<<<<< b97d14f3a42dd4e55b3f5f286f46bf3c0b1fb541
     let page = EditorFactory.generateRandomPage()
     
     override func viewDidLoad() {
@@ -98,6 +99,25 @@ class EditViewController: UIViewController, CanvasViewDataSource, CanvasViewDele
         default:
             ()
         }
+=======
+   private var tabViewController: CTATabViewController!
+   private var canvasViewController: CTACanvasViewController!
+   private var selectorViewController: CTASelectorsViewController!
+   private var selectedIndexPath: NSIndexPath?
+    
+   private var container: ContainerVMProtocol? {
+        guard let selectedIndexPath = selectedIndexPath else {
+            return nil
+        }
+        return page.containerVMs[selectedIndexPath.item]
+    }
+
+   private let page = EditorFactory.generateRandomPage()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        addGestures()
+>>>>>>> Mod - 'Container' - calculate layout infomation
     }
     
     var beganRadian: CGFloat = 0.0
@@ -117,6 +137,7 @@ class EditViewController: UIViewController, CanvasViewDataSource, CanvasViewDele
             let nextRotation = beganRadian + rotRadian
             selContainerView.transform = CGAffineTransformMakeRotation(nextRotation)
             
+<<<<<<< b97d14f3a42dd4e55b3f5f286f46bf3c0b1fb541
         case .Ended:
             let nextRotation = beganRadian + rotRadian
             selContainer.radius = Double(nextRotation)
@@ -154,10 +175,23 @@ class EditViewController: UIViewController, CanvasViewDataSource, CanvasViewDele
             selContainer.size = (Double(size.width), Double(size.height))
             selContainer.textElement.fontScale = nextfontSize
             
+=======
+        case let vc as CTASelectorsViewController:
+            selectorViewController = vc
+            selectorViewController.dataSource = self
+            selectorViewController.delegate = self
+            
+        case let vc as CTACanvasViewController:
+            canvasViewController = vc
+            canvasViewController.dataSource = self
+            canvasViewController.delegate = self
+
+>>>>>>> Mod - 'Container' - calculate layout infomation
         default:
             ()
         }
     }
+<<<<<<< b97d14f3a42dd4e55b3f5f286f46bf3c0b1fb541
     
     @IBAction func reloadCavas(sender: AnyObject? = nil) {
         
@@ -172,10 +206,90 @@ class EditViewController: UIViewController, CanvasViewDataSource, CanvasViewDele
         
         page.append(container)
         reloadCavas()
+=======
+    
+    
+    
+    @IBAction func reloadCavas(sender: AnyObject? = nil) {
+
+    }
+    
+    @IBAction func add(sender: AnyObject) {
+
+>>>>>>> Mod - 'Container' - calculate layout infomation
     }
     
     @IBAction func del(sender: AnyObject) {
+
+    }
+    
+    
+    // MARK: - Gestures
+    private func addGestures() {
         
+        let pan = UIPanGestureRecognizer(target: self, action: "pan:")
+        canvasViewController.view.addGestureRecognizer(pan)
+        
+        let rotation = UIRotationGestureRecognizer(target: self, action: "rotation:")
+        canvasViewController.view.addGestureRecognizer(rotation)
+        
+        let pinch = UIPinchGestureRecognizer(target: self, action: "pinch:")
+        canvasViewController.view.addGestureRecognizer(pinch)
+    }
+    
+    private var beganPosition: CGPoint!
+    func pan(sender: UIPanGestureRecognizer) {
+        
+        guard let selectedIndexPath = selectedIndexPath, let container = container else {
+            return
+        }
+        
+        let translation = sender.translationInView(sender.view)
+        
+        switch sender.state {
+        case .Began:
+            beganPosition = container.center
+        case .Changed:
+            let nextPosition = CGPoint(x: beganPosition.x + translation.x, y: beganPosition.y + translation.y)
+            container.center = nextPosition
+            canvasViewController.updateAt(selectedIndexPath)
+            
+        case .Ended:
+            ()
+        default:
+            ()
+        }
+    }
+    
+    private var beganRadian: CGFloat = 0
+    func rotation(sender: UIRotationGestureRecognizer) {
+        
+        guard let selectedIndexPath = selectedIndexPath, let container = container else {
+            return
+        }
+        
+        let rotRadian = sender.rotation
+        switch sender.state {
+        case .Began:
+            beganRadian = CGFloat(container.radius)
+            
+        case .Changed:
+            let nextRotation = beganRadian + rotRadian
+            container.radius = nextRotation
+            canvasViewController.updateAt(selectedIndexPath)
+            
+        case .Ended:
+            ()
+            
+        default:
+            ()
+        }
+    }
+    
+    private var beganScale: CGFloat = 0
+    func pinch(sender: UIPinchGestureRecognizer) {
+        
+<<<<<<< b97d14f3a42dd4e55b3f5f286f46bf3c0b1fb541
         guard let selContainer = selCotainerVM as? CTAContainer,
             let index = (page.containerVMs.indexOf{$0.iD == selContainer.iD}) else {
                 return
@@ -202,6 +316,35 @@ extension EditViewController {
 //        cell.backgroundColor = UIColor.lightGrayColor()
         return cell
     }
+=======
+        guard let selectedIndexPath = selectedIndexPath, let container = container else {
+            return
+        }
+        
+        let scale = sender.scale
+        switch sender.state {
+        case .Began:
+            beganScale = container.scale
+            
+        case .Changed:
+            let nextScale = scale * beganScale
+            let canvasSize = canvasViewController.view.bounds.size
+            container.updateWithScale(nextScale, constraintSzie: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
+            
+            canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+            
+        case .Ended:
+            ()
+        default:
+            ()
+        }
+    }
+}
+
+// MARK: - Gesture
+extension EditViewController {
+    
+>>>>>>> Mod - 'Container' - calculate layout infomation
     
 }
 
@@ -234,5 +377,39 @@ extension EditViewController {
         
         selContainerView = canvas.containerViewAt(index)
         selCotainerVM = page.containerByID(selContainerView!.iD)
+    }
+}
+
+// MARK: - CanvasViewControllerDelegate
+extension EditViewController: CanvasViewControllerDelegate {
+    
+    func canvasViewController(viewCOntroller: CTACanvasViewController, didSelectedIndexPath indexPath: NSIndexPath) {
+        selectedIndexPath = indexPath
+        
+        selectorViewController.reloadData()
+    }
+    
+}
+
+extension EditViewController: CTASelectorsViewControllerDataSource {
+    
+    func selectorsViewControllerContainer(viewcontroller: CTASelectorsViewController) -> ContainerVMProtocol? {
+        
+        return container
+    }
+}
+
+extension EditViewController: CTASelectorViewControllerDelegate {
+    
+    func scaleDidChanged(scale: CGFloat) {
+        
+        guard let selectedIndexPath = selectedIndexPath, let container = container else {
+            return
+        }
+        
+        let canvasSize = canvasViewController.view.bounds.size
+        container.updateWithScale(scale, constraintSzie: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
+        
+        canvasViewController.updateAt(selectedIndexPath, updateContents: true)
     }
 }
