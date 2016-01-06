@@ -12,7 +12,6 @@ import UIKit
 enum CTAContentsType {
     
     case Empty, Text
-//    , Image
 }
 
 protocol PageVMProtocol {
@@ -39,10 +38,6 @@ protocol TextContainerVMProtocol: ContainerVMProtocol {
     
     var textElement: protocol<CTAElement, TextModifiable> { get }
 }
-
-//typealias ContainerVMProtocol = protocol<>
-
-
 
 // MARK: - ContainerEdit Protocols
 
@@ -100,17 +95,22 @@ protocol TextModifiable: TextRetrievable {
 protocol ViewPropertiesRetrivevale:class {
     
 //    var origion: (x: Double, y: Double) { get }
-    var position: (x: Double, y: Double) { get }
-    var size: (width: Double, height: Double) { get }
-    var radius: Double { get }
+    var center: CGPoint { get }
+    var size: CGSize { get }
+    var scale: CGFloat { get }
+    var radius: CGFloat { get }
+    var inset: CGPoint { get }
+    
+    func updateWithScale(ascale: CGFloat, constraintSzie: CGSize)
 }
 
 protocol viewPropertiesModifiable: ViewPropertiesRetrivevale {
     
 //    var origion: (x: Double, y: Double) { get set }
-    var position: (x: Double, y: Double) { set get }
-    var size: (width: Double, height: Double) { get set }
-    var radius: Double { get set }
+    var center: CGPoint { set get }
+    var size: CGSize { get set }
+    var scale: CGFloat { get set }
+    var radius: CGFloat { get set }
 }
 
 protocol contentsTypeRetrivevable {

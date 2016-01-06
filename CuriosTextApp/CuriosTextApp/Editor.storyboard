@@ -51,8 +51,13 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
+<<<<<<< b97d14f3a42dd4e55b3f5f286f46bf3c0b1fb541
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ScrollBarCell" id="e8s-rg-ALg" customClass="CTAScollBarCell" customModule="CuriosTextApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="-1" width="50" height="50"/>
+=======
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SelectorSizeCell" id="vZj-YD-brO" customClass="CTASelectorSizeCell" customModule="CuriosTextApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+>>>>>>> Mod - 'Container' - calculate layout infomation
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -90,7 +95,29 @@
                         <outlet property="seletectorsView" destination="qQa-ia-Vgp" id="Snb-Tz-Se3"/>
                     </connections>
                 </viewController>
+<<<<<<< b97d14f3a42dd4e55b3f5f286f46bf3c0b1fb541
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vkq-b0-3kk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+=======
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vNG-Ne-lhB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1329.5" y="833.5"/>
+        </scene>
+        <!--Canvas View Controller-->
+        <scene sceneID="uUB-7H-kxe">
+            <objects>
+                <viewController id="u9D-4j-ony" customClass="CTACanvasViewController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nj1-XT-278"/>
+                        <viewControllerLayoutGuide type="bottom" id="8uf-GK-ZAR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Dun-4x-XKY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="akx-k7-HC7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+>>>>>>> Mod - 'Container' - calculate layout infomation
             </objects>
             <point key="canvasLocation" x="911.5" y="191.5"/>
         </scene>

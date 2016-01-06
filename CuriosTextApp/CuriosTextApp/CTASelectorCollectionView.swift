@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum CTASelectorType {
+enum CTASelectorType: String {
     
     case Size
     case Fonts

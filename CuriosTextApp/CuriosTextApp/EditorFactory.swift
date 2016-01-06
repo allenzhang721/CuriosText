@@ -48,7 +48,7 @@ class EditorFactory {
     class func generateRandomPage() -> CTAPage {
         
         var containers = [CTAContainer]()
-        for _ in 0..<5 {
+        for _ in 0..<1 {
             
             let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "Emiaostein \nWhat can i do for you ?", attributes: CTATextAttributes())
             containers += [con]
@@ -64,7 +64,7 @@ extension EditorFactory {
     private class func containerWithEmptyBy(viewPro: protocol<ViewPropertiesRetrivevale, ContainerIdentifiable>) -> ContainerView {
         
         let containerView = ContainerView(frame: CGRect(x: 0, y: 0, width: viewPro.size.width, height: viewPro.size.height))
-        containerView.layer.position = CGPoint(x: viewPro.position.x, y: viewPro.position.y)
+        containerView.layer.position = viewPro.center
         containerView.addID(viewPro.iD)
         
         return containerView
@@ -221,7 +221,7 @@ extension EditorFactory {
             )
         )
         
-        containerView.layer.position = CGPoint(x: containerVM.position.x, y: containerVM.position.y)
+        containerView.layer.position = containerVM.center
         containerView.addID(containerVM.iD)
         
         let textView = TextView(frame: textRect)
@@ -261,6 +261,7 @@ extension EditorFactory {
                 rotation: 0.0,
                 alpha: 1.0,
                 scale: 1.0,
+                inset: CGPoint.zero,
                 element: textElement
             )
     }
