@@ -41,7 +41,14 @@ final class CTAUserModel: CTABaseModel, CreateableSecureStorable, GenericPasswor
         self.cityID      = cityID;
         self.weixinID    = weixinID;
         self.weiboID     = weiboID;
-
+    }
+    
+    init(userID:String, nikeName:String, userDesc:String, userIconURL:String, sex:Int){
+        self.userID      = userID;
+        self.nikeName    = nikeName;
+        self.userDesc    = userDesc;
+        self.userIconURL = userIconURL;
+        self.sex         = sex;
     }
     
     static func generateFrom(json: JSON) -> CTAUserModel {

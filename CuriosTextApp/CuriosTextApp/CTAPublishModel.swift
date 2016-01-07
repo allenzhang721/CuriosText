@@ -17,26 +17,17 @@ final class CTAPublishModel: CTABaseModel{
     let publishIconURL:String;
     let previewIconURL:String;
     let publishURL:String;
-    let userID:String;
-    let nikeName:String;
-    let userDesc:String;
-    let userIconURL:String;
-    let sex:Int;
+    let userModel:CTAUserModel;
     let relationType:Int;
     
     init(publishID:String, title:String, publishDesc:String, publishIconURL:String, previewIconURL:String, publishURL:String, userID:String, nikeName:String, userDesc:String, userIconURL:String, sex:Int, relationType:Int) {
-        
         self.publishID      = publishID;
         self.title          = title;
         self.publishDesc    = publishDesc;
         self.publishIconURL = publishIconURL;
         self.previewIconURL = previewIconURL;
         self.publishURL     = publishURL;
-        self.userID         = userID;
-        self.nikeName       = nikeName;
-        self.userDesc       = userDesc;
-        self.userIconURL    = userIconURL;
-        self.sex            = sex;
+        self.userModel      = CTAUserModel.init(userID: userID, nikeName: nikeName, userDesc: userDesc, userIconURL: userIconURL, sex: sex)
         self.relationType   = relationType;
     }
     
