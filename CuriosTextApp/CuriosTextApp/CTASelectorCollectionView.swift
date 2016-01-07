@@ -10,85 +10,84 @@ import UIKit
 
 enum CTASelectorType: String {
     
-    case Size
-    case Fonts
+    case Size, Fonts, Rotator
 }
 
 final class CTASelectorViewFactory {
     
-    class func selectorViewBy(type: CTASelectorType) -> CTASelectorReuseableView {
-        
-        switch type {
-            
-        case .Size:
-            return CTASelectorReuseableView()
-        case .Fonts:
-            return CTASelectorReuseableView()
-        }
-    }
+//    class func selectorViewBy(type: CTASelectorType) -> CTASelectorReuseableView {
+//        
+//        switch type {
+//            
+//        case .Size:
+//            return CTASelectorReuseableView()
+//        case .Fonts:
+//            return CTASelectorReuseableView()
+//        }
+//    }
 }
 
 final class CTASelectorCollectionView: UIView {
     
-    private var selectorsQueue = [CTASelectorType: [CTASelectorReuseableView]]()
-    
-    var selectorView: CTASelectorReuseableView?
-    
-    func changeTo(type: CTASelectorType) {
-        
-        let preresueView = selectorView
-        let nextReuseView: CTASelectorReuseableView
-        
-//       print("\nchangeBegan = \(self.selectorsQueue[.Size])")
-        
-        if let reuseViews = selectorsQueue[type] where reuseViews.count > 0 {
-            nextReuseView = reuseViews.first!
-            selectorsQueue[type]!.removeAtIndex(0)
-        } else {
-            // generate new reuseView
-//            print("Create New")
-            nextReuseView = CTASelectorViewFactory.selectorViewBy(type)
-        }
-        
-        nextReuseView.frame = bounds
-        
-//        print("nextNew = \(nextReuseView)")
-        let translationY =  CGRectGetHeight(bounds)
-        
-        nextReuseView.backgroundColor = UIColor.lightGrayColor()
-        
-        nextReuseView.transform = CGAffineTransformMakeTranslation(0, translationY)
-        
-        UIView.transitionWithView(self, duration: 0.2, options: [.BeginFromCurrentState],
-            animations: {[unowned self] () -> Void in
-                if let preresueView = preresueView {
-                    self.sendSubviewToBack(preresueView)
-                    preresueView.transform = CGAffineTransformMakeTranslation(0, translationY)
-                    
-                }
-                self.addSubview(nextReuseView)
-                nextReuseView.transform = CGAffineTransformMakeTranslation(0, 0)
-                self.selectorView = nextReuseView
-                
-            })  {[weak self] (success) -> Void in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    
-                    
-                    if let preresueView = preresueView {
-                        if self?.selectorsQueue[type] != nil {
-                            self?.selectorsQueue[type]! += [preresueView]
-                        } else {
-                            self?.selectorsQueue[type] = [preresueView]
-                        }
-                        preresueView.transform = CGAffineTransformIdentity
-                    }
-//                    print("willReove = \(preresueView)")
-                    preresueView?.removeFromSuperview()
-                    
-//                    print("removeFinish = \(self?.selectorsQueue[.Size]?.count)")
-                })
-        }
-    }
+//    private var selectorsQueue = [CTASelectorType: [CTASelectorReuseableView]]()
+//    
+//    var selectorView: CTASelectorReuseableView?
+//    
+//    func changeTo(type: CTASelectorType) {
+//        
+//        let preresueView = selectorView
+//        let nextReuseView: CTASelectorReuseableView
+//        
+////       print("\nchangeBegan = \(self.selectorsQueue[.Size])")
+//        
+//        if let reuseViews = selectorsQueue[type] where reuseViews.count > 0 {
+//            nextReuseView = reuseViews.first!
+//            selectorsQueue[type]!.removeAtIndex(0)
+//        } else {
+//            // generate new reuseView
+////            print("Create New")
+//            nextReuseView = CTASelectorViewFactory.selectorViewBy(type)
+//        }
+//        
+//        nextReuseView.frame = bounds
+//        
+////        print("nextNew = \(nextReuseView)")
+//        let translationY =  CGRectGetHeight(bounds)
+//        
+//        nextReuseView.backgroundColor = UIColor.lightGrayColor()
+//        
+//        nextReuseView.transform = CGAffineTransformMakeTranslation(0, translationY)
+//        
+//        UIView.transitionWithView(self, duration: 0.2, options: [.BeginFromCurrentState],
+//            animations: {[unowned self] () -> Void in
+//                if let preresueView = preresueView {
+//                    self.sendSubviewToBack(preresueView)
+//                    preresueView.transform = CGAffineTransformMakeTranslation(0, translationY)
+//                    
+//                }
+//                self.addSubview(nextReuseView)
+//                nextReuseView.transform = CGAffineTransformMakeTranslation(0, 0)
+//                self.selectorView = nextReuseView
+//                
+//            })  {[weak self] (success) -> Void in
+//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                    
+//                    
+//                    if let preresueView = preresueView {
+//                        if self?.selectorsQueue[type] != nil {
+//                            self?.selectorsQueue[type]! += [preresueView]
+//                        } else {
+//                            self?.selectorsQueue[type] = [preresueView]
+//                        }
+//                        preresueView.transform = CGAffineTransformIdentity
+//                    }
+////                    print("willReove = \(preresueView)")
+//                    preresueView?.removeFromSuperview()
+//                    
+////                    print("removeFinish = \(self?.selectorsQueue[.Size]?.count)")
+//                })
+//        }
+//    }
     
     
     

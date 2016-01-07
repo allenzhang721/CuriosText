@@ -289,7 +289,7 @@ final class CTATextElement: NSObject, CTAElement, TextModifiable {
         let textSize = str.boundingRectWithSize(constraintSzie, options: .UsesLineFragmentOrigin, context: nil).size
         let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
         
-        print("need TextSize = \(textSize)")
+//        print("need TextSize = \(textSize)")
         
         return (inset, size)
     }

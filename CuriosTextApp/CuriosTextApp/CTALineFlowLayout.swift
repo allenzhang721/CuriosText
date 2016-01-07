@@ -90,8 +90,12 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
                     if distance < activeDistance {
                         if currentIndexPath != attribute.indexPath {
                             
-                                delegate?.didChangeTo(collectionView, itemAtIndexPath: attribute.indexPath, oldIndexPath: currentIndexPath)
+                            let s = currentIndexPath != nil
+                            
                                 currentIndexPath = attribute.indexPath
+                            if s {
+                                delegate?.didChangeTo(collectionView, itemAtIndexPath: attribute.indexPath, oldIndexPath: currentIndexPath)
+                            }
                         }
                         //                    let alpha = minAlpha + (1.0 - minAlpha) * (1 - normalizedDistance)
                         //                    let scale = minScale + (maxScale - minScale) * (1 - normalizedDistance)

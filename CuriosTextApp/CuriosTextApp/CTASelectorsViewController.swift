@@ -20,12 +20,13 @@ protocol CTASelectorable: class {
 protocol CTASelectorScaleable: CTASelectorable {
     
     func scaleDidChanged(scale: CGFloat)
+    func radianDidChanged(radian: CGFloat)
     
 }
 
 typealias CTASelectorViewControllerDelegate = protocol<CTASelectorScaleable>
 
-class CTASelectorsViewController: UIViewController, UICollectionViewDataSource {
+class CTASelectorsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     var container: ContainerVMProtocol? {
         return dataSource?.selectorsViewControllerContainer(self)
@@ -33,6 +34,22 @@ class CTASelectorsViewController: UIViewController, UICollectionViewDataSource {
     
     var count: Int {
         return (container == nil) ? 0 : 1
+    }
+    
+    var action: String {
+        
+        switch currentType {
+            
+        case .Size:
+            return "scaleChanged:"
+            
+        case .Rotator:
+            return "radianChanged:"
+            
+        default:
+            return ""
+        }
+        
     }
     
     private var began: Bool = false
@@ -52,9 +69,15 @@ class CTASelectorsViewController: UIViewController, UICollectionViewDataSource {
             return
         }
         
+        if let cell = collectionview.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as? CTASelectorCell {
+            
+            cell.dataSource = nil
+            cell.removeAllTarget()
+        }
+        
         currentType = type
         
-        let acount = count
+        let acount = collectionview.numberOfItemsInSection(0)
         
         collectionview.performBatchUpdates({ () -> Void in
             
@@ -67,10 +90,16 @@ class CTASelectorsViewController: UIViewController, UICollectionViewDataSource {
             }, completion: nil)
     }
     
-    func reloadData() {
+    func updateSelector() {
         
         guard let collectionview = collectionview else {
             return
+        }
+        
+        if let cell = collectionview.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as? CTASelectorCell {
+            
+            cell.dataSource = nil
+            cell.removeAllTarget()
         }
         
         let currentCount = collectionview.numberOfItemsInSection(0)
@@ -82,11 +111,12 @@ class CTASelectorsViewController: UIViewController, UICollectionViewDataSource {
                 collectionview.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             }
             
-            if currentCount > 0 || nextCount <= 0 {
+            if currentCount > 0 {
                 collectionview.deleteItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             }
             }, completion: nil)
     }
+    
 }
 
 extension CTASelectorsViewController {
@@ -98,19 +128,48 @@ extension CTASelectorsViewController {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Selector\(currentType.rawValue)Cell", forIndexPath: indexPath) as! CTASelectorSizeCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Selector\(currentType.rawValue)Cell", forIndexPath: indexPath)
         
-        cell.sizeView.updateValue(container!.scale)
-        
-        cell.sizeView.addTarget(self, action: "scaleChanged:", forControlEvents: .ValueChanged)
-//        print((container as! TextContainerVMProtocol).textElement.fontScale)
-        
-        cell.backgroundColor = UIColor.whiteColor()
+        print("Selector Cell")
+        cell.backgroundColor = UIColor.blackColor()
         
         return cell
     }
+    
+    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        
+        guard let cell = cell as? CTASelectorCell else {
+            return
+        }
+        cell.dataSource = self
+        cell.retriveBeganValue()
+        cell.addTarget(self, action: Selector(action), forControlEvents: .ValueChanged)
+    }
+    
+    func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        
+        guard let cell = cell as? CTASelectorCell else {
+            return
+        }
+        
+        cell.dataSource = nil
+        cell.removeAllTarget()
+    }
 }
 
+// MARK: - SelectorDataSource
+extension CTASelectorsViewController: CTASelectorDataSource {
+    
+    func selectorBeganScale(cell: CTASelectorCell) -> CGFloat {
+        return container!.scale
+    }
+    
+    func selectorBeganRadian(cell: CTASelectorCell) -> CGFloat {
+        return container!.radius
+    }
+}
+
+// MARK: - Actions
 extension CTASelectorsViewController {
     
     func scaleChanged(sender: CTAScrollTuneView) {
@@ -118,6 +177,11 @@ extension CTASelectorsViewController {
         print("nextScale = \(v)")
         delegate?.scaleDidChanged(v)
         
+    }
+    
+    func radianChanged(sender: CTARotatorView) {
+        let v = CGFloat(Int(sender.radian * 100.0)) / 100.0
+        delegate?.radianDidChanged(v)
     }
     
 }
