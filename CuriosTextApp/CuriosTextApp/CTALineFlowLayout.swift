@@ -51,7 +51,11 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
             return
         }
         
+        scrollDirection = .Horizontal
+        minimumLineSpacing = 0
+        
         let colSize = collectionView.bounds.size
+        itemSize = CGSize(width: colSize.width / 4, height: colSize.height)
         let top = (colSize.height - itemSize.height) / 2.0
         let left = (colSize.width - itemSize.width) / 2.0
         let bottom = top
@@ -65,7 +69,7 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
         
         return true
     }
-
+    
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
         guard let collectionView = collectionView, let attributes = super.layoutAttributesForElementsInRect(rect) as? [CollectionViewAttributes] else {
@@ -92,7 +96,7 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
                             
                             let s = currentIndexPath != nil
                             
-                                currentIndexPath = attribute.indexPath
+                            currentIndexPath = attribute.indexPath
                             if s {
                                 delegate?.didChangeTo(collectionView, itemAtIndexPath: attribute.indexPath, oldIndexPath: currentIndexPath)
                             }
@@ -102,13 +106,13 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
                         //                    attribute.alpha = alpha
                         //                    attribute.transform = CGAffineTransformMakeScale(scale, scale)
                         
-//                        print("active")
+                        //                        print("active")
                         attribute.actived = true
                         
                     } else {
                         //                    attribute.alpha = minAlpha
                         //                    attribute.transform = CGAffineTransformMakeScale(minScale, minScale)
-//                        print("dactive")
+                        //                        print("dactive")
                         attribute.actived = false
                     }
                 }

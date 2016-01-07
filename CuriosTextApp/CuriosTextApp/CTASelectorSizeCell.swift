@@ -9,7 +9,7 @@
 import UIKit
 
 class CTASelectorSizeCell: CTASelectorCell {
-
+    
     let sizeView: CTAScrollTuneView
     
     override init(frame: CGRect) {
@@ -18,7 +18,7 @@ class CTASelectorSizeCell: CTASelectorCell {
         
         contentView.addSubview(sizeView)
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         self.sizeView = CTAScrollTuneView(frame: CGRect(x: 0, y: 0, width: 320, height: 88))
         super.init(coder: aDecoder)

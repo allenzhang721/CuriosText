@@ -113,13 +113,8 @@ final class CTATextAttributes:NSObject, NSCoding {
         }()
         
         let textColor: UIColor = {
-            
-<<<<<<< b97d14f3a42dd4e55b3f5f286f46bf3c0b1fb541
-            return UIColor.whiteColor()
-=======
+
             return UIColor.blackColor()
-//            return UIColor(red: CGFloat(random() % 255) / 255.0, green: CGFloat(random() % 255) / 255.0, blue: CGFloat(random() % 255) / 255.0, alpha: 1)
->>>>>>> Mod - 'Container' - calculate layout infomation
         }()
         
         return [
@@ -289,7 +284,7 @@ final class CTATextElement: NSObject, CTAElement, TextModifiable {
         let textSize = str.boundingRectWithSize(constraintSzie, options: .UsesLineFragmentOrigin, context: nil).size
         let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
         
-//        print("need TextSize = \(textSize)")
+        print("need TextSize = \(textSize)")
         
         return (inset, size)
     }

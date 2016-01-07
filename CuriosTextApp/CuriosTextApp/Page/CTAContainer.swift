@@ -108,15 +108,8 @@ extension CTAContainer {
         }
         
         set {
-<<<<<<< b97d14f3a42dd4e55b3f5f286f46bf3c0b1fb541
-            x = newValue.x
-            y = newValue.y
-            
-            print("x = \(x), y = \(y)")
-=======
             width = Double(newValue.width)
             height = Double(newValue.height)
->>>>>>> Mod - 'Container' - calculate layout infomation
         }
         
     }
