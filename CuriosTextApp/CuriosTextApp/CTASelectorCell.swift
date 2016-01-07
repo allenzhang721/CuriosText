@@ -8,6 +8,26 @@
 
 import UIKit
 
-class CTASelectorCell: UICollectionViewCell {
+protocol CTASelectorDataSource: class {
     
+    func selectorBeganScale(cell: CTASelectorCell) -> CGFloat
+    func selectorBeganRadian(cell: CTASelectorCell) -> CGFloat
+}
+
+protocol CTASelectorControl: class {
+    
+    func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents)
+    
+    func removeAllTarget()
+}
+
+class CTASelectorCell: UICollectionViewCell, CTASelectorControl {
+    
+    weak var dataSource: CTASelectorDataSource?
+    
+    func retriveBeganValue(){}
+    
+    func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents){}
+    
+    func removeAllTarget(){}
 }

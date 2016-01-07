@@ -65,7 +65,71 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SelectorRotatorCell" id="9Yr-f7-M4B" customClass="CTASelectorRotatorCell" customModule="CuriosTextApp" customModuleProvider="target">
+                                        <rect key="frame" x="65" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
                                 </cells>
+<<<<<<< 1066c8aed1e5fa25c540372da6f0f9d962a1f0ab
+=======
+                                <connections>
+                                    <outlet property="dataSource" destination="J1I-be-YO3" id="bgv-N7-p05"/>
+                                    <outlet property="delegate" destination="J1I-be-YO3" id="nyM-6R-crz"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="n6o-wO-Veu" firstAttribute="leading" secondItem="Fdc-pE-A3y" secondAttribute="leading" id="Jjp-sp-iR6"/>
+                            <constraint firstItem="n6o-wO-Veu" firstAttribute="top" secondItem="Fdc-pE-A3y" secondAttribute="top" id="m4x-nz-GHy"/>
+                            <constraint firstAttribute="trailing" secondItem="n6o-wO-Veu" secondAttribute="trailing" id="stq-Pj-uWG"/>
+                            <constraint firstAttribute="bottom" secondItem="n6o-wO-Veu" secondAttribute="bottom" id="vQN-DN-aRa"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="collectionview" destination="n6o-wO-Veu" id="vKa-Xz-hnr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iwN-n2-IWg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="911.5" y="814"/>
+        </scene>
+        <!--Tab View Controller-->
+        <scene sceneID="hjo-rQ-pA6">
+            <objects>
+                <viewController id="sKV-m4-89O" customClass="CTATabViewController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1rc-DD-K8O"/>
+                        <viewControllerLayoutGuide type="bottom" id="qaK-JN-kw1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SjE-PE-1ot">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NzW-pb-uLw">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewLayout key="collectionViewLayout" id="rQ7-cJ-Jft" customClass="CTALineFlowLayout" customModule="CuriosTextApp" customModuleProvider="target"/>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TabCell" id="r23-1N-NDO" customClass="CTAScollBarCell" customModule="CuriosTextApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="sKV-m4-89O" id="lMS-bI-PUz"/>
+                                </connections>
+>>>>>>> Add - 'RotatorSelector'
                             </collectionView>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qQa-ia-Vgp" customClass="CTASelectorCollectionView" customModule="CuriosTextApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="530" width="375" height="88"/>

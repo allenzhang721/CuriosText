@@ -48,7 +48,7 @@ class EditorFactory {
     class func generateRandomPage() -> CTAPage {
         
         var containers = [CTAContainer]()
-        for _ in 0..<1 {
+        for _ in 0..<2 {
             
             let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "我叫陈星宇 \nWhat can i do for you ?", attributes: CTATextAttributes())
             containers += [con]

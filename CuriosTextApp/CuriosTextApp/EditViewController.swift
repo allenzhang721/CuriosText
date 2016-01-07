@@ -111,6 +111,21 @@ class EditViewController: UIViewController, CanvasViewDataSource, CanvasViewDele
         }
         return page.containerVMs[selectedIndexPath.item]
     }
+    
+    private var tabItems: [CTATabItem]? {
+        
+        guard let container = container else {
+            return nil
+        }
+        
+        switch container.type {
+        case .Text:
+            return CTATabItemFactory.shareInstance.textTabItems
+            
+        default:
+            return [CTATabItem]()
+        }
+    }
 
    private let page = EditorFactory.generateRandomPage()
     
@@ -133,9 +148,16 @@ class EditViewController: UIViewController, CanvasViewDataSource, CanvasViewDele
         case .Began:
             beganRadian = CGFloat(selContainer.radius)
             
+<<<<<<< 1066c8aed1e5fa25c540372da6f0f9d962a1f0ab
         case .Changed:
             let nextRotation = beganRadian + rotRadian
             selContainerView.transform = CGAffineTransformMakeRotation(nextRotation)
+=======
+        case let vc as CTATabViewController:
+            tabViewController = vc
+            tabViewController.delegate = self
+            tabViewController.dataSource = self
+>>>>>>> Add - 'RotatorSelector'
             
 <<<<<<< b97d14f3a42dd4e55b3f5f286f46bf3c0b1fb541
         case .Ended:
@@ -207,8 +229,6 @@ class EditViewController: UIViewController, CanvasViewDataSource, CanvasViewDele
         page.append(container)
         reloadCavas()
 =======
-    
-    
     
     @IBAction func reloadCavas(sender: AnyObject? = nil) {
 
@@ -287,6 +307,7 @@ class EditViewController: UIViewController, CanvasViewDataSource, CanvasViewDele
     }
     
     private var beganScale: CGFloat = 0
+    private var oldScale: CGFloat = 0
     func pinch(sender: UIPinchGestureRecognizer) {
         
 <<<<<<< b97d14f3a42dd4e55b3f5f286f46bf3c0b1fb541
@@ -325,13 +346,18 @@ extension EditViewController {
         switch sender.state {
         case .Began:
             beganScale = container.scale
+            oldScale = container.scale
             
         case .Changed:
             let nextScale = scale * beganScale
-            let canvasSize = canvasViewController.view.bounds.size
-            container.updateWithScale(nextScale, constraintSzie: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
             
-            canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+            if fabs(nextScale * 100.0 - oldScale * 100.0) > 0.1 {
+                let ascale = floor(nextScale * 100) / 100.0
+                let canvasSize = canvasViewController.view.bounds.size
+                container.updateWithScale(ascale, constraintSzie: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
+                
+                canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+            }
             
         case .Ended:
             ()
@@ -341,26 +367,59 @@ extension EditViewController {
     }
 }
 
-// MARK: - Gesture
-extension EditViewController {
-    
->>>>>>> Mod - 'Container' - calculate layout infomation
-    
-}
 
-// MARK: - FlowLayoutDelegate
-extension EditViewController {
+// MARK: - CTATabViewController
+extension EditViewController: CTATabViewControllerDataSource {
+   // MARK: - DataSource
+    
+<<<<<<< 1066c8aed1e5fa25c540372da6f0f9d962a1f0ab
+>>>>>>> Mod - 'Container' - calculate layout infomation
+=======
+    func tableViewControllerNumberOfItems(viewController: CTATabViewController) -> Int {
+        
+        guard let items = tabItems else {
+            return 0
+        }
+        
+        return items.count
+    }
+>>>>>>> Add - 'RotatorSelector'
+    
+    func tableViewController(viewController: CTATabViewController, tabItemAtIndexPath indexPath: NSIndexPath) -> CTATabItem {
+        
+        guard let items = tabItems else {
+            return CTATabItem()
+        }
+        
+        return items[indexPath.item]
+    }
+    
+    // MARK: - Delegate
     
     func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
+        
+        guard let items = tabItems, let selectorItem = items[indexPath.item].userInfo as? CTASelectorTabItem else {
+            return
+        }
 
+<<<<<<< 1066c8aed1e5fa25c540372da6f0f9d962a1f0ab
         seletectorsView.changeTo(.Size)
+=======
+        selectorViewController.changeToSelector(selectorItem.type)
+>>>>>>> Add - 'RotatorSelector'
     }
     
 }
 
 
+<<<<<<< 1066c8aed1e5fa25c540372da6f0f9d962a1f0ab
 // MARK: - CanvasDataSource, CanvasDelegate
 extension EditViewController {
+=======
+// MARK: - CTACanvasViewController
+extension EditViewController: CanvasViewControllerDataSource, CanvasViewControllerDelegate {
+    // MARK: - DataSource
+>>>>>>> Add - 'RotatorSelector'
     
     func numberOfcontainerInCanvasView(canvas: CanvasView) -> Int {
         
@@ -378,28 +437,29 @@ extension EditViewController {
         selContainerView = canvas.containerViewAt(index)
         selCotainerVM = page.containerByID(selContainerView!.iD)
     }
-}
-
-// MARK: - CanvasViewControllerDelegate
-extension EditViewController: CanvasViewControllerDelegate {
+    
+    
+    // MARK: - Delegate
     
     func canvasViewController(viewCOntroller: CTACanvasViewController, didSelectedIndexPath indexPath: NSIndexPath) {
-        selectedIndexPath = indexPath
         
-        selectorViewController.reloadData()
+        selectedIndexPath = indexPath
+        tabViewController.collectionView.reloadData()
+        selectorViewController.updateSelector()
     }
-    
 }
 
-extension EditViewController: CTASelectorsViewControllerDataSource {
+// MARK: - CTASelectorsViewController
+
+extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorViewControllerDelegate {
     
+    // MARK: - DataSource
     func selectorsViewControllerContainer(viewcontroller: CTASelectorsViewController) -> ContainerVMProtocol? {
         
         return container
     }
-}
-
-extension EditViewController: CTASelectorViewControllerDelegate {
+    
+    // MARK: - Delegate
     
     func scaleDidChanged(scale: CGFloat) {
         
@@ -411,5 +471,15 @@ extension EditViewController: CTASelectorViewControllerDelegate {
         container.updateWithScale(scale, constraintSzie: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
         
         canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+    }
+    
+    func radianDidChanged(radian: CGFloat) {
+        
+        guard let selectedIndexPath = selectedIndexPath, let container = container else {
+            return
+        }
+        
+        container.radius = radian
+        canvasViewController.updateAt(selectedIndexPath, updateContents: false)
     }
 }
