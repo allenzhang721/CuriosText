@@ -2,6 +2,8 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qRf-5N-mQJ">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Edit View Controller-->
@@ -38,34 +40,165 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="7S1-ii-JWa">
-                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aV6-Ee-4qV">
+                                <rect key="frame" x="0.0" y="80" width="375" height="375"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="49" id="eiS-rT-yoD"/>
+                                    <constraint firstAttribute="width" secondItem="aV6-Ee-4qV" secondAttribute="height" multiplier="1:1" id="5m5-v3-F04"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="292-bu-Eoh">
-                                    <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
+                                <connections>
+                                    <segue destination="fYX-9w-8BI" kind="embed" id="lhE-BI-6CO"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O59-ti-f4e">
+                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="md2-kw-S50"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="XuM-HM-a9W" kind="embed" id="91f-kb-sgW"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UV4-IL-VCX">
+                                <rect key="frame" x="0.0" y="530" width="375" height="88"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="88" id="TP5-32-fKk"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="qne-Oy-fsc" kind="embed" id="eNp-UJ-leQ"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="UV4-IL-VCX" secondAttribute="trailing" constant="-20" id="35J-Mj-PnT"/>
+                            <constraint firstItem="aV6-Ee-4qV" firstAttribute="centerX" secondItem="w2g-1j-cAV" secondAttribute="centerX" id="40s-6S-53e"/>
+                            <constraint firstItem="O59-ti-f4e" firstAttribute="top" secondItem="UV4-IL-VCX" secondAttribute="bottom" id="4w9-hh-uOL"/>
+                            <constraint firstItem="UV4-IL-VCX" firstAttribute="leading" secondItem="w2g-1j-cAV" secondAttribute="leadingMargin" constant="-20" id="CGj-T2-6W2"/>
+                            <constraint firstItem="aT5-ah-Tch" firstAttribute="top" secondItem="w2g-1j-cAV" secondAttribute="top" constant="20" id="D3M-Nn-Iqp"/>
+                            <constraint firstItem="O59-ti-f4e" firstAttribute="top" secondItem="UV4-IL-VCX" secondAttribute="bottom" constant="8" id="EJQ-SH-sQJ"/>
+                            <constraint firstItem="O59-ti-f4e" firstAttribute="leading" secondItem="w2g-1j-cAV" secondAttribute="leading" id="H6Q-Nc-CSB"/>
+                            <constraint firstItem="aV6-Ee-4qV" firstAttribute="top" secondItem="ueh-u7-QEU" secondAttribute="bottom" constant="60" id="LUb-N9-aDh"/>
+                            <constraint firstAttribute="trailing" secondItem="UV4-IL-VCX" secondAttribute="trailing" id="MRS-1u-ipg"/>
+                            <constraint firstItem="aT5-ah-Tch" firstAttribute="leading" secondItem="w2g-1j-cAV" secondAttribute="leading" id="VW0-Lu-swc"/>
+                            <constraint firstItem="AXi-ce-yHq" firstAttribute="top" secondItem="O59-ti-f4e" secondAttribute="bottom" id="fNW-Ki-ECW"/>
+                            <constraint firstAttribute="trailing" secondItem="aT5-ah-Tch" secondAttribute="trailing" id="oj6-Dc-kmd"/>
+                            <constraint firstItem="UV4-IL-VCX" firstAttribute="width" secondItem="w2g-1j-cAV" secondAttribute="width" id="ov3-94-6SC"/>
+                            <constraint firstAttribute="trailing" secondItem="O59-ti-f4e" secondAttribute="trailing" id="qvr-ir-UxA"/>
+                            <constraint firstItem="UV4-IL-VCX" firstAttribute="leading" secondItem="w2g-1j-cAV" secondAttribute="leading" id="rdv-ai-8iK"/>
+                            <constraint firstItem="aV6-Ee-4qV" firstAttribute="width" secondItem="w2g-1j-cAV" secondAttribute="width" id="wsg-X2-foO"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="35J-Mj-PnT"/>
+                                <exclude reference="CGj-T2-6W2"/>
+                                <exclude reference="ov3-94-6SC"/>
+                                <exclude reference="EJQ-SH-sQJ"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vNG-Ne-lhB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1539.5" y="494.5"/>
+        </scene>
+        <!--Canvas View Controller-->
+        <scene sceneID="21T-lx-I6T">
+            <objects>
+                <viewController id="fYX-9w-8BI" customClass="CTACanvasViewController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PiP-ju-XMg"/>
+                        <viewControllerLayoutGuide type="bottom" id="tyw-wd-2gr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wEn-hY-wzc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n0w-LA-dYR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2052.5" y="494.5"/>
+        </scene>
+        <!--Tab View Controller-->
+        <scene sceneID="Vgo-GO-r2N">
+            <objects>
+                <viewController id="XuM-HM-a9W" customClass="CTATabViewController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QMn-5e-w9y"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZSf-CV-So8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JU2-Qo-UUC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BoJ-Wp-vAt">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewLayout key="collectionViewLayout" id="H4y-af-FrL" customClass="CTALineFlowLayout" customModule="CuriosTextApp" customModuleProvider="target"/>
                                 <cells>
-<<<<<<< b97d14f3a42dd4e55b3f5f286f46bf3c0b1fb541
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ScrollBarCell" id="e8s-rg-ALg" customClass="CTAScollBarCell" customModule="CuriosTextApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="-1" width="50" height="50"/>
-=======
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SelectorSizeCell" id="vZj-YD-brO" customClass="CTASelectorSizeCell" customModule="CuriosTextApp" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TabCell" id="0QX-x1-oeV" customClass="CTAScollBarCell" customModule="CuriosTextApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="120" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="120" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" red="0.94279695679999997" green="0.94279695679999997" blue="0.94279695679999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <size key="customSize" width="120" height="50"/>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="XuM-HM-a9W" id="NUM-Ym-aNM"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="BoJ-Wp-vAt" firstAttribute="leading" secondItem="JU2-Qo-UUC" secondAttribute="leading" id="EIz-Dj-jMd"/>
+                            <constraint firstAttribute="trailing" secondItem="BoJ-Wp-vAt" secondAttribute="trailing" id="IJl-m9-iCV"/>
+                            <constraint firstAttribute="bottom" secondItem="BoJ-Wp-vAt" secondAttribute="bottom" id="MIU-Lp-gNH"/>
+                            <constraint firstItem="BoJ-Wp-vAt" firstAttribute="top" secondItem="JU2-Qo-UUC" secondAttribute="top" id="S8y-Xz-H7J"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="collectionView" destination="BoJ-Wp-vAt" id="59h-5k-Cm6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r2o-aN-skY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1539.5" y="983.5"/>
+        </scene>
+        <!--Selectors View Controller-->
+        <scene sceneID="Zda-h3-UfJ">
+            <objects>
+                <viewController id="qne-Oy-fsc" customClass="CTASelectorsViewController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WUo-P5-HOk"/>
+                        <viewControllerLayoutGuide type="bottom" id="CUR-Wq-apr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="qWU-2s-9so">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="VpJ-Pq-Aql">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewLayout key="collectionViewLayout" id="hZM-cm-C7I" customClass="CTASelectorsFlowLayout" customModule="CuriosTextApp" customModuleProvider="target"/>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SelectorSizeCell" id="zp2-Tl-Qnt" customClass="CTASelectorSizeCell" customModule="CuriosTextApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
->>>>>>> Mod - 'Container' - calculate layout infomation
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SelectorRotatorCell" id="9Yr-f7-M4B" customClass="CTASelectorRotatorCell" customModule="CuriosTextApp" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SelectorRotatorCell" id="3mX-XB-C2N" customClass="CTASelectorRotatorCell" customModule="CuriosTextApp" customModuleProvider="target">
                                         <rect key="frame" x="65" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -73,117 +206,24 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </collectionViewCell>
                                 </cells>
-<<<<<<< 1066c8aed1e5fa25c540372da6f0f9d962a1f0ab
-=======
                                 <connections>
-                                    <outlet property="dataSource" destination="J1I-be-YO3" id="bgv-N7-p05"/>
-                                    <outlet property="delegate" destination="J1I-be-YO3" id="nyM-6R-crz"/>
+                                    <outlet property="dataSource" destination="qne-Oy-fsc" id="FNQ-cj-xgH"/>
+                                    <outlet property="delegate" destination="qne-Oy-fsc" id="8nB-GT-HnF"/>
                                 </connections>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="n6o-wO-Veu" firstAttribute="leading" secondItem="Fdc-pE-A3y" secondAttribute="leading" id="Jjp-sp-iR6"/>
-                            <constraint firstItem="n6o-wO-Veu" firstAttribute="top" secondItem="Fdc-pE-A3y" secondAttribute="top" id="m4x-nz-GHy"/>
-                            <constraint firstAttribute="trailing" secondItem="n6o-wO-Veu" secondAttribute="trailing" id="stq-Pj-uWG"/>
-                            <constraint firstAttribute="bottom" secondItem="n6o-wO-Veu" secondAttribute="bottom" id="vQN-DN-aRa"/>
-                        </constraints>
                     </view>
                     <connections>
-                        <outlet property="collectionview" destination="n6o-wO-Veu" id="vKa-Xz-hnr"/>
+                        <outlet property="collectionview" destination="VpJ-Pq-Aql" id="YOc-PH-lE7"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iwN-n2-IWg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wEk-D6-ljE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="911.5" y="814"/>
-        </scene>
-        <!--Tab View Controller-->
-        <scene sceneID="hjo-rQ-pA6">
-            <objects>
-                <viewController id="sKV-m4-89O" customClass="CTATabViewController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="1rc-DD-K8O"/>
-                        <viewControllerLayoutGuide type="bottom" id="qaK-JN-kw1"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="SjE-PE-1ot">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NzW-pb-uLw">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <collectionViewLayout key="collectionViewLayout" id="rQ7-cJ-Jft" customClass="CTALineFlowLayout" customModule="CuriosTextApp" customModuleProvider="target"/>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TabCell" id="r23-1N-NDO" customClass="CTAScollBarCell" customModule="CuriosTextApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="sKV-m4-89O" id="lMS-bI-PUz"/>
-                                </connections>
->>>>>>> Add - 'RotatorSelector'
-                            </collectionView>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qQa-ia-Vgp" customClass="CTASelectorCollectionView" customModule="CuriosTextApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="530" width="375" height="88"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="88" id="hSq-tW-ssh"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstItem="aT5-ah-Tch" firstAttribute="top" secondItem="w2g-1j-cAV" secondAttribute="top" constant="20" id="D3M-Nn-Iqp"/>
-                            <constraint firstAttribute="trailing" secondItem="qQa-ia-Vgp" secondAttribute="trailing" id="LXu-8v-n5c"/>
-                            <constraint firstAttribute="trailing" secondItem="7S1-ii-JWa" secondAttribute="trailing" id="NJ4-fP-lNR"/>
-                            <constraint firstItem="aT5-ah-Tch" firstAttribute="leading" secondItem="w2g-1j-cAV" secondAttribute="leading" id="VW0-Lu-swc"/>
-                            <constraint firstItem="7S1-ii-JWa" firstAttribute="leading" secondItem="w2g-1j-cAV" secondAttribute="leading" id="Y19-ML-jAM"/>
-                            <constraint firstItem="AXi-ce-yHq" firstAttribute="top" secondItem="7S1-ii-JWa" secondAttribute="bottom" id="bR8-Jf-xTn"/>
-                            <constraint firstItem="7S1-ii-JWa" firstAttribute="top" secondItem="qQa-ia-Vgp" secondAttribute="bottom" id="d23-tS-5MH"/>
-                            <constraint firstAttribute="trailing" secondItem="aT5-ah-Tch" secondAttribute="trailing" id="oj6-Dc-kmd"/>
-                            <constraint firstItem="qQa-ia-Vgp" firstAttribute="leading" secondItem="w2g-1j-cAV" secondAttribute="leading" id="rXX-Y3-19S"/>
-                        </constraints>
-                    </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <connections>
-                        <outlet property="scrollBarCollectionView" destination="7S1-ii-JWa" id="2VJ-9u-6fw"/>
-                        <outlet property="seletectorsView" destination="qQa-ia-Vgp" id="Snb-Tz-Se3"/>
-                    </connections>
-                </viewController>
-<<<<<<< b97d14f3a42dd4e55b3f5f286f46bf3c0b1fb541
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Vkq-b0-3kk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-=======
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vNG-Ne-lhB" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1329.5" y="833.5"/>
-        </scene>
-        <!--Canvas View Controller-->
-        <scene sceneID="uUB-7H-kxe">
-            <objects>
-                <viewController id="u9D-4j-ony" customClass="CTACanvasViewController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="nj1-XT-278"/>
-                        <viewControllerLayoutGuide type="bottom" id="8uf-GK-ZAR"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Dun-4x-XKY">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="akx-k7-HC7" userLabel="First Responder" sceneMemberID="firstResponder"/>
->>>>>>> Mod - 'Container' - calculate layout infomation
-            </objects>
-            <point key="canvasLocation" x="911.5" y="191.5"/>
+            <point key="canvasLocation" x="2052.5" y="859"/>
         </scene>
     </scenes>
 </document>

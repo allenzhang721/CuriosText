@@ -145,16 +145,6 @@ extension CTASelectorsViewController {
         cell.retriveBeganValue()
         cell.addTarget(self, action: Selector(action), forControlEvents: .ValueChanged)
     }
-    
-    func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        
-        guard let cell = cell as? CTASelectorCell else {
-            return
-        }
-        
-        cell.dataSource = nil
-        cell.removeAllTarget()
-    }
 }
 
 // MARK: - SelectorDataSource

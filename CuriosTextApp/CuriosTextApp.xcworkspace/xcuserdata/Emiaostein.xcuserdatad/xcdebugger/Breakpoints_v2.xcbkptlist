@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/CTASelectorsViewController.swift"
-            timestampString = "473856565.853309"
+            timestampString = "473877879.971255"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "146"
-            endingLineNumber = "146">
+            startingLineNumber = "200"
+            endingLineNumber = "200">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -72,11 +72,21 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/CTASelectorsViewController.swift"
-            timestampString = "473856565.853309"
+            timestampString = "473877879.971255"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133">
+            startingLineNumber = "187"
+            endingLineNumber = "187">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            scope = "0"
+            stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -86,13 +96,29 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/EditViewController.swift"
-            timestampString = "473855768.19826"
+            timestampString = "473878195.425568"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209"
-            landmarkName = "pinch(_:)"
-            landmarkType = "7">
+            startingLineNumber = "242"
+            endingLineNumber = "242"
+            landmarkName = "scaleDidChanged(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CuriosTextApp/EditViewController.swift"
+            timestampString = "473878738.332735"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "tableViewControllerNumberOfItems(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
