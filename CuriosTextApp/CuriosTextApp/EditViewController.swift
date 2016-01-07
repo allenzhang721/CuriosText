@@ -8,12 +8,8 @@
 
 import UIKit
 
-class EditViewController: UIViewController, LineFlowLayoutDelegate {
-    
-//    @IBOutlet weak var scrollBarCollectionView: UICollectionView!
-    var canvasView: CanvasView!
-    
-//    @IBOutlet weak var seletectorsView: CTASelectorCollectionView!
+class EditViewController: UIViewController {
+
    private var tabViewController: CTATabViewController!
    private var canvasViewController: CTACanvasViewController!
    private var selectorViewController: CTASelectorsViewController!
@@ -168,7 +164,7 @@ class EditViewController: UIViewController, LineFlowLayoutDelegate {
 }
 
 // MARK: - CTATabViewController
-extension EditViewController: CTATabViewControllerDataSource {
+extension EditViewController: CTATabViewControllerDataSource, LineFlowLayoutDelegate {
 // MARK: - DataSource
     
     func tableViewControllerNumberOfItems(viewController: CTATabViewController) -> Int {

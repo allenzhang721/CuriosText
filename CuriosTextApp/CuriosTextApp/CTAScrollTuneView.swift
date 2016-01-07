@@ -75,6 +75,12 @@ class CTAScrollTuneView: UIControl, ValueTuneable {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        setup(bounds, attributes: attributes)
+    }
+    
     private func setup(frame: CGRect, attributes: CTAScrollTuneAttributes) {
         
         // Mask
@@ -167,7 +173,6 @@ extension CTAScrollTuneView {
         minumValue = Int(max * 1000) > Int(min * 1000) ? min : max
     }
 }
-
 
 extension CTAScrollTuneView: UIScrollViewDelegate {
     

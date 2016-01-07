@@ -25,12 +25,15 @@ final class CTATabItemFactory {
         
         var items = [CTATabItem]()
         
-        for i in 0..<2 {
+        for i in 0..<3 {
             var item: CTASelectorTabItem
             switch i {
+                
             case 0:
-                item = CTASelectorTabItem(type: .Size)
+                item = CTASelectorTabItem(type: .Fonts)
             case 1:
+                item = CTASelectorTabItem(type: .Size)
+            case 2:
                 item = CTASelectorTabItem(type: .Rotator)
             default:
                 item = CTASelectorTabItem(type: .Size)

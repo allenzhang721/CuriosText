@@ -51,17 +51,33 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
             return
         }
         
-        scrollDirection = .Horizontal
+//        scrollDirection = .Horizontal
         minimumLineSpacing = 0
+        minimumInteritemSpacing = 0
         
-        let colSize = collectionView.bounds.size
-        itemSize = CGSize(width: colSize.width / 4, height: colSize.height)
-        let top = (colSize.height - itemSize.height) / 2.0
-        let left = (colSize.width - itemSize.width) / 2.0
-        let bottom = top
-        let right = left
-        
-        collectionView.contentInset = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
+        switch scrollDirection {
+            
+        case .Horizontal:
+            let colSize = collectionView.bounds.size
+            itemSize = CGSize(width: colSize.width / 2, height: colSize.height)
+            let top = (colSize.height - itemSize.height) / 2.0
+            let left = (colSize.width - itemSize.width) / 2.0
+            let bottom = top
+            let right = left
+            
+            collectionView.contentInset = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
+            
+        case .Vertical:
+            let colSize = collectionView.bounds.size
+            itemSize = CGSize(width: colSize.width, height: colSize.height / 2)
+            let top = (colSize.height - itemSize.height) / 2.0
+            let left = (colSize.width - itemSize.width) / 2.0
+            let bottom = top
+            let right = left
+            
+            collectionView.contentInset = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
+            
+        }
         
     }
     

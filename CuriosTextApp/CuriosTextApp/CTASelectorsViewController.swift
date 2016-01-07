@@ -56,14 +56,14 @@ class CTASelectorsViewController: UIViewController, UICollectionViewDataSource, 
     
     var dataSource: CTASelectorsViewControllerDataSource?
     var delegate: CTASelectorViewControllerDelegate?
-    private var currentType: CTASelectorType = .Size
+    private var currentType: CTASelectorType = .Fonts
     
     @IBOutlet weak var collectionview: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    func changeToSelector(type: CTASelectorType = .Size) {
+    func changeToSelector(type: CTASelectorType) {
         
         guard let collectionview = collectionview where container != nil else {
             return
@@ -131,7 +131,7 @@ extension CTASelectorsViewController {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Selector\(currentType.rawValue)Cell", forIndexPath: indexPath)
         
         print("Selector Cell")
-        cell.backgroundColor = UIColor.blackColor()
+        cell.backgroundColor = UIColor.darkGrayColor()
         
         return cell
     }
