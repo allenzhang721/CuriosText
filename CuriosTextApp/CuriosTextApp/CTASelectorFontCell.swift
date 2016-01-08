@@ -18,7 +18,6 @@ class CTASelectorFontCell: CTASelectorCell {
     }
     
     func setup() {
-        
         self.selectView = CTAScrollSelectView(frame: bounds, direction: .Horizontal)
         addSubview(selectView)
     }
@@ -26,6 +25,25 @@ class CTASelectorFontCell: CTASelectorCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         selectView.frame = bounds
+    }
+    
+    override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
+        
+        selectView.addTarget(target, action: action, forControlEvents: controlEvents)
+    }
+    
+    override func removeAllTarget() {
+        
+        for target in selectView.allTargets() {
+            
+            guard let actions = selectView.actionsForTarget(target, forControlEvent: selectView.allControlEvents()) else {
+                continue
+            }
+            
+            for action in actions {
+                selectView.removeTarget(target, action: Selector(action), forControlEvents: selectView.allControlEvents())
+            }
+        }
     }
 
 }

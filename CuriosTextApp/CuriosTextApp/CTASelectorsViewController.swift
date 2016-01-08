@@ -21,7 +21,7 @@ protocol CTASelectorScaleable: CTASelectorable {
     
     func scaleDidChanged(scale: CGFloat)
     func radianDidChanged(radian: CGFloat)
-    
+    func fontDidChanged(fontFamily: String, fontName: String)
 }
 
 typealias CTASelectorViewControllerDelegate = protocol<CTASelectorScaleable>
@@ -45,6 +45,9 @@ class CTASelectorsViewController: UIViewController, UICollectionViewDataSource, 
             
         case .Rotator:
             return "radianChanged:"
+            
+        case .Fonts:
+            return "indexPathChanged:"
             
         default:
             return ""
@@ -157,6 +160,11 @@ extension CTASelectorsViewController: CTASelectorDataSource {
     func selectorBeganRadian(cell: CTASelectorCell) -> CGFloat {
         return container!.radius
     }
+    
+    func selectorBeganIndexPath(cell: CTASelectorCell) -> NSIndexPath {
+        
+        return NSIndexPath(forItem: 0, inSection: 0)
+    }
 }
 
 // MARK: - Actions
@@ -174,4 +182,24 @@ extension CTASelectorsViewController {
         delegate?.radianDidChanged(v)
     }
     
+    func indexPathChanged(sender: CTAScrollSelectView) {
+        
+        guard let indexPath = sender.indexPath else {
+            return
+        }
+        
+        
+        let family = UIFont.familyNames()[indexPath.section]
+        let fontName = UIFont.fontNamesForFamilyName(family)
+        
+        let name: String
+        
+        if fontName.count > 0 && fontName.count >= indexPath.item {
+            name = fontName[indexPath.item]
+        } else {
+            name = ""
+        }
+        
+        delegate?.fontDidChanged(family, fontName: name)
+    }
 }

@@ -19,7 +19,6 @@ class CTASelectorSizeCell: CTASelectorCell {
     
     func setup() {
         sizeView = CTAScrollTuneView(frame: CGRect.zero)
-        
         addSubview(sizeView)
     }
     

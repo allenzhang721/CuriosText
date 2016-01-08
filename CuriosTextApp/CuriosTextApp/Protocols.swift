@@ -36,7 +36,9 @@ protocol ContainerVMProtocol: viewPropertiesModifiable, contentsTypeRetrivevable
 
 protocol TextContainerVMProtocol: ContainerVMProtocol {
     
-    var textElement: protocol<CTAElement, TextModifiable> { get }
+    var textElement: protocol<CTAElement, TextModifiable>? { get }
+    
+    func updateWithFontFamily(family: String, FontName name: String, constraintSize: CGSize)
 }
 
 // MARK: - ContainerEdit Protocols
@@ -90,6 +92,10 @@ extension TextRetrievable {
 protocol TextModifiable: TextRetrievable {
     
     var fontScale: CGFloat { get set }
+    var fontFamily: String { get set }
+    var fontName: String { get set }
+    
+    func resultWithFontFamily(family: String, fontName name: String, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
 }
 
 protocol ViewPropertiesRetrivevale:class {
