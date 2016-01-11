@@ -58,6 +58,7 @@
 		2C3E0ADF1C2156B200450B2C /* Qiniu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3E0ADE1C2156B200450B2C /* Qiniu.framework */; };
 		2C3E0AE11C21578400450B2C /* UploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3E0AE01C21578400450B2C /* UploadTests.swift */; };
 		2C3E0AE31C2157B800450B2C /* Qiniu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3E0AE21C2157B800450B2C /* Qiniu.framework */; };
+		2C5ACC121C439E8100B96CCD /* CTAStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5ACC111C439E8100B96CCD /* CTAStyleKit.swift */; };
 		2C6C67FF1C350A4800CCE81C /* CTALineFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6C67FE1C350A4800CCE81C /* CTALineFlowLayout.swift */; };
 		2C6C68011C350A8500CCE81C /* CTASelectorCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6C68001C350A8500CCE81C /* CTASelectorCollectionView.swift */; };
 		2C6C68031C350B4400CCE81C /* CTAScollBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6C68021C350B4400CCE81C /* CTAScollBarCell.swift */; };
@@ -69,6 +70,8 @@
 		2C7A95231C3A51F1005B0EAE /* CTALoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A95221C3A51F1005B0EAE /* CTALoginViewController.swift */; };
 		2C7A95251C3A520B005B0EAE /* CTASettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A95241C3A520B005B0EAE /* CTASettingViewController.swift */; };
 		2C7A959F1C3A6A4F005B0EAE /* CTAPageControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A959E1C3A6A4F005B0EAE /* CTAPageControllers.swift */; };
+		2C82FF551C4362FA001D927A /* CTASegementControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82FF541C4362FA001D927A /* CTASegementControl.swift */; };
+		2C82FF571C437F58001D927A /* CTASelectorAligmentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82FF561C437F58001D927A /* CTASelectorAligmentsCell.swift */; };
 		2C94E3501C3FB59800E2C8E4 /* CTASelectorFontNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C94E34F1C3FB59800E2C8E4 /* CTASelectorFontNameCell.swift */; };
 		2C9706C11C1E6EC200FA2E17 /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */; };
 		2C9706C21C1E6EC200FA2E17 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9706C01C1E6EC200FA2E17 /* SwiftyJSON.framework */; };
@@ -182,6 +185,7 @@
 		2C3E0ADE1C2156B200450B2C /* Qiniu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qiniu.framework; path = "Pods/../build/Debug-iphoneos/Qiniu.framework"; sourceTree = "<group>"; };
 		2C3E0AE01C21578400450B2C /* UploadTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadTests.swift; sourceTree = "<group>"; };
 		2C3E0AE21C2157B800450B2C /* Qiniu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qiniu.framework; path = "Pods/../build/Debug-iphoneos/Qiniu.framework"; sourceTree = "<group>"; };
+		2C5ACC111C439E8100B96CCD /* CTAStyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAStyleKit.swift; sourceTree = "<group>"; };
 		2C6C67FE1C350A4800CCE81C /* CTALineFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTALineFlowLayout.swift; sourceTree = "<group>"; };
 		2C6C68001C350A8500CCE81C /* CTASelectorCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorCollectionView.swift; sourceTree = "<group>"; };
 		2C6C68021C350B4400CCE81C /* CTAScollBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAScollBarCell.swift; sourceTree = "<group>"; };
@@ -193,6 +197,8 @@
 		2C7A95221C3A51F1005B0EAE /* CTALoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTALoginViewController.swift; sourceTree = "<group>"; };
 		2C7A95241C3A520B005B0EAE /* CTASettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASettingViewController.swift; sourceTree = "<group>"; };
 		2C7A959E1C3A6A4F005B0EAE /* CTAPageControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPageControllers.swift; sourceTree = "<group>"; };
+		2C82FF541C4362FA001D927A /* CTASegementControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASegementControl.swift; sourceTree = "<group>"; };
+		2C82FF561C437F58001D927A /* CTASelectorAligmentsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorAligmentsCell.swift; sourceTree = "<group>"; };
 		2C94E34F1C3FB59800E2C8E4 /* CTASelectorFontNameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorFontNameCell.swift; sourceTree = "<group>"; };
 		2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Locksmith.framework; path = "Pods/../build/Debug-iphoneos/Locksmith.framework"; sourceTree = "<group>"; };
 		2C9706C01C1E6EC200FA2E17 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "Pods/../build/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
@@ -292,6 +298,7 @@
 				2C0404611C3EC31100A5B017 /* CTARotatorView.swift */,
 				2C04045F1C3EC2C500A5B017 /* CTAScrollTuneView.swift */,
 				2C3097091C3F7FA800D996A4 /* CTAScrollSelectView.swift */,
+				2C82FF541C4362FA001D927A /* CTASegementControl.swift */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -306,6 +313,7 @@
 				2C94E34F1C3FB59800E2C8E4 /* CTASelectorFontNameCell.swift */,
 				2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */,
 				2C0404671C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift */,
+				2C82FF561C437F58001D927A /* CTASelectorAligmentsCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -448,6 +456,7 @@
 		2C6C67FD1C35082C00CCE81C /* CTAToolKit */ = {
 			isa = PBXGroup;
 			children = (
+				2C5ACC111C439E8100B96CCD /* CTAStyleKit.swift */,
 				2C0404691C3EC5CE00A5B017 /* view */,
 				2C0404641C3EC53900A5B017 /* Layout */,
 				2C6C68001C350A8500CCE81C /* CTASelectorCollectionView.swift */,
@@ -730,12 +739,15 @@
 				66C7BF251C3114BD00ADF251 /* CTADomainListInfo.swift in Sources */,
 				661EFBC51C213282009CF87A /* CTAPublishDomain.swift in Sources */,
 				2C3CAD171C21825900D8DE4B /* CTAElement.swift in Sources */,
+				2C82FF571C437F58001D927A /* CTASelectorAligmentsCell.swift in Sources */,
 				6628C7031C200C11007F873C /* CTAViewUserModel.swift in Sources */,
 				2C7A95231C3A51F1005B0EAE /* CTALoginViewController.swift in Sources */,
+				2C5ACC121C439E8100B96CCD /* CTAStyleKit.swift in Sources */,
 				2C3CAD161C21825900D8DE4B /* CTAContainer.swift in Sources */,
 				66A072AF1C18713F0046C72F /* CTAUploadRequestAPI.swift in Sources */,
 				2C9706CB1C1E713A00FA2E17 /* CTABaseModel.swift in Sources */,
 				2C3CAD1A1C21825900D8DE4B /* CTATextElement.swift in Sources */,
+				2C82FF551C4362FA001D927A /* CTASegementControl.swift in Sources */,
 				2CAEAC931C323F2600C9F9AC /* EditorFactory.swift in Sources */,
 				66A072AD1C186EFF0046C72F /* CTARelationRequestAPI.swift in Sources */,
 				2C3CAD0F1C21825100D8DE4B /* CTAPresenter.swift in Sources */,

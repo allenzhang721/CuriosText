@@ -190,5 +190,14 @@ extension CTAContainer: TextContainerVMProtocol {
         contentInset = inset
     }
     
+    func updateWithTextAlignment(alignment: NSTextAlignment) {
+        guard let textElement = textElement else {
+            fatalError("This Contaienr do not contain Text Element")
+        }
+        
+        textElement.alignment = alignment
+        
+    }
+    
     // TODO: CTAContainer, Calculate the position and origion if occur rotation -- Emiaostein; 2015-12-18-14:49
 }

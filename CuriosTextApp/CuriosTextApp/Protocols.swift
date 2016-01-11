@@ -39,6 +39,7 @@ protocol TextContainerVMProtocol: ContainerVMProtocol {
     var textElement: protocol<CTAElement, TextModifiable>? { get }
     
     func updateWithFontFamily(family: String, FontName name: String, constraintSize: CGSize)
+    func updateWithTextAlignment(alignment: NSTextAlignment)
 }
 
 // MARK: - ContainerEdit Protocols
@@ -57,6 +58,7 @@ protocol TextRetrievable: class {
     var shadowBlurRadius: CGFloat { get }
     
     func attributeStringWithFontScale(scale: CGFloat) -> NSAttributedString
+    func attributeStringWithAlignment(alignment: NSTextAlignment) -> NSAttributedString
 }
 
 extension TextRetrievable {
@@ -87,6 +89,10 @@ extension TextRetrievable {
         
         return (inset, textSize, rect, str)
     }
+    
+    func textResultWithAlignment(alignment: NSTextAlignment) -> NSAttributedString {
+        return attributeStringWithAlignment(alignment)
+    }
 }
 
 protocol TextModifiable: TextRetrievable {
@@ -94,6 +100,7 @@ protocol TextModifiable: TextRetrievable {
     var fontScale: CGFloat { get set }
     var fontFamily: String { get set }
     var fontName: String { get set }
+    var alignment: NSTextAlignment { get set }
     
     func resultWithFontFamily(family: String, fontName name: String, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
 }

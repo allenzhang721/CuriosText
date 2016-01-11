@@ -209,6 +209,30 @@ final class CTATextAttributes:NSObject, NSCoding {
         
     }
     
+    func textAttributesWithTextAlignment(alignment: NSTextAlignment) -> [String: AnyObject] {
+        
+        let afont = font
+        let paragraphStyle: NSParagraphStyle = {
+            let p = NSMutableParagraphStyle()
+            p.lineSpacing = CGFloat(textlineSpacing)
+            p.alignment = alignment
+            return p
+        }()
+        
+        let textColor: UIColor = {
+            
+            return UIColor.whiteColor()
+        }()
+        
+        return [
+            NSFontAttributeName: afont,
+            NSParagraphStyleAttributeName: paragraphStyle,
+            NSForegroundColorAttributeName: textColor,
+            NSKernAttributeName: NSNumber(double: textKern)
+        ]
+        
+    }
+    
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(fontFamily, forKey: TextAttributeName.fontFamily)
@@ -389,6 +413,17 @@ extension CTATextElement {
         
     }
     
+    var alignment: NSTextAlignment {
+     
+        get {
+            return attributes.textAligiment
+        }
+        
+        set {
+            attributes.textAligiment = newValue
+        }
+    }
+    
     var shadowOffset: CGPoint {
         return attributes.textShadowOffset
     }
@@ -404,7 +439,11 @@ extension CTATextElement {
     func attributeStringWithFontFamily(family: String, fontName name: String) -> NSAttributedString {
         
         return NSAttributedString(string: text, attributes: attributes.textAttributesWithFontScaleWithFontFamily(family, fontName: name))
+    }
+    
+    func attributeStringWithAlignment(alignment: NSTextAlignment) -> NSAttributedString {
         
+        return NSAttributedString(string: text, attributes: attributes.textAttributesWithTextAlignment(alignment))
     }
     
 }

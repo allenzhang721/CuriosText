@@ -268,6 +268,16 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         
         canvasViewController.updateAt(selectedIndexPath, updateContents: true)
     }
+    
+    func alignmentDidChanged(alignment: NSTextAlignment) {
+        
+        guard let selectedIndexPath = selectedIndexPath, let container = container as? TextContainerVMProtocol else {
+            return
+        }
+        
+        container.updateWithTextAlignment(alignment)
+        canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+    }
 }
 
 

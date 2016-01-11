@@ -22,6 +22,7 @@ protocol CTASelectorScaleable: CTASelectorable {
     func scaleDidChanged(scale: CGFloat)
     func radianDidChanged(radian: CGFloat)
     func fontDidChanged(fontFamily: String, fontName: String)
+    func alignmentDidChanged(alignment: NSTextAlignment)
 }
 
 typealias CTASelectorViewControllerDelegate = protocol<CTASelectorScaleable>
@@ -48,6 +49,9 @@ class CTASelectorsViewController: UIViewController, UICollectionViewDataSource, 
             
         case .Fonts:
             return "indexPathChanged:"
+            
+        case .Aligments:
+            return "aligmentsChanged:"
             
         default:
             return ""
@@ -134,7 +138,7 @@ extension CTASelectorsViewController {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Selector\(currentType.rawValue)Cell", forIndexPath: indexPath)
         
         print("Selector Cell")
-        cell.backgroundColor = UIColor.darkGrayColor()
+//        cell.backgroundColor = UIColor.darkGrayColor()
         
         return cell
     }
@@ -164,6 +168,14 @@ extension CTASelectorsViewController: CTASelectorDataSource {
     func selectorBeganIndexPath(cell: CTASelectorCell) -> NSIndexPath {
         
         return NSIndexPath(forItem: 0, inSection: 0)
+    }
+    
+    func selectorBeganAlignment(cell: CTASelectorCell) -> NSTextAlignment {
+        
+        guard let container = container as? TextContainerVMProtocol, let textElement = container.textElement else {
+            return .Left
+        }
+         return textElement.alignment
     }
 }
 
@@ -201,5 +213,10 @@ extension CTASelectorsViewController {
         }
         
         delegate?.fontDidChanged(family, fontName: name)
+    }
+    
+    func aligmentsChanged(sender: CTASegmentControl) {
+        
+        delegate?.alignmentDidChanged(NSTextAlignment(rawValue: sender.selectedIndex)!)
     }
 }
