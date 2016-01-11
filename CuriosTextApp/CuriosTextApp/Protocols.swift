@@ -40,6 +40,7 @@ protocol TextContainerVMProtocol: ContainerVMProtocol {
     
     func updateWithFontFamily(family: String, FontName name: String, constraintSize: CGSize)
     func updateWithTextAlignment(alignment: NSTextAlignment)
+    func updateWithTextSpacing(lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize)
 }
 
 // MARK: - ContainerEdit Protocols
@@ -101,8 +102,12 @@ protocol TextModifiable: TextRetrievable {
     var fontFamily: String { get set }
     var fontName: String { get set }
     var alignment: NSTextAlignment { get set }
+    var lineSpacing: CGFloat { get set }
+    var textSpacing: CGFloat { get set }
     
     func resultWithFontFamily(family: String, fontName name: String, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
+    
+    func resultWithLineSpacing(lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
 }
 
 protocol ViewPropertiesRetrivevale:class {

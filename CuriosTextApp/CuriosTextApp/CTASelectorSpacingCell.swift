@@ -1,5 +1,5 @@
 //
-//  CTASelectorAligmentsCell.swift
+//  CTASelectorSpacingCell.swift
 //  CuriosTextApp
 //
 //  Created by Emiaostein on 1/11/16.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class CTASelectorAligmentsCell: CTASelectorCell {
+class CTASelectorSpacingCell: CTASelectorCell {
 
-    var view: CTASegmentControl!
+    var view: CTATextSpacingView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -18,27 +18,14 @@ class CTASelectorAligmentsCell: CTASelectorCell {
     }
     
     func setup() {
-        let normals: [UIImage] = [
-            CTAStyleKit.imageOfAlignmentLeftNormal,
-            CTAStyleKit.imageOfAlignmentCenterNormal,
-            CTAStyleKit.imageOfAlignmentRightNormal,
-            CTAStyleKit.imageOfAlignmentJustNormal
-        ]
         
-        let selected: [UIImage] = [
-            CTAStyleKit.imageOfAlignmentLeftSelected,
-            CTAStyleKit.imageOfAlignmentCenterSelected,
-            CTAStyleKit.imageOfAlignmentRightSelected,
-            CTAStyleKit.imageOfAlignmentJustSelected
-        ]
-        
-        view = CTASegmentControl(frame: bounds, normal: normals, highlighted: selected, selected: selected)
+        view = CTATextSpacingView(frame: bounds)
         addSubview(view)
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        view.frame = bounds
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.leftAnchor.constraintEqualToAnchor(leftAnchor).active = true
+        view.topAnchor.constraintEqualToAnchor(topAnchor).active = true
+        view.rightAnchor.constraintEqualToAnchor(rightAnchor).active = true
+        view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
     }
     
     override func retriveBeganValue() {
@@ -47,7 +34,7 @@ class CTASelectorAligmentsCell: CTASelectorCell {
             return
         }
         
-        view.selectedIndex = dataSource.selectorBeganAlignment(self).rawValue
+        view.spacing = dataSource.selectorBeganSpacing(self)
     }
     
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {

@@ -3,5 +3,6 @@
     <pages>
         <page name='segment'/>
         <page name='Rotator'/>
+        <page name='textSpacing'/>
     </pages>
 </playground>

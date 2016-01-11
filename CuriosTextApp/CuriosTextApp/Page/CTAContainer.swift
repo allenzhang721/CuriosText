@@ -199,5 +199,23 @@ extension CTAContainer: TextContainerVMProtocol {
         
     }
     
+    func updateWithTextSpacing(lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize) {
+        guard let textElement = textElement else {
+            fatalError("This Contaienr do not contain Text Element")
+        }
+        
+        textElement.lineSpacing = lineSpacing
+        textElement.textSpacing = textSpacing
+        
+        let newResult = textElement.resultWithLineSpacing(lineSpacing, textSpacing: textSpacing, constraintSize: constraintSize)
+        let contentSize = CGSize(width: ceil(newResult.size.width), height: ceil(newResult.size.height))
+        let inset = CGPoint(x: floor(newResult.inset.x), y: newResult.inset.y)
+        // new content size
+        let nextSize = CGSize(width: contentSize.width - 2 * inset.x, height: contentSize.height - 2 * inset.y)
+        
+        size = nextSize
+        contentInset = inset
+    }
+    
     // TODO: CTAContainer, Calculate the position and origion if occur rotation -- Emiaostein; 2015-12-18-14:49
 }

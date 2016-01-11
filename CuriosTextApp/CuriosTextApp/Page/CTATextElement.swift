@@ -233,6 +233,29 @@ final class CTATextAttributes:NSObject, NSCoding {
         
     }
     
+    func textAttributesWithLineSpacing(lineSpacing: CGFloat, textSpacing: CGFloat) -> [String: AnyObject] {
+        
+        let afont = font
+        let paragraphStyle: NSParagraphStyle = {
+            let p = NSMutableParagraphStyle()
+            p.lineSpacing = CGFloat(lineSpacing)
+            p.alignment = textAligiment
+            return p
+        }()
+        
+        let textColor: UIColor = {
+            
+            return UIColor.whiteColor()
+        }()
+        
+        return [
+            NSFontAttributeName: afont,
+            NSParagraphStyleAttributeName: paragraphStyle,
+            NSForegroundColorAttributeName: textColor,
+            NSKernAttributeName: NSNumber(float: Float(textSpacing))
+        ]
+    }
+    
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(fontFamily, forKey: TextAttributeName.fontFamily)
@@ -368,6 +391,19 @@ final class CTATextElement: NSObject, CTAElement, TextModifiable {
         return (inset, size)
         
     }
+    
+    func resultWithLineSpacing(lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize) {
+        
+        let inset = CGPoint(x: 20.0 / 17.0 * fontSize * scale, y: 0)
+        let str = attributeStringWithLineSpacing(lineSpacing, textSpacing: textSpacing)
+        let textSize = str.boundingRectWithSize(constraintSize, options: .UsesLineFragmentOrigin, context: nil).size
+        let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
+        
+        //        print("need TextSize = \(textSize)")
+        
+        return (inset, size)
+        
+    }
 }
 
 // MARK: - TextModify
@@ -424,6 +460,26 @@ extension CTATextElement {
         }
     }
     
+    var lineSpacing: CGFloat {
+        get {
+            return CGFloat(attributes.textlineSpacing)
+        }
+        
+        set {
+            attributes.textlineSpacing = Double(newValue)
+        }
+    }
+    
+    var textSpacing: CGFloat{
+        get {
+            return CGFloat(attributes.textKern)
+        }
+        
+        set {
+            attributes.textKern = Double(newValue)
+        }
+    }
+    
     var shadowOffset: CGPoint {
         return attributes.textShadowOffset
     }
@@ -444,6 +500,11 @@ extension CTATextElement {
     func attributeStringWithAlignment(alignment: NSTextAlignment) -> NSAttributedString {
         
         return NSAttributedString(string: text, attributes: attributes.textAttributesWithTextAlignment(alignment))
+    }
+    
+    func attributeStringWithLineSpacing(lineSpacing: CGFloat, textSpacing: CGFloat) -> NSAttributedString {
+        
+        return NSAttributedString(string: text, attributes: attributes.textAttributesWithLineSpacing(lineSpacing, textSpacing: textSpacing))
     }
     
 }

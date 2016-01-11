@@ -23,6 +23,7 @@ protocol CTASelectorScaleable: CTASelectorable {
     func radianDidChanged(radian: CGFloat)
     func fontDidChanged(fontFamily: String, fontName: String)
     func alignmentDidChanged(alignment: NSTextAlignment)
+    func spacingDidChanged(lineSpacing: CGFloat, textSpacing: CGFloat)
 }
 
 typealias CTASelectorViewControllerDelegate = protocol<CTASelectorScaleable>
@@ -52,6 +53,9 @@ class CTASelectorsViewController: UIViewController, UICollectionViewDataSource, 
             
         case .Aligments:
             return "aligmentsChanged:"
+            
+        case .TextSpacing:
+            return "textSpacingChanged:"
             
         default:
             return ""
@@ -177,6 +181,15 @@ extension CTASelectorsViewController: CTASelectorDataSource {
         }
          return textElement.alignment
     }
+    
+    func selectorBeganSpacing(cell: CTASelectorCell) -> (CGFloat, CGFloat) {
+        
+        guard let container = container as? TextContainerVMProtocol, let textElement = container.textElement else {
+            return (0, 0)
+        }
+        
+        return (textElement.lineSpacing, textElement.textSpacing)
+    }
 }
 
 // MARK: - Actions
@@ -218,5 +231,11 @@ extension CTASelectorsViewController {
     func aligmentsChanged(sender: CTASegmentControl) {
         
         delegate?.alignmentDidChanged(NSTextAlignment(rawValue: sender.selectedIndex)!)
+    }
+    
+    func textSpacingChanged(sender: CTATextSpacingView) {
+        
+        delegate?.spacingDidChanged(sender.spacing.0, textSpacing: sender.spacing.1)
+        
     }
 }

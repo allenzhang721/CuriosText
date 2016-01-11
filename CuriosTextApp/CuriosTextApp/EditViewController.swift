@@ -278,6 +278,18 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         container.updateWithTextAlignment(alignment)
         canvasViewController.updateAt(selectedIndexPath, updateContents: true)
     }
+    
+    func spacingDidChanged(lineSpacing: CGFloat, textSpacing: CGFloat) {
+        
+        guard let selectedIndexPath = selectedIndexPath, let container = container as? TextContainerVMProtocol else {
+            return
+        }
+        
+        let canvasSize = canvasViewController.view.bounds.size
+        container.updateWithTextSpacing(lineSpacing, textSpacing: textSpacing, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
+        canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+        
+    }
 }
 
 

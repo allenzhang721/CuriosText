@@ -14,6 +14,7 @@ protocol CTASelectorDataSource: class {
     func selectorBeganRadian(cell: CTASelectorCell) -> CGFloat
     func selectorBeganIndexPath(cell: CTASelectorCell) -> NSIndexPath
     func selectorBeganAlignment(cell: CTASelectorCell) -> NSTextAlignment
+    func selectorBeganSpacing(cell: CTASelectorCell) -> (CGFloat, CGFloat)
 }
 
 protocol CTASelectorControl: class {
