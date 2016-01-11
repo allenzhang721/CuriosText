@@ -290,7 +290,11 @@ final class CTACanvasViewController: UIViewController {
             collectionView.collectionViewLayout.invalidateLayoutWithContext(context)
             
             if updateContents {
-                (cell as! CTACanvasTextCell).textView.attributedText = (container as! TextContainerVMProtocol).textElement.attributeString
+                guard let cell = cell as? CTACanvasTextCell, let container = container as? TextContainerVMProtocol else {
+                    return
+                }
+                
+                cell.textView.attributedText = container.textElement?.attributeString
             }
         }
     }
@@ -332,7 +336,7 @@ extension CTACanvasViewController: UICollectionViewDelegate, UICollectionViewDat
         
         if let textContainer = containerAt(indexPath) as? TextContainerVMProtocol, let acell = cell as? CTACanvasTextCell {
             
-            acell.textView.attributedText = textContainer.textElement.attributeString
+            acell.textView.attributedText = textContainer.textElement!.attributeString
         }
         
         //        cell.backgroundColor = UIColor.whiteColor()

@@ -12,6 +12,8 @@ protocol CTASelectorDataSource: class {
     
     func selectorBeganScale(cell: CTASelectorCell) -> CGFloat
     func selectorBeganRadian(cell: CTASelectorCell) -> CGFloat
+    func selectorBeganIndexPath(cell: CTASelectorCell) -> NSIndexPath
+    func selectorBeganAlignment(cell: CTASelectorCell) -> NSTextAlignment
 }
 
 protocol CTASelectorControl: class {
@@ -22,8 +24,10 @@ protocol CTASelectorControl: class {
 }
 
 class CTASelectorCell: UICollectionViewCell, CTASelectorControl {
-    
+
     weak var dataSource: CTASelectorDataSource?
+    
+    var controlView: UIControl?
     
     func retriveBeganValue(){}
     

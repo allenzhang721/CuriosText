@@ -10,19 +10,16 @@ import UIKit
 
 class CTASelectorSizeCell: CTASelectorCell {
     
-    let sizeView: CTAScrollTuneView
+    var sizeView: CTAScrollTuneView!
     
-    override init(frame: CGRect) {
-        self.sizeView = CTAScrollTuneView(frame: CGRect(x: 0, y: 0, width: 320, height: 88))
-        super.init(frame: frame)
-        
-        contentView.addSubview(sizeView)
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setup()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        self.sizeView = CTAScrollTuneView(frame: CGRect(x: 0, y: 0, width: 320, height: 88))
-        super.init(coder: aDecoder)
-        contentView.addSubview(sizeView)
+    func setup() {
+        sizeView = CTAScrollTuneView(frame: CGRect.zero)
+        addSubview(sizeView)
     }
     
     override func layoutSubviews() {

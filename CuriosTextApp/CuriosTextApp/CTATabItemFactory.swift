@@ -24,14 +24,19 @@ final class CTATabItemFactory {
    let textTabItems: [CTATabItem] = {
         
         var items = [CTATabItem]()
-        
-        for i in 0..<2 {
+        let count = 4
+        for i in 0..<count {
             var item: CTASelectorTabItem
             switch i {
+                
             case 0:
-                item = CTASelectorTabItem(type: .Size)
+                item = CTASelectorTabItem(type: .Fonts)
             case 1:
+                item = CTASelectorTabItem(type: .Size)
+            case 2:
                 item = CTASelectorTabItem(type: .Rotator)
+            case 3:
+                item = CTASelectorTabItem(type: .Aligments)
             default:
                 item = CTASelectorTabItem(type: .Size)
             }

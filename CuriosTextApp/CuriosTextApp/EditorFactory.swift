@@ -208,10 +208,10 @@ extension EditorFactory {
         //        }
         
         
-        let str = containerVM.textElement.attributeString
-        let textViewInset = containerVM.textElement.rectInset()
-        let textSize = containerVM.textElement.textSizeWithConstraintSize(CGSize(width: 320, height: 568 * 2))
-        let textRect = containerVM.textElement.textFrameWithTextSize(textsize: textSize)
+        let str = containerVM.textElement!.attributeString
+        let textViewInset = containerVM.textElement!.rectInset()
+        let textSize = containerVM.textElement!.textSizeWithConstraintSize(CGSize(width: 320, height: 568 * 2))
+        let textRect = containerVM.textElement!.textFrameWithTextSize(textsize: textSize)
         let containerView = ContainerTextView(
             frame: CGRect(
                 x: 0,

@@ -33,7 +33,8 @@ class CTATabViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        collectionView.decelerationRate = UIScrollViewDecelerationRateFast
+        layout.scrollDirection = .Horizontal
         layout.delegate = delegate
     }
 }
