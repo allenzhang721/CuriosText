@@ -24,6 +24,7 @@ protocol CTASelectorScaleable: CTASelectorable {
     func fontDidChanged(fontFamily: String, fontName: String)
     func alignmentDidChanged(alignment: NSTextAlignment)
     func spacingDidChanged(lineSpacing: CGFloat, textSpacing: CGFloat)
+    func colorDidChanged(item: CTAColorItem)
 }
 
 typealias CTASelectorViewControllerDelegate = protocol<CTASelectorScaleable>
@@ -56,6 +57,9 @@ class CTASelectorsViewController: UIViewController, UICollectionViewDataSource, 
             
         case .TextSpacing:
             return "textSpacingChanged:"
+            
+        case .Colors:
+            return "indexPathOfColorChanged:"
             
         default:
             return ""
@@ -237,5 +241,13 @@ extension CTASelectorsViewController {
         
         delegate?.spacingDidChanged(sender.spacing.0, textSpacing: sender.spacing.1)
         
+    }
+    
+    func indexPathOfColorChanged(sender: CTAPickerView) {
+        
+        if let colorItem = CTAColorsManger.colorAtIndexPath(sender.selectedIndexPath!) {
+            delegate?.colorDidChanged(colorItem)
+        }
+        print("color indexPath = \(sender.selectedIndexPath)")
     }
 }

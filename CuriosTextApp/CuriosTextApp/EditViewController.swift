@@ -290,6 +290,16 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         canvasViewController.updateAt(selectedIndexPath, updateContents: true)
         
     }
+    
+    func colorDidChanged(item: CTAColorItem) {
+        
+        guard let selectedIndexPath = selectedIndexPath, let container = container as? TextContainerVMProtocol else {
+            return
+        }
+        
+        container.updateWithColor(item.colorHex, alpha: item.colorHexAlpha)
+        canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+    }
 }
 
 

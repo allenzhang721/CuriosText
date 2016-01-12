@@ -67,7 +67,7 @@ extension CTAScrollSelectView: UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("FontFamilyCell", forIndexPath: indexPath)
         
-        cell.backgroundColor = UIColor(red: CGFloat(random() % 255) / 255.0, green: CGFloat(random() % 255) / 255.0, blue: CGFloat(random() % 255) / 255.0, alpha: 1)
+        cell.backgroundColor = CTAStyleKit.black8
         return cell
     }
 }
@@ -77,6 +77,11 @@ extension CTAScrollSelectView: LineFlowLayoutDelegate {
     func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
         
         self.indexPath = indexPath
+        let cell = collectionView.cellForItemAtIndexPath(indexPath)
+        cell?.backgroundColor = CTAStyleKit.black7
+        if let oldIndexPath = oldIndexPath, let oldCell = collectionView.cellForItemAtIndexPath(oldIndexPath) {
+            oldCell.backgroundColor = CTAStyleKit.black8
+        }
         sendActionsForControlEvents(.ValueChanged)
         print("\(indexPath)")
     }

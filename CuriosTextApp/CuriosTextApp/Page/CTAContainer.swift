@@ -217,5 +217,16 @@ extension CTAContainer: TextContainerVMProtocol {
         contentInset = inset
     }
     
+    func updateWithColor(hex: String, alpha: CGFloat) {
+        
+        guard let textElement = textElement else {
+            fatalError("This Contaienr do not contain Text Element")
+        }
+        
+        textElement.colorHex = hex
+        textElement.colorAlpha = alpha
+        
+    }
+    
     // TODO: CTAContainer, Calculate the position and origion if occur rotation -- Emiaostein; 2015-12-18-14:49
 }

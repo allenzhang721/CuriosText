@@ -24,7 +24,7 @@ final class CTATabItemFactory {
    let textTabItems: [CTATabItem] = {
         
         var items = [CTATabItem]()
-        let count = 5
+        let count = 6
         for i in 0..<count {
             var item: CTASelectorTabItem
             switch i {
@@ -39,6 +39,8 @@ final class CTATabItemFactory {
                 item = CTASelectorTabItem(type: .Aligments)
             case 4:
                 item = CTASelectorTabItem(type: .TextSpacing)
+            case 5:
+                item = CTASelectorTabItem(type: .Colors)
             default:
                 item = CTASelectorTabItem(type: .Size)
             }

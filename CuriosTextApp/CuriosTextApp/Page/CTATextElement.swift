@@ -112,10 +112,7 @@ final class CTATextAttributes:NSObject, NSCoding {
             return p
         }()
         
-        let textColor: UIColor = {
-
-            return UIColor.blackColor()
-        }()
+        let textColor = UIColor(hexString: textColorHex, alpha: Float(textColorAlpha)) ?? UIColor.blackColor()
         
         return [
             NSFontAttributeName: font,
@@ -253,6 +250,29 @@ final class CTATextAttributes:NSObject, NSCoding {
             NSParagraphStyleAttributeName: paragraphStyle,
             NSForegroundColorAttributeName: textColor,
             NSKernAttributeName: NSNumber(float: Float(textSpacing))
+        ]
+    }
+    
+    func textAttributesWithColor(color: UIColor) -> [String: AnyObject] {
+        
+        let afont = font
+        let paragraphStyle: NSParagraphStyle = {
+            let p = NSMutableParagraphStyle()
+            p.lineSpacing = CGFloat(textlineSpacing)
+            p.alignment = textAligiment
+            return p
+        }()
+        
+//        let textColor: UIColor = {
+//            
+//            return UIColor.whiteColor()
+//        }()
+        
+        return [
+            NSFontAttributeName: afont,
+            NSParagraphStyleAttributeName: paragraphStyle,
+            NSForegroundColorAttributeName: color,
+            NSKernAttributeName: NSNumber(float: Float(textKern))
         ]
     }
     
@@ -477,6 +497,26 @@ extension CTATextElement {
         
         set {
             attributes.textKern = Double(newValue)
+        }
+    }
+    
+    var colorHex: String {
+        get {
+            return attributes.textColorHex
+        }
+        
+        set {
+            attributes.textColorHex = newValue
+        }
+        
+    }
+    var colorAlpha: CGFloat {
+        get {
+            return CGFloat(attributes.textColorAlpha)
+        }
+        
+        set {
+            attributes.textColorAlpha = Double(newValue)
         }
     }
     

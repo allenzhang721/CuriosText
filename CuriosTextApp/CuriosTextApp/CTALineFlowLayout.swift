@@ -36,6 +36,8 @@ protocol LineFlowLayoutDelegate: class {
 
 final class CTALineFlowLayout: UICollectionViewFlowLayout {
     
+    var showCount: Int = 2
+    
     weak var delegate: LineFlowLayoutDelegate?
     
     private var currentIndexPath: NSIndexPath?
@@ -59,7 +61,7 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
             
         case .Horizontal:
             let colSize = collectionView.bounds.size
-            itemSize = CGSize(width: colSize.width / 2, height: colSize.height)
+            itemSize = CGSize(width: colSize.width / CGFloat(showCount), height: colSize.height)
             let top = (colSize.height - itemSize.height) / 2.0
             let left = (colSize.width - itemSize.width) / 2.0
             let bottom = top
@@ -69,7 +71,7 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
             
         case .Vertical:
             let colSize = collectionView.bounds.size
-            itemSize = CGSize(width: colSize.width, height: colSize.height / 2)
+            itemSize = CGSize(width: colSize.width, height: colSize.height / CGFloat(showCount))
             let top = (colSize.height - itemSize.height) / 2.0
             let left = (colSize.width - itemSize.width) / 2.0
             let bottom = top
@@ -111,11 +113,11 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
                         if currentIndexPath != attribute.indexPath {
                             
                             let s = currentIndexPath != nil
-                            
-                            currentIndexPath = attribute.indexPath
                             if s {
                                 delegate?.didChangeTo(collectionView, itemAtIndexPath: attribute.indexPath, oldIndexPath: currentIndexPath)
                             }
+                            currentIndexPath = attribute.indexPath
+                            
                         }
                         //                    let alpha = minAlpha + (1.0 - minAlpha) * (1 - normalizedDistance)
                         //                    let scale = minScale + (maxScale - minScale) * (1 - normalizedDistance)
