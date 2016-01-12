@@ -11,11 +11,11 @@ import SwiftyJSON
 
 class CTAPublishDomain: CTABaseDomain {
     
-    static var _instance:CTAUpTokenDomain?;
+    static var _instance:CTAPublishDomain?;
     
-    static func getInstance() -> CTAUpTokenDomain{
+    static func getInstance() -> CTAPublishDomain{
         if _instance == nil{
-            _instance = CTAUpTokenDomain.init();
+            _instance = CTAPublishDomain.init();
         }
         return _instance!
     }

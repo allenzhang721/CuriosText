@@ -9,7 +9,12 @@
 import Foundation
 import SwiftyJSON
 
-class CTABaseDomain {
+protocol CTABaseDomain{
+    func checkJsonResult(json: JSON) -> Bool;
+    func changeUUID(uuid:String) ->String;
+}
+
+extension CTABaseDomain {
     
    func checkJsonResult(json: JSON) -> Bool{
         let reslut = json[CTARequestResultKey.result].string

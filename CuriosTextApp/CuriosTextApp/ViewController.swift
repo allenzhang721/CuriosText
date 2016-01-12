@@ -14,23 +14,34 @@ class ViewController: UIViewController {
     
     private let pageControllers = CTAPageControllers()
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
     
-    addChildViewController(pageViewController)
-    view.addSubview(pageViewController.view)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        CTAUpTokenDomain.getInstance().uploadFilePath { (info) -> Void in
+            let dic = info.modelDic
+            let publishFilePath = dic![key(.PublishFilePath)]
+            let userFilePath = dic![key(.UserFilePath)]
+            CTAFilePath.publishFilePath = publishFilePath!
+            CTAFilePath.userFilePath = userFilePath!
+        }
     
-    pageViewController.view.backgroundColor = UIColor.lightGrayColor()
-    pageViewController.dataSource = pageControllers
-
-    pageViewController.setViewControllers([pageControllers.controllers[0]], direction: .Forward, animated: false, completion: nil)
-  }
+        addChildViewController(pageViewController)
+        view.addSubview(pageViewController.view)
     
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
-  }
+        pageViewController.view.backgroundColor = UIColor.lightGrayColor()
+        pageViewController.dataSource = pageControllers
 
-
+        pageViewController.setViewControllers([pageControllers.controllers[0]], direction: .Forward, animated: false, completion: nil)
+        
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
 }
 

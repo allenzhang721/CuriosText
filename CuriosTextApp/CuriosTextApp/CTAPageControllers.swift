@@ -22,7 +22,7 @@ class CTAPageControllers: NSObject, UIPageViewControllerDataSource {
             case 0:
                controller = CTAHomeViewController()
             case 1:
-                controller = CTADocumentsViewController()
+                controller = CTAUserPublishesViewController()
             default:
                 ()
             }

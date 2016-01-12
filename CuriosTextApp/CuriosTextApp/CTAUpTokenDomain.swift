@@ -30,7 +30,7 @@ class CTAUpTokenDomain: CTABaseDomain {
                 if result {
                     let publishFilePath = json[key(.PublishFilePath)].string ?? ""
                     let userFilePath = json[key(.UserFilePath)].string ?? ""
-                    let dic:Dictionary<String, AnyObject> = [
+                    let dic:Dictionary<String, String> = [
                         key(.PublishFilePath) : publishFilePath,
                         key(.UserFilePath)    : userFilePath
                     ];

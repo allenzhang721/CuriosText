@@ -11,11 +11,11 @@ import SwiftyJSON
 
 class CTAUserRelationDomain: CTABaseDomain {
     
-    static var _instance:CTAUpTokenDomain?;
+    static var _instance:CTAUserRelationDomain?;
     
-    static func getInstance() -> CTAUpTokenDomain{
+    static func getInstance() -> CTAUserRelationDomain{
         if _instance == nil{
-            _instance = CTAUpTokenDomain.init();
+            _instance = CTAUserRelationDomain.init();
         }
         return _instance!
     }
