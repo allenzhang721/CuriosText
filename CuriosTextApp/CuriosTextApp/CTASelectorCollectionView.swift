@@ -10,7 +10,7 @@ import UIKit
 
 enum CTASelectorType: String {
     
-    case Size, Fonts, Rotator
+    case Size, Fonts, Rotator, Aligments, TextSpacing, Colors
 }
 
 final class CTASelectorViewFactory {

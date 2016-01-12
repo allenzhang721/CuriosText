@@ -21,7 +21,10 @@ protocol CTASelectorScaleable: CTASelectorable {
     
     func scaleDidChanged(scale: CGFloat)
     func radianDidChanged(radian: CGFloat)
-    
+    func fontDidChanged(fontFamily: String, fontName: String)
+    func alignmentDidChanged(alignment: NSTextAlignment)
+    func spacingDidChanged(lineSpacing: CGFloat, textSpacing: CGFloat)
+    func colorDidChanged(item: CTAColorItem)
 }
 
 typealias CTASelectorViewControllerDelegate = protocol<CTASelectorScaleable>
@@ -46,6 +49,18 @@ class CTASelectorsViewController: UIViewController, UICollectionViewDataSource, 
         case .Rotator:
             return "radianChanged:"
             
+        case .Fonts:
+            return "indexPathChanged:"
+            
+        case .Aligments:
+            return "aligmentsChanged:"
+            
+        case .TextSpacing:
+            return "textSpacingChanged:"
+            
+        case .Colors:
+            return "indexPathOfColorChanged:"
+            
         default:
             return ""
         }
@@ -56,14 +71,14 @@ class CTASelectorsViewController: UIViewController, UICollectionViewDataSource, 
     
     var dataSource: CTASelectorsViewControllerDataSource?
     var delegate: CTASelectorViewControllerDelegate?
-    private var currentType: CTASelectorType = .Size
+    private var currentType: CTASelectorType = .Fonts
     
     @IBOutlet weak var collectionview: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    func changeToSelector(type: CTASelectorType = .Size) {
+    func changeToSelector(type: CTASelectorType) {
         
         guard let collectionview = collectionview where container != nil else {
             return
@@ -131,7 +146,7 @@ extension CTASelectorsViewController {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Selector\(currentType.rawValue)Cell", forIndexPath: indexPath)
         
         print("Selector Cell")
-        cell.backgroundColor = UIColor.blackColor()
+//        cell.backgroundColor = UIColor.darkGrayColor()
         
         return cell
     }
@@ -157,6 +172,28 @@ extension CTASelectorsViewController: CTASelectorDataSource {
     func selectorBeganRadian(cell: CTASelectorCell) -> CGFloat {
         return container!.radius
     }
+    
+    func selectorBeganIndexPath(cell: CTASelectorCell) -> NSIndexPath {
+        
+        return NSIndexPath(forItem: 0, inSection: 0)
+    }
+    
+    func selectorBeganAlignment(cell: CTASelectorCell) -> NSTextAlignment {
+        
+        guard let container = container as? TextContainerVMProtocol, let textElement = container.textElement else {
+            return .Left
+        }
+         return textElement.alignment
+    }
+    
+    func selectorBeganSpacing(cell: CTASelectorCell) -> (CGFloat, CGFloat) {
+        
+        guard let container = container as? TextContainerVMProtocol, let textElement = container.textElement else {
+            return (0, 0)
+        }
+        
+        return (textElement.lineSpacing, textElement.textSpacing)
+    }
 }
 
 // MARK: - Actions
@@ -174,4 +211,43 @@ extension CTASelectorsViewController {
         delegate?.radianDidChanged(v)
     }
     
+    func indexPathChanged(sender: CTAScrollSelectView) {
+        
+        guard let indexPath = sender.indexPath else {
+            return
+        }
+        
+        
+        let family = UIFont.familyNames()[indexPath.section]
+        let fontName = UIFont.fontNamesForFamilyName(family)
+        
+        let name: String
+        
+        if fontName.count > 0 && fontName.count >= indexPath.item {
+            name = fontName[indexPath.item]
+        } else {
+            name = ""
+        }
+        
+        delegate?.fontDidChanged(family, fontName: name)
+    }
+    
+    func aligmentsChanged(sender: CTASegmentControl) {
+        
+        delegate?.alignmentDidChanged(NSTextAlignment(rawValue: sender.selectedIndex)!)
+    }
+    
+    func textSpacingChanged(sender: CTATextSpacingView) {
+        
+        delegate?.spacingDidChanged(sender.spacing.0, textSpacing: sender.spacing.1)
+        
+    }
+    
+    func indexPathOfColorChanged(sender: CTAPickerView) {
+        
+        if let colorItem = CTAColorsManger.colorAtIndexPath(sender.selectedIndexPath!) {
+            delegate?.colorDidChanged(colorItem)
+        }
+        print("color indexPath = \(sender.selectedIndexPath)")
+    }
 }

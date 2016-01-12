@@ -8,12 +8,8 @@
 
 import UIKit
 
-class EditViewController: UIViewController, LineFlowLayoutDelegate {
-    
-//    @IBOutlet weak var scrollBarCollectionView: UICollectionView!
-    var canvasView: CanvasView!
-    
-//    @IBOutlet weak var seletectorsView: CTASelectorCollectionView!
+class EditViewController: UIViewController {
+
    private var tabViewController: CTATabViewController!
    private var canvasViewController: CTACanvasViewController!
    private var selectorViewController: CTASelectorsViewController!
@@ -168,7 +164,7 @@ class EditViewController: UIViewController, LineFlowLayoutDelegate {
 }
 
 // MARK: - CTATabViewController
-extension EditViewController: CTATabViewControllerDataSource {
+extension EditViewController: CTATabViewControllerDataSource, LineFlowLayoutDelegate {
 // MARK: - DataSource
     
     func tableViewControllerNumberOfItems(viewController: CTATabViewController) -> Int {
@@ -258,6 +254,51 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         
         container.radius = radian
         canvasViewController.updateAt(selectedIndexPath, updateContents: false)
+    }
+    
+    func fontDidChanged(fontFamily: String, fontName: String) {
+        
+        guard let selectedIndexPath = selectedIndexPath, let container = container as? TextContainerVMProtocol else {
+            return
+        }
+        
+         let canvasSize = canvasViewController.view.bounds.size
+        container.updateWithFontFamily(fontFamily, FontName: fontName, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
+        
+        
+        canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+    }
+    
+    func alignmentDidChanged(alignment: NSTextAlignment) {
+        
+        guard let selectedIndexPath = selectedIndexPath, let container = container as? TextContainerVMProtocol else {
+            return
+        }
+        
+        container.updateWithTextAlignment(alignment)
+        canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+    }
+    
+    func spacingDidChanged(lineSpacing: CGFloat, textSpacing: CGFloat) {
+        
+        guard let selectedIndexPath = selectedIndexPath, let container = container as? TextContainerVMProtocol else {
+            return
+        }
+        
+        let canvasSize = canvasViewController.view.bounds.size
+        container.updateWithTextSpacing(lineSpacing, textSpacing: textSpacing, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
+        canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+        
+    }
+    
+    func colorDidChanged(item: CTAColorItem) {
+        
+        guard let selectedIndexPath = selectedIndexPath, let container = container as? TextContainerVMProtocol else {
+            return
+        }
+        
+        container.updateWithColor(item.colorHex, alpha: item.colorHexAlpha)
+        canvasViewController.updateAt(selectedIndexPath, updateContents: true)
     }
 }
 

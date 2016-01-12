@@ -36,7 +36,12 @@ protocol ContainerVMProtocol: viewPropertiesModifiable, contentsTypeRetrivevable
 
 protocol TextContainerVMProtocol: ContainerVMProtocol {
     
-    var textElement: protocol<CTAElement, TextModifiable> { get }
+    var textElement: protocol<CTAElement, TextModifiable>? { get }
+    
+    func updateWithFontFamily(family: String, FontName name: String, constraintSize: CGSize)
+    func updateWithTextAlignment(alignment: NSTextAlignment)
+    func updateWithTextSpacing(lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize)
+    func updateWithColor(hex: String, alpha: CGFloat)
 }
 
 // MARK: - ContainerEdit Protocols
@@ -55,6 +60,7 @@ protocol TextRetrievable: class {
     var shadowBlurRadius: CGFloat { get }
     
     func attributeStringWithFontScale(scale: CGFloat) -> NSAttributedString
+    func attributeStringWithAlignment(alignment: NSTextAlignment) -> NSAttributedString
 }
 
 extension TextRetrievable {
@@ -85,11 +91,26 @@ extension TextRetrievable {
         
         return (inset, textSize, rect, str)
     }
+    
+    func textResultWithAlignment(alignment: NSTextAlignment) -> NSAttributedString {
+        return attributeStringWithAlignment(alignment)
+    }
 }
 
 protocol TextModifiable: TextRetrievable {
     
     var fontScale: CGFloat { get set }
+    var fontFamily: String { get set }
+    var fontName: String { get set }
+    var alignment: NSTextAlignment { get set }
+    var lineSpacing: CGFloat { get set }
+    var textSpacing: CGFloat { get set }
+    var colorHex: String { get set }
+    var colorAlpha: CGFloat { get set }
+    
+    func resultWithFontFamily(family: String, fontName name: String, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
+    
+    func resultWithLineSpacing(lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
 }
 
 protocol ViewPropertiesRetrivevale:class {

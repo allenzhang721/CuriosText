@@ -162,12 +162,70 @@ extension CTAContainer {
 // MARK: - TextModifiable, ViewModifiable
 extension CTAContainer: TextContainerVMProtocol {
     
-    var textElement: protocol<CTAElement, TextModifiable> {
+    var textElement: protocol<CTAElement, TextModifiable>? {
         guard let te = element as? CTATextElement else {
+            return nil
             fatalError("This Contaienr do not contain Text Element")
         }
         
         return te
+    }
+    
+    func updateWithFontFamily(family: String, FontName name: String, constraintSize: CGSize) {
+        
+        guard let textElement = textElement else {
+            fatalError("This Contaienr do not contain Text Element")
+        }
+        
+        textElement.fontFamily = family
+        textElement.fontName = name
+        
+        let newResult = textElement.resultWithFontFamily(family, fontName: name, constraintSize: constraintSize)
+        let contentSize = CGSize(width: ceil(newResult.size.width), height: ceil(newResult.size.height))
+        let inset = CGPoint(x: floor(newResult.inset.x), y: newResult.inset.y)
+        // new content size
+        let nextSize = CGSize(width: contentSize.width - 2 * inset.x, height: contentSize.height - 2 * inset.y)
+        
+        size = nextSize
+        contentInset = inset
+    }
+    
+    func updateWithTextAlignment(alignment: NSTextAlignment) {
+        guard let textElement = textElement else {
+            fatalError("This Contaienr do not contain Text Element")
+        }
+        
+        textElement.alignment = alignment
+        
+    }
+    
+    func updateWithTextSpacing(lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize) {
+        guard let textElement = textElement else {
+            fatalError("This Contaienr do not contain Text Element")
+        }
+        
+        textElement.lineSpacing = lineSpacing
+        textElement.textSpacing = textSpacing
+        
+        let newResult = textElement.resultWithLineSpacing(lineSpacing, textSpacing: textSpacing, constraintSize: constraintSize)
+        let contentSize = CGSize(width: ceil(newResult.size.width), height: ceil(newResult.size.height))
+        let inset = CGPoint(x: floor(newResult.inset.x), y: newResult.inset.y)
+        // new content size
+        let nextSize = CGSize(width: contentSize.width - 2 * inset.x, height: contentSize.height - 2 * inset.y)
+        
+        size = nextSize
+        contentInset = inset
+    }
+    
+    func updateWithColor(hex: String, alpha: CGFloat) {
+        
+        guard let textElement = textElement else {
+            fatalError("This Contaienr do not contain Text Element")
+        }
+        
+        textElement.colorHex = hex
+        textElement.colorAlpha = alpha
+        
     }
     
     // TODO: CTAContainer, Calculate the position and origion if occur rotation -- Emiaostein; 2015-12-18-14:49
