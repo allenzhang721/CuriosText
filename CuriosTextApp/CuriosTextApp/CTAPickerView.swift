@@ -21,6 +21,7 @@ final class CTAPickerView: UIControl {
     
     weak var dataSource: CTAPickerViewDataSource?
     
+    private let showCount: Int
     private var section = 0
     private var item = 0
 //    private var currentIndexPath: NSIndexPath?
@@ -36,13 +37,15 @@ final class CTAPickerView: UIControl {
         }
     }
     
-    override init(frame: CGRect) {
+     init(frame: CGRect, showCount: Int = 4) {
+        self.showCount = showCount
         super.init(frame: CGRect.zero)
         setup()
     }
 
     required init?(coder aDecoder: NSCoder) {
 //        fatalError("init(coder:) has not been implemented")
+        self.showCount = 2
         super.init(coder: aDecoder)
         setup()
     }
@@ -50,7 +53,7 @@ final class CTAPickerView: UIControl {
     func setup() {
         
         let layout = CTALineFlowLayout()
-        layout.showCount = 4
+        layout.showCount = showCount
         layout.scrollDirection = .Horizontal
         collectionView = UICollectionView(frame: bounds, collectionViewLayout: layout)
         collectionView.backgroundColor = UIColor.whiteColor()
