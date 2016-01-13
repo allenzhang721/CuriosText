@@ -25,7 +25,9 @@ final class CTAColorItem {
 
 final class CTAColorsManger {
     
-    static let colorsCatagory = ["red", "yellow", "blue", "green", "orange", "brown", "purple", "black", "salamander", "intoDreams", "cynicide", "birdsofParadise", "brokenGlass", "vintagePattern", "sunset", "rosanne", "joyful", "starSeeker", "cloudyDay", "monoPolygons"]
+    static let colorsCatagory = ["red", "yellow", "blue", "green", "orange", "brown", "purple", "black"]
+    
+//    "salamander", "intoDreams", "cynicide", "birdsofParadise", "brokenGlass", "vintagePattern", "sunset", "rosanne", "joyful", "starSeeker", "cloudyDay", "monoPolygons"
     
     static let colors: [String: ContiguousArray<CTAColorItem>] = {
         
@@ -35,7 +37,7 @@ final class CTAColorsManger {
             
             var items = ContiguousArray<CTAColorItem>()
             
-            for i in 0..<9 {
+            for i in 0..<7 {
               let color =  CTAStyleKit.performSelector(Selector("\(catagory)\(8 - i)")).takeUnretainedValue() as! UIColor
                 let item = CTAColorItem(color: color)
                 items.append(item)
