@@ -10,6 +10,7 @@ import UIKit
 
 protocol CTAPickerViewDataSource: class {
     
+    func pickViewRegisterItemCellClass(view: CTAPickerView) -> (AnyClass?, String)
     func numberOfSectionsInCollectionView(view: CTAPickerView) -> Int
     func pickView(view: CTAPickerView, numberOfItemsAtSection section: Int) -> Int
     func pickView(view: CTAPickerView, configItemCell itemCell: CTAVerticalItemCollectionViewCell, itemAtSection section: Int, ItemAtIndex index: Int)
@@ -102,23 +103,23 @@ extension CTAPickerView: UICollectionViewDataSource {
     
 }
 
+// MARK: - Section Cell
 extension CTAPickerView: LineFlowLayoutDelegate {
     
     func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
         
+        
         section = indexPath.section
         item = (collectionView.cellForItemAtIndexPath(indexPath) as! CTASelectorVerticalCell).item
         sendActionsForControlEvents(.ValueChanged)
-//        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! CTASelectorVerticalCell
-//        cell.reload()
     }
 }
 
 extension CTAPickerView: CTASelectorVerticalCellDataSource {
     
-    func verticalCellClass(cell: CTASelectorVerticalCell) -> (AnyClass?, String) {
+    func verticalCellRegisterItemCellClass(cell: CTASelectorVerticalCell) -> (AnyClass?, String) {
         
-        return (CTAVerticalItemColorCollectionViewCell.self, "PickerItemCell")
+        return dataSource!.pickViewRegisterItemCellClass(self)
     }
     
     func verticalCell(cell: CTASelectorVerticalCell, numberOfItemsInSection section: Int) -> Int {
@@ -131,6 +132,8 @@ extension CTAPickerView: CTASelectorVerticalCellDataSource {
     }
 }
 
+
+// MARK: - vertical cell
 extension CTAPickerView: CTASelectorVerticalCellDelegate {
     
     func verticalCell(cell: CTASelectorVerticalCell, configItemCell itemCell: CTAVerticalItemCollectionViewCell, itemCellForItemAtIndexPath indexPath: NSIndexPath) {
@@ -138,7 +141,7 @@ extension CTAPickerView: CTASelectorVerticalCellDelegate {
         dataSource?.pickView(self, configItemCell: itemCell, itemAtSection: cell.section, ItemAtIndex: indexPath.item)
     }
     
-    func verticalCell(cell: CTASelectorVerticalCell, didChangetoIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
+    func verticalCell(cell: CTASelectorVerticalCell, didChangetoItemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
         
         item = indexPath.item
         sendActionsForControlEvents(.ValueChanged)

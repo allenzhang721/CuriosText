@@ -10,6 +10,7 @@ import UIKit
 
 class CTAVerticalItemColorCollectionViewCell: CTAVerticalItemCollectionViewCell {
 
+    
     var colorView: UIView!
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -38,12 +39,63 @@ class CTAVerticalItemColorCollectionViewCell: CTAVerticalItemCollectionViewCell 
         
         colorView = UIView(frame: bounds)
         colorView.layer.cornerRadius = 18
-        addSubview(colorView)
+        colorView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        colorView.layer.borderWidth = 0.5
+        contentView.addSubview(colorView)
         colorView.translatesAutoresizingMaskIntoConstraints = false
         colorView.centerXAnchor.constraintEqualToAnchor(centerXAnchor).active = true
         colorView.centerYAnchor.constraintEqualToAnchor(centerYAnchor).active = true
         colorView.widthAnchor.constraintEqualToConstant(36).active = true
         colorView.heightAnchor.constraintEqualToConstant(36).active = true
+    }
+    
+    override func update() {
+        
+        let superActived = delegate?.itemCellSuperActived(self) ?? false
+        
+        if actived && superActived {
+            alpha = 1.0
+            return
+        }
+        
+        if actived && !superActived {
+            alpha = 1.0
+            return
+        }
+        
+        if !actived && superActived {
+            alpha = 1.0
+            return
+        }
+        
+        if !actived && !superActived {
+            alpha = 0.0
+            return
+        }
+        
+    }
+    
+    override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
+        
+        super.applyLayoutAttributes(layoutAttributes)
+        
+        guard let layoutAttributes = layoutAttributes as? CollectionViewAttributes else {
+            return
+        }
+        
+        update()
+        
+        if actived != layoutAttributes.actived {
+            
+            actived = layoutAttributes.actived
+            UIView.transitionWithView(self, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {[weak self] () -> Void in
+                
+                                if let sr = self {
+                                    sr.update()
+                                }
+                
+                }, completion: nil)
+        }
     }
     
 

@@ -145,7 +145,7 @@ extension CTASelectorsViewController {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Selector\(currentType.rawValue)Cell", forIndexPath: indexPath)
         
-        print("Selector Cell")
+//        print("Selector Cell")
 //        cell.backgroundColor = UIColor.darkGrayColor()
         
         return cell
@@ -248,6 +248,6 @@ extension CTASelectorsViewController {
         if let colorItem = CTAColorsManger.colorAtIndexPath(sender.selectedIndexPath!) {
             delegate?.colorDidChanged(colorItem)
         }
-        print("color indexPath = \(sender.selectedIndexPath)")
+//        print("color indexPath = \(sender.selectedIndexPath)")
     }
 }

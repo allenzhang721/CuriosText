@@ -8,6 +8,21 @@
 
 import UIKit
 
+protocol CTAVerticalItemCollectionViewCellDelegate: class {
+    
+    func itemCellSuperActived(cell: CTAVerticalItemCollectionViewCell) -> Bool
+    
+}
+
 class CTAVerticalItemCollectionViewCell: UICollectionViewCell {
+    
+//    var superActived: Bool = false
+    var actived: Bool = false
+    
+    weak var delegate: CTAVerticalItemCollectionViewCellDelegate?
+    
+    func update() {
+        
+    }
     
 }

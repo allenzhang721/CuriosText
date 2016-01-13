@@ -37,15 +37,15 @@ public class CTAStyleKit : NSObject {
         static let yellow6: UIColor = UIColor(red: 0.306, green: 0.898, blue: 0.000, alpha: 1.000)
         static let yellow7: UIColor = UIColor(red: 0.958, green: 1.000, blue: 0.471, alpha: 1.000)
         static let yellow8: UIColor = UIColor(red: 0.985, green: 1.000, blue: 0.811, alpha: 1.000)
-        static let blue0: UIColor = UIColor(red: 0.263, green: 0.000, blue: 0.729, alpha: 1.000)
-        static let blue1: UIColor = UIColor(red: 0.086, green: 0.102, blue: 0.545, alpha: 1.000)
-        static let blue2: UIColor = UIColor(red: 0.635, green: 0.000, blue: 0.898, alpha: 1.000)
-        static let blue3: UIColor = UIColor(red: 0.592, green: 0.286, blue: 0.725, alpha: 1.000)
-        static let blue4: UIColor = UIColor(red: 0.800, green: 0.176, blue: 0.898, alpha: 1.000)
-        static let blue5: UIColor = UIColor(red: 0.898, green: 0.000, blue: 0.898, alpha: 1.000)
-        static let blue6: UIColor = UIColor(red: 0.820, green: 0.000, blue: 0.898, alpha: 1.000)
-        static let blue7: UIColor = UIColor(red: 0.776, green: 0.478, blue: 0.898, alpha: 1.000)
-        static let blue8: UIColor = UIColor(red: 0.898, green: 0.455, blue: 0.898, alpha: 1.000)
+        static let blue0: UIColor = UIColor(red: 0.187, green: 0.006, blue: 0.507, alpha: 1.000)
+        static let blue1: UIColor = UIColor(red: 0.184, green: 0.006, blue: 0.500, alpha: 1.000)
+        static let blue2: UIColor = UIColor(red: 0.263, green: 0.000, blue: 0.729, alpha: 1.000)
+        static let blue3: UIColor = UIColor(red: 0.086, green: 0.102, blue: 0.545, alpha: 1.000)
+        static let blue4: UIColor = UIColor(red: 0.247, green: 0.000, blue: 0.898, alpha: 1.000)
+        static let blue5: UIColor = UIColor(red: 0.161, green: 0.000, blue: 0.729, alpha: 1.000)
+        static let blue6: UIColor = UIColor(red: 0.000, green: 0.322, blue: 0.729, alpha: 1.000)
+        static let blue7: UIColor = UIColor(red: 0.075, green: 0.514, blue: 0.898, alpha: 1.000)
+        static let blue8: UIColor = UIColor(red: 0.212, green: 0.722, blue: 0.898, alpha: 1.000)
         static let green0: UIColor = UIColor(red: 0.000, green: 0.380, blue: 0.188, alpha: 1.000)
         static let green1: UIColor = UIColor(red: 0.000, green: 0.576, blue: 0.043, alpha: 1.000)
         static let green2: UIColor = UIColor(red: 0.000, green: 0.757, blue: 0.373, alpha: 1.000)
@@ -64,15 +64,15 @@ public class CTAStyleKit : NSObject {
         static let orange6: UIColor = UIColor(red: 1.000, green: 0.816, blue: 0.476, alpha: 1.000)
         static let orange7: UIColor = UIColor(red: 1.000, green: 0.890, blue: 0.686, alpha: 1.000)
         static let orange8: UIColor = UIColor(red: 1.000, green: 0.891, blue: 0.690, alpha: 1.000)
-        static let brown0: UIColor = UIColor(red: 0.329, green: 0.123, blue: 0.000, alpha: 1.000)
-        static let brown1: UIColor = UIColor(red: 0.514, green: 0.192, blue: 0.000, alpha: 1.000)
-        static let brown2: UIColor = UIColor(red: 0.749, green: 0.423, blue: 0.228, alpha: 1.000)
-        static let brown3: UIColor = UIColor(red: 0.749, green: 0.493, blue: 0.340, alpha: 1.000)
-        static let brown4: UIColor = UIColor(red: 0.749, green: 0.594, blue: 0.501, alpha: 1.000)
-        static let brown5: UIColor = UIColor(red: 0.749, green: 0.618, blue: 0.540, alpha: 1.000)
-        static let brown6: UIColor = UIColor(red: 0.749, green: 0.576, blue: 0.473, alpha: 1.000)
-        static let brown7: UIColor = UIColor(red: 0.863, green: 0.607, blue: 0.454, alpha: 1.000)
-        static let brown8: UIColor = UIColor(red: 0.749, green: 0.698, blue: 0.667, alpha: 1.000)
+        static let indigo0: UIColor = UIColor(red: 0.635, green: 1.000, blue: 1.000, alpha: 1.000)
+        static let indigo1: UIColor = UIColor(red: 0.436, green: 1.000, blue: 1.000, alpha: 1.000)
+        static let indigo2: UIColor = UIColor(red: 0.388, green: 0.898, blue: 0.898, alpha: 1.000)
+        static let indigo3: UIColor = UIColor(red: 0.000, green: 0.898, blue: 0.898, alpha: 1.000)
+        static let indigo4: UIColor = UIColor(red: 0.000, green: 0.898, blue: 0.898, alpha: 1.000)
+        static let indigo5: UIColor = UIColor(red: 0.000, green: 0.741, blue: 0.733, alpha: 1.000)
+        static let indigo6: UIColor = UIColor(red: 0.000, green: 0.725, blue: 0.898, alpha: 1.000)
+        static let indigo7: UIColor = UIColor(red: 0.000, green: 0.655, blue: 0.808, alpha: 1.000)
+        static let indigo8: UIColor = UIColor(red: 0.000, green: 0.541, blue: 0.729, alpha: 1.000)
         static let purple0: UIColor = UIColor(red: 0.422, green: 0.196, blue: 0.490, alpha: 1.000)
         static let purple1: UIColor = UIColor(red: 0.420, green: 0.184, blue: 0.490, alpha: 1.000)
         static let purple2: UIColor = UIColor(red: 0.590, green: 0.424, blue: 0.640, alpha: 1.000)
@@ -274,15 +274,15 @@ public class CTAStyleKit : NSObject {
     public class var orange6: UIColor { return Cache.orange6 }
     public class var orange7: UIColor { return Cache.orange7 }
     public class var orange8: UIColor { return Cache.orange8 }
-    public class var brown0: UIColor { return Cache.brown0 }
-    public class var brown1: UIColor { return Cache.brown1 }
-    public class var brown2: UIColor { return Cache.brown2 }
-    public class var brown3: UIColor { return Cache.brown3 }
-    public class var brown4: UIColor { return Cache.brown4 }
-    public class var brown5: UIColor { return Cache.brown5 }
-    public class var brown6: UIColor { return Cache.brown6 }
-    public class var brown7: UIColor { return Cache.brown7 }
-    public class var brown8: UIColor { return Cache.brown8 }
+    public class var indigo0: UIColor { return Cache.indigo0 }
+    public class var indigo1: UIColor { return Cache.indigo1 }
+    public class var indigo2: UIColor { return Cache.indigo2 }
+    public class var indigo3: UIColor { return Cache.indigo3 }
+    public class var indigo4: UIColor { return Cache.indigo4 }
+    public class var indigo5: UIColor { return Cache.indigo5 }
+    public class var indigo6: UIColor { return Cache.indigo6 }
+    public class var indigo7: UIColor { return Cache.indigo7 }
+    public class var indigo8: UIColor { return Cache.indigo8 }
     public class var purple0: UIColor { return Cache.purple0 }
     public class var purple1: UIColor { return Cache.purple1 }
     public class var purple2: UIColor { return Cache.purple2 }
