@@ -307,7 +307,7 @@ final class CTACanvasViewController: UIViewController {
             return nil
         }
         
-        let reverseCell = visualCells.reverse()
+        let reverseCell = visualCells
         
         for cell in reverseCell {
             
