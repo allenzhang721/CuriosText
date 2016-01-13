@@ -54,6 +54,11 @@ final class CTASelectorColorsCell: CTASelectorCell {
 
 extension CTASelectorColorsCell: CTAPickerViewDataSource {
     
+    func pickViewRegisterItemCellClass(view: CTAPickerView) -> (AnyClass?, String) {
+        
+        return (CTAVerticalItemColorCollectionViewCell.self, "SelectorColorItemCell")
+    }
+    
     func numberOfSectionsInCollectionView(view: CTAPickerView) -> Int {
         
         return CTAColorsManger.colorsCatagory.count

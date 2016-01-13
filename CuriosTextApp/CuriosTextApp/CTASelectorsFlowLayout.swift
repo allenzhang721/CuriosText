@@ -16,7 +16,7 @@ class CTASelectorsFlowLayout: UICollectionViewFlowLayout {
         
         itemSize = self.collectionView!.bounds.size
         
-        print("selectorCellSize = \(itemSize)")
+//        print("selectorCellSize = \(itemSize)")
 //        scrollDirection = .Vertical
     }
     

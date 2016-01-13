@@ -126,12 +126,14 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
                         
                         //                        print("active")
                         attribute.actived = true
+//                        attribute.alpha = 1.0
                         
                     } else {
                         //                    attribute.alpha = minAlpha
                         //                    attribute.transform = CGAffineTransformMakeScale(minScale, minScale)
                         //                        print("dactive")
                         attribute.actived = false
+//                        attribute.alpha = 0.1
                     }
                 }
             }
