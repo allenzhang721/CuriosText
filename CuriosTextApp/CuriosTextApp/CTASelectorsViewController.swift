@@ -50,7 +50,7 @@ class CTASelectorsViewController: UIViewController, UICollectionViewDataSource, 
             return "radianChanged:"
             
         case .Fonts:
-            return "indexPathChanged:"
+            return "indexPathOfFontsChanged:"
             
         case .Aligments:
             return "aligmentsChanged:"
@@ -211,9 +211,9 @@ extension CTASelectorsViewController {
         delegate?.radianDidChanged(v)
     }
     
-    func indexPathChanged(sender: CTAScrollSelectView) {
+    func indexPathOfFontsChanged(sender: CTAPickerView) {
         
-        guard let indexPath = sender.indexPath else {
+        guard let indexPath = sender.selectedIndexPath else {
             return
         }
         
