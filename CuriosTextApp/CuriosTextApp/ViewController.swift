@@ -22,11 +22,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         CTAUpTokenDomain.getInstance().uploadFilePath { (info) -> Void in
-            let dic = info.modelDic
-            let publishFilePath = dic![key(.PublishFilePath)]
-            let userFilePath = dic![key(.UserFilePath)]
-            CTAFilePath.publishFilePath = publishFilePath!
-            CTAFilePath.userFilePath = userFilePath!
+            if info.result {
+                let dic = info.modelDic
+                let publishFilePath = dic![key(.PublishFilePath)]
+                let userFilePath = dic![key(.UserFilePath)]
+                CTAFilePath.publishFilePath = publishFilePath!
+                CTAFilePath.userFilePath = userFilePath!
+            }
         }
     
         addChildViewController(pageViewController)
