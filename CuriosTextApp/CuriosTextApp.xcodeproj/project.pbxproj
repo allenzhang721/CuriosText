@@ -80,7 +80,6 @@
 		2C7A959F1C3A6A4F005B0EAE /* CTAPageControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A959E1C3A6A4F005B0EAE /* CTAPageControllers.swift */; };
 		2C82FF551C4362FA001D927A /* CTASegementControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82FF541C4362FA001D927A /* CTASegementControl.swift */; };
 		2C82FF571C437F58001D927A /* CTASelectorAligmentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82FF561C437F58001D927A /* CTASelectorAligmentsCell.swift */; };
-		2C94E3501C3FB59800E2C8E4 /* CTASelectorFontNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C94E34F1C3FB59800E2C8E4 /* CTASelectorFontNameCell.swift */; };
 		2C9706C11C1E6EC200FA2E17 /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */; };
 		2C9706C21C1E6EC200FA2E17 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9706C01C1E6EC200FA2E17 /* SwiftyJSON.framework */; };
 		2C9706C51C1E6EE900FA2E17 /* CTABaseDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9706C41C1E6EE900FA2E17 /* CTABaseDomain.swift */; };
@@ -219,7 +218,6 @@
 		2C7A959E1C3A6A4F005B0EAE /* CTAPageControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPageControllers.swift; sourceTree = "<group>"; };
 		2C82FF541C4362FA001D927A /* CTASegementControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASegementControl.swift; sourceTree = "<group>"; };
 		2C82FF561C437F58001D927A /* CTASelectorAligmentsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorAligmentsCell.swift; sourceTree = "<group>"; };
-		2C94E34F1C3FB59800E2C8E4 /* CTASelectorFontNameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorFontNameCell.swift; sourceTree = "<group>"; };
 		2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Locksmith.framework; path = "Pods/../build/Debug-iphoneos/Locksmith.framework"; sourceTree = "<group>"; };
 		2C9706C01C1E6EC200FA2E17 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "Pods/../build/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
 		2C9706C41C1E6EE900FA2E17 /* CTABaseDomain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTABaseDomain.swift; sourceTree = "<group>"; };
@@ -336,7 +334,6 @@
 				2C04045B1C3EC25A00A5B017 /* CTACanvasTextCell.swift */,
 				2C1F01571C3BD5960033CED8 /* CTASelectorCell.swift */,
 				2C3097051C3F5F9200D996A4 /* CTASelectorFontCell.swift */,
-				2C94E34F1C3FB59800E2C8E4 /* CTASelectorFontNameCell.swift */,
 				2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */,
 				2C0404671C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift */,
 				2C82FF561C437F58001D927A /* CTASelectorAligmentsCell.swift */,
@@ -384,6 +381,7 @@
 		2C3B33C81C1176D000738166 /* CuriosTextApp */ = {
 			isa = PBXGroup;
 			children = (
+				2C5ACC111C439E8100B96CCD /* CTAStyleKit.swift */,
 				2CB322301C4533BE00BD06F5 /* UserPublishes */,
 				2C31EB5F1C451AD9002A4D71 /* Extensions */,
 				2C5C24991C44FA8B00A70F1B /* Mangers */,
@@ -507,7 +505,6 @@
 		2C6C67FD1C35082C00CCE81C /* CTAToolKit */ = {
 			isa = PBXGroup;
 			children = (
-				2C5ACC111C439E8100B96CCD /* CTAStyleKit.swift */,
 				2C0404691C3EC5CE00A5B017 /* view */,
 				2C0404641C3EC53900A5B017 /* Layout */,
 				2C6C68001C350A8500CCE81C /* CTASelectorCollectionView.swift */,
@@ -827,7 +824,6 @@
 				2CAEAC9D1C323F4300C9F9AC /* ContainerImgView.swift in Sources */,
 				2C9706CD1C1E794B00FA2E17 /* CTAError.swift in Sources */,
 				661D29F61C2AD5E60073FC0E /* CTAUploadController.swift in Sources */,
-				2C94E3501C3FB59800E2C8E4 /* CTASelectorFontNameCell.swift in Sources */,
 				2C3B34061C11B4F900738166 /* CTAConstants.swift in Sources */,
 				66C7BF231C3111D700ADF251 /* CTADomainInfo.swift in Sources */,
 				2C5C248E1C44E1C900A70F1B /* CTAVerticalItemCollectionViewCell.swift in Sources */,

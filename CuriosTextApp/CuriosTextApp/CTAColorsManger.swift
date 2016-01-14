@@ -50,7 +50,6 @@ final class CTAColorsManger {
     }()
     
     class func colorAtIndexPath(indexPath: NSIndexPath) -> CTAColorItem? {
-        
         let key = CTAColorsManger.colorsCatagory[indexPath.section]
         let color = CTAColorsManger.colors[key]![indexPath.item]
         return color

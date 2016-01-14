@@ -12,27 +12,22 @@ protocol CTASelectorDataSource: class {
     
     func selectorBeganScale(cell: CTASelectorCell) -> CGFloat
     func selectorBeganRadian(cell: CTASelectorCell) -> CGFloat
-    func selectorBeganIndexPath(cell: CTASelectorCell) -> NSIndexPath
+//    func selectorBeganIndexPath(cell: CTASelectorCell) -> NSIndexPath
     func selectorBeganAlignment(cell: CTASelectorCell) -> NSTextAlignment
     func selectorBeganSpacing(cell: CTASelectorCell) -> (CGFloat, CGFloat)
 }
 
 protocol CTASelectorControl: class {
-    
+    func retriveBeganValue()
     func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents)
-    
     func removeAllTarget()
 }
 
 class CTASelectorCell: UICollectionViewCell, CTASelectorControl {
-
     weak var dataSource: CTASelectorDataSource?
-    
     var controlView: UIControl?
     
     func retriveBeganValue(){}
-    
     func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents){}
-    
     func removeAllTarget(){}
 }

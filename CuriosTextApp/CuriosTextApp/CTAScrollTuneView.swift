@@ -38,6 +38,8 @@ class CTAScrollTuneAttributes {
 
 class CTAScrollTuneView: UIControl, ValueTuneable {
     
+    var maxiumValue: CGFloat = 5.0
+    var minumValue: CGFloat = 0.5
     private let scrollView: UIScrollView
     private let backgroundLayer: CALayer
     private let maskLayer: CAShapeLayer
@@ -46,17 +48,12 @@ class CTAScrollTuneView: UIControl, ValueTuneable {
     private var validRulerLength: CGFloat = 0
     private var validScrollLength: CGFloat = 0
     
-   private(set) var value: CGFloat = 0.0
-    var maxiumValue: CGFloat = 5.0
-    var minumValue: CGFloat = 0.5
+    private(set) var value: CGFloat = 0.0
     
-    var rulerUnit: CGFloat {
-        
+    private var rulerUnit: CGFloat {
         return validRulerLength / (maxiumValue - minumValue)
     }
-    
-    var scrollUnit: CGFloat {
-        
+    private var scrollUnit: CGFloat {
         return validScrollLength / (maxiumValue - minumValue)
     }
     
@@ -68,9 +65,9 @@ class CTAScrollTuneView: UIControl, ValueTuneable {
         backgroundLayer.contentsScale = UIScreen.mainScreen().scale
         maskLayer.contentsScale = UIScreen.mainScreen().scale
         super.init(frame: frame)
-         setup(bounds, attributes: attributes)
+        setup(bounds, attributes: attributes)
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -90,7 +87,7 @@ class CTAScrollTuneView: UIControl, ValueTuneable {
         //valid length
         validRulerLength = linePath.bounds.width - CGFloat(attributes.lineWidth)
         validScrollLength = validRulerLength
-
+        
         // indicator
         let indicatorlayer = indicator(superLayerSize: frame.size, attrbutes: attributes)
         
@@ -106,7 +103,7 @@ class CTAScrollTuneView: UIControl, ValueTuneable {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.contentSize = CGSize(width: validRulerLength + CGRectGetWidth(frame), height: CGRectGetHeight(frame))
-   
+        
         layer.addSublayer(backgroundLayer)
         addSubview(scrollView)
         beganTranslateX = CGRectGetWidth(frame) / 2.0 - CGFloat(attributes.lineWidth) / 2.0
@@ -124,25 +121,25 @@ class CTAScrollTuneView: UIControl, ValueTuneable {
         return indicatorlayer
     }
     
-   private func updateLineOffset(offset: CGFloat) {
+    private func updateLineOffset(offset: CGFloat) {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         maskLayer.transform = CATransform3DMakeTranslation(offset, 0, 0)
         CATransaction.commit()
     }
     
-   private func updateLineOffsetByValue(v: CGFloat) {
+    private func updateLineOffsetByValue(v: CGFloat) {
         
         let beganX = beganTranslateX
         let offset = -(v - minumValue) * rulerUnit + beganX
         updateLineOffset(offset)
     }
     
-   private func updateScrollOffset(offset: CGFloat) {
+    private func updateScrollOffset(offset: CGFloat) {
         scrollView.setContentOffset(CGPoint(x: offset, y: scrollView.contentOffset.y), animated: false)
     }
     
-   private func updateScrollOffsetByValue(v: CGFloat) {
+    private func updateScrollOffsetByValue(v: CGFloat) {
         
         let offset = v * scrollUnit
         updateScrollOffset(offset)
@@ -156,8 +153,8 @@ extension CTAScrollTuneView {
         let nextValue = min(max(minumValue, v), maxiumValue)
         value = nextValue
         
-        updateLineOffsetByValue(v)
-        updateScrollOffsetByValue(v)
+        updateLineOffsetByValue(nextValue)
+        updateScrollOffsetByValue(nextValue)
     }
     
     private func updateValueByDragging(v: CGFloat) {
@@ -178,9 +175,9 @@ extension CTAScrollTuneView: UIScrollViewDelegate {
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
-//        let nextRuleOffset = beganTranslateX - scrollView.contentOffset.x
+        //        let nextRuleOffset = beganTranslateX - scrollView.contentOffset.x
         let nextValue = minumValue + scrollView.contentOffset.x / scrollUnit
-
+        
         
         if fabs((nextValue * 100.0 - value * 100.0)) > 0.1 {
             

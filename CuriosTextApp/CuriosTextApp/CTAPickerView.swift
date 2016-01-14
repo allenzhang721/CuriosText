@@ -20,11 +20,10 @@ protocol CTAPickerViewDataSource: class {
 final class CTAPickerView: UIControl {
     
     weak var dataSource: CTAPickerViewDataSource?
-    
+
     private let showCount: Int
     private var section = 0
     private var item = 0
-//    private var currentIndexPath: NSIndexPath?
     private var collectionView: UICollectionView!
     
     var selectedIndexPath: NSIndexPath? {
@@ -44,14 +43,12 @@ final class CTAPickerView: UIControl {
     }
 
     required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
         self.showCount = 2
         super.init(coder: aDecoder)
         setup()
     }
     
     func setup() {
-        
         let layout = CTALineFlowLayout()
         layout.showCount = showCount
         layout.scrollDirection = .Horizontal
@@ -71,9 +68,7 @@ final class CTAPickerView: UIControl {
         
         layout.delegate = self
         collectionView.dataSource = self
-        
     }
-
 }
 
 extension CTAPickerView: UICollectionViewDataSource {
@@ -103,14 +98,12 @@ extension CTAPickerView: UICollectionViewDataSource {
         cell.register()
         return cell
     }
-    
 }
 
 // MARK: - Section Cell
 extension CTAPickerView: LineFlowLayoutDelegate {
     
     func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
-        
         
         section = indexPath.section
         item = (collectionView.cellForItemAtIndexPath(indexPath) as! CTASelectorVerticalCell).item

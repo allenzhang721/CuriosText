@@ -10,8 +10,8 @@ import UIKit
 
 protocol CTATabViewControllerDataSource: class {
     
-    func tableViewControllerNumberOfItems(viewController: CTATabViewController) -> Int
-    func tableViewController(viewController: CTATabViewController, tabItemAtIndexPath indexPath: NSIndexPath) -> CTATabItem
+    func tabViewControllerNumberOfItems(viewController: CTATabViewController) -> Int
+    func tabViewController(viewController: CTATabViewController, tabItemAtIndexPath indexPath: NSIndexPath) -> CTATabItem
 }
 
 class CTATabItem {
@@ -47,7 +47,7 @@ extension CTATabViewController: UICollectionViewDataSource {
             return 0
         }
         
-        return dataSource.tableViewControllerNumberOfItems(self)
+        return dataSource.tabViewControllerNumberOfItems(self)
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -56,7 +56,5 @@ extension CTATabViewController: UICollectionViewDataSource {
 
         
         return cell
-        
     }
-    
 }
