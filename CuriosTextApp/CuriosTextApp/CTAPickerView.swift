@@ -24,7 +24,7 @@ final class CTAPickerView: UIControl {
     private let showCount: Int
     private var section = 0
     private var item = 0
-    private var collectionView: UICollectionView!
+    var collectionView: UICollectionView!
     
     var selectedIndexPath: NSIndexPath? {
         get {
@@ -75,6 +75,14 @@ final class CTAPickerView: UIControl {
         debug_print(self)
         
         debug_print(collectionView)
+        
+        let section = NSIndexPath(forItem: 0, inSection: indexPath.section)
+        collectionView.scrollToItemAtIndexPath(section, atScrollPosition: .CenteredHorizontally, animated: false)
+        
+        let item = NSIndexPath(forItem: indexPath.item, inSection: 0)
+        if let cell = collectionView.cellForItemAtIndexPath(section) as? CTASelectorVerticalCell {
+            cell.collectionView.scrollToItemAtIndexPath(item, atScrollPosition: .CenteredVertically, animated: false)
+        }
     }
 }
 
@@ -113,7 +121,11 @@ extension CTAPickerView: LineFlowLayoutDelegate {
     func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
         
         section = indexPath.section
-        item = (collectionView.cellForItemAtIndexPath(indexPath) as! CTASelectorVerticalCell).item
+        
+        if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? CTASelectorVerticalCell {
+            item = cell.item
+        }
+
         sendActionsForControlEvents(.ValueChanged)
     }
 }
@@ -134,7 +146,6 @@ extension CTAPickerView: CTASelectorVerticalCellDataSource {
         return dataSource.pickView(self, numberOfItemsAtSection: section)
     }
 }
-
 
 // MARK: - vertical cell
 extension CTAPickerView: CTASelectorVerticalCellDelegate {

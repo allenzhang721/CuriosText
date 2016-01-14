@@ -105,6 +105,7 @@
 		2CB322321C4533E200BD06F5 /* CTAPublishesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB322311C4533E200BD06F5 /* CTAPublishesCell.swift */; };
 		2CCD94DC1C43B4AA001E5D08 /* CTATextSpacingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */; };
 		2CD8F4091C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8F4081C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift */; };
+		2CF5EB8B1C47B2CF009F0719 /* CTAFontsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF5EB8A1C47B2CF009F0719 /* CTAFontsManager.swift */; };
 		661D29F11C2A8FC30073FC0E /* CTAUploadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D29F01C2A8FC30073FC0E /* CTAUploadModel.swift */; };
 		661D29F41C2A97060073FC0E /* CTAUploadProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D29F31C2A97060073FC0E /* CTAUploadProtocol.swift */; };
 		661D29F61C2AD5E60073FC0E /* CTAUploadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D29F51C2AD5E60073FC0E /* CTAUploadController.swift */; };
@@ -244,6 +245,7 @@
 		2CB322311C4533E200BD06F5 /* CTAPublishesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishesCell.swift; sourceTree = "<group>"; };
 		2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATextSpacingView.swift; sourceTree = "<group>"; };
 		2CD8F4081C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAVerticalItemFontsCollectionViewCell.swift; sourceTree = "<group>"; };
+		2CF5EB8A1C47B2CF009F0719 /* CTAFontsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAFontsManager.swift; sourceTree = "<group>"; };
 		661D29F01C2A8FC30073FC0E /* CTAUploadModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUploadModel.swift; sourceTree = "<group>"; };
 		661D29F31C2A97060073FC0E /* CTAUploadProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUploadProtocol.swift; sourceTree = "<group>"; };
 		661D29F51C2AD5E60073FC0E /* CTAUploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUploadController.swift; sourceTree = "<group>"; };
@@ -501,6 +503,7 @@
 			isa = PBXGroup;
 			children = (
 				2C5C24971C44FA5600A70F1B /* CTAColorsManger.swift */,
+				2CF5EB8A1C47B2CF009F0719 /* CTAFontsManager.swift */,
 			);
 			name = Mangers;
 			sourceTree = "<group>";
@@ -858,6 +861,7 @@
 				2CAEAC9B1C323F4300C9F9AC /* CanvasView.swift in Sources */,
 				66A072A91C156D1C0046C72F /* CTAUserRequestAPI.swift in Sources */,
 				2C5C24921C44E82100A70F1B /* CTAPickerView.swift in Sources */,
+				2CF5EB8B1C47B2CF009F0719 /* CTAFontsManager.swift in Sources */,
 				2C7A951D1C3A50F6005B0EAE /* CTATemplateViewController.swift in Sources */,
 				2C3CAD251C21826800D8DE4B /* CTATextLayer.swift in Sources */,
 				2C6C68011C350A8500CCE81C /* CTASelectorCollectionView.swift in Sources */,

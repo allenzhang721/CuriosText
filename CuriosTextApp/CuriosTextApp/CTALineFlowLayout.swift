@@ -41,6 +41,15 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
         return CollectionViewAttributes.self
     }
     
+    override func collectionViewContentSize() -> CGSize {
+        
+        
+        
+        let size = super.collectionViewContentSize()
+        debug_print(size)
+        return size
+    }
+    
     override func prepareLayout() {
         guard let collectionView = collectionView else {
             return

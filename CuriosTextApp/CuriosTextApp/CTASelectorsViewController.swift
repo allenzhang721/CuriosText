@@ -135,6 +135,12 @@ extension CTASelectorsViewController {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Selector\(currentType.rawValue)Cell", forIndexPath: indexPath)
         
+//        if let cell = cell as? CTASelectorCell {
+//            
+//            
+//        }
+        
+        
         debug_print("cellBounds = \(cell)\n subViews = \(cell.contentView.subviews.first as? CTAPickerView)")
         
         return cell
@@ -144,9 +150,6 @@ extension CTASelectorsViewController {
         guard let cell = cell as? CTASelectorCell else {
             return
         }
-        
-        debug_print("cellBounds = \(cell)\n subViews = \(cell.contentView.subviews.first as? CTAPickerView)")
-        
         
         cell.dataSource = self
         cell.retriveBeganValue()
@@ -189,9 +192,19 @@ extension CTASelectorsViewController: CTASelectorDataSource {
     }
     
     // TODO: Font,Color need began value -- EMIAOSTEIN; 2016-01-13-18:51
-    func selectorBeganFontIndexPath(cell: CTASelectorCell) -> NSIndexPath {
+    func selectorBeganFontIndexPath(cell: CTASelectorCell) -> NSIndexPath? {
         
-        return NSIndexPath(forItem: 2, inSection: 2)
+        guard
+            let container = container as? TextContainerVMProtocol,
+            let textElement = container.textElement else {
+                return nil
+        }
+        
+        let family = textElement.fontFamily
+        let name = textElement.fontName
+        
+        return CTAFontsManager.indexPathForFamily(family, fontName: name)
+//        return NSIndexPath(forItem: 2, inSection: 2)
     }
 }
 
@@ -212,17 +225,13 @@ extension CTASelectorsViewController {
             return
         }
         
-        let family = UIFont.familyNames()[indexPath.section]
-        let fontName = UIFont.fontNamesForFamilyName(family)
+        let r = CTAFontsManager.familyAndFontNameWith(indexPath)
         
-        let name: String
-        if fontName.count > 0 && fontName.count >= indexPath.item {
-            name = fontName[indexPath.item]
-        } else {
-            name = ""
+        guard let family = r.0, let font = r.1 else {
+            return
         }
         
-        delegate?.fontDidChanged(family, fontName: name)
+        delegate?.fontDidChanged(family, fontName: font)
     }
     
     func aligmentsChanged(sender: CTASegmentControl) {

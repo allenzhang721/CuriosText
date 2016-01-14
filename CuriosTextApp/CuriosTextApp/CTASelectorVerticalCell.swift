@@ -26,7 +26,7 @@ final class CTASelectorVerticalCell: CTASelectorCell {
     
     weak var verticalDataSource: CTASelectorVerticalCellDataSource!
     weak var verticalDelegate: CTASelectorVerticalCellDelegate?
-    private var collectionView: UICollectionView!
+    var collectionView: UICollectionView!
     var cellIdentifier: String!
     var section: Int = 0
     var item: Int = 0

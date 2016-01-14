@@ -11,7 +11,6 @@ import UIKit
 final class CTASelectorFontCell: CTASelectorCell {
     
     private var view: CTAPickerView!
-    let family = UIFont.familyNames()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,8 +38,15 @@ final class CTASelectorFontCell: CTASelectorCell {
             return
         }
         
-        view.updateTo(dataSource.selectorBeganFontIndexPath(self))
-        
+        let time: NSTimeInterval = 0.1
+        let delay = dispatch_time(DISPATCH_TIME_NOW,
+            Int64(time * Double(NSEC_PER_SEC)))
+        dispatch_after(delay, dispatch_get_main_queue()) {
+            
+            if let indexPath = dataSource.selectorBeganFontIndexPath(self) {
+                 self.view.updateTo(indexPath)
+            }
+        }
     }
     
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
@@ -67,25 +73,30 @@ extension CTASelectorFontCell: CTAPickerViewDataSource {
     }
     
     func numberOfSectionsInCollectionView(view: CTAPickerView) -> Int {
-        return 5
+        debug_print("")
+        return CTAFontsManager.families.count
     }
     
     func pickView(view: CTAPickerView, numberOfItemsAtSection section: Int) -> Int {
-        let afamily = family[section]
-        return UIFont.fontNamesForFamilyName(afamily).count
+        let afamily = CTAFontsManager.families[section]
+        debug_print("")
+        
+        guard let fonts  = CTAFontsManager.fontNamesWithFamily(afamily) else {
+            return 0
+        }
+        return fonts.count
     }
     
     func pickView(view: CTAPickerView, configItemCell itemCell: CTAVerticalItemCollectionViewCell, itemAtSection section: Int, ItemAtIndex index: Int) {
+        debug_print("")
         if let itemCell = itemCell as? CTAVerticalItemFontsCollectionViewCell {
-            let family = UIFont.familyNames()[section]
-            let fontNames = UIFont.fontNamesForFamilyName(family)
+            let res = CTAFontsManager.familyAndFontNameWith(NSIndexPath(forItem: index, inSection: section))
             
-            if fontNames.count > 0 {
-                let name = fontNames[index]
-                itemCell.backgroundColor = CTAStyleKit.birdsofParadise0
-                itemCell.view.text = family
-                itemCell.view.font = UIFont(name: name, size: 17)
+            guard let family = res.0, font = res.1 else {
+                return
             }
+                itemCell.view.text = family
+                itemCell.view.font = UIFont(name: font, size: 17)
         }
     }
 }
