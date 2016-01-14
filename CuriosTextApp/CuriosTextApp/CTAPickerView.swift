@@ -38,7 +38,7 @@ final class CTAPickerView: UIControl {
     
      init(frame: CGRect, showCount: Int = 4) {
         self.showCount = showCount
-        super.init(frame: CGRect.zero)
+        super.init(frame: frame)
         setup()
     }
 
@@ -68,6 +68,13 @@ final class CTAPickerView: UIControl {
         
         layout.delegate = self
         collectionView.dataSource = self
+    }
+    
+    func updateTo(indexPath: NSIndexPath) {
+        
+        debug_print(self)
+        
+        debug_print(collectionView)
     }
 }
 

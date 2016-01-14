@@ -15,11 +15,12 @@ final class CTASelectorFontCell: CTASelectorCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        debug_print("awakeFromNib")
         setup()
     }
     
     private func setup() {
-        view = CTAPickerView(frame: bounds, showCount: 2)
+        view = CTAPickerView(frame: CGRect(x: 0, y: 0, width: 320, height: 88), showCount: 2)
         view.backgroundColor = UIColor.whiteColor()
         contentView.addSubview(view)
         view.backgroundColor = CTAStyleKit.intoDreams1
@@ -30,6 +31,16 @@ final class CTASelectorFontCell: CTASelectorCell {
         view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
         
         view.dataSource = self
+    }
+    
+    override func retriveBeganValue() {
+        
+        guard let dataSource = dataSource else {
+            return
+        }
+        
+        view.updateTo(dataSource.selectorBeganFontIndexPath(self))
+        
     }
     
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
@@ -71,6 +82,7 @@ extension CTASelectorFontCell: CTAPickerViewDataSource {
             
             if fontNames.count > 0 {
                 let name = fontNames[index]
+                itemCell.backgroundColor = CTAStyleKit.birdsofParadise0
                 itemCell.view.text = family
                 itemCell.view.font = UIFont(name: name, size: 17)
             }

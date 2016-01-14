@@ -135,6 +135,8 @@ extension CTASelectorsViewController {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Selector\(currentType.rawValue)Cell", forIndexPath: indexPath)
         
+        debug_print("cellBounds = \(cell)\n subViews = \(cell.contentView.subviews.first as? CTAPickerView)")
+        
         return cell
     }
     
@@ -142,6 +144,10 @@ extension CTASelectorsViewController {
         guard let cell = cell as? CTASelectorCell else {
             return
         }
+        
+        debug_print("cellBounds = \(cell)\n subViews = \(cell.contentView.subviews.first as? CTAPickerView)")
+        
+        
         cell.dataSource = self
         cell.retriveBeganValue()
         cell.addTarget(self, action: Selector(action), forControlEvents: .ValueChanged)
@@ -183,6 +189,10 @@ extension CTASelectorsViewController: CTASelectorDataSource {
     }
     
     // TODO: Font,Color need began value -- EMIAOSTEIN; 2016-01-13-18:51
+    func selectorBeganFontIndexPath(cell: CTASelectorCell) -> NSIndexPath {
+        
+        return NSIndexPath(forItem: 2, inSection: 2)
+    }
 }
 
 // MARK: - Actions

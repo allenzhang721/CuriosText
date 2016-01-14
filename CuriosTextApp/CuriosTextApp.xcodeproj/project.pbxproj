@@ -67,6 +67,7 @@
 		2C5C24921C44E82100A70F1B /* CTAPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C24911C44E82100A70F1B /* CTAPickerView.swift */; };
 		2C5C24961C44F5D800A70F1B /* CTASelectorColorsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C24951C44F5D800A70F1B /* CTASelectorColorsCell.swift */; };
 		2C5C24981C44FA5600A70F1B /* CTAColorsManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C24971C44FA5600A70F1B /* CTAColorsManger.swift */; };
+		2C5EA2561C479CE000DCEE7B /* Print.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5EA2551C479CE000DCEE7B /* Print.swift */; };
 		2C6C67FF1C350A4800CCE81C /* CTALineFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6C67FE1C350A4800CCE81C /* CTALineFlowLayout.swift */; };
 		2C6C68011C350A8500CCE81C /* CTASelectorCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6C68001C350A8500CCE81C /* CTASelectorCollectionView.swift */; };
 		2C6C68031C350B4400CCE81C /* CTAScollBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6C68021C350B4400CCE81C /* CTAScollBarCell.swift */; };
@@ -205,6 +206,7 @@
 		2C5C24911C44E82100A70F1B /* CTAPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPickerView.swift; sourceTree = "<group>"; };
 		2C5C24951C44F5D800A70F1B /* CTASelectorColorsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorColorsCell.swift; sourceTree = "<group>"; };
 		2C5C24971C44FA5600A70F1B /* CTAColorsManger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAColorsManger.swift; sourceTree = "<group>"; };
+		2C5EA2551C479CE000DCEE7B /* Print.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Print.swift; sourceTree = "<group>"; };
 		2C6C67FE1C350A4800CCE81C /* CTALineFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTALineFlowLayout.swift; sourceTree = "<group>"; };
 		2C6C68001C350A8500CCE81C /* CTASelectorCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorCollectionView.swift; sourceTree = "<group>"; };
 		2C6C68021C350B4400CCE81C /* CTAScollBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAScollBarCell.swift; sourceTree = "<group>"; };
@@ -352,6 +354,7 @@
 			children = (
 				2C31EB601C451AEE002A4D71 /* UIColorExtensions.swift */,
 				2C31EB621C452597002A4D71 /* SwiftHEXColors.swift */,
+				2C5EA2551C479CE000DCEE7B /* Print.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -842,6 +845,7 @@
 				66A072AB1C1811810046C72F /* CTAPublishRequestAPI.swift in Sources */,
 				2C0404581C3EBBB800A5B017 /* CTATabViewController.swift in Sources */,
 				2CAEAC951C323F2600C9F9AC /* ElementProtocol.swift in Sources */,
+				2C5EA2561C479CE000DCEE7B /* Print.swift in Sources */,
 				2C9706D11C1E805D00FA2E17 /* CTARequestResult.swift in Sources */,
 				66ADD74F1C28011B00FD9BAF /* CTAUpTokenModel.swift in Sources */,
 				2C0404681C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift in Sources */,
