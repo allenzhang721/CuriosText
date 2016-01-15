@@ -54,4 +54,19 @@ final class CTAColorsManger {
         let color = CTAColorsManger.colors[key]![indexPath.item]
         return color
     }
+    
+    class func indexPathOfColor(colorHex: String) -> NSIndexPath? {
+        
+        for (section,catagory) in colorsCatagory.enumerate() {
+            
+            let items = colors[catagory]!
+            
+            for (i, item) in items.enumerate() {
+                if item.colorHex == colorHex {
+                    return NSIndexPath(forItem: i, inSection: section)
+                }
+            }
+        }
+        return nil
+    }
 }

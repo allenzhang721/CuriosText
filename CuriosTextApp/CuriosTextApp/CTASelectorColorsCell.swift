@@ -32,6 +32,17 @@ final class CTASelectorColorsCell: CTASelectorCell {
         view.dataSource = self
     }
     
+    override func retriveBeganValue() {
+        
+        guard let dataSource = dataSource else {
+            return
+        }
+        
+        if let indexPath = dataSource.selectorBeganColorIndexPath(self) {
+            self.view.updateTo(indexPath)
+        }
+    }
+    
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
         
         view.addTarget(target, action: action, forControlEvents: controlEvents)

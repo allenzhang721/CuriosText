@@ -211,6 +211,19 @@ extension CTASelectorsViewController: CTASelectorDataSource {
         return indexPath
 //        return NSIndexPath(forItem: 2, inSection: 2)
     }
+    
+    func selectorBeganColorIndexPath(cell: CTASelectorCell) -> NSIndexPath? {
+        
+        guard
+            let container = container as? TextContainerVMProtocol,
+            let textElement = container.textElement else {
+                return nil
+        }
+        
+        let indexPath = CTAColorsManger.indexPathOfColor(textElement.colorHex)
+        return indexPath
+        //        return NSIndexPath(forItem: 2, inSection: 2)
+    }
 }
 
 // MARK: - Actions
