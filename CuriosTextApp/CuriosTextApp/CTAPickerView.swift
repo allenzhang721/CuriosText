@@ -14,7 +14,6 @@ protocol CTAPickerViewDataSource: class {
     func numberOfSectionsInCollectionView(view: CTAPickerView) -> Int
     func pickView(view: CTAPickerView, numberOfItemsAtSection section: Int) -> Int
     func pickView(view: CTAPickerView, configItemCell itemCell: CTAVerticalItemCollectionViewCell, itemAtSection section: Int, ItemAtIndex index: Int)
-    
 }
 
 final class CTAPickerView: UIControl {
@@ -68,13 +67,19 @@ final class CTAPickerView: UIControl {
         
         layout.delegate = self
         collectionView.dataSource = self
+        
+        reloadData()
     }
     
+    func reloadData() {
+        collectionView.reloadData()
+    }
+    
+//    override func didMoveToSuperview() {
+//        reloadData()
+//    }
+
     func updateTo(indexPath: NSIndexPath) {
-        
-        debug_print(self)
-        
-        debug_print(collectionView)
         
         let section = NSIndexPath(forItem: 0, inSection: indexPath.section)
         collectionView.scrollToItemAtIndexPath(section, atScrollPosition: .CenteredHorizontally, animated: false)
@@ -91,7 +96,7 @@ extension CTAPickerView: UICollectionViewDataSource {
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         
         guard let dataSource = dataSource else {
-            return 1
+            return 5
         }
         
         return dataSource.numberOfSectionsInCollectionView(self)
@@ -111,6 +116,7 @@ extension CTAPickerView: UICollectionViewDataSource {
         cell.verticalDelegate = self
         cell.section = indexPath.section
         cell.register()
+        cell.reloadData()
         return cell
     }
 }

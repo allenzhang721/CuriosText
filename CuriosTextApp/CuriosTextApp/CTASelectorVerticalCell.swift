@@ -52,9 +52,8 @@ final class CTASelectorVerticalCell: CTASelectorCell {
     }
     
     override func prepareForReuse() {
-        super.prepareForReuse()
-        reload()
-//        collectionView.reloadItemsAtIndexPaths(collectionView.indexPathsForVisibleItems())
+        
+        collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 1, inSection: 0), atScrollPosition: .CenteredVertically, animated: false)
     }
     
     private func setup() {
@@ -76,6 +75,8 @@ final class CTASelectorVerticalCell: CTASelectorCell {
         
         collectionView.dataSource = self
         layout.delegate = self
+        
+        reloadData()
     }
     
     func register() {
@@ -87,6 +88,10 @@ final class CTASelectorVerticalCell: CTASelectorCell {
             cellIdentifier = "VerticalEmptyCell"
             collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
         }
+    }
+    
+    func reloadData() {
+        collectionView.reloadData()
     }
     
     override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
@@ -128,7 +133,7 @@ extension CTASelectorVerticalCell: UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         guard let verticalDataSource = verticalDataSource else {
-            return 0
+            return 5
         }
         
         return verticalDataSource.verticalCell(self, numberOfItemsInSection: section)

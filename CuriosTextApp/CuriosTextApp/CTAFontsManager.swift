@@ -18,6 +18,15 @@ class CTAFontsManager {
         return valildFamilies
     }()
     
+    class func defaultFamily() -> String {
+        return CTAFontsManager.families[3]
+    }
+    
+    class func defaultFontName() -> String {
+        let name = fontNamesWithFamily(defaultFamily())![0]
+        return name
+    }
+    
     class func fontNamesWithFamily(family: String) -> [String]? {
         return UIFont.fontNamesForFamilyName(family)
     }

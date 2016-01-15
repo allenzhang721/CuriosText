@@ -140,9 +140,6 @@ extension CTASelectorsViewController {
 //            
 //        }
         
-        
-        debug_print("cellBounds = \(cell)\n subViews = \(cell.contentView.subviews.first as? CTAPickerView)")
-        
         return cell
     }
     

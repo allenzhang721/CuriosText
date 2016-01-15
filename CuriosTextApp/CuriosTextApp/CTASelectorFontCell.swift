@@ -14,7 +14,6 @@ final class CTASelectorFontCell: CTASelectorCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        debug_print("awakeFromNib")
         setup()
     }
     
@@ -30,6 +29,16 @@ final class CTASelectorFontCell: CTASelectorCell {
         view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
         
         view.dataSource = self
+//        view.reloadData()
+    }
+    
+    override func prepareForReuse() {
+        
+        view.updateTo(NSIndexPath(forItem: 2, inSection: 5))
+    }
+    
+    func reloadData() {
+        view.reloadData()
     }
     
     override func retriveBeganValue() {
@@ -38,14 +47,8 @@ final class CTASelectorFontCell: CTASelectorCell {
             return
         }
         
-        let time: NSTimeInterval = 0.1
-        let delay = dispatch_time(DISPATCH_TIME_NOW,
-            Int64(time * Double(NSEC_PER_SEC)))
-        dispatch_after(delay, dispatch_get_main_queue()) {
-            
-            if let indexPath = dataSource.selectorBeganFontIndexPath(self) {
-                 self.view.updateTo(indexPath)
-            }
+        if let indexPath = dataSource.selectorBeganFontIndexPath(self) {
+            self.view.updateTo(indexPath)
         }
     }
     
@@ -73,13 +76,11 @@ extension CTASelectorFontCell: CTAPickerViewDataSource {
     }
     
     func numberOfSectionsInCollectionView(view: CTAPickerView) -> Int {
-        debug_print("")
         return CTAFontsManager.families.count
     }
     
     func pickView(view: CTAPickerView, numberOfItemsAtSection section: Int) -> Int {
         let afamily = CTAFontsManager.families[section]
-        debug_print("")
         
         guard let fonts  = CTAFontsManager.fontNamesWithFamily(afamily) else {
             return 0
@@ -88,7 +89,6 @@ extension CTASelectorFontCell: CTAPickerViewDataSource {
     }
     
     func pickView(view: CTAPickerView, configItemCell itemCell: CTAVerticalItemCollectionViewCell, itemAtSection section: Int, ItemAtIndex index: Int) {
-        debug_print("")
         if let itemCell = itemCell as? CTAVerticalItemFontsCollectionViewCell {
             let res = CTAFontsManager.familyAndFontNameWith(NSIndexPath(forItem: index, inSection: section))
             
