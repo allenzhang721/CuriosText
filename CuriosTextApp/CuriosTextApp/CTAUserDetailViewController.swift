@@ -77,16 +77,18 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         self.view.addSubview(self.backImageView!)
         self.backImageView.image = UIImage.init(named: "userdetail_bakground")
         
-        self.userIconImageView = UIImageView.init(frame: CGRect.init(x: (self.view.frame.size.width - 90*rate)/2, y: 135*rate, width: 90*rate, height: 90*rate))
+        self.userIconImageView = UIImageView.init(frame: CGRect.init(x: (self.view.frame.size.width - 90)/2, y: self.backImageView.frame.origin.y + 20*rate, width: 90, height: 90))
         self.view.addSubview(self.userIconImageView)
         self.cropImageCircle(self.userIconImageView)
         
-        self.userNikeNameLabel = UILabel.init(frame: CGRect.init(x: 120, y: 255*rate, width: 78, height: 40))
+        self.userNikeNameLabel = UILabel.init(frame: CGRect.init(x: 120, y: self.userIconImageView.frame.origin.y + self.userIconImageView.frame.size.height + 30*rate, width: 78, height: 40))
         self.view.addSubview(self.userNikeNameLabel)
         self.userNikeNameLabel.font = UIFont.systemFontOfSize(26)
         self.userNikeNameLabel.textColor = UIColor.whiteColor()
+        self.userNikeNameLabel.text = " "
+        self.userNikeNameLabel.sizeToFit()
         
-        self.lineImageView = UIImageView.init(frame: CGRect.init(x: self.view.frame.size.width / 2 - 1, y: 330*rate, width: 2, height: 18))
+        self.lineImageView = UIImageView.init(frame: CGRect.init(x: self.view.frame.size.width / 2 - 1, y: self.userNikeNameLabel.frame.origin.y + self.userNikeNameLabel.frame.size.height + 30*rate, width: 2, height: 18))
         self.lineImageView.image = UIImage.init(named: "follow-line")
         self.view.addSubview(self.lineImageView)
         
@@ -118,7 +120,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         self.beFollowCountLabel.font = UIFont.systemFontOfSize(16)
         self.beFollowCountLabel.textColor = UIColor.whiteColor()
         
-        self.userDescTextView = UITextView.init(frame: CGRect.init(x: (self.view.frame.width - self.backImageView.frame.width + 20)/2, y: 386*rate, width: self.backImageView.frame.width - 20, height: 90))
+        self.userDescTextView = UITextView.init(frame: CGRect.init(x: (self.view.frame.width - self.backImageView.frame.width + 20)/2, y: self.lineImageView.frame.origin.y + self.lineImageView.frame.size.height + 30*rate, width: self.backImageView.frame.width - 20, height: 90))
         self.userDescTextView.editable = false
         self.userDescTextView.scrollEnabled = false
         self.userDescTextView.selectable = false
