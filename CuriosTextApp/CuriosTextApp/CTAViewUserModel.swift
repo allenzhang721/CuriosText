@@ -20,9 +20,9 @@ final class CTAViewUserModel: CTABaseModel {
     let provinceID:Int;
     let cityID:Int;
     let followCount:Int;
-    let beFollowCount:Int;
+    var beFollowCount:Int = 0;
     let publishCount:Int;
-    let relationType:Int;
+    var relationType:Int = 0;
     
     init(userID:String, nikeName:String, userDesc:String, userIconURL:String, sex:Int, countryID:Int, provinceID:Int, cityID:Int, followCount:Int, beFollowCount:Int, publishCount:Int, relationType:Int){
         self.userID      = userID;
