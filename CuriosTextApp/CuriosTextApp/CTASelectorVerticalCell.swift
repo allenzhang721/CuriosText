@@ -51,9 +51,11 @@ final class CTASelectorVerticalCell: CTASelectorCell {
         collectionView.reloadData()
     }
     
-    override func prepareForReuse() {
+    func updateTo(item: Int) {
         
-        collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 1, inSection: 0), atScrollPosition: .CenteredVertically, animated: false)
+        debug_print("vertical Cell will update to =\(item)")
+        let indexPath = NSIndexPath(forItem: item, inSection: 0)
+        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredVertically, animated: false)
     }
     
     private func setup() {

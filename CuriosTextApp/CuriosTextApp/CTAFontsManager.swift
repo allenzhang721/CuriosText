@@ -23,7 +23,7 @@ class CTAFontsManager {
     }
     
     class func defaultFontName() -> String {
-        let name = fontNamesWithFamily(defaultFamily())![0]
+        let name = fontNamesWithFamily(defaultFamily())![1]
         return name
     }
     

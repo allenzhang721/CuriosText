@@ -199,8 +199,9 @@ extension CTASelectorsViewController: CTASelectorDataSource {
         
         let family = textElement.fontFamily
         let name = textElement.fontName
-        
-        return CTAFontsManager.indexPathForFamily(family, fontName: name)
+        let indexPath = CTAFontsManager.indexPathForFamily(family, fontName: name)
+        debug_print("beganFont = \(indexPath)")
+        return indexPath
 //        return NSIndexPath(forItem: 2, inSection: 2)
     }
 }

@@ -20,6 +20,7 @@ final class CTAPickerView: UIControl {
     
     weak var dataSource: CTAPickerViewDataSource?
 
+    private var currentIndexPath: NSIndexPath?
     private let showCount: Int
     private var section = 0
     private var item = 0
@@ -67,6 +68,7 @@ final class CTAPickerView: UIControl {
         
         layout.delegate = self
         collectionView.dataSource = self
+        collectionView.delegate = self
         
         reloadData()
     }
@@ -81,17 +83,19 @@ final class CTAPickerView: UIControl {
 
     func updateTo(indexPath: NSIndexPath) {
         
+        debug_print("pickView will updateTo = \(indexPath)")
+        currentIndexPath = indexPath
+        
         let section = NSIndexPath(forItem: 0, inSection: indexPath.section)
         collectionView.scrollToItemAtIndexPath(section, atScrollPosition: .CenteredHorizontally, animated: false)
         
-        let item = NSIndexPath(forItem: indexPath.item, inSection: 0)
-        if let cell = collectionView.cellForItemAtIndexPath(section) as? CTASelectorVerticalCell {
-            cell.collectionView.scrollToItemAtIndexPath(item, atScrollPosition: .CenteredVertically, animated: false)
-        }
+//        if let cell = collectionView.cellForItemAtIndexPath(section) as? CTASelectorVerticalCell {
+//            cell.updateTo(indexPath.item)
+//        }
     }
 }
 
-extension CTAPickerView: UICollectionViewDataSource {
+extension CTAPickerView: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         
@@ -119,6 +123,15 @@ extension CTAPickerView: UICollectionViewDataSource {
         cell.reloadData()
         return cell
     }
+    
+    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        
+        if let acurrentIndexPath = currentIndexPath where acurrentIndexPath.section == indexPath.section, let cell = cell as? CTASelectorVerticalCell {
+            
+            cell.updateTo(acurrentIndexPath.item)
+            currentIndexPath = nil
+        }
+    }
 }
 
 // MARK: - Section Cell
@@ -126,13 +139,16 @@ extension CTAPickerView: LineFlowLayoutDelegate {
     
     func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
         
-        section = indexPath.section
-        
-        if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? CTASelectorVerticalCell {
-            item = cell.item
+        if let _ = oldIndexPath {
+            debug_print("font section did changed to \(indexPath.section)")
+            section = indexPath.section
+            
+            if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? CTASelectorVerticalCell {
+                item = cell.item
+            }
+            
+            sendActionsForControlEvents(.ValueChanged)
         }
-
-        sendActionsForControlEvents(.ValueChanged)
     }
 }
 
@@ -163,7 +179,12 @@ extension CTAPickerView: CTASelectorVerticalCellDelegate {
     
     func verticalCell(cell: CTASelectorVerticalCell, didChangetoItemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
         
-        item = indexPath.item
-        sendActionsForControlEvents(.ValueChanged)
+        if let oldIndexPath = oldIndexPath {
+            debug_print("vertical cell did changed from \(oldIndexPath.item) to \(indexPath.item)")
+            item = indexPath.item
+            sendActionsForControlEvents(.ValueChanged)
+        }
+        
+       
     }
 }
