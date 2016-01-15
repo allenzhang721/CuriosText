@@ -138,7 +138,10 @@ extension CTASelectorVerticalCell: UICollectionViewDataSource {
             return 5
         }
         
-        return verticalDataSource.verticalCell(self, numberOfItemsInSection: section)
+        let items = verticalDataSource.verticalCell(self, numberOfItemsInSection: self.section)
+        debug_print("verticalCell at Section \(self.section) have \(items) items")
+        
+        return items
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
