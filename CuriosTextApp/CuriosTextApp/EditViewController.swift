@@ -253,6 +253,8 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             return
         }
         
+        debug_print("font Did Changed", context: fdContext)
+        
         let canvasSize = canvasViewController.view.bounds.size
         container.updateWithFontFamily(
             fontFamily,

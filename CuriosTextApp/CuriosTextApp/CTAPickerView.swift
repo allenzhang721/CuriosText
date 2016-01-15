@@ -83,7 +83,6 @@ final class CTAPickerView: UIControl {
 
     func updateTo(indexPath: NSIndexPath) {
         
-        debug_print("pickView will updateTo = \(indexPath)")
         currentIndexPath = indexPath
         
         let section = NSIndexPath(forItem: 0, inSection: indexPath.section)
@@ -139,8 +138,10 @@ extension CTAPickerView: LineFlowLayoutDelegate {
     
     func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
         
-        if let _ = oldIndexPath {
-            debug_print("font section did changed to \(indexPath.section)")
+       
+        
+        if let oldIndexPath = oldIndexPath {
+             debug_print("picker view did changed from \(oldIndexPath.section) to \(indexPath.section)", context: fdContext)
             section = indexPath.section
             
             if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? CTASelectorVerticalCell {
@@ -180,7 +181,7 @@ extension CTAPickerView: CTASelectorVerticalCellDelegate {
     func verticalCell(cell: CTASelectorVerticalCell, didChangetoItemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
         
         if let oldIndexPath = oldIndexPath {
-            debug_print("vertical cell did changed from \(oldIndexPath.item) to \(indexPath.item)")
+            debug_print("vertical at Section \(cell.section) did changed from \(oldIndexPath.item) to \(indexPath.item)", context: fdContext)
             item = indexPath.item
             sendActionsForControlEvents(.ValueChanged)
         }

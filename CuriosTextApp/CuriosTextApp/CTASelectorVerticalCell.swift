@@ -53,7 +53,6 @@ final class CTASelectorVerticalCell: CTASelectorCell {
     
     func updateTo(item: Int) {
         
-        debug_print("vertical Cell will update to =\(item)")
         let indexPath = NSIndexPath(forItem: item, inSection: 0)
         collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredVertically, animated: false)
     }
@@ -135,11 +134,10 @@ extension CTASelectorVerticalCell: UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         guard let verticalDataSource = verticalDataSource else {
-            return 5
+            return 0
         }
         
         let items = verticalDataSource.verticalCell(self, numberOfItemsInSection: self.section)
-        debug_print("verticalCell at Section \(self.section) have \(items) items")
         
         return items
     }
@@ -179,7 +177,7 @@ extension CTASelectorVerticalCell: LineFlowLayoutDelegate {
         
         item = indexPath.item
         
-        guard let verticalDelegate = verticalDelegate where actived == true else {
+        guard let verticalDelegate = verticalDelegate, let _ = oldIndexPath where actived == true else {
             return
         }
  

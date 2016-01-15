@@ -29,7 +29,7 @@ typealias CTASelectorViewControllerDelegate = protocol<CTASelectorScaleable>
 
 final class CTASelectorsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    
+    private var animation: Bool = false
     var dataSource: CTASelectorsViewControllerDataSource?
     var delegate: CTASelectorViewControllerDelegate?
     private var began: Bool = false
@@ -86,6 +86,8 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
             return
         }
         
+        animation = true
+        
         if let cell = collectionview.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as? CTASelectorCell {
             cell.dataSource = nil
             cell.removeAllTarget()
@@ -103,7 +105,13 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
             if currentCount > 0 {
                 collectionview.deleteItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             }
-            }, completion: nil)
+            }, completion: { finished in
+                
+                dispatch_async(dispatch_get_main_queue(), {[weak self] () -> Void in
+                    
+                    self?.animation = false
+                })
+        })
     }
     
     func updateIfNeed() {
@@ -200,7 +208,6 @@ extension CTASelectorsViewController: CTASelectorDataSource {
         let family = textElement.fontFamily
         let name = textElement.fontName
         let indexPath = CTAFontsManager.indexPathForFamily(family, fontName: name)
-        debug_print("beganFont = \(indexPath)")
         return indexPath
 //        return NSIndexPath(forItem: 2, inSection: 2)
     }
@@ -219,7 +226,7 @@ extension CTASelectorsViewController {
     }
     
     func indexPathOfFontsChanged(sender: CTAPickerView) {
-        guard let indexPath = sender.selectedIndexPath else {
+        guard let indexPath = sender.selectedIndexPath where animation == false else {
             return
         }
         
