@@ -11,10 +11,14 @@ import UIKit
 
 class CTAFontsManager {
     
+    static var indexPaths = [CTAIndexPath]()
    static let families: [String] = {
     
     let valildFamilies = UIFont.familyNames().filter {UIFont.fontNamesForFamilyName($0).count > 0}
 //        let a = valildFamilies
+    for (s, f) in valildFamilies.enumerate() {
+        CTAFontsManager.indexPaths.append(CTAIndexPath(section: s, item: 0))
+    }
         return valildFamilies
     }()
     
@@ -53,6 +57,29 @@ class CTAFontsManager {
         
         let font = fonts[indexPath.item]
         return (family, font)
+    }
+    
+    class func updateSection(section: Int, withItem newItem: Int) {
+        
+        if let indexSection = (indexPaths.indexOf{ $0.section == section }) {
+            
+            indexPaths[indexSection] = CTAIndexPath(section: section, item: newItem)
+        }
+    }
+    
+    class func itemAtSection(section: Int) -> Int? {
+        
+        guard section < CTAFontsManager.families.count else {
+            return nil
+        }
+        
+        let index = (indexPaths.filter {$0.section == section})
+        guard index.count > 0 else {
+            return nil
+        }
+        
+        return index.first?.item
+        
     }
     
 }

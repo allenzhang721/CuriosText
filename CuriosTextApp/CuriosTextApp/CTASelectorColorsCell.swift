@@ -104,8 +104,6 @@ extension CTASelectorColorsCell: CTAPickerViewDataSource {
     if let itemCell = itemCell as? CTAVerticalItemColorCollectionViewCell {
         itemCell.colorView.backgroundColor = CTAColorsManger.colorAtIndexPath(NSIndexPath(forItem: index, inSection: section))?.color
     }
-    
-        
     }
 }
 

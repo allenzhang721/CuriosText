@@ -90,11 +90,28 @@ final class CTASelectorVerticalCell: CTASelectorCell {
         
         if let index = verticalDataSource?.verticalCellBeganIndex(self) {
             debug_print("verticalCell reloadData and will scroll to item = \(index)", context: colorContext)
-            if let attribute = collectionView.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0)) {
-                let center = attribute.center
-                collectionView.setContentOffset(CGPoint(x: 0, y: center.y - collectionView.bounds.height / 2.0), animated: false)
-            }
+            dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
+                if let sr = self {
+                    
+                    sr.load(index)
+                }
+            })
+            
         }
+    }
+    
+    private func load(index: Int) {
+        
+        let items = collectionView(collectionView, numberOfItemsInSection: 0)
+        let next = min(index, items - 1)
+        
+        collectionView?.scrollToItemAtIndexPath(NSIndexPath(forItem: next, inSection: 0), atScrollPosition: .CenteredVertically, animated: false)
+        
+//        guard let attribute = collectionView?.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0)) else {
+//            return
+//        }
+//            let center = attribute.center
+//            collectionView.setContentOffset(CGPoint(x: 0, y: center.y - collectionView.bounds.height / 2.0), animated: false)
     }
     
     override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {

@@ -29,6 +29,7 @@ final class CTASelectorFontCell: CTASelectorCell {
         view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
         
         view.dataSource = self
+        view.delegate = self
     }
     
     func reloadData() {
@@ -42,6 +43,7 @@ final class CTASelectorFontCell: CTASelectorCell {
         }
         
         if let indexPath = dataSource.selectorBeganFontIndexPath(self) {
+            CTAFontsManager.updateSection(indexPath.section, withItem: indexPath.item)
             self.view.updateTo(indexPath)
         }
     }
@@ -84,7 +86,7 @@ extension CTASelectorFontCell: CTAPickerViewDataSource {
     
     func pickView(view: CTAPickerView, indexAtSection section: Int) -> Int {
         
-        guard let index = CTAColorsManger.itemAtSection(section) else {
+        guard let index = CTAFontsManager.itemAtSection(section) else {
             return 0
         }
         
@@ -102,4 +104,18 @@ extension CTASelectorFontCell: CTAPickerViewDataSource {
                 itemCell.view.font = UIFont(name: font, size: 17)
         }
     }
+}
+
+extension CTASelectorFontCell: CTAPickerViewDelegate {
+    
+    func pickView(view: CTAPickerView, itemDidChangedToIndexPath indexPath: NSIndexPath) {
+        
+        debug_print("color cell will began at \(indexPath)", context: colorContext)
+        CTAFontsManager.updateSection(indexPath.section, withItem: indexPath.item)
+    }
+    
+    func pickView(view: CTAPickerView, sectionDidChangedToIndexPath indexPath: NSIndexPath) {
+        
+    }
+    
 }

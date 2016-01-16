@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/CTASelectorVerticalCell.swift"
-            timestampString = "474615051.351091"
+            timestampString = "474623598.530422"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "178"
-            endingLineNumber = "178"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
             landmarkName = "CTASelectorVerticalCell"
             landmarkType = "3">
          </BreakpointContent>
