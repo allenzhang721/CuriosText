@@ -40,8 +40,8 @@ struct TextAttributeName {
 
 let defaultTextAttributes: [String: AnyObject] = [
     
-    TextAttributeName.fontFamily: "Iowan Old Style",
-    TextAttributeName.fontName: "IowanOldStyle-BoldItalic",
+    TextAttributeName.fontFamily: CTAFontsManager.defaultFamily(),
+    TextAttributeName.fontName: CTAFontsManager.defaultFontName(),
     TextAttributeName.fontSize: NSNumber(integer: Int(UIFont.labelFontSize())),
     TextAttributeName.fontMatrix: [
         TextAttributeName.fontMatrixScale: 3.0],
@@ -70,11 +70,11 @@ let defaultTextAttributes: [String: AnyObject] = [
 
 final class CTATextAttributes:NSObject, NSCoding {
     
-    var fontFamily: String = "Iowan Old Style"
-    var fontName: String = "IowanOldStyle-BoldItalic"
+    var fontFamily: String = CTAFontsManager.defaultFamily()
+    var fontName: String = CTAFontsManager.defaultFontName()
     var fontSize = Double(UIFont.labelFontSize())
     var fontScale = 1.0
-    var textColorHex = "#FFFFFF"
+    var textColorHex = "#B79AC0"
     var textColorAlpha = 1.0
     var textKern = 0.0
     var textlineSpacing = 0.0

@@ -8,10 +8,9 @@
 
 import UIKit
 
-class CTASelectorFontCell: CTASelectorCell {
-
+final class CTASelectorFontCell: CTASelectorCell {
+    
     private var view: CTAPickerView!
-    let family = UIFont.familyNames()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,8 +18,7 @@ class CTASelectorFontCell: CTASelectorCell {
     }
     
     private func setup() {
-        
-        view = CTAPickerView(frame: bounds, showCount: 2)
+        view = CTAPickerView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)), showCount: 2)
         view.backgroundColor = UIColor.whiteColor()
         contentView.addSubview(view)
         view.backgroundColor = CTAStyleKit.intoDreams1
@@ -31,17 +29,31 @@ class CTASelectorFontCell: CTASelectorCell {
         view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
         
         view.dataSource = self
+        view.delegate = self
+    }
+    
+    func reloadData() {
+        view.reloadData()
+    }
+    
+    override func retriveBeganValue() {
+        
+        guard let dataSource = dataSource else {
+            return
+        }
+        
+        if let indexPath = dataSource.selectorBeganFontIndexPath(self) {
+            CTAFontsManager.updateSection(indexPath.section, withItem: indexPath.item)
+            self.view.updateTo(indexPath)
+        }
     }
     
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
-        
         view.addTarget(target, action: action, forControlEvents: controlEvents)
     }
     
     override func removeAllTarget() {
-        
         for target in view.allTargets() {
-            
             guard let actions = view.actionsForTarget(target, forControlEvent: view.allControlEvents()) else {
                 continue
             }
@@ -56,38 +68,54 @@ class CTASelectorFontCell: CTASelectorCell {
 extension CTASelectorFontCell: CTAPickerViewDataSource {
     
     func pickViewRegisterItemCellClass(view: CTAPickerView) -> (AnyClass?, String) {
-        
-        return (CTAVerticalItemFontsCollectionViewCell.self, "SelectorColorItemCell")
+        return (CTAVerticalItemFontsCollectionViewCell.self, "SelectorFontItemCell")
     }
     
     func numberOfSectionsInCollectionView(view: CTAPickerView) -> Int {
-        
-        
-        return 5
+        return CTAFontsManager.families.count
     }
     
     func pickView(view: CTAPickerView, numberOfItemsAtSection section: Int) -> Int {
+        let afamily = CTAFontsManager.families[section]
         
-        let afamily = family[section]
-        return UIFont.fontNamesForFamilyName(afamily).count
+        guard let fonts  = CTAFontsManager.fontNamesWithFamily(afamily) else {
+            return 0
+        }
+        return fonts.count
+    }
+    
+    func pickView(view: CTAPickerView, indexAtSection section: Int) -> Int {
+        
+        guard let index = CTAFontsManager.itemAtSection(section) else {
+            return 0
+        }
+        
+        return index
     }
     
     func pickView(view: CTAPickerView, configItemCell itemCell: CTAVerticalItemCollectionViewCell, itemAtSection section: Int, ItemAtIndex index: Int) {
-        
         if let itemCell = itemCell as? CTAVerticalItemFontsCollectionViewCell {
+            let res = CTAFontsManager.familyAndFontNameWith(NSIndexPath(forItem: index, inSection: section))
             
-            let family = UIFont.familyNames()[section]
-            let fontNames = UIFont.fontNamesForFamilyName(family)
-            
-            if fontNames.count > 0 {
-                let name = fontNames[index]
-                
-                itemCell.view.text = family
-                itemCell.view.font = UIFont(name: name, size: 17)
+            guard let family = res.0, font = res.1 else {
+                return
             }
+                itemCell.view.text = family
+                itemCell.view.font = UIFont(name: font, size: 17)
         }
+    }
+}
+
+extension CTASelectorFontCell: CTAPickerViewDelegate {
+    
+    func pickView(view: CTAPickerView, itemDidChangedToIndexPath indexPath: NSIndexPath) {
         
+        debug_print("color cell will began at \(indexPath)", context: colorContext)
+        CTAFontsManager.updateSection(indexPath.section, withItem: indexPath.item)
+    }
+    
+    func pickView(view: CTAPickerView, sectionDidChangedToIndexPath indexPath: NSIndexPath) {
         
     }
-
+    
 }

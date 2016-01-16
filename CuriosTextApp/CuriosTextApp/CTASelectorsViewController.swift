@@ -9,7 +9,6 @@
 import UIKit
 
 protocol CTASelectorsViewControllerDataSource: class {
-    
     func selectorsViewControllerContainer(viewcontroller: CTASelectorsViewController) -> ContainerVMProtocol?
 }
 
@@ -18,7 +17,6 @@ protocol CTASelectorable: class {
 }
 
 protocol CTASelectorScaleable: CTASelectorable {
-    
     func scaleDidChanged(scale: CGFloat)
     func radianDidChanged(radian: CGFloat)
     func fontDidChanged(fontFamily: String, fontName: String)
@@ -29,70 +27,51 @@ protocol CTASelectorScaleable: CTASelectorable {
 
 typealias CTASelectorViewControllerDelegate = protocol<CTASelectorScaleable>
 
-class CTASelectorsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+final class CTASelectorsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    var container: ContainerVMProtocol? {
-        return dataSource?.selectorsViewControllerContainer(self)
-    }
-    
-    var count: Int {
-        return (container == nil) ? 0 : 1
-    }
-    
-    var action: String {
-        
-        switch currentType {
-            
-        case .Size:
-            return "scaleChanged:"
-            
-        case .Rotator:
-            return "radianChanged:"
-            
-        case .Fonts:
-            return "indexPathOfFontsChanged:"
-            
-        case .Aligments:
-            return "aligmentsChanged:"
-            
-        case .TextSpacing:
-            return "textSpacingChanged:"
-            
-        case .Colors:
-            return "indexPathOfColorChanged:"
-            
-        default:
-            return ""
-        }
-        
-    }
-    
-    private var began: Bool = false
-    
+    private var animation: Bool = false
     var dataSource: CTASelectorsViewControllerDataSource?
     var delegate: CTASelectorViewControllerDelegate?
     private var currentType: CTASelectorType = .Fonts
-    
+    private var container: ContainerVMProtocol? {
+        return dataSource?.selectorsViewControllerContainer(self)
+    }
+    private var count: Int {
+        return (container == nil) ? 0 : 1
+    }
+    private var action: String {
+        switch currentType {
+        case .Size: return "scaleChanged:"
+        case .Rotator: return "radianChanged:"
+        case .Fonts: return "indexPathOfFontsChanged:"
+        case .Aligments: return "aligmentsChanged:"
+        case .TextSpacing: return "textSpacingChanged:"
+        case .Colors: return "indexPathOfColorChanged:"
+        }
+    }
+
     @IBOutlet weak var collectionview: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
     }
     
     func changeToSelector(type: CTASelectorType) {
-        
         guard let collectionview = collectionview where container != nil else {
             return
         }
         
         if let cell = collectionview.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as? CTASelectorCell {
-            
             cell.dataSource = nil
             cell.removeAllTarget()
         }
         
         currentType = type
-        
         let acount = collectionview.numberOfItemsInSection(0)
+        
+        animation = true
         
         collectionview.performBatchUpdates({ () -> Void in
             
@@ -102,23 +81,31 @@ class CTASelectorsViewController: UIViewController, UICollectionViewDataSource, 
                 collectionview.deleteItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             }
             
-            }, completion: nil)
+            }, completion: { finished in
+                
+                dispatch_async(dispatch_get_main_queue(), {[weak self] () -> Void in
+                    
+                    self?.animation = false
+                    })
+        })
     }
     
     func updateSelector() {
-        
         guard let collectionview = collectionview else {
             return
         }
         
+        
+        
         if let cell = collectionview.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as? CTASelectorCell {
-            
             cell.dataSource = nil
             cell.removeAllTarget()
         }
         
         let currentCount = collectionview.numberOfItemsInSection(0)
         let nextCount = count
+        
+        animation = true
         
         collectionview.performBatchUpdates({ () -> Void in
             
@@ -129,7 +116,30 @@ class CTASelectorsViewController: UIViewController, UICollectionViewDataSource, 
             if currentCount > 0 {
                 collectionview.deleteItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             }
-            }, completion: nil)
+            }, completion: { finished in
+                
+                dispatch_async(dispatch_get_main_queue(), {[weak self] () -> Void in
+                    
+                    self?.animation = false
+                })
+        })
+    }
+    
+    func updateIfNeed() {
+        
+        if let container = container {
+            
+            switch collectionview.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) {
+                
+            case let cell as CTASelectorSizeCell:
+                cell.sizeView.updateValue(container.scale)
+                
+            case let cell as CTASelectorRotatorCell:
+                cell.view.radian = container.radius
+            default:
+                ()
+            }
+        }
     }
     
 }
@@ -137,73 +147,87 @@ class CTASelectorsViewController: UIViewController, UICollectionViewDataSource, 
 extension CTASelectorsViewController {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Selector\(currentType.rawValue)Cell", forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Selector\(currentType.rawValue)Cell", forIndexPath: indexPath) as! CTASelectorCell
         
-//        print("Selector Cell")
-//        cell.backgroundColor = UIColor.darkGrayColor()
-        
-        return cell
-    }
-    
-    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        
-        guard let cell = cell as? CTASelectorCell else {
-            return
-        }
         cell.dataSource = self
-        cell.retriveBeganValue()
+        cell.beganLoad()
         cell.addTarget(self, action: Selector(action), forControlEvents: .ValueChanged)
+        cell.retriveBeganValue()
+        return cell
     }
 }
 
 // MARK: - SelectorDataSource
 extension CTASelectorsViewController: CTASelectorDataSource {
     
+    // TODO: Scale began value need fix -- EMIAOSTEIN; 2016-01-13-18:52
     func selectorBeganScale(cell: CTASelectorCell) -> CGFloat {
-        return container!.scale
+        return container?.scale ?? 1.0
     }
     
     func selectorBeganRadian(cell: CTASelectorCell) -> CGFloat {
-        return container!.radius
-    }
-    
-    func selectorBeganIndexPath(cell: CTASelectorCell) -> NSIndexPath {
-        
-        return NSIndexPath(forItem: 0, inSection: 0)
+        return container?.radius ?? 0.0
     }
     
     func selectorBeganAlignment(cell: CTASelectorCell) -> NSTextAlignment {
-        
-        guard let container = container as? TextContainerVMProtocol, let textElement = container.textElement else {
+        guard
+            let container = container as? TextContainerVMProtocol,
+            let textElement = container.textElement else {
             return .Left
         }
          return textElement.alignment
     }
     
     func selectorBeganSpacing(cell: CTASelectorCell) -> (CGFloat, CGFloat) {
-        
-        guard let container = container as? TextContainerVMProtocol, let textElement = container.textElement else {
+        guard
+            let container = container as? TextContainerVMProtocol,
+            let textElement = container.textElement else {
             return (0, 0)
         }
-        
         return (textElement.lineSpacing, textElement.textSpacing)
+    }
+    
+    // TODO: Font,Color need began value -- EMIAOSTEIN; 2016-01-13-18:51
+    func selectorBeganFontIndexPath(cell: CTASelectorCell) -> NSIndexPath? {
+        
+        guard
+            let container = container as? TextContainerVMProtocol,
+            let textElement = container.textElement else {
+                return nil
+        }
+        
+        let family = textElement.fontFamily
+        let name = textElement.fontName
+        let indexPath = CTAFontsManager.indexPathForFamily(family, fontName: name)
+        return indexPath
+    }
+    
+    func selectorBeganColorIndexPath(cell: CTASelectorCell) -> NSIndexPath? {
+        
+        guard
+            let container = container as? TextContainerVMProtocol,
+            let textElement = container.textElement else {
+                return nil
+        }
+        
+        guard let indexPath = CTAColorsManger.indexPathOfColor(textElement.colorHex) else {
+            return nil
+        }
+        
+        return indexPath
     }
 }
 
 // MARK: - Actions
 extension CTASelectorsViewController {
-    
     func scaleChanged(sender: CTAScrollTuneView) {
         let v = CGFloat(Int(sender.value * 100.0)) / 100.0
-        print("nextScale = \(v)")
         delegate?.scaleDidChanged(v)
-        
     }
     
     func radianChanged(sender: CTARotatorView) {
@@ -212,42 +236,33 @@ extension CTASelectorsViewController {
     }
     
     func indexPathOfFontsChanged(sender: CTAPickerView) {
-        
-        guard let indexPath = sender.selectedIndexPath else {
+        guard let indexPath = sender.selectedIndexPath where animation == false else {
             return
         }
         
+        let r = CTAFontsManager.familyAndFontNameWith(indexPath)
         
-        let family = UIFont.familyNames()[indexPath.section]
-        let fontName = UIFont.fontNamesForFamilyName(family)
-        
-        let name: String
-        
-        if fontName.count > 0 && fontName.count >= indexPath.item {
-            name = fontName[indexPath.item]
-        } else {
-            name = ""
+        guard let family = r.0, let font = r.1 else {
+            return
         }
         
-        delegate?.fontDidChanged(family, fontName: name)
+        delegate?.fontDidChanged(family, fontName: font)
     }
     
     func aligmentsChanged(sender: CTASegmentControl) {
-        
         delegate?.alignmentDidChanged(NSTextAlignment(rawValue: sender.selectedIndex)!)
     }
     
     func textSpacingChanged(sender: CTATextSpacingView) {
-        
         delegate?.spacingDidChanged(sender.spacing.0, textSpacing: sender.spacing.1)
-        
     }
     
     func indexPathOfColorChanged(sender: CTAPickerView) {
-        
-        if let colorItem = CTAColorsManger.colorAtIndexPath(sender.selectedIndexPath!) {
-            delegate?.colorDidChanged(colorItem)
+        guard
+            let selectedIndexPath = sender.selectedIndexPath,
+            let colorItem = CTAColorsManger.colorAtIndexPath(selectedIndexPath) where animation == false else {
+            return
         }
-//        print("color indexPath = \(sender.selectedIndexPath)")
+        delegate?.colorDidChanged(colorItem)
     }
 }

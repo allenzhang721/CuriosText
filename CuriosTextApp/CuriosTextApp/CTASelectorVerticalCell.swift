@@ -11,7 +11,7 @@ import UIKit
 protocol CTASelectorVerticalCellDataSource: class {
     func verticalCellRegisterItemCellClass(cell: CTASelectorVerticalCell) -> (AnyClass?, String)
     func verticalCell(cell: CTASelectorVerticalCell, numberOfItemsInSection section: Int) -> Int
-    
+    func verticalCellBeganIndex(cell: CTASelectorVerticalCell) -> Int
 }
 
 protocol CTASelectorVerticalCellDelegate: class {
@@ -26,7 +26,7 @@ final class CTASelectorVerticalCell: CTASelectorCell {
     
     weak var verticalDataSource: CTASelectorVerticalCellDataSource!
     weak var verticalDelegate: CTASelectorVerticalCellDelegate?
-    private var collectionView: UICollectionView!
+    var collectionView: UICollectionView!
     var cellIdentifier: String!
     var section: Int = 0
     var item: Int = 0
@@ -47,14 +47,10 @@ final class CTASelectorVerticalCell: CTASelectorCell {
         setup()
     }
     
-    func reload() {
-        collectionView.reloadData()
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        reload()
-//        collectionView.reloadItemsAtIndexPaths(collectionView.indexPathsForVisibleItems())
+    func updateTo(item: Int) {
+        
+        let indexPath = NSIndexPath(forItem: item, inSection: 0)
+        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredVertically, animated: false)
     }
     
     private func setup() {
@@ -87,6 +83,35 @@ final class CTASelectorVerticalCell: CTASelectorCell {
             cellIdentifier = "VerticalEmptyCell"
             collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
         }
+    }
+    
+    func reloadData() {
+        collectionView.reloadData()
+        
+        if let index = verticalDataSource?.verticalCellBeganIndex(self) {
+            debug_print("verticalCell reloadData and will scroll to item = \(index)", context: colorContext)
+            dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
+                if let sr = self {
+                    
+                    sr.load(index)
+                }
+            })
+            
+        }
+    }
+    
+    private func load(index: Int) {
+        
+        let items = collectionView(collectionView, numberOfItemsInSection: 0)
+        let next = min(index, items - 1)
+        
+        collectionView?.scrollToItemAtIndexPath(NSIndexPath(forItem: next, inSection: 0), atScrollPosition: .CenteredVertically, animated: false)
+        
+//        guard let attribute = collectionView?.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0)) else {
+//            return
+//        }
+//            let center = attribute.center
+//            collectionView.setContentOffset(CGPoint(x: 0, y: center.y - collectionView.bounds.height / 2.0), animated: false)
     }
     
     override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
@@ -128,10 +153,12 @@ extension CTASelectorVerticalCell: UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         guard let verticalDataSource = verticalDataSource else {
-            return 0
+            return 5
         }
         
-        return verticalDataSource.verticalCell(self, numberOfItemsInSection: section)
+        let items = verticalDataSource.verticalCell(self, numberOfItemsInSection: self.section)
+        
+        return items
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -168,8 +195,7 @@ extension CTASelectorVerticalCell: LineFlowLayoutDelegate {
     func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
         
         item = indexPath.item
-        
-        guard let verticalDelegate = verticalDelegate where actived == true else {
+        guard let verticalDelegate = verticalDelegate, let _ = oldIndexPath where actived == true else {
             return
         }
  

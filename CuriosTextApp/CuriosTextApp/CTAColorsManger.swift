@@ -23,9 +23,16 @@ final class CTAColorItem {
     }
 }
 
+struct CTAIndexPath {
+    
+    let section: Int
+    let item: Int
+}
+
 final class CTAColorsManger {
     
     static let colorsCatagory = ["red", "yellow", "blue", "green", "orange", "indigo", "purple", "black"]
+    static var indexPaths = [CTAIndexPath]()
     
 //    "salamander", "intoDreams", "cynicide", "birdsofParadise", "brokenGlass", "vintagePattern", "sunset", "rosanne", "joyful", "starSeeker", "cloudyDay", "monoPolygons"
     
@@ -33,7 +40,7 @@ final class CTAColorsManger {
         
         var c = [String: ContiguousArray<CTAColorItem>]()
 
-        for catagory in colorsCatagory {
+        for (asection, catagory) in colorsCatagory.enumerate() {
             
             var items = ContiguousArray<CTAColorItem>()
             
@@ -42,17 +49,54 @@ final class CTAColorsManger {
                 let item = CTAColorItem(color: color)
                 items.append(item)
             }
-            
+            CTAColorsManger.indexPaths.append(CTAIndexPath(section: asection, item: 0))
             c[catagory] = items
         }
-
+        
         return c
     }()
     
-    class func colorAtIndexPath(indexPath: NSIndexPath) -> CTAColorItem? {
+    class func updateSection(section: Int, withItem newItem: Int) {
         
+        if let indexSection = (indexPaths.indexOf{ $0.section == section }) {
+            
+            indexPaths[indexSection] = CTAIndexPath(section: section, item: newItem)
+        }
+    }
+    
+    class func itemAtSection(section: Int) -> Int? {
+        
+        guard section < colorsCatagory.count else {
+            return nil
+        }
+        
+        let index = (indexPaths.filter {$0.section == section})
+        guard index.count > 0 else {
+            return nil
+        }
+        
+        return index.first?.item
+        
+    }
+    
+    class func colorAtIndexPath(indexPath: NSIndexPath) -> CTAColorItem? {
         let key = CTAColorsManger.colorsCatagory[indexPath.section]
         let color = CTAColorsManger.colors[key]![indexPath.item]
         return color
+    }
+    
+    class func indexPathOfColor(colorHex: String) -> NSIndexPath? {
+        
+        for (section,catagory) in colorsCatagory.enumerate() {
+            
+            let items = colors[catagory]!
+            
+            for (i, item) in items.enumerate() {
+                if item.colorHex == colorHex {
+                    return NSIndexPath(forItem: i, inSection: section)
+                }
+            }
+        }
+        return nil
     }
 }
