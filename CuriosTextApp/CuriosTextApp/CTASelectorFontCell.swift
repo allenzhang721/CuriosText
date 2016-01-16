@@ -18,7 +18,7 @@ final class CTASelectorFontCell: CTASelectorCell {
     }
     
     private func setup() {
-        view = CTAPickerView(frame: CGRect(x: 0, y: 0, width: 320, height: 88), showCount: 2)
+        view = CTAPickerView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)), showCount: 2)
         view.backgroundColor = UIColor.whiteColor()
         contentView.addSubview(view)
         view.backgroundColor = CTAStyleKit.intoDreams1
@@ -29,12 +29,6 @@ final class CTASelectorFontCell: CTASelectorCell {
         view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
         
         view.dataSource = self
-//        view.reloadData()
-    }
-    
-    override func prepareForReuse() {
-        
-        view.updateTo(NSIndexPath(forItem: 2, inSection: 5))
     }
     
     func reloadData() {
@@ -72,7 +66,7 @@ final class CTASelectorFontCell: CTASelectorCell {
 extension CTASelectorFontCell: CTAPickerViewDataSource {
     
     func pickViewRegisterItemCellClass(view: CTAPickerView) -> (AnyClass?, String) {
-        return (CTAVerticalItemFontsCollectionViewCell.self, "SelectorColorItemCell")
+        return (CTAVerticalItemFontsCollectionViewCell.self, "SelectorFontItemCell")
     }
     
     func numberOfSectionsInCollectionView(view: CTAPickerView) -> Int {
@@ -86,6 +80,15 @@ extension CTASelectorFontCell: CTAPickerViewDataSource {
             return 0
         }
         return fonts.count
+    }
+    
+    func pickView(view: CTAPickerView, indexAtSection section: Int) -> Int {
+        
+        guard let index = CTAColorsManger.itemAtSection(section) else {
+            return 0
+        }
+        
+        return index
     }
     
     func pickView(view: CTAPickerView, configItemCell itemCell: CTAVerticalItemCollectionViewCell, itemAtSection section: Int, ItemAtIndex index: Int) {

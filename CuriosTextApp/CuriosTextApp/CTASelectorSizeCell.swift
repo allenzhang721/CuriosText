@@ -18,7 +18,7 @@ class CTASelectorSizeCell: CTASelectorCell {
     }
     
     func setup() {
-        sizeView = CTAScrollTuneView(frame: CGRect.zero)
+        sizeView = CTAScrollTuneView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)))
         addSubview(sizeView)
     }
     
@@ -27,6 +27,8 @@ class CTASelectorSizeCell: CTASelectorCell {
         super.layoutSubviews()
         sizeView.frame = bounds
     }
+    
+
     
     override func retriveBeganValue() {
         

@@ -11,7 +11,7 @@ import UIKit
 protocol CTASelectorVerticalCellDataSource: class {
     func verticalCellRegisterItemCellClass(cell: CTASelectorVerticalCell) -> (AnyClass?, String)
     func verticalCell(cell: CTASelectorVerticalCell, numberOfItemsInSection section: Int) -> Int
-    
+    func verticalCellBeganIndex(cell: CTASelectorVerticalCell) -> Int
 }
 
 protocol CTASelectorVerticalCellDelegate: class {
@@ -47,10 +47,6 @@ final class CTASelectorVerticalCell: CTASelectorCell {
         setup()
     }
     
-    func reload() {
-        collectionView.reloadData()
-    }
-    
     func updateTo(item: Int) {
         
         let indexPath = NSIndexPath(forItem: item, inSection: 0)
@@ -76,8 +72,6 @@ final class CTASelectorVerticalCell: CTASelectorCell {
         
         collectionView.dataSource = self
         layout.delegate = self
-        
-        reloadData()
     }
     
     func register() {
@@ -93,6 +87,14 @@ final class CTASelectorVerticalCell: CTASelectorCell {
     
     func reloadData() {
         collectionView.reloadData()
+        
+        if let index = verticalDataSource?.verticalCellBeganIndex(self) {
+            debug_print("verticalCell reloadData and will scroll to item = \(index)", context: colorContext)
+            if let attribute = collectionView.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0)) {
+                let center = attribute.center
+                collectionView.setContentOffset(CGPoint(x: 0, y: center.y - collectionView.bounds.height / 2.0), animated: false)
+            }
+        }
     }
     
     override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
@@ -134,7 +136,7 @@ extension CTASelectorVerticalCell: UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         guard let verticalDataSource = verticalDataSource else {
-            return 0
+            return 5
         }
         
         let items = verticalDataSource.verticalCell(self, numberOfItemsInSection: self.section)
@@ -176,7 +178,6 @@ extension CTASelectorVerticalCell: LineFlowLayoutDelegate {
     func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
         
         item = indexPath.item
-        
         guard let verticalDelegate = verticalDelegate, let _ = oldIndexPath where actived == true else {
             return
         }

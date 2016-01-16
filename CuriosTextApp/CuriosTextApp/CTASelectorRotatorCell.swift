@@ -13,13 +13,13 @@ class CTASelectorRotatorCell: CTASelectorCell {
     let view: CTARotatorView
     
     override init(frame: CGRect) {
-        self.view = CTARotatorView(frame: CGRect(x: 0, y: 0, width: 320, height: 88))
+        self.view = CTARotatorView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)))
         super.init(frame: frame)
         contentView.addSubview(view)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.view = CTARotatorView(frame: CGRect(x: 0, y: 0, width: 320, height: 88))
+        self.view = CTARotatorView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)))
         super.init(coder: aDecoder)
         contentView.addSubview(view)
     }

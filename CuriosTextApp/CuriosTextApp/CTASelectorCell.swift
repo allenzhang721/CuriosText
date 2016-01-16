@@ -30,6 +30,7 @@ class CTASelectorCell: UICollectionViewCell, CTASelectorControl {
     weak var dataSource: CTASelectorDataSource?
     var controlView: UIControl?
     
+    func beganLoad(){}
     func retriveBeganValue(){}
     func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents){}
     func removeAllTarget(){}

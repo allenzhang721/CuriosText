@@ -14,11 +14,20 @@ protocol CTAPickerViewDataSource: class {
     func numberOfSectionsInCollectionView(view: CTAPickerView) -> Int
     func pickView(view: CTAPickerView, numberOfItemsAtSection section: Int) -> Int
     func pickView(view: CTAPickerView, configItemCell itemCell: CTAVerticalItemCollectionViewCell, itemAtSection section: Int, ItemAtIndex index: Int)
+    func pickView(view: CTAPickerView, indexAtSection section: Int) -> Int
+}
+
+protocol CTAPickerViewDelegate: class {
+    
+    func pickView(view: CTAPickerView, itemDidChangedToIndexPath indexPath: NSIndexPath)
+    func pickView(view: CTAPickerView, sectionDidChangedToIndexPath indexPath: NSIndexPath)
+    
 }
 
 final class CTAPickerView: UIControl {
     
     weak var dataSource: CTAPickerViewDataSource?
+    weak var delegate: CTAPickerViewDelegate?
 
     private var currentIndexPath: NSIndexPath?
     private let showCount: Int
@@ -36,7 +45,7 @@ final class CTAPickerView: UIControl {
         }
     }
     
-     init(frame: CGRect, showCount: Int = 4) {
+     init(frame: CGRect, showCount: Int = 2) {
         self.showCount = showCount
         super.init(frame: frame)
         setup()
@@ -69,32 +78,34 @@ final class CTAPickerView: UIControl {
         layout.delegate = self
         collectionView.dataSource = self
         collectionView.delegate = self
-        
-        reloadData()
     }
     
     func reloadData() {
         collectionView.reloadData()
     }
-    
-//    override func didMoveToSuperview() {
-//        reloadData()
-//    }
 
     func updateTo(indexPath: NSIndexPath) {
         
         currentIndexPath = indexPath
-        
         let section = NSIndexPath(forItem: 0, inSection: indexPath.section)
-        collectionView.scrollToItemAtIndexPath(section, atScrollPosition: .CenteredHorizontally, animated: false)
         
-//        if let cell = collectionView.cellForItemAtIndexPath(section) as? CTASelectorVerticalCell {
-//            cell.updateTo(indexPath.item)
-//        }
+        if let att = collectionView.layoutAttributesForItemAtIndexPath(section) {
+            let center = att.center
+            let offset = CGPoint(x: center.x - collectionView.bounds.width / 2.0, y: 0)
+            collectionView.setContentOffset(offset, animated: false)
+
+            if let visualCells = collectionView.visibleCells() as? [CTASelectorVerticalCell] where visualCells.count > 0 {
+                
+                for cell in visualCells  {
+                    cell.reloadData()
+                }
+            }            
+        }
     }
 }
 
 extension CTAPickerView: UICollectionViewDataSource, UICollectionViewDelegate {
+    
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         
@@ -122,31 +133,25 @@ extension CTAPickerView: UICollectionViewDataSource, UICollectionViewDelegate {
         cell.reloadData()
         return cell
     }
-    
-    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        
-        if let acurrentIndexPath = currentIndexPath where acurrentIndexPath.section == indexPath.section, let cell = cell as? CTASelectorVerticalCell {
-            
-            cell.updateTo(acurrentIndexPath.item)
-            currentIndexPath = nil
-        }
-    }
 }
 
 // MARK: - Section Cell
 extension CTAPickerView: LineFlowLayoutDelegate {
     
     func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
+
+        section = indexPath.section
         
-       
+        if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? CTASelectorVerticalCell {
+            item = cell.item
+        }
+        
+        if let selectedIndexPath = selectedIndexPath {
+            delegate?.pickView(self, itemDidChangedToIndexPath: selectedIndexPath)
+        }
         
         if let oldIndexPath = oldIndexPath {
              debug_print("picker view did changed from \(oldIndexPath.section) to \(indexPath.section)", context: fdContext)
-            section = indexPath.section
-            
-            if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? CTASelectorVerticalCell {
-                item = cell.item
-            }
             
             sendActionsForControlEvents(.ValueChanged)
         }
@@ -163,10 +168,23 @@ extension CTAPickerView: CTASelectorVerticalCellDataSource {
     func verticalCell(cell: CTASelectorVerticalCell, numberOfItemsInSection section: Int) -> Int {
         
         guard let dataSource = dataSource else {
-            return 0
+            return 5
         }
         
         return dataSource.pickView(self, numberOfItemsAtSection: section)
+    }
+    
+    func verticalCellBeganIndex(cell: CTASelectorVerticalCell) -> Int {
+        
+        
+        guard let dataSource = dataSource else {
+            return 0
+        }
+        
+        
+        let item = dataSource.pickView(self, indexAtSection: cell.section)
+        debug_print("vertical Cell began At = \(item)", context: colorContext)
+        return item
     }
 }
 
@@ -180,12 +198,16 @@ extension CTAPickerView: CTASelectorVerticalCellDelegate {
     
     func verticalCell(cell: CTASelectorVerticalCell, didChangetoItemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
         
-        if let oldIndexPath = oldIndexPath {
-            debug_print("vertical at Section \(cell.section) did changed from \(oldIndexPath.item) to \(indexPath.item)", context: fdContext)
-            item = indexPath.item
-            sendActionsForControlEvents(.ValueChanged)
+        section = cell.section
+        item = indexPath.item
+        if let selectedIndexPath = selectedIndexPath {
+            delegate?.pickView(self, itemDidChangedToIndexPath: selectedIndexPath)
         }
         
-       
+        if let oldIndexPath = oldIndexPath {
+            debug_print("vertical at Section \(cell.section) did changed from \(oldIndexPath.item) to \(indexPath.item)", context: colorContext)
+            
+            sendActionsForControlEvents(.ValueChanged)
+        }
     }
 }

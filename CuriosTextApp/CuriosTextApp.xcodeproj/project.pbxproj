@@ -326,7 +326,10 @@
 				2C3097091C3F7FA800D996A4 /* CTAScrollSelectView.swift */,
 				2C82FF541C4362FA001D927A /* CTASegementControl.swift */,
 				2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */,
+				2C0404551C3EBB7A00A5B017 /* CTASelectorsViewController.swift */,
+				2C5C24951C44F5D800A70F1B /* CTASelectorColorsCell.swift */,
 				2C5C24911C44E82100A70F1B /* CTAPickerView.swift */,
+				2C5C248B1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -342,8 +345,6 @@
 				2C0404671C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift */,
 				2C82FF561C437F58001D927A /* CTASelectorAligmentsCell.swift */,
 				2C7336DE1C43CFCD00E1D511 /* CTASelectorSpacingCell.swift */,
-				2C5C24951C44F5D800A70F1B /* CTASelectorColorsCell.swift */,
-				2C5C248B1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift */,
 				2C5C248D1C44E1C900A70F1B /* CTAVerticalItemCollectionViewCell.swift */,
 				2C5C248F1C44E1EE00A70F1B /* CTAVerticalItemColorCollectionViewCell.swift */,
 				2CD8F4081C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift */,
@@ -570,7 +571,6 @@
 				2CAEAC8E1C323F2600C9F9AC /* EditorFactory.swift */,
 				2C0404591C3EBDBF00A5B017 /* CTATabItemFactory.swift */,
 				2CAEAC8F1C323F2600C9F9AC /* EditViewController.swift */,
-				2C0404551C3EBB7A00A5B017 /* CTASelectorsViewController.swift */,
 				2C0404531C3EBB6800A5B017 /* CTACanvasViewController.swift */,
 				2C0404571C3EBBB800A5B017 /* CTATabViewController.swift */,
 				2CAEAC901C323F2600C9F9AC /* ElementProtocol.swift */,
