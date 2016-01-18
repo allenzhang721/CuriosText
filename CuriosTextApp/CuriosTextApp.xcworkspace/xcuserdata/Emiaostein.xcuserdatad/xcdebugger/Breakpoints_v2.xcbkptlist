@@ -82,12 +82,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/EditViewController.swift"
-            timestampString = "473923928.376095"
+            timestampString = "474789775.321621"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
-            landmarkName = "tableViewControllerNumberOfItems(_:)"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
+            landmarkName = "tabViewController(_:tabItemAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

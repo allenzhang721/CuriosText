@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  
+
+  Created by Emiaostein on 1/18/16.
+
+*/
+
+//默认使用方法: NSLocalizedString("YES", comment: "")
+
+"Localizable" = "本地化";
