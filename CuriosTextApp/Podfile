@@ -10,6 +10,7 @@ pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 pod "Qiniu", '~> 7.0'
 pod 'Kingfisher', '~> 1.8.5'
 pod 'MJRefresh', '~> 3.0.7'
+pod 'pop', '~> 1.0.8'
 
 end
 

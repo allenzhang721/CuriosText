@@ -108,6 +108,11 @@
 		2CAEACA31C323F9700C9F9AC /* TexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEACA11C323F9700C9F9AC /* TexView.swift */; };
 		2CB3222F1C45334900BD06F5 /* CTAUserPublishesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB3222E1C45334900BD06F5 /* CTAUserPublishesViewController.swift */; };
 		2CB322321C4533E200BD06F5 /* CTAPublishesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB322311C4533E200BD06F5 /* CTAPublishesCell.swift */; };
+		2CB380AF1C4CF86D009A681A /* CTAPreviewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB380AE1C4CF86D009A681A /* CTAPreviewProtocol.swift */; };
+		2CB380B11C4CF8D2009A681A /* CTAAnimationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB380B01C4CF8D2009A681A /* CTAAnimationProtocol.swift */; };
+		2CB380B31C4D003B009A681A /* CTAAnimationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB380B21C4D003B009A681A /* CTAAnimationConfig.swift */; };
+		2CB380B71C4D0D1F009A681A /* CTAPreviewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB380B61C4D0D1F009A681A /* CTAPreviewLayout.swift */; };
+		2CB380B91C4D20E5009A681A /* CTAPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB380B81C4D20E5009A681A /* CTAPreviewCell.swift */; };
 		2CCD94DC1C43B4AA001E5D08 /* CTATextSpacingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */; };
 		2CD8F4091C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8F4081C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift */; };
 		2CF5EB8B1C47B2CF009F0719 /* CTAFontsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF5EB8A1C47B2CF009F0719 /* CTAFontsManager.swift */; };
@@ -257,6 +262,12 @@
 		2CAEACA11C323F9700C9F9AC /* TexView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TexView.swift; sourceTree = "<group>"; };
 		2CB3222E1C45334900BD06F5 /* CTAUserPublishesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUserPublishesViewController.swift; sourceTree = "<group>"; };
 		2CB322311C4533E200BD06F5 /* CTAPublishesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishesCell.swift; sourceTree = "<group>"; };
+		2CB380AD1C4CC6D3009A681A /* preview.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = preview.playground; sourceTree = "<group>"; };
+		2CB380AE1C4CF86D009A681A /* CTAPreviewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewProtocol.swift; sourceTree = "<group>"; };
+		2CB380B01C4CF8D2009A681A /* CTAAnimationProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAnimationProtocol.swift; sourceTree = "<group>"; };
+		2CB380B21C4D003B009A681A /* CTAAnimationConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAnimationConfig.swift; sourceTree = "<group>"; };
+		2CB380B61C4D0D1F009A681A /* CTAPreviewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewLayout.swift; sourceTree = "<group>"; };
+		2CB380B81C4D20E5009A681A /* CTAPreviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewCell.swift; sourceTree = "<group>"; };
 		2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATextSpacingView.swift; sourceTree = "<group>"; };
 		2CD8F4081C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAVerticalItemFontsCollectionViewCell.swift; sourceTree = "<group>"; };
 		2CF5EB8A1C47B2CF009F0719 /* CTAFontsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAFontsManager.swift; sourceTree = "<group>"; };
@@ -338,9 +349,9 @@
 				2C04045F1C3EC2C500A5B017 /* CTAScrollTuneView.swift */,
 				2C0404611C3EC31100A5B017 /* CTARotatorView.swift */,
 				2C3097091C3F7FA800D996A4 /* CTAScrollSelectView.swift */,
-				2C82FF541C4362FA001D927A /* CTASegementControl.swift */,
 				2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */,
 				2C0404551C3EBB7A00A5B017 /* CTASelectorsViewController.swift */,
+				2C82FF541C4362FA001D927A /* CTASegementControl.swift */,
 				2C5C24951C44F5D800A70F1B /* CTASelectorColorsCell.swift */,
 				2C5C24911C44E82100A70F1B /* CTAPickerView.swift */,
 				2C5C248B1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift */,
@@ -380,6 +391,12 @@
 			isa = PBXGroup;
 			children = (
 				2C32BD481C4CA7A100788A97 /* CTAPreviewCanvasView.swift */,
+				2CB380B81C4D20E5009A681A /* CTAPreviewCell.swift */,
+				2CB380B61C4D0D1F009A681A /* CTAPreviewLayout.swift */,
+				2CB380AE1C4CF86D009A681A /* CTAPreviewProtocol.swift */,
+				2CB380B01C4CF8D2009A681A /* CTAAnimationProtocol.swift */,
+				2CB380B21C4D003B009A681A /* CTAAnimationConfig.swift */,
+				2CB380AD1C4CC6D3009A681A /* preview.playground */,
 			);
 			name = Preview;
 			sourceTree = "<group>";
@@ -840,6 +857,7 @@
 				66C7BF251C3114BD00ADF251 /* CTADomainListInfo.swift in Sources */,
 				2CCD94DC1C43B4AA001E5D08 /* CTATextSpacingView.swift in Sources */,
 				661EFBC51C213282009CF87A /* CTAPublishDomain.swift in Sources */,
+				2CB380B71C4D0D1F009A681A /* CTAPreviewLayout.swift in Sources */,
 				2C3CAD171C21825900D8DE4B /* CTAElement.swift in Sources */,
 				2C32BD491C4CA7A100788A97 /* CTAPreviewCanvasView.swift in Sources */,
 				2C82FF571C437F58001D927A /* CTASelectorAligmentsCell.swift in Sources */,
@@ -851,6 +869,7 @@
 				2C5ACC121C439E8100B96CCD /* CTAStyleKit.swift in Sources */,
 				2C3CAD161C21825900D8DE4B /* CTAContainer.swift in Sources */,
 				66A072AF1C18713F0046C72F /* CTAUploadRequestAPI.swift in Sources */,
+				2CB380B91C4D20E5009A681A /* CTAPreviewCell.swift in Sources */,
 				2C9706CB1C1E713A00FA2E17 /* CTABaseModel.swift in Sources */,
 				2C3CAD1A1C21825900D8DE4B /* CTATextElement.swift in Sources */,
 				2C82FF551C4362FA001D927A /* CTASegementControl.swift in Sources */,
@@ -864,7 +883,9 @@
 				2C04045C1C3EC25A00A5B017 /* CTACanvasTextCell.swift in Sources */,
 				2C31EB611C451AEE002A4D71 /* UIColorExtensions.swift in Sources */,
 				2C0404661C3EC58100A5B017 /* CTASelectorsFlowLayout.swift in Sources */,
+				2CB380B11C4CF8D2009A681A /* CTAAnimationProtocol.swift in Sources */,
 				2C3CAD231C21826800D8DE4B /* CTAContainerLayer.swift in Sources */,
+				2CB380AF1C4CF86D009A681A /* CTAPreviewProtocol.swift in Sources */,
 				2C3B33FE1C117C8000738166 /* CTANetworkConig.swift in Sources */,
 				2CAEAC9D1C323F4300C9F9AC /* ContainerImgView.swift in Sources */,
 				2C9706CD1C1E794B00FA2E17 /* CTAError.swift in Sources */,
@@ -897,6 +918,7 @@
 				2C8DD2151C4A342C0035C52D /* CTALoadingProtocol.swift in Sources */,
 				2C1F015C1C3CE3770033CED8 /* CTACanvasCell.swift in Sources */,
 				2C6C67FF1C350A4800CCE81C /* CTALineFlowLayout.swift in Sources */,
+				2CB380B31C4D003B009A681A /* CTAAnimationConfig.swift in Sources */,
 				2CAEACA31C323F9700C9F9AC /* TexView.swift in Sources */,
 				2CAEAC9B1C323F4300C9F9AC /* CanvasView.swift in Sources */,
 				66A072A91C156D1C0046C72F /* CTAUserRequestAPI.swift in Sources */,
