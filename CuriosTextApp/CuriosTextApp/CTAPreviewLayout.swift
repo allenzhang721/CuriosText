@@ -10,7 +10,7 @@ import UIKit
 
 protocol CTAPreviewLayoutDataSource: class {
     
-    func layout(layout: CTAPreviewLayout, layoutAttributesAtIndexPath indexPath: NSIndexPath) -> CTAPreviewContainer?
+    func layout(layout: CTAPreviewLayout, layoutAttributesAtIndexPath indexPath: NSIndexPath) -> ContainerVMProtocol?
 }
 
 class CTAPreviewLayout: UICollectionViewFlowLayout {
@@ -32,10 +32,9 @@ class CTAPreviewLayout: UICollectionViewFlowLayout {
                     continue
                 }
                 
-                attribute.bounds = container.bounds
+                attribute.size = container.size
                 attribute.center = container.center
-                attribute.transform = container.transform
-                attribute.alpha = container.alpha
+                attribute.transform = CGAffineTransformMakeRotation(container.radius)
             }
         }
         

@@ -10,14 +10,24 @@ extension CGRect: RectIntegerable {}
 //    public typealias T = NSValue
 //    
 //    public func toValue() -> NSValue {
+//
+//        return NSValue(CGSize: CGSize(width: width, height: height))
+//    }
+//}
+//
+//extension CGPoint: Valueable {
+//    
+//    public typealias T = NSValue
+//    
+//    public func toValue() -> NSValue {
 //        
-//       return NSValue(CGSize: CGSize(width: width, height: height))
+//        return NSValue(CGPoint: CGPoint(x: x, y: y))
 //    }
 //}
 
 public protocol Integerable {
     typealias T
-
+    
     func toCeil() -> T
     func toFloor() -> T
 }

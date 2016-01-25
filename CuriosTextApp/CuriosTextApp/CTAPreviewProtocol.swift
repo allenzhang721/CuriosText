@@ -14,13 +14,12 @@ protocol CTAPreviewControl {
     func play()
     func pause()
     func stop()
-    func replay()
 }
 
 protocol CTAPreviewPage {
     
-    var containers: [CTAPreviewContainer] { get }
-    var animations: [CTAAnimation] { get }
+    var previewContainers: [CTAPreviewContainer] { get }
+    var animations: [CTAAnimationBinder] { get }
 }
 
 protocol CTAPreviewContainer {

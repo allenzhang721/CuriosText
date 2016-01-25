@@ -10,18 +10,32 @@ import UIKit
 
 class CTAPreviewCell: UICollectionViewCell {
     
-    var layers = [CALayer]()
+    var previewView: CTAPreviewView!
     
-    func play() {
-        
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
     }
     
-    func pause() {
-        
+    func setup() {
+        previewView = CTAPreviewView(frame: bounds)
+//        previewView.backgroundColor = CTAStyleKit.birdsofParadise0
+        addSubview(previewView)
     }
     
-    func stop() {
-        
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        previewView.bounds = bounds
     }
     
+//    override func prepareForReuse() {
+//        
+//        super.prepareForReuse()
+//        previewView.clearViews()
+//    }
 }

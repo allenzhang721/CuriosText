@@ -17,12 +17,20 @@ struct CTAAnimationConfig {
     let withFormer: Bool
     let loadStrategy: CTAContentLoadStrategy
     let generateStrategy: CTAContentGenerateStrategy
+    
+    static var defaultConfig: CTAAnimationConfig {
+        return CTAAnimationConfig(duration: 3.0, delay: 0.0, repeatCount: 0, reverse: false, withFormer: false, loadStrategy: CTAContentLoadStrategy.defautlStrategy, generateStrategy: CTAContentGenerateStrategy.defaultStrategy)
+    }
 }
 
 struct CTAContentLoadStrategy {
     
     let loadAtAnimationBegan: Bool
     let removeAtAnimationEnd: Bool
+    
+    static var defautlStrategy: CTAContentLoadStrategy {
+        return CTAContentLoadStrategy(loadAtAnimationBegan: false, removeAtAnimationEnd: false)
+    }
 }
 
 struct CTAContentGenerateStrategy {

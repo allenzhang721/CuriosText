@@ -10,79 +10,115 @@ import UIKit
 
 protocol CTAPreviewCanvasViewDataSource: class {
     
-    func canvasViewWithPage(view: CTAPreviewCanvasView) -> CTAPreviewPage
+    func canvasViewWithPage(view: CTAPreviewCanvasView) -> PageVMProtocol
 }
 
-class CTAPreviewCanvasView: UIView, CTAPreviewControl {
+class CTAPreviewCanvasView: UIView {
 
     weak var datasource: CTAPreviewCanvasViewDataSource?
     var collectionView: UICollectionView!
-    var page: CTAPreviewPage? {
+    var page: PageVMProtocol? {
         return datasource?.canvasViewWithPage(self)
     }
+//    var headNode: CTAAnimationPlayNode?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setup()
     }
 
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        setup()
     }
     
     private func setup() {
         let layout = CTAPreviewLayout()
         collectionView = UICollectionView(frame: bounds, collectionViewLayout: layout)
+        collectionView.backgroundColor = CTAStyleKit.birdsofParadise3
         collectionView.registerClass(CTAPreviewCell.self, forCellWithReuseIdentifier: "ContainerCell")
         
         collectionView.dataSource = self
         layout.dataSource = self
-        layer.addSublayer(collectionView.layer)
+//        layer.addSublayer(collectionView.layer)
+        addSubview(collectionView)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         collectionView.frame = bounds
     }
+    
+    func refresh() {
+        
+//        stop()
+        clear()
+        collectionView.reloadData()
+    }
+    
 }
 
-extension CTAPreviewCanvasView {
+extension CTAPreviewCanvasView: CTAPreviewControl {
     
     func play() {
-        guard let cells = collectionView.visibleCells() as? [CTAPreviewCell] else {
-            return
-        }
-        
-        for cell in cells {
-            cell.play()
-        }
-    }
     
-    func pause() {
-        guard let cells = collectionView.visibleCells() as? [CTAPreviewCell] else {
-            return
-        }
-        
-        for cell in cells {
-            cell.pause()
-        }
-        
-    }
-    
-    func stop() {
-        guard let cells = collectionView.visibleCells() as? [CTAPreviewCell] else {
-            return
-        }
-        
-        for cell in cells {
-            cell.stop()
-        }
-    }
-    
-    func replay() {
         guard let page = page else {
             return
         }
         
+//        collectionView.reloadData()
+        
+//        if headNode == nil {
+//            let groups = CTAPreviewCanvasController.splits(page.animationBinders)
+////            var firstNode: CTAAnimationPlayNode?
+////            var preNode: CTAAnimationPlayNode?
+//            for group in groups {
+//                
+//                var controllers = [CTAAnimationController]()
+//                for binder in group {
+//                    let targetID = binder.targetiD
+//                    guard let container = page.containerByID(targetID), let index = page.indexByID(targetID) else {
+//                        continue
+//                    }
+//                    
+//                    let preView = (collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0)) as? CTAPreviewCell)?.previewView
+//                    
+//                    let controller = CTAAnimationController(preView: preView, binder: binder, container: container, canvasSize: bounds.size)
+//                    
+//                    controllers.append(controller)
+//                }
+//                let node = CTAAnimationPlayNode(controllers: controllers)
+//                
+//                if firstNode == nil {
+//                    firstNode = node
+//                    preNode = node
+//                } else {
+//                    preNode?.nextNode = node
+//                    preNode = node
+//                }
+//            }
+//            headNode = firstNode
+//        }
+//        
+//        headNode?.play()
+    }
+    
+    func pause() {
+
+    }
+    
+    func stop() {
+
+    }
+    
+    func clear() {
+        
+        let visualCells = collectionView.visibleCells() as! [CTAPreviewCell]
+        
+        for cell in visualCells {
+            cell.previewView.clearViews()
+        }
+    
     }
 }
 
@@ -94,12 +130,16 @@ extension CTAPreviewCanvasView: UICollectionViewDataSource {
             return 0
         }
         
-        return page.containers.count
+        return page.containerVMs.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ContainerCell", forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ContainerCell", forIndexPath: indexPath) as! CTAPreviewCell
+        
+        let id = page!.containerVMs[indexPath.item].iD
+        let needLoadContents = page!.containerShouldLoadBeforeAnimationBeganByID(id)
+        CTAPreviewCanvasController.configPreviewView(cell.previewView, container: page!.containerVMs[indexPath.item], needLoadContents: needLoadContents)
         
         return cell
     }
@@ -107,13 +147,13 @@ extension CTAPreviewCanvasView: UICollectionViewDataSource {
 
 extension CTAPreviewCanvasView: CTAPreviewLayoutDataSource {
     
-    func layout(layout: CTAPreviewLayout, layoutAttributesAtIndexPath indexPath: NSIndexPath) -> CTAPreviewContainer? {
+    func layout(layout: CTAPreviewLayout, layoutAttributesAtIndexPath indexPath: NSIndexPath) -> ContainerVMProtocol? {
         
         guard let page = page else {
             return nil
         }
         
-        return page.containers[indexPath.item]
+        return page.containerVMs[indexPath.item]
     }
 }
 
