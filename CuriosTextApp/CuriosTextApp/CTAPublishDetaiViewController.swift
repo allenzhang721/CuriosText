@@ -291,22 +291,22 @@ class CTAPublishDetailViewController: UIViewController, CTAImageControllerProtoc
     }
     
     func getCurrentPublishIndex(selectedIndex:Int) -> Int{
-        let count = self.getCellCount()
+        let count = self.getCellCount()-1
         let isLeft = (selectedIndex % 2 == 0 ? true : false )
         let publishCount = self.publishModelArray.count - 1
         let isLastLeft = publishCount % 2 == 0 ? true : false
         var midCount = count/2
-        if isLeft {
-            if isLastLeft &&  selectedIndex ==  publishCount{
-                midCount = count - 2
-            }else {
+        if publishCount - selectedIndex > midCount {
+            if isLeft {
                 midCount = midCount % 2 == 0 ?  midCount : midCount-1
+            }else {
+                midCount = midCount % 2 == 0 ?  midCount + 1 : midCount
             }
         }else {
-            if !isLastLeft && selectedIndex >= publishCount - 1{
+            if isLastLeft {
                 midCount = count - (publishCount - selectedIndex) - 1
-            }else{
-                midCount = midCount % 2 == 0 ?  midCount + 1 : midCount
+            }else {
+                midCount = count - (publishCount - selectedIndex)
             }
         }
         let newIndex = selectedIndex > midCount ? midCount : selectedIndex
@@ -848,22 +848,13 @@ class CTAPublishDetailViewController: UIViewController, CTAImageControllerProtoc
         let space = self.getCellSpace()
         let cellRect = self.getCellRect()
         let centX = currentIndex % 2 == 0 ? (space + cellRect.width / 2) : (UIScreen.mainScreen().bounds.width - (space + cellRect.width / 2))
-        var isLastRow:Bool = false
-        if currentIndex % 2 == 0  {
-            if selectedIndex > self.publishModelArray.count - 3 {
-                isLastRow = true
-            }
-        } else {
-            if selectedIndex > self.publishModelArray.count - 2 {
-                isLastRow = true
-            }
-        }
+    
         var centY:CGFloat = 0.0
-        if !isLastRow{
-            let yIndex = Int(currentIndex / 2)
-            centY = CGFloat(yIndex) * (space + cellRect.height) + cellRect.height/2 + 44
-        }else {
-            centY = UIScreen.mainScreen().bounds.height - space - cellRect.height/2
+        let yIndex = Int(currentIndex / 2)
+        centY = CGFloat(yIndex) * (space + cellRect.height) + cellRect.height/2 + 44
+        let maxY = UIScreen.mainScreen().bounds.height - space - cellRect.height/2
+        if centY > maxY{
+            centY = maxY
         }
         return CGPoint(x: centX, y: centY)
     }
