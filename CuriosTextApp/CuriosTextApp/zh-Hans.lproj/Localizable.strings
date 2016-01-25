@@ -6,6 +6,12 @@
 
 */
 
-//默认使用方法: NSLocalizedString("YES", comment: "")
+//默认使用方法: NSLocalizedString("Localizable", comment: "")
 
 "Localizable" = "本地化";
+"FollowLabel" = "关注";
+"BeFollowLabel" = "粉丝";
+"FollowButtonLabel" = "关注";
+"UnFollowButtonLabel" = "取消关注";
+"TenThousand" = "万";
+"HundredMillion" = "亿";

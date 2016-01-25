@@ -9,9 +9,9 @@
 import UIKit
 import Kingfisher
 
-class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol, CTALoadingProtocol{
+class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol, CTALoadingProtocol, CTASystemLanguageProtocol, CTAPublishCellProtocol{
     
-    var backImageView:UIImageView!
+    var backImageView:UIView!
     var userIconImageView:UIImageView!
     var userNikeNameLabel:UILabel!
     var userDescTextView:UITextView!
@@ -27,7 +27,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     
     var blackColorView:UIView!
     
-    var userModel:CTAUserModel?
+    var viewUser:CTAUserModel?
     var loginUserID:String = ""
     var userDetailModel:CTAViewUserModel?
     
@@ -41,12 +41,12 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        self.initBackView();
+        self.initView();
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if self.userModel != nil {
+        if self.viewUser != nil {
             self.setViewByUserModel()
         } else {
             self.setDefaultView()
@@ -64,74 +64,74 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         self.resetDisView()
     }
     
-    func initBackView(){
+    func initView(){
         self.blackColorView = UIView.init(frame: self.view.bounds)
         self.view.addSubview(self.blackColorView!)
         let tap = UITapGestureRecognizer(target: self, action: "backButtonClikc:")
         self.blackColorView.addGestureRecognizer(tap)
         
-        let backWidth  = self.view.frame.width - 56
-        let rate       = backWidth/375
-        let backHeight = rate * 517
-        self.backImageView = UIImageView.init(frame: CGRect.init(x: 28, y: (self.view.frame.height - backHeight)/2, width: backWidth, height: backHeight))
+        let rate       = self.getHorRate()
+        let backWidth  = rate * 300
+        let backHeight = rate * 440
+        self.backImageView = UIView.init(frame: CGRect.init(x: (self.view.frame.width - backWidth)/2, y: (self.view.frame.height - backHeight)/2, width: backWidth, height: backHeight))
         self.view.addSubview(self.backImageView!)
-        self.backImageView.image = UIImage.init(named: "userdetail_bakground")
-        
-        self.userIconImageView = UIImageView.init(frame: CGRect.init(x: (self.view.frame.size.width - 90)/2, y: self.backImageView.frame.origin.y + 20*rate, width: 90, height: 90))
+        self.backImageView.backgroundColor = UIColor.whiteColor()
+        self.cropImageRound(self.backImageView)
+
+        self.userIconImageView = UIImageView.init(frame:CGRect.init(x: (self.view.frame.size.width - 60)/2, y: self.backImageView.frame.origin.y + 14*rate, width: 60*rate, height: 60*rate ))
         self.view.addSubview(self.userIconImageView)
         self.cropImageCircle(self.userIconImageView)
         
-        self.userNikeNameLabel = UILabel.init(frame: CGRect.init(x: 120, y: self.userIconImageView.frame.origin.y + self.userIconImageView.frame.size.height + 30*rate, width: 78, height: 40))
+        self.userNikeNameLabel = UILabel.init(frame: CGRect.init(x: 120, y: self.userIconImageView.frame.origin.y + 65*rate, width: 120, height: 28))
         self.view.addSubview(self.userNikeNameLabel)
-        self.userNikeNameLabel.font = UIFont.systemFontOfSize(26)
-        self.userNikeNameLabel.textColor = UIColor.whiteColor()
+        self.userNikeNameLabel.font = UIFont.systemFontOfSize(20)
+        self.userNikeNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.userNikeNameLabel.text = " "
         self.userNikeNameLabel.sizeToFit()
         
-        self.lineImageView = UIImageView.init(frame: CGRect.init(x: self.view.frame.size.width / 2 - 1, y: self.userNikeNameLabel.frame.origin.y + self.userNikeNameLabel.frame.size.height + 30*rate, width: 2, height: 18))
+        self.lineImageView = UIImageView.init(frame: CGRect.init(x: self.view.frame.size.width / 2 - 1, y: self.userNikeNameLabel.frame.origin.y + 85*rate, width: 2, height: 18))
         self.lineImageView.image = UIImage.init(named: "follow-line")
         self.view.addSubview(self.lineImageView)
         
         self.followLabel = UILabel.init()
         self.view.addSubview(self.followLabel)
-        self.followLabel.font = UIFont.systemFontOfSize(18)
-        self.followLabel.textColor = UIColor.whiteColor()
-        self.followLabel.text = "关注"
+        self.followLabel.font = UIFont.systemFontOfSize(10)
+        self.followLabel.textColor = UIColor.init(red: 239/255, green: 51/255, blue: 74/255, alpha: 1.0)
+        self.followLabel.text = NSLocalizedString("FollowLabel", comment: "")
         self.followLabel.sizeToFit()
         self.followLabel.frame.origin.x = self.view.frame.size.width / 2 - self.followLabel.frame.width - 20
-        self.followLabel.frame.origin.y = self.lineImageView.frame.origin.y+self.lineImageView.frame.height/2-self.followLabel.frame.height/2
-        
+        self.followLabel.frame.origin.y = self.lineImageView.frame.origin.y-self.followLabel.frame.height - 2
+    
         self.followCountLabel = UILabel.init()
         self.view.addSubview(self.followCountLabel)
-        self.followCountLabel.font = UIFont.systemFontOfSize(16)
-        self.followCountLabel.textColor = UIColor.whiteColor()
+        self.followCountLabel.font = UIFont.systemFontOfSize(18)
+        self.followCountLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         
         self.beFollowLabel = UILabel.init()
         self.view.addSubview(self.beFollowLabel)
-        self.beFollowLabel.font = UIFont.systemFontOfSize(18)
-        self.beFollowLabel.textColor = UIColor.whiteColor()
-        self.beFollowLabel.text = "粉丝"
+        self.beFollowLabel.font = UIFont.systemFontOfSize(10)
+        self.beFollowLabel.textColor = UIColor.init(red: 239/255, green: 51/255, blue: 74/255, alpha: 1.0)
+        self.beFollowLabel.text = NSLocalizedString("BeFollowLabel", comment: "")
         self.beFollowLabel.sizeToFit()
         self.beFollowLabel.frame.origin.x = self.view.frame.size.width / 2  + 20
-        self.beFollowLabel.frame.origin.y = self.lineImageView.frame.origin.y+self.lineImageView.frame.height/2-self.followLabel.frame.height/2
+        self.beFollowLabel.frame.origin.y = self.lineImageView.frame.origin.y - self.beFollowLabel.frame.height - 2
     
         self.beFollowCountLabel = UILabel.init()
         self.view.addSubview(self.beFollowCountLabel)
-        self.beFollowCountLabel.font = UIFont.systemFontOfSize(16)
-        self.beFollowCountLabel.textColor = UIColor.whiteColor()
+        self.beFollowCountLabel.font = UIFont.systemFontOfSize(18)
+        self.beFollowCountLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         
-        self.userDescTextView = UITextView.init(frame: CGRect.init(x: (self.view.frame.width - self.backImageView.frame.width + 20)/2, y: self.lineImageView.frame.origin.y + self.lineImageView.frame.size.height + 30*rate, width: self.backImageView.frame.width - 20, height: 90))
+        self.userDescTextView = UITextView.init(frame: CGRect.init(x: (self.view.frame.width - 260*rate)/2, y: self.lineImageView.frame.origin.y + 52*rate, width: 260*rate, height: 140*rate))
         self.userDescTextView.editable = false
         self.userDescTextView.scrollEnabled = false
         self.userDescTextView.selectable = false
         self.userDescTextView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
         self.view.addSubview(self.userDescTextView)
-        self.userDescTextView.font = UIFont.systemFontOfSize(18)
-        self.userDescTextView.textColor = UIColor.whiteColor()
+        self.userDescTextView.font = UIFont.systemFontOfSize(14)
+        self.userDescTextView.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.userDescTextView.textAlignment = .Center
-
         
-        self.followButtonView = UIView.init(frame: CGRect.init(x: (self.view.frame.width - 120)/2, y: (self.backImageView.frame.origin.y+self.backImageView.frame.height - 65), width: 120, height: 46))
+        self.followButtonView = UIView.init(frame: CGRect.init(x: (self.view.frame.width - 120*rate)/2, y: (self.backImageView.frame.origin.y+self.backImageView.frame.height - 65*rate), width: 120*rate, height: 35*rate))
         self.view.addSubview(self.followButtonView)
         
         self.followButtonBgView = UIImageView.init(image: UIImage.init(named: "follow-button"))
@@ -141,7 +141,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         self.followButton = UIButton.init()
         self.followButton.frame.size = self.followButtonView.frame.size
         self.followButtonBgView.addSubview(self.followButton)
-        self.followButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.followButton.setTitleColor(UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0), forState: .Normal)
         self.followButtonView.hidden = true
         
         let followTap = UITapGestureRecognizer(target: self, action: "followButtonClick:")
@@ -150,13 +150,13 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     
     func setViewByUserModel(){
         
-        let imagePath = CTAFilePath.userFilePath+(self.userModel?.userIconURL)!
+        let imagePath = CTAFilePath.userFilePath+(self.viewUser?.userIconURL)!
         let imageURL = NSURL(string: imagePath)!
         self.userIconImageView.kf_showIndicatorWhenLoading = true
         self.userIconImageView.kf_setImageWithURL(imageURL, placeholderImage: UIImage.init(named: "default-usericon"), optionsInfo: [.Transition(ImageTransition.Fade(1))])
         
-        self.userNikeNameLabel.text = self.userModel?.nikeName
-        self.userDescTextView.text  = self.userModel?.userDesc
+        self.userNikeNameLabel.text = self.viewUser?.nikeName
+        self.userDescTextView.text  = self.viewUser?.userDesc
     }
     
     func setDefaultView(){
@@ -172,7 +172,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         if self.loadingImageView != nil {
             self.hideLoadingView(self.loadingImageView!)
         }
-        self.userModel = nil
+        self.viewUser = nil
         self.userDetailModel = nil
         self.loginUserID = ""
         self.followCountLabel.text = ""
@@ -190,7 +190,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     func loadUserDetail(){
         self.followButtonView!.hidden = true
         self.showLoadingHandle();
-        CTAUserDomain.getInstance().userDetail(self.loginUserID, beUserID: self.userModel!.userID) { (info) -> Void in
+        CTAUserDomain.getInstance().userDetail(self.loginUserID, beUserID: self.viewUser!.userID) { (info) -> Void in
             if info.result{
                 self.userDetailModel = info.baseModel! as? CTAViewUserModel
             }else {
@@ -226,13 +226,13 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
             
             self.followCountLabel.text = self.changeCountToString(followCount)
             self.followCountLabel.sizeToFit()
-            self.followCountLabel.frame.origin.x = self.followLabel.frame.origin.x - self.followCountLabel.frame.size.width - 5
-            self.followCountLabel.frame.origin.y = self.followLabel.frame.origin.y + self.followLabel.frame.height/2 - self.followCountLabel.frame.height/2
+            self.followCountLabel.frame.origin.x = self.followLabel.frame.origin.x + (self.followLabel.frame.size.width - self.followCountLabel.frame.width)/2
+            self.followCountLabel.frame.origin.y = self.followLabel.frame.origin.y + self.followLabel.frame.height
             
             self.beFollowCountLabel.text = self.changeCountToString(beFollowCount)
             self.beFollowCountLabel.sizeToFit()
-            self.beFollowCountLabel.frame.origin.x = self.beFollowLabel.frame.origin.x + self.beFollowLabel.frame.width + 5
-            self.beFollowCountLabel.frame.origin.y = self.beFollowLabel.frame.origin.y + self.beFollowLabel.frame.height/2 - self.beFollowCountLabel.frame.height/2
+            self.beFollowCountLabel.frame.origin.x = self.beFollowLabel.frame.origin.x + (self.beFollowLabel.frame.width - self.beFollowCountLabel.frame.width)/2
+            self.beFollowCountLabel.frame.origin.y = self.beFollowLabel.frame.origin.y + self.beFollowLabel.frame.height
             
             let imagePath = CTAFilePath.userFilePath+self.userDetailModel!.userIconURL
             let imageURL = NSURL(string: imagePath)!
@@ -253,9 +253,9 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         case -1:
             self.followButtonView.hidden = true;
         case 0, 3:
-            buttonLabel = "关注"
+            buttonLabel = NSLocalizedString("FollowButtonLabel", comment: "")
         case 1, 5:
-            buttonLabel = "取消关注"
+            buttonLabel = NSLocalizedString("UnFollowButtonLabel", comment: "")
         case 2, 4, 6:
             self.followButtonView.hidden = true;
         default:
@@ -266,31 +266,74 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     
     func changeCountToString(count:Int) -> String{
         var countString:String = ""
-        if count < 10000 {
-            countString = String(count)
-        }else {
-            if count < 1000000{
-                if count%10000 < 1000{
+        let language = self.getCurrentLanguage()
+        if language == "zh-Hant-US" || language == "zh-Hans-US" || language == "zh-HK" {
+            if count < 10000 {
+                countString = String(count)
+            }else if count < 100000000{
+                if count < 1000000{
+                    var countFloat = Double(count) / 10000.00
+                    let countNumber = floor(countFloat*10)
+                    countFloat = Double(countNumber)/10
+                    if (countFloat - floor(countFloat))*10 < 1 {
+                        countString = String(Int(countFloat)) + NSLocalizedString("TenThousand", comment: "")
+                    }else {
+                        countString =  String(format: "%.1f", countFloat) + NSLocalizedString("TenThousand", comment: "")
+                    }
+                }else {
                     let countInt = count / 10000
-                    countString = String(countInt) + "万"
-                }else{
-                    let countFloat = Double(count) / 10000.00
-                    countString = String(format: "%.1f", countFloat) + "万"
+                    countString = String(countInt) + NSLocalizedString("TenThousand", comment: "")
                 }
             }else {
-                if count < 100000000{
-                    let countInt = count / 10000
-                    countString = String(countInt) + "万"
-                } else {
-                    if count%100000000 < 10000000{
-                        let countInt = count / 100000000
-                        countString = String(countInt) + "亿"
-                    }else{
-                        let countFloat = Double(count) / 100000000.00
-                        countString = String(format: "%.1f", countFloat) + "亿"
-                    }
+                var countFloat = Double(count) / 100000000.00
+                let countNumber = floor(countFloat*10)
+                countFloat = Double(countNumber)/10
+                if (countFloat - floor(countFloat))*10 < 1 {
+                    countString = String(Int(countFloat)) + NSLocalizedString("HundredMillion", comment: "")
+                }else {
+                    countString =  String(format: "%.1f", countFloat) + NSLocalizedString("HundredMillion", comment: "")
                 }
-                
+            }
+        }else {
+            if count < 1000 {
+                countString = String(count)
+            }else if count < 1000000{
+                if count < 100000{
+                    var countFloat = Double(count) / 1000.00
+                    let countNumber = floor(countFloat*10)
+                    countFloat = Double(countNumber)/10
+                    if (countFloat - floor(countFloat))*10 < 1 {
+                        countString = String(Int(countFloat)) + NSLocalizedString("Thousand", comment: "")
+                    }else {
+                        countString =  String(format: "%.1f", countFloat) + NSLocalizedString("Thousand", comment: "")
+                    }
+                }else {
+                    let countInt = count / 1000
+                    countString = String(countInt) + NSLocalizedString("Thousand", comment: "")
+                }
+            }else if count < 1000000000{
+                if count < 100000000{
+                    var countFloat = Double(count) / 1000000.00
+                    let countNumber = floor(countFloat*10)
+                    countFloat = Double(countNumber)/10
+                    if (countFloat - floor(countFloat))*10 < 1 {
+                        countString = String(Int(countFloat)) + NSLocalizedString("Million", comment: "")
+                    }else {
+                        countString =  String(format: "%.1f", countFloat) + NSLocalizedString("Million", comment: "")
+                    }
+                }else {
+                    let countInt = count / 1000000
+                    countString = String(countInt) + NSLocalizedString("Million", comment: "")
+                }
+            }else {
+                var countFloat = Double(count) / 1000000000.00
+                let countNumber = floor(countFloat*10)
+                countFloat = Double(countNumber)/10
+                if (countFloat - floor(countFloat))*10 < 1 {
+                    countString = String(Int(countFloat)) + NSLocalizedString("Billion", comment: "")
+                }else {
+                    countString =  String(format: "%.1f", countFloat) + NSLocalizedString("Billion", comment: "")
+                }
             }
         }
         return countString

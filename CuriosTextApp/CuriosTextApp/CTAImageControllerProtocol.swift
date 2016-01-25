@@ -9,19 +9,19 @@
 import UIKit
 
 protocol CTAImageControllerProtocol{
-    func cropImageCircle(imageView:UIImageView)
-    func cropImageRound(imageView:UIImageView)
+    func cropImageCircle(imageView:UIView)
+    func cropImageRound(imageView:UIView)
     func addImageShadow(imageView:UIView)
 }
 
 extension CTAImageControllerProtocol{
-    func cropImageCircle(imageView:UIImageView){
+    func cropImageCircle(imageView:UIView){
         imageView.contentMode = .ScaleAspectFill
         imageView.layer.cornerRadius = imageView.frame.width/2
         imageView.layer.masksToBounds = true
     }
     
-    func cropImageRound(imageView:UIImageView){
+    func cropImageRound(imageView:UIView){
         imageView.contentMode = .ScaleAspectFill
         //imageView.layer.cornerRadius = 4.0
         //imageView.clipsToBounds = true

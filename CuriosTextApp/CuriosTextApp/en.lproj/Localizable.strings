@@ -5,3 +5,10 @@
   Created by Emiaostein on 1/18/16.
 
 */
+"FollowLabel" = "following";
+"BeFollowLabel" = "followers";
+"FollowButtonLabel" = "Follow";
+"UnFollowButtonLabel" = "Unfollow";
+"Thousand" = "K";
+"Million" = "M";
+"Billion" = "B";
