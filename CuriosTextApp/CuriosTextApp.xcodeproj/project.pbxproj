@@ -502,7 +502,6 @@
 				2C7A95181C3A507A005B0EAE /* CTAHomeViewController.swift */,
 				2C7A951C1C3A50F6005B0EAE /* CTATemplateViewController.swift */,
 				2C7A951E1C3A511B005B0EAE /* CTADocmentPreviewViewController.swift */,
-				2C8DD2101C4A33770035C52D /* CTAUserDetailViewController.swift */,
 				2C32BD4A1C4CB56E00788A97 /* UseCase */,
 				2C7A95201C3A51D6005B0EAE /* CTAUserInfoViewController.swift */,
 				2C7A95221C3A51F1005B0EAE /* CTALoginViewController.swift */,
@@ -686,6 +685,7 @@
 				2CFC658D1C56305500E8ADE7 /* CTAFullPublishesCell.swift */,
 				2CFC65931C56310800E8ADE7 /* CTAPublishDetaiViewController.swift */,
 				2CB3222E1C45334900BD06F5 /* CTAUserPublishesViewController.swift */,
+				2C8DD2101C4A33770035C52D /* CTAUserDetailViewController.swift */,
 			);
 			name = UserPublishes;
 			sourceTree = "<group>";
@@ -786,6 +786,7 @@
 				TargetAttributes = {
 					2C3B33C51C1176D000738166 = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = LKNH59573E;
 					};
 					2C3B33D91C1176D000738166 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -1182,6 +1183,7 @@
 			baseConfigurationReference = 942BE59E5A421D0CB32A58EB /* Pods-CuriosTextApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -1199,6 +1201,7 @@
 			baseConfigurationReference = FEA1095AC8443011149CF7A8 /* Pods-CuriosTextApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",

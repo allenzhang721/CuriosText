@@ -11,6 +11,8 @@ import Kingfisher
 
 class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
+    private let page = EditorFactory.generateRandomPage()
+    
     var publishModel:CTAPublishModel?{
         didSet{
             self.reloadCell()
@@ -21,9 +23,11 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
     var cellImageView:UIImageView!
     
+    var previewView: CTAPreviewCanvasView!
+    
     var animationEnable:Bool = false{
         didSet{
-            self.reloadAnimation()
+            self.loadAnimation()
         }
     }
     
@@ -58,15 +62,24 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
         }
     }
     
-    func reloadAnimation(){
+    func loadAnimation(){
         if self.animationEnable{
-            
+            // add preview
+            // refresh data
+            let preview = CTAPreviewCanvasView(frame: bounds)
+            preview.center = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0)
+            preview.datasource = self
+            addSubview(preview)
+            previewView = preview
+//            previewView.reloadData()
         }
     }
     
     func playAnimation(){
         if self.animationEnable{
-            
+            // preview play
+            previewView.reloadData()
+            previewView.play()
         }
     }
     
@@ -76,5 +89,13 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
     func stopAnimation(){
         
+    }
+}
+
+extension CTAFullPublishesCell: CTAPreviewCanvasViewDataSource {
+    
+    func canvasViewWithPage(view: CTAPreviewCanvasView) -> PageVMProtocol {
+        
+        return page
     }
 }

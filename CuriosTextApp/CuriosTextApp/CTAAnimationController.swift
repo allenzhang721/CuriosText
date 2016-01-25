@@ -24,6 +24,8 @@ class CTAAnimationController: NSObject {
     weak var preView: CTAPreviewView?
     var container: ContainerVMProtocol
     var canvasSize: CGSize
+    private var playing: Bool = false
+    
     var duration: Float {
         return binder.config.duration + binder.config.delay
     }
@@ -43,12 +45,18 @@ class CTAAnimationController: NSObject {
             self.views = CTAAnimationController.createViews(binder, container: container)
         }
         
+        playing = true
+        
         let time: NSTimeInterval = NSTimeInterval(duration)
         let delay = dispatch_time(DISPATCH_TIME_NOW,
             Int64(time * Double(NSEC_PER_SEC)))
         dispatch_after(delay, dispatch_get_main_queue()) { [weak self] in
             
-            self?.delegate?.controllerAnimationDidFinished(self!)
+            if let sf = self where sf.playing == true {
+                sf.playing = false
+                sf.delegate?.controllerAnimationDidFinished(sf)
+            }
+            
         }
         
         if let apreView = preView {
@@ -76,6 +84,8 @@ class CTAAnimationController: NSObject {
         guard let views = views else {
             return
         }
+        
+//        playing = false
         
         for v in views {
             v.pop_removeAllAnimations()

@@ -25,7 +25,13 @@ class CTAPreviewViewController: UIViewController {
     }
     @IBAction func stop(sender: AnyObject) {
         
-        previewView.refresh()
+        previewView.reloadData()
+//        previewView.refresh()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        previewView.reloadData()
     }
 }
 
