@@ -85,7 +85,8 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.isLoginUser = false
         self.publishModelArray.removeAll()
         self.collectionView.reloadData()
-        isDisAppear = true
+        self.isDisAppear = true
+        self.previousScrollViewYOffset = 0.0
     }
     
     override func didReceiveMemoryWarning() {
@@ -424,14 +425,14 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
         var scrollOffY = centY - selectedCellCenter.y
         let scrollHeight = self.collectionView.frame.size.height
         let scrollContentSizeHeight = self.collectionView.contentSize.height + self.collectionView.contentInset.bottom
-        if scrollOffY + scrollHeight > scrollContentSizeHeight-5{
+        if scrollOffY > 0 && scrollOffY + scrollHeight > scrollContentSizeHeight-5{
             scrollOffY = scrollContentSizeHeight - scrollHeight-5
         }
-        self.previousScrollViewYOffset = scrollOffY
-        self.collectionView.contentOffset.y = scrollOffY
-        self.collectionView.reloadData()
-        
-        
+        if self.collectionView.contentOffset.y != scrollOffY {
+            self.collectionView.contentOffset.y = scrollOffY
+            self.collectionView.reloadData()
+             self.previousScrollViewYOffset = scrollOffY
+        }
     }
 }
 

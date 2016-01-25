@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     // Override point for customization after application launch.
-    CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.Test.description
+    CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.Debug.description
     return true
   }
 
