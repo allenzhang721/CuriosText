@@ -48,13 +48,18 @@ class EditorFactory {
     class func generateRandomPage() -> CTAPage {
         
         var containers = [CTAContainer]()
-        for _ in 0..<3 {
+        var animations = [CTAAnimation]()
+        let n = 3
+        for i in 0..<n {
             
-            let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "我叫陈星宇 \nWhat can i do for you ?", attributes: CTATextAttributes())
+            let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "我叫陈星宇 \nWhat can i do for you ?", attributes: CTATextAttributes(), index: i, count: n)
             containers += [con]
+            
+            let ani = generateAnimationFor(con.iD, index: i)
+            animations += [ani]
         }
         
-        let page = CTAPage(containers: containers)
+        let page = CTAPage(containers: containers, anis: animations)
         return page
     }
 }
@@ -243,19 +248,32 @@ extension EditorFactory {
 
 extension EditorFactory {
     
+    class func generateAnimationFor (
+        targetID: String,
+        index: Int) -> CTAAnimation {
+            
+            let ani = CTAAnimation(targetID: targetID, animationName: (index % 2 == 0) ? .MoveIn : .MoveOut)
+            
+            return ani
+    }
+    
     class func generateTextContainer(
         pageWidth: Double,
         pageHeigh: Double,
         text: String,
-        attributes: CTATextAttributes)
+        attributes: CTATextAttributes,
+        index: Int,
+        count: Int)
         -> CTAContainer {
             
             let textElement = CTATextElement(text: text, attributes: attributes)
             let textSize = textElement.textSizeWithConstraintSize(CGSize(width: pageWidth, height: pageHeigh * 2))
             
+            let h = pageHeigh / Double(count)
+            
             return CTAContainer(
                 x: pageWidth / 2.0,
-                y: pageHeigh / 2.0,
+                y: h * Double(index) + 0.25 * h,
                 width: Double(textSize.width),
                 height: Double(textSize.height),
                 rotation: 0.0,

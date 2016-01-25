@@ -17,6 +17,7 @@ enum CTAContentsType {
 protocol PageVMProtocol {
     
     var containerVMs: [ContainerVMProtocol] { get }
+    var animationBinders: [CTAAnimationBinder] { get }
 }
 
 extension PageVMProtocol {
@@ -28,6 +29,28 @@ extension PageVMProtocol {
         }
         return containerVMs[index]
     }
+    
+    func indexByID(id: String) -> Int? {
+        
+        guard let index = (containerVMs.indexOf{$0.iD == id}) else {
+            return nil
+        }
+        return index
+    }
+}
+
+extension PageVMProtocol {
+    
+    func containerShouldLoadBeforeAnimationBeganByID(iD: String) -> Bool {
+        
+        guard let aniFirstIndex = (animationBinders.indexOf{$0.targetiD == iD}) else {
+            return true
+        }
+        
+        let ani = animationBinders[aniFirstIndex]
+        return ani.name.shouldVisalbeBeforeBegan()
+    }
+    
 }
 
 protocol ContainerVMProtocol: viewPropertiesModifiable, contentsTypeRetrivevable, ContainerIdentifiable {
@@ -117,7 +140,7 @@ protocol ViewPropertiesRetrivevale:class {
     
 //    var origion: (x: Double, y: Double) { get }
     var center: CGPoint { get }
-    var size: CGSize { get }
+    var size: CGSize { get } // real size + inset
     var scale: CGFloat { get }
     var radius: CGFloat { get }
     var inset: CGPoint { get }

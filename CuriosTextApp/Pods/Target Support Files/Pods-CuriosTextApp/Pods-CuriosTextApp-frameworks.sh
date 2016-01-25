@@ -92,6 +92,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-CuriosTextApp/MJRefresh.framework"
   install_framework "Pods-CuriosTextApp/Qiniu.framework"
   install_framework "Pods-CuriosTextApp/SwiftyJSON.framework"
+  install_framework "Pods-CuriosTextApp/pop.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-CuriosTextApp/AFNetworking.framework"
@@ -102,4 +103,5 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-CuriosTextApp/MJRefresh.framework"
   install_framework "Pods-CuriosTextApp/Qiniu.framework"
   install_framework "Pods-CuriosTextApp/SwiftyJSON.framework"
+  install_framework "Pods-CuriosTextApp/pop.framework"
 fi

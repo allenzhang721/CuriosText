@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-final class CTAContainer: NSObject, NSCoding, ContainerVMProtocol {
+final class CTAContainer: NSObject, NSCoding {
     
     private struct SerialKeys {
         static let x = "x"
@@ -88,7 +88,7 @@ extension CTAContainer {
 }
 
 // MARK: - ContainerViewModel
-extension CTAContainer {
+extension CTAContainer: ContainerVMProtocol {
     
     var center: CGPoint {
         get {
