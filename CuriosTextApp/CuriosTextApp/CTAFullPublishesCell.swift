@@ -71,24 +71,22 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
             preview.datasource = self
             addSubview(preview)
             previewView = preview
-//            previewView.reloadData()
         }
     }
     
     func playAnimation(){
         if self.animationEnable{
             // preview play
-            previewView.reloadData()
             previewView.play()
         }
     }
     
     func pauseAnimation(){
-        
+        previewView.pause()
     }
     
     func stopAnimation(){
-        
+        previewView.stop()
     }
 }
 

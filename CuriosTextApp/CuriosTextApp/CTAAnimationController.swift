@@ -25,6 +25,7 @@ class CTAAnimationController: NSObject {
     var container: ContainerVMProtocol
     var canvasSize: CGSize
     private var playing: Bool = false
+    private var pausing: Bool = true
     
     var duration: Float {
         return binder.config.duration + binder.config.delay
@@ -46,17 +47,18 @@ class CTAAnimationController: NSObject {
         }
         
         playing = true
+        pausing = false
         
         let time: NSTimeInterval = NSTimeInterval(duration)
         let delay = dispatch_time(DISPATCH_TIME_NOW,
             Int64(time * Double(NSEC_PER_SEC)))
         dispatch_after(delay, dispatch_get_main_queue()) { [weak self] in
             
-            if let sf = self where sf.playing == true {
+            if let sf = self where sf.playing == true && sf.pausing == false {
                 sf.playing = false
+                sf.pausing = true
                 sf.delegate?.controllerAnimationDidFinished(sf)
             }
-            
         }
         
         if let apreView = preView {
@@ -74,6 +76,26 @@ class CTAAnimationController: NSObject {
     
     func pause() {
         
+        
+        
+        guard let views = views else {
+            return
+        }
+        
+        if pausing == false && playing == true {
+            pausing = true
+            for v in views {
+                
+                if let keys = v.layer.pop_animationKeys() {
+                    debug_print(keys, context: aniContext)
+                    for key in keys  {
+                        let animation = v.layer.pop_animationForKey(key as! String) as? POPBasicAnimation
+                        debug_print(animation, context: aniContext)
+                        animation?.paused = true
+                    }
+                }
+            }
+        }
     }
     
     func stop() {
@@ -83,6 +105,7 @@ class CTAAnimationController: NSObject {
         }
         
         playing = false
+        pausing = true
         
         for v in views {
             v.pop_removeAllAnimations()

@@ -34,7 +34,7 @@ enum CTARequestHost: CustomStringConvertible {
     case .Test:
       return "http://182.92.150.178/CuriosTextServices"
     case .Debug:
-      return "http://192.168.1.100:8080/CuriosTextServices"
+      return "http://192.168.1.101:8080/CuriosTextServices"
     case .Production:
       return ""
     }

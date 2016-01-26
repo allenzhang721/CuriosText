@@ -136,12 +136,15 @@ extension CTAPreviewCanvasView: CTAPreviewControl {
     }
     
     func pause() {
-
+            animationNodeManager.pause()
     }
     
     func stop() {
-        reloadData(false)
-        animationNodeManager.stop()
+        
+        if animationNodeManager.playing {
+            reloadData(false)
+            animationNodeManager.stop()
+        }
     }
     
     func clear() {
