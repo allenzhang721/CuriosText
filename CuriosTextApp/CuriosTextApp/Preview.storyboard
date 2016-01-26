@@ -19,11 +19,37 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KuV-UU-3vM" customClass="CTAPreviewCanvasView" customModule="CuriosTextApp" customModuleProvider="target">
                                 <rect key="frame" x="15" y="162" width="344" height="344"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="0.15848599137931035" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="KuV-UU-3vM" secondAttribute="height" multiplier="1:1" id="aMK-js-XsC"/>
                                 </constraints>
                             </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="mnx-cW-cUk">
+                                <rect key="frame" x="106" y="590" width="164" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="irN-d3-Hw7">
+                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                        <state key="normal" title="Play"/>
+                                        <connections>
+                                            <action selector="play:" destination="y1t-ux-RMz" eventType="touchUpInside" id="UeQ-q8-Cd9"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aqV-Ng-yJ7">
+                                        <rect key="frame" x="60" y="0.0" width="42" height="30"/>
+                                        <state key="normal" title="Pause"/>
+                                        <connections>
+                                            <action selector="pause:" destination="y1t-ux-RMz" eventType="touchUpInside" id="yjM-l3-tTX"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1lj-uo-k3w">
+                                        <rect key="frame" x="132" y="0.0" width="32" height="30"/>
+                                        <state key="normal" title="Stop"/>
+                                        <connections>
+                                            <action selector="reload:" destination="y1t-ux-RMz" eventType="touchUpInside" id="R7N-35-s9n"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -31,11 +57,9 @@
                             <constraint firstItem="KuV-UU-3vM" firstAttribute="width" secondItem="19W-98-gcy" secondAttribute="width" constant="-31" id="3jQ-sx-rvG"/>
                             <constraint firstItem="KuV-UU-3vM" firstAttribute="centerX" secondItem="19W-98-gcy" secondAttribute="centerX" id="8Aw-Me-XWs"/>
                             <constraint firstItem="KuV-UU-3vM" firstAttribute="centerY" secondItem="19W-98-gcy" secondAttribute="centerY" id="8OY-td-II6"/>
+                            <constraint firstItem="mnx-cW-cUk" firstAttribute="centerX" secondItem="19W-98-gcy" secondAttribute="centerX" id="ako-qG-zi3"/>
+                            <constraint firstItem="Uv4-F6-8hG" firstAttribute="top" secondItem="mnx-cW-cUk" secondAttribute="bottom" constant="47" id="yAB-qP-0aI"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="ljA-EO-RWO" appends="YES" id="xHR-bB-lF5"/>
-                            <outletCollection property="gestureRecognizers" destination="8gb-0V-KGX" appends="YES" id="OCn-Gq-XDm"/>
-                        </connections>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
@@ -43,16 +67,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R7W-G4-7Dd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="ljA-EO-RWO">
-                    <connections>
-                        <action selector="tap:" destination="y1t-ux-RMz" id="P97-Df-EUl"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <swipeGestureRecognizer direction="right" id="8gb-0V-KGX">
-                    <connections>
-                        <action selector="stop:" destination="y1t-ux-RMz" id="LTh-yf-ooB"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="68.5" y="368.5"/>
         </scene>

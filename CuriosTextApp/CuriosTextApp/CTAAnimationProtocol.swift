@@ -55,10 +55,13 @@ extension CTAAnimationBinder {
     
     func moveIn(view: UIView, index: Int) {
         
+        let translationX = POPLayerGetTranslationX(view.layer)
+        POPLayerSetTranslationX(view.layer, -300 - translationX)
+        
         let ani = POPBasicAnimation(propertyNamed: kPOPLayerTranslationX)
         ani.beginTime = CACurrentMediaTime() + CFTimeInterval(config.delay)
         ani.duration = CFTimeInterval(config.duration)
-        ani.fromValue = NSNumber(float: -300)
+//        ani.fromValue = NSNumber(float: -300)
         ani.toValue = NSNumber(float: 0)
         view.layer.pop_addAnimation(ani, forKey: "MOVE_IN")
     }

@@ -258,11 +258,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/CTAAnimationPlayNodeManager.swift"
-            timestampString = "475417435.701843"
+            timestampString = "475477638.036414"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
             landmarkName = "CTAAnimationPlayNodeManager"
             landmarkType = "3">
          </BreakpointContent>

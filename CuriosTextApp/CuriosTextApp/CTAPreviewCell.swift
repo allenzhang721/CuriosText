@@ -24,7 +24,6 @@ class CTAPreviewCell: UICollectionViewCell {
     
     func setup() {
         previewView = CTAPreviewView(frame: bounds)
-//        previewView.backgroundColor = CTAStyleKit.birdsofParadise0
         addSubview(previewView)
     }
     
@@ -32,10 +31,4 @@ class CTAPreviewCell: UICollectionViewCell {
         super.layoutSubviews()
         previewView.bounds = bounds
     }
-    
-//    override func prepareForReuse() {
-//        
-//        super.prepareForReuse()
-//        previewView.clearViews()
-//    }
 }

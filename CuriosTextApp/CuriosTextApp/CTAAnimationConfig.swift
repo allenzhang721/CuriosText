@@ -19,7 +19,7 @@ struct CTAAnimationConfig {
     let generateStrategy: CTAContentGenerateStrategy
     
     static var defaultConfig: CTAAnimationConfig {
-        return CTAAnimationConfig(duration: 3.0, delay: 0.0, repeatCount: 0, reverse: false, withFormer: false, loadStrategy: CTAContentLoadStrategy.defautlStrategy, generateStrategy: CTAContentGenerateStrategy.defaultStrategy)
+        return CTAAnimationConfig(duration: 3.0, delay: 1.0, repeatCount: 0, reverse: false, withFormer: false, loadStrategy: CTAContentLoadStrategy.defautlStrategy, generateStrategy: CTAContentGenerateStrategy.defaultStrategy)
     }
 }
 

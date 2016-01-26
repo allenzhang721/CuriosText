@@ -34,6 +34,7 @@ class CTAPreviewCanvasView: UIView {
         } else {
             
             let groups = CTAPreviewCanvasController.splits(page.animationBinders)
+            
             var controllerNodes = [[CTAAnimationController]]()
             for group in groups {
 
@@ -43,8 +44,12 @@ class CTAPreviewCanvasView: UIView {
                     guard let container = page.containerByID(targetID), let index = page.indexByID(targetID) else {
                         continue
                     }
+                    
+                    let cell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0))
 
-                    let preView = (collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0)) as? CTAPreviewCell)?.previewView
+                    let preView = (cell as? CTAPreviewCell)?.previewView
+                    
+                    debug_print("index = \(index) \(cell)", context: aniContext)
 
                     let controller = CTAAnimationController(preView: preView, binder: binder, container: container, canvasSize: bounds.size)
 
@@ -62,20 +67,15 @@ class CTAPreviewCanvasView: UIView {
     var nodeCount: Int {
         return controllers.count
     }
-//    var headNode: CTAAnimationPlayNode?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        animationNodeManager.dataSource = self
         setup()
-//        animationNodeManager.reloadNodes()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        animationNodeManager.dataSource = self
         setup()
-//        animationNodeManager.reloadNodes()
     }
     
     private func setup() {
@@ -86,6 +86,7 @@ class CTAPreviewCanvasView: UIView {
         
         collectionView.dataSource = self
         layout.dataSource = self
+        animationNodeManager.dataSource = self
 //        layer.addSublayer(collectionView.layer)
         addSubview(collectionView)
     }
@@ -95,12 +96,18 @@ class CTAPreviewCanvasView: UIView {
         collectionView.frame = bounds
     }
     
-    
-    func reloadData() {
+    func reloadData(needReloadAnimation: Bool = true) {
         
         cleanViews()
-        animationNodeManager.reloadNodes()
-        collectionView.reloadData()
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        collectionView.reloadSections(NSIndexSet(index: 0))
+        CATransaction.commit()
+        
+        if needReloadAnimation {
+            splitedControllers = nil
+            animationNodeManager.reloadNodes()
+        }
     }
 
     func cleanViews() {
@@ -116,11 +123,16 @@ class CTAPreviewCanvasView: UIView {
 extension CTAPreviewCanvasView: CTAPreviewControl {
     
     func play() {
-        guard let page = page else {
+        guard let _ = page else {
             return
         }
-
-        animationNodeManager.play()
+        
+        if animationNodeManager.stoped {
+            reloadData()
+            animationNodeManager.play()
+        } else if animationNodeManager.paused {
+            animationNodeManager.play()
+        }
     }
     
     func pause() {
@@ -128,7 +140,8 @@ extension CTAPreviewCanvasView: CTAPreviewControl {
     }
     
     func stop() {
-
+        reloadData(false)
+        animationNodeManager.stop()
     }
     
     func clear() {
@@ -138,7 +151,6 @@ extension CTAPreviewCanvasView: CTAPreviewControl {
         for cell in visualCells {
             cell.previewView.clearViews()
         }
-    
     }
 }
 
@@ -157,9 +169,17 @@ extension CTAPreviewCanvasView: UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ContainerCell", forIndexPath: indexPath) as! CTAPreviewCell
         
-        let id = page!.containerVMs[indexPath.item].iD
+        let container = page!.containerVMs[indexPath.item]
+        
+        let id = container.iD
         let needLoadContents = page!.containerShouldLoadBeforeAnimationBeganByID(id)
-        CTAPreviewCanvasController.configPreviewView(cell.previewView, container: page!.containerVMs[indexPath.item], needLoadContents: needLoadContents)
+        
+        debug_print(" \(needLoadContents) load \(cell.previewView)", context: aniContext)
+        
+        CTAPreviewCanvasController.configPreviewView(
+            cell.previewView,
+            container: container,
+            needLoadContents: needLoadContents)
         
         return cell
     }

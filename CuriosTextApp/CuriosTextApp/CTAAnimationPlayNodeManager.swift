@@ -140,7 +140,6 @@ final class CTAAnimationPlayNodeManager {
         }
         
         for n in nodes.values {
-//            debug_print("node is stop", context: aniContext)
             if n.playing {
                 
                 return true
@@ -175,6 +174,7 @@ final class CTAAnimationPlayNodeManager {
         
         // 3. if did end or if first play not began
         if stoped {
+            
             debug_print("Manager is stop and will play", context: aniContext)
             // need first play or play again
             if nodes.count > 0 {
@@ -187,7 +187,7 @@ final class CTAAnimationPlayNodeManager {
         
         // 2. if pause
         if paused {
-            debug_print("node manager paused", context: aniContext)
+            debug_print("Manager is paused and will play", context: aniContext)
             // continue play
             for n in nodes.values {
                 if n.paused {
@@ -210,11 +210,13 @@ final class CTAAnimationPlayNodeManager {
         
         //2. if pause
         if paused {
+            debug_print("Manager is paused and will pause but do nothing", context: aniContext)
             return
         }
         
         //1. if playing
         if playing {
+            debug_print("Manager is playing and will pause", context: aniContext)
             // pause
             for n in nodes.values {
                 
@@ -227,6 +229,7 @@ final class CTAAnimationPlayNodeManager {
         
         //3. if did end or first play not began
         if stoped {
+            debug_print("Manager is stoped and will pause but do nothing", context: aniContext)
             return
         }
     }
@@ -235,11 +238,13 @@ final class CTAAnimationPlayNodeManager {
         
         //3. if did end
         if stoped {
+            debug_print("Manager is stoped and will stop but do nothing", context: aniContext)
             return
         }
         
         //1. if playing
         if playing {
+            debug_print("Manager is playing and will stop", context: aniContext)
             // need to stop
             for n in nodes.values {
                 if n.playing {

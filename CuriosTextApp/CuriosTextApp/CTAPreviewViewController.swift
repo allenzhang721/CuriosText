@@ -18,20 +18,20 @@ class CTAPreviewViewController: UIViewController {
 
         previewView.datasource = self
     }
-    @IBAction func tap(sender: UITapGestureRecognizer) {
+    
+    @IBAction func play(sender: AnyObject) {
         
-//        previewView.refresh()
         previewView.play()
     }
-    @IBAction func stop(sender: AnyObject) {
+    
+    @IBAction func pause(sender: AnyObject) {
         
-        previewView.reloadData()
-//        previewView.refresh()
+        previewView.pause()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        
-        previewView.reloadData()
+    
+    @IBAction func reload(sender: AnyObject) {
+        previewView.stop()
     }
 }
 
