@@ -196,6 +196,12 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     
     func settingButtonClick(sender: UIButton){
         print("setting button click")
+        
+        let vc = UIViewController()
+        vc.view.backgroundColor = UIColor.darkGrayColor()
+        presentViewController(vc, animated: true, completion: {
+            vc.dismissViewControllerAnimated(true, completion: nil)
+        })
     }
     
     func backButtonClick(sender: UIButton){

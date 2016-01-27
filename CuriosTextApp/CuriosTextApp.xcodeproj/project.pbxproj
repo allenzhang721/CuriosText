@@ -94,6 +94,7 @@
 		2C8DD2111C4A33770035C52D /* CTAUserDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8DD2101C4A33770035C52D /* CTAUserDetailViewController.swift */; };
 		2C8DD2131C4A34230035C52D /* CTAImageControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8DD2121C4A34230035C52D /* CTAImageControllerProtocol.swift */; };
 		2C8DD2151C4A342C0035C52D /* CTALoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8DD2141C4A342C0035C52D /* CTALoadingProtocol.swift */; };
+		2C9043F81C589E0000E62B19 /* CTAAddBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9043F71C589E0000E62B19 /* CTAAddBarView.swift */; };
 		2C9706C11C1E6EC200FA2E17 /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */; };
 		2C9706C21C1E6EC200FA2E17 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9706C01C1E6EC200FA2E17 /* SwiftyJSON.framework */; };
 		2C9706C51C1E6EE900FA2E17 /* CTABaseDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9706C41C1E6EE900FA2E17 /* CTABaseDomain.swift */; };
@@ -265,6 +266,7 @@
 		2C8DD2101C4A33770035C52D /* CTAUserDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUserDetailViewController.swift; sourceTree = "<group>"; };
 		2C8DD2121C4A34230035C52D /* CTAImageControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAImageControllerProtocol.swift; sourceTree = "<group>"; };
 		2C8DD2141C4A342C0035C52D /* CTALoadingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTALoadingProtocol.swift; sourceTree = "<group>"; };
+		2C9043F71C589E0000E62B19 /* CTAAddBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAddBarView.swift; sourceTree = "<group>"; };
 		2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Locksmith.framework; path = "Pods/../build/Debug-iphoneos/Locksmith.framework"; sourceTree = "<group>"; };
 		2C9706C01C1E6EC200FA2E17 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "Pods/../build/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
 		2C9706C41C1E6EE900FA2E17 /* CTABaseDomain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTABaseDomain.swift; sourceTree = "<group>"; };
@@ -498,6 +500,7 @@
 				2C3B33F71C11772400738166 /* CTARequest */,
 				2C3B33C91C1176D000738166 /* AppDelegate.swift */,
 				2C3B33CB1C1176D000738166 /* ViewController.swift */,
+				2C9043F71C589E0000E62B19 /* CTAAddBarView.swift */,
 				2C7A959E1C3A6A4F005B0EAE /* CTAPageControllers.swift */,
 				2C7A95181C3A507A005B0EAE /* CTAHomeViewController.swift */,
 				2C7A951C1C3A50F6005B0EAE /* CTATemplateViewController.swift */,
@@ -936,6 +939,7 @@
 				2CD8F4091C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift in Sources */,
 				2CAEAC9C1C323F4300C9F9AC /* CanvasViewProtocol.swift in Sources */,
 				2C0404601C3EC2C500A5B017 /* CTAScrollTuneView.swift in Sources */,
+				2C9043F81C589E0000E62B19 /* CTAAddBarView.swift in Sources */,
 				2C3B33FC1C11798F00738166 /* CTANetworkAgent.swift in Sources */,
 				2C04045C1C3EC25A00A5B017 /* CTACanvasTextCell.swift in Sources */,
 				2C31EB611C451AEE002A4D71 /* UIColorExtensions.swift in Sources */,
