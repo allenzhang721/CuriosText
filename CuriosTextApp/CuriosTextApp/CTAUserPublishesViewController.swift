@@ -10,13 +10,14 @@ import UIKit
 import Kingfisher
 import MJRefresh
 
-class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtocol, CTALoadingProtocol, CTAPublishCellProtocol, CTAPublishDetailDelegate{
+class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtocol, CTALoadingProtocol, CTAPublishCellProtocol, CTAPublishDetailDelegate, CTAUserDetailProtocol{
     
     var viewUser:CTAUserModel?
     var loginUser:CTAUserModel?
     var isLoginUser:Bool = false
     var isLoadingFirstData = false
     var isLoadedAll = false
+    var isCanChangeToolBar = true
     
     var publishModelArray:Array<CTAPublishModel> = []
     var selectedPublishID:String = ""
@@ -44,6 +45,15 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     
     var userDetail:CTAUserDetailViewController?
     var userDetailTran:CTAPullUserDetailTransition?
+    
+    static var _instance:CTAUserPublishesViewController?;
+    
+    static func getInstance() -> CTAUserPublishesViewController{
+        if _instance == nil{
+            _instance = CTAUserPublishesViewController();
+        }
+        return _instance!
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -352,6 +362,9 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
     
     //scroll view hide tool bar
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        if !self.isCanChangeToolBar {
+            return
+        }
         var toolBarViewframe = self.viewToolBar.frame
         var collectViewFrame = self.collectionView.frame
         let size  = toolBarViewframe.height
@@ -434,11 +447,13 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
         if scrollOffY > 0 && scrollOffY + scrollHeight > scrollContentSizeHeight-5{
             scrollOffY = scrollContentSizeHeight - scrollHeight-5
         }
+        self.isCanChangeToolBar = false
         if self.collectionView.contentOffset.y != scrollOffY {
             self.collectionView.contentOffset.y = scrollOffY
+            self.previousScrollViewYOffset = scrollOffY
             self.collectionView.reloadData()
-             self.previousScrollViewYOffset = scrollOffY
         }
+        self.isCanChangeToolBar = true
     }
 }
 
@@ -561,22 +576,6 @@ extension CTAUserPublishesViewController: UIViewControllerAnimatedTransitioning{
             cellView = nil;
         }
         animationView.removeFromSuperview()
-    }
-}
-
-extension CTAUserPublishesViewController: CTAUserDetailProtocol{
-    var userDetailViewController:CTAUserDetailViewController {
-        if self.userDetail == nil {
-            self.userDetail = CTAUserDetailViewController()
-        }
-        return self.userDetail!
-    }
-    
-    var userDetailTransition: CTAPullUserDetailTransition {
-        if self.userDetailTran == nil {
-            self.userDetailTran = CTAPullUserDetailTransition()
-        }
-        return self.userDetailTran!
     }
 }
 

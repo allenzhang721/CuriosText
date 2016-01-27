@@ -9,9 +9,8 @@
 import UIKit
 import Kingfisher
 
-class CTAPublishDetailViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol{
-    
-    
+class CTAPublishDetailViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTAUserDetailProtocol{
+
     var viewUser:CTAUserModel?
     var loginUserID:String = ""
     
@@ -43,8 +42,14 @@ class CTAPublishDetailViewController: UIViewController, CTAImageControllerProtoc
     
     var delegate:CTAPublishDetailDelegate?
     
-    var userDetail:CTAUserDetailViewController?
-    var userDetailTran:CTAPullUserDetailTransition?
+    static var _instance:CTAPublishDetailViewController?;
+    
+    static func getInstance() -> CTAPublishDetailViewController{
+        if _instance == nil{
+            _instance = CTAPublishDetailViewController();
+        }
+        return _instance!
+    }
     
     override func prefersStatusBarHidden() -> Bool {
         return true
@@ -900,22 +905,6 @@ class CTAPublishDetailViewController: UIViewController, CTAImageControllerProtoc
     
     func likeButtonClick(sender: UIButton){
         print("like button click")
-    }
-}
-
-extension CTAPublishDetailViewController: CTAUserDetailProtocol{
-    var userDetailViewController:CTAUserDetailViewController {
-        if self.userDetail == nil {
-            self.userDetail = CTAUserDetailViewController()
-        }
-        return self.userDetail!
-    }
-    
-    var userDetailTransition: CTAPullUserDetailTransition {
-        if self.userDetailTran == nil {
-            self.userDetailTran = CTAPullUserDetailTransition()
-        }
-        return self.userDetailTran!
     }
 }
 
