@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/CTASelectorsViewController.swift"
-            timestampString = "474293944.238717"
+            timestampString = "475587850.912556"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "263"
-            endingLineNumber = "263"
+            startingLineNumber = "261"
+            endingLineNumber = "261"
             landmarkName = "indexPathOfColorChanged(_:)"
             landmarkType = "5">
          </BreakpointContent>
