@@ -23,7 +23,7 @@ class CTAScollBarCell: UICollectionViewCell {
         
         barItemView.translatesAutoresizingMaskIntoConstraints = false
         barItemView.widthAnchor.constraintEqualToAnchor(widthAnchor).active = true
-        barItemView.heightAnchor.constraintEqualToAnchor(heightAnchor).active = true
+        barItemView.heightAnchor.constraintEqualToAnchor(heightAnchor, constant: -16).active = true
         barItemView.centerXAnchor.constraintEqualToAnchor(centerXAnchor).active = true
         barItemView.centerYAnchor.constraintEqualToAnchor(centerYAnchor).active = true
     }

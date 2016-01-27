@@ -48,7 +48,7 @@ class CTABarItemView: UIView {
         titleLabel = UILabel()
         
         imageView.contentMode = .ScaleAspectFit
-        titleLabel.font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize())
+        titleLabel.font = UIFont.systemFontOfSize(12)
         titleLabel.textAlignment = .Center
         titleLabel.minimumScaleFactor = 0.5
         titleLabel.adjustsFontSizeToFitWidth = true
@@ -68,12 +68,12 @@ class CTABarItemView: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.centerXAnchor.constraintEqualToAnchor(centerXAnchor).active = true
         imageView.topAnchor.constraintEqualToAnchor(topAnchor).active = true
-        imageView.widthAnchor.constraintEqualToConstant(30).active = true
-        imageView.heightAnchor.constraintEqualToConstant(30).active = true
+        imageView.widthAnchor.constraintEqualToConstant(22).active = true
+        imageView.heightAnchor.constraintEqualToConstant(22).active = true
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.topAnchor.constraintEqualToAnchor(imageView.bottomAnchor, constant: 2).active = true
-        titleLabel.widthAnchor.constraintEqualToConstant(30).active = true
+        titleLabel.widthAnchor.constraintEqualToConstant(40).active = true
         titleLabel.centerXAnchor.constraintEqualToAnchor(centerXAnchor).active = true
     }
     

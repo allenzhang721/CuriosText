@@ -54,8 +54,6 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
     }
     
     func changeToSelector(type: CTASelectorType) {
