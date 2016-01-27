@@ -109,7 +109,6 @@
 		2CAEAC941C323F2600C9F9AC /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC8F1C323F2600C9F9AC /* EditViewController.swift */; };
 		2CAEAC951C323F2600C9F9AC /* ElementProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC901C323F2600C9F9AC /* ElementProtocol.swift */; };
 		2CAEAC9B1C323F4300C9F9AC /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC961C323F4300C9F9AC /* CanvasView.swift */; };
-		2CAEAC9C1C323F4300C9F9AC /* CanvasViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC971C323F4300C9F9AC /* CanvasViewProtocol.swift */; };
 		2CAEAC9D1C323F4300C9F9AC /* ContainerImgView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC981C323F4300C9F9AC /* ContainerImgView.swift */; };
 		2CAEAC9E1C323F4300C9F9AC /* ContainerTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC991C323F4300C9F9AC /* ContainerTextView.swift */; };
 		2CAEAC9F1C323F4300C9F9AC /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC9A1C323F4300C9F9AC /* ContainerView.swift */; };
@@ -281,7 +280,6 @@
 		2CAEAC8F1C323F2600C9F9AC /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		2CAEAC901C323F2600C9F9AC /* ElementProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementProtocol.swift; sourceTree = "<group>"; };
 		2CAEAC961C323F4300C9F9AC /* CanvasView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
-		2CAEAC971C323F4300C9F9AC /* CanvasViewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasViewProtocol.swift; sourceTree = "<group>"; };
 		2CAEAC981C323F4300C9F9AC /* ContainerImgView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerImgView.swift; sourceTree = "<group>"; };
 		2CAEAC991C323F4300C9F9AC /* ContainerTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerTextView.swift; sourceTree = "<group>"; };
 		2CAEAC9A1C323F4300C9F9AC /* ContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
@@ -396,7 +394,7 @@
 			name = view;
 			sourceTree = "<group>";
 		};
-		2C1F01561C3BD5540033CED8 /* Cells */ = {
+		2C1F01561C3BD5540033CED8 /* Cells_view */ = {
 			isa = PBXGroup;
 			children = (
 				2C1F015B1C3CE3770033CED8 /* CTACanvasCell.swift */,
@@ -411,7 +409,7 @@
 				2C5C248F1C44E1EE00A70F1B /* CTAVerticalItemColorCollectionViewCell.swift */,
 				2CD8F4081C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift */,
 			);
-			name = Cells;
+			name = Cells_view;
 			sourceTree = "<group>";
 		};
 		2C31EB5F1C451AD9002A4D71 /* Extensions */ = {
@@ -618,12 +616,25 @@
 			name = CTAUIKit_view;
 			sourceTree = "<group>";
 		};
+		2C7C27DC1C58B5CA00975D4A /* SpecialView_view */ = {
+			isa = PBXGroup;
+			children = (
+				2CAEAC961C323F4300C9F9AC /* CanvasView.swift */,
+				2CAEAC9A1C323F4300C9F9AC /* ContainerView.swift */,
+				2CAEAC991C323F4300C9F9AC /* ContainerTextView.swift */,
+				2CAEAC981C323F4300C9F9AC /* ContainerImgView.swift */,
+				2CAEACA11C323F9700C9F9AC /* TexView.swift */,
+			);
+			name = SpecialView_view;
+			sourceTree = "<group>";
+		};
 		2C81B59E1C58B10600AE16E0 /* Gobal */ = {
 			isa = PBXGroup;
 			children = (
 				2C5ACC111C439E8100B96CCD /* CTAStyleKit.swift */,
 				2C3CAD0A1C21825100D8DE4B /* CTAIDGenerator.swift */,
 				2C5EA2551C479CE000DCEE7B /* Print.swift */,
+				2CAEAC8C1C323F2600C9F9AC /* Dynamic.swift */,
 				2C6C67FD1C35082C00CCE81C /* CTAUIKit_view */,
 				2C5C24991C44FA8B00A70F1B /* Mangers_model */,
 				2C3CAD071C21825100D8DE4B /* Document_model */,
@@ -680,21 +691,15 @@
 		2CAEAC8B1C323ED900C9F9AC /* Editor */ = {
 			isa = PBXGroup;
 			children = (
-				2C0404631C3EC35D00A5B017 /* Tools.playground */,
-				2C1F01561C3BD5540033CED8 /* Cells */,
-				2CAEACA11C323F9700C9F9AC /* TexView.swift */,
-				2CAEAC961C323F4300C9F9AC /* CanvasView.swift */,
-				2CAEAC971C323F4300C9F9AC /* CanvasViewProtocol.swift */,
-				2CAEAC981C323F4300C9F9AC /* ContainerImgView.swift */,
-				2CAEAC991C323F4300C9F9AC /* ContainerTextView.swift */,
-				2CAEAC9A1C323F4300C9F9AC /* ContainerView.swift */,
-				2CAEAC8C1C323F2600C9F9AC /* Dynamic.swift */,
 				2CAEAC8D1C323F2600C9F9AC /* Editor.storyboard */,
+				2C0404631C3EC35D00A5B017 /* Tools.playground */,
+				2C7C27DC1C58B5CA00975D4A /* SpecialView_view */,
+				2C1F01561C3BD5540033CED8 /* Cells_view */,
+				2CAEAC901C323F2600C9F9AC /* ElementProtocol.swift */,
 				2C0404591C3EBDBF00A5B017 /* CTATabItemFactory.swift */,
 				2CAEAC8F1C323F2600C9F9AC /* EditViewController.swift */,
 				2C0404531C3EBB6800A5B017 /* CTACanvasViewController.swift */,
 				2C0404571C3EBBB800A5B017 /* CTATabViewController.swift */,
-				2CAEAC901C323F2600C9F9AC /* ElementProtocol.swift */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -955,7 +960,6 @@
 				66A072AD1C186EFF0046C72F /* CTARelationRequestAPI.swift in Sources */,
 				2C3CAD0F1C21825100D8DE4B /* CTAPresenter.swift in Sources */,
 				2CD8F4091C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift in Sources */,
-				2CAEAC9C1C323F4300C9F9AC /* CanvasViewProtocol.swift in Sources */,
 				2C0404601C3EC2C500A5B017 /* CTAScrollTuneView.swift in Sources */,
 				2C9043F81C589E0000E62B19 /* CTAAddBarView.swift in Sources */,
 				2C3B33FC1C11798F00738166 /* CTANetworkAgent.swift in Sources */,
