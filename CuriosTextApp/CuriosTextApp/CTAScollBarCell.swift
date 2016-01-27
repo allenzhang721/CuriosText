@@ -13,10 +13,22 @@ let deactivedColor = UIColor.lightGrayColor()
 
 class CTAScollBarCell: UICollectionViewCell {
     
-    var actived: Bool = false
+    private var actived: Bool = false
+    private var barItemView: CTABarItemView!
     
     override func awakeFromNib() {
         backgroundColor = deactivedColor
+        
+        barItemView = CTABarItemView(frame: CGRect.zero, item: nil)
+        addSubview(barItemView)
+        
+        barItemView.backgroundColor = UIColor.darkGrayColor()
+        
+        barItemView.translatesAutoresizingMaskIntoConstraints = false
+        barItemView.widthAnchor.constraintEqualToConstant(50).active = true
+        barItemView.heightAnchor.constraintEqualToAnchor(heightAnchor).active = true
+        barItemView.centerXAnchor.constraintEqualToAnchor(centerXAnchor).active = true
+        barItemView.centerYAnchor.constraintEqualToAnchor(centerYAnchor).active = true
     }
     
     override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
@@ -29,13 +41,15 @@ class CTAScollBarCell: UICollectionViewCell {
         
         if actived != layoutAttributes.actived {
             actived = layoutAttributes.actived
-            UIView.transitionWithView(self, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {[weak self] () -> Void in
-                
-                if let sr = self {
-                    sr.backgroundColor = sr.actived ? activedColor : deactivedColor
-                }
-                
-                }, completion: nil)
+            barItemView.setSelected(actived)
+//            UIView.transitionWithView(self, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {[weak self] () -> Void in
+//                
+//                if let sr = self {
+//                    sr.barItemView.setSelected(sr.actived)
+////                    sr.backgroundColor = sr.actived ? activedColor : deactivedColor
+//                }
+//                
+//                }, completion: nil)
         }
     }
 }
