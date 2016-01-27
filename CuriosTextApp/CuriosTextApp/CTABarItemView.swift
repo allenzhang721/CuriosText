@@ -47,15 +47,23 @@ class CTABarItemView: UIView {
         imageView = UIImageView()
         titleLabel = UILabel()
         
+        imageView.contentMode = .ScaleAspectFit
+        titleLabel.font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize())
+        titleLabel.textAlignment = .Center
+        titleLabel.minimumScaleFactor = 0.5
+        titleLabel.adjustsFontSizeToFitWidth = true
+        
         addSubview(imageView)
         addSubview(titleLabel)
         
         if let item = item {
             imageView.image = selected ? item.selectedImage : item.normalImage
             titleLabel.textColor = selected ? item.selectedColor : item.normalColor
-            titleLabel.font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize())
+            
             titleLabel.text = item.title
         }
+        
+        imageView.image = CTAStyleKit.imageOfSpacingBarItemNormal
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.centerXAnchor.constraintEqualToAnchor(centerXAnchor).active = true
@@ -64,8 +72,8 @@ class CTABarItemView: UIView {
         imageView.heightAnchor.constraintEqualToConstant(30).active = true
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.topAnchor.constraintEqualToAnchor(imageView.bottomAnchor, constant: 5).active = true
-        titleLabel.widthAnchor.constraintEqualToAnchor(widthAnchor).active = true
+        titleLabel.topAnchor.constraintEqualToAnchor(imageView.bottomAnchor, constant: 2).active = true
+        titleLabel.widthAnchor.constraintEqualToConstant(30).active = true
         titleLabel.centerXAnchor.constraintEqualToAnchor(centerXAnchor).active = true
     }
     

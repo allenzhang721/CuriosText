@@ -14,18 +14,15 @@ let deactivedColor = UIColor.lightGrayColor()
 class CTAScollBarCell: UICollectionViewCell {
     
     private var actived: Bool = false
-    private var barItemView: CTABarItemView!
+    var barItemView: CTABarItemView!
     
     override func awakeFromNib() {
-        backgroundColor = deactivedColor
         
         barItemView = CTABarItemView(frame: CGRect.zero, item: nil)
-        addSubview(barItemView)
-        
-        barItemView.backgroundColor = UIColor.darkGrayColor()
+        contentView.addSubview(barItemView)
         
         barItemView.translatesAutoresizingMaskIntoConstraints = false
-        barItemView.widthAnchor.constraintEqualToConstant(50).active = true
+        barItemView.widthAnchor.constraintEqualToAnchor(widthAnchor).active = true
         barItemView.heightAnchor.constraintEqualToAnchor(heightAnchor).active = true
         barItemView.centerXAnchor.constraintEqualToAnchor(centerXAnchor).active = true
         barItemView.centerYAnchor.constraintEqualToAnchor(centerYAnchor).active = true

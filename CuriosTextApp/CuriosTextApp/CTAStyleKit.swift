@@ -227,6 +227,34 @@ public class CTAStyleKit : NSObject {
         static var addTargets: [AnyObject]?
         static var imageOfNode: UIImage?
         static var nodeTargets: [AnyObject]?
+        static var imageOfFontBarItemNormal: UIImage?
+        static var fontBarItemNormalTargets: [AnyObject]?
+        static var imageOfFontBarItemSelected: UIImage?
+        static var fontBarItemSelectedTargets: [AnyObject]?
+        static var imageOfSizeBarItemNormal: UIImage?
+        static var sizeBarItemNormalTargets: [AnyObject]?
+        static var imageOfSizeBarItemSelected: UIImage?
+        static var sizeBarItemSelectedTargets: [AnyObject]?
+        static var imageOfColorBarItemSelected: UIImage?
+        static var colorBarItemSelectedTargets: [AnyObject]?
+        static var imageOfColorBarItemNormal: UIImage?
+        static var colorBarItemNormalTargets: [AnyObject]?
+        static var imageOfRotationBarItemSelected: UIImage?
+        static var rotationBarItemSelectedTargets: [AnyObject]?
+        static var imageOfRotationBarItemNormal: UIImage?
+        static var rotationBarItemNormalTargets: [AnyObject]?
+        static var imageOfAlignmentBarItemNormal: UIImage?
+        static var alignmentBarItemNormalTargets: [AnyObject]?
+        static var imageOfAlignmentBarItemSelected: UIImage?
+        static var alignmentBarItemSelectedTargets: [AnyObject]?
+        static var imageOfSpacingBarItemNormal: UIImage?
+        static var spacingBarItemNormalTargets: [AnyObject]?
+        static var imageOfSpacingBarItemSelected: UIImage?
+        static var spacingBarItemSelectedTargets: [AnyObject]?
+        static var imageOfAnimationBarItemNormal: UIImage?
+        static var animationBarItemNormalTargets: [AnyObject]?
+        static var imageOfAnimationBarItemSelected: UIImage?
+        static var animationBarItemSelectedTargets: [AnyObject]?
     }
 
     //// Colors
@@ -924,6 +952,700 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
+    public class func drawFontBarItemNormal() {
+        //// Color Declarations
+        let fillColor4 = UIColor(red: 0.608, green: 0.608, blue: 0.608, alpha: 1.000)
+
+        //// Bezier Drawing
+        let bezierPath = UIBezierPath()
+        bezierPath.moveToPoint(CGPointMake(7, 12.65))
+        bezierPath.addCurveToPoint(CGPointMake(8.98, 12.68), controlPoint1: CGPointMake(7.32, 12.65), controlPoint2: CGPointMake(7.98, 12.66))
+        bezierPath.addCurveToPoint(CGPointMake(11.3, 12.71), controlPoint1: CGPointMake(9.98, 12.7), controlPoint2: CGPointMake(10.75, 12.71))
+        bezierPath.addCurveToPoint(CGPointMake(12.13, 12.68), controlPoint1: CGPointMake(11.49, 12.71), controlPoint2: CGPointMake(11.76, 12.7))
+        bezierPath.addCurveToPoint(CGPointMake(9.46, 6.21), controlPoint1: CGPointMake(11.29, 10.26), controlPoint2: CGPointMake(10.4, 8.1))
+        bezierPath.addLineToPoint(CGPointMake(7, 12.65))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(0, 20.97))
+        bezierPath.addCurveToPoint(CGPointMake(2.38, 20.34), controlPoint1: CGPointMake(0, 20.97), controlPoint2: CGPointMake(2.13, 20.43))
+        bezierPath.addCurveToPoint(CGPointMake(3.02, 19.92), controlPoint1: CGPointMake(2.62, 20.25), controlPoint2: CGPointMake(2.83, 20.11))
+        bezierPath.addCurveToPoint(CGPointMake(3.47, 19.2), controlPoint1: CGPointMake(3.2, 19.74), controlPoint2: CGPointMake(3.35, 19.5))
+        bezierPath.addLineToPoint(CGPointMake(10.92, 0))
+        bezierPath.addLineToPoint(CGPointMake(11.76, 0))
+        bezierPath.addCurveToPoint(CGPointMake(19.94, 19.29), controlPoint1: CGPointMake(11.76, 0), controlPoint2: CGPointMake(19.69, 18.79))
+        bezierPath.addCurveToPoint(CGPointMake(20.44, 20.1), controlPoint1: CGPointMake(20.13, 19.72), controlPoint2: CGPointMake(20.3, 19.99))
+        bezierPath.addCurveToPoint(CGPointMake(21.71, 20.52), controlPoint1: CGPointMake(20.63, 20.24), controlPoint2: CGPointMake(21.05, 20.38))
+        bezierPath.addCurveToPoint(CGPointMake(23, 20.85), controlPoint1: CGPointMake(22.38, 20.66), controlPoint2: CGPointMake(23, 20.85))
+        bezierPath.addCurveToPoint(CGPointMake(23, 22), controlPoint1: CGPointMake(23, 20.85), controlPoint2: CGPointMake(23, 21.96))
+        bezierPath.addCurveToPoint(CGPointMake(11.82, 21.99), controlPoint1: CGPointMake(22.39, 22), controlPoint2: CGPointMake(11.82, 21.99))
+        bezierPath.addLineToPoint(CGPointMake(11.82, 20.97))
+        bezierPath.addCurveToPoint(CGPointMake(13.95, 20.44), controlPoint1: CGPointMake(11.82, 20.97), controlPoint2: CGPointMake(13.84, 20.46))
+        bezierPath.addCurveToPoint(CGPointMake(14.18, 20.39), controlPoint1: CGPointMake(14.07, 20.41), controlPoint2: CGPointMake(14.14, 20.4))
+        bezierPath.addCurveToPoint(CGPointMake(14.39, 20.32), controlPoint1: CGPointMake(14.22, 20.38), controlPoint2: CGPointMake(14.29, 20.36))
+        bezierPath.addCurveToPoint(CGPointMake(14.6, 20.23), controlPoint1: CGPointMake(14.49, 20.29), controlPoint2: CGPointMake(14.56, 20.26))
+        bezierPath.addCurveToPoint(CGPointMake(14.76, 20.12), controlPoint1: CGPointMake(14.65, 20.2), controlPoint2: CGPointMake(14.7, 20.16))
+        bezierPath.addCurveToPoint(CGPointMake(14.89, 19.96), controlPoint1: CGPointMake(14.83, 20.07), controlPoint2: CGPointMake(14.87, 20.02))
+        bezierPath.addCurveToPoint(CGPointMake(14.93, 19.76), controlPoint1: CGPointMake(14.92, 19.9), controlPoint2: CGPointMake(14.93, 19.83))
+        bezierPath.addCurveToPoint(CGPointMake(14.48, 18.38), controlPoint1: CGPointMake(14.93, 19.61), controlPoint2: CGPointMake(14.78, 19.15))
+        bezierPath.addCurveToPoint(CGPointMake(13.44, 15.85), controlPoint1: CGPointMake(14.18, 17.61), controlPoint2: CGPointMake(13.84, 16.77))
+        bezierPath.addCurveToPoint(CGPointMake(12.84, 14.42), controlPoint1: CGPointMake(13.05, 14.92), controlPoint2: CGPointMake(12.85, 14.45))
+        bezierPath.addLineToPoint(CGPointMake(6.34, 14.39))
+        bezierPath.addCurveToPoint(CGPointMake(5.23, 17.18), controlPoint1: CGPointMake(6.09, 14.94), controlPoint2: CGPointMake(5.72, 15.87))
+        bezierPath.addCurveToPoint(CGPointMake(4.5, 19.5), controlPoint1: CGPointMake(4.75, 18.49), controlPoint2: CGPointMake(4.5, 19.26))
+        bezierPath.addCurveToPoint(CGPointMake(4.71, 20.04), controlPoint1: CGPointMake(4.5, 19.71), controlPoint2: CGPointMake(4.57, 19.89))
+        bezierPath.addCurveToPoint(CGPointMake(5.33, 20.39), controlPoint1: CGPointMake(4.84, 20.18), controlPoint2: CGPointMake(5.05, 20.3))
+        bezierPath.addCurveToPoint(CGPointMake(6.04, 20.58), controlPoint1: CGPointMake(5.62, 20.47), controlPoint2: CGPointMake(5.85, 20.54))
+        bezierPath.addCurveToPoint(CGPointMake(6.86, 20.7), controlPoint1: CGPointMake(6.22, 20.62), controlPoint2: CGPointMake(6.49, 20.66))
+        bezierPath.addCurveToPoint(CGPointMake(7.45, 20.76), controlPoint1: CGPointMake(7.22, 20.74), controlPoint2: CGPointMake(7.45, 20.76))
+        bezierPath.addLineToPoint(CGPointMake(7.45, 22))
+        bezierPath.addLineToPoint(CGPointMake(0, 22))
+        bezierPath.addLineToPoint(CGPointMake(0, 20.97))
+        bezierPath.closePath()
+        bezierPath.usesEvenOddFillRule = true;
+
+        fillColor4.setFill()
+        bezierPath.fill()
+    }
+
+    public class func drawFontBarItemSelected() {
+
+        //// Bezier Drawing
+        let bezierPath = UIBezierPath()
+        bezierPath.moveToPoint(CGPointMake(7, 12.65))
+        bezierPath.addCurveToPoint(CGPointMake(8.98, 12.68), controlPoint1: CGPointMake(7.32, 12.65), controlPoint2: CGPointMake(7.98, 12.66))
+        bezierPath.addCurveToPoint(CGPointMake(11.3, 12.71), controlPoint1: CGPointMake(9.98, 12.7), controlPoint2: CGPointMake(10.75, 12.71))
+        bezierPath.addCurveToPoint(CGPointMake(12.13, 12.68), controlPoint1: CGPointMake(11.49, 12.71), controlPoint2: CGPointMake(11.76, 12.7))
+        bezierPath.addCurveToPoint(CGPointMake(9.46, 6.21), controlPoint1: CGPointMake(11.29, 10.26), controlPoint2: CGPointMake(10.4, 8.1))
+        bezierPath.addLineToPoint(CGPointMake(7, 12.65))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(0, 20.97))
+        bezierPath.addCurveToPoint(CGPointMake(2.38, 20.34), controlPoint1: CGPointMake(0, 20.97), controlPoint2: CGPointMake(2.13, 20.43))
+        bezierPath.addCurveToPoint(CGPointMake(3.02, 19.92), controlPoint1: CGPointMake(2.62, 20.25), controlPoint2: CGPointMake(2.83, 20.11))
+        bezierPath.addCurveToPoint(CGPointMake(3.47, 19.2), controlPoint1: CGPointMake(3.2, 19.74), controlPoint2: CGPointMake(3.35, 19.5))
+        bezierPath.addLineToPoint(CGPointMake(10.92, 0))
+        bezierPath.addLineToPoint(CGPointMake(11.76, 0))
+        bezierPath.addCurveToPoint(CGPointMake(19.94, 19.29), controlPoint1: CGPointMake(11.76, 0), controlPoint2: CGPointMake(19.69, 18.79))
+        bezierPath.addCurveToPoint(CGPointMake(20.44, 20.1), controlPoint1: CGPointMake(20.13, 19.72), controlPoint2: CGPointMake(20.3, 19.99))
+        bezierPath.addCurveToPoint(CGPointMake(21.71, 20.52), controlPoint1: CGPointMake(20.63, 20.24), controlPoint2: CGPointMake(21.05, 20.38))
+        bezierPath.addCurveToPoint(CGPointMake(23, 20.85), controlPoint1: CGPointMake(22.38, 20.66), controlPoint2: CGPointMake(23, 20.85))
+        bezierPath.addCurveToPoint(CGPointMake(23, 22), controlPoint1: CGPointMake(23, 20.85), controlPoint2: CGPointMake(23, 21.96))
+        bezierPath.addCurveToPoint(CGPointMake(11.82, 21.99), controlPoint1: CGPointMake(22.39, 22), controlPoint2: CGPointMake(11.82, 21.99))
+        bezierPath.addLineToPoint(CGPointMake(11.82, 20.97))
+        bezierPath.addCurveToPoint(CGPointMake(13.95, 20.44), controlPoint1: CGPointMake(11.82, 20.97), controlPoint2: CGPointMake(13.84, 20.46))
+        bezierPath.addCurveToPoint(CGPointMake(14.18, 20.39), controlPoint1: CGPointMake(14.07, 20.41), controlPoint2: CGPointMake(14.14, 20.4))
+        bezierPath.addCurveToPoint(CGPointMake(14.39, 20.32), controlPoint1: CGPointMake(14.22, 20.38), controlPoint2: CGPointMake(14.29, 20.36))
+        bezierPath.addCurveToPoint(CGPointMake(14.6, 20.23), controlPoint1: CGPointMake(14.49, 20.29), controlPoint2: CGPointMake(14.56, 20.26))
+        bezierPath.addCurveToPoint(CGPointMake(14.76, 20.12), controlPoint1: CGPointMake(14.65, 20.2), controlPoint2: CGPointMake(14.7, 20.16))
+        bezierPath.addCurveToPoint(CGPointMake(14.89, 19.96), controlPoint1: CGPointMake(14.83, 20.07), controlPoint2: CGPointMake(14.87, 20.02))
+        bezierPath.addCurveToPoint(CGPointMake(14.93, 19.76), controlPoint1: CGPointMake(14.92, 19.9), controlPoint2: CGPointMake(14.93, 19.83))
+        bezierPath.addCurveToPoint(CGPointMake(14.48, 18.38), controlPoint1: CGPointMake(14.93, 19.61), controlPoint2: CGPointMake(14.78, 19.15))
+        bezierPath.addCurveToPoint(CGPointMake(13.44, 15.85), controlPoint1: CGPointMake(14.18, 17.61), controlPoint2: CGPointMake(13.84, 16.77))
+        bezierPath.addCurveToPoint(CGPointMake(12.84, 14.42), controlPoint1: CGPointMake(13.05, 14.92), controlPoint2: CGPointMake(12.85, 14.45))
+        bezierPath.addLineToPoint(CGPointMake(6.34, 14.39))
+        bezierPath.addCurveToPoint(CGPointMake(5.23, 17.18), controlPoint1: CGPointMake(6.09, 14.94), controlPoint2: CGPointMake(5.72, 15.87))
+        bezierPath.addCurveToPoint(CGPointMake(4.5, 19.5), controlPoint1: CGPointMake(4.75, 18.49), controlPoint2: CGPointMake(4.5, 19.26))
+        bezierPath.addCurveToPoint(CGPointMake(4.71, 20.04), controlPoint1: CGPointMake(4.5, 19.71), controlPoint2: CGPointMake(4.57, 19.89))
+        bezierPath.addCurveToPoint(CGPointMake(5.33, 20.39), controlPoint1: CGPointMake(4.84, 20.18), controlPoint2: CGPointMake(5.05, 20.3))
+        bezierPath.addCurveToPoint(CGPointMake(6.04, 20.58), controlPoint1: CGPointMake(5.62, 20.47), controlPoint2: CGPointMake(5.85, 20.54))
+        bezierPath.addCurveToPoint(CGPointMake(6.86, 20.7), controlPoint1: CGPointMake(6.22, 20.62), controlPoint2: CGPointMake(6.49, 20.66))
+        bezierPath.addCurveToPoint(CGPointMake(7.45, 20.76), controlPoint1: CGPointMake(7.22, 20.74), controlPoint2: CGPointMake(7.45, 20.76))
+        bezierPath.addLineToPoint(CGPointMake(7.45, 22))
+        bezierPath.addLineToPoint(CGPointMake(0, 22))
+        bezierPath.addLineToPoint(CGPointMake(0, 20.97))
+        bezierPath.closePath()
+        bezierPath.usesEvenOddFillRule = true;
+
+        CTAStyleKit.selectedColor.setFill()
+        bezierPath.fill()
+    }
+
+    public class func drawSizeBarItemNormal() {
+        //// Color Declarations
+        let fillColor4 = UIColor(red: 0.608, green: 0.608, blue: 0.608, alpha: 1.000)
+
+        //// Bezier Drawing
+        let bezierPath = UIBezierPath()
+        bezierPath.moveToPoint(CGPointMake(0, 9))
+        bezierPath.addLineToPoint(CGPointMake(0, 7))
+        bezierPath.addLineToPoint(CGPointMake(13, 7))
+        bezierPath.addLineToPoint(CGPointMake(13, 9))
+        bezierPath.addLineToPoint(CGPointMake(8, 9))
+        bezierPath.addLineToPoint(CGPointMake(8, 22))
+        bezierPath.addLineToPoint(CGPointMake(5, 22))
+        bezierPath.addLineToPoint(CGPointMake(5, 9))
+        bezierPath.addLineToPoint(CGPointMake(0, 9))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(9, 0))
+        bezierPath.addLineToPoint(CGPointMake(28, 0))
+        bezierPath.addLineToPoint(CGPointMake(28, 2))
+        bezierPath.addLineToPoint(CGPointMake(20, 2))
+        bezierPath.addLineToPoint(CGPointMake(20, 22))
+        bezierPath.addLineToPoint(CGPointMake(17, 22))
+        bezierPath.addLineToPoint(CGPointMake(17, 2))
+        bezierPath.addLineToPoint(CGPointMake(9, 2))
+        bezierPath.addLineToPoint(CGPointMake(9, 0))
+        bezierPath.closePath()
+        bezierPath.usesEvenOddFillRule = true;
+
+        fillColor4.setFill()
+        bezierPath.fill()
+    }
+
+    public class func drawSizeBarItemSelected() {
+
+        //// Bezier Drawing
+        let bezierPath = UIBezierPath()
+        bezierPath.moveToPoint(CGPointMake(0, 9))
+        bezierPath.addLineToPoint(CGPointMake(0, 7))
+        bezierPath.addLineToPoint(CGPointMake(13, 7))
+        bezierPath.addLineToPoint(CGPointMake(13, 9))
+        bezierPath.addLineToPoint(CGPointMake(8, 9))
+        bezierPath.addLineToPoint(CGPointMake(8, 22))
+        bezierPath.addLineToPoint(CGPointMake(5, 22))
+        bezierPath.addLineToPoint(CGPointMake(5, 9))
+        bezierPath.addLineToPoint(CGPointMake(0, 9))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(9, 0))
+        bezierPath.addLineToPoint(CGPointMake(28, 0))
+        bezierPath.addLineToPoint(CGPointMake(28, 2))
+        bezierPath.addLineToPoint(CGPointMake(20, 2))
+        bezierPath.addLineToPoint(CGPointMake(20, 22))
+        bezierPath.addLineToPoint(CGPointMake(17, 22))
+        bezierPath.addLineToPoint(CGPointMake(17, 2))
+        bezierPath.addLineToPoint(CGPointMake(9, 2))
+        bezierPath.addLineToPoint(CGPointMake(9, 0))
+        bezierPath.closePath()
+        bezierPath.usesEvenOddFillRule = true;
+
+        CTAStyleKit.selectedColor.setFill()
+        bezierPath.fill()
+    }
+
+    public class func drawColorBarItemSelected() {
+
+        //// Bezier Drawing
+        let bezierPath = UIBezierPath()
+        bezierPath.moveToPoint(CGPointMake(26.26, 2.85))
+        bezierPath.addLineToPoint(CGPointMake(23.77, 1.56))
+        bezierPath.addCurveToPoint(CGPointMake(22.73, 1.47), controlPoint1: CGPointMake(23.44, 1.38), controlPoint2: CGPointMake(23.1, 1.35))
+        bezierPath.addCurveToPoint(CGPointMake(21.93, 2.17), controlPoint1: CGPointMake(22.36, 1.59), controlPoint2: CGPointMake(22.09, 1.82))
+        bezierPath.addLineToPoint(CGPointMake(13.04, 19.67))
+        bezierPath.addCurveToPoint(CGPointMake(12.97, 20.74), controlPoint1: CGPointMake(12.88, 20.02), controlPoint2: CGPointMake(12.85, 20.38))
+        bezierPath.addCurveToPoint(CGPointMake(13.66, 21.57), controlPoint1: CGPointMake(13.09, 21.11), controlPoint2: CGPointMake(13.32, 21.38))
+        bezierPath.addLineToPoint(CGPointMake(16.13, 22.86))
+        bezierPath.addCurveToPoint(CGPointMake(17.17, 22.93), controlPoint1: CGPointMake(16.45, 23.02), controlPoint2: CGPointMake(16.8, 23.04))
+        bezierPath.addCurveToPoint(CGPointMake(18, 22.23), controlPoint1: CGPointMake(17.54, 22.81), controlPoint2: CGPointMake(17.82, 22.57))
+        bezierPath.addLineToPoint(CGPointMake(26.86, 4.75))
+        bezierPath.addCurveToPoint(CGPointMake(26.93, 3.66), controlPoint1: CGPointMake(27.02, 4.4), controlPoint2: CGPointMake(27.04, 4.04))
+        bezierPath.addCurveToPoint(CGPointMake(26.26, 2.85), controlPoint1: CGPointMake(26.81, 3.29), controlPoint2: CGPointMake(26.59, 3.02))
+        bezierPath.addLineToPoint(CGPointMake(26.26, 2.85))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(17.38, 20.33))
+        bezierPath.addCurveToPoint(CGPointMake(16.58, 21.03), controlPoint1: CGPointMake(17.21, 20.68), controlPoint2: CGPointMake(16.95, 20.91))
+        bezierPath.addCurveToPoint(CGPointMake(15.51, 20.96), controlPoint1: CGPointMake(16.21, 21.15), controlPoint2: CGPointMake(15.85, 21.13))
+        bezierPath.addCurveToPoint(CGPointMake(14.84, 20.14), controlPoint1: CGPointMake(15.18, 20.78), controlPoint2: CGPointMake(14.96, 20.51))
+        bezierPath.addCurveToPoint(CGPointMake(14.91, 19.07), controlPoint1: CGPointMake(14.72, 19.77), controlPoint2: CGPointMake(14.75, 19.42))
+        bezierPath.addCurveToPoint(CGPointMake(15.72, 18.37), controlPoint1: CGPointMake(15.09, 18.72), controlPoint2: CGPointMake(15.36, 18.49))
+        bezierPath.addCurveToPoint(CGPointMake(16.78, 18.47), controlPoint1: CGPointMake(16.08, 18.25), controlPoint2: CGPointMake(16.44, 18.28))
+        bezierPath.addCurveToPoint(CGPointMake(17.47, 19.28), controlPoint1: CGPointMake(17.12, 18.63), controlPoint2: CGPointMake(17.35, 18.9))
+        bezierPath.addCurveToPoint(CGPointMake(17.38, 20.33), controlPoint1: CGPointMake(17.59, 19.65), controlPoint2: CGPointMake(17.56, 20))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(19.35, 1.51))
+        bezierPath.addCurveToPoint(CGPointMake(18.96, 0.51), controlPoint1: CGPointMake(19.35, 1.12), controlPoint2: CGPointMake(19.22, 0.79))
+        bezierPath.addCurveToPoint(CGPointMake(18, 0.08), controlPoint1: CGPointMake(18.7, 0.22), controlPoint2: CGPointMake(18.38, 0.08))
+        bezierPath.addLineToPoint(CGPointMake(15.21, -0))
+        bezierPath.addCurveToPoint(CGPointMake(14.22, 0.4), controlPoint1: CGPointMake(14.83, -0), controlPoint2: CGPointMake(14.5, 0.13))
+        bezierPath.addCurveToPoint(CGPointMake(13.8, 1.37), controlPoint1: CGPointMake(13.94, 0.66), controlPoint2: CGPointMake(13.8, 0.99))
+        bezierPath.addLineToPoint(CGPointMake(13.47, 15.78))
+        bezierPath.addLineToPoint(CGPointMake(19.27, 4.31))
+        bezierPath.addLineToPoint(CGPointMake(19.35, 1.51))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(9.36, 1.23))
+        bezierPath.addLineToPoint(CGPointMake(6.84, 2.39))
+        bezierPath.addCurveToPoint(CGPointMake(6.12, 3.18), controlPoint1: CGPointMake(6.49, 2.55), controlPoint2: CGPointMake(6.25, 2.82))
+        bezierPath.addCurveToPoint(CGPointMake(6.16, 4.25), controlPoint1: CGPointMake(5.98, 3.55), controlPoint2: CGPointMake(6, 3.91))
+        bezierPath.addLineToPoint(CGPointMake(12.04, 17.34))
+        bezierPath.addLineToPoint(CGPointMake(12.34, 4.45))
+        bezierPath.addLineToPoint(CGPointMake(11.2, 1.92))
+        bezierPath.addCurveToPoint(CGPointMake(10.41, 1.19), controlPoint1: CGPointMake(11.03, 1.57), controlPoint2: CGPointMake(10.77, 1.33))
+        bezierPath.addCurveToPoint(CGPointMake(9.36, 1.23), controlPoint1: CGPointMake(10.05, 1.06), controlPoint2: CGPointMake(9.7, 1.07))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(4.04, 5.87))
+        bezierPath.addCurveToPoint(CGPointMake(3.03, 5.57), controlPoint1: CGPointMake(3.76, 5.63), controlPoint2: CGPointMake(3.42, 5.53))
+        bezierPath.addCurveToPoint(CGPointMake(2.09, 6.06), controlPoint1: CGPointMake(2.64, 5.61), controlPoint2: CGPointMake(2.33, 5.77))
+        bezierPath.addLineToPoint(CGPointMake(0.31, 8.23))
+        bezierPath.addCurveToPoint(CGPointMake(0.01, 9.25), controlPoint1: CGPointMake(0.07, 8.52), controlPoint2: CGPointMake(-0.03, 8.86))
+        bezierPath.addCurveToPoint(CGPointMake(0.49, 10.21), controlPoint1: CGPointMake(0.04, 9.63), controlPoint2: CGPointMake(0.21, 9.95))
+        bezierPath.addLineToPoint(CGPointMake(11.44, 19.4))
+        bezierPath.addLineToPoint(CGPointMake(6.16, 7.66))
+        bezierPath.addLineToPoint(CGPointMake(4.04, 5.87))
+        bezierPath.closePath()
+        bezierPath.usesEvenOddFillRule = true;
+
+        CTAStyleKit.selectedColor.setFill()
+        bezierPath.fill()
+    }
+
+    public class func drawColorBarItemNormal() {
+        //// Color Declarations
+        let fillColor4 = UIColor(red: 0.608, green: 0.608, blue: 0.608, alpha: 1.000)
+
+        //// Bezier Drawing
+        let bezierPath = UIBezierPath()
+        bezierPath.moveToPoint(CGPointMake(26.26, 2.85))
+        bezierPath.addLineToPoint(CGPointMake(23.77, 1.56))
+        bezierPath.addCurveToPoint(CGPointMake(22.73, 1.47), controlPoint1: CGPointMake(23.44, 1.38), controlPoint2: CGPointMake(23.1, 1.35))
+        bezierPath.addCurveToPoint(CGPointMake(21.93, 2.17), controlPoint1: CGPointMake(22.36, 1.59), controlPoint2: CGPointMake(22.09, 1.82))
+        bezierPath.addLineToPoint(CGPointMake(13.04, 19.67))
+        bezierPath.addCurveToPoint(CGPointMake(12.97, 20.74), controlPoint1: CGPointMake(12.88, 20.02), controlPoint2: CGPointMake(12.85, 20.38))
+        bezierPath.addCurveToPoint(CGPointMake(13.66, 21.57), controlPoint1: CGPointMake(13.09, 21.11), controlPoint2: CGPointMake(13.32, 21.38))
+        bezierPath.addLineToPoint(CGPointMake(16.13, 22.86))
+        bezierPath.addCurveToPoint(CGPointMake(17.17, 22.93), controlPoint1: CGPointMake(16.45, 23.02), controlPoint2: CGPointMake(16.8, 23.04))
+        bezierPath.addCurveToPoint(CGPointMake(18, 22.23), controlPoint1: CGPointMake(17.54, 22.81), controlPoint2: CGPointMake(17.82, 22.57))
+        bezierPath.addLineToPoint(CGPointMake(26.86, 4.75))
+        bezierPath.addCurveToPoint(CGPointMake(26.93, 3.66), controlPoint1: CGPointMake(27.02, 4.4), controlPoint2: CGPointMake(27.04, 4.04))
+        bezierPath.addCurveToPoint(CGPointMake(26.26, 2.85), controlPoint1: CGPointMake(26.81, 3.29), controlPoint2: CGPointMake(26.59, 3.02))
+        bezierPath.addLineToPoint(CGPointMake(26.26, 2.85))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(17.38, 20.33))
+        bezierPath.addCurveToPoint(CGPointMake(16.58, 21.03), controlPoint1: CGPointMake(17.21, 20.68), controlPoint2: CGPointMake(16.95, 20.91))
+        bezierPath.addCurveToPoint(CGPointMake(15.51, 20.96), controlPoint1: CGPointMake(16.21, 21.15), controlPoint2: CGPointMake(15.85, 21.13))
+        bezierPath.addCurveToPoint(CGPointMake(14.84, 20.14), controlPoint1: CGPointMake(15.18, 20.78), controlPoint2: CGPointMake(14.96, 20.51))
+        bezierPath.addCurveToPoint(CGPointMake(14.91, 19.07), controlPoint1: CGPointMake(14.72, 19.77), controlPoint2: CGPointMake(14.75, 19.42))
+        bezierPath.addCurveToPoint(CGPointMake(15.72, 18.37), controlPoint1: CGPointMake(15.09, 18.72), controlPoint2: CGPointMake(15.36, 18.49))
+        bezierPath.addCurveToPoint(CGPointMake(16.78, 18.47), controlPoint1: CGPointMake(16.08, 18.25), controlPoint2: CGPointMake(16.44, 18.28))
+        bezierPath.addCurveToPoint(CGPointMake(17.47, 19.28), controlPoint1: CGPointMake(17.12, 18.63), controlPoint2: CGPointMake(17.35, 18.9))
+        bezierPath.addCurveToPoint(CGPointMake(17.38, 20.33), controlPoint1: CGPointMake(17.59, 19.65), controlPoint2: CGPointMake(17.56, 20))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(19.35, 1.51))
+        bezierPath.addCurveToPoint(CGPointMake(18.96, 0.51), controlPoint1: CGPointMake(19.35, 1.12), controlPoint2: CGPointMake(19.22, 0.79))
+        bezierPath.addCurveToPoint(CGPointMake(18, 0.08), controlPoint1: CGPointMake(18.7, 0.22), controlPoint2: CGPointMake(18.38, 0.08))
+        bezierPath.addLineToPoint(CGPointMake(15.21, -0))
+        bezierPath.addCurveToPoint(CGPointMake(14.22, 0.4), controlPoint1: CGPointMake(14.83, -0), controlPoint2: CGPointMake(14.5, 0.13))
+        bezierPath.addCurveToPoint(CGPointMake(13.8, 1.37), controlPoint1: CGPointMake(13.94, 0.66), controlPoint2: CGPointMake(13.8, 0.99))
+        bezierPath.addLineToPoint(CGPointMake(13.47, 15.78))
+        bezierPath.addLineToPoint(CGPointMake(19.27, 4.31))
+        bezierPath.addLineToPoint(CGPointMake(19.35, 1.51))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(9.36, 1.23))
+        bezierPath.addLineToPoint(CGPointMake(6.84, 2.39))
+        bezierPath.addCurveToPoint(CGPointMake(6.12, 3.18), controlPoint1: CGPointMake(6.49, 2.55), controlPoint2: CGPointMake(6.25, 2.82))
+        bezierPath.addCurveToPoint(CGPointMake(6.16, 4.25), controlPoint1: CGPointMake(5.98, 3.55), controlPoint2: CGPointMake(6, 3.91))
+        bezierPath.addLineToPoint(CGPointMake(12.04, 17.34))
+        bezierPath.addLineToPoint(CGPointMake(12.34, 4.45))
+        bezierPath.addLineToPoint(CGPointMake(11.2, 1.92))
+        bezierPath.addCurveToPoint(CGPointMake(10.41, 1.19), controlPoint1: CGPointMake(11.03, 1.57), controlPoint2: CGPointMake(10.77, 1.33))
+        bezierPath.addCurveToPoint(CGPointMake(9.36, 1.23), controlPoint1: CGPointMake(10.05, 1.06), controlPoint2: CGPointMake(9.7, 1.07))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(4.04, 5.87))
+        bezierPath.addCurveToPoint(CGPointMake(3.03, 5.57), controlPoint1: CGPointMake(3.76, 5.63), controlPoint2: CGPointMake(3.42, 5.53))
+        bezierPath.addCurveToPoint(CGPointMake(2.09, 6.06), controlPoint1: CGPointMake(2.64, 5.61), controlPoint2: CGPointMake(2.33, 5.77))
+        bezierPath.addLineToPoint(CGPointMake(0.31, 8.23))
+        bezierPath.addCurveToPoint(CGPointMake(0.01, 9.25), controlPoint1: CGPointMake(0.07, 8.52), controlPoint2: CGPointMake(-0.03, 8.86))
+        bezierPath.addCurveToPoint(CGPointMake(0.49, 10.21), controlPoint1: CGPointMake(0.04, 9.63), controlPoint2: CGPointMake(0.21, 9.95))
+        bezierPath.addLineToPoint(CGPointMake(11.44, 19.4))
+        bezierPath.addLineToPoint(CGPointMake(6.16, 7.66))
+        bezierPath.addLineToPoint(CGPointMake(4.04, 5.87))
+        bezierPath.closePath()
+        bezierPath.usesEvenOddFillRule = true;
+
+        fillColor4.setFill()
+        bezierPath.fill()
+    }
+
+    public class func drawRotationBarItemSelected() {
+
+        //// Bezier Drawing
+        let bezierPath = UIBezierPath()
+        bezierPath.moveToPoint(CGPointMake(21.02, 6.68))
+        bezierPath.addCurveToPoint(CGPointMake(24, 13.85), controlPoint1: CGPointMake(23.01, 8.65), controlPoint2: CGPointMake(24, 11.05))
+        bezierPath.addCurveToPoint(CGPointMake(21.02, 21.03), controlPoint1: CGPointMake(24, 16.66), controlPoint2: CGPointMake(23.01, 19.06))
+        bezierPath.addCurveToPoint(CGPointMake(13.78, 24), controlPoint1: CGPointMake(19.07, 23.01), controlPoint2: CGPointMake(16.66, 24))
+        bezierPath.addCurveToPoint(CGPointMake(8.89, 22.73), controlPoint1: CGPointMake(12.04, 24), controlPoint2: CGPointMake(10.41, 23.58))
+        bezierPath.addLineToPoint(CGPointMake(10.59, 21.09))
+        bezierPath.addCurveToPoint(CGPointMake(13.78, 21.77), controlPoint1: CGPointMake(11.55, 21.55), controlPoint2: CGPointMake(12.61, 21.77))
+        bezierPath.addCurveToPoint(CGPointMake(19.42, 19.44), controlPoint1: CGPointMake(15.98, 21.77), controlPoint2: CGPointMake(17.86, 21))
+        bezierPath.addCurveToPoint(CGPointMake(21.71, 13.88), controlPoint1: CGPointMake(20.95, 17.92), controlPoint2: CGPointMake(21.71, 16.07))
+        bezierPath.addCurveToPoint(CGPointMake(19.42, 8.26), controlPoint1: CGPointMake(21.71, 11.69), controlPoint2: CGPointMake(20.95, 9.82))
+        bezierPath.addCurveToPoint(CGPointMake(13.78, 5.93), controlPoint1: CGPointMake(17.86, 6.71), controlPoint2: CGPointMake(15.98, 5.93))
+        bezierPath.addLineToPoint(CGPointMake(13.78, 9.59))
+        bezierPath.addLineToPoint(CGPointMake(8.99, 4.82))
+        bezierPath.addLineToPoint(CGPointMake(13.78, 0))
+        bezierPath.addLineToPoint(CGPointMake(13.78, 3.66))
+        bezierPath.addCurveToPoint(CGPointMake(21.02, 6.68), controlPoint1: CGPointMake(16.66, 3.66), controlPoint2: CGPointMake(19.07, 4.66))
+        bezierPath.addLineToPoint(CGPointMake(21.02, 6.68))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(3.25, 13.72))
+        bezierPath.addLineToPoint(CGPointMake(7.4, 17.85))
+        bezierPath.addLineToPoint(CGPointMake(11.55, 13.72))
+        bezierPath.addLineToPoint(CGPointMake(7.4, 9.59))
+        bezierPath.addLineToPoint(CGPointMake(3.25, 13.72))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(7.4, 6.41))
+        bezierPath.addLineToPoint(CGPointMake(14.74, 13.72))
+        bezierPath.addLineToPoint(CGPointMake(7.4, 21.03))
+        bezierPath.addLineToPoint(CGPointMake(0, 13.72))
+        bezierPath.addLineToPoint(CGPointMake(7.4, 6.41))
+        bezierPath.closePath()
+        bezierPath.usesEvenOddFillRule = true;
+
+        CTAStyleKit.selectedColor.setFill()
+        bezierPath.fill()
+    }
+
+    public class func drawRotationBarItemNormal() {
+        //// Color Declarations
+        let fillColor4 = UIColor(red: 0.608, green: 0.608, blue: 0.608, alpha: 1.000)
+
+        //// Bezier Drawing
+        let bezierPath = UIBezierPath()
+        bezierPath.moveToPoint(CGPointMake(21.02, 6.68))
+        bezierPath.addCurveToPoint(CGPointMake(24, 13.85), controlPoint1: CGPointMake(23.01, 8.65), controlPoint2: CGPointMake(24, 11.05))
+        bezierPath.addCurveToPoint(CGPointMake(21.02, 21.03), controlPoint1: CGPointMake(24, 16.66), controlPoint2: CGPointMake(23.01, 19.06))
+        bezierPath.addCurveToPoint(CGPointMake(13.78, 24), controlPoint1: CGPointMake(19.07, 23.01), controlPoint2: CGPointMake(16.66, 24))
+        bezierPath.addCurveToPoint(CGPointMake(8.89, 22.73), controlPoint1: CGPointMake(12.04, 24), controlPoint2: CGPointMake(10.41, 23.58))
+        bezierPath.addLineToPoint(CGPointMake(10.59, 21.09))
+        bezierPath.addCurveToPoint(CGPointMake(13.78, 21.77), controlPoint1: CGPointMake(11.55, 21.55), controlPoint2: CGPointMake(12.61, 21.77))
+        bezierPath.addCurveToPoint(CGPointMake(19.42, 19.44), controlPoint1: CGPointMake(15.98, 21.77), controlPoint2: CGPointMake(17.86, 21))
+        bezierPath.addCurveToPoint(CGPointMake(21.71, 13.88), controlPoint1: CGPointMake(20.95, 17.92), controlPoint2: CGPointMake(21.71, 16.07))
+        bezierPath.addCurveToPoint(CGPointMake(19.42, 8.26), controlPoint1: CGPointMake(21.71, 11.69), controlPoint2: CGPointMake(20.95, 9.82))
+        bezierPath.addCurveToPoint(CGPointMake(13.78, 5.93), controlPoint1: CGPointMake(17.86, 6.71), controlPoint2: CGPointMake(15.98, 5.93))
+        bezierPath.addLineToPoint(CGPointMake(13.78, 9.59))
+        bezierPath.addLineToPoint(CGPointMake(8.99, 4.82))
+        bezierPath.addLineToPoint(CGPointMake(13.78, 0))
+        bezierPath.addLineToPoint(CGPointMake(13.78, 3.66))
+        bezierPath.addCurveToPoint(CGPointMake(21.02, 6.68), controlPoint1: CGPointMake(16.66, 3.66), controlPoint2: CGPointMake(19.07, 4.66))
+        bezierPath.addLineToPoint(CGPointMake(21.02, 6.68))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(3.25, 13.72))
+        bezierPath.addLineToPoint(CGPointMake(7.4, 17.85))
+        bezierPath.addLineToPoint(CGPointMake(11.55, 13.72))
+        bezierPath.addLineToPoint(CGPointMake(7.4, 9.59))
+        bezierPath.addLineToPoint(CGPointMake(3.25, 13.72))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(7.4, 6.41))
+        bezierPath.addLineToPoint(CGPointMake(14.74, 13.72))
+        bezierPath.addLineToPoint(CGPointMake(7.4, 21.03))
+        bezierPath.addLineToPoint(CGPointMake(0, 13.72))
+        bezierPath.addLineToPoint(CGPointMake(7.4, 6.41))
+        bezierPath.closePath()
+        bezierPath.usesEvenOddFillRule = true;
+
+        fillColor4.setFill()
+        bezierPath.fill()
+    }
+
+    public class func drawAlignmentBarItemNormal() {
+        //// Color Declarations
+        let fillColor4 = UIColor(red: 0.608, green: 0.608, blue: 0.608, alpha: 1.000)
+
+        //// Bezier Drawing
+        let bezierPath = UIBezierPath()
+        bezierPath.moveToPoint(CGPointMake(0, 0))
+        bezierPath.addLineToPoint(CGPointMake(19, 0))
+        bezierPath.addLineToPoint(CGPointMake(19, 2))
+        bezierPath.addLineToPoint(CGPointMake(0, 2))
+        bezierPath.addLineToPoint(CGPointMake(0, 0))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(3, 6))
+        bezierPath.addLineToPoint(CGPointMake(16, 6))
+        bezierPath.addLineToPoint(CGPointMake(16, 8))
+        bezierPath.addLineToPoint(CGPointMake(3, 8))
+        bezierPath.addLineToPoint(CGPointMake(3, 6))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(0, 12))
+        bezierPath.addLineToPoint(CGPointMake(19, 12))
+        bezierPath.addLineToPoint(CGPointMake(19, 14))
+        bezierPath.addLineToPoint(CGPointMake(0, 14))
+        bezierPath.addLineToPoint(CGPointMake(0, 12))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(4, 18))
+        bezierPath.addLineToPoint(CGPointMake(16, 18))
+        bezierPath.addLineToPoint(CGPointMake(16, 20))
+        bezierPath.addLineToPoint(CGPointMake(4, 20))
+        bezierPath.addLineToPoint(CGPointMake(4, 18))
+        bezierPath.closePath()
+        bezierPath.usesEvenOddFillRule = true;
+
+        fillColor4.setFill()
+        bezierPath.fill()
+    }
+
+    public class func drawAlignmentBarItemSelected() {
+
+        //// Bezier Drawing
+        let bezierPath = UIBezierPath()
+        bezierPath.moveToPoint(CGPointMake(0, 0))
+        bezierPath.addLineToPoint(CGPointMake(19, 0))
+        bezierPath.addLineToPoint(CGPointMake(19, 2))
+        bezierPath.addLineToPoint(CGPointMake(0, 2))
+        bezierPath.addLineToPoint(CGPointMake(0, 0))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(3, 6))
+        bezierPath.addLineToPoint(CGPointMake(16, 6))
+        bezierPath.addLineToPoint(CGPointMake(16, 8))
+        bezierPath.addLineToPoint(CGPointMake(3, 8))
+        bezierPath.addLineToPoint(CGPointMake(3, 6))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(0, 12))
+        bezierPath.addLineToPoint(CGPointMake(19, 12))
+        bezierPath.addLineToPoint(CGPointMake(19, 14))
+        bezierPath.addLineToPoint(CGPointMake(0, 14))
+        bezierPath.addLineToPoint(CGPointMake(0, 12))
+        bezierPath.closePath()
+        bezierPath.moveToPoint(CGPointMake(4, 18))
+        bezierPath.addLineToPoint(CGPointMake(16, 18))
+        bezierPath.addLineToPoint(CGPointMake(16, 20))
+        bezierPath.addLineToPoint(CGPointMake(4, 20))
+        bezierPath.addLineToPoint(CGPointMake(4, 18))
+        bezierPath.closePath()
+        bezierPath.usesEvenOddFillRule = true;
+
+        CTAStyleKit.selectedColor.setFill()
+        bezierPath.fill()
+    }
+
+    public class func drawSpacingBarItemNormal() {
+        //// General Declarations
+        let context = UIGraphicsGetCurrentContext()
+
+        //// Color Declarations
+        let fillColor4 = UIColor(red: 0.608, green: 0.608, blue: 0.608, alpha: 1.000)
+
+        //// Group 3
+        CGContextSaveGState(context)
+        CGContextBeginTransparencyLayer(context, nil)
+
+        //// Clip Clip
+        let clipPath = UIBezierPath()
+        clipPath.moveToPoint(CGPointMake(21.2, 4.53))
+        clipPath.addLineToPoint(CGPointMake(3.8, 4.53))
+        clipPath.addLineToPoint(CGPointMake(6.94, 1.39))
+        clipPath.addLineToPoint(CGPointMake(5.54, -0.01))
+        clipPath.addLineToPoint(CGPointMake(1.42, 4.11))
+        clipPath.addLineToPoint(CGPointMake(1.39, 4.08))
+        clipPath.addLineToPoint(CGPointMake(0.01, 5.46))
+        clipPath.addLineToPoint(CGPointMake(5.6, 11.04))
+        clipPath.addLineToPoint(CGPointMake(6.97, 9.67))
+        clipPath.addLineToPoint(CGPointMake(3.78, 6.47))
+        clipPath.addLineToPoint(CGPointMake(21.22, 6.47))
+        clipPath.addLineToPoint(CGPointMake(18.03, 9.67))
+        clipPath.addLineToPoint(CGPointMake(19.4, 11.04))
+        clipPath.addLineToPoint(CGPointMake(24.99, 5.46))
+        clipPath.addLineToPoint(CGPointMake(23.61, 4.08))
+        clipPath.addLineToPoint(CGPointMake(23.58, 4.11))
+        clipPath.addLineToPoint(CGPointMake(19.46, -0.01))
+        clipPath.addLineToPoint(CGPointMake(18.06, 1.39))
+        clipPath.addLineToPoint(CGPointMake(21.2, 4.53))
+        clipPath.closePath()
+        clipPath.usesEvenOddFillRule = true;
+
+        clipPath.addClip()
+
+
+        //// Rectangle Drawing
+        let rectanglePath = UIBezierPath(rect: CGRectMake(0, -0, 25, 11))
+        fillColor4.setFill()
+        rectanglePath.fill()
+
+
+        CGContextEndTransparencyLayer(context)
+        CGContextRestoreGState(context)
+    }
+
+    public class func drawSpacingBarItemSelected() {
+        //// General Declarations
+        let context = UIGraphicsGetCurrentContext()
+
+        //// Group 3
+        CGContextSaveGState(context)
+        CGContextBeginTransparencyLayer(context, nil)
+
+        //// Clip Clip
+        let clipPath = UIBezierPath()
+        clipPath.moveToPoint(CGPointMake(21.2, 4.53))
+        clipPath.addLineToPoint(CGPointMake(3.8, 4.53))
+        clipPath.addLineToPoint(CGPointMake(6.94, 1.39))
+        clipPath.addLineToPoint(CGPointMake(5.54, -0.01))
+        clipPath.addLineToPoint(CGPointMake(1.42, 4.11))
+        clipPath.addLineToPoint(CGPointMake(1.39, 4.08))
+        clipPath.addLineToPoint(CGPointMake(0.01, 5.46))
+        clipPath.addLineToPoint(CGPointMake(5.6, 11.04))
+        clipPath.addLineToPoint(CGPointMake(6.97, 9.67))
+        clipPath.addLineToPoint(CGPointMake(3.78, 6.47))
+        clipPath.addLineToPoint(CGPointMake(21.22, 6.47))
+        clipPath.addLineToPoint(CGPointMake(18.03, 9.67))
+        clipPath.addLineToPoint(CGPointMake(19.4, 11.04))
+        clipPath.addLineToPoint(CGPointMake(24.99, 5.46))
+        clipPath.addLineToPoint(CGPointMake(23.61, 4.08))
+        clipPath.addLineToPoint(CGPointMake(23.58, 4.11))
+        clipPath.addLineToPoint(CGPointMake(19.46, -0.01))
+        clipPath.addLineToPoint(CGPointMake(18.06, 1.39))
+        clipPath.addLineToPoint(CGPointMake(21.2, 4.53))
+        clipPath.closePath()
+        clipPath.usesEvenOddFillRule = true;
+
+        clipPath.addClip()
+
+
+        //// Rectangle Drawing
+        let rectanglePath = UIBezierPath(rect: CGRectMake(0, -0, 25, 11))
+        CTAStyleKit.selectedColor.setFill()
+        rectanglePath.fill()
+
+
+        CGContextEndTransparencyLayer(context)
+        CGContextRestoreGState(context)
+    }
+
+    public class func drawAnimationBarItemNormal() {
+        //// General Declarations
+        let context = UIGraphicsGetCurrentContext()
+
+        //// Color Declarations
+        let fillColor4 = UIColor(red: 0.608, green: 0.608, blue: 0.608, alpha: 1.000)
+
+        //// Group 3
+        CGContextSaveGState(context)
+        CGContextBeginTransparencyLayer(context, nil)
+
+        //// Clip Clip
+        let clipPath = UIBezierPath()
+        clipPath.moveToPoint(CGPointMake(7.94, 5.5))
+        clipPath.addLineToPoint(CGPointMake(22.45, 20.07))
+        clipPath.addLineToPoint(CGPointMake(20.53, 22))
+        clipPath.addLineToPoint(CGPointMake(6.01, 7.43))
+        clipPath.addLineToPoint(CGPointMake(7.94, 5.5))
+        clipPath.closePath()
+        clipPath.moveToPoint(CGPointMake(7.03, 3.63))
+        clipPath.addLineToPoint(CGPointMake(7.03, 0))
+        clipPath.addLineToPoint(CGPointMake(8.85, 0))
+        clipPath.addLineToPoint(CGPointMake(8.85, 3.63))
+        clipPath.addLineToPoint(CGPointMake(7.03, 3.63))
+        clipPath.closePath()
+        clipPath.moveToPoint(CGPointMake(7.03, 15.2))
+        clipPath.addLineToPoint(CGPointMake(7.03, 11.57))
+        clipPath.addLineToPoint(CGPointMake(8.85, 11.57))
+        clipPath.addLineToPoint(CGPointMake(8.85, 15.2))
+        clipPath.addLineToPoint(CGPointMake(7.03, 15.2))
+        clipPath.closePath()
+        clipPath.moveToPoint(CGPointMake(12.25, 8.39))
+        clipPath.addLineToPoint(CGPointMake(12.25, 6.58))
+        clipPath.addLineToPoint(CGPointMake(15.88, 6.58))
+        clipPath.addLineToPoint(CGPointMake(15.88, 8.39))
+        clipPath.addLineToPoint(CGPointMake(12.25, 8.39))
+        clipPath.closePath()
+        clipPath.moveToPoint(CGPointMake(13.95, 2.84))
+        clipPath.addLineToPoint(CGPointMake(11.4, 5.39))
+        clipPath.addLineToPoint(CGPointMake(10.09, 4.14))
+        clipPath.addLineToPoint(CGPointMake(12.64, 1.53))
+        clipPath.addLineToPoint(CGPointMake(13.95, 2.84))
+        clipPath.closePath()
+        clipPath.moveToPoint(CGPointMake(1.93, 2.84))
+        clipPath.addLineToPoint(CGPointMake(3.23, 1.53))
+        clipPath.addLineToPoint(CGPointMake(5.78, 4.14))
+        clipPath.addLineToPoint(CGPointMake(4.48, 5.39))
+        clipPath.addLineToPoint(CGPointMake(1.93, 2.84))
+        clipPath.closePath()
+        clipPath.moveToPoint(CGPointMake(1.93, 12.3))
+        clipPath.addLineToPoint(CGPointMake(4.48, 9.75))
+        clipPath.addLineToPoint(CGPointMake(5.78, 11))
+        clipPath.addLineToPoint(CGPointMake(3.23, 13.61))
+        clipPath.addLineToPoint(CGPointMake(1.93, 12.3))
+        clipPath.closePath()
+        clipPath.moveToPoint(CGPointMake(0, 8.39))
+        clipPath.addLineToPoint(CGPointMake(0, 6.58))
+        clipPath.addLineToPoint(CGPointMake(3.63, 6.58))
+        clipPath.addLineToPoint(CGPointMake(3.63, 8.39))
+        clipPath.addLineToPoint(CGPointMake(0, 8.39))
+        clipPath.closePath()
+        clipPath.usesEvenOddFillRule = true;
+
+        clipPath.addClip()
+
+
+        //// Rectangle Drawing
+        let rectanglePath = UIBezierPath(rect: CGRectMake(-0, 0, 22, 22))
+        fillColor4.setFill()
+        rectanglePath.fill()
+
+
+        CGContextEndTransparencyLayer(context)
+        CGContextRestoreGState(context)
+    }
+
+    public class func drawAnimationBarItemSelected() {
+        //// General Declarations
+        let context = UIGraphicsGetCurrentContext()
+
+        //// Group 3
+        CGContextSaveGState(context)
+        CGContextBeginTransparencyLayer(context, nil)
+
+        //// Clip Clip
+        let clipPath = UIBezierPath()
+        clipPath.moveToPoint(CGPointMake(7.94, 5.5))
+        clipPath.addLineToPoint(CGPointMake(22.45, 20.07))
+        clipPath.addLineToPoint(CGPointMake(20.53, 22))
+        clipPath.addLineToPoint(CGPointMake(6.01, 7.43))
+        clipPath.addLineToPoint(CGPointMake(7.94, 5.5))
+        clipPath.closePath()
+        clipPath.moveToPoint(CGPointMake(7.03, 3.63))
+        clipPath.addLineToPoint(CGPointMake(7.03, 0))
+        clipPath.addLineToPoint(CGPointMake(8.85, 0))
+        clipPath.addLineToPoint(CGPointMake(8.85, 3.63))
+        clipPath.addLineToPoint(CGPointMake(7.03, 3.63))
+        clipPath.closePath()
+        clipPath.moveToPoint(CGPointMake(7.03, 15.2))
+        clipPath.addLineToPoint(CGPointMake(7.03, 11.57))
+        clipPath.addLineToPoint(CGPointMake(8.85, 11.57))
+        clipPath.addLineToPoint(CGPointMake(8.85, 15.2))
+        clipPath.addLineToPoint(CGPointMake(7.03, 15.2))
+        clipPath.closePath()
+        clipPath.moveToPoint(CGPointMake(12.25, 8.39))
+        clipPath.addLineToPoint(CGPointMake(12.25, 6.58))
+        clipPath.addLineToPoint(CGPointMake(15.88, 6.58))
+        clipPath.addLineToPoint(CGPointMake(15.88, 8.39))
+        clipPath.addLineToPoint(CGPointMake(12.25, 8.39))
+        clipPath.closePath()
+        clipPath.moveToPoint(CGPointMake(13.95, 2.84))
+        clipPath.addLineToPoint(CGPointMake(11.4, 5.39))
+        clipPath.addLineToPoint(CGPointMake(10.09, 4.14))
+        clipPath.addLineToPoint(CGPointMake(12.64, 1.53))
+        clipPath.addLineToPoint(CGPointMake(13.95, 2.84))
+        clipPath.closePath()
+        clipPath.moveToPoint(CGPointMake(1.93, 2.84))
+        clipPath.addLineToPoint(CGPointMake(3.23, 1.53))
+        clipPath.addLineToPoint(CGPointMake(5.78, 4.14))
+        clipPath.addLineToPoint(CGPointMake(4.48, 5.39))
+        clipPath.addLineToPoint(CGPointMake(1.93, 2.84))
+        clipPath.closePath()
+        clipPath.moveToPoint(CGPointMake(1.93, 12.3))
+        clipPath.addLineToPoint(CGPointMake(4.48, 9.75))
+        clipPath.addLineToPoint(CGPointMake(5.78, 11))
+        clipPath.addLineToPoint(CGPointMake(3.23, 13.61))
+        clipPath.addLineToPoint(CGPointMake(1.93, 12.3))
+        clipPath.closePath()
+        clipPath.moveToPoint(CGPointMake(0, 8.39))
+        clipPath.addLineToPoint(CGPointMake(0, 6.58))
+        clipPath.addLineToPoint(CGPointMake(3.63, 6.58))
+        clipPath.addLineToPoint(CGPointMake(3.63, 8.39))
+        clipPath.addLineToPoint(CGPointMake(0, 8.39))
+        clipPath.closePath()
+        clipPath.usesEvenOddFillRule = true;
+
+        clipPath.addClip()
+
+
+        //// Rectangle Drawing
+        let rectanglePath = UIBezierPath(rect: CGRectMake(-0, 0, 22, 22))
+        CTAStyleKit.selectedColor.setFill()
+        rectanglePath.fill()
+
+
+        CGContextEndTransparencyLayer(context)
+        CGContextRestoreGState(context)
+    }
+
     //// Generated Images
 
     public class var imageOfAlignmentRightSelected: UIImage {
@@ -1122,6 +1844,202 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfNode!
     }
 
+    public class var imageOfFontBarItemNormal: UIImage {
+        if Cache.imageOfFontBarItemNormal != nil {
+            return Cache.imageOfFontBarItemNormal!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(23, 22), false, 0)
+            CTAStyleKit.drawFontBarItemNormal()
+
+        Cache.imageOfFontBarItemNormal = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfFontBarItemNormal!
+    }
+
+    public class var imageOfFontBarItemSelected: UIImage {
+        if Cache.imageOfFontBarItemSelected != nil {
+            return Cache.imageOfFontBarItemSelected!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(23, 22), false, 0)
+            CTAStyleKit.drawFontBarItemSelected()
+
+        Cache.imageOfFontBarItemSelected = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfFontBarItemSelected!
+    }
+
+    public class var imageOfSizeBarItemNormal: UIImage {
+        if Cache.imageOfSizeBarItemNormal != nil {
+            return Cache.imageOfSizeBarItemNormal!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(28, 22), false, 0)
+            CTAStyleKit.drawSizeBarItemNormal()
+
+        Cache.imageOfSizeBarItemNormal = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfSizeBarItemNormal!
+    }
+
+    public class var imageOfSizeBarItemSelected: UIImage {
+        if Cache.imageOfSizeBarItemSelected != nil {
+            return Cache.imageOfSizeBarItemSelected!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(28, 22), false, 0)
+            CTAStyleKit.drawSizeBarItemSelected()
+
+        Cache.imageOfSizeBarItemSelected = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfSizeBarItemSelected!
+    }
+
+    public class var imageOfColorBarItemSelected: UIImage {
+        if Cache.imageOfColorBarItemSelected != nil {
+            return Cache.imageOfColorBarItemSelected!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(28, 23), false, 0)
+            CTAStyleKit.drawColorBarItemSelected()
+
+        Cache.imageOfColorBarItemSelected = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfColorBarItemSelected!
+    }
+
+    public class var imageOfColorBarItemNormal: UIImage {
+        if Cache.imageOfColorBarItemNormal != nil {
+            return Cache.imageOfColorBarItemNormal!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(28, 23), false, 0)
+            CTAStyleKit.drawColorBarItemNormal()
+
+        Cache.imageOfColorBarItemNormal = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfColorBarItemNormal!
+    }
+
+    public class var imageOfRotationBarItemSelected: UIImage {
+        if Cache.imageOfRotationBarItemSelected != nil {
+            return Cache.imageOfRotationBarItemSelected!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(24, 24), false, 0)
+            CTAStyleKit.drawRotationBarItemSelected()
+
+        Cache.imageOfRotationBarItemSelected = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfRotationBarItemSelected!
+    }
+
+    public class var imageOfRotationBarItemNormal: UIImage {
+        if Cache.imageOfRotationBarItemNormal != nil {
+            return Cache.imageOfRotationBarItemNormal!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(24, 24), false, 0)
+            CTAStyleKit.drawRotationBarItemNormal()
+
+        Cache.imageOfRotationBarItemNormal = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfRotationBarItemNormal!
+    }
+
+    public class var imageOfAlignmentBarItemNormal: UIImage {
+        if Cache.imageOfAlignmentBarItemNormal != nil {
+            return Cache.imageOfAlignmentBarItemNormal!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(19, 20), false, 0)
+            CTAStyleKit.drawAlignmentBarItemNormal()
+
+        Cache.imageOfAlignmentBarItemNormal = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfAlignmentBarItemNormal!
+    }
+
+    public class var imageOfAlignmentBarItemSelected: UIImage {
+        if Cache.imageOfAlignmentBarItemSelected != nil {
+            return Cache.imageOfAlignmentBarItemSelected!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(19, 20), false, 0)
+            CTAStyleKit.drawAlignmentBarItemSelected()
+
+        Cache.imageOfAlignmentBarItemSelected = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfAlignmentBarItemSelected!
+    }
+
+    public class var imageOfSpacingBarItemNormal: UIImage {
+        if Cache.imageOfSpacingBarItemNormal != nil {
+            return Cache.imageOfSpacingBarItemNormal!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(25, 11), false, 0)
+            CTAStyleKit.drawSpacingBarItemNormal()
+
+        Cache.imageOfSpacingBarItemNormal = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfSpacingBarItemNormal!
+    }
+
+    public class var imageOfSpacingBarItemSelected: UIImage {
+        if Cache.imageOfSpacingBarItemSelected != nil {
+            return Cache.imageOfSpacingBarItemSelected!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(25, 11), false, 0)
+            CTAStyleKit.drawSpacingBarItemSelected()
+
+        Cache.imageOfSpacingBarItemSelected = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfSpacingBarItemSelected!
+    }
+
+    public class var imageOfAnimationBarItemNormal: UIImage {
+        if Cache.imageOfAnimationBarItemNormal != nil {
+            return Cache.imageOfAnimationBarItemNormal!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(22, 22), false, 0)
+            CTAStyleKit.drawAnimationBarItemNormal()
+
+        Cache.imageOfAnimationBarItemNormal = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfAnimationBarItemNormal!
+    }
+
+    public class var imageOfAnimationBarItemSelected: UIImage {
+        if Cache.imageOfAnimationBarItemSelected != nil {
+            return Cache.imageOfAnimationBarItemSelected!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(22, 22), false, 0)
+            CTAStyleKit.drawAnimationBarItemSelected()
+
+        Cache.imageOfAnimationBarItemSelected = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfAnimationBarItemSelected!
+    }
+
     //// Customization Infrastructure
 
     @IBOutlet var alignmentRightSelectedTargets: [AnyObject]! {
@@ -1260,6 +2178,146 @@ public class CTAStyleKit : NSObject {
             Cache.nodeTargets = newValue
             for target: AnyObject in newValue {
                 target.performSelector("setImage:", withObject: CTAStyleKit.imageOfNode)
+            }
+        }
+    }
+
+    @IBOutlet var fontBarItemNormalTargets: [AnyObject]! {
+        get { return Cache.fontBarItemNormalTargets }
+        set {
+            Cache.fontBarItemNormalTargets = newValue
+            for target: AnyObject in newValue {
+                target.performSelector("setImage:", withObject: CTAStyleKit.imageOfFontBarItemNormal)
+            }
+        }
+    }
+
+    @IBOutlet var fontBarItemSelectedTargets: [AnyObject]! {
+        get { return Cache.fontBarItemSelectedTargets }
+        set {
+            Cache.fontBarItemSelectedTargets = newValue
+            for target: AnyObject in newValue {
+                target.performSelector("setImage:", withObject: CTAStyleKit.imageOfFontBarItemSelected)
+            }
+        }
+    }
+
+    @IBOutlet var sizeBarItemNormalTargets: [AnyObject]! {
+        get { return Cache.sizeBarItemNormalTargets }
+        set {
+            Cache.sizeBarItemNormalTargets = newValue
+            for target: AnyObject in newValue {
+                target.performSelector("setImage:", withObject: CTAStyleKit.imageOfSizeBarItemNormal)
+            }
+        }
+    }
+
+    @IBOutlet var sizeBarItemSelectedTargets: [AnyObject]! {
+        get { return Cache.sizeBarItemSelectedTargets }
+        set {
+            Cache.sizeBarItemSelectedTargets = newValue
+            for target: AnyObject in newValue {
+                target.performSelector("setImage:", withObject: CTAStyleKit.imageOfSizeBarItemSelected)
+            }
+        }
+    }
+
+    @IBOutlet var colorBarItemSelectedTargets: [AnyObject]! {
+        get { return Cache.colorBarItemSelectedTargets }
+        set {
+            Cache.colorBarItemSelectedTargets = newValue
+            for target: AnyObject in newValue {
+                target.performSelector("setImage:", withObject: CTAStyleKit.imageOfColorBarItemSelected)
+            }
+        }
+    }
+
+    @IBOutlet var colorBarItemNormalTargets: [AnyObject]! {
+        get { return Cache.colorBarItemNormalTargets }
+        set {
+            Cache.colorBarItemNormalTargets = newValue
+            for target: AnyObject in newValue {
+                target.performSelector("setImage:", withObject: CTAStyleKit.imageOfColorBarItemNormal)
+            }
+        }
+    }
+
+    @IBOutlet var rotationBarItemSelectedTargets: [AnyObject]! {
+        get { return Cache.rotationBarItemSelectedTargets }
+        set {
+            Cache.rotationBarItemSelectedTargets = newValue
+            for target: AnyObject in newValue {
+                target.performSelector("setImage:", withObject: CTAStyleKit.imageOfRotationBarItemSelected)
+            }
+        }
+    }
+
+    @IBOutlet var rotationBarItemNormalTargets: [AnyObject]! {
+        get { return Cache.rotationBarItemNormalTargets }
+        set {
+            Cache.rotationBarItemNormalTargets = newValue
+            for target: AnyObject in newValue {
+                target.performSelector("setImage:", withObject: CTAStyleKit.imageOfRotationBarItemNormal)
+            }
+        }
+    }
+
+    @IBOutlet var alignmentBarItemNormalTargets: [AnyObject]! {
+        get { return Cache.alignmentBarItemNormalTargets }
+        set {
+            Cache.alignmentBarItemNormalTargets = newValue
+            for target: AnyObject in newValue {
+                target.performSelector("setImage:", withObject: CTAStyleKit.imageOfAlignmentBarItemNormal)
+            }
+        }
+    }
+
+    @IBOutlet var alignmentBarItemSelectedTargets: [AnyObject]! {
+        get { return Cache.alignmentBarItemSelectedTargets }
+        set {
+            Cache.alignmentBarItemSelectedTargets = newValue
+            for target: AnyObject in newValue {
+                target.performSelector("setImage:", withObject: CTAStyleKit.imageOfAlignmentBarItemSelected)
+            }
+        }
+    }
+
+    @IBOutlet var spacingBarItemNormalTargets: [AnyObject]! {
+        get { return Cache.spacingBarItemNormalTargets }
+        set {
+            Cache.spacingBarItemNormalTargets = newValue
+            for target: AnyObject in newValue {
+                target.performSelector("setImage:", withObject: CTAStyleKit.imageOfSpacingBarItemNormal)
+            }
+        }
+    }
+
+    @IBOutlet var spacingBarItemSelectedTargets: [AnyObject]! {
+        get { return Cache.spacingBarItemSelectedTargets }
+        set {
+            Cache.spacingBarItemSelectedTargets = newValue
+            for target: AnyObject in newValue {
+                target.performSelector("setImage:", withObject: CTAStyleKit.imageOfSpacingBarItemSelected)
+            }
+        }
+    }
+
+    @IBOutlet var animationBarItemNormalTargets: [AnyObject]! {
+        get { return Cache.animationBarItemNormalTargets }
+        set {
+            Cache.animationBarItemNormalTargets = newValue
+            for target: AnyObject in newValue {
+                target.performSelector("setImage:", withObject: CTAStyleKit.imageOfAnimationBarItemNormal)
+            }
+        }
+    }
+
+    @IBOutlet var animationBarItemSelectedTargets: [AnyObject]! {
+        get { return Cache.animationBarItemSelectedTargets }
+        set {
+            Cache.animationBarItemSelectedTargets = newValue
+            for target: AnyObject in newValue {
+                target.performSelector("setImage:", withObject: CTAStyleKit.imageOfAnimationBarItemSelected)
             }
         }
     }

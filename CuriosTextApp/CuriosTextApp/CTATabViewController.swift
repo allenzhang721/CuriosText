@@ -11,7 +11,7 @@ import UIKit
 protocol CTATabViewControllerDataSource: class {
     
     func tabViewControllerNumberOfItems(viewController: CTATabViewController) -> Int
-    func tabViewController(viewController: CTATabViewController, tabItemAtIndexPath indexPath: NSIndexPath) -> CTATabItem
+    func tabViewController(viewController: CTATabViewController, tabItemAtIndexPath indexPath: NSIndexPath) -> CTABarItem
 }
 
 class CTATabItem {
@@ -52,9 +52,12 @@ extension CTATabViewController: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TabCell", forIndexPath: indexPath)
-
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TabCell", forIndexPath: indexPath) as! CTAScollBarCell
         
+        if let dataSource = dataSource {
+            cell.barItemView.setItem(dataSource.tabViewController(self, tabItemAtIndexPath: indexPath))
+        }
+
         return cell
     }
 }

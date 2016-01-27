@@ -157,23 +157,23 @@ extension EditViewController: CTATabViewControllerDataSource, LineFlowLayoutDele
     func tabViewControllerNumberOfItems(
         viewController: CTATabViewController)
         -> Int {
-            guard let items = tabItems else {
-                return 0
-            }
+//            guard let items = tabItems else {
+//                return 0
+//            }
             
-            return items.count
+            return CTABarItemsFactory.textSelectorItems.count
     }
     
     func tabViewController(
         viewController: CTATabViewController,
         tabItemAtIndexPath indexPath: NSIndexPath)
-        -> CTATabItem {
-            guard
-                let items = tabItems else {
-                return CTATabItem()
-            }
+        -> CTABarItem {
+//            guard
+//                let items = tabItems else {
+//                return CTATabItem()
+//            }
             
-            return items[indexPath.item]
+            return CTABarItemsFactory.textSelectorItems[indexPath.item]
     }
     
     // MARK: - Delegate
