@@ -29,6 +29,9 @@
 		2C31EB631C452597002A4D71 /* SwiftHEXColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C31EB621C452597002A4D71 /* SwiftHEXColors.swift */; };
 		2C32BD491C4CA7A100788A97 /* CTAPreviewCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C32BD481C4CA7A100788A97 /* CTAPreviewCanvasView.swift */; };
 		2C32BD561C4CB89100788A97 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C32BD581C4CB89100788A97 /* Localizable.strings */; };
+		2C3AE3EC1C59EC9E004D62B4 /* CTASocialShareManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3AE3EB1C59EC9E004D62B4 /* CTASocialShareManager.swift */; };
+		2C3AE3EF1C59F5CD004D62B4 /* CTASocialTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3AE3EE1C59F5CD004D62B4 /* CTASocialTestViewController.swift */; };
+		2C3AE3F11C59F5E3004D62B4 /* CTASocial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C3AE3F01C59F5E3004D62B4 /* CTASocial.storyboard */; };
 		2C3B33CA1C1176D000738166 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33C91C1176D000738166 /* AppDelegate.swift */; };
 		2C3B33CC1C1176D000738166 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33CB1C1176D000738166 /* ViewController.swift */; };
 		2C3B33CF1C1176D000738166 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C3B33CD1C1176D000738166 /* Main.storyboard */; };
@@ -71,6 +74,7 @@
 		2C5C24961C44F5D800A70F1B /* CTASelectorColorsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C24951C44F5D800A70F1B /* CTASelectorColorsCell.swift */; };
 		2C5C24981C44FA5600A70F1B /* CTAColorsManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C24971C44FA5600A70F1B /* CTAColorsManger.swift */; };
 		2C5EA2561C479CE000DCEE7B /* Print.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5EA2551C479CE000DCEE7B /* Print.swift */; };
+		2C6017BD1C59D84C00EEB804 /* MonkeyKing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6017BC1C59D84C00EEB804 /* MonkeyKing.framework */; };
 		2C65B6681C4F514D007B4DEA /* Preview.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C65B6671C4F514D007B4DEA /* Preview.storyboard */; };
 		2C65B66A1C4F517A007B4DEA /* CTAPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C65B6691C4F517A007B4DEA /* CTAPreviewViewController.swift */; };
 		2C65B66C1C4F55F8007B4DEA /* CTAAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C65B66B1C4F55F8007B4DEA /* CTAAnimation.swift */; };
@@ -198,6 +202,9 @@
 		2C32BD571C4CB89100788A97 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2C32BD591C4CB89200788A97 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2C32BD5A1C4CB89300788A97 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		2C3AE3EB1C59EC9E004D62B4 /* CTASocialShareManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASocialShareManager.swift; sourceTree = "<group>"; };
+		2C3AE3EE1C59F5CD004D62B4 /* CTASocialTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASocialTestViewController.swift; sourceTree = "<group>"; };
+		2C3AE3F01C59F5E3004D62B4 /* CTASocial.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CTASocial.storyboard; sourceTree = "<group>"; };
 		2C3B33C61C1176D000738166 /* CuriosTextApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CuriosTextApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C3B33C91C1176D000738166 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2C3B33CB1C1176D000738166 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -245,6 +252,7 @@
 		2C5C24951C44F5D800A70F1B /* CTASelectorColorsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorColorsCell.swift; sourceTree = "<group>"; };
 		2C5C24971C44FA5600A70F1B /* CTAColorsManger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAColorsManger.swift; sourceTree = "<group>"; };
 		2C5EA2551C479CE000DCEE7B /* Print.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Print.swift; sourceTree = "<group>"; };
+		2C6017BC1C59D84C00EEB804 /* MonkeyKing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MonkeyKing.framework; path = "Pods/../build/Debug-iphoneos/MonkeyKing.framework"; sourceTree = "<group>"; };
 		2C65B6671C4F514D007B4DEA /* Preview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Preview.storyboard; sourceTree = "<group>"; };
 		2C65B6691C4F517A007B4DEA /* CTAPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewViewController.swift; sourceTree = "<group>"; };
 		2C65B66B1C4F55F8007B4DEA /* CTAAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAnimation.swift; sourceTree = "<group>"; };
@@ -337,6 +345,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C6017BD1C59D84C00EEB804 /* MonkeyKing.framework in Frameworks */,
 				2CD488171C4E53E500D11CB7 /* pop.framework in Frameworks */,
 				2C3E0ADF1C2156B200450B2C /* Qiniu.framework in Frameworks */,
 				2C9706C11C1E6EC200FA2E17 /* Locksmith.framework in Frameworks */,
@@ -383,34 +392,20 @@
 			name = Layout;
 			sourceTree = "<group>";
 		};
-		2C0404691C3EC5CE00A5B017 /* view */ = {
-			isa = PBXGroup;
-			children = (
-				2C6C68021C350B4400CCE81C /* CTAScollBarCell.swift */,
-				2C04045F1C3EC2C500A5B017 /* CTAScrollTuneView.swift */,
-				2C0404611C3EC31100A5B017 /* CTARotatorView.swift */,
-				2C3097091C3F7FA800D996A4 /* CTAScrollSelectView.swift */,
-				2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */,
-				2C0404551C3EBB7A00A5B017 /* CTASelectorsViewController.swift */,
-				2C82FF541C4362FA001D927A /* CTASegementControl.swift */,
-				2C5C24951C44F5D800A70F1B /* CTASelectorColorsCell.swift */,
-				2C5C24911C44E82100A70F1B /* CTAPickerView.swift */,
-				2C5C248B1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift */,
-			);
-			name = view;
-			sourceTree = "<group>";
-		};
 		2C1F01561C3BD5540033CED8 /* Cells_view */ = {
 			isa = PBXGroup;
 			children = (
 				2C1F015B1C3CE3770033CED8 /* CTACanvasCell.swift */,
 				2C04045B1C3EC25A00A5B017 /* CTACanvasTextCell.swift */,
+				2C6C68021C350B4400CCE81C /* CTAScollBarCell.swift */,
 				2C1F01571C3BD5960033CED8 /* CTASelectorCell.swift */,
 				2C3097051C3F5F9200D996A4 /* CTASelectorFontCell.swift */,
 				2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */,
 				2C0404671C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift */,
 				2C82FF561C437F58001D927A /* CTASelectorAligmentsCell.swift */,
 				2C7336DE1C43CFCD00E1D511 /* CTASelectorSpacingCell.swift */,
+				2C5C24951C44F5D800A70F1B /* CTASelectorColorsCell.swift */,
+				2C5C248B1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift */,
 				2C5C248D1C44E1C900A70F1B /* CTAVerticalItemCollectionViewCell.swift */,
 				2C5C248F1C44E1EE00A70F1B /* CTAVerticalItemColorCollectionViewCell.swift */,
 				2CD8F4081C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift */,
@@ -459,6 +454,15 @@
 				2C8DD2121C4A34230035C52D /* CTAImageControllerProtocol.swift */,
 			);
 			name = UseCase;
+			sourceTree = "<group>";
+		};
+		2C3AE3ED1C59F5A9004D62B4 /* SocialShareTest */ = {
+			isa = PBXGroup;
+			children = (
+				2C3AE3EE1C59F5CD004D62B4 /* CTASocialTestViewController.swift */,
+				2C3AE3F01C59F5E3004D62B4 /* CTASocial.storyboard */,
+			);
+			name = SocialShareTest;
 			sourceTree = "<group>";
 		};
 		2C3B33BD1C1176D000738166 = {
@@ -608,6 +612,7 @@
 				2C5C24971C44FA5600A70F1B /* CTAColorsManger.swift */,
 				2CF5EB8A1C47B2CF009F0719 /* CTAFontsManager.swift */,
 				2C1312351C59966C00346804 /* CTAUserManager.swift */,
+				2C3AE3EB1C59EC9E004D62B4 /* CTASocialShareManager.swift */,
 			);
 			name = Mangers_model;
 			sourceTree = "<group>";
@@ -615,7 +620,6 @@
 		2C6C67FD1C35082C00CCE81C /* CTAUIKit_view */ = {
 			isa = PBXGroup;
 			children = (
-				2C0404691C3EC5CE00A5B017 /* view */,
 				2C0404641C3EC53900A5B017 /* Layout */,
 				2C6C68001C350A8500CCE81C /* CTASelectorCollectionView.swift */,
 				2C1B2AAB1C3520160053BE5E /* CTASelectorsReuseableView.swift */,
@@ -626,12 +630,18 @@
 		2C7C27DC1C58B5CA00975D4A /* SpecialView_view */ = {
 			isa = PBXGroup;
 			children = (
+				2CAEACA11C323F9700C9F9AC /* TexView.swift */,
 				2C7C27DD1C58B83F00975D4A /* CTABarItemView.swift */,
 				2CAEAC961C323F4300C9F9AC /* CanvasView.swift */,
 				2CAEAC9A1C323F4300C9F9AC /* ContainerView.swift */,
 				2CAEAC991C323F4300C9F9AC /* ContainerTextView.swift */,
 				2CAEAC981C323F4300C9F9AC /* ContainerImgView.swift */,
-				2CAEACA11C323F9700C9F9AC /* TexView.swift */,
+				2C04045F1C3EC2C500A5B017 /* CTAScrollTuneView.swift */,
+				2C0404611C3EC31100A5B017 /* CTARotatorView.swift */,
+				2C3097091C3F7FA800D996A4 /* CTAScrollSelectView.swift */,
+				2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */,
+				2C82FF541C4362FA001D927A /* CTASegementControl.swift */,
+				2C5C24911C44E82100A70F1B /* CTAPickerView.swift */,
 			);
 			name = SpecialView_view;
 			sourceTree = "<group>";
@@ -655,6 +665,7 @@
 		2C81B5A01C58B48800AE16E0 /* Emiaostein */ = {
 			isa = PBXGroup;
 			children = (
+				2C3AE3ED1C59F5A9004D62B4 /* SocialShareTest */,
 				2C32BD471C4C975E00788A97 /* Preview */,
 				2CAEAC8B1C323ED900C9F9AC /* Editor */,
 			);
@@ -707,6 +718,7 @@
 				2CAEAC901C323F2600C9F9AC /* ElementProtocol.swift */,
 				2C0404591C3EBDBF00A5B017 /* CTATabItemFactory.swift */,
 				2CAEAC8F1C323F2600C9F9AC /* EditViewController.swift */,
+				2C0404551C3EBB7A00A5B017 /* CTASelectorsViewController.swift */,
 				2C0404531C3EBB6800A5B017 /* CTACanvasViewController.swift */,
 				2C0404571C3EBBB800A5B017 /* CTATabViewController.swift */,
 			);
@@ -736,6 +748,7 @@
 		3971561C9A2A856DEC31B599 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2C6017BC1C59D84C00EEB804 /* MonkeyKing.framework */,
 				2CD488161C4E53E500D11CB7 /* pop.framework */,
 				2C3E0AE21C2157B800450B2C /* Qiniu.framework */,
 				2C3E0ADE1C2156B200450B2C /* Qiniu.framework */,
@@ -829,7 +842,7 @@
 				TargetAttributes = {
 					2C3B33C51C1176D000738166 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = LKNH59573E;
+						DevelopmentTeam = P36PRJCB4C;
 					};
 					2C3B33D91C1176D000738166 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -873,6 +886,7 @@
 				2CAEAC921C323F2600C9F9AC /* Editor.storyboard in Resources */,
 				2C3CAD2C1C21828200D8DE4B /* 2.jpg in Resources */,
 				2C65B6681C4F514D007B4DEA /* Preview.storyboard in Resources */,
+				2C3AE3F11C59F5E3004D62B4 /* CTASocial.storyboard in Resources */,
 				2C3B33CF1C1176D000738166 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -992,6 +1006,8 @@
 				2CAEAC9D1C323F4300C9F9AC /* ContainerImgView.swift in Sources */,
 				2C9706CD1C1E794B00FA2E17 /* CTAError.swift in Sources */,
 				661D29F61C2AD5E60073FC0E /* CTAUploadController.swift in Sources */,
+				2C3AE3EC1C59EC9E004D62B4 /* CTASocialShareManager.swift in Sources */,
+				2C3AE3EF1C59F5CD004D62B4 /* CTASocialTestViewController.swift in Sources */,
 				2C3B34061C11B4F900738166 /* CTAConstants.swift in Sources */,
 				2CFC658E1C56305500E8ADE7 /* CTAFullPublishesCell.swift in Sources */,
 				66C7BF231C3111D700ADF251 /* CTADomainInfo.swift in Sources */,
@@ -1237,8 +1253,9 @@
 				INFOPLIST_FILE = CuriosTextApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosTextApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "7e02dc05-e38c-4197-a4b8-2e7656981ca6";
 			};
 			name = Debug;
 		};
@@ -1255,8 +1272,9 @@
 				INFOPLIST_FILE = CuriosTextApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosTextApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "7e02dc05-e38c-4197-a4b8-2e7656981ca6";
 			};
 			name = Release;
 		};

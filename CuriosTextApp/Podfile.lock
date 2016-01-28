@@ -25,6 +25,7 @@ PODS:
   - Kingfisher (1.8.5)
   - Locksmith (2.0.2)
   - MJRefresh (3.0.8)
+  - MonkeyKing (0.9)
   - pop (1.0.8)
   - Qiniu (7.0.16):
     - AFNetworking (~> 2.0)
@@ -36,6 +37,7 @@ DEPENDENCIES:
   - Kingfisher (~> 1.8.5)
   - Locksmith
   - MJRefresh (~> 3.0.7)
+  - MonkeyKing (~> 0.9)
   - pop (~> 1.0.8)
   - Qiniu (~> 7.0)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
@@ -56,6 +58,7 @@ SPEC CHECKSUMS:
   Kingfisher: 780fed0fa82692a3bd59d53329ae2b85cdd354a5
   Locksmith: 7f2b68448449a7712348f9a4ed60604c1cc8dfa6
   MJRefresh: fafde8f18f4afd66b434331a9beb67a6c0264056
+  MonkeyKing: a66bc26f506dbc4ab07281bb654ca4712c3c1c57
   pop: bb773ae2c791ca2629de13b347e7a8b450fa6a57
   Qiniu: 51a8702cddc02b50867e10cef99291b9a8a006b1
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
