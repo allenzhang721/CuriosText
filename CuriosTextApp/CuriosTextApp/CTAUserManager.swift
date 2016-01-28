@@ -12,12 +12,15 @@ import SwiftyJSON
 
 class CTAUserManager {
     
+    static let account = "com.botai.curiosText.LatestAccount"
+    static let service = "com.botai.curiosText"
+    
     static private(set) var user: CTAUserModel?
     
     class func save(user: CTAUserModel) -> Bool {
         
         do {
-            try Locksmith.saveData(user.data, forUserAccount: "LatestAccount", inService: "com.botai.curiosText")
+            try Locksmith.saveData(user.data, forUserAccount: account, inService: service)
             CTAUserManager.user = user
             
             return true
@@ -30,7 +33,7 @@ class CTAUserManager {
     
     class func load() -> Bool {
         
-        guard let dic = Locksmith.loadDataForUserAccount("LatestAccount", inService: "com.botai.curiosText") else {
+        guard let dic = Locksmith.loadDataForUserAccount(account, inService: service) else {
             return false
         }
         
@@ -38,5 +41,16 @@ class CTAUserManager {
         let user = CTAUserModel.generateFrom(json)
         CTAUserManager.user = user
         return true
+    }
+    
+    class func logout() -> Bool {
+        
+        do {
+            try Locksmith.deleteDataForUserAccount(account, inService: service)
+            user = nil
+            return true
+        } catch {
+            return false
+        }
     }
 }
