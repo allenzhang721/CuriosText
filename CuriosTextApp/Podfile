@@ -12,6 +12,7 @@ pod 'Kingfisher', '~> 1.8.5'
 pod 'MJRefresh', '~> 3.0.7'
 pod 'pop', '~> 1.0.8'
 pod 'MonkeyKing', '~> 0.9'
+pod 'SMSSDK', '~> 2.0.0'
 
 end
 
