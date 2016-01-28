@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="oFJ-5U-TRY">
-                                <rect key="frame" x="247" y="205" width="106" height="190"/>
+                                <rect key="frame" x="247" y="125" width="106" height="350"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VH5-Ww-4hK">
                                         <rect key="frame" x="0.0" y="0.0" width="106" height="30"/>
@@ -38,6 +38,20 @@
                                         <state key="normal" title="Share Message"/>
                                         <connections>
                                             <action selector="shareMessage:" destination="udY-52-CNF" eventType="touchUpInside" id="Oz4-xv-bPk"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y73-1l-BhO">
+                                        <rect key="frame" x="0.0" y="240" width="106" height="30"/>
+                                        <state key="normal" title="SMS"/>
+                                        <connections>
+                                            <action selector="sms:" destination="udY-52-CNF" eventType="touchUpInside" id="FWJ-7M-kJf"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oYk-nB-nSj">
+                                        <rect key="frame" x="0.0" y="320" width="106" height="30"/>
+                                        <state key="normal" title="verify SMS"/>
+                                        <connections>
+                                            <action selector="verifySMS:" destination="udY-52-CNF" eventType="touchUpInside" id="bJZ-YI-ShE"/>
                                         </connections>
                                     </button>
                                 </subviews>

@@ -20,18 +20,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let weChatAppID = ""
     let weChatAppKey = ""
-    CTASocialShareManager.register(.WeChat, appID: weChatAppID, appKey: weChatAppKey)
+    CTASocialManager.register(.WeChat, appID: weChatAppID, appKey: weChatAppKey)
     
     let weiboAppID = ""
     let weiboAppKey = ""
-    CTASocialShareManager.register(.Weibo, appID: weiboAppID, appKey: weiboAppKey)
+    CTASocialManager.register(.Weibo, appID: weiboAppID, appKey: weiboAppKey)
+    
+    // http://dashboard.mob.com/#/sms/index
+    let smsAppID = "cee2524c26f323f571cf0b53590815bd"
+    let smsAppKey = "f3c8b751ff80"
+    CTASocialManager.register(.SMS, appID: smsAppID, appKey: smsAppKey)
     
     return true
   }
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         
-        if CTASocialShareManager.handleOpenURL(url) {
+        if CTASocialManager.handleOpenURL(url) {
             return true
         }
         

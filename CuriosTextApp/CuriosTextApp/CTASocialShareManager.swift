@@ -11,32 +11,54 @@ import MonkeyKing
 
 typealias CTASocialProtocol = protocol<CTASocialRegisterable, CTASocialOAuthable>
 
-class CTASocialShareManager: CTASocialProtocol {
+class CTASocialManager: CTASocialProtocol {
     
+    typealias SMSCompletionHandler = (result: Bool) -> Void
     typealias SharedCompletionHandler = (result: Bool) -> Void
     typealias OAuthCompletionHandler = (NSDictionary?, NSURLResponse?, NSError?) -> Void
-    typealias Info = (title: String?, description: String?, thumbnail: UIImage?, media: CTASocialShareManager.Media?)
+    typealias Info = (title: String?, description: String?, thumbnail: UIImage?, media: CTASocialManager.Media?)
     
     enum CTASocialSharePlatformType {
-        case WeChat, Weibo
+        case WeChat, Weibo, SMS
+    }
+}
+
+extension CTASocialManager {
+    
+    static func getVerificationCode(phoneNumber: String, zone: String!, completionHandler: SMSCompletionHandler) {
+        
+        SMSSDK.getVerificationCodeByMethod(SMSGetCodeMethod(0), phoneNumber: phoneNumber, zone: zone, customIdentifier: nil) { (error) -> Void in
+            
+            completionHandler(result: error == nil ? true : false)
+        }
+    }
+    
+    static func commitVerificationCode(code: String, phoneNumber: String, zone: String!, completionHandler: SMSCompletionHandler) {
+        
+        SMSSDK.commitVerificationCode(code, phoneNumber: phoneNumber, zone: zone) { (error) -> Void in
+            
+            completionHandler(result: error == nil ? true : false)
+        }
     }
 }
 
 protocol CTASocialRegisterable {
     
-    static func register(platform: CTASocialShareManager.CTASocialSharePlatformType, appID: String, appKey: String)
+    static func register(platform: CTASocialManager.CTASocialSharePlatformType, appID: String, appKey: String)
     static func handleOpenURL(url: NSURL) -> Bool
 }
 
 extension CTASocialRegisterable {
     
-    static func register(platform: CTASocialShareManager.CTASocialSharePlatformType, appID: String, appKey: String) {
+    static func register(platform: CTASocialManager.CTASocialSharePlatformType, appID: String, appKey: String) {
         
         switch platform {
         case .WeChat:
             MonkeyKing.registerAccount(.WeChat(appID: appID, appKey: appKey))
         case .Weibo:
             MonkeyKing.registerAccount(.Weibo(appID: appID, appKey: appKey, redirectURL: ""))
+        case .SMS:
+            SMSSDK.registerApp(appKey, withSecret: appID)
         }
     }
     
@@ -49,7 +71,7 @@ protocol CTASocialShareable {
   
 }
 
-extension CTASocialShareManager: CTASocialShareable {
+extension CTASocialManager: CTASocialShareable {
     
     
     
@@ -74,18 +96,11 @@ extension CTASocialShareManager: CTASocialShareable {
         }
     }
     
-    
-//    
-//    func toMonkeyKingInfo(info: CTASocialShareManager.Info) -> MonkeyKing.Info {
-//        
-//        return (title: info.title, description: info.description, thumbnail: info.thumbnail, media: info.media?.toMonkeyKingMedia())
-//    }
-    
      enum Message {
          enum WeChatSubtype {
-            case Session(info: CTASocialShareManager.Info)
-            case Timeline(info: CTASocialShareManager.Info)
-            case Favorite(info: CTASocialShareManager.Info)
+            case Session(info: CTASocialManager.Info)
+            case Timeline(info: CTASocialManager.Info)
+            case Favorite(info: CTASocialManager.Info)
             
             func toMonkeyKingSubtype() -> MonkeyKing.Message.WeChatSubtype {
                 
@@ -102,10 +117,10 @@ extension CTASocialShareManager: CTASocialShareable {
                 
             }
         }
-        case WeChat(CTASocialShareManager.Message.WeChatSubtype)
+        case WeChat(CTASocialManager.Message.WeChatSubtype)
 
         enum WeiboSubtype {
-            case Default(info: CTASocialShareManager.Info, accessToken: String?)
+            case Default(info: CTASocialManager.Info, accessToken: String?)
             
             func toMonkeyKingSubtype() -> MonkeyKing.Message.WeiboSubtype {
                 
@@ -115,7 +130,7 @@ extension CTASocialShareManager: CTASocialShareable {
                 }
             }
         }
-        case Weibo(CTASocialShareManager.Message.WeiboSubtype)
+        case Weibo(CTASocialManager.Message.WeiboSubtype)
 
         
          func toMonkeyKingMessage() -> MonkeyKing.Message {
@@ -129,7 +144,7 @@ extension CTASocialShareManager: CTASocialShareable {
             }
         }
     }
-    class func shareMessage(message: CTASocialShareManager.Message, completionHandler: CTASocialShareManager.SharedCompletionHandler) {
+    class func shareMessage(message: CTASocialManager.Message, completionHandler: CTASocialManager.SharedCompletionHandler) {
         
         MonkeyKing.shareMessage(message.toMonkeyKingMessage(), completionHandler: completionHandler)
     }
@@ -137,12 +152,12 @@ extension CTASocialShareManager: CTASocialShareable {
 
 protocol CTASocialOAuthable: class {
     
-    static func OAuth(platform: CTASocialShareManager.CTASocialSharePlatformType, completionHandler: CTASocialShareManager.OAuthCompletionHandler)
+    static func OAuth(platform: CTASocialManager.CTASocialSharePlatformType, completionHandler: CTASocialManager.OAuthCompletionHandler)
 }
 
 extension CTASocialOAuthable {
     
-    static func OAuth(platform: CTASocialShareManager.CTASocialSharePlatformType, completionHandler: CTASocialShareManager.OAuthCompletionHandler) {
+    static func OAuth(platform: CTASocialManager.CTASocialSharePlatformType, completionHandler: CTASocialManager.OAuthCompletionHandler) {
         
         switch platform {
         case .WeChat:
@@ -150,6 +165,8 @@ extension CTASocialOAuthable {
             
         case .Weibo:
             MonkeyKing.OAuth(.Weibo, completionHandler: completionHandler)
+        default:
+            ()
         }
     }
 }

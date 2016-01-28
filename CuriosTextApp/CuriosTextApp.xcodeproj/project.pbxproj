@@ -128,6 +128,13 @@
 		2CB380B71C4D0D1F009A681A /* CTAPreviewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB380B61C4D0D1F009A681A /* CTAPreviewLayout.swift */; };
 		2CB380B91C4D20E5009A681A /* CTAPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB380B81C4D20E5009A681A /* CTAPreviewCell.swift */; };
 		2CC1C9411C58D36800844A33 /* CTABarItemsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC1C9401C58D36800844A33 /* CTABarItemsFactory.swift */; };
+		2CC74C921C5A275C00B536C2 /* SMS_SDKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2CC74C8D1C5A275C00B536C2 /* SMS_SDKLocalizable.strings */; };
+		2CC74C931C5A275C00B536C2 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC74C8F1C5A275C00B536C2 /* MOBFoundation.framework */; };
+		2CC74C941C5A275C00B536C2 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC74C901C5A275C00B536C2 /* SMS_SDK.framework */; };
+		2CC74C961C5A27D400B536C2 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC74C951C5A27D400B536C2 /* libz.tbd */; };
+		2CC74C981C5A27F800B536C2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC74C971C5A27F800B536C2 /* MessageUI.framework */; };
+		2CC74C9A1C5A28BA00B536C2 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC74C991C5A28BA00B536C2 /* libicucore.tbd */; };
+		2CC74C9F1C5A2BFA00B536C2 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC74C9E1C5A2BFA00B536C2 /* libstdc++.tbd */; };
 		2CCD94DC1C43B4AA001E5D08 /* CTATextSpacingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */; };
 		2CD08F5D1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD08F5C1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift */; };
 		2CD488131C4E1A4900D11CB7 /* CTAPreviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD488121C4E1A4900D11CB7 /* CTAPreviewManager.swift */; };
@@ -307,6 +314,15 @@
 		2CB380B61C4D0D1F009A681A /* CTAPreviewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewLayout.swift; sourceTree = "<group>"; };
 		2CB380B81C4D20E5009A681A /* CTAPreviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewCell.swift; sourceTree = "<group>"; };
 		2CC1C9401C58D36800844A33 /* CTABarItemsFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTABarItemsFactory.swift; sourceTree = "<group>"; };
+		2CC74C8E1C5A275C00B536C2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SMS_SDKLocalizable.strings; sourceTree = "<group>"; };
+		2CC74C8F1C5A275C00B536C2 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
+		2CC74C901C5A275C00B536C2 /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SMS_SDK.framework; sourceTree = "<group>"; };
+		2CC74C911C5A275C00B536C2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/SMS_SDKLocalizable.strings"; sourceTree = "<group>"; };
+		2CC74C951C5A27D400B536C2 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		2CC74C971C5A27F800B536C2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		2CC74C991C5A28BA00B536C2 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		2CC74C9D1C5A2B6100B536C2 /* CuriosTextApp-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CuriosTextApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		2CC74C9E1C5A2BFA00B536C2 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATextSpacingView.swift; sourceTree = "<group>"; };
 		2CD08F5C1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAnimationPlayNodeManager.swift; sourceTree = "<group>"; };
 		2CD488121C4E1A4900D11CB7 /* CTAPreviewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewManager.swift; sourceTree = "<group>"; };
@@ -345,6 +361,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CC74C9F1C5A2BFA00B536C2 /* libstdc++.tbd in Frameworks */,
+				2CC74C9A1C5A28BA00B536C2 /* libicucore.tbd in Frameworks */,
+				2CC74C961C5A27D400B536C2 /* libz.tbd in Frameworks */,
+				2CC74C981C5A27F800B536C2 /* MessageUI.framework in Frameworks */,
+				2CC74C931C5A275C00B536C2 /* MOBFoundation.framework in Frameworks */,
+				2CC74C941C5A275C00B536C2 /* SMS_SDK.framework in Frameworks */,
 				2C6017BD1C59D84C00EEB804 /* MonkeyKing.framework in Frameworks */,
 				2CD488171C4E53E500D11CB7 /* pop.framework in Frameworks */,
 				2C3E0ADF1C2156B200450B2C /* Qiniu.framework in Frameworks */,
@@ -473,6 +495,7 @@
 				2C3B33E81C1176D000738166 /* CuriosTextAppUITests */,
 				2C3B33C71C1176D000738166 /* Products */,
 				03F562127B9340BB0C7224EC /* Pods */,
+				2CC74C8C1C5A275C00B536C2 /* SMS_SDK */,
 				3971561C9A2A856DEC31B599 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -490,6 +513,7 @@
 		2C3B33C81C1176D000738166 /* CuriosTextApp */ = {
 			isa = PBXGroup;
 			children = (
+				2CC74C9D1C5A2B6100B536C2 /* CuriosTextApp-Bridging-Header.h */,
 				2C81B59E1C58B10600AE16E0 /* Gobal */,
 				2C81B5A01C58B48800AE16E0 /* Emiaostein */,
 				2CAEAC8A1C323EC600C9F9AC /* Deprecated */,
@@ -500,6 +524,7 @@
 				2C3B33F71C11772400738166 /* CTARequest */,
 				2CB322301C4533BE00BD06F5 /* UserPublishes */,
 				2C32BD4A1C4CB56E00788A97 /* UseCase */,
+				2C3AE3ED1C59F5A9004D62B4 /* SocialShareTest */,
 				2C3B33C91C1176D000738166 /* AppDelegate.swift */,
 				2C3B33CB1C1176D000738166 /* ViewController.swift */,
 				2C9043F71C589E0000E62B19 /* CTAAddBarView.swift */,
@@ -665,7 +690,6 @@
 		2C81B5A01C58B48800AE16E0 /* Emiaostein */ = {
 			isa = PBXGroup;
 			children = (
-				2C3AE3ED1C59F5A9004D62B4 /* SocialShareTest */,
 				2C32BD471C4C975E00788A97 /* Preview */,
 				2CAEAC8B1C323ED900C9F9AC /* Editor */,
 			);
@@ -745,9 +769,23 @@
 			name = factory_model;
 			sourceTree = "<group>";
 		};
+		2CC74C8C1C5A275C00B536C2 /* SMS_SDK */ = {
+			isa = PBXGroup;
+			children = (
+				2CC74C8D1C5A275C00B536C2 /* SMS_SDKLocalizable.strings */,
+				2CC74C8F1C5A275C00B536C2 /* MOBFoundation.framework */,
+				2CC74C901C5A275C00B536C2 /* SMS_SDK.framework */,
+			);
+			path = SMS_SDK;
+			sourceTree = "<group>";
+		};
 		3971561C9A2A856DEC31B599 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2CC74C9E1C5A2BFA00B536C2 /* libstdc++.tbd */,
+				2CC74C991C5A28BA00B536C2 /* libicucore.tbd */,
+				2CC74C971C5A27F800B536C2 /* MessageUI.framework */,
+				2CC74C951C5A27D400B536C2 /* libz.tbd */,
 				2C6017BC1C59D84C00EEB804 /* MonkeyKing.framework */,
 				2CD488161C4E53E500D11CB7 /* pop.framework */,
 				2C3E0AE21C2157B800450B2C /* Qiniu.framework */,
@@ -887,6 +925,7 @@
 				2C3CAD2C1C21828200D8DE4B /* 2.jpg in Resources */,
 				2C65B6681C4F514D007B4DEA /* Preview.storyboard in Resources */,
 				2C3AE3F11C59F5E3004D62B4 /* CTASocial.storyboard in Resources */,
+				2CC74C921C5A275C00B536C2 /* SMS_SDKLocalizable.strings in Resources */,
 				2C3B33CF1C1176D000738166 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1154,6 +1193,15 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		2CC74C8D1C5A275C00B536C2 /* SMS_SDKLocalizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2CC74C8E1C5A275C00B536C2 /* en */,
+				2CC74C911C5A275C00B536C2 /* zh-Hans */,
+			);
+			name = SMS_SDKLocalizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -1249,6 +1297,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/SMS_SDK",
 				);
 				INFOPLIST_FILE = CuriosTextApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1256,6 +1305,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7e02dc05-e38c-4197-a4b8-2e7656981ca6";
+				SWIFT_OBJC_BRIDGING_HEADER = "CuriosTextApp-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -1268,6 +1318,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/SMS_SDK",
 				);
 				INFOPLIST_FILE = CuriosTextApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1275,6 +1326,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7e02dc05-e38c-4197-a4b8-2e7656981ca6";
+				SWIFT_OBJC_BRIDGING_HEADER = "CuriosTextApp-Bridging-Header.h";
 			};
 			name = Release;
 		};

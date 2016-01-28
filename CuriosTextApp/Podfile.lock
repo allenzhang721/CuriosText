@@ -30,7 +30,6 @@ PODS:
   - Qiniu (7.0.16):
     - AFNetworking (~> 2.0)
     - HappyDNS (~> 0.2)
-  - SMSSDK (2.0.0)
   - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
@@ -41,7 +40,6 @@ DEPENDENCIES:
   - MonkeyKing (~> 0.9)
   - pop (~> 1.0.8)
   - Qiniu (~> 7.0)
-  - SMSSDK (~> 2.0.0)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
 
 EXTERNAL SOURCES:
@@ -63,7 +61,6 @@ SPEC CHECKSUMS:
   MonkeyKing: a66bc26f506dbc4ab07281bb654ca4712c3c1c57
   pop: bb773ae2c791ca2629de13b347e7a8b450fa6a57
   Qiniu: 51a8702cddc02b50867e10cef99291b9a8a006b1
-  SMSSDK: 3be0004bddcfdc86c305fc96e77d3a724eab1b18
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
 COCOAPODS: 0.39.0
