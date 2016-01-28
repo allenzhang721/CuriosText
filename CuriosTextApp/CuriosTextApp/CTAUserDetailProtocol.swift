@@ -9,20 +9,17 @@
 import UIKit
 
 protocol CTAUserDetailProtocol{
-    var userDetailViewController:CTAUserDetailViewController{ get }
-    var userDetailTransition:CTAPullUserDetailTransition{ get }
     func showUserDetailView(viewUser:CTAUserModel?, loginUserID:String)
 }
 
 extension CTAUserDetailProtocol where Self: UIViewController{
     func showUserDetailView(viewUser:CTAUserModel?, loginUserID:String) {
-        self.userDetailViewController
-        self.userDetailViewController.viewUser = viewUser
-        self.userDetailViewController.loginUserID = loginUserID
-        self.userDetailViewController.transitioningDelegate = self.userDetailTransition
-        self.userDetailViewController.modalPresentationStyle = .Custom
-        self.presentViewController(self.userDetailViewController, animated: true) { () -> Void in
-            self.userDetailViewController.setBackgroundColor()
+        CTAUserDetailViewController.getInstance().viewUser = viewUser
+        CTAUserDetailViewController.getInstance().loginUserID = loginUserID
+        CTAUserDetailViewController.getInstance().transitioningDelegate = CTAPullUserDetailTransition.getInstance()
+        CTAUserDetailViewController.getInstance().modalPresentationStyle = .Custom
+        self.presentViewController(CTAUserDetailViewController.getInstance(), animated: true) { () -> Void in
+            CTAUserDetailViewController.getInstance().setBackgroundColor()
         }
     }
 }
@@ -30,6 +27,15 @@ extension CTAUserDetailProtocol where Self: UIViewController{
 class CTAPullUserDetailTransition: NSObject, UIViewControllerTransitioningDelegate{
     
     var isPersent:Bool = false
+    
+    static var _instance:CTAPullUserDetailTransition?;
+    
+    static func getInstance() -> CTAPullUserDetailTransition{
+        if _instance == nil{
+            _instance = CTAPullUserDetailTransition();
+        }
+        return _instance!
+    }
     
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning?
     {

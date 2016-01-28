@@ -33,6 +33,15 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     
     var loadingImageView:UIImageView?
     
+    static var _instance:CTAUserDetailViewController?;
+    
+    static func getInstance() -> CTAUserDetailViewController{
+        if _instance == nil{
+            _instance = CTAUserDetailViewController();
+        }
+        return _instance!
+    }
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
@@ -106,6 +115,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         self.view.addSubview(self.followCountLabel)
         self.followCountLabel.font = UIFont.systemFontOfSize(18)
         self.followCountLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        self.followCountLabel.text = "0"
         
         self.beFollowLabel = UILabel.init()
         self.view.addSubview(self.beFollowLabel)
@@ -120,6 +130,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         self.view.addSubview(self.beFollowCountLabel)
         self.beFollowCountLabel.font = UIFont.systemFontOfSize(18)
         self.beFollowCountLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        self.beFollowCountLabel.text = "0"
         
         self.userDescTextView = UITextView.init(frame: CGRect.init(x: (self.view.frame.width - 260*rate)/2, y: self.lineImageView.frame.origin.y + 52*rate, width: 260*rate, height: 140*rate))
         self.userDescTextView.editable = false
@@ -164,8 +175,10 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         self.userNikeNameLabel.text = "Curios"
         self.userDescTextView.text  = "To be or not to be, That's a question!"
         self.followButtonView.hidden = true
+        self.followCountLabel.text = "0"
+        self.beFollowCountLabel.text = "0"
     }
-     
+    
     func resetDisView(){
         self.setDefaultView()
         self.fitView()
@@ -175,8 +188,6 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         self.viewUser = nil
         self.userDetailModel = nil
         self.loginUserID = ""
-        self.followCountLabel.text = ""
-        self.beFollowCountLabel.text = ""
     }
     
     func fitView(){
@@ -185,6 +196,14 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
             self.userNikeNameLabel.frame.size.width = self.view.frame.width - 80
         }
         self.userNikeNameLabel.frame.origin.x = (self.view.frame.width - self.userNikeNameLabel.frame.width)/2
+        
+        self.followCountLabel.sizeToFit()
+        self.followCountLabel.frame.origin.x = self.followLabel.frame.origin.x + (self.followLabel.frame.size.width - self.followCountLabel.frame.width)/2
+        self.followCountLabel.frame.origin.y = self.followLabel.frame.origin.y + self.followLabel.frame.height
+        
+        self.beFollowCountLabel.sizeToFit()
+        self.beFollowCountLabel.frame.origin.x = self.beFollowLabel.frame.origin.x + (self.beFollowLabel.frame.width - self.beFollowCountLabel.frame.width)/2
+        self.beFollowCountLabel.frame.origin.y = self.beFollowLabel.frame.origin.y + self.beFollowLabel.frame.height
     }
     
     func loadUserDetail(){
@@ -225,14 +244,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
             self.setFollowButton()
             
             self.followCountLabel.text = self.changeCountToString(followCount)
-            self.followCountLabel.sizeToFit()
-            self.followCountLabel.frame.origin.x = self.followLabel.frame.origin.x + (self.followLabel.frame.size.width - self.followCountLabel.frame.width)/2
-            self.followCountLabel.frame.origin.y = self.followLabel.frame.origin.y + self.followLabel.frame.height
-            
             self.beFollowCountLabel.text = self.changeCountToString(beFollowCount)
-            self.beFollowCountLabel.sizeToFit()
-            self.beFollowCountLabel.frame.origin.x = self.beFollowLabel.frame.origin.x + (self.beFollowLabel.frame.width - self.beFollowCountLabel.frame.width)/2
-            self.beFollowCountLabel.frame.origin.y = self.beFollowLabel.frame.origin.y + self.beFollowLabel.frame.height
             
             let imagePath = CTAFilePath.userFilePath+self.userDetailModel!.userIconURL
             let imageURL = NSURL(string: imagePath)!
@@ -241,8 +253,8 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
             
             self.userNikeNameLabel.text = self.userDetailModel!.nikeName
             self.userDescTextView.text  = self.userDetailModel!.userDesc
-            self.fitView()
         }
+        self.fitView()
     }
     
     func setFollowButton(){
