@@ -84,7 +84,7 @@ extension CTAPublishCellProtocol{
     func getFullVerSpace() -> CGFloat{
         let midY = UIScreen.mainScreen().bounds.height / 2
         let fullSize = self.getFullCellRect(nil , rate: 1)
-        let space = (midY - (50 - fullSize.width / 2))
+        let space = (midY - (60 - fullSize.width / 2))
         return space
     }
     

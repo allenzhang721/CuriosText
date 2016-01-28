@@ -236,8 +236,8 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         if userDetailModel == nil {
             self.followButtonView!.hidden = true
             self.followButton.setTitle("", forState: .Normal)
-            self.followCountLabel.text = ""
-            self.beFollowCountLabel.text = ""
+            self.followCountLabel.text = "0"
+            self.beFollowCountLabel.text = "0"
         }else {
             let followCount = self.userDetailModel!.followCount
             let beFollowCount = self.userDetailModel!.beFollowCount

@@ -41,7 +41,6 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     
     var selectedRect:CGRect?
     var isPersent:Bool = false
-    var publishDetailViewController:CTAPublishDetailViewController?
     
     var userDetail:CTAUserDetailViewController?
     var userDetailTran:CTAPullUserDetailTransition?
@@ -345,16 +344,13 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
             self.selectedPublishID = self.publishModelArray[index].publishID
         }
         if self.selectedPublishID != "" {
-            if self.publishDetailViewController == nil {
-                self.publishDetailViewController = CTAPublishDetailViewController()
-            }
-            self.publishDetailViewController?.setPublishData(self.selectedPublishID, publishModelArray: self.publishModelArray)
-            self.publishDetailViewController?.loginUserID = (self.loginUser != nil ? self.loginUser!.userID : "")
-            self.publishDetailViewController?.viewUser = self.viewUser
-            self.publishDetailViewController?.delegate = self
-            self.publishDetailViewController?.transitioningDelegate = self
-            self.publishDetailViewController?.modalPresentationStyle = .Custom
-            self.presentViewController(self.publishDetailViewController!, animated: true) { () -> Void in
+            CTAPublishDetailViewController.getInstance().setPublishData(self.selectedPublishID, publishModelArray: self.publishModelArray)
+            CTAPublishDetailViewController.getInstance().loginUserID = (self.loginUser != nil ? self.loginUser!.userID : "")
+            CTAPublishDetailViewController.getInstance().viewUser = self.viewUser
+            CTAPublishDetailViewController.getInstance().delegate = self
+            CTAPublishDetailViewController.getInstance().transitioningDelegate = self
+            CTAPublishDetailViewController.getInstance().modalPresentationStyle = .Custom
+            self.presentViewController(CTAPublishDetailViewController.getInstance(), animated: true) { () -> Void in
                 
             }
         }
@@ -479,9 +475,17 @@ extension CTAUserPublishesViewController: UIViewControllerAnimatedTransitioning{
     func animateTransition(transitionContext: UIViewControllerContextTransitioning){
         if isPersent{
             if let toView = transitionContext.viewForKey(UITransitionContextToViewKey){
+                let view = transitionContext.containerView()!
                 var animationView:UIView? = self.getAnimationView()
-                transitionContext.containerView()!.addSubview(animationView!)
-                transitionContext.containerView()!.addSubview(toView)
+                var barView:CTAAddBarView? = CTAAddBarView(frame: CGRect.zero)
+                view.addSubview(animationView!)
+                view.addSubview(barView!)
+                barView!.translatesAutoresizingMaskIntoConstraints = false
+                barView!.heightAnchor.constraintEqualToConstant(30).active = true
+                barView!.widthAnchor.constraintEqualToAnchor(view.widthAnchor, multiplier: 0.8).active = true
+                barView!.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor).active = true
+                barView!.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor).active = true
+                view.addSubview(toView)
                 toView.alpha = 0
                 self.collectionView.hidden = true
                 toView.frame = UIScreen.mainScreen().bounds
@@ -496,6 +500,7 @@ extension CTAUserPublishesViewController: UIViewControllerAnimatedTransitioning{
                                 animationView?.hidden = true
                                 self.clearAnimationView(animationView!)
                                 animationView = nil
+                                barView = nil
                                 toView.alpha = 1
                                 self.collectionView.hidden = false
                                 self.viewToolBar.alpha = 1
