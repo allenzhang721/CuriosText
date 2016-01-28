@@ -10,7 +10,7 @@ import Foundation
 import Locksmith
 import SwiftyJSON
 
-final class CTAUserModel: CTABaseModel, CreateableSecureStorable, GenericPasswordSecureStorable {
+final class CTAUserModel: CTABaseModel {
     
     let userID:String;
     var nikeName: String = "";
@@ -82,7 +82,7 @@ final class CTAUserModel: CTABaseModel, CreateableSecureStorable, GenericPasswor
     }
 }
 
-extension CTAUserModel {
+extension CTAUserModel: CreateableSecureStorable, GenericPasswordSecureStorable {
     
     /// The service to which the type belongs
     var service: String {
