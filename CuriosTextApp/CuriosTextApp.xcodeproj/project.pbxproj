@@ -28,6 +28,8 @@
 		2C2B45AA1C5CBCC8004A4809 /* CTALoginProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B45A91C5CBCC8004A4809 /* CTALoginProtocol.swift */; };
 		2C2B45AC1C5CBCE7004A4809 /* CTAAddBarProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B45AB1C5CBCE7004A4809 /* CTAAddBarProtocol.swift */; };
 		2C2B45AE1C5CBD16004A4809 /* CTAPublishProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B45AD1C5CBD16004A4809 /* CTAPublishProtocol.swift */; };
+		2C2B45B01C5CBED1004A4809 /* LocaleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B45AF1C5CBED1004A4809 /* LocaleHelper.swift */; };
+		2C2B45B21C5CC077004A4809 /* SupportCountryZone in Resources */ = {isa = PBXBuildFile; fileRef = 2C2B45B11C5CC077004A4809 /* SupportCountryZone */; };
 		2C3097061C3F5F9200D996A4 /* CTASelectorFontCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3097051C3F5F9200D996A4 /* CTASelectorFontCell.swift */; };
 		2C30970A1C3F7FA800D996A4 /* CTAScrollSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3097091C3F7FA800D996A4 /* CTAScrollSelectView.swift */; };
 		2C31EB611C451AEE002A4D71 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C31EB601C451AEE002A4D71 /* UIColorExtensions.swift */; };
@@ -211,6 +213,8 @@
 		2C2B45A91C5CBCC8004A4809 /* CTALoginProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTALoginProtocol.swift; sourceTree = "<group>"; };
 		2C2B45AB1C5CBCE7004A4809 /* CTAAddBarProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAddBarProtocol.swift; sourceTree = "<group>"; };
 		2C2B45AD1C5CBD16004A4809 /* CTAPublishProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishProtocol.swift; sourceTree = "<group>"; };
+		2C2B45AF1C5CBED1004A4809 /* LocaleHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleHelper.swift; sourceTree = "<group>"; };
+		2C2B45B11C5CC077004A4809 /* SupportCountryZone */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SupportCountryZone; sourceTree = "<group>"; };
 		2C3097051C3F5F9200D996A4 /* CTASelectorFontCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorFontCell.swift; sourceTree = "<group>"; };
 		2C3097091C3F7FA800D996A4 /* CTAScrollSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAScrollSelectView.swift; sourceTree = "<group>"; };
 		2C31EB601C451AEE002A4D71 /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
@@ -700,6 +704,8 @@
 				2C3CAD0A1C21825100D8DE4B /* CTAIDGenerator.swift */,
 				2C5EA2551C479CE000DCEE7B /* Print.swift */,
 				2CAEAC8C1C323F2600C9F9AC /* Dynamic.swift */,
+				2C2B45AF1C5CBED1004A4809 /* LocaleHelper.swift */,
+				2C2B45B11C5CC077004A4809 /* SupportCountryZone */,
 				2C6C67FD1C35082C00CCE81C /* CTAUIKit_view */,
 				2C5C24991C44FA8B00A70F1B /* Mangers_model */,
 				2C3CAD071C21825100D8DE4B /* Document_model */,
@@ -945,6 +951,7 @@
 				2C3B33D11C1176D000738166 /* Assets.xcassets in Resources */,
 				2C567A691C5CBAF200F11369 /* Countries.plist in Resources */,
 				2CAEAC921C323F2600C9F9AC /* Editor.storyboard in Resources */,
+				2C2B45B21C5CC077004A4809 /* SupportCountryZone in Resources */,
 				2C3CAD2C1C21828200D8DE4B /* 2.jpg in Resources */,
 				2C65B6681C4F514D007B4DEA /* Preview.storyboard in Resources */,
 				2C3AE3F11C59F5E3004D62B4 /* CTASocial.storyboard in Resources */,
@@ -1066,6 +1073,7 @@
 				2C3CAD231C21826800D8DE4B /* CTAContainerLayer.swift in Sources */,
 				2CB380AF1C4CF86D009A681A /* CTAPreviewProtocol.swift in Sources */,
 				2CD488151C4E1A7300D11CB7 /* CTAPreviewPlay.swift in Sources */,
+				2C2B45B01C5CBED1004A4809 /* LocaleHelper.swift in Sources */,
 				2C3B33FE1C117C8000738166 /* CTANetworkConig.swift in Sources */,
 				2CAEAC9D1C323F4300C9F9AC /* ContainerImgView.swift in Sources */,
 				2C247FEB1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift in Sources */,
