@@ -52,7 +52,14 @@ class CTABarItemsFactory {
             selectedImage: CTAStyleKit.imageOfColorBarItemSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: "Color")
+            title: "Color"),
+        
+        CTABarItem(
+            normalImage: CTAStyleKit.imageOfAnimationBarItemNormal,
+            selectedImage: CTAStyleKit.imageOfAnimationBarItemSelected,
+            normalColor: CTAStyleKit.normalColor,
+            selectedColor: CTAStyleKit.selectedColor,
+            title: "Animation")
     
     ]
 }

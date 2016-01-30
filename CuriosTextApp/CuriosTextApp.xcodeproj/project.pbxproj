@@ -23,6 +23,8 @@
 		2C1F01581C3BD5960033CED8 /* CTASelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1F01571C3BD5960033CED8 /* CTASelectorCell.swift */; };
 		2C1F015A1C3BD7400033CED8 /* CTASelectorSizeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */; };
 		2C1F015C1C3CE3770033CED8 /* CTACanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1F015B1C3CE3770033CED8 /* CTACanvasCell.swift */; };
+		2C247FE91C5CA10E0069CFFC /* CTASelectorAnimationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C247FE81C5CA10E0069CFFC /* CTASelectorAnimationCell.swift */; };
+		2C247FEB1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C247FEA1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift */; };
 		2C3097061C3F5F9200D996A4 /* CTASelectorFontCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3097051C3F5F9200D996A4 /* CTASelectorFontCell.swift */; };
 		2C30970A1C3F7FA800D996A4 /* CTAScrollSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3097091C3F7FA800D996A4 /* CTAScrollSelectView.swift */; };
 		2C31EB611C451AEE002A4D71 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C31EB601C451AEE002A4D71 /* UIColorExtensions.swift */; };
@@ -66,6 +68,7 @@
 		2C3E0ADF1C2156B200450B2C /* Qiniu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3E0ADE1C2156B200450B2C /* Qiniu.framework */; };
 		2C3E0AE11C21578400450B2C /* UploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3E0AE01C21578400450B2C /* UploadTests.swift */; };
 		2C3E0AE31C2157B800450B2C /* Qiniu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3E0AE21C2157B800450B2C /* Qiniu.framework */; };
+		2C5378381C5C71BB004BCF40 /* CTATabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5378371C5C71BB004BCF40 /* CTATabView.swift */; };
 		2C5ACC121C439E8100B96CCD /* CTAStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5ACC111C439E8100B96CCD /* CTAStyleKit.swift */; };
 		2C5C248C1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C248B1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift */; };
 		2C5C248E1C44E1C900A70F1B /* CTAVerticalItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C248D1C44E1C900A70F1B /* CTAVerticalItemCollectionViewCell.swift */; };
@@ -199,6 +202,8 @@
 		2C1F01571C3BD5960033CED8 /* CTASelectorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorCell.swift; sourceTree = "<group>"; };
 		2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorSizeCell.swift; sourceTree = "<group>"; };
 		2C1F015B1C3CE3770033CED8 /* CTACanvasCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACanvasCell.swift; sourceTree = "<group>"; };
+		2C247FE81C5CA10E0069CFFC /* CTASelectorAnimationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorAnimationCell.swift; sourceTree = "<group>"; };
+		2C247FEA1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTALabelCollectionViewCell.swift; sourceTree = "<group>"; };
 		2C3097051C3F5F9200D996A4 /* CTASelectorFontCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorFontCell.swift; sourceTree = "<group>"; };
 		2C3097091C3F7FA800D996A4 /* CTAScrollSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAScrollSelectView.swift; sourceTree = "<group>"; };
 		2C31EB601C451AEE002A4D71 /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
@@ -251,6 +256,7 @@
 		2C3E0ADE1C2156B200450B2C /* Qiniu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qiniu.framework; path = "Pods/../build/Debug-iphoneos/Qiniu.framework"; sourceTree = "<group>"; };
 		2C3E0AE01C21578400450B2C /* UploadTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadTests.swift; sourceTree = "<group>"; };
 		2C3E0AE21C2157B800450B2C /* Qiniu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qiniu.framework; path = "Pods/../build/Debug-iphoneos/Qiniu.framework"; sourceTree = "<group>"; };
+		2C5378371C5C71BB004BCF40 /* CTATabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATabView.swift; sourceTree = "<group>"; };
 		2C5ACC111C439E8100B96CCD /* CTAStyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAStyleKit.swift; sourceTree = "<group>"; };
 		2C5C248B1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorVerticalCell.swift; sourceTree = "<group>"; };
 		2C5C248D1C44E1C900A70F1B /* CTAVerticalItemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAVerticalItemCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -420,6 +426,7 @@
 				2C1F015B1C3CE3770033CED8 /* CTACanvasCell.swift */,
 				2C04045B1C3EC25A00A5B017 /* CTACanvasTextCell.swift */,
 				2C6C68021C350B4400CCE81C /* CTAScollBarCell.swift */,
+				2C247FEA1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift */,
 				2C1F01571C3BD5960033CED8 /* CTASelectorCell.swift */,
 				2C3097051C3F5F9200D996A4 /* CTASelectorFontCell.swift */,
 				2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */,
@@ -427,6 +434,7 @@
 				2C82FF561C437F58001D927A /* CTASelectorAligmentsCell.swift */,
 				2C7336DE1C43CFCD00E1D511 /* CTASelectorSpacingCell.swift */,
 				2C5C24951C44F5D800A70F1B /* CTASelectorColorsCell.swift */,
+				2C247FE81C5CA10E0069CFFC /* CTASelectorAnimationCell.swift */,
 				2C5C248B1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift */,
 				2C5C248D1C44E1C900A70F1B /* CTAVerticalItemCollectionViewCell.swift */,
 				2C5C248F1C44E1EE00A70F1B /* CTAVerticalItemColorCollectionViewCell.swift */,
@@ -667,6 +675,7 @@
 				2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */,
 				2C82FF541C4362FA001D927A /* CTASegementControl.swift */,
 				2C5C24911C44E82100A70F1B /* CTAPickerView.swift */,
+				2C5378371C5C71BB004BCF40 /* CTATabView.swift */,
 			);
 			name = SpecialView_view;
 			sourceTree = "<group>";
@@ -1016,6 +1025,7 @@
 				2C5C24981C44FA5600A70F1B /* CTAColorsManger.swift in Sources */,
 				6628C7031C200C11007F873C /* CTAViewUserModel.swift in Sources */,
 				2C31EB631C452597002A4D71 /* SwiftHEXColors.swift in Sources */,
+				2C247FE91C5CA10E0069CFFC /* CTASelectorAnimationCell.swift in Sources */,
 				2C8DD2131C4A34230035C52D /* CTAImageControllerProtocol.swift in Sources */,
 				2C7A95231C3A51F1005B0EAE /* CTALoginViewController.swift in Sources */,
 				2C5ACC121C439E8100B96CCD /* CTAStyleKit.swift in Sources */,
@@ -1043,6 +1053,7 @@
 				2CD488151C4E1A7300D11CB7 /* CTAPreviewPlay.swift in Sources */,
 				2C3B33FE1C117C8000738166 /* CTANetworkConig.swift in Sources */,
 				2CAEAC9D1C323F4300C9F9AC /* ContainerImgView.swift in Sources */,
+				2C247FEB1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift in Sources */,
 				2C9706CD1C1E794B00FA2E17 /* CTAError.swift in Sources */,
 				661D29F61C2AD5E60073FC0E /* CTAUploadController.swift in Sources */,
 				2C3AE3EC1C59EC9E004D62B4 /* CTASocialShareManager.swift in Sources */,
@@ -1117,6 +1128,7 @@
 				2C1F01581C3BD5960033CED8 /* CTASelectorCell.swift in Sources */,
 				2C7A959F1C3A6A4F005B0EAE /* CTAPageControllers.swift in Sources */,
 				2CB322321C4533E200BD06F5 /* CTAPublishesCell.swift in Sources */,
+				2C5378381C5C71BB004BCF40 /* CTATabView.swift in Sources */,
 				2C7C27DE1C58B83F00975D4A /* CTABarItemView.swift in Sources */,
 				6667FF661C327ADE004CDBDB /* CTAUploadAction.swift in Sources */,
 				2C7A95211C3A51D6005B0EAE /* CTAUserInfoViewController.swift in Sources */,

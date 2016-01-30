@@ -17,6 +17,11 @@ class CTASelectorTabItem {
     }
 }
 
+enum CTASelectorType: String {
+    
+    case Fonts, Size, Rotator, Aligments, TextSpacing, Colors, Animation
+}
+
 final class CTATabItemFactory {
     
     static let shareInstance = CTATabItemFactory()
@@ -24,7 +29,7 @@ final class CTATabItemFactory {
    let textTabItems: [CTATabItem] = {
         
         var items = [CTATabItem]()
-        let count = 6
+        let count = 7
         for i in 0..<count {
             var item: CTASelectorTabItem
             switch i {
@@ -41,6 +46,8 @@ final class CTATabItemFactory {
                 item = CTASelectorTabItem(type: .TextSpacing)
             case 5:
                 item = CTASelectorTabItem(type: .Colors)
+            case 6:
+                item = CTASelectorTabItem(type: .Animation)
             default:
                 item = CTASelectorTabItem(type: .Size)
             }

@@ -10,6 +10,7 @@ import UIKit
 
 protocol CTASelectorsViewControllerDataSource: class {
     func selectorsViewControllerContainer(viewcontroller: CTASelectorsViewController) -> ContainerVMProtocol?
+//    func selectorsViewControllerAnimation(ViewController: CTASelectorsViewController) -> 
 }
 
 protocol CTASelectorable: class {
@@ -47,6 +48,7 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
         case .Aligments: return "aligmentsChanged:"
         case .TextSpacing: return "textSpacingChanged:"
         case .Colors: return "indexPathOfColorChanged:"
+        case .Animation: return "animationChanged:"
         }
     }
 
@@ -262,5 +264,9 @@ extension CTASelectorsViewController {
             return
         }
         delegate?.colorDidChanged(colorItem)
+    }
+    
+    func animationChanged(sender: AnyObject) {
+        
     }
 }
