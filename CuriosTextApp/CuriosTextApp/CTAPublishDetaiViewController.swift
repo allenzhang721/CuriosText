@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import Kingfisher
 
-class CTAPublishDetailViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTAUserDetailProtocol{
+class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
 
     var viewUser:CTAUserModel?
     var loginUserID:String = ""
@@ -22,11 +21,9 @@ class CTAPublishDetailViewController: UIViewController, CTAImageControllerProtoc
     var previousFullCell:CTAFullPublishesCell!
     var fullCellArray:Array<CTAFullPublishesCell> = []
     
-    var userIconImage:UIImageView!
-    var userNikenameLabel:UILabel!
-    var shareButton:UIButton!
-    var rebuildButton:UIButton!
-    var likeButton:UIButton!
+    var userIconImage:UIImageView = UIImageView()
+    var userNikenameLabel:UILabel = UILabel()
+    var likeButton:UIButton = UIButton()
     
     var isLoading:Bool = false
     var isLoadingFirstData = false
@@ -106,69 +103,18 @@ class CTAPublishDetailViewController: UIViewController, CTAImageControllerProtoc
         self.previousFullCell.animationEnable = true
         self.previousFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
         
-        self.rebuildButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 15, height: 20))
-        self.rebuildButton.setImage(UIImage.init(named: "rebuild-button"), forState: .Normal)
-        self.rebuildButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2 + fullSize.height/2 + 44*self.getVerRate())
-        self.view.addSubview(self.rebuildButton)
-        
-        self.likeButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 21, height: 20))
-        self.likeButton.setImage(UIImage.init(named: "like-button"), forState: .Normal)
-        self.likeButton.setImage(UIImage.init(named: "like-selected-button"), forState: .Selected)
-        self.likeButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 + 96*self.getHorRate(),y: UIScreen.mainScreen().bounds.height/2 + fullSize.height/2 + 44*self.getVerRate())
-        self.view.addSubview(self.likeButton)
-        
-        self.shareButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 15, height: 20))
-        self.shareButton.setImage(UIImage.init(named: "share-button"), forState: .Normal)
-        self.shareButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 96*self.getHorRate(), y: UIScreen.mainScreen().bounds.height/2 + fullSize.height/2 + 44*self.getVerRate())
-        self.view.addSubview(self.shareButton)
-        
-        self.userIconImage = UIImageView.init(frame: CGRect.init(x: UIScreen.mainScreen().bounds.width/2, y: 9, width: 60 * self.getHorRate(), height: 60 * self.getHorRate()));
-        self.userIconImage.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2 - fullSize.height/2 - 80 * self.getVerRate())
-        self.cropImageCircle(self.userIconImage)
-        self.userNikenameLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 100, height: 25))
-        self.userNikenameLabel.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2 - fullSize.height/2 - 25 * self.getVerRate())
-        self.userNikenameLabel.font = UIFont.systemFontOfSize(18)
-        self.userNikenameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        self.view.addSubview(self.userIconImage)
-        self.view.addSubview(self.userNikenameLabel)
-        
+        self.initPublishSubView(self.currentFullCell.frame, horRate: self.getHorRate())
+        self.initAddBarView()
         let pan = UIPanGestureRecognizer(target: self, action: "viewPanHandler:")
         self.view.addGestureRecognizer(pan)
         
         let tap = UITapGestureRecognizer(target: self, action: "viewBackHandler:")
         self.view.addGestureRecognizer(tap)
-        
-        self.userIconImage.userInteractionEnabled = true
-        let iconTap = UITapGestureRecognizer(target: self, action: "userIconClick:")
-        self.userIconImage.addGestureRecognizer(iconTap)
-        self.shareButton.addTarget(self, action: "shareButtonClick:", forControlEvents: .TouchUpInside)
-        self.rebuildButton.addTarget(self, action: "reBuildButtonClick:", forControlEvents: .TouchUpInside)
-        self.likeButton.addTarget(self, action: "likeButtonClick:", forControlEvents: .TouchUpInside)
-        
-        let barView = CTAAddBarView(frame: CGRect.zero)
-        view.addSubview(barView)
-        barView.translatesAutoresizingMaskIntoConstraints = false
-        barView.heightAnchor.constraintEqualToConstant(30).active = true
-        barView.widthAnchor.constraintEqualToAnchor(view.widthAnchor, multiplier: 0.8).active = true
-        barView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor).active = true
-        barView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor).active = true
     }
     
     func reloadView(){
         if self.viewUser != nil {
-            self.userNikenameLabel.text = self.viewUser?.nikeName
-            self.userNikenameLabel.sizeToFit()
-            let maxWidth = UIScreen.mainScreen().bounds.width - 100
-            var labelWidth = self.userNikenameLabel.frame.width
-            if self.userNikenameLabel.frame.width > maxWidth {
-                labelWidth = maxWidth
-            }
-            self.userNikenameLabel.frame.size.width = labelWidth
-            self.userNikenameLabel.frame.origin.x = (UIScreen.mainScreen().bounds.width - labelWidth)/2
-            let imagePath = CTAFilePath.userFilePath+self.viewUser!.userIconURL
-            let imageURL = NSURL(string: imagePath)!
-            self.userIconImage.kf_showIndicatorWhenLoading = true
-            self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: UIImage.init(named: "default-usericon"), optionsInfo: [.Transition(ImageTransition.Fade(1))])
+            self.changeUserView(self.viewUser!)
         }
         self.loadPublishCell()
     }
@@ -247,6 +193,8 @@ class CTAPublishDetailViewController: UIViewController, CTAImageControllerProtoc
         self.currentFullCell!.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2)
         self.currentFullCell!.alpha = 1.0
         self.currentFullCell!.playAnimation()
+        
+        self.setLikeButtonStyle(self.currentFullCell.publishModel)
     }
     
     func getNextEnableCell() -> CTAFullPublishesCell? {
@@ -737,11 +685,13 @@ class CTAPublishDetailViewController: UIViewController, CTAImageControllerProtoc
     }
     
     func changeViewAlpha(alpha:CGFloat) {
-        self.userIconImage.alpha = alpha
-        self.userNikenameLabel.alpha = alpha
-        self.shareButton.alpha = alpha
-        self.rebuildButton.alpha = alpha
-        self.likeButton.alpha = alpha
+        let subViews = self.view.subviews
+        for var i=0; i<subViews.count; i++ {
+            let view = subViews[i]
+            if !(view is CTAFullPublishesCell) && !(view is CTAAddBarView) {
+                view.alpha = alpha
+            }
+        }
     }
     
     func viewVerComplete(newLocation:CGPoint){
@@ -873,38 +823,20 @@ class CTAPublishDetailViewController: UIViewController, CTAImageControllerProtoc
     }
     
     func viewBackHandler(sender: UIPanGestureRecognizer) {
-        var pt = sender.locationInView(self.currentFullCell)
-        if !self.currentFullCell.pointInside(pt, withEvent: nil){
-            pt = sender.locationInView(self.userIconImage)
-            if !self.userIconImage.pointInside(pt, withEvent: nil){
-                pt = sender.locationInView(self.userNikenameLabel)
-                if !self.userNikenameLabel.pointInside(pt, withEvent: nil){
-                    pt = sender.locationInView(self.view)
-                    let rect = CGRect.init(x: self.shareButton!.frame.origin.x - 5, y: self.shareButton!.frame.origin.y - 5, width: self.likeButton!.frame.origin.x + self.likeButton!.frame.width - self.shareButton!.frame.origin.x + 10, height: self.shareButton!.frame.height + 10)
-                    if !rect.contains(pt){
-                        self.currentCenter = self.currentFullCell.center
-                        self.setVerCellCenter()
-                        self.verPanAnimation(500.00)
-                    }
-                }
+        var isHave:Bool = false
+        let subViews = self.view.subviews
+        for var i=0; i<subViews.count; i++ {
+            let view = subViews[i]
+            let pt = sender.locationInView(view)
+            if view.pointInside(pt, withEvent: nil){
+                isHave = true
             }
         }
-    }
-    
-    func userIconClick(sender: UIPanGestureRecognizer) {
-        self.showUserDetailView(self.viewUser, loginUserID: "08698b06271f442099d7943150f8eafe")
-    }
-    
-    func shareButtonClick(sender: UIButton){
-        print("share button click")
-    }
-    
-    func reBuildButtonClick(sender: UIButton){
-        print("rebuild button click")
-    }
-    
-    func likeButtonClick(sender: UIButton){
-        print("like button click")
+        if !isHave {
+            self.currentCenter = self.currentFullCell.center
+            self.setVerCellCenter()
+            self.verPanAnimation(500.00)
+        }
     }
 }
 
@@ -922,4 +854,35 @@ enum CTAPanHorDirection{
 
 enum CTAPanVerDirection{
     case Change, Reset
+}
+
+extension CTAPublishDetailViewController: CTAPublishProtocol{
+    
+    func likeButtonClick(sender: UIButton){
+        if let publishModel = self.currentFullCell.publishModel{
+            self.likeHandler(self.loginUserID, publishModel: publishModel)
+        }
+    }
+    
+    func shareButtonClick(sender: UIButton){
+        if let publishModel = self.currentFullCell.publishModel{
+            self.shareHandler(self.loginUserID, publishModel: publishModel)
+        }
+    }
+    
+    func rebuildButtonClick(sender: UIButton){
+        if let publishModel = self.currentFullCell.publishModel{
+            self.rebuildHandler(self.loginUserID, publishModel: publishModel)
+        }
+    }
+    
+    func userIconClick(sender: UIPanGestureRecognizer) {
+        self.showUserDetailHandler(self.viewUser, loginUserID: self.loginUserID)
+    }
+}
+
+extension CTAPublishDetailViewController: CTAAddBarProtocol{
+    func addBarViewClick(sender: UIPanGestureRecognizer) {
+        self.addPublishHandler()
+    }
 }

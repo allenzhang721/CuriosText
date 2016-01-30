@@ -44,13 +44,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     }
     
     func reloadCell(){
-        let size = CGSize.init(width: self.frame.width, height: self.frame.height)
-        let rect = CGRectMake(0, 0, size.width, size.height)
-        UIGraphicsBeginImageContextWithOptions(size, false, 0)
-        UIColor.whiteColor().setFill()
-        UIRectFill(rect)
-        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        let image = self.getDefaultIcon(self.bounds)
         if publishModel != nil {
             let imagePath = CTAFilePath.publishFilePath+self.publishModel!.publishIconURL
             let imageURL = NSURL(string: imagePath)!

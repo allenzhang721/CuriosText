@@ -31,7 +31,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     var loginUserID:String = ""
     var userDetailModel:CTAViewUserModel?
     
-    var loadingImageView:UIImageView?
+    var loadingImageView:UIImageView? = UIImageView()
     
     static var _instance:CTAUserDetailViewController?;
     
@@ -182,9 +182,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     func resetDisView(){
         self.setDefaultView()
         self.fitView()
-        if self.loadingImageView != nil {
-            self.hideLoadingView(self.loadingImageView!)
-        }
+        self.hideLoadingView()
         self.viewUser = nil
         self.userDetailModel = nil
         self.loginUserID = ""
@@ -216,20 +214,13 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
                 self.userDetailModel = nil
             }
             self.setViewByDetailUser()
-            self.hideLoadingHandler()
+            self.hideLoadingView()
         }
     }
     
     func showLoadingHandle(){
-        if self.loadingImageView == nil {
-            let rect = CGRect.init(x: self.followButtonView.frame.origin.x + self.followButtonView.frame.width/2 - 20, y: self.followButtonView.frame.origin.y + self.followButtonView.frame.height/2 - 20, width: 40, height: 40)
-            self.loadingImageView = UIImageView.init(frame: rect)
-        }
-        self.showLoadingView(self.loadingImageView!, superView: self.view)
-    }
-    
-    func hideLoadingHandler(){
-        self.hideLoadingView(self.loadingImageView!)
+        self.loadingImageView!.frame = CGRect.init(x: self.followButtonView.frame.origin.x + self.followButtonView.frame.width/2 - 20, y: self.followButtonView.frame.origin.y + self.followButtonView.frame.height/2 - 20, width: 40, height: 40)
+        self.showLoadingView()
     }
     
     func setViewByDetailUser(){
@@ -263,13 +254,17 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         var buttonLabel:String = ""
         switch  relationType{
         case -1:
-            self.followButtonView.hidden = true;
+            self.followButtonView.hidden = true
         case 0, 3:
-            buttonLabel = NSLocalizedString("FollowButtonLabel", comment: "")
+            if self.loginUserID == "" {
+               self.followButtonView.hidden = true
+            }else {
+               buttonLabel = NSLocalizedString("FollowButtonLabel", comment: "")
+            }
         case 1, 5:
             buttonLabel = NSLocalizedString("UnFollowButtonLabel", comment: "")
         case 2, 4, 6:
-            self.followButtonView.hidden = true;
+            self.followButtonView.hidden = true
         default:
             buttonLabel = ""
         }
@@ -381,7 +376,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
                         self.setViewByDetailUser()
                     }
                     self.followButtonView!.hidden = false
-                    self.hideLoadingHandler()
+                    self.hideLoadingView()
                 }
             case 1, 5:
                 self.followButtonView!.hidden = true
@@ -393,7 +388,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
                         self.setViewByDetailUser()
                     }
                     self.followButtonView!.hidden = false
-                    self.hideLoadingHandler()
+                    self.hideLoadingView()
                 }
             default:
                 break

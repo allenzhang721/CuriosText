@@ -10,7 +10,7 @@ import UIKit
 import Kingfisher
 import MJRefresh
 
-class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtocol, CTALoadingProtocol, CTAPublishCellProtocol, CTAPublishDetailDelegate, CTAUserDetailProtocol{
+class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTAPublishDetailDelegate, CTAUserDetailProtocol{
     
     var viewUser:CTAUserModel?
     var loginUser:CTAUserModel?
@@ -60,19 +60,25 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         // Do any additional setup after loading the view.
         self.initCollectionView();
         self.initViewNavigateBar();
-        view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.whiteColor()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if isDisAppear{
+            if viewUser == nil {
+                self.isLoginUser = true
+            }else {
+                self.isLoginUser = false
+            }
             self.loadLocalUserModel()
             if loginUser != nil {
-                if viewUser == nil {
+                if self.isLoginUser {
                     viewUser = loginUser
-                    self.isLoginUser = true
                 }
                 self.setViewNavigateBar()
+            }else {
+                self.setNavigateButton()
             }
         }
     }
@@ -122,7 +128,6 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     
         let freshIcon1:UIImage = UIImage.init(named: "fresh-icon-1")!
         
-        
         self.headerFresh = MJRefreshGifHeader.init(refreshingTarget: self, refreshingAction: "loadFirstData")
         self.headerFresh.setImages([freshIcon1], forState: .Idle)
         self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Pulling)
@@ -141,13 +146,18 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     }
     
     func loadLocalUserModel(){
-        self.loginUser = CTAUserModel.init(userID: "ae7ca2d8590f4709ad73286920fa522f", nikeName: "喵萌君", userDesc: "美丽俏佳人231房间打开辣椒快乐附近的咖喱封疆大吏卡附近的克拉房间里放入破饿哇减肥fjdklajfkdljwofjdklafjdk打卡啦放假啦z", userIconURL: "5416b04634fb4d0daed0e9f8ce10801d/icon.jpg", sex: 1)
+        if CTAUserManager.load(){
+            self.loginUser = CTAUserManager.user
+        }else {
+            self.loginUser = nil
+        }
     }
     
     func initViewNavigateBar(){
         self.userHeaderView = UIView.init(frame: CGRectMake(62,0,self.view.frame.size.width-124, 44))
-        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (self.userHeaderView.frame.width-25)/2, y: 9, width: 26, height: 26));
+        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (self.userHeaderView.frame.width-26)/2, y: 9, width: 26, height: 26));
         self.cropImageCircle(self.userIconImage)
+        self.userIconImage.image = UIImage(named: "default-usericon")
         self.userNikenameLabel = UILabel.init(frame: CGRect.init(x: (self.userHeaderView.frame.width-100)/2, y: 14, width: 100, height: 16))
         self.userNikenameLabel.font = UIFont.systemFontOfSize(12)
         self.userNikenameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
@@ -172,7 +182,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
     }
     
-    func setViewNavigateBar(){
+    func setNavigateButton(){
         if self.isLoginUser {
             self.settingButton.hidden = false
             self.homeViewButton.hidden = false
@@ -182,6 +192,10 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
             self.homeViewButton.hidden = true
             self.backButton.hidden = false
         }
+    }
+    
+    func setViewNavigateBar(){
+        self.setNavigateButton()
         self.userNikenameLabel.text = self.viewUser?.nikeName
         self.userNikenameLabel.sizeToFit()
         let maxWidth = self.userHeaderView.frame.width - 30
@@ -208,7 +222,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         
         let vc = UIViewController()
         vc.view.backgroundColor = UIColor.darkGrayColor()
-        presentViewController(vc, animated: true, completion: {
+        self.presentViewController(vc, animated: true, completion: {
             vc.dismissViewControllerAnimated(true, completion: nil)
         })
     }
@@ -233,7 +247,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     
     
     func loadUserPublishes(start:Int, size:Int = 20){
-        if self.isLoading{
+        if self.isLoading || self.loginUser == nil{
             self.freshComplete();
             return
         }
@@ -581,6 +595,12 @@ extension CTAUserPublishesViewController: UIViewControllerAnimatedTransitioning{
             cellView = nil;
         }
         animationView.removeFromSuperview()
+    }
+}
+
+extension CTAUserPublishesViewController:CTALoadingProtocol{
+    var loadingImageView:UIImageView?{
+        return nil
     }
 }
 

@@ -12,3 +12,8 @@
 "Thousand" = "K";
 "Million" = "M";
 "Billion" = "B";
+"LoginLabel" = "Welcome to Curios";
+"CountryLabel" = "Country";
+"PhonePlaceholder" = "Mobile number";
+"PasswordLabel" = "Password";
+"PasswordPlaceholder" = "Enter password";

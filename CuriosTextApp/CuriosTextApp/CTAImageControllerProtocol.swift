@@ -12,6 +12,7 @@ protocol CTAImageControllerProtocol{
     func cropImageCircle(imageView:UIView)
     func cropImageRound(imageView:UIView)
     func addImageShadow(imageView:UIView)
+    func getDefaultIcon(size:CGRect) -> UIImage
 }
 
 extension CTAImageControllerProtocol{
@@ -36,5 +37,17 @@ extension CTAImageControllerProtocol{
         imageView.layer.shadowOffset = CGSize(width: 0, height: 10)
         imageView.layer.shadowOpacity = 0.4
         imageView.layer.shadowRadius = 5
+    }
+    
+    func getDefaultIcon(rect:CGRect) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
+        UIColor.whiteColor().setFill()
+        UIRectFill(rect)
+        let iconImage = UIImage(named: "defaultpublish-icon")
+        iconImage?.drawInRect(CGRect(x: (rect.size.width - 50)/2, y: (rect.size.height - 52)/2, width: 50, height: 52), blendMode: .Normal, alpha: 1.0)
+        
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image;
     }
 }

@@ -15,3 +15,8 @@
 "UnFollowButtonLabel" = "取消关注";
 "TenThousand" = "万";
 "HundredMillion" = "亿";
+"LoginLabel" = "欢迎使用奇思";
+"CountryLabel" = "国家/地区";
+"PhonePlaceholder" = "请填写手机号码";
+"PasswordLabel" = "密码";
+"PasswordPlaceholder" = "请填写密码";
