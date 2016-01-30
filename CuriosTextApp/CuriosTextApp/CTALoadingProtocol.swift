@@ -9,24 +9,30 @@
 import UIKit
 
 protocol CTALoadingProtocol{
-    func showLoadingView(loadingImageView:UIImageView, superView:UIView)
-    func hideLoadingView(loadingImageView:UIImageView)
+    var loadingImageView:UIImageView?{get}
+    func showLoadingView()
+    func hideLoadingView()
     func getLoadingImages() -> [UIImage]
 }
 
-extension CTALoadingProtocol{
+extension CTALoadingProtocol where Self: UIViewController{
     
-    func showLoadingView(loadingImageView:UIImageView, superView:UIView){
-        loadingImageView.animationImages = self.getLoadingImages()
-        loadingImageView.animationDuration = 1.0
-        loadingImageView.animationRepeatCount = 0
-        superView.addSubview(loadingImageView)
-        loadingImageView.startAnimating()
+    func showLoadingView(){
+        if self.loadingImageView != nil {
+            self.loadingImageView!.animationImages = self.getLoadingImages()
+            self.loadingImageView!.animationDuration = 1.0
+            self.loadingImageView!.animationRepeatCount = 0
+            self.view.addSubview(self.loadingImageView!)
+            self.loadingImageView!.startAnimating()
+        }
     }
     
-    func hideLoadingView(loadingImageView:UIImageView){
-        loadingImageView.stopAnimating()
-        loadingImageView.removeFromSuperview()
+    func hideLoadingView(){
+        if self.loadingImageView != nil {
+            self.loadingImageView!.stopAnimating()
+            self.loadingImageView!.removeFromSuperview()
+
+        }
     }
 
     func getLoadingImages() -> [UIImage]{

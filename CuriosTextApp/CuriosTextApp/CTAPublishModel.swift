@@ -19,8 +19,12 @@ final class CTAPublishModel: CTABaseModel{
     let publishURL:String;
     let userModel:CTAUserModel;
     let relationType:Int;
+    let shareCount:Int;
+    let rebuildCount:Int;
+    let likeCount:Int;
+    var likeStatus:Int = 0;
     
-    init(publishID:String, title:String, publishDesc:String, publishIconURL:String, previewIconURL:String, publishURL:String, userID:String, nikeName:String, userDesc:String, userIconURL:String, sex:Int, relationType:Int) {
+    init(publishID:String, title:String, publishDesc:String, publishIconURL:String, previewIconURL:String, publishURL:String, userID:String, nikeName:String, userDesc:String, userIconURL:String, sex:Int, relationType:Int, shareCount:Int, rebuildCount:Int, likeCount:Int, likeStatus:Int) {
         self.publishID      = publishID;
         self.title          = title;
         self.publishDesc    = publishDesc;
@@ -29,6 +33,10 @@ final class CTAPublishModel: CTABaseModel{
         self.publishURL     = publishURL;
         self.userModel      = CTAUserModel.init(userID: userID, nikeName: nikeName, userDesc: userDesc, userIconURL: userIconURL, sex: sex)
         self.relationType   = relationType;
+        self.shareCount     = shareCount;
+        self.rebuildCount   = rebuildCount;
+        self.likeCount      = likeCount;
+        self.likeStatus     = likeStatus;
     }
     
     static func generateFrom(json: JSON) -> CTAPublishModel {
@@ -45,8 +53,12 @@ final class CTAPublishModel: CTABaseModel{
         let userIconURL:String    = json[key(.UserIconURL)].string ?? "";
         let sex:Int               = json[key(.Sex)].int ?? 0;
         let relationType:Int      = json[key(.RelationType)].int ?? 0;
+        let shareCount:Int        = json[key(.ShareCount)].int ?? 0;
+        let rebuildCount:Int      = json[key(.RebuildCount)].int ?? 0;
+        let likeCount:Int         = json[key(.LikeCount)].int ?? 0;
+        let likeStatus:Int        = json[key(.LikeStatus)].int ?? 0;
         
-        return CTAPublishModel.init(publishID: publishID, title: title, publishDesc: publishDesc, publishIconURL: publishIconURL, previewIconURL: previewIconURL, publishURL: publishURL, userID: userID, nikeName: nikeName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, relationType: relationType)
+        return CTAPublishModel.init(publishID: publishID, title: title, publishDesc: publishDesc, publishIconURL: publishIconURL, previewIconURL: previewIconURL, publishURL: publishURL, userID: userID, nikeName: nikeName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, relationType: relationType, shareCount: shareCount, rebuildCount: rebuildCount, likeCount: likeCount, likeStatus: likeStatus)
     }
     
     func save() throws {

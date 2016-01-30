@@ -152,6 +152,7 @@ enum CTAParameterKey: CustomStringConvertible {
   case RelationType, RelationUserID, FollowCount, BeFollowCount, PublishCount
   case PublishFilePath, UserFilePath
   case UpToken, UpTokenKey
+  case ShareCount, RebuildCount, LikeCount, LikeStatus
   
   var description: String {
     switch self {
@@ -227,6 +228,14 @@ enum CTAParameterKey: CustomStringConvertible {
         return "upToken"
     case .UpTokenKey:
         return "upTokenKey"
+    case .ShareCount:
+        return "shareCount"
+    case .RebuildCount:
+        return "rebuildCount"
+    case .LikeCount:
+        return "likeCount"
+    case .LikeStatus:
+        return "likeStatus"
     }
   }
 }

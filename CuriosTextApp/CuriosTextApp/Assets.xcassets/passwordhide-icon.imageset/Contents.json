@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "delete-button.png",
+      "filename" : "passwordhide-icon.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "delete-button@2x.png",
+      "filename" : "passwordhide-icon@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "delete-button@3x.png",
+      "filename" : "passwordhide-icon@3x.png",
       "scale" : "3x"
     }
   ],
