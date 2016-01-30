@@ -66,6 +66,7 @@
 		2C3E0ADF1C2156B200450B2C /* Qiniu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3E0ADE1C2156B200450B2C /* Qiniu.framework */; };
 		2C3E0AE11C21578400450B2C /* UploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3E0AE01C21578400450B2C /* UploadTests.swift */; };
 		2C3E0AE31C2157B800450B2C /* Qiniu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3E0AE21C2157B800450B2C /* Qiniu.framework */; };
+		2C567A691C5CBAF200F11369 /* Countries.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C567A6B1C5CBAF200F11369 /* Countries.plist */; };
 		2C5ACC121C439E8100B96CCD /* CTAStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5ACC111C439E8100B96CCD /* CTAStyleKit.swift */; };
 		2C5C248C1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C248B1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift */; };
 		2C5C248E1C44E1C900A70F1B /* CTAVerticalItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C248D1C44E1C900A70F1B /* CTAVerticalItemCollectionViewCell.swift */; };
@@ -251,6 +252,8 @@
 		2C3E0ADE1C2156B200450B2C /* Qiniu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qiniu.framework; path = "Pods/../build/Debug-iphoneos/Qiniu.framework"; sourceTree = "<group>"; };
 		2C3E0AE01C21578400450B2C /* UploadTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadTests.swift; sourceTree = "<group>"; };
 		2C3E0AE21C2157B800450B2C /* Qiniu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qiniu.framework; path = "Pods/../build/Debug-iphoneos/Qiniu.framework"; sourceTree = "<group>"; };
+		2C567A6A1C5CBAF200F11369 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/Countries.plist; sourceTree = "<group>"; };
+		2C567A6C1C5CBAF500F11369 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/Countries.plist"; sourceTree = "<group>"; };
 		2C5ACC111C439E8100B96CCD /* CTAStyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAStyleKit.swift; sourceTree = "<group>"; };
 		2C5C248B1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorVerticalCell.swift; sourceTree = "<group>"; };
 		2C5C248D1C44E1C900A70F1B /* CTAVerticalItemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAVerticalItemCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -539,6 +542,7 @@
 				2C3B33D01C1176D000738166 /* Assets.xcassets */,
 				2C3B33D21C1176D000738166 /* LaunchScreen.storyboard */,
 				2C3B33D51C1176D000738166 /* Info.plist */,
+				2C567A6B1C5CBAF200F11369 /* Countries.plist */,
 				2C32BD581C4CB89100788A97 /* Localizable.strings */,
 			);
 			path = CuriosTextApp;
@@ -921,6 +925,7 @@
 				2C3B33D41C1176D000738166 /* LaunchScreen.storyboard in Resources */,
 				2C32BD561C4CB89100788A97 /* Localizable.strings in Resources */,
 				2C3B33D11C1176D000738166 /* Assets.xcassets in Resources */,
+				2C567A691C5CBAF200F11369 /* Countries.plist in Resources */,
 				2CAEAC921C323F2600C9F9AC /* Editor.storyboard in Resources */,
 				2C3CAD2C1C21828200D8DE4B /* 2.jpg in Resources */,
 				2C65B6681C4F514D007B4DEA /* Preview.storyboard in Resources */,
@@ -1191,6 +1196,15 @@
 				2C32BD4C1C4CB5C500788A97 /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		2C567A6B1C5CBAF200F11369 /* Countries.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2C567A6A1C5CBAF200F11369 /* en */,
+				2C567A6C1C5CBAF500F11369 /* zh-Hans */,
+			);
+			name = Countries.plist;
 			sourceTree = "<group>";
 		};
 		2CC74C8D1C5A275C00B536C2 /* SMS_SDKLocalizable.strings */ = {
