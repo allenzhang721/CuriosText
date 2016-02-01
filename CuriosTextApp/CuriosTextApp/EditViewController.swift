@@ -15,16 +15,14 @@ class EditViewController: UIViewController {
     private var selectorViewController: CTASelectorsViewController!
     private var selectedIndexPath: NSIndexPath?
     private let page = EditorFactory.generateRandomPage()
-    private var container: ContainerVMProtocol? {
+    
+    private var selectedContainer: ContainerVMProtocol? {
         guard let selectedIndexPath = selectedIndexPath else { return nil }
         return page.containerVMs[selectedIndexPath.item]
     }
-    private var tabItems: [CTATabItem]? {
-        guard let container = container else { return nil }
-        switch container.type {
-        case .Text: return CTATabItemFactory.shareInstance.textTabItems
-        default: return [CTATabItem]()
-        }
+    private var animation: CTAAnimationBinder? {
+        guard let container = selectedContainer else {return nil}
+        return page.animationBinders.filter{$0.targetiD == container.iD}.first
     }
     
     override func viewDidLoad() {
@@ -65,9 +63,10 @@ class EditViewController: UIViewController {
         canvasViewController.view.addGestureRecognizer(pinch)
     }
     
+    
     private var beganPosition: CGPoint!
     func pan(sender: UIPanGestureRecognizer) {
-        guard let selectedIndexPath = selectedIndexPath, let container = container else {
+        guard let selectedIndexPath = selectedIndexPath, let container = selectedContainer else {
             return
         }
         
@@ -91,7 +90,7 @@ class EditViewController: UIViewController {
     // TODO: Need Update RotatorSelector -- Emiaostein; 2016-01-13-18:13
     private var beganRadian: CGFloat = 0
     func rotation(sender: UIRotationGestureRecognizer) {
-        guard let selectedIndexPath = selectedIndexPath, let container = container else {
+        guard let selectedIndexPath = selectedIndexPath, let container = selectedContainer else {
             return
         }
         
@@ -119,7 +118,7 @@ class EditViewController: UIViewController {
     private var beganScale: CGFloat = 0
     private var oldScale: CGFloat = 0
     func pinch(sender: UIPinchGestureRecognizer) {
-        guard let selectedIndexPath = selectedIndexPath, let container = container else {
+        guard let selectedIndexPath = selectedIndexPath, let container = selectedContainer else {
             return
         }
         
@@ -150,16 +149,41 @@ class EditViewController: UIViewController {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // MARK: - CTATabViewController
-extension EditViewController: CTATabViewControllerDataSource, LineFlowLayoutDelegate {
+extension EditViewController: CTATabViewControllerDataSource, CTATabViewControllerDelegate {
     // MARK: - DataSource
     
     func tabViewControllerNumberOfItems(
         viewController: CTATabViewController)
         -> Int {
-//            guard let items = tabItems else {
-//                return 0
-//            }
+            guard let _ = selectedContainer else {
+                return 0
+            }
             
             return CTABarItemsFactory.textSelectorItems.count
     }
@@ -168,28 +192,51 @@ extension EditViewController: CTATabViewControllerDataSource, LineFlowLayoutDele
         viewController: CTATabViewController,
         tabItemAtIndexPath indexPath: NSIndexPath)
         -> CTABarItem {
-//            guard
-//                let items = tabItems else {
-//                return CTATabItem()
-//            }
             
             return CTABarItemsFactory.textSelectorItems[indexPath.item]
     }
     
     // MARK: - Delegate
     
-    func didChangeTo(
-        collectionView: UICollectionView,
-        itemAtIndexPath indexPath: NSIndexPath,
-        oldIndexPath: NSIndexPath?) {
-            guard
-                let items = tabItems,
-                let selectorItem = items[indexPath.item].userInfo as? CTASelectorTabItem else {
-                return
-            }
-            selectorViewController.changeToSelector(selectorItem.type)
+    func tabViewController(ViewController: CTATabViewController, didChangedToIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
+        
+        guard let container = selectedContainer where container.featureTypes.count > 0 else {
+            return
+        }
+        
+        selectorViewController.changeToSelector(container.featureTypes[indexPath.item])
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // MARK: - CTACanvasViewController
 extension EditViewController: CanvasViewControllerDataSource, CanvasViewControllerDelegate {
@@ -216,14 +263,18 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     
     // MARK: - DataSource
     func selectorsViewControllerContainer(viewcontroller: CTASelectorsViewController) -> ContainerVMProtocol? {
-        return container
+        return selectedContainer
+    }
+    
+    func selectorsViewControllerAnimation(ViewController: CTASelectorsViewController) -> CTAAnimationBinder? {
+        return animation
     }
     
     // MARK: - Delegate
     func scaleDidChanged(scale: CGFloat) {
         guard
             let selectedIndexPath = selectedIndexPath,
-            let container = container else {
+            let container = selectedContainer else {
             return
         }
         
@@ -238,7 +289,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     func radianDidChanged(radian: CGFloat) {
         guard
             let selectedIndexPath = selectedIndexPath,
-            let container = container else {
+            let container = selectedContainer else {
             return
         }
         
@@ -249,7 +300,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     func fontDidChanged(fontFamily: String, fontName: String) {
         guard
             let selectedIndexPath = selectedIndexPath,
-            let container = container as? TextContainerVMProtocol else {
+            let container = selectedContainer as? TextContainerVMProtocol else {
             return
         }
         
@@ -267,7 +318,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     func alignmentDidChanged(alignment: NSTextAlignment) {
         guard
             let selectedIndexPath = selectedIndexPath,
-            let container = container as? TextContainerVMProtocol else {
+            let container = selectedContainer as? TextContainerVMProtocol else {
             return
         }
         
@@ -278,7 +329,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     func spacingDidChanged(lineSpacing: CGFloat, textSpacing: CGFloat) {
         guard
             let selectedIndexPath = selectedIndexPath,
-            let container = container as? TextContainerVMProtocol else {
+            let container = selectedContainer as? TextContainerVMProtocol else {
             return
         }
         
@@ -294,7 +345,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     func colorDidChanged(item: CTAColorItem) {
         guard
             let selectedIndexPath = selectedIndexPath,
-            let container = container as? TextContainerVMProtocol else {
+            let container = selectedContainer as? TextContainerVMProtocol else {
             return
         }
         

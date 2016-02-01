@@ -10,7 +10,7 @@ import UIKit
 
 protocol CTASelectorsViewControllerDataSource: class {
     func selectorsViewControllerContainer(viewcontroller: CTASelectorsViewController) -> ContainerVMProtocol?
-//    func selectorsViewControllerAnimation(ViewController: CTASelectorsViewController) -> 
+    func selectorsViewControllerAnimation(ViewController: CTASelectorsViewController) -> CTAAnimationBinder?
 }
 
 protocol CTASelectorable: class {
@@ -28,12 +28,12 @@ protocol CTASelectorScaleable: CTASelectorable {
 
 typealias CTASelectorViewControllerDelegate = protocol<CTASelectorScaleable>
 
-final class CTASelectorsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+final class CTASelectorsViewController: UIViewController, UICollectionViewDataSource {
     
     private var animation: Bool = false
     var dataSource: CTASelectorsViewControllerDataSource?
     var delegate: CTASelectorViewControllerDelegate?
-    private var currentType: CTASelectorType = .Fonts
+    private var currentType: CTAContainerFeatureType = .Fonts
     private var container: ContainerVMProtocol? {
         return dataSource?.selectorsViewControllerContainer(self)
     }
@@ -58,7 +58,7 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
         super.viewDidLoad()
     }
     
-    func changeToSelector(type: CTASelectorType) {
+    func changeToSelector(type: CTAContainerFeatureType) {
         guard let collectionview = collectionview where container != nil else {
             return
         }
@@ -144,6 +144,7 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
     
 }
 
+// MARK: - UIColletionViewDataSource
 extension CTASelectorsViewController {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -159,6 +160,17 @@ extension CTASelectorsViewController {
         cell.addTarget(self, action: Selector(action), forControlEvents: .ValueChanged)
         cell.retriveBeganValue()
         return cell
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+extension CTASelectorsViewController: UICollectionViewDelegate {
+    
+    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        
+        if let cell = cell as? CTASelectorCell {
+            cell.willBeDisplayed()
+        }
     }
 }
 
@@ -220,6 +232,11 @@ extension CTASelectorsViewController: CTASelectorDataSource {
         }
         
         return indexPath
+    }
+    
+    func selectorBeganAnimation(cell: CTASelectorCell) -> CTAAnimationBinder? {
+        
+        return dataSource?.selectorsViewControllerAnimation(self)
     }
 }
 

@@ -78,6 +78,7 @@ extension CTAPage: PageVMProtocol {
     }
     
     var animationBinders: [CTAAnimationBinder] {
-        return animatoins.map { $0 as CTAAnimationBinder }
+        
+        return animatoins.map { $0 as CTAAnimationBinder}
     }
 }

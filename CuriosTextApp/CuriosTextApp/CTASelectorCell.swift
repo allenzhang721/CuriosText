@@ -17,7 +17,7 @@ protocol CTASelectorDataSource: class {
     func selectorBeganSpacing(cell: CTASelectorCell) -> (CGFloat, CGFloat)
     func selectorBeganFontIndexPath(cell: CTASelectorCell) -> NSIndexPath?
     func selectorBeganColorIndexPath(cell: CTASelectorCell) -> NSIndexPath?
-    
+    func selectorBeganAnimation(cell: CTASelectorCell) -> CTAAnimationBinder?
 }
 
 protocol CTASelectorControl: class {
@@ -34,4 +34,7 @@ class CTASelectorCell: UICollectionViewCell, CTASelectorControl {
     func retriveBeganValue(){}
     func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents){}
     func removeAllTarget(){}
+    
+    func willBeDisplayed(){}
+    func didEndDiplayed(){}
 }

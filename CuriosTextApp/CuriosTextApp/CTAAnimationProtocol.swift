@@ -10,14 +10,6 @@ import Foundation
 import UIKit
 import pop
 
-protocol CTAAnimationBinder {
-    
-    var iD: String { get }
-    var targetiD: String { get }
-    var name: CTAAnimationName { get }
-    var config: CTAAnimationConfig { get }
-}
-
 enum CTAAnimationName {
     
     case MoveIn, FlyIn
@@ -31,6 +23,34 @@ enum CTAAnimationName {
             return true
         }
     }
+}
+
+protocol CTAAnimationBinder {
+    
+    var iD: String { get }
+    var targetiD: String { get }
+    var name: CTAAnimationName { get }
+    var config: CTAAnimationConfig { get }
+}
+
+extension CTAAnimationBinder {
+    
+    var animationName: CTAAnimationName {
+        return name
+    }
+    var duration: Float {
+        return config.duration
+    }
+    var delay: Float {
+        return config.delay
+    }
+}
+
+protocol CTAAnimationRetriveable: CTAAnimationBinder {
+    
+    var animationName: CTAAnimationName { get }
+    var duration: Float { get }
+    var delay: Float { get }
 }
 
 extension CTAAnimationBinder {
