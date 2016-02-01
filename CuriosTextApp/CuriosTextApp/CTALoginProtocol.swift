@@ -18,8 +18,7 @@ extension CTALoginProtocol where Self: UIViewController{
         
         
         let login = CTALoginViewController.getInstance()
-        
-        
+        login.isChangeContry = true
         let navigationController = UINavigationController(rootViewController: login)
         navigationController.navigationBarHidden = true
         self.presentViewController(navigationController, animated: false, completion: {

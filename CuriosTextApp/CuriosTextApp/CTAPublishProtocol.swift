@@ -52,7 +52,7 @@ extension CTAPublishProtocol where Self: UIViewController{
         rebuildButton.addTarget(self, action: "rebuildButtonClick:", forControlEvents: .TouchUpInside)
         
         self.userIconImage.frame = CGRect.init(x: UIScreen.mainScreen().bounds.width/2, y: 9, width: 60 * horRate, height: 60 * horRate)
-        self.userIconImage.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2 - publishRect.height/2 - 80 * horRate)
+        self.userIconImage.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2 - publishRect.height/2 - 75 * horRate)
         self.cropImageCircle(self.userIconImage)
         self.view.addSubview(self.userIconImage)
         self.userIconImage.userInteractionEnabled = true

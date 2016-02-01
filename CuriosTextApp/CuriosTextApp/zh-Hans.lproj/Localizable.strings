@@ -20,3 +20,24 @@
 "PhonePlaceholder" = "请填写手机号码";
 "PasswordLabel" = "密码";
 "PasswordPlaceholder" = "请填写密码";
+"SearchLabel" = "选择国家和地区";
+"LoginButtonLabel" = "登录";
+"OtherAccountLoginLabel" = "使用其他账号登录";
+"ForgetPasswordLabel" = "忘记密码?";
+"RegisterLabel" = "注册";
+"EnterMobileLabel" = "请输入你的手机号码";
+"RegisterButtonLabel" = "注册";
+"SMSVerifyTitle" = "请输入验证码";
+"SMSVerifyMessage" = "短信已发送至:";
+"NoReceivedCodeLabel" = "收不到验证码?";
+"SMSVerifyBackTitle" = "验证码短信可能略有延迟，确定返回并重新开始?";
+
+"AlertOkLabel" = "确定";
+"AlertCancelLabel" = "取消";
+"AlertResendLabel" = "重发";
+"AlertBackLabel" = "返回";
+"AlertWaitLabel" = "等待";
+"AlertTitleNumberConfirm" = "验证手机号码";
+"AlertMessageNumberConfirm" = "我们将发送验证码短信到这个号码:";
+"AlertTitleNumberVerifyError" = "发送验证码失败，请稍后再试";
+"AlertTitleCodeVerifyError" = "验证码不正确，请重新输入";

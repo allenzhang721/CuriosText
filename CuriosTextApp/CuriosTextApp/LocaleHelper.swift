@@ -39,8 +39,8 @@ class LocaleHelper {
   
   class func allCountriesFromLocalFile() -> Dictionary<String, Array<CountryZone>> {
     
-    let countriesFilePath = NSBundle.mainBundle().pathForResource("country", ofType: "plist")!
-    var dic = NSDictionary(contentsOfFile: countriesFilePath) as! Dictionary<String, Array<String>>
+    let countriesFilePath = NSBundle.mainBundle().pathForResource("Countries", ofType: "plist")!
+    let dic = NSDictionary(contentsOfFile: countriesFilePath) as! Dictionary<String, Array<String>>
     
     var con = Dictionary<String, Array<CountryZone>>()
     for (key, countries) in dic {
