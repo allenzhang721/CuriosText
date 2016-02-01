@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CTALoginViewController: UIViewController, CTAPublishCellProtocol {
+class CTALoginViewController: UIViewController, CTAPhoneProtocol{
     
     static var _instance:CTALoginViewController?;
     
@@ -19,9 +19,17 @@ class CTALoginViewController: UIViewController, CTAPublishCellProtocol {
         return _instance!
     }
     
-    var userPhoneTextinput:UITextField!
-    var userPasswordTextinput:UITextField!
-    var countryNameLabel:UILabel!
+    
+    var phoneTextinput:UITextField = UITextField()
+    var countryNameLabel:UILabel = UILabel()
+    var areaCodeLabel:UILabel = UILabel()
+    
+    var passwordTextinput:UITextField!
+    var passwordVisibleButton:UIButton!
+    var loginButton:UIButton!
+    
+    var selectedModel:CountryZone?
+    var isChangeContry:Bool = false
     
     override func prefersStatusBarHidden() -> Bool {
         return true
@@ -37,6 +45,7 @@ class CTALoginViewController: UIViewController, CTAPublishCellProtocol {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.viewWillLoad()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -65,6 +74,9 @@ class CTALoginViewController: UIViewController, CTAPublishCellProtocol {
     
     func initView(){
         let bouns = UIScreen.mainScreen().bounds
+        let tap = UITapGestureRecognizer(target: self, action: "bgViewClick:")
+        self.view.addGestureRecognizer(tap)
+        
         let closeButton = UIButton.init(frame: CGRect.init(x: 10, y: 10, width: 35, height: 35))
         closeButton.setImage(UIImage(named: "close-button"), forState: .Normal)
         closeButton.addTarget(self, action: "closeButtonClick:", forControlEvents: .TouchUpInside)
@@ -74,43 +86,154 @@ class CTALoginViewController: UIViewController, CTAPublishCellProtocol {
         iconImage.image = UIImage(named: "defaultpublish-icon")
         self.view.addSubview(iconImage)
         
-        let countryLabel = UILabel.init(frame: CGRect.init(x: 27, y: 214*self.getVerRate(), width: 82, height: 25))
-        countryLabel.font = UIFont.systemFontOfSize(18)
-        countryLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        countryLabel.text = NSLocalizedString("CountryLabel", comment: "")
-        self.view.addSubview(countryLabel)
-        self.countryNameLabel = UILabel.init(frame: CGRect.init(x: 128, y: 214*self.getVerRate(), width: 36, height: 25))
-        self.countryNameLabel.font = UIFont.systemFontOfSize(18)
-        self.countryNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        self.countryNameLabel.text = "中国"
-        self.view.addSubview(self.countryNameLabel)
-        let nextImage = UIImageView.init(frame: CGRect.init(x: 330, y: 216*self.getVerRate(), width: 11, height: 20))
-        nextImage.image = UIImage(named: "next-icon")
-        self.view.addSubview(nextImage)
+        self.initPhoneView()
+        self.phoneTextinput.delegate = self
         
-        let textLine = UIImageView.init(frame: CGRect.init(x: 27, y: 249*self.getVerRate(), width: 330, height: 1))
+        let passwordLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: 315*self.getVerRate(), width: 50, height: 25))
+        passwordLabel.font = UIFont.systemFontOfSize(18)
+        passwordLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        passwordLabel.text = NSLocalizedString("PasswordLabel", comment: "")
+        passwordLabel.sizeToFit()
+        self.view.addSubview(passwordLabel)
+        
+        self.passwordTextinput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: 300*self.getVerRate(), width: 190*self.getHorRate(), height: 50))
+        self.passwordTextinput.placeholder = NSLocalizedString("PasswordPlaceholder", comment: "")
+        self.passwordTextinput.secureTextEntry = true
+        self.passwordTextinput.clearsOnBeginEditing = true
+        self.view.addSubview(self.passwordTextinput)
+        self.passwordVisibleButton = UIButton.init(frame: CGRect.init(x: bouns.width - 27*self.getHorRate() - 20, y: 321*self.getVerRate(), width: 20, height: 13))
+        self.passwordVisibleButton.setImage(UIImage(named: "passwordhide-icon"), forState: .Normal)
+        self.view.addSubview(self.passwordVisibleButton)
+        self.passwordVisibleButton.addTarget(self, action: "passwordVisibleClick:", forControlEvents: .TouchUpInside)
+        let textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 349*self.getVerRate(), width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "textinput-line")
         self.view.addSubview(textLine)
         
-        self.userPhoneTextinput = UITextField.init(frame: CGRect.init(x: (bouns.width - 280)/2, y: 300*self.getVerRate(), width: 280, height: 50))
-        self.userPhoneTextinput.placeholder = NSLocalizedString("UserPhoneLabel", comment: "")
-        self.view.addSubview(self.userPhoneTextinput)
+        self.loginButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: 370*self.getVerRate(), width: 40, height: 28))
+        self.loginButton.setTitle(NSLocalizedString("LoginButtonLabel", comment: ""), forState: .Normal)
+        self.loginButton.setTitleColor(UIColor.init(red: 239/255, green: 51/255, blue: 74/255, alpha: 1.0), forState: .Normal)
+        self.loginButton.setTitleColor(UIColor.init(red: 216/255, green: 216/255, blue: 216/255, alpha: 1.0), forState: .Disabled)
+        self.loginButton.titleLabel?.font = UIFont.systemFontOfSize(20)
+        self.loginButton.sizeToFit()
+        self.loginButton.frame.origin.x = (bouns.width - self.loginButton.frame.width)/2
+        self.loginButton.addTarget(self, action: "loginButtonClick:", forControlEvents: .TouchUpInside)
+        self.view.addSubview(self.loginButton)
         
         
-        self.userPasswordTextinput = UITextField.init(frame: CGRect.init(x: (bouns.width - 280)/2, y: 350*self.getVerRate(), width: 280, height: 50))
-        self.userPasswordTextinput.placeholder = NSLocalizedString("UserPasswordLabel", comment: "")
-        self.userPasswordTextinput.secureTextEntry = true
-        self.view.addSubview(self.userPasswordTextinput)
-        let userPasswordLine = UIImageView.init(frame: CGRect.init(x: (bouns.width - 280)/2, y: 399*self.getVerRate(), width: 280, height: 1))
-        userPasswordLine.image = UIImage(named: "textinput-line")
-        self.view.addSubview(userPasswordLine)
+        let spaceView = UIImageView.init(frame: CGRect.init(x: (bouns.width - 215)/2, y: bouns.height - 170*self.getVerRate(), width: 215, height: 3))
+        spaceView.image = UIImage(named: "login-spaceline")
+        self.view.addSubview(spaceView)
+        
+        let otherAccountLabel = UILabel.init(frame: CGRect.init(x: (bouns.width - 215)/2, y: bouns.height - 175*self.getVerRate(), width: 50, height: 14))
+        otherAccountLabel.font = UIFont.systemFontOfSize(12)
+        otherAccountLabel.textColor = UIColor.init(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0)
+        otherAccountLabel.text = NSLocalizedString("OtherAccountLoginLabel", comment: "")
+        otherAccountLabel.sizeToFit()
+        otherAccountLabel.frame.origin.x = (bouns.width - otherAccountLabel.frame.width)/2
+        self.view.addSubview(otherAccountLabel)
+        
+        let weichatButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 44)/2, y: bouns.height - 130*self.getVerRate(), width: 44, height: 44))
+        weichatButton.setImage(UIImage(named: "weichat-icon"), forState: .Normal)
+        weichatButton.addTarget(self, action: "weichatButtonClick", forControlEvents: .TouchUpInside)
+        self.view.addSubview(weichatButton)
+        
+        let forgetButton = UIButton.init(frame: CGRect.init(x: 27, y: bouns.height - 52*self.getVerRate(), width: 20, height: 84))
+        forgetButton.setTitle(NSLocalizedString("ForgetPasswordLabel", comment: ""), forState: .Normal)
+        forgetButton.setTitleColor(UIColor.init(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0), forState: .Normal)
+        forgetButton.titleLabel?.font = UIFont.systemFontOfSize(14)
+        forgetButton.sizeToFit()
+        forgetButton.addTarget(self, action: "forgetButtonClick:", forControlEvents: .TouchUpInside)
+        self.view.addSubview(forgetButton)
+        
+        let registerButton = UIButton.init(frame: CGRect.init(x: 27*self.getHorRate(), y: bouns.height - 52*self.getVerRate(), width: 20, height: 84))
+        registerButton.setTitle(NSLocalizedString("RegisterLabel", comment: ""), forState: .Normal)
+        registerButton.setTitleColor(UIColor.init(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0), forState: .Normal)
+        registerButton.titleLabel?.font = UIFont.systemFontOfSize(14)
+        registerButton.sizeToFit()
+        registerButton.frame.origin.x = bouns.width - 27*self.getHorRate() - registerButton.frame.width
+        registerButton.addTarget(self, action: "registerButtonClick:", forControlEvents: .TouchUpInside)
+        self.view.addSubview(registerButton)
+    }
+    
+    func viewWillLoad(){
+        if isChangeContry{
+            self.phoneTextinput.text = ""
+            self.passwordTextinput.text = ""
+            self.passwordTextinput.secureTextEntry = true
+            self.passwordVisibleButton.setImage(UIImage(named: "passwordhide-icon"), forState: .Normal)
+            self.selectedModel = self.getCurrentContryModel()
+            self.changeCountryLabelByModel(self.selectedModel)
+        }
+        self.isChangeContry = false
+    }
+    
+    func bgViewClick(sender: UIPanGestureRecognizer){
+        self.resignHandler(sender)
     }
     
     func closeButtonClick(sender: UIButton){
-        
+        self.resignView()
         self.dismissViewControllerAnimated(false) { () -> Void in
             
         }
     }
+    
+    func passwordVisibleClick(sender: UIButton){
+        self.passwordTextinput.secureTextEntry = !self.passwordTextinput.secureTextEntry
+        if self.passwordTextinput.secureTextEntry{
+            self.passwordVisibleButton.setImage(UIImage(named: "passwordhide-icon"), forState: .Normal)
+        }else {
+            self.passwordVisibleButton.setImage(UIImage(named: "passwordshow-icon"), forState: .Normal)
+        }
+    }
+    
+    func countryNameClick(sender: UIPanGestureRecognizer){
+        self.resignView()
+        let searchCountry = CTASearchCountryViewController.getInstance()
+        searchCountry.selectedDelegate = self
+        self.navigationController?.pushViewController(searchCountry, animated: true)
+    }
+    
+    func loginButtonClick(sender: UIButton){
+        print("loginButtonClick")
+    }
+    
+    func forgetButtonClick(sender: UIButton){
+        print("forgetButtonClick")
+    }
+    
+    func registerButtonClick(sender: UIButton){
+        self.resignView()
+        let registerCountry = CTARegisterViewController.getInstance()
+        registerCountry.isChangeContry = true
+        self.navigationController?.pushViewController(registerCountry, animated: true)
+    }
+    
+    func weichatButtonClick(sender: UIButton){
+        print("weichatButtonClick")
+    }
+}
 
+extension CTALoginViewController: CTACountryDelegate{
+    func setCountryCode(model:CountryZone){
+        self.selectedModel = model
+        self.changeCountryLabelByModel(selectedModel)
+    }
+}
+
+extension CTALoginViewController: UITextFieldDelegate{
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
+        let newText = self.phoneTextinput.text
+        let newStr = NSString(string: newText!)
+        let isDelete = string == "" ? true : false
+        if self.selectedModel != nil && self.selectedModel?.zoneCode == "86" {
+            self.phoneTextinput.text = self.changeChinaPhone(newStr, isDelete: isDelete)
+        }
+        if newStr.length < 20 || isDelete{
+            return true
+        }else {
+            return false
+        }
+    }
 }
