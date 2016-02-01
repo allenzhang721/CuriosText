@@ -10,5 +10,6 @@
 #define CuriosTextApp_Bridging_Header_h
 
 #import <SMS_SDK/SMSSDK.h>
+#import "AESCrypt.h"
 
 #endif /* CuriosTextApp_Bridging_Header_h */

@@ -20,6 +20,12 @@
 		2C0404681C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0404671C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift */; };
 		2C1312361C59966C00346804 /* CTAUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1312351C59966C00346804 /* CTAUserManager.swift */; };
 		2C1B2AAC1C3520160053BE5E /* CTASelectorsReuseableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B2AAB1C3520160053BE5E /* CTASelectorsReuseableView.swift */; };
+		2C1B88961C5F35B9000403FD /* CTAEncryptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B88951C5F35B9000403FD /* CTAEncryptManager.swift */; };
+		2C1B88A41C5F366F000403FD /* CTAPhoneProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B88A31C5F366F000403FD /* CTAPhoneProtocol.swift */; };
+		2C1B88A61C5F36A9000403FD /* CTASearchCountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B88A51C5F36A9000403FD /* CTASearchCountryViewController.swift */; };
+		2C1B88A91C5F36F9000403FD /* CTARegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B88A81C5F36F9000403FD /* CTARegisterViewController.swift */; };
+		2C1B88AB1C5F371A000403FD /* CTAAlertProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B88AA1C5F371A000403FD /* CTAAlertProtocol.swift */; };
+		2C1B88AD1C5F3741000403FD /* CTASMSVerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B88AC1C5F3741000403FD /* CTASMSVerifyViewController.swift */; };
 		2C1F01581C3BD5960033CED8 /* CTASelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1F01571C3BD5960033CED8 /* CTASelectorCell.swift */; };
 		2C1F015A1C3BD7400033CED8 /* CTASelectorSizeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */; };
 		2C1F015C1C3CE3770033CED8 /* CTACanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1F015B1C3CE3770033CED8 /* CTACanvasCell.swift */; };
@@ -153,6 +159,10 @@
 		2CD488151C4E1A7300D11CB7 /* CTAPreviewPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD488141C4E1A7300D11CB7 /* CTAPreviewPlay.swift */; };
 		2CD488171C4E53E500D11CB7 /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD488161C4E53E500D11CB7 /* pop.framework */; };
 		2CD8F4091C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8F4081C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift */; };
+		2CDDF5091C5F3BE00019FC83 /* AESCrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDF5021C5F3BE00019FC83 /* AESCrypt.m */; };
+		2CDDF50A1C5F3BE00019FC83 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDF5041C5F3BE00019FC83 /* NSData+Base64.m */; };
+		2CDDF50B1C5F3BE00019FC83 /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDF5061C5F3BE00019FC83 /* NSData+CommonCrypto.m */; };
+		2CDDF50C1C5F3BE00019FC83 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDF5081C5F3BE00019FC83 /* NSString+Base64.m */; };
 		2CF5EB8B1C47B2CF009F0719 /* CTAFontsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF5EB8A1C47B2CF009F0719 /* CTAFontsManager.swift */; };
 		2CFC658C1C56301600E8ADE7 /* CTAPublishCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFC658B1C56301600E8ADE7 /* CTAPublishCellProtocol.swift */; };
 		2CFC658E1C56305500E8ADE7 /* CTAFullPublishesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFC658D1C56305500E8ADE7 /* CTAFullPublishesCell.swift */; };
@@ -208,6 +218,12 @@
 		2C0404671C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorRotatorCell.swift; sourceTree = "<group>"; };
 		2C1312351C59966C00346804 /* CTAUserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUserManager.swift; sourceTree = "<group>"; };
 		2C1B2AAB1C3520160053BE5E /* CTASelectorsReuseableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorsReuseableView.swift; sourceTree = "<group>"; };
+		2C1B88951C5F35B9000403FD /* CTAEncryptManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAEncryptManager.swift; sourceTree = "<group>"; };
+		2C1B88A31C5F366F000403FD /* CTAPhoneProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPhoneProtocol.swift; sourceTree = "<group>"; };
+		2C1B88A51C5F36A9000403FD /* CTASearchCountryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASearchCountryViewController.swift; sourceTree = "<group>"; };
+		2C1B88A81C5F36F9000403FD /* CTARegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTARegisterViewController.swift; sourceTree = "<group>"; };
+		2C1B88AA1C5F371A000403FD /* CTAAlertProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAlertProtocol.swift; sourceTree = "<group>"; };
+		2C1B88AC1C5F3741000403FD /* CTASMSVerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASMSVerifyViewController.swift; sourceTree = "<group>"; };
 		2C1F01571C3BD5960033CED8 /* CTASelectorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorCell.swift; sourceTree = "<group>"; };
 		2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorSizeCell.swift; sourceTree = "<group>"; };
 		2C1F015B1C3CE3770033CED8 /* CTACanvasCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACanvasCell.swift; sourceTree = "<group>"; };
@@ -346,7 +362,6 @@
 		2CC74C951C5A27D400B536C2 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		2CC74C971C5A27F800B536C2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		2CC74C991C5A28BA00B536C2 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
-		2CC74C9D1C5A2B6100B536C2 /* CuriosTextApp-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CuriosTextApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		2CC74C9E1C5A2BFA00B536C2 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATextSpacingView.swift; sourceTree = "<group>"; };
 		2CD08F5C1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAnimationPlayNodeManager.swift; sourceTree = "<group>"; };
@@ -354,6 +369,15 @@
 		2CD488141C4E1A7300D11CB7 /* CTAPreviewPlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewPlay.swift; sourceTree = "<group>"; };
 		2CD488161C4E53E500D11CB7 /* pop.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = pop.framework; path = "Pods/../build/Debug-iphoneos/pop.framework"; sourceTree = "<group>"; };
 		2CD8F4081C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAVerticalItemFontsCollectionViewCell.swift; sourceTree = "<group>"; };
+		2CDDF5001C5F3B860019FC83 /* CuriosTextApp-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CuriosTextApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		2CDDF5011C5F3BE00019FC83 /* AESCrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AESCrypt.h; path = AESEncypt/AESCrypt.h; sourceTree = SOURCE_ROOT; };
+		2CDDF5021C5F3BE00019FC83 /* AESCrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AESCrypt.m; path = AESEncypt/AESCrypt.m; sourceTree = SOURCE_ROOT; };
+		2CDDF5031C5F3BE00019FC83 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Base64.h"; path = "AESEncypt/NSData+Base64.h"; sourceTree = SOURCE_ROOT; };
+		2CDDF5041C5F3BE00019FC83 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Base64.m"; path = "AESEncypt/NSData+Base64.m"; sourceTree = SOURCE_ROOT; };
+		2CDDF5051C5F3BE00019FC83 /* NSData+CommonCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+CommonCrypto.h"; path = "AESEncypt/NSData+CommonCrypto.h"; sourceTree = SOURCE_ROOT; };
+		2CDDF5061C5F3BE00019FC83 /* NSData+CommonCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+CommonCrypto.m"; path = "AESEncypt/NSData+CommonCrypto.m"; sourceTree = SOURCE_ROOT; };
+		2CDDF5071C5F3BE00019FC83 /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Base64.h"; path = "AESEncypt/NSString+Base64.h"; sourceTree = SOURCE_ROOT; };
+		2CDDF5081C5F3BE00019FC83 /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Base64.m"; path = "AESEncypt/NSString+Base64.m"; sourceTree = SOURCE_ROOT; };
 		2CF5EB8A1C47B2CF009F0719 /* CTAFontsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAFontsManager.swift; sourceTree = "<group>"; };
 		2CFC658B1C56301600E8ADE7 /* CTAPublishCellProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishCellProtocol.swift; sourceTree = "<group>"; };
 		2CFC658D1C56305500E8ADE7 /* CTAFullPublishesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAFullPublishesCell.swift; sourceTree = "<group>"; };
@@ -439,6 +463,31 @@
 			name = Layout;
 			sourceTree = "<group>";
 		};
+		2C1B88941C5F357E000403FD /* AES256 */ = {
+			isa = PBXGroup;
+			children = (
+				2CDDF5011C5F3BE00019FC83 /* AESCrypt.h */,
+				2CDDF5021C5F3BE00019FC83 /* AESCrypt.m */,
+				2CDDF5031C5F3BE00019FC83 /* NSData+Base64.h */,
+				2CDDF5041C5F3BE00019FC83 /* NSData+Base64.m */,
+				2CDDF5051C5F3BE00019FC83 /* NSData+CommonCrypto.h */,
+				2CDDF5061C5F3BE00019FC83 /* NSData+CommonCrypto.m */,
+				2CDDF5071C5F3BE00019FC83 /* NSString+Base64.h */,
+				2CDDF5081C5F3BE00019FC83 /* NSString+Base64.m */,
+			);
+			name = AES256;
+			sourceTree = "<group>";
+		};
+		2C1B88A71C5F36C8000403FD /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				2C1B88AC1C5F3741000403FD /* CTASMSVerifyViewController.swift */,
+				2C1B88A81C5F36F9000403FD /* CTARegisterViewController.swift */,
+				2C1B88A51C5F36A9000403FD /* CTASearchCountryViewController.swift */,
+			);
+			name = Launch;
+			sourceTree = "<group>";
+		};
 		2C1F01561C3BD5540033CED8 /* Cells_view */ = {
 			isa = PBXGroup;
 			children = (
@@ -499,6 +548,8 @@
 		2C32BD4A1C4CB56E00788A97 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				2C1B88AA1C5F371A000403FD /* CTAAlertProtocol.swift */,
+				2C1B88A31C5F366F000403FD /* CTAPhoneProtocol.swift */,
 				2C2B45A91C5CBCC8004A4809 /* CTALoginProtocol.swift */,
 				2CFC65911C5630EA00E8ADE7 /* CTASystemLanguageProtocol.swift */,
 				2CFC658F1C5630C700E8ADE7 /* CTAUserDetailProtocol.swift */,
@@ -546,7 +597,7 @@
 		2C3B33C81C1176D000738166 /* CuriosTextApp */ = {
 			isa = PBXGroup;
 			children = (
-				2CC74C9D1C5A2B6100B536C2 /* CuriosTextApp-Bridging-Header.h */,
+				2CDDF5001C5F3B860019FC83 /* CuriosTextApp-Bridging-Header.h */,
 				2C81B59E1C58B10600AE16E0 /* Gobal */,
 				2C81B5A01C58B48800AE16E0 /* Emiaostein */,
 				2CAEAC8A1C323EC600C9F9AC /* Deprecated */,
@@ -555,6 +606,7 @@
 				2C9706C31C1E6ED200FA2E17 /* Domain */,
 				2C3B33FA1C11778700738166 /* CTARequestAPI */,
 				2C3B33F71C11772400738166 /* CTARequest */,
+				2C1B88A71C5F36C8000403FD /* Launch */,
 				2CB322301C4533BE00BD06F5 /* UserPublishes */,
 				2C32BD4A1C4CB56E00788A97 /* UseCase */,
 				2C3AE3ED1C59F5A9004D62B4 /* SocialShareTest */,
@@ -672,6 +724,7 @@
 				2CF5EB8A1C47B2CF009F0719 /* CTAFontsManager.swift */,
 				2C1312351C59966C00346804 /* CTAUserManager.swift */,
 				2C3AE3EB1C59EC9E004D62B4 /* CTASocialShareManager.swift */,
+				2C1B88951C5F35B9000403FD /* CTAEncryptManager.swift */,
 			);
 			name = Mangers_model;
 			sourceTree = "<group>";
@@ -709,6 +762,7 @@
 		2C81B59E1C58B10600AE16E0 /* Gobal */ = {
 			isa = PBXGroup;
 			children = (
+				2C1B88941C5F357E000403FD /* AES256 */,
 				2C5ACC111C439E8100B96CCD /* CTAStyleKit.swift */,
 				2C3CAD0A1C21825100D8DE4B /* CTAIDGenerator.swift */,
 				2C5EA2551C479CE000DCEE7B /* Print.swift */,
@@ -1041,11 +1095,13 @@
 			files = (
 				2CAEAC911C323F2600C9F9AC /* Dynamic.swift in Sources */,
 				2CD08F5D1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift in Sources */,
+				2C1B88961C5F35B9000403FD /* CTAEncryptManager.swift in Sources */,
 				2CFC65901C5630C700E8ADE7 /* CTAUserDetailProtocol.swift in Sources */,
 				2CAEAC9E1C323F4300C9F9AC /* ContainerTextView.swift in Sources */,
 				2C1B2AAC1C3520160053BE5E /* CTASelectorsReuseableView.swift in Sources */,
 				2C5C248C1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift in Sources */,
 				66C7BF251C3114BD00ADF251 /* CTADomainListInfo.swift in Sources */,
+				2C1B88AD1C5F3741000403FD /* CTASMSVerifyViewController.swift in Sources */,
 				2CCD94DC1C43B4AA001E5D08 /* CTATextSpacingView.swift in Sources */,
 				661EFBC51C213282009CF87A /* CTAPublishDomain.swift in Sources */,
 				2CB380B71C4D0D1F009A681A /* CTAPreviewLayout.swift in Sources */,
@@ -1053,8 +1109,10 @@
 				2C3CAD171C21825900D8DE4B /* CTAElement.swift in Sources */,
 				2C32BD491C4CA7A100788A97 /* CTAPreviewCanvasView.swift in Sources */,
 				2C82FF571C437F58001D927A /* CTASelectorAligmentsCell.swift in Sources */,
+				2CDDF5091C5F3BE00019FC83 /* AESCrypt.m in Sources */,
 				2C5C24981C44FA5600A70F1B /* CTAColorsManger.swift in Sources */,
 				6628C7031C200C11007F873C /* CTAViewUserModel.swift in Sources */,
+				2C1B88AB1C5F371A000403FD /* CTAAlertProtocol.swift in Sources */,
 				2C31EB631C452597002A4D71 /* SwiftHEXColors.swift in Sources */,
 				2C247FE91C5CA10E0069CFFC /* CTASelectorAnimationCell.swift in Sources */,
 				2C3FD9821C5E175A0064179F /* CTAConfigCell.swift in Sources */,
@@ -1062,12 +1120,15 @@
 				2C7A95231C3A51F1005B0EAE /* CTALoginViewController.swift in Sources */,
 				2C5ACC121C439E8100B96CCD /* CTAStyleKit.swift in Sources */,
 				2C3CAD161C21825900D8DE4B /* CTAContainer.swift in Sources */,
+				2CDDF50C1C5F3BE00019FC83 /* NSString+Base64.m in Sources */,
+				2CDDF50A1C5F3BE00019FC83 /* NSData+Base64.m in Sources */,
 				66A072AF1C18713F0046C72F /* CTAUploadRequestAPI.swift in Sources */,
 				2C1312361C59966C00346804 /* CTAUserManager.swift in Sources */,
 				2CB380B91C4D20E5009A681A /* CTAPreviewCell.swift in Sources */,
 				2C9706CB1C1E713A00FA2E17 /* CTABaseModel.swift in Sources */,
 				2C3CAD1A1C21825900D8DE4B /* CTATextElement.swift in Sources */,
 				2C82FF551C4362FA001D927A /* CTASegementControl.swift in Sources */,
+				2CDDF50B1C5F3BE00019FC83 /* NSData+CommonCrypto.m in Sources */,
 				2C65B6721C4F6F4C007B4DEA /* ValueExtension.swift in Sources */,
 				2CAEAC931C323F2600C9F9AC /* EditorFactory.swift in Sources */,
 				66A072AD1C186EFF0046C72F /* CTARelationRequestAPI.swift in Sources */,
@@ -1101,6 +1162,7 @@
 				661D29F11C2A8FC30073FC0E /* CTAUploadModel.swift in Sources */,
 				2C9706C91C1E710F00FA2E17 /* CTAUserModel.swift in Sources */,
 				2C5C24961C44F5D800A70F1B /* CTASelectorColorsCell.swift in Sources */,
+				2C1B88A61C5F36A9000403FD /* CTASearchCountryViewController.swift in Sources */,
 				2C3B33CC1C1176D000738166 /* ViewController.swift in Sources */,
 				2CAEAC9F1C323F4300C9F9AC /* ContainerView.swift in Sources */,
 				2C30970A1C3F7FA800D996A4 /* CTAScrollSelectView.swift in Sources */,
@@ -1170,6 +1232,8 @@
 				6667FF661C327ADE004CDBDB /* CTAUploadAction.swift in Sources */,
 				2C7A95211C3A51D6005B0EAE /* CTAUserInfoViewController.swift in Sources */,
 				2C65B66C1C4F55F8007B4DEA /* CTAAnimation.swift in Sources */,
+				2C1B88A41C5F366F000403FD /* CTAPhoneProtocol.swift in Sources */,
+				2C1B88A91C5F36F9000403FD /* CTARegisterViewController.swift in Sources */,
 				2CFC658C1C56301600E8ADE7 /* CTAPublishCellProtocol.swift in Sources */,
 				2C9706C71C1E6FE100FA2E17 /* CTAUserDomain.swift in Sources */,
 				2C3CAD181C21825900D8DE4B /* CTAImageElement.swift in Sources */,
