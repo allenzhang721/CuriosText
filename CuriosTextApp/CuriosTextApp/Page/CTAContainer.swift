@@ -9,6 +9,11 @@
 import Foundation
 import UIKit
 
+enum CTAContainerFeatureType: String {
+    
+    case Fonts, Size, Rotator, Aligments, TextSpacing, Colors, Animation //Text
+}
+
 final class CTAContainer: NSObject, NSCoding {
     
     private struct SerialKeys {
@@ -70,6 +75,11 @@ final class CTAContainer: NSObject, NSCoding {
         self.contentInset = inset
         self.iD = CTAIDGenerator.generateID()
     }
+}
+
+extension CTAContainer {
+
+    
 }
 
 // MARK: - contentsTypeRetrivevable

@@ -11,6 +11,9 @@ import UIKit
 class CTASelectorAnimationCell: CTASelectorCell {
 
     var tabView: CTATabView!
+    var animation: CTAAnimationBinder? {
+        return dataSource?.selectorBeganAnimation(self)
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,6 +29,7 @@ class CTASelectorAnimationCell: CTASelectorCell {
         
         tabView = CTATabView(frame: bounds)
         tabView.backgroundColor = UIColor.whiteColor()
+        tabView.dataSource = self
         contentView.addSubview(tabView)
         
         // Constraints
@@ -35,5 +39,21 @@ class CTASelectorAnimationCell: CTASelectorCell {
         tabView.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor).active = true
         tabView.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor).active = true
     }
+    
+    override func willBeDisplayed() {
+        
+    }
+}
 
+extension CTASelectorAnimationCell: CTATabViewDataSource {
+    
+    func numberOfTabItemsInTabView(view: CTATabView) -> Int {
+        
+        return animation != nil ? 3 : 1
+    }
+    
+//    func tabView(view: CTATabView, cellForItemAtIndexPath: NSIndexPath) -> UICollectionViewCell {
+//        
+//        
+//    }
 }

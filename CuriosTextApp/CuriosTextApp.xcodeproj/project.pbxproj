@@ -73,6 +73,9 @@
 		2C3E0ADF1C2156B200450B2C /* Qiniu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3E0ADE1C2156B200450B2C /* Qiniu.framework */; };
 		2C3E0AE11C21578400450B2C /* UploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3E0AE01C21578400450B2C /* UploadTests.swift */; };
 		2C3E0AE31C2157B800450B2C /* Qiniu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3E0AE21C2157B800450B2C /* Qiniu.framework */; };
+		2C3FD9821C5E175A0064179F /* CTAConfigCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3FD9811C5E175A0064179F /* CTAConfigCell.swift */; };
+		2C3FD9841C5E17BA0064179F /* CTAConfigAnimationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3FD9831C5E17BA0064179F /* CTAConfigAnimationCell.swift */; };
+		2C3FD9881C5E21260064179F /* CTAConfigSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3FD9871C5E21260064179F /* CTAConfigSliderCell.swift */; };
 		2C5378381C5C71BB004BCF40 /* CTATabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5378371C5C71BB004BCF40 /* CTATabView.swift */; };
 		2C567A691C5CBAF200F11369 /* Countries.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C567A6B1C5CBAF200F11369 /* Countries.plist */; };
 		2C5ACC121C439E8100B96CCD /* CTAStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5ACC111C439E8100B96CCD /* CTAStyleKit.swift */; };
@@ -267,6 +270,9 @@
 		2C3E0ADE1C2156B200450B2C /* Qiniu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qiniu.framework; path = "Pods/../build/Debug-iphoneos/Qiniu.framework"; sourceTree = "<group>"; };
 		2C3E0AE01C21578400450B2C /* UploadTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadTests.swift; sourceTree = "<group>"; };
 		2C3E0AE21C2157B800450B2C /* Qiniu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qiniu.framework; path = "Pods/../build/Debug-iphoneos/Qiniu.framework"; sourceTree = "<group>"; };
+		2C3FD9811C5E175A0064179F /* CTAConfigCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAConfigCell.swift; sourceTree = "<group>"; };
+		2C3FD9831C5E17BA0064179F /* CTAConfigAnimationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAConfigAnimationCell.swift; sourceTree = "<group>"; };
+		2C3FD9871C5E21260064179F /* CTAConfigSliderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAConfigSliderCell.swift; sourceTree = "<group>"; };
 		2C5378371C5C71BB004BCF40 /* CTATabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATabView.swift; sourceTree = "<group>"; };
 		2C567A6A1C5CBAF200F11369 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/Countries.plist; sourceTree = "<group>"; };
 		2C567A6C1C5CBAF500F11369 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/Countries.plist"; sourceTree = "<group>"; };
@@ -448,6 +454,9 @@
 				2C7336DE1C43CFCD00E1D511 /* CTASelectorSpacingCell.swift */,
 				2C5C24951C44F5D800A70F1B /* CTASelectorColorsCell.swift */,
 				2C247FE81C5CA10E0069CFFC /* CTASelectorAnimationCell.swift */,
+				2C3FD9811C5E175A0064179F /* CTAConfigCell.swift */,
+				2C3FD9871C5E21260064179F /* CTAConfigSliderCell.swift */,
+				2C3FD9831C5E17BA0064179F /* CTAConfigAnimationCell.swift */,
 				2C5C248B1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift */,
 				2C5C248D1C44E1C900A70F1B /* CTAVerticalItemCollectionViewCell.swift */,
 				2C5C248F1C44E1EE00A70F1B /* CTAVerticalItemColorCollectionViewCell.swift */,
@@ -768,7 +777,6 @@
 				2C7C27DC1C58B5CA00975D4A /* SpecialView_view */,
 				2C1F01561C3BD5540033CED8 /* Cells_view */,
 				2CAEAC901C323F2600C9F9AC /* ElementProtocol.swift */,
-				2C0404591C3EBDBF00A5B017 /* CTATabItemFactory.swift */,
 				2CAEAC8F1C323F2600C9F9AC /* EditViewController.swift */,
 				2C0404551C3EBB7A00A5B017 /* CTASelectorsViewController.swift */,
 				2C0404531C3EBB6800A5B017 /* CTACanvasViewController.swift */,
@@ -792,6 +800,7 @@
 		2CC1C9421C58D38100844A33 /* factory_model */ = {
 			isa = PBXGroup;
 			children = (
+				2C0404591C3EBDBF00A5B017 /* CTATabItemFactory.swift */,
 				2CC1C9401C58D36800844A33 /* CTABarItemsFactory.swift */,
 			);
 			name = factory_model;
@@ -1048,6 +1057,7 @@
 				6628C7031C200C11007F873C /* CTAViewUserModel.swift in Sources */,
 				2C31EB631C452597002A4D71 /* SwiftHEXColors.swift in Sources */,
 				2C247FE91C5CA10E0069CFFC /* CTASelectorAnimationCell.swift in Sources */,
+				2C3FD9821C5E175A0064179F /* CTAConfigCell.swift in Sources */,
 				2C8DD2131C4A34230035C52D /* CTAImageControllerProtocol.swift in Sources */,
 				2C7A95231C3A51F1005B0EAE /* CTALoginViewController.swift in Sources */,
 				2C5ACC121C439E8100B96CCD /* CTAStyleKit.swift in Sources */,
@@ -1074,6 +1084,7 @@
 				2CB380AF1C4CF86D009A681A /* CTAPreviewProtocol.swift in Sources */,
 				2CD488151C4E1A7300D11CB7 /* CTAPreviewPlay.swift in Sources */,
 				2C2B45B01C5CBED1004A4809 /* LocaleHelper.swift in Sources */,
+				2C3FD9841C5E17BA0064179F /* CTAConfigAnimationCell.swift in Sources */,
 				2C3B33FE1C117C8000738166 /* CTANetworkConig.swift in Sources */,
 				2CAEAC9D1C323F4300C9F9AC /* ContainerImgView.swift in Sources */,
 				2C247FEB1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift in Sources */,
@@ -1081,6 +1092,7 @@
 				661D29F61C2AD5E60073FC0E /* CTAUploadController.swift in Sources */,
 				2C3AE3EC1C59EC9E004D62B4 /* CTASocialShareManager.swift in Sources */,
 				2C3AE3EF1C59F5CD004D62B4 /* CTASocialTestViewController.swift in Sources */,
+				2C3FD9881C5E21260064179F /* CTAConfigSliderCell.swift in Sources */,
 				2C3B34061C11B4F900738166 /* CTAConstants.swift in Sources */,
 				2CFC658E1C56305500E8ADE7 /* CTAFullPublishesCell.swift in Sources */,
 				66C7BF231C3111D700ADF251 /* CTADomainInfo.swift in Sources */,

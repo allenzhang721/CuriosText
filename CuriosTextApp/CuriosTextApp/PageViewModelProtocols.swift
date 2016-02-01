@@ -57,6 +57,31 @@ protocol ContainerVMProtocol: viewPropertiesModifiable, contentsTypeRetrivevable
     
 }
 
+extension ContainerVMProtocol {
+    
+    var featureTypes: [CTAContainerFeatureType] {
+        
+        switch type {
+            
+        case .Text:
+            let textTypes: [CTAContainerFeatureType] = [
+                .Fonts,
+                .Size,
+                .Rotator,
+                .Aligments,
+                .TextSpacing,
+                .Colors,
+                .Animation
+            ]
+            
+            return textTypes
+            
+        default:
+            return []
+        }
+    }
+}
+
 protocol TextContainerVMProtocol: ContainerVMProtocol {
     
     var textElement: protocol<CTAElement, TextModifiable>? { get }

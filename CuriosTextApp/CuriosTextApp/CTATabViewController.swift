@@ -14,18 +14,14 @@ protocol CTATabViewControllerDataSource: class {
     func tabViewController(viewController: CTATabViewController, tabItemAtIndexPath indexPath: NSIndexPath) -> CTABarItem
 }
 
-class CTATabItem {
+protocol CTATabViewControllerDelegate: class {
     
-    let userInfo: AnyObject?
-    
-    init(userInfo: AnyObject? = nil) {
-        self.userInfo = userInfo
-    }
+    func tabViewController(ViewController: CTATabViewController, didChangedToIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?)
 }
 
 class CTATabViewController: UIViewController {
 
-    weak var delegate: LineFlowLayoutDelegate?
+    weak var delegate: CTATabViewControllerDelegate?
     weak var dataSource: CTATabViewControllerDataSource?
     @IBOutlet weak var collectionView: UICollectionView!
     var layout: CTALineFlowLayout {
@@ -41,7 +37,7 @@ class CTATabViewController: UIViewController {
         
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         layout.scrollDirection = .Horizontal
-        layout.delegate = delegate
+        layout.delegate = self
     }
 }
 
@@ -66,4 +62,16 @@ extension CTATabViewController: UICollectionViewDataSource {
 
         return cell
     }
+}
+
+extension CTATabViewController: LineFlowLayoutDelegate {
+    
+    func didChangeTo(
+        collectionView: UICollectionView,
+        itemAtIndexPath indexPath: NSIndexPath,
+        oldIndexPath: NSIndexPath?) {
+            
+            delegate?.tabViewController(self, didChangedToIndexPath: indexPath, oldIndexPath: oldIndexPath)
+    }
+    
 }

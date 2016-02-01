@@ -10,6 +10,18 @@ import Foundation
 
 class CTABarItemsFactory {
     
+    //Fonts, Size, Rotator, Aligments, TextSpacing, Colors, Animation
+    static let textTypes: [CTAContainerFeatureType] = [
+        .Fonts,
+        .Size,
+        .Rotator,
+        .Aligments,
+        .TextSpacing,
+        .TextSpacing,
+        .Colors,
+        .Animation
+    ]
+    
     static let textSelectorItems = [
     
         CTABarItem(

@@ -22,7 +22,7 @@ class CTAScrollTuneAttributes {
     
     let lineWidth = 2
     let lineSpace = 6 * 3
-    let showShortLine = true
+    private(set) var showShortLine = true
     let count = 100
     let lineColor = UIColor.lightGrayColor()
     let indicatorColor = UIColor.redColor()
@@ -33,6 +33,10 @@ class CTAScrollTuneAttributes {
     
     var totalLineCount: Int {
         return count + 1
+    }
+    
+    init(showShortLine: Bool = true) {
+        self.showShortLine = showShortLine
     }
 }
 
