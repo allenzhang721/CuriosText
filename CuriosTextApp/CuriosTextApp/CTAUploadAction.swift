@@ -121,6 +121,14 @@ class CTAUploadAction: CTAUploadProtocol {
         return true
     }
     
+    /**
+     User to upload
+     
+     - parameter uploadID:       publishID
+     - parameter uploadArray:    uploadArray description
+     - parameter progressHandle:
+     - parameter completeHandle:
+     */
     func uploadFileArray(uploadID:String, uploadArray:Array<CTAUploadModel>, progress progressHandle:(CTAUploadProgressInfo!) -> Void, complete completeHandle:(CTAUploadInfo!) -> Void){
         for var i = 0; i < uploadArray.count; i++ {
             let uploadMode:CTAUploadModel = uploadArray[i]

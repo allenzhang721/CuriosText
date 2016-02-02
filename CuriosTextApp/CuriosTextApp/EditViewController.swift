@@ -14,7 +14,11 @@ class EditViewController: UIViewController {
     private var canvasViewController: CTACanvasViewController!
     private var selectorViewController: CTASelectorsViewController!
     private var selectedIndexPath: NSIndexPath?
-    private let page = EditorFactory.generateRandomPage()
+    var document: CTADocument!
+    
+    private var page: CTAPage {
+        return document.page!
+    }
     
     private var selectedContainer: ContainerVMProtocol? {
         guard let selectedIndexPath = selectedIndexPath else { return nil }
@@ -149,7 +153,29 @@ class EditViewController: UIViewController {
     }
 }
 
-
+// MARK: - Publish
+extension EditViewController {
+    
+    @IBAction func publish(sender: AnyObject) {
+        
+        CTADocumentManager.saveDoucment { (success) -> Void in
+            
+            if success {
+                
+                CTADocumentManager.uploadFiles({ (success, publishID, publishURL) -> Void in
+                    
+                    debug_print("upload \(success)")
+                    
+                    CTAPublishDomain().createPublishFile(publishID, userID: "ae7ca2d8590f4709ad73286920fa522f", title: "Emiaostein", publishDesc: "Emiaostein", publishIconURL: "", previewIconURL: "", publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
+                        
+                        debug_print("publish \(domainInfo.result), publishURL = \(publishURL)")
+                    })
+                })
+            }
+        }
+    }
+    
+}
 
 
 

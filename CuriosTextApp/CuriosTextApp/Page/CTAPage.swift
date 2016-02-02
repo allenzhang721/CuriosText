@@ -16,6 +16,7 @@ final class CTAPage:NSObject, NSCoding {
         static let width = "width"
         static let height = "height"
         static let containers = "containers"
+        static let animations = "animations"
     }
     
     private(set) var width = 320.0
@@ -28,12 +29,14 @@ final class CTAPage:NSObject, NSCoding {
         width = aDecoder.decodeDoubleForKey(SerialKeys.width)
         height = aDecoder.decodeDoubleForKey(SerialKeys.height)
         containers = aDecoder.decodeObjectForKey(SerialKeys.containers) as! [CTAContainer]
+        animatoins = aDecoder.decodeObjectForKey(SerialKeys.animations) as! [CTAAnimation]
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeDouble(width, forKey: SerialKeys.width)
         aCoder.encodeDouble(height, forKey: SerialKeys.height)
         aCoder.encodeObject(containers, forKey: SerialKeys.containers)
+        aCoder.encodeObject(animatoins, forKey: SerialKeys.animations)
     }
     
     init(containers: [CTAContainer], anis: [CTAAnimation] = []) {

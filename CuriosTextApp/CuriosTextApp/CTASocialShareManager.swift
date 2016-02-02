@@ -161,7 +161,12 @@ extension CTASocialOAuthable {
         
         switch platform {
         case .WeChat:
-            MonkeyKing.OAuth(.WeChat, completionHandler: completionHandler)
+            
+            MonkeyKing.OAuth(.WeChat, completionHandler: { (dictionary, response, error) -> Void in
+                
+                debug_print(dictionary)
+                completionHandler(dictionary, response, error)
+            })
             
         case .Weibo:
             MonkeyKing.OAuth(.Weibo, completionHandler: completionHandler)

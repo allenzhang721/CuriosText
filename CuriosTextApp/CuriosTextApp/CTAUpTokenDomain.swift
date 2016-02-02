@@ -63,6 +63,12 @@ class CTAUpTokenDomain: CTABaseDomain {
         }
     }
     
+    /**
+     <#Description#>
+     
+     - parameter list:
+     - parameter compelecationBlock:  
+     */
     func publishUpToken(list:Array<CTAUpTokenModel>, compelecationBlock: (CTADomainListInfo!) -> Void)  {
         
         CTAPublishUpTokenRequest.init(list: list).startWithCompletionBlockWithSuccess { (response) -> Void in

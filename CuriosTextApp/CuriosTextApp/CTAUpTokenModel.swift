@@ -11,7 +11,7 @@ import SwiftyJSON
 
 final class CTAUpTokenModel: CTABaseModel {
     
-    let upTokenKey:String;
+    let upTokenKey:String; // service path: publishID/fileName.fileExtension
     let upToken:String;
     
     init(upTokenKey:String, upToken:String = ""){

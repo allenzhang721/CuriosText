@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import pop
 
-enum CTAAnimationName {
+enum CTAAnimationName: Int {
     
     case MoveIn, FlyIn
     case MoveOut, FlyOut

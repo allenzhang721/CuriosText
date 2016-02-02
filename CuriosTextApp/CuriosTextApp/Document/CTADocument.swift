@@ -12,11 +12,11 @@ import UIKit
 class CTADocument: UIDocument {
     
     private struct WrapperKey {
-        static let resource = "resource" // directory
-        static let page = "page"
+        static let resource = "resource" // resource directory
+        static let page = "page" // page file
     }
     
-    weak var accesser: CTADocumentAccesser?
+    var page: CTAPage?
     
     private var rootWrapper: NSFileWrapper!
     private var resWrapper: NSFileWrapper!
@@ -45,8 +45,8 @@ class CTADocument: UIDocument {
         }
     }
     
-    init(fileURL url: NSURL, accesser: CTADocumentAccesser?) {
-        self.accesser = accesser
+    init(fileURL url: NSURL, page: CTAPage?) {
+        self.page = page
         super.init(fileURL: url)
     }
     
@@ -59,7 +59,10 @@ class CTADocument: UIDocument {
         rootWrapper = contents
         
         // Fetch the page file data
-        accesser?.retrivedPageData(root.fileWrappers?[WrapperKey.page]?.regularFileContents)
+        let data = root.fileWrappers?[WrapperKey.page]?.regularFileContents
+//        page?.retrivedPageData(root.fileWrappers?[WrapperKey.page]?.regularFileContents)
+        
+        page = NSKeyedUnarchiver.unarchiveObjectWithData(data!) as? CTAPage
     }
     
     /*
@@ -71,11 +74,11 @@ class CTADocument: UIDocument {
     */
     override func contentsForType(typeName: String) throws -> AnyObject {
         
-        if let pageData = accesser?.pageData {
-            let pageWrapper = NSFileWrapper(regularFileWithContents: pageData)
-            pageWrapper.preferredFilename = WrapperKey.page
-            root.addFileWrapper(pageWrapper)
-        }
+        let pageData = NSKeyedArchiver.archivedDataWithRootObject(page!)
+        let pageWrapper = NSFileWrapper(regularFileWithContents: pageData)
+        pageWrapper.preferredFilename = WrapperKey.page
+        root.addFileWrapper(pageWrapper)
+       
         
         root.addFileWrapper(res)
 
@@ -93,5 +96,35 @@ class CTADocument: UIDocument {
     func resourceBy(name: String) -> NSData? {
         
         return resWrapper.fileWrappers?[name]?.regularFileContents
+    }
+}
+
+extension CTADocument {
+    
+    func filePaths() -> (String , [String: String]) { // relativePath: filePath
+        
+    var filePaths = [String: String]()
+        let url = fileURL
+        let publishID = fileURL.lastPathComponent!
+        let pageUrl = url.URLByAppendingPathComponent(WrapperKey.page)
+        let resDirUrl = url.URLByAppendingPathComponent(WrapperKey.resource)
+    
+        let pagePath = publishID + "/" + WrapperKey.page
+        
+        filePaths[pagePath] = pageUrl.path!
+        
+        if let resourceFileWrappers = res.fileWrappers {
+            
+            for r in resourceFileWrappers.values {
+                if let fileName = r.filename where r.regularFile {
+                    let resUrl = resDirUrl.URLByAppendingPathComponent(fileName)
+                    let resPath = publishID + "/" + fileName
+                    
+                    filePaths[resPath] = resUrl.path!
+                }
+            }
+        }
+        
+        return (pagePath, filePaths)
     }
 }
