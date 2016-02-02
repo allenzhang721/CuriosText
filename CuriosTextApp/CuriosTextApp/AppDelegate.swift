@@ -18,23 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Override point for customization after application launch.
     CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.Debug.description
     
-    let weChatAppID = ""
-    let weChatAppKey = ""
-    CTASocialManager.register(.WeChat, appID: weChatAppID, appKey: weChatAppKey)
+//    let account = MonkeyKing.Account.WeChat(appID: CTAConfigs.weChat.appID, appKey: CTAConfigs.weChat.appKey)
+//    MonkeyKing.registerAccount(account)
     
-    let weiboAppID = ""
-    let weiboAppKey = ""
-    CTASocialManager.register(.Weibo, appID: weiboAppID, appKey: weiboAppKey)
-    
-    // http://dashboard.mob.com/#/sms/index
-    let smsAppID = "cee2524c26f323f571cf0b53590815bd"
-    let smsAppKey = "f3c8b751ff80"
-    CTASocialManager.register(.SMS, appID: smsAppID, appKey: smsAppKey)
+    CTASocialManager.register(.WeChat, appID: CTAConfigs.weChat.appID, appKey: CTAConfigs.weChat.appKey)
+    CTASocialManager.register(.SMS, appID: CTAConfigs.SMS.appID, appKey: CTAConfigs.SMS.appKey) // http://dashboard.mob.com/#/sms/index
     
     return true
   }
     
-    func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         
         if CTASocialManager.handleOpenURL(url) {
             return true

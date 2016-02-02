@@ -11,8 +11,6 @@ import Foundation
 class CTAIDGenerator {
     
     class func generateID() -> String {
-    
-        let uuid = NSUUID().UUIDString
-        return uuid.substringWithRange(Range(start: uuid.endIndex.advancedBy(-12), end: uuid.endIndex))
+        return NSUUID().UUIDString.characters.split("-").map{String($0)}.reduce("") {$0 + $1}
     }
 }

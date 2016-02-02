@@ -9,7 +9,7 @@
         <!--Edit View Controller-->
         <scene sceneID="ZOJ-jn-SCs">
             <objects>
-                <viewController id="qRf-5N-mQJ" customClass="EditViewController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditViewController" id="qRf-5N-mQJ" customClass="EditViewController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ueh-u7-QEU"/>
                         <viewControllerLayoutGuide type="bottom" id="AXi-ce-yHq"/>
@@ -33,9 +33,9 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="vMw-Cu-dGI"/>
-                                    <barButtonItem title="Reload" id="AZ3-Xf-rl7">
+                                    <barButtonItem title="publish" id="AZ3-Xf-rl7">
                                         <connections>
-                                            <action selector="reloadCavas:" destination="qRf-5N-mQJ" id="QvQ-Dy-Qyi"/>
+                                            <action selector="publish:" destination="qRf-5N-mQJ" id="1St-gW-9rg"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
