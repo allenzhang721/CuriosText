@@ -164,6 +164,7 @@
 		2CDDF50A1C5F3BE00019FC83 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDF5041C5F3BE00019FC83 /* NSData+Base64.m */; };
 		2CDDF50B1C5F3BE00019FC83 /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDF5061C5F3BE00019FC83 /* NSData+CommonCrypto.m */; };
 		2CDDF50C1C5F3BE00019FC83 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDF5081C5F3BE00019FC83 /* NSString+Base64.m */; };
+		2CE6D21A1C60D00A0064A9B0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2CE6D21C1C60D00A0064A9B0 /* InfoPlist.strings */; };
 		2CED15AE1C5F65E10086976E /* CTADocumentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CED15AD1C5F65E10086976E /* CTADocumentProtocol.swift */; };
 		2CED15B01C5F6F990086976E /* CTADocumentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CED15AF1C5F6F990086976E /* CTADocumentManager.swift */; };
 		2CF5EB8B1C47B2CF009F0719 /* CTAFontsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF5EB8A1C47B2CF009F0719 /* CTAFontsManager.swift */; };
@@ -383,6 +384,8 @@
 		2CDDF5061C5F3BE00019FC83 /* NSData+CommonCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+CommonCrypto.m"; path = "AESEncypt/NSData+CommonCrypto.m"; sourceTree = SOURCE_ROOT; };
 		2CDDF5071C5F3BE00019FC83 /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Base64.h"; path = "AESEncypt/NSString+Base64.h"; sourceTree = SOURCE_ROOT; };
 		2CDDF5081C5F3BE00019FC83 /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Base64.m"; path = "AESEncypt/NSString+Base64.m"; sourceTree = SOURCE_ROOT; };
+		2CE6D21B1C60D00A0064A9B0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2CE6D21D1C60D00D0064A9B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		2CED15AD1C5F65E10086976E /* CTADocumentProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTADocumentProtocol.swift; sourceTree = "<group>"; };
 		2CED15AF1C5F6F990086976E /* CTADocumentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTADocumentManager.swift; sourceTree = "<group>"; };
 		2CF5EB8A1C47B2CF009F0719 /* CTAFontsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAFontsManager.swift; sourceTree = "<group>"; };
@@ -632,6 +635,7 @@
 				2C3B33D21C1176D000738166 /* LaunchScreen.storyboard */,
 				2C3B33D51C1176D000738166 /* Info.plist */,
 				2C567A6B1C5CBAF200F11369 /* Countries.plist */,
+				2CE6D21C1C60D00A0064A9B0 /* InfoPlist.strings */,
 				2C32BD581C4CB89100788A97 /* Localizable.strings */,
 			);
 			path = CuriosTextApp;
@@ -1021,6 +1025,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C3B33D41C1176D000738166 /* LaunchScreen.storyboard in Resources */,
+				2CE6D21A1C60D00A0064A9B0 /* InfoPlist.strings in Resources */,
 				2C32BD561C4CB89100788A97 /* Localizable.strings in Resources */,
 				2C3B33D11C1176D000738166 /* Assets.xcassets in Resources */,
 				2C567A691C5CBAF200F11369 /* Countries.plist in Resources */,
@@ -1336,6 +1341,15 @@
 				2CC74C911C5A275C00B536C2 /* zh-Hans */,
 			);
 			name = SMS_SDKLocalizable.strings;
+			sourceTree = "<group>";
+		};
+		2CE6D21C1C60D00A0064A9B0 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2CE6D21B1C60D00A0064A9B0 /* en */,
+				2CE6D21D1C60D00D0064A9B0 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
