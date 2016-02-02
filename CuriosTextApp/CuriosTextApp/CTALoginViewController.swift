@@ -136,10 +136,10 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         otherAccountLabel.frame.origin.x = (bouns.width - otherAccountLabel.frame.width)/2
         self.view.addSubview(otherAccountLabel)
         
-        let weichatButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 44)/2, y: bouns.height - 130*self.getVerRate(), width: 44, height: 44))
-        weichatButton.setImage(UIImage(named: "weichat-icon"), forState: .Normal)
-        weichatButton.addTarget(self, action: "weichatButtonClick:", forControlEvents: .TouchUpInside)
-        self.view.addSubview(weichatButton)
+        let wechatButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 44)/2, y: bouns.height - 130*self.getVerRate(), width: 44, height: 44))
+        wechatButton.setImage(UIImage(named: "wechat-icon"), forState: .Normal)
+        wechatButton.addTarget(self, action: "wechatButtonClick:", forControlEvents: .TouchUpInside)
+        self.view.addSubview(wechatButton)
         
         let forgetButton = UIButton.init(frame: CGRect.init(x: 27, y: bouns.height - 52*self.getVerRate(), width: 20, height: 84))
         forgetButton.setTitle(NSLocalizedString("ForgetPasswordLabel", comment: ""), forState: .Normal)
@@ -263,7 +263,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         self.navigationController?.pushViewController(setMobileView, animated: true)
     }
     
-    func weichatButtonClick(sender: UIButton){
+    func wechatButtonClick(sender: UIButton){
         CTASocialManager.OAuth(.WeChat) { (resultDic, urlResponse, error) -> Void in
             print(resultDic)
         }

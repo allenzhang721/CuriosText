@@ -7,8 +7,13 @@
 //
 
 import Foundation
+import Kingfisher
 
-class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CTAAlertProtocol, CTATextInputProtocol{
+enum CTASetUserNameType{
+    case register, registerWechat
+}
+
+class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CTAAlertProtocol, CTATextInputProtocol, CTALoadingProtocol, CTAImageControllerProtocol{
     
     static var _instance:CTASetUserNameViewController?;
     
@@ -21,7 +26,18 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     
     var userNameTextInput:UITextField!
     var completeButton:UIButton!
-    var iconImageButton:UIButton!
+    var userIconImage:UIImageView!
+    let imagePicker:UIImagePickerController = UIImagePickerController()
+    
+    var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
+    
+    var userNameType:CTASetUserNameType = .register
+    var selectedImage:UIImage?
+    var isChangeImage:Bool = false
+    var isResetView:Bool = false
+    
+    var userIconPath:String = ""
+    var userModel:CTAUserModel?
     
     override func prefersStatusBarHidden() -> Bool {
         return true
@@ -63,10 +79,16 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         userInfoLabel.frame.origin.x = (bouns.width - userInfoLabel.frame.width)/2
         self.view.addSubview(userInfoLabel)
         
-        self.iconImageButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 60)/2, y: 170*self.getVerRate(), width: 60, height: 62))
-        self.iconImageButton.setImage(UIImage(named: "setimage-icon"), forState: .Normal)
-        self.iconImageButton.addTarget(self, action: "iconImageButtonClick:", forControlEvents: .TouchUpInside)
-        self.view.addSubview(self.iconImageButton)
+        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bouns.width - 60)/2, y: 170*self.getVerRate(), width: 60, height: 62))
+        self.userIconImage.image = UIImage(named: "setimage-icon")
+        self.cropImageCircle(self.userIconImage)
+        self.view.addSubview(self.userIconImage)
+        self.userIconImage.userInteractionEnabled = true
+        let iconTap = UITapGestureRecognizer(target: self, action: "userIconClick:")
+        self.userIconImage.addGestureRecognizer(iconTap)
+    
+        self.imagePicker.delegate = self
+        
         
         let userNameLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: 262*self.getVerRate(), width: 50, height: 25))
         userNameLabel.font = UIFont.systemFontOfSize(18)
@@ -96,9 +118,55 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     }
     
     func viewWillLoad(){
-        self.iconImageButton.setImage(UIImage(named: "setimage-icon"), forState: .Normal)
-        self.userNameTextInput.text = ""
-        self.completeButton.enabled = false
+        if self.isResetView {
+            self.selectedImage = nil
+            self.isChangeImage = false
+            if self.userIconPath == "" {
+                if self.userModel != nil {
+                    if self.userModel!.userIconURL != "" {
+                        let imagePath = CTAFilePath.userFilePath+self.userModel!.userIconURL
+                        self.loadUserIcon(imagePath)
+                    }else {
+                        self.userIconImage.image = UIImage(named: "setimage-icon")
+                    }
+                }else {
+                    self.userIconImage.image = UIImage(named: "setimage-icon")
+                }
+            }else {
+                self.loadUserIcon(self.userIconPath)
+            }
+            if self.userModel != nil {
+                self.userNameTextInput.text = self.userModel!.nikeName
+            }else {
+                self.userNameTextInput.text = ""
+            }
+            self.setCompleteButtonStyle()
+        }
+        self.isResetView = false
+    }
+    
+    func loadUserIcon(iconPath:String){
+        let imageURL = NSURL(string: iconPath)!
+        self.userIconImage.kf_showIndicatorWhenLoading = true
+        self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: UIImage(named: "setimage-icon"), optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in
+            if error == nil {
+                self.selectedImage = self.userIconImage.image
+                self.setCompleteButtonStyle()
+            }else {
+                self.userIconImage.image = UIImage(named: "setimage-icon")
+            }
+            self.userIconImage.kf_showIndicatorWhenLoading = false
+        }
+    }
+    
+    func setCompleteButtonStyle(){
+        let newText = self.userNameTextInput.text
+        let newStr = NSString(string: newText!)
+        if self.selectedImage != nil && newStr.length > 0{
+            self.completeButton.enabled = true
+        }else {
+            self.completeButton.enabled = false
+        }
     }
     
     func backButtonClick(sender: UIButton){
@@ -108,15 +176,101 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
                 self.navigationController?.popToViewController(mobile, animated: true)
             }
         }
-       
+    }
+    
+    func changeToLoadingView() {
+        self.resignView()
+        self.completeButton.hidden = true
+        self.loadingImageView?.center = self.completeButton.center
+        self.showLoadingView()
+    }
+    
+    func changeToUnloadingView(){
+        self.completeButton.hidden = false
+        self.hideLoadingView()
     }
     
     func completeButtonClick(sender: UIButton){
-    
+        if self.userModel != nil {
+            self.changeToLoadingView()
+            if self.isChangeImage {
+                let userID = self.userModel!.userID
+                let uuid = NSUUID().UUIDString
+                let uuidStr = NSString(string: uuid)
+                let imageName = uuidStr.substringWithRange(NSMakeRange(0, 6))
+                let userIconKey = userID+"/"+imageName+".jpg"
+                let uptoken = CTAUpTokenModel.init(upTokenKey: userIconKey)
+                CTAUpTokenDomain.getInstance().userUpToken([uptoken], compelecationBlock: { (listInfo) -> Void in
+                    if listInfo.result {
+                        let newToken = listInfo.modelArray![0] as! CTAUpTokenModel
+                        let imageData = compressIconImage(self.selectedImage!)
+                        let uploadModel = CTAUploadModel.init(key: userIconKey, token: newToken.upToken, fileData: imageData)
+                        CTAUploadAction.getInstance().uploadFile(userID, uploadModel: uploadModel, progress: { (_) -> Void in
+                            }, complete: { (info) -> Void in
+                                if info.result{
+                                    self.uploadUserInfo(userIconKey)
+                                }else {
+                                    self.changeToUnloadingView()
+                                    self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                    })
+                                }
+                        })
+                    }else {
+                       self.changeToUnloadingView()
+                    }
+                })
+            }else {
+                self.uploadUserInfo()
+            }
+        }else {
+            self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+            })
+        }
     }
     
-    func iconImageButtonClick(sender: UIButton){
+    func uploadUserInfo(userIconURL:String = ""){
+        if self.userModel != nil {
+            if userIconURL != "" {
+                self.userModel!.userIconURL = userIconURL
+            }
+            self.userModel!.nikeName = self.userNameTextInput.text!
+            self.changeToLoadingView()
+            CTAUserDomain.getInstance().updateUserInfo(self.userModel!, compelecationBlock: { (info) -> Void in
+                self.changeToUnloadingView()
+                if info.result {
+                    CTAUserManager.save(self.userModel!)
+                    self.navigationController?.dismissViewControllerAnimated(true, completion: { () -> Void in
+                    })
+                }else {
+                    if info.errorType is CTAInternetError {
+                        self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                        })
+                    }else {
+                        let error = info.errorType as! CTARequestUserError
+                        self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                        })
+                    }
+                }
+            })
+        }
         
+    }
+    
+    func userIconClick(sender: UIPanGestureRecognizer){
+        var alertArray:Array<String> = []
+        alertArray.append(NSLocalizedString("AlertTakePhotoLabel", comment: ""))
+        alertArray.append(NSLocalizedString("AlertChoosePhoteLabel", comment: ""))
+        self.showSheetAlert(alertArray, cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: "")) { (index) -> Void in
+            if index == 0{
+                self.imagePicker.allowsEditing = false
+                self.imagePicker.sourceType = .Camera
+                self.presentViewController(self.imagePicker, animated: true, completion: nil)
+            }else if index == 1{
+                self.imagePicker.allowsEditing = false
+                self.imagePicker.sourceType = .PhotoLibrary
+                self.presentViewController(self.imagePicker, animated: true, completion: nil)
+            }
+        }
     }
     
     func bgViewClick(sender: UIPanGestureRecognizer){
@@ -135,8 +289,30 @@ extension CTASetUserNameViewController: UITextFieldDelegate{
                 self.completeButton.enabled = false
             }
         }else{
-            self.completeButton.enabled = true
+            if self.selectedImage != nil{
+                self.completeButton.enabled = true
+            }
         }
-        return true
+        if newStr.length < 20 || isDelete {
+            return true
+        }else {
+            return false
+        }
+    }
+}
+
+extension CTASetUserNameViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]){
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            self.userIconImage.image = pickedImage
+            self.selectedImage = pickedImage
+            self.setCompleteButtonStyle()
+            self.isChangeImage = true
+        }
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController){
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }

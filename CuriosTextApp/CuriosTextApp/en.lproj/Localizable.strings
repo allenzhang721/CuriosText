@@ -42,6 +42,8 @@
 "AlertNoLabel" = "No";
 "AlertCancelLabel" = "Cancel";
 "AlertResendLabel" = "Resend";
+"AlertTakePhotoLabel" = "Take Photo";
+"AlertChoosePhoteLabel" = "Choose from Photos";
 "AlertBackLabel" = "Back";
 "AlertWaitLabel" = "Wait";
 "AlertTitleSMSVerifyBack" = "Verification code SMS may be slightly delayed. Go back and start again now?";
@@ -56,7 +58,7 @@
 "AlertTitleInternetError" = "Internet error. Please try it again later.";
 "AlertTitleRegisterError" = "Sign up failed. Please try it again later.";
 "AlertTitleChangeError" = "Change failed. Please try it again later.";
-"AlertTitlePhoneExist" = "Mobile Number existed. Whether login with this account?";
+"AlertTitlePhoneExist" = "Mobile Number existed. Login this account?";
 "AlertTitlePhoneNotExist" = "Mobile Number not registered. Please try other.";
 "AlertTitlePhoneNil" = "Mobile Number null";
 "AlertTitleConnectUs" = "Please connect service.";

@@ -179,7 +179,7 @@ class CTAUploadActionModel {
     let uploadID:String
     let uploadArray:Array<CTAUploadModel>
     let progress: (CTAUploadProgressInfo!) -> Void
-    var complete: (CTAUploadInfo!) -> Void
+    let complete: (CTAUploadInfo!) -> Void
     
     init(uploadID:String, uploadArray:Array<CTAUploadModel>, progress:(CTAUploadProgressInfo!) -> Void, complete:(CTAUploadInfo!) -> Void){
         self.uploadID    = uploadID;

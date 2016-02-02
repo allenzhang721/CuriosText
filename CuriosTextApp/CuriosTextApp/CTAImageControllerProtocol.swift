@@ -8,6 +8,52 @@
 
 import UIKit
 
+func compressIconImage(image:UIImage) -> NSData{
+    let newImage = compressImage(image, maxWidth: 600)
+    let newData = UIImageJPEGRepresentation(newImage, 0.1)
+    return newData!
+}
+
+func compressJPGImage(image:UIImage) -> NSData{
+    let newImage = compressImage(image)
+    let newData = UIImageJPEGRepresentation(newImage, 0.1)
+    return newData!
+}
+
+func compressPNGImage(image:UIImage) -> NSData{
+    let newImage = compressImage(image)
+    let newData = UIImagePNGRepresentation(newImage)
+    return newData!
+}
+
+func compressImage(image:UIImage, maxWidth:CGFloat = UIScreen.mainScreen().bounds.width * 3) -> UIImage{
+    let maxWidth = maxWidth
+    let maxHeight = maxWidth
+    let imageSize = image.size
+    var rate:CGFloat
+    let imageRate = imageSize.width / imageSize.height
+    let maxRate = maxWidth / maxHeight
+    if image.size.width > maxWidth*8 || image.size.height > maxHeight*8{
+        if maxRate > imageRate{
+            rate = maxHeight*8 / imageSize.height
+        }else {
+            rate = maxWidth*8 / imageSize.width
+        }
+    }else {
+        if maxRate > imageRate{
+            rate = maxWidth / imageSize.width
+        }else {
+            rate = maxHeight / imageSize.height
+        }
+    }
+    let newSize = CGSize.init(width: rate*image.size.width, height: rate*image.size.height)
+    UIGraphicsBeginImageContextWithOptions(newSize, false, 1)
+    image.drawInRect(CGRect(x: 0, y: 0, width: newSize.width, height: newSize.width), blendMode: .Normal, alpha: 1.0)
+    let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return image
+}
+
 protocol CTAImageControllerProtocol{
     func cropImageCircle(imageView:UIView)
     func cropImageRound(imageView:UIView)

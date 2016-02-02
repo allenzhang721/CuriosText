@@ -168,6 +168,10 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
                         self.changeToUnloadingView()
                         if info!.result{
                             let setNameView = CTASetUserNameViewController.getInstance()
+                            setNameView.userNameType = .register
+                            setNameView.isResetView = true
+                            setNameView.userModel = self.userModel
+                            setNameView.userIconPath = ""
                             self.navigationController?.pushViewController(setNameView, animated: true)
                         }else {
                             if info.errorType is CTAInternetError {

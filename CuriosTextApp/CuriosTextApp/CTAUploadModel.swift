@@ -12,16 +12,28 @@ class CTAUploadModel {
     
     let key:String; // Service relative path: /publishID/fileName.png --  Emiaostein, 1/02/16, 18:15
     let token:String;
-    let filePath:String; // file's local absolute path --  Emiaostein, 1/02/16, 18:18
+    var filePath:String; // file's local absolute path --  Emiaostein, 1/02/16, 18:18
     var uploadID:String = "";
     var isUploading:Bool = false;
     var uploadProgress:Float = 0.0;
     var uploadComplete:Bool = false;
+    var fileData:NSData?
+    let isUploadData:Bool
     
     init(key:String, token:String, filePath:String){
         self.key          = key;
         self.token        = token;
         self.filePath     = filePath;
+        self.fileData     = nil;
+        self.isUploadData = false;
+    }
+    
+    init(key:String, token:String, fileData:NSData){
+        self.key          = key;
+        self.token        = token;
+        self.fileData     = fileData;
+        self.filePath     = ""
+        self.isUploadData = true;
     }
     
 }

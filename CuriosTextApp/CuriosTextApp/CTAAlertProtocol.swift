@@ -12,7 +12,7 @@ protocol CTAAlertProtocol{
     
     func showSelectedAlert(alertTile:String, alertMessage:String, okAlertLabel:String, cancelAlertLabel:String, compelecationBlock: (Bool) -> Void)
     func showSingleAlert(alertTile:String, alertMessage:String, compelecationBlock: () -> Void)
-    func showSheetAlert(okAlertLabel:String, cancelAlertLabel:String, compelecationBlock: (Bool) -> Void)
+    func showSheetAlert(okAlertArray:Array<String>, cancelAlertLabel:String, compelecationBlock: (index:Int) -> Void)
 }
 
 extension CTAAlertProtocol where Self: UIViewController{
@@ -36,13 +36,16 @@ extension CTAAlertProtocol where Self: UIViewController{
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    func showSheetAlert(okAlertLabel:String, cancelAlertLabel:String, compelecationBlock: (Bool) -> Void){
+    func showSheetAlert(okAlertArray:Array<String>, cancelAlertLabel:String, compelecationBlock: (index:Int) -> Void){
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        alert.addAction(UIAlertAction(title: okAlertLabel, style: .Default, handler: { (_) -> Void in
-            compelecationBlock(true)
-        }))
+        for var i:Int=0; i < okAlertArray.count; i++ {
+            let alertIndex = i
+            alert.addAction(UIAlertAction(title: okAlertArray[i], style: .Default, handler: { (_) -> Void in
+                compelecationBlock(index: alertIndex)
+            }))
+        }
         alert.addAction(UIAlertAction(title: cancelAlertLabel, style: UIAlertActionStyle.Cancel, handler: { (_) -> Void in
-            compelecationBlock(false)
+            compelecationBlock(index: -1)
         }))
         self.presentViewController(alert, animated: true, completion: nil)
     }

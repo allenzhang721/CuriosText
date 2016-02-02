@@ -194,21 +194,21 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
         self.changeToLoadingView()
         let code = self.verifyLabel1.text!+self.verifyLabel2.text!+self.verifyLabel3.text!+self.verifyLabel4.text!
         CTASocialManager.commitVerificationCode(code, phoneNumber: self.phone, zone: self.areaZone) { (result) -> Void in
-//            if result{
+            if result{
                 if self.smsType == .register {
                     CTAUserDomain.getInstance().phoneRegister(self.phone, areaCode: self.areaZone, passwd: "", compelecationBlock: { (info) -> Void in
                         self.changeToUnloadingView()
                         if info.result{
                             if info.successType == 0{
                                 let userModel = info.baseModel as! CTAUserModel
-                                self.pushSetPasswordView(userModel)
+                                self.pushSetPasswordView(userModel, setPasswordType: .register)
                             }else if info.successType == 2{
                                 let userModel = info.baseModel as! CTAUserModel
                                 self.showSelectedAlert(NSLocalizedString("AlertTitlePhoneExist", comment: ""), alertMessage: "", okAlertLabel: NSLocalizedString("AlertYesLabel", comment: ""), cancelAlertLabel: NSLocalizedString("AlertNoLabel", comment: ""), compelecationBlock: { (result) -> Void in
                                     if result {
                                         self.loginComplete(userModel)
                                     }else {
-                                        self.pushSetPasswordView(userModel)
+                                        self.pushSetPasswordView(userModel, setPasswordType: .resetPassword)
                                     }
                                 })
                             }
@@ -240,7 +240,7 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
                     CTAUserDomain.getInstance().checkUserExist(self.phone, areaCode: self.areaZone, compelecationBlock: { (info) -> Void in
                         self.changeToUnloadingView()
                         if info.result{
-                            self.pushSetPasswordView(nil)
+                            self.pushSetPasswordView(nil, setPasswordType: .resetPassword)
                         }else {
                             if info.errorType is CTAInternetError {
                                 self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
@@ -270,12 +270,12 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
                         }
                     })
                 }
-//            }else {
-//                self.changeToUnloadingView()
-//                self.showSingleAlert(NSLocalizedString("AlertTitleCodeVerifyError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-//                    self.resetView()
-//                })
-//            }
+            }else {
+                self.changeToUnloadingView()
+                self.showSingleAlert(NSLocalizedString("AlertTitleCodeVerifyError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                    self.resetView()
+                })
+            }
         }
     }
     
@@ -287,11 +287,20 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
         self.hideTextInput.text = ""
     }
     
-    func pushSetPasswordView(userModel:CTAUserModel?){
+    func pushSetPasswordView(userModel:CTAUserModel?, setPasswordType:CTASetPasswordType){
         let setView = CTASetPasswordViewController.getInstance()
         if self.smsType == .register {
-            setView.setPasswordType = .register
             setView.userModel = userModel
+            if userModel != nil {
+                if userModel!.nikeName == "" || userModel!.userIconURL == "" {
+                    setView.setPasswordType = .register
+                }else {
+                    setView.setPasswordType = setPasswordType
+                }
+            }else {
+                setView.setPasswordType = setPasswordType
+            }
+            
         }else if self.smsType == .resetPassword{
             setView.setPasswordType = .resetPassword
             setView.resetAreaCode = self.areaZone
@@ -302,8 +311,8 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
     
     func reSendButtonClick(sender: UIButton){
         self.hideTextInput.resignFirstResponder()
-        self.showSheetAlert(NSLocalizedString("AlertResendLabel", comment: ""), cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: ""), compelecationBlock: { (result) -> Void in
-            if result {
+        self.showSheetAlert([NSLocalizedString("AlertResendLabel", comment: "")], cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: ""), compelecationBlock: { (result) -> Void in
+            if result != -1{
                 sender.hidden = true
                 self.loadingImageView?.center = sender.center
                 self.showLoadingView()

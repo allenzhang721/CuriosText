@@ -80,20 +80,32 @@ class CTAUploadController {
                 self.uploadStart(uploadModel.key)
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
                     let option = QNUploadOption(mime: nil, progressHandler: { (fileKey, progress) -> Void in
-                        CTAUploadController.getInstance().uploadProgress(fileKey, progress: progress)
+                            CTAUploadController.getInstance().uploadProgress(fileKey, progress: progress)
                         }, params: nil, checkCrc: true, cancellationSignal: nil)
                     var ainfo: QNResponseInfo!
                     var afileKey: String!
                     var aresponse:  [NSObject : AnyObject]?
-                    self.uploadManager.putFile(uploadModel.filePath, key: uploadModel.key, token: uploadModel.token, complete: { (info, fileKey, response) -> Void in
-                        ainfo = info
-                        afileKey = fileKey
-                        aresponse = response
-                        
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.uploadCompleted(ainfo, filekey: afileKey, response: aresponse)
-                        })
-                        }, option: option)
+                    if uploadModel.isUploadData {
+                        self.uploadManager.putData(uploadModel.fileData, key: uploadModel.key, token: uploadModel.token, complete: { (info, fileKey, response) -> Void in
+                                ainfo = info
+                                afileKey = fileKey
+                                aresponse = response
+                            
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    self.uploadCompleted(ainfo, filekey: afileKey, response: aresponse)
+                                })
+                            }, option: option)
+                    }else {
+                        self.uploadManager.putFile(uploadModel.filePath, key: uploadModel.key, token: uploadModel.token, complete: { (info, fileKey, response) -> Void in
+                                ainfo = info
+                                afileKey = fileKey
+                                aresponse = response
+                            
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    self.uploadCompleted(ainfo, filekey: afileKey, response: aresponse)
+                                })
+                            }, option: option)
+                    }
                 })
             }
         }

@@ -22,8 +22,8 @@ struct CTARequestResultKey {
 
 struct CTAFilePath {
 
-    static var userFilePath = "https://dn-tu-curiosapp.qbox.me"
-    static var publishFilePath = "https://dn-tp-curiosapp.qbox.me"
+    static var userFilePath = "https://dn-tu-curiosapp.qbox.me/"
+    static var publishFilePath = "https://dn-tp-curiosapp.qbox.me/"
 }
 
 enum CTARequestHost: CustomStringConvertible {
@@ -36,7 +36,7 @@ enum CTARequestHost: CustomStringConvertible {
     case .Debug:
       return "http://192.168.1.100:8080/CuriosTextServices"
     case .Production:
-      return ""
+      return "http://cta.curiosapp.com"
     }
   }
 }

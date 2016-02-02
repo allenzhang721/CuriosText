@@ -45,6 +45,8 @@
 "AlertNoLabel" = "否";
 "AlertCancelLabel" = "取消";
 "AlertResendLabel" = "重发";
+"AlertTakePhotoLabel" = "拍照";
+"AlertChoosePhoteLabel" = "从相册中选择";
 "AlertBackLabel" = "返回";
 "AlertWaitLabel" = "等待";
 "AlertTitleSMSVerifyBack" = "验证码短信可能略有延迟,确定返回并重新开始?";
