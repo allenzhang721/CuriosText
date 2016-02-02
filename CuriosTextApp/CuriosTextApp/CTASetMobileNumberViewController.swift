@@ -8,13 +8,17 @@
 
 import Foundation
 
-class CTARegisterViewController: UIViewController, CTAPhoneProtocol, CTAAlertProtocol, CTALoadingProtocol{
+enum CTASetMobileNumberType{
+    case register, resetPassword
+}
+
+class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAAlertProtocol, CTALoadingProtocol{
     
-    static var _instance:CTARegisterViewController?;
+    static var _instance:CTASetMobileNumberViewController?;
     
-    static func getInstance() -> CTARegisterViewController{
+    static func getInstance() -> CTASetMobileNumberViewController{
         if _instance == nil{
-            _instance = CTARegisterViewController();
+            _instance = CTASetMobileNumberViewController();
         }
         return _instance!
     }
@@ -27,6 +31,7 @@ class CTARegisterViewController: UIViewController, CTAPhoneProtocol, CTAAlertPro
     
     var selectedModel:CountryZone?
     var isChangeContry:Bool = false
+    var setMobileNumberType:CTASetMobileNumberType = .register
     
     override func prefersStatusBarHidden() -> Bool {
         return true
@@ -72,12 +77,10 @@ class CTARegisterViewController: UIViewController, CTAPhoneProtocol, CTAAlertPro
         self.phoneTextinput.delegate = self
         
         self.registerButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: 320*self.getVerRate(), width: 40, height: 28))
-        self.registerButton.setTitle(NSLocalizedString("RegisterButtonLabel", comment: ""), forState: .Normal)
+        self.registerButton.setTitle(NSLocalizedString("NextButtonLabel", comment: ""), forState: .Normal)
         self.registerButton.setTitleColor(UIColor.init(red: 239/255, green: 51/255, blue: 74/255, alpha: 1.0), forState: .Normal)
         self.registerButton.setTitleColor(UIColor.init(red: 216/255, green: 216/255, blue: 216/255, alpha: 1.0), forState: .Disabled)
         self.registerButton.titleLabel?.font = UIFont.systemFontOfSize(20)
-        self.registerButton.sizeToFit()
-        self.registerButton.frame.origin.x = (bouns.width - self.registerButton.frame.width)/2
         self.registerButton.addTarget(self, action: "registerButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(self.registerButton)
     }
@@ -91,6 +94,13 @@ class CTARegisterViewController: UIViewController, CTAPhoneProtocol, CTAAlertPro
         if self.phoneTextinput.text == "" {
             self.registerButton.enabled = false
         }
+        if self.setMobileNumberType == .register{
+            self.registerButton.setTitle(NSLocalizedString("RegisterLabel", comment: ""), forState: .Normal)
+        }else if self.setMobileNumberType == .resetPassword{
+            self.registerButton.setTitle(NSLocalizedString("NextButtonLabel", comment: ""), forState: .Normal)
+        }
+        self.registerButton.sizeToFit()
+        self.registerButton.frame.origin.x = (UIScreen.mainScreen().bounds.width - self.registerButton.frame.width)/2
         self.isChangeContry = false
     }
     
@@ -117,20 +127,22 @@ class CTARegisterViewController: UIViewController, CTAPhoneProtocol, CTAAlertPro
                         sender.hidden = false
                         self.hideLoadingView()
                         self.view.userInteractionEnabled = true
-//                        let verify = CTASMSVerifyViewController.getInstance()
-//                        verify.phone = phoneNumber
-//                        verify.areaZone = zone
-//                        self.navigationController?.pushViewController(verify, animated: true)
+
                         if result {
                             let verify = CTASMSVerifyViewController.getInstance()
                             verify.phone = phoneNumber
                             verify.areaZone = zone
+                            if self.setMobileNumberType == .register{
+                                verify.smsType = .register
+                            }else if self.setMobileNumberType == .resetPassword{
+                                verify.smsType = .resetPassword
+                            }
                             self.navigationController?.pushViewController(verify, animated: true)
                         }else {
                             self.showSingleAlert(NSLocalizedString("AlertTitleNumberVerifyError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                             })
                         }
-                        
+                    
                     })
                 }
             })
@@ -150,14 +162,14 @@ class CTARegisterViewController: UIViewController, CTAPhoneProtocol, CTAAlertPro
     }
 }
 
-extension CTARegisterViewController: CTACountryDelegate{
+extension CTASetMobileNumberViewController: CTACountryDelegate{
     func setCountryCode(model:CountryZone){
         self.selectedModel = model
         self.changeCountryLabelByModel(selectedModel)
     }
 }
 
-extension CTARegisterViewController: UITextFieldDelegate{
+extension CTASetMobileNumberViewController: UITextFieldDelegate{
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
         let newText = self.phoneTextinput.text

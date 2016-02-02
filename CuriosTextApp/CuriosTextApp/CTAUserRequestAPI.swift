@@ -299,6 +299,30 @@ class CTAUpdateUserSexRequest: CTABaseRequest{
     }
 }
 
+class CTACheckUserExistRequest: CTABaseRequest{
+    let phone: String;
+    let areaCode: String;
+    
+    init(phone:String, areaCode:String){
+        self.phone    = phone;
+        self.areaCode = areaCode;
+    }
+    
+    override func requestUrl() -> String {
+        return CTARequestUrl.CheckUserExist.description;
+    }
+    
+    override func parameter() -> String {
+        
+        let dic:Dictionary<String, AnyObject> = [
+            key(.Phone)   : phone,
+            key(.AreaCode): areaCode
+        ];
+        
+        return self.getParameterString(dic, errorMessage: "CTACheckUserExistRequest");
+    }
+}
+
 class CTABindingPhoneRequest: CTABaseRequest{
     let userID:String;
     let phone: String;
@@ -442,12 +466,10 @@ class CTACheckPasswordRequest: CTABaseRequest{
 
 class CTAUpdatePasswordRequest: CTABaseRequest{
     let userID:String;
-    let password:String;
     let newPassword:String;
     
-    init(userID:String, password:String, newPassword:String){
+    init(userID:String, newPassword:String){
         self.userID      = userID;
-        self.password    = password;
         self.newPassword = newPassword
     }
     
@@ -459,7 +481,6 @@ class CTAUpdatePasswordRequest: CTABaseRequest{
         
         let dic:Dictionary<String, AnyObject> = [
             key(.UserID)     : userID,
-            key(.Password)   : password,
             key(.NewPassword): newPassword
         ];
         

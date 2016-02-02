@@ -254,6 +254,24 @@ class CTAUserDomain: CTABaseDomain {
         }
     }
     
+    func checkUserExist(phone:String, areaCode:String, compelecationBlock: (CTADomainInfo!) -> Void){
+        CTACheckUserExistRequest.init(phone: phone, areaCode: areaCode).startWithCompletionBlockWithSuccess{ (response) -> Void in
+            switch response.result {
+            case .Success(let json):
+                let json:JSON = JSON(json)
+                let resultIndex = json[CTARequestResultKey.resultIndex].int!
+                let result = self.checkJsonResult(json)
+                if result {
+                    compelecationBlock(CTADomainInfo.init(result: true, successType: resultIndex))
+                } else{
+                    compelecationBlock(CTADomainInfo.init(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
+                }
+            case .Failure( _):
+                compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            }
+        }
+    }
+    
     func bindingUserPhone(userID:String, phone: String, areaCode: String, compelecationBlock: (CTADomainInfo!) -> Void) {
         
         CTABindingPhoneRequest.init(userID: userID, phone: phone, areaCode: areaCode).startWithCompletionBlockWithSuccess{ (response) -> Void in
@@ -374,9 +392,9 @@ class CTAUserDomain: CTABaseDomain {
         }
     }
     
-    func updatePassword(userID:String, passwd:String, newPasswd:String,compelecationBlock: (CTADomainInfo?) -> Void) {
+    func updatePassword(userID:String, newPasswd:String, compelecationBlock: (CTADomainInfo!) -> Void) {
         
-        CTAUpdatePasswordRequest.init(userID: userID, password: passwd, newPassword: newPasswd).startWithCompletionBlockWithSuccess{ (response) -> Void in
+        CTAUpdatePasswordRequest.init(userID: userID, newPassword: newPasswd).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
             case .Success(let json):

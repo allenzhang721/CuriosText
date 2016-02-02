@@ -22,8 +22,8 @@ struct CTARequestResultKey {
 
 struct CTAFilePath {
 
-    static var userFilePath = ""//"https://dn-tu-curiosapp.qbox.me"
-    static var publishFilePath = ""//"https://dn-tp-curiosapp.qbox.me"
+    static var userFilePath = "https://dn-tu-curiosapp.qbox.me"
+    static var publishFilePath = "https://dn-tp-curiosapp.qbox.me"
 }
 
 enum CTARequestHost: CustomStringConvertible {
@@ -45,7 +45,7 @@ enum CTARequestUrl: CustomStringConvertible {
   case GetUserID,Login
   case PhoneRegister, WeixinRegister, WeiboRegister
   case UpdateUserInfo, UpdateUserNikename, UpdateUserDesc, UpdateUserIconURL, UpdateUserAddress, UpdateUserSex
-  case BindingPhone, BindingWeixinID, UnbindingWeixinID, BingingWeiboID, UnbindingWeiboID
+  case CheckUserExist, BindingPhone, BindingWeixinID, UnbindingWeixinID, BingingWeiboID, UnbindingWeiboID
   case CheckPassword, UpdatePassword, ResetPassword, UserDetail
     
   case GetPublishID, CreatePublish, DeletePublish
@@ -78,6 +78,8 @@ enum CTARequestUrl: CustomStringConvertible {
         return "/user/updateUserAddress"
     case .UpdateUserSex:
         return "/user/updateUserSex"
+    case .CheckUserExist:
+        return "/user/checkUserExist"
     case .BindingPhone:
         return "/user/bindingPhone"
     case .BindingWeixinID:

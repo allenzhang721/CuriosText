@@ -41,6 +41,7 @@ enum CTAPhoneRegisterError:Int, ErrorType{
     
     case PhoneIsEmpty = 1
     case PhoneExist = 2
+    case UserIsDelete = 4
     case NeedContactWithService = 8
     case DataIsEmpty = 9
     

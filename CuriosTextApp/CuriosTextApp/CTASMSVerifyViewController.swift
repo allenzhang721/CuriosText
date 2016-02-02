@@ -8,7 +8,11 @@
 
 import Foundation
 
-class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAAlertProtocol, CTALoadingProtocol{
+enum CTASMSVerifyType{
+    case register, resetPassword
+}
+
+class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAAlertProtocol, CTALoadingProtocol, CTALoginProtocol{
     
     static var _instance:CTASMSVerifyViewController?;
     
@@ -32,6 +36,9 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
     var verifyLabel2:UILabel!
     var verifyLabel3:UILabel!
     var verifyLabel4:UILabel!
+    
+    var smsType:CTASMSVerifyType = .register
+    var isBackDirect:Bool = false
     
     override func prefersStatusBarHidden() -> Bool {
         return true
@@ -57,14 +64,11 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
     func initView(){
         let bouns = UIScreen.mainScreen().bounds
         
-        
-        
         self.hideTextInput = UITextField.init(frame: CGRect.init(x: 0, y: 0, width: 300, height: 40))
         self.hideTextInput.hidden = true
         self.hideTextInput.delegate = self
         self.hideTextInput.keyboardType = .NumberPad
         self.view.addSubview(self.hideTextInput)
-        
         
         let backButton = UIButton.init(frame: CGRect.init(x: 20, y: 12, width: 11, height: 20))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
@@ -156,50 +160,150 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
         
         self.phoneLabel.sizeToFit()
         self.phoneLabel.frame.origin.x = (UIScreen.mainScreen().bounds.width - self.phoneLabel.frame.width)/2
+        self.resetView()
+        self.hideTextInput.becomeFirstResponder()
+        self.isBackDirect = false
+    }
+    
+    func backButtonClick(sender: UIButton){
+        if !self.isBackDirect {
+            self.showSelectedAlert(NSLocalizedString("AlertTitleSMSVerifyBack", comment: ""), alertMessage: "", okAlertLabel: NSLocalizedString("AlertBackLabel", comment: ""), cancelAlertLabel: NSLocalizedString("AlertWaitLabel", comment: "")) { (result) -> Void in
+                if result {
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+            }
+        }else {
+            self.navigationController?.popViewControllerAnimated(true)
+        }
+    }
+    
+    func changeToLoadingView() {
+        self.hideTextInput.resignFirstResponder()
+        self.resendButton.hidden = true
+        self.loadingImageView?.center = self.resendButton.center
+        self.showLoadingView()
+    }
+    
+    func changeToUnloadingView(){
+        self.resendButton.hidden = false
+        self.hideLoadingView()
+        self.hideTextInput.becomeFirstResponder()
+    }
+    
+    func submit(){
+        self.changeToLoadingView()
+        let code = self.verifyLabel1.text!+self.verifyLabel2.text!+self.verifyLabel3.text!+self.verifyLabel4.text!
+        CTASocialManager.commitVerificationCode(code, phoneNumber: self.phone, zone: self.areaZone) { (result) -> Void in
+//            if result{
+                if self.smsType == .register {
+                    CTAUserDomain.getInstance().phoneRegister(self.phone, areaCode: self.areaZone, passwd: "", compelecationBlock: { (info) -> Void in
+                        self.changeToUnloadingView()
+                        if info.result{
+                            if info.successType == 0{
+                                let userModel = info.baseModel as! CTAUserModel
+                                self.pushSetPasswordView(userModel)
+                            }else if info.successType == 2{
+                                let userModel = info.baseModel as! CTAUserModel
+                                self.showSelectedAlert(NSLocalizedString("AlertTitlePhoneExist", comment: ""), alertMessage: "", okAlertLabel: NSLocalizedString("AlertYesLabel", comment: ""), cancelAlertLabel: NSLocalizedString("AlertNoLabel", comment: ""), compelecationBlock: { (result) -> Void in
+                                    if result {
+                                        self.loginComplete(userModel)
+                                    }else {
+                                        self.pushSetPasswordView(userModel)
+                                    }
+                                })
+                            }
+                        }else {
+                            if info.errorType is CTAInternetError {
+                                self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                    self.resetView()
+                                })
+                            }else {
+                                let error = info.errorType as! CTAPhoneRegisterError
+                                self.isBackDirect = true
+                                if error == .PhoneIsEmpty {
+                                    self.showSingleAlert(NSLocalizedString("AlertTitlePhoneNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        self.resetView()
+                                    })
+                                }else if error == .DataIsEmpty{
+                                    self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        self.resetView()
+                                    })
+                                }else {
+                                    self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        self.resetView()
+                                    })
+                                }
+                            }
+                        }
+                    })
+                }else if self.smsType == .resetPassword{
+                    CTAUserDomain.getInstance().checkUserExist(self.phone, areaCode: self.areaZone, compelecationBlock: { (info) -> Void in
+                        self.changeToUnloadingView()
+                        if info.result{
+                            self.pushSetPasswordView(nil)
+                        }else {
+                            if info.errorType is CTAInternetError {
+                                self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                    self.resetView()
+                                })
+                            }else {
+                                let error = info.errorType as! CTARequestUserError
+                                self.isBackDirect = true
+                                if error == .UserIDIsEmpty {
+                                    self.showSingleAlert(NSLocalizedString("AlertTitlePhoneNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        self.resetView()
+                                    })
+                                }else if error == .UserIDNotExist {
+                                    self.showSingleAlert(NSLocalizedString("AlertTitlePhoneNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        self.resetView()
+                                    })
+                                }else if error == .NeedContactWithService{
+                                    self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        self.resetView()
+                                    })
+                                }else if error == .DataIsEmpty{
+                                    self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        self.resetView()
+                                    })
+                                }
+                            }
+                        }
+                    })
+                }
+//            }else {
+//                self.changeToUnloadingView()
+//                self.showSingleAlert(NSLocalizedString("AlertTitleCodeVerifyError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+//                    self.resetView()
+//                })
+//            }
+        }
+    }
+    
+    func resetView(){
         self.verifyLabel1.text = ""
         self.verifyLabel2.text = ""
         self.verifyLabel3.text = ""
         self.verifyLabel4.text = ""
         self.hideTextInput.text = ""
-        self.hideTextInput.becomeFirstResponder()
     }
     
-    func backButtonClick(sender: UIButton){
-        self.showSelectedAlert(NSLocalizedString("SMSVerifyBackTitle", comment: ""), alertMessage: "", okAlertLabel: NSLocalizedString("AlertBackLabel", comment: ""), cancelAlertLabel: NSLocalizedString("AlertWaitLabel", comment: "")) { (result) -> Void in
-            if result {
-                self.navigationController?.popViewControllerAnimated(true)
-            }
+    func pushSetPasswordView(userModel:CTAUserModel?){
+        let setView = CTASetPasswordViewController.getInstance()
+        if self.smsType == .register {
+            setView.setPasswordType = .register
+            setView.userModel = userModel
+        }else if self.smsType == .resetPassword{
+            setView.setPasswordType = .resetPassword
+            setView.resetAreaCode = self.areaZone
+            setView.resetPhone = self.phone
         }
-    }
-    
-    func submit(){
-        self.hideTextInput.resignFirstResponder()
-        self.resendButton.hidden = true
-        self.loadingImageView?.center = self.resendButton.center
-        self.showLoadingView()
-        let code = self.verifyLabel1.text!+self.verifyLabel2.text!+self.verifyLabel3.text!+self.verifyLabel4.text!
-        CTASocialManager.commitVerificationCode(code, phoneNumber: self.phone, zone: self.areaZone) { (result) -> Void in
-            self.resendButton.hidden = false
-            self.hideLoadingView()
-            self.hideTextInput.becomeFirstResponder()
-            if result{
-                
-            }else {
-                self.showSingleAlert(NSLocalizedString("AlertTitleCodeVerifyError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                    self.verifyLabel1.text = ""
-                    self.verifyLabel2.text = ""
-                    self.verifyLabel3.text = ""
-                    self.verifyLabel4.text = ""
-                    self.hideTextInput.text = ""
-                })
-            }
-        }
+        self.navigationController?.pushViewController(setView, animated: true)
     }
     
     func reSendButtonClick(sender: UIButton){
+        self.hideTextInput.resignFirstResponder()
         self.showSheetAlert(NSLocalizedString("AlertResendLabel", comment: ""), cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: ""), compelecationBlock: { (result) -> Void in
             if result {
-                self.hideTextInput.resignFirstResponder()
                 sender.hidden = true
                 self.loadingImageView?.center = sender.center
                 self.showLoadingView()
@@ -214,6 +318,8 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
                         }
                     }
                 })
+            }else {
+                self.hideTextInput.becomeFirstResponder()
             }
         })
     }
