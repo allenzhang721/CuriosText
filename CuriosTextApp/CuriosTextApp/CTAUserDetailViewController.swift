@@ -182,7 +182,6 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     func resetDisView(){
         self.setDefaultView()
         self.fitView()
-        self.hideLoadingView()
         self.viewUser = nil
         self.userDetailModel = nil
         self.loginUserID = ""
@@ -205,8 +204,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     }
     
     func loadUserDetail(){
-        self.followButtonView!.hidden = true
-        self.showLoadingHandle();
+        self.showLoadingViewByView(self.followButtonView)
         CTAUserDomain.getInstance().userDetail(self.loginUserID, beUserID: self.viewUser!.userID) { (info) -> Void in
             if info.result{
                 self.userDetailModel = info.baseModel! as? CTAViewUserModel
@@ -216,11 +214,6 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
             self.setViewByDetailUser()
             self.hideLoadingView()
         }
-    }
-    
-    func showLoadingHandle(){
-        self.loadingImageView!.frame = CGRect.init(x: self.followButtonView.frame.origin.x + self.followButtonView.frame.width/2 - 20, y: self.followButtonView.frame.origin.y + self.followButtonView.frame.height/2 - 20, width: 40, height: 40)
-        self.showLoadingView()
     }
     
     func setViewByDetailUser(){
@@ -367,28 +360,24 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
             let relationType:Int = self.userDetailModel!.relationType
             switch  relationType{
             case 0, 3:
-                self.followButtonView!.hidden = true
-                self.showLoadingHandle()
+                self.showLoadingViewByView(self.followButtonView)
                 CTAUserRelationDomain.getInstance().followUser(self.loginUserID, relationUserID: self.userDetailModel!.userID) { (info) -> Void in
                     if info.result {
                         self.userDetailModel!.relationType = (relationType==0 ? 1 : 5)
                         self.userDetailModel!.beFollowCount += 1
                         self.setViewByDetailUser()
                     }
-                    self.followButtonView!.hidden = false
-                    self.hideLoadingView()
+                    self.hideLoadingViewByView(self.followButtonView)
                 }
             case 1, 5:
-                self.followButtonView!.hidden = true
-                self.showLoadingHandle()
+                self.showLoadingViewByView(self.followButtonView)
                 CTAUserRelationDomain.getInstance().unFollowUser(self.loginUserID, relationUserID: self.userDetailModel!.userID) { (info) -> Void in
                     if info.result {
                         self.userDetailModel!.relationType = (relationType==1 ? 0 : 3)
                         self.userDetailModel!.beFollowCount = (self.userDetailModel!.beFollowCount - 1  > 0 ? self.userDetailModel!.beFollowCount - 1 : 0)
                         self.setViewByDetailUser()
                     }
-                    self.followButtonView!.hidden = false
-                    self.hideLoadingView()
+                    self.hideLoadingViewByView(self.followButtonView)
                 }
             default:
                 break

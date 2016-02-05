@@ -28,8 +28,8 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     var userIconImage:UIImageView!
     var userNikenameLabel:UILabel!
     
-    let backButton:UIButton = UIButton.init(frame: CGRect.init(x: 10, y: 12, width: 12, height: 20))
-    let homeViewButton:UIButton = UIButton.init(frame: CGRect.init(x: 10, y: 10, width: 30, height: 24))
+    var backButton:UIButton!
+    var homeViewButton:UIButton!
     var settingButton:UIButton!
     
     var previousScrollViewYOffset:CGFloat = 0.0
@@ -154,17 +154,21 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     }
     
     func initViewNavigateBar(){
+        let bounds = UIScreen.mainScreen().bounds
         self.userHeaderView = UIView.init(frame: CGRectMake(62,0,self.view.frame.size.width-124, 44))
-        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (self.userHeaderView.frame.width-26)/2, y: 9, width: 26, height: 26));
+        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bounds.size.width-26)/2, y: 9, width: 26, height: 26));
         self.cropImageCircle(self.userIconImage)
         self.userIconImage.image = UIImage(named: "default-usericon")
-        self.userNikenameLabel = UILabel.init(frame: CGRect.init(x: (self.userHeaderView.frame.width-100)/2, y: 14, width: 100, height: 16))
+        self.userNikenameLabel = UILabel.init(frame: CGRect.init(x: (bounds.size.width-100)/2, y: 14, width: 100, height: 16))
         self.userNikenameLabel.font = UIFont.systemFontOfSize(12)
         self.userNikenameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        self.settingButton = UIButton.init(frame: CGRect.init(x: self.view.frame.width - 42, y: 10, width: 32, height: 24))
+        self.settingButton = UIButton.init(frame: CGRect.init(x: bounds.size.width - 45, y: 2, width: 40, height: 40))
         self.settingButton.setImage(UIImage.init(named: "setting-button"), forState: .Normal)
+        self.homeViewButton = UIButton.init(frame: CGRect.init(x: 5, y: 2, width: 40, height: 40))
         self.homeViewButton.setImage(UIImage.init(named: "homeview-button"), forState: .Normal)
+        self.backButton = UIButton.init(frame: CGRect.init(x: 5, y: 2, width: 40, height: 40))
         self.backButton.setImage(UIImage.init(named: "back-button"), forState: .Normal)
+        
         self.viewToolBar = UIView()
         self.viewToolBar.frame = CGRectMake(0, 0, self.view.frame.size.width, 44)
         self.userHeaderView.addSubview(self.userIconImage)

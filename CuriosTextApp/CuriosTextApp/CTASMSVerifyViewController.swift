@@ -70,7 +70,7 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
         self.hideTextInput.keyboardType = .NumberPad
         self.view.addSubview(self.hideTextInput)
         
-        let backButton = UIButton.init(frame: CGRect.init(x: 20, y: 12, width: 11, height: 20))
+        let backButton = UIButton.init(frame: CGRect.init(x: 5, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
@@ -179,14 +179,11 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
     
     func changeToLoadingView() {
         self.hideTextInput.resignFirstResponder()
-        self.resendButton.hidden = true
-        self.loadingImageView?.center = self.resendButton.center
-        self.showLoadingView()
+        self.showLoadingViewByView(self.resendButton)
     }
     
     func changeToUnloadingView(){
-        self.resendButton.hidden = false
-        self.hideLoadingView()
+        self.hideLoadingViewByView(self.resendButton)
         self.hideTextInput.becomeFirstResponder()
     }
     
@@ -313,17 +310,13 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
         self.hideTextInput.resignFirstResponder()
         self.showSheetAlert([NSLocalizedString("AlertResendLabel", comment: "")], cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: ""), compelecationBlock: { (result) -> Void in
             if result != -1{
-                sender.hidden = true
-                self.loadingImageView?.center = sender.center
-                self.showLoadingView()
+                self.changeToLoadingView()
                 let delay = dispatch_time(DISPATCH_TIME_NOW,
                     Int64(1.0 * Double(NSEC_PER_SEC)))
                 CTASocialManager.getVerificationCode(self.phone, zone: self.areaZone, completionHandler: { (result) -> Void in
                     dispatch_after(delay, dispatch_get_main_queue()) { [weak self] in
                         if let sf = self{
-                            sender.hidden = false
-                            sf.hideLoadingView()
-                            sf.hideTextInput.becomeFirstResponder()
+                            self?.changeToUnloadingView()
                         }
                     }
                 })

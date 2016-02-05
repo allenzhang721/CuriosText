@@ -60,7 +60,7 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
         let tap = UITapGestureRecognizer(target: self, action: "bgViewClick:")
         self.view.addGestureRecognizer(tap)
         
-        let backButton = UIButton.init(frame: CGRect.init(x: 20, y: 12, width: 11, height: 20))
+        let backButton = UIButton.init(frame: CGRect.init(x: 5, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
@@ -119,15 +119,9 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
             self.resignView()
             self.showSelectedAlert(NSLocalizedString("AlertTitleNumberConfirm", comment: ""), alertMessage: message, okAlertLabel: NSLocalizedString("AlertOkLabel", comment: ""), cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: ""), compelecationBlock: { (result) -> Void in
                 if result {
-                    sender.hidden = true
-                    self.loadingImageView!.center = sender.center
-                    self.showLoadingView()
-                    self.view.userInteractionEnabled = false
+                    self.showLoadingViewByView(sender)
                     CTASocialManager.getVerificationCode(phoneNumber, zone: zone, completionHandler: { (result) -> Void in
-                        sender.hidden = false
-                        self.hideLoadingView()
-                        self.view.userInteractionEnabled = true
-
+                        self.hideLoadingViewByView(sender)
                         if result {
                             let verify = CTASMSVerifyViewController.getInstance()
                             verify.phone = phoneNumber

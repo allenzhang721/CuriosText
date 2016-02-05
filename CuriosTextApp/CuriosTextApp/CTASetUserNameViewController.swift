@@ -66,7 +66,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         let tap = UITapGestureRecognizer(target: self, action: "bgViewClick:")
         self.view.addGestureRecognizer(tap)
         
-        let backButton = UIButton.init(frame: CGRect.init(x: 20, y: 12, width: 11, height: 20))
+        let backButton = UIButton.init(frame: CGRect.init(x: 5, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
@@ -180,14 +180,11 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     
     func changeToLoadingView() {
         self.resignView()
-        self.completeButton.hidden = true
-        self.loadingImageView?.center = self.completeButton.center
-        self.showLoadingView()
+        self.showLoadingViewByView(self.completeButton)
     }
     
     func changeToUnloadingView(){
-        self.completeButton.hidden = false
-        self.hideLoadingView()
+        self.hideLoadingViewByView(self.completeButton)
     }
     
     func completeButtonClick(sender: UIButton){

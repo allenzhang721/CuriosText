@@ -70,8 +70,8 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         let bouns = UIScreen.mainScreen().bounds
         let tap = UITapGestureRecognizer(target: self, action: "bgViewClick:")
         self.view.addGestureRecognizer(tap)
-        
-        let backButton = UIButton.init(frame: CGRect.init(x: 20, y: 12, width: 11, height: 20))
+    
+        let backButton = UIButton.init(frame: CGRect.init(x: 5, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
@@ -145,18 +145,15 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
     }
     
     func changeToLoadingView() {
-        self.submitButton.hidden = true
-        self.loadingImageView?.center = self.submitButton.center
-        self.showLoadingView()
+        self.resignView()
+        self.showLoadingViewByView(self.submitButton)
     }
     
     func changeToUnloadingView(){
-        self.submitButton.hidden = false
-        self.hideLoadingView()
+        self.hideLoadingViewByView(self.submitButton)
     }
     
     func submitButtonClikc(send: UIButton){
-        self.resignView()
         let passwordText = self.passwordTextinput.text
         let confirmText = self.confirmTextinput.text
         if passwordText == confirmText {

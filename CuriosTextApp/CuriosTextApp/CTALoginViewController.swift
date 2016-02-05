@@ -178,9 +178,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
     
     func closeButtonClick(sender: UIButton){
         self.resignView()
-        self.dismissViewControllerAnimated(false) { () -> Void in
-            
-        }
+        self.navigationController?.dismissViewControllerAnimated(false, completion: nil)
     }
     
     func passwordVisibleClick(sender: UIButton){
@@ -200,14 +198,11 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
     }
     
     func changeToLoadingView(button:UIButton){
-        button.hidden = true
-        self.loadingImageView?.center = button.center
-        self.showLoadingView()
+        self.showLoadingViewByView(button)
     }
     
     func changeToUnloadingView(button:UIButton){
-        button.hidden = false
-        self.hideLoadingView()
+        self.hideLoadingViewByView(button)
     }
     
     func loginButtonClick(sender: UIButton){

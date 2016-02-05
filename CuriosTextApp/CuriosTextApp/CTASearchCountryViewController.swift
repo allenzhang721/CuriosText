@@ -83,7 +83,7 @@ class CTASearchCountryViewController: UIViewController{
         searchLabel.textAlignment = .Center
         self.view.addSubview(searchLabel)
         
-        let backButton = UIButton.init(frame: CGRect.init(x: 20, y: 12, width: 11, height: 20))
+        let backButton = UIButton.init(frame: CGRect.init(x: 5, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
