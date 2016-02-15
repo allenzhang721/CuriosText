@@ -87,6 +87,8 @@
 		2C401DB11C70D05400AE45FE /* CTACanvasImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C401DB01C70D05400AE45FE /* CTACanvasImageCell.swift */; };
 		2C47F89C1C7171020068F215 /* CTAContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47F89B1C7171020068F215 /* CTAContainerViewModel.swift */; };
 		2C47F89E1C7171380068F215 /* CTAPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47F89D1C7171380068F215 /* CTAPageViewModel.swift */; };
+		2C47F8A01C7174D20068F215 /* CTATextContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47F89F1C7174D20068F215 /* CTATextContainerViewModel.swift */; };
+		2C47F8A21C7175A50068F215 /* CTAImgContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47F8A11C7175A50068F215 /* CTAImgContainerViewModel.swift */; };
 		2C5378381C5C71BB004BCF40 /* CTATabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5378371C5C71BB004BCF40 /* CTATabView.swift */; };
 		2C567A691C5CBAF200F11369 /* Countries.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C567A6B1C5CBAF200F11369 /* Countries.plist */; };
 		2C5ACC121C439E8100B96CCD /* CTAStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5ACC111C439E8100B96CCD /* CTAStyleKit.swift */; };
@@ -303,6 +305,8 @@
 		2C401DB01C70D05400AE45FE /* CTACanvasImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACanvasImageCell.swift; sourceTree = "<group>"; };
 		2C47F89B1C7171020068F215 /* CTAContainerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAContainerViewModel.swift; sourceTree = "<group>"; };
 		2C47F89D1C7171380068F215 /* CTAPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPageViewModel.swift; sourceTree = "<group>"; };
+		2C47F89F1C7174D20068F215 /* CTATextContainerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATextContainerViewModel.swift; sourceTree = "<group>"; };
+		2C47F8A11C7175A50068F215 /* CTAImgContainerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAImgContainerViewModel.swift; sourceTree = "<group>"; };
 		2C5378371C5C71BB004BCF40 /* CTATabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATabView.swift; sourceTree = "<group>"; };
 		2C567A6A1C5CBAF200F11369 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/Countries.plist; sourceTree = "<group>"; };
 		2C567A6C1C5CBAF500F11369 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/Countries.plist"; sourceTree = "<group>"; };
@@ -720,6 +724,8 @@
 				2C3CAD111C21825900D8DE4B /* CTAContainer.swift */,
 				2C47F89D1C7171380068F215 /* CTAPageViewModel.swift */,
 				2C47F89B1C7171020068F215 /* CTAContainerViewModel.swift */,
+				2C47F89F1C7174D20068F215 /* CTATextContainerViewModel.swift */,
+				2C47F8A11C7175A50068F215 /* CTAImgContainerViewModel.swift */,
 				2C3CAD121C21825900D8DE4B /* CTAElement.swift */,
 				2C3CAD151C21825900D8DE4B /* CTATextElement.swift */,
 				2C3CAD131C21825900D8DE4B /* CTAImageElement.swift */,
@@ -1195,6 +1201,7 @@
 				2C3FD9881C5E21260064179F /* CTAConfigSliderCell.swift in Sources */,
 				2C3B34061C11B4F900738166 /* CTAConstants.swift in Sources */,
 				2CFC658E1C56305500E8ADE7 /* CTAFullPublishesCell.swift in Sources */,
+				2C47F8A21C7175A50068F215 /* CTAImgContainerViewModel.swift in Sources */,
 				66C7BF231C3111D700ADF251 /* CTADomainInfo.swift in Sources */,
 				2C5C248E1C44E1C900A70F1B /* CTAVerticalItemCollectionViewCell.swift in Sources */,
 				2C0C14E91C60D9640011A31D /* CTASetMobileNumberViewController.swift in Sources */,
@@ -1234,6 +1241,7 @@
 				2CAEACA31C323F9700C9F9AC /* TexView.swift in Sources */,
 				2CAEAC9B1C323F4300C9F9AC /* CanvasView.swift in Sources */,
 				66A072A91C156D1C0046C72F /* CTAUserRequestAPI.swift in Sources */,
+				2C47F8A01C7174D20068F215 /* CTATextContainerViewModel.swift in Sources */,
 				2C5C24921C44E82100A70F1B /* CTAPickerView.swift in Sources */,
 				2CF5EB8B1C47B2CF009F0719 /* CTAFontsManager.swift in Sources */,
 				2C7A951D1C3A50F6005B0EAE /* CTATemplateViewController.swift in Sources */,

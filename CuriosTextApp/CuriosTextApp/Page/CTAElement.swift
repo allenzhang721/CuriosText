@@ -18,5 +18,9 @@ protocol CTAElement: class, NSCoding {
     //    var width: Double { get }
     //    var height: Double { get }
     
-    func resultWithScale(scale: CGFloat, constraintSzie: CGSize) -> (inset: CGPoint, size: CGSize)
+    func resultWithScale(
+        scale: CGFloat,
+        preScale: CGFloat,
+        containerSize: CGSize,
+        constraintSzie: CGSize) -> (inset: CGPoint, size: CGSize)
 }

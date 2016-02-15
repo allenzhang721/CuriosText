@@ -11,7 +11,8 @@ import UIKit
 
 enum CTAContainerFeatureType: String {
     
-    case Fonts, Size, Rotator, Aligments, TextSpacing, Colors, Animation //Text
+    case Size, Rotator
+    case Fonts, Aligments, TextSpacing, Colors, Animation //Text
 }
 
 final class CTAContainer: NSObject, NSCoding {
