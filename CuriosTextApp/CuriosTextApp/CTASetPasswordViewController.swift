@@ -142,6 +142,13 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         self.passwordTextinput.secureTextEntry = true
         self.passwordVisibleButton.setImage(UIImage(named: "passwordhide-icon"), forState: .Normal)
         self.submitButton.enabled = false
+        
+        if self.userModel != nil {
+            if self.resetPhone == "" {
+                self.resetPhone = self.userModel!.phone
+                self.resetAreaCode = self.userModel!.areaCode
+            }
+        }
     }
     
     func changeToLoadingView() {

@@ -12,7 +12,7 @@ import Kingfisher
 protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAUserDetailProtocol{
     var likeButton:UIButton{get}
     var userIconImage:UIImageView{get}
-    var userNikenameLabel:UILabel{get}
+    var userNicknameLabel:UILabel{get}
     func initPublishSubView(publishRect:CGRect, horRate:CGFloat)
     func changeUserView(userModel:CTAUserModel)
     
@@ -51,7 +51,7 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.view.addSubview(rebuildButton)
         rebuildButton.addTarget(self, action: "rebuildButtonClick:", forControlEvents: .TouchUpInside)
         
-        self.userIconImage.frame = CGRect.init(x: UIScreen.mainScreen().bounds.width/2, y: 9, width: 60 * horRate, height: 60 * horRate)
+        self.userIconImage.frame = CGRect.init(x: UIScreen.mainScreen().bounds.width/2, y: 9, width: 60, height: 60)
         self.userIconImage.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2 - publishRect.height/2 - 75 * horRate)
         self.cropImageCircle(self.userIconImage)
         self.view.addSubview(self.userIconImage)
@@ -60,23 +60,23 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.userIconImage.addGestureRecognizer(iconTap)
         self.userIconImage.image = UIImage(named: "default-usericon")
         
-        self.userNikenameLabel.frame = CGRect.init(x: 0, y: 0, width: 100, height: 25)
-        self.userNikenameLabel.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2 - publishRect.height/2 - 25 * horRate)
-        self.userNikenameLabel.font = UIFont.systemFontOfSize(18)
-        self.userNikenameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        self.view.addSubview(self.userNikenameLabel)
+        self.userNicknameLabel.frame = CGRect.init(x: 0, y: 0, width: 100, height: 25)
+        self.userNicknameLabel.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2 - publishRect.height/2 - 25 * horRate)
+        self.userNicknameLabel.font = UIFont.systemFontOfSize(18)
+        self.userNicknameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        self.view.addSubview(self.userNicknameLabel)
     }
     
     func changeUserView(userModel:CTAUserModel){
-        self.userNikenameLabel.text = userModel.nikeName
-        self.userNikenameLabel.sizeToFit()
+        self.userNicknameLabel.text = userModel.nickName
+        self.userNicknameLabel.sizeToFit()
         let maxWidth = UIScreen.mainScreen().bounds.width - 100
-        var labelWidth = self.userNikenameLabel.frame.width
-        if self.userNikenameLabel.frame.width > maxWidth {
+        var labelWidth = self.userNicknameLabel.frame.width
+        if self.userNicknameLabel.frame.width > maxWidth {
             labelWidth = maxWidth
         }
-        self.userNikenameLabel.frame.size.width = labelWidth
-        self.userNikenameLabel.frame.origin.x = (UIScreen.mainScreen().bounds.width - labelWidth)/2
+        self.userNicknameLabel.frame.size.width = labelWidth
+        self.userNicknameLabel.frame.origin.x = (UIScreen.mainScreen().bounds.width - labelWidth)/2
         let imagePath = CTAFilePath.userFilePath+userModel.userIconURL
         let imageURL = NSURL(string: imagePath)!
         self.userIconImage.kf_showIndicatorWhenLoading = true

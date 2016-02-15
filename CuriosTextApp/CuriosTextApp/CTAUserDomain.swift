@@ -90,9 +90,9 @@ class CTAUserDomain: CTABaseDomain {
         }
     }
     
-    func weixinRegister(weixinID: String, nikeName: String, userIconURL:String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func weixinRegister(weixinID: String, nickName: String, userIconURL:String, compelecationBlock: (CTADomainInfo!) -> Void) {
         
-        CTAWeixinRegisterRequest.init(weixinID: weixinID, nikeName: nikeName, userIconURL: userIconURL).startWithCompletionBlockWithSuccess{ (response) -> Void in
+        CTAWeixinRegisterRequest.init(weixinID: weixinID, nickName: nickName, userIconURL: userIconURL).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
             case .Success(let json):
@@ -111,9 +111,9 @@ class CTAUserDomain: CTABaseDomain {
         }
     }
     
-    func weiboRegister(weiboID: String, nikeName: String, userIconURL:String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func weiboRegister(weiboID: String, nickName: String, userIconURL:String, compelecationBlock: (CTADomainInfo!) -> Void) {
         
-        CTAWeiboRegisterRequest.init(weiboID: weiboID, nikeName: nikeName, userIconURL: userIconURL).startWithCompletionBlockWithSuccess{ (response) -> Void in
+        CTAWeiboRegisterRequest.init(weiboID: weiboID, nickName: nickName, userIconURL: userIconURL).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
             case .Success(let json):
@@ -153,9 +153,9 @@ class CTAUserDomain: CTABaseDomain {
         }
     }
     
-    func updateNikename(userID:String, nikeName:String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func updateNickname(userID:String, nickName:String, compelecationBlock: (CTADomainInfo!) -> Void) {
         
-        CTAUpdateUserNikenameRequest.init(userID: userID, nikeName: nikeName).startWithCompletionBlockWithSuccess{ (response) -> Void in
+        CTAUpdateUserNicknameRequest.init(userID: userID, nickName: nickName).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
             case .Success(let json):
@@ -214,9 +214,9 @@ class CTAUserDomain: CTABaseDomain {
         }
     }
     
-    func updateUserAddress(userID:String, countryID: Int, provinceID: Int, cityID: Int, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func updateUserAddress(userID:String, country: String, province: String, city: String, compelecationBlock: (CTADomainInfo!) -> Void) {
         
-        CTAUpdateUserAddressRequest.init(userID: userID, countryID: countryID, provinceID: provinceID, cityID: cityID).startWithCompletionBlockWithSuccess{ (response) -> Void in
+        CTAUpdateUserAddressRequest.init(userID: userID, country: country,  province: province, city: city).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
             case .Success(let json):
