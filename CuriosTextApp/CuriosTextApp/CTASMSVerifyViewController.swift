@@ -111,25 +111,29 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
         line.image = UIImage(named: "textinput-line")
         self.view.addSubview(line)
         
-        self.verifyLabel1 = UILabel.init(frame: CGRect.init(x: bouns.width/2 - 123, y: 230*self.getVerRate(), width: 36, height: 84))
-        self.verifyLabel1.font = UIFont.systemFontOfSize(60)
+        self.verifyLabel1 = UILabel.init(frame: CGRect.init(x: bouns.width/2 - 123, y: 230*self.getVerRate(), width: 36, height: 60))
+        self.verifyLabel1.font = UIFont.systemFontOfSize(40)
         self.verifyLabel1.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.verifyLabel1)
+        self.verifyLabel1.textAlignment = .Center
         
-        self.verifyLabel2 = UILabel.init(frame: CGRect.init(x: bouns.width/2 - 53, y: 230*self.getVerRate(), width: 36, height: 84))
-        self.verifyLabel2.font = UIFont.systemFontOfSize(60)
+        self.verifyLabel2 = UILabel.init(frame: CGRect.init(x: bouns.width/2 - 53, y: 230*self.getVerRate(), width: 36, height: 60))
+        self.verifyLabel2.font = UIFont.systemFontOfSize(40)
         self.verifyLabel2.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.verifyLabel2)
+        self.verifyLabel2.textAlignment = .Center
         
-        self.verifyLabel3 = UILabel.init(frame: CGRect.init(x: bouns.width/2 + 17, y: 230*self.getVerRate(), width: 36, height: 84))
-        self.verifyLabel3.font = UIFont.systemFontOfSize(60)
+        self.verifyLabel3 = UILabel.init(frame: CGRect.init(x: bouns.width/2 + 17, y: 230*self.getVerRate(), width: 36, height: 60))
+        self.verifyLabel3.font = UIFont.systemFontOfSize(40)
         self.verifyLabel3.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.verifyLabel3)
+        self.verifyLabel3.textAlignment = .Center
         
-        self.verifyLabel4 = UILabel.init(frame: CGRect.init(x: bouns.width/2 + 87, y: 230*self.getVerRate(), width: 36, height: 84))
-        self.verifyLabel4.font = UIFont.systemFontOfSize(60)
+        self.verifyLabel4 = UILabel.init(frame: CGRect.init(x: bouns.width/2 + 87, y: 230*self.getVerRate(), width: 36, height: 60))
+        self.verifyLabel4.font = UIFont.systemFontOfSize(40)
         self.verifyLabel4.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.verifyLabel4)
+        self.verifyLabel4.textAlignment = .Center
         
         self.resendButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: 320*self.getVerRate(), width: 70, height: 20))
         self.resendButton.setTitle(NSLocalizedString("NoReceivedCodeLabel", comment: ""), forState: .Normal)

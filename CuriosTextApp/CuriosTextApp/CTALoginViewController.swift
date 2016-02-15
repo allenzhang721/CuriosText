@@ -90,29 +90,29 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         
         self.initPhoneView()
         self.phoneTextinput.delegate = self
-        
-        let passwordLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: 315*self.getVerRate(), width: 50, height: 25))
+    
+        self.passwordTextinput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+50, width: 190*self.getHorRate(), height: 50))
+        self.passwordTextinput.placeholder = NSLocalizedString("PasswordPlaceholder", comment: "")
+        self.passwordTextinput.secureTextEntry = true
+        self.passwordTextinput.clearsOnBeginEditing = true
+        self.passwordTextinput.delegate = self
+        self.passwordTextinput.returnKeyType = .Go
+        self.view.addSubview(self.passwordTextinput)
+        let passwordLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.passwordTextinput.frame.origin.y+12, width: 50, height: 25))
         passwordLabel.font = UIFont.systemFontOfSize(18)
         passwordLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         passwordLabel.text = NSLocalizedString("PasswordLabel", comment: "")
         passwordLabel.sizeToFit()
         self.view.addSubview(passwordLabel)
-        
-        self.passwordTextinput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: 300*self.getVerRate(), width: 190*self.getHorRate(), height: 50))
-        self.passwordTextinput.placeholder = NSLocalizedString("PasswordPlaceholder", comment: "")
-        self.passwordTextinput.secureTextEntry = true
-        self.passwordTextinput.clearsOnBeginEditing = true
-        self.passwordTextinput.delegate = self
-        self.view.addSubview(self.passwordTextinput)
-        self.passwordVisibleButton = UIButton.init(frame: CGRect.init(x: bouns.width - 27*self.getHorRate() - 20, y: 321*self.getVerRate(), width: 20, height: 13))
+        self.passwordVisibleButton = UIButton.init(frame: CGRect.init(x: bouns.width - 27*self.getHorRate() - 20, y: self.passwordTextinput.frame.origin.y+19, width: 20, height: 13))
         self.passwordVisibleButton.setImage(UIImage(named: "passwordhide-icon"), forState: .Normal)
         self.view.addSubview(self.passwordVisibleButton)
         self.passwordVisibleButton.addTarget(self, action: "passwordVisibleClick:", forControlEvents: .TouchUpInside)
-        let textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 349*self.getVerRate(), width: 330*self.getHorRate(), height: 1))
+        let textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.passwordTextinput.frame.origin.y+49, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "textinput-line")
         self.view.addSubview(textLine)
         
-        self.loginButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: 370*self.getVerRate(), width: 40, height: 28))
+        self.loginButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: self.passwordTextinput.frame.origin.y+70, width: 40, height: 28))
         self.loginButton.setTitle(NSLocalizedString("LoginButtonLabel", comment: ""), forState: .Normal)
         self.loginButton.setTitleColor(UIColor.init(red: 239/255, green: 51/255, blue: 74/255, alpha: 1.0), forState: .Normal)
         self.loginButton.setTitleColor(UIColor.init(red: 216/255, green: 216/255, blue: 216/255, alpha: 1.0), forState: .Disabled)
@@ -206,39 +206,47 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
     }
     
     func loginButtonClick(sender: UIButton){
-        self.resignView()
+        self.loginHandler()
+    }
+    
+    func loginHandler(){
         let phoneLabel = self.phoneTextinput.text!
-        let phoneNumber = phoneLabel.stringByReplacingOccurrencesOfString("\\s", withString: "", options: .RegularExpressionSearch, range: nil)
-        let zone = self.selectedModel!.zoneCode
         let passwordText = self.passwordTextinput.text
-        let cryptPassword = CTAEncryptManager.hash256(passwordText!)
-        self.changeToLoadingView(self.loginButton)
-        CTAUserDomain.getInstance().login(phoneNumber, areaCode: zone, passwd: cryptPassword) { (info) -> Void in
-            self.changeToUnloadingView(self.loginButton)
-            if info.result{
-                let userModel = info.baseModel as! CTAUserModel
-                self.loginComplete(userModel)
-            }else {
-                if info.errorType is CTAInternetError {
-                    self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                    })
+        if phoneLabel != "" && passwordText != ""{
+            self.resignView()
+            let phoneNumber = phoneLabel.stringByReplacingOccurrencesOfString("\\s", withString: "", options: .RegularExpressionSearch, range: nil)
+            let zone = self.selectedModel!.zoneCode
+            let cryptPassword = CTAEncryptManager.hash256(passwordText!)
+            self.changeToLoadingView(self.loginButton)
+            CTAUserDomain.getInstance().login(phoneNumber, areaCode: zone, passwd: cryptPassword) { (info) -> Void in
+                self.changeToUnloadingView(self.loginButton)
+                if info.result{
+                    let userModel = info.baseModel as! CTAUserModel
+                    self.loginComplete(userModel)
                 }else {
-                    let error = info.errorType as! CTAUserLoginError
-                    if error == .UserNameOrPasswordWrong {
-                        self.showSingleAlert(NSLocalizedString("AlertTitleLoginFaile", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                        })
-                    }else if error == .PhoneNotExist{
-                        self.showSingleAlert(NSLocalizedString("AlertTitleLoginFaile", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                        })
-                    }else if error == .DataIsEmpty{
-                        self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                    if info.errorType is CTAInternetError {
+                        self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                         })
                     }else {
-                        self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                        })
+                        let error = info.errorType as! CTAUserLoginError
+                        if error == .UserNameOrPasswordWrong {
+                            self.showSingleAlert(NSLocalizedString("AlertTitleLoginFaile", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                            })
+                        }else if error == .PhoneNotExist{
+                            self.showSingleAlert(NSLocalizedString("AlertTitleLoginFaile", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                            })
+                        }else if error == .DataIsEmpty{
+                            self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                            })
+                        }else {
+                            self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                            })
+                        }
                     }
                 }
             }
+        }else {
+            self.loginButton.enabled = false
         }
     }
     
@@ -289,7 +297,7 @@ extension CTALoginViewController: UITextFieldDelegate{
                     self.loginButton.enabled = true
                 }
             }else {
-                if newStr.length == 1 {
+                if newStr.length <= 1 {
                     self.loginButton.enabled = false
                 }
             }
@@ -306,7 +314,7 @@ extension CTALoginViewController: UITextFieldDelegate{
                     self.loginButton.enabled = true
                 }
             }else {
-                if newStr.length == 6 {
+                if newStr.length <= 6 {
                     self.loginButton.enabled = false
                 }
             }
@@ -314,6 +322,17 @@ extension CTALoginViewController: UITextFieldDelegate{
                 return true
             }else {
                 return false
+            }
+        }
+        return true
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool{
+        if textField == self.passwordTextinput{
+            if self.loginButton.enabled {
+                self.loginHandler()
+            }else {
+                textField.resignFirstResponder()
             }
         }
         return true

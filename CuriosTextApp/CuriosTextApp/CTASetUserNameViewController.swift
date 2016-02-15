@@ -89,24 +89,25 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     
         self.imagePicker.delegate = self
         
+        self.userNickNameTextInput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: 250*self.getVerRate(), width: 190*self.getHorRate(), height: 50))
+        self.userNickNameTextInput.placeholder = NSLocalizedString("UserNamePlaceholder", comment: "")
+        self.userNickNameTextInput.clearsOnBeginEditing = true
+        self.userNickNameTextInput.delegate = self
+        self.userNickNameTextInput.returnKeyType = .Done
+        self.view.addSubview(self.userNickNameTextInput)
         
-        let userNickNameLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: 262*self.getVerRate(), width: 50, height: 25))
+        let userNickNameLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userNickNameTextInput.frame.origin.y + 12, width: 50, height: 25))
         userNickNameLabel.font = UIFont.systemFontOfSize(18)
         userNickNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         userNickNameLabel.text = NSLocalizedString("UserNickNameLabel", comment: "")
         userNickNameLabel.sizeToFit()
         self.view.addSubview(userNickNameLabel)
         
-        self.userNickNameTextInput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: 250*self.getVerRate(), width: 190*self.getHorRate(), height: 50))
-        self.userNickNameTextInput.placeholder = NSLocalizedString("UserNamePlaceholder", comment: "")
-        self.userNickNameTextInput.clearsOnBeginEditing = true
-        self.userNickNameTextInput.delegate = self
-        self.view.addSubview(self.userNickNameTextInput)
-        let textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 299*self.getVerRate(), width: 330*self.getHorRate(), height: 1))
+        let textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userNickNameTextInput.frame.origin.y + 49, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "textinput-line")
         self.view.addSubview(textLine)
         
-        self.completeButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: 320*self.getVerRate(), width: 40, height: 28))
+        self.completeButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: self.userNickNameTextInput.frame.origin.y + 70, width: 40, height: 28))
         self.completeButton.setTitle(NSLocalizedString("CompleteButtonLabel", comment: ""), forState: .Normal)
         self.completeButton.setTitleColor(UIColor.init(red: 239/255, green: 51/255, blue: 74/255, alpha: 1.0), forState: .Normal)
         self.completeButton.setTitleColor(UIColor.init(red: 216/255, green: 216/255, blue: 216/255, alpha: 1.0), forState: .Disabled)
@@ -188,40 +189,54 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     }
     
     func completeButtonClick(sender: UIButton){
-        if self.userModel != nil {
-            self.changeToLoadingView()
-            if self.isChangeImage {
-                let userID = self.userModel!.userID
-                let uuid = NSUUID().UUIDString
-                let uuidStr = NSString(string: uuid)
-                let imageName = uuidStr.substringWithRange(NSMakeRange(0, 6))
-                let userIconKey = userID+"/"+imageName+".jpg"
-                let uptoken = CTAUpTokenModel.init(upTokenKey: userIconKey)
-                CTAUpTokenDomain.getInstance().userUpToken([uptoken], compelecationBlock: { (listInfo) -> Void in
-                    if listInfo.result {
-                        let newToken = listInfo.modelArray![0] as! CTAUpTokenModel
-                        let imageData = compressIconImage(self.selectedImage!)
-                        let uploadModel = CTAUploadModel.init(key: userIconKey, token: newToken.upToken, fileData: imageData)
-                        CTAUploadAction.getInstance().uploadFile(userID, uploadModel: uploadModel, progress: { (_) -> Void in
-                            }, complete: { (info) -> Void in
-                                if info.result{
-                                    self.uploadUserInfo(userIconKey)
-                                }else {
-                                    self.changeToUnloadingView()
-                                    self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                    })
-                                }
-                        })
-                    }else {
-                       self.changeToUnloadingView()
+        self.completeHandler()
+    }
+    
+    func completeHandler(){
+        if self.userNickNameTextInput.text != "" {
+            if self.userModel != nil {
+                if self.isChangeImage {
+                    self.changeToLoadingView()
+                    let userID = self.userModel!.userID
+                    let uuid = NSUUID().UUIDString
+                    let uuidStr = NSString(string: uuid)
+                    let imageName = uuidStr.substringWithRange(NSMakeRange(0, 6))
+                    let userIconKey = userID+"/"+imageName+".jpg"
+                    let uptoken = CTAUpTokenModel.init(upTokenKey: userIconKey)
+                    CTAUpTokenDomain.getInstance().userUpToken([uptoken], compelecationBlock: { (listInfo) -> Void in
+                        if listInfo.result {
+                            let newToken = listInfo.modelArray![0] as! CTAUpTokenModel
+                            let imageData = compressIconImage(self.selectedImage!)
+                            let uploadModel = CTAUploadModel.init(key: userIconKey, token: newToken.upToken, fileData: imageData)
+                            CTAUploadAction.getInstance().uploadFile(userID, uploadModel: uploadModel, progress: { (_) -> Void in
+                                }, complete: { (info) -> Void in
+                                    if info.result{
+                                        self.uploadUserInfo(userIconKey)
+                                    }else {
+                                        self.changeToUnloadingView()
+                                        self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        })
+                                    }
+                            })
+                        }else {
+                            self.changeToUnloadingView()
+                        }
+                    })
+                }else {
+                    if self.userModel != nil {
+                        if self.userModel!.nickName == self.userNickNameTextInput.text{
+                            self.updateComplete()
+                        }else {
+                            self.uploadUserInfo()
+                        }
                     }
-                })
+                }
             }else {
-                self.uploadUserInfo()
+                self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                })
             }
         }else {
-            self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-            })
+            self.completeButton.enabled = false
         }
     }
     
@@ -235,9 +250,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
             CTAUserDomain.getInstance().updateUserInfo(self.userModel!, compelecationBlock: { (info) -> Void in
                 self.changeToUnloadingView()
                 if info.result {
-                    CTAUserManager.save(self.userModel!)
-                    self.navigationController?.dismissViewControllerAnimated(true, completion: { () -> Void in
-                    })
+                    self.updateComplete()
                 }else {
                     if info.errorType is CTAInternetError {
                         self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
@@ -250,7 +263,12 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
                 }
             })
         }
-        
+    }
+    
+    func updateComplete(){
+        CTAUserManager.save(self.userModel!)
+        self.navigationController?.dismissViewControllerAnimated(true, completion: { () -> Void in
+        })
     }
     
     func userIconClick(sender: UIPanGestureRecognizer){
@@ -282,7 +300,7 @@ extension CTASetUserNameViewController: UITextFieldDelegate{
         let newStr = NSString(string: newText!)
         let isDelete = string == "" ? true : false
         if isDelete {
-            if newStr.length == 1{
+            if newStr.length <= 1{
                 self.completeButton.enabled = false
             }
         }else{
@@ -295,6 +313,14 @@ extension CTASetUserNameViewController: UITextFieldDelegate{
         }else {
             return false
         }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool{
+        textField.resignFirstResponder()
+        if self.completeButton.enabled {
+            self.completeHandler()
+        }
+        return true
     }
 }
 

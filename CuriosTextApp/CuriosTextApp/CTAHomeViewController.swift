@@ -28,6 +28,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     
         self.initView()
         self.view.backgroundColor = UIColor.whiteColor()
+        CTAUserManager.logout()
     }
 
     override func didReceiveMemoryWarning() {

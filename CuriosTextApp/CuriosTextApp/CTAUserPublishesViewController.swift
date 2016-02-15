@@ -500,14 +500,12 @@ extension CTAUserPublishesViewController: UIViewControllerAnimatedTransitioning{
             if let toView = transitionContext.viewForKey(UITransitionContextToViewKey){
                 let view = transitionContext.containerView()!
                 var animationView:UIView? = self.getAnimationView()
-                var barView:CTAAddBarView? = CTAAddBarView(frame: CGRect.zero)
                 view.addSubview(animationView!)
+                
+                var barView:CTAAddBarView? = CTAAddBarView(frame: CGRect.zero)
                 view.addSubview(barView!)
-                barView!.translatesAutoresizingMaskIntoConstraints = false
-                barView!.heightAnchor.constraintEqualToConstant(30).active = true
-                barView!.widthAnchor.constraintEqualToAnchor(view.widthAnchor, multiplier: 0.8).active = true
-                barView!.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor).active = true
-                barView!.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor).active = true
+                setAddBarView(barView!, view: view)
+                
                 view.addSubview(toView)
                 toView.alpha = 0
                 self.collectionView.hidden = true

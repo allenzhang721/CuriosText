@@ -76,7 +76,7 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
         self.initPhoneView()
         self.phoneTextinput.delegate = self
         
-        self.registerButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: 320*self.getVerRate(), width: 40, height: 28))
+        self.registerButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: self.phoneTextinput.frame.origin.y+70, width: 40, height: 28))
         self.registerButton.setTitle(NSLocalizedString("NextButtonLabel", comment: ""), forState: .Normal)
         self.registerButton.setTitleColor(UIColor.init(red: 239/255, green: 51/255, blue: 74/255, alpha: 1.0), forState: .Normal)
         self.registerButton.setTitleColor(UIColor.init(red: 216/255, green: 216/255, blue: 216/255, alpha: 1.0), forState: .Disabled)
@@ -110,9 +110,9 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
     }
     
     func registerButtonClick(sender: UIButton){
-        if self.selectedModel != nil {
+        let phoneLabel = self.phoneTextinput.text!
+        if self.selectedModel != nil && phoneLabel != ""{
             var message = NSLocalizedString("AlertMessageNumberConfirm", comment: "")
-            let phoneLabel = self.phoneTextinput.text!
             let phoneNumber = phoneLabel.stringByReplacingOccurrencesOfString("\\s", withString: "", options: .RegularExpressionSearch, range: nil)
             let zone = self.selectedModel!.zoneCode
             message = message + "\n" + "+"+zone+" "+phoneLabel
@@ -140,6 +140,8 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
                     })
                 }
             })
+        }else {
+            self.registerButton.enabled = false
         }
         
     }
@@ -173,7 +175,7 @@ extension CTASetMobileNumberViewController: UITextFieldDelegate{
             self.phoneTextinput.text = self.changeChinaPhone(newStr, isDelete: isDelete)
         }
         if isDelete {
-            if newStr.length == 1{
+            if newStr.length <= 1{
                 self.registerButton.enabled = false
             }
         }else{

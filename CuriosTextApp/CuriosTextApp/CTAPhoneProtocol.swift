@@ -25,43 +25,45 @@ protocol CTAPhoneProtocol: CTAPublishCellProtocol, CTASystemLanguageProtocol, CT
 extension CTAPhoneProtocol where Self: UIViewController{
     func initPhoneView(){
         let bouns = UIScreen.mainScreen().bounds
-        let countryLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: 214*self.getVerRate(), width: 82, height: 25))
-        countryLabel.font = UIFont.systemFontOfSize(18)
-        countryLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        countryLabel.text = NSLocalizedString("CountryLabel", comment: "")
-        countryLabel.sizeToFit()
-        self.view.addSubview(countryLabel)
-        self.countryNameLabel.frame = CGRect.init(x: 128*self.getHorRate(), y: 214*self.getVerRate(), width: 230*self.getHorRate(), height: 25)
+
+        self.countryNameLabel.frame = CGRect.init(x: 128*self.getHorRate(), y: 212*self.getVerRate(), width: 230*self.getHorRate(), height: 25)
         self.countryNameLabel.font = UIFont.systemFontOfSize(18)
         self.countryNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.countryNameLabel.userInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: "countryNameClick:")
         self.countryNameLabel.addGestureRecognizer(tap)
-        
         self.view.addSubview(self.countryNameLabel)
-        let nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 27*self.getHorRate() - 11, y: 216*self.getVerRate(), width: 11, height: 20))
+        let countryLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.countryNameLabel.frame.origin.y, width: 82, height: 25))
+        countryLabel.font = UIFont.systemFontOfSize(18)
+        countryLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        countryLabel.text = NSLocalizedString("CountryLabel", comment: "")
+        self.view.addSubview(countryLabel)
+        let nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 27*self.getHorRate() - 11, y: self.countryNameLabel.frame.origin.y+2, width: 11, height: 20))
         nextImage.image = UIImage(named: "next-icon")
         self.view.addSubview(nextImage)
-        var textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 249*self.getVerRate(), width: 330*self.getHorRate(), height: 1))
+        var textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.countryNameLabel.frame.origin.y+37, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "textinput-line")
         self.view.addSubview(textLine)
         
-        self.areaCodeLabel.frame = CGRect.init(x: 27*self.getHorRate(), y: 265*self.getVerRate(), width: 50, height: 25)
-        self.areaCodeLabel.font = UIFont.systemFontOfSize(18)
-        self.areaCodeLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        self.view.addSubview(self.areaCodeLabel)
-        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 299*self.getVerRate(), width: 90*self.getHorRate(), height: 1))
-        textLine.image = UIImage(named: "textinput-line")
-        self.view.addSubview(textLine)
         
-        self.phoneTextinput.frame = CGRect.init(x: 128*self.getHorRate(), y: 250*self.getVerRate(), width: 230*self.getHorRate(), height: 50)
+        self.phoneTextinput.frame = CGRect.init(x: 128*self.getHorRate(), y: self.countryNameLabel.frame.origin.y+38, width: 230*self.getHorRate(), height: 50)
         self.phoneTextinput.placeholder = NSLocalizedString("PhonePlaceholder", comment: "")
         self.view.addSubview(self.phoneTextinput)
         self.phoneTextinput.keyboardType = .NumberPad
         self.phoneTextinput.clearButtonMode = .WhileEditing
-        textLine = UIImageView.init(frame: CGRect.init(x: 125*self.getHorRate(), y: 299*self.getVerRate(), width: 230*self.getHorRate(), height: 1))
+        textLine = UIImageView.init(frame: CGRect.init(x: 125*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+49, width: 230*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "textinput-line")
         self.view.addSubview(textLine)
+        
+        self.areaCodeLabel.frame = CGRect.init(x: 27*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+12, width: 50, height: 25)
+        self.areaCodeLabel.font = UIFont.systemFontOfSize(18)
+        self.areaCodeLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        self.view.addSubview(self.areaCodeLabel)
+        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+49, width: 90*self.getHorRate(), height: 1))
+        textLine.image = UIImage(named: "textinput-line")
+        self.view.addSubview(textLine)
+        
+        
     }
     
     func getCurrentContryModel() -> CountryZone?{

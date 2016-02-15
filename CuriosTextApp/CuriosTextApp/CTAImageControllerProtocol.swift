@@ -10,7 +10,7 @@ import UIKit
 
 func compressIconImage(image:UIImage) -> NSData{
     let newImage = compressImage(image, maxWidth: 600)
-    let newData = UIImageJPEGRepresentation(newImage, 0.1)
+    let newData = UIImageJPEGRepresentation(newImage, 0.3)
     return newData!
 }
 
@@ -86,12 +86,14 @@ extension CTAImageControllerProtocol{
     }
     
     func getDefaultIcon(rect:CGRect) -> UIImage {
+        let rate = rect.size.width / 174.00
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
         UIColor.whiteColor().setFill()
         UIRectFill(rect)
         let iconImage = UIImage(named: "defaultpublish-icon")
-        iconImage?.drawInRect(CGRect(x: (rect.size.width - 50)/2, y: (rect.size.height - 52)/2, width: 50, height: 52), blendMode: .Normal, alpha: 1.0)
-        
+        let imgWidth = 50 * rate
+        let imgHeight = 52 * rate
+        iconImage?.drawInRect(CGRect(x: (rect.size.width - imgWidth)/2, y: (rect.size.height - imgHeight)/2, width: imgWidth, height: imgHeight), blendMode: .Normal, alpha: 1.0)
         let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image;

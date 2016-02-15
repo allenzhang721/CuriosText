@@ -98,9 +98,9 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         self.view.addSubview(self.userFollowingImageView)
         self.userFollowingImageView.hidden = true
         
-        self.userNickNameLabel = UILabel.init(frame: CGRect.init(x: 120, y: self.userIconImageView.frame.origin.y + 65*rate, width: 120, height: 28))
+        self.userNickNameLabel = UILabel.init(frame: CGRect.init(x: 120, y: self.userIconImageView.frame.origin.y + 65, width: 120, height: 28))
         self.view.addSubview(self.userNickNameLabel)
-        self.userNickNameLabel.font = UIFont.systemFontOfSize(20)
+        self.userNickNameLabel.font = UIFont.systemFontOfSize(18)
         self.userNickNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.userNickNameLabel.text = " "
         self.userNickNameLabel.sizeToFit()
