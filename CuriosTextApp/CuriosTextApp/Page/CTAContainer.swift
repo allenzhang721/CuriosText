@@ -13,6 +13,7 @@ enum CTAContainerFeatureType: String {
     
     case Size, Rotator
     case Fonts, Aligments, TextSpacing, Colors, Animation //Text
+    case Empty
 }
 
 final class CTAContainer: NSObject, NSCoding {

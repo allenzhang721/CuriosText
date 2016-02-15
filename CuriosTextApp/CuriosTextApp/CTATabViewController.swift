@@ -12,6 +12,7 @@ protocol CTATabViewControllerDataSource: class {
     
     func tabViewControllerNumberOfItems(viewController: CTATabViewController) -> Int
     func tabViewController(viewController: CTATabViewController, tabItemAtIndexPath indexPath: NSIndexPath) -> CTABarItem
+
 }
 
 protocol CTATabViewControllerDelegate: class {
@@ -29,7 +30,6 @@ class CTATabViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         let layout = CTALineFlowLayout()
         layout.showCount = 4
@@ -70,8 +70,12 @@ extension CTATabViewController: LineFlowLayoutDelegate {
         collectionView: UICollectionView,
         itemAtIndexPath indexPath: NSIndexPath,
         oldIndexPath: NSIndexPath?) {
+        
+        if collectionView.dragging || collectionView.decelerating || collectionView.tracking {
             
             delegate?.tabViewController(self, didChangedToIndexPath: indexPath, oldIndexPath: oldIndexPath)
+        }
+        
     }
     
 }

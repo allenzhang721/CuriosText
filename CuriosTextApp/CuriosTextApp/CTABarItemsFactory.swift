@@ -11,15 +11,36 @@ import Foundation
 class CTABarItemsFactory {
     
     //Fonts, Size, Rotator, Aligments, TextSpacing, Colors, Animation
-    static let textTypes: [CTAContainerFeatureType] = [
-        .Fonts,
-        .Size,
-        .Rotator,
-        .Aligments,
-        .TextSpacing,
-        .TextSpacing,
-        .Colors,
-        .Animation
+//    static let textTypes: [CTAContainerFeatureType] = [
+//        .Fonts,
+//        .Size,
+//        .Rotator,
+//        .Aligments,
+//        .TextSpacing,
+//        .TextSpacing,
+//        .Colors,
+//        .Animation
+//    ]
+    
+    static let emptySelectorItems: [CTABarItem] = [
+    
+    ]
+    
+    static let imgSelectorItems = [
+        
+        CTABarItem(
+            normalImage: CTAStyleKit.imageOfSizeBarItemNormal,
+            selectedImage: CTAStyleKit.imageOfSizeBarItemSelected,
+            normalColor: CTAStyleKit.normalColor,
+            selectedColor: CTAStyleKit.selectedColor,
+            title: "Size"),
+        
+        CTABarItem(
+            normalImage: CTAStyleKit.imageOfRotationBarItemNormal,
+            selectedImage: CTAStyleKit.imageOfRotationBarItemSelected,
+            normalColor: CTAStyleKit.normalColor,
+            selectedColor: CTAStyleKit.selectedColor,
+            title: "Rotation")
     ]
     
     static let textSelectorItems = [

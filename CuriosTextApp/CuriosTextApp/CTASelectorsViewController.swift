@@ -11,6 +11,7 @@ import UIKit
 protocol CTASelectorsViewControllerDataSource: class {
     func selectorsViewControllerContainer(viewcontroller: CTASelectorsViewController) -> ContainerVMProtocol?
     func selectorsViewControllerAnimation(ViewController: CTASelectorsViewController) -> CTAAnimationBinder?
+    func selectorsViewController(viewController: CTASelectorsViewController, needChangedFromSelectorType type: CTAContainerFeatureType) -> CTAContainerFeatureType
 }
 
 protocol CTASelectorable: class {
@@ -33,7 +34,7 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
     private var animation: Bool = false
     var dataSource: CTASelectorsViewControllerDataSource?
     var delegate: CTASelectorViewControllerDelegate?
-    private var currentType: CTAContainerFeatureType = .Size
+    private(set) var currentType: CTAContainerFeatureType = .Empty
     private var container: ContainerVMProtocol? {
         return dataSource?.selectorsViewControllerContainer(self)
     }
@@ -49,6 +50,7 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
         case .TextSpacing: return "textSpacingChanged:"
         case .Colors: return "indexPathOfColorChanged:"
         case .Animation: return "animationChanged:"
+        case .Empty: return ""
         }
     }
 
@@ -99,6 +101,8 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
             cell.dataSource = nil
             cell.removeAllTarget()
         }
+        
+        currentType = dataSource?.selectorsViewController(self, needChangedFromSelectorType: currentType) ?? currentType
         
         let currentCount = collectionview.numberOfItemsInSection(0)
         let nextCount = count
@@ -154,7 +158,9 @@ extension CTASelectorsViewController {
         
         cell.dataSource = self
         cell.beganLoad()
-        cell.addTarget(self, action: Selector(action), forControlEvents: .ValueChanged)
+        if action.characters.count > 0 {
+            cell.addTarget(self, action: Selector(action), forControlEvents: .ValueChanged)
+        }
         cell.retriveBeganValue()
         return cell
     }
@@ -167,6 +173,13 @@ extension CTASelectorsViewController: UICollectionViewDelegate {
         
         if let cell = cell as? CTASelectorCell {
             cell.willBeDisplayed()
+        }
+    }
+    
+    func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        
+        if let cell = cell as? CTASelectorCell {
+            cell.didEndDiplayed()
         }
     }
 }
