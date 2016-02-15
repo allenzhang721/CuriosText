@@ -14,6 +14,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     
     var viewUser:CTAUserModel?
     var loginUser:CTAUserModel?
+    var viewUserID:String = ""
     var isLoginUser:Bool = false
     var isLoadingFirstData = false
     var isLoadedAll = false
@@ -34,7 +35,6 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     
     var previousScrollViewYOffset:CGFloat = 0.0
     var isLoading:Bool = false
-    var isDisAppear:Bool = true
     
     var headerFresh:MJRefreshGifHeader!
     var footerFresh:MJRefreshAutoGifFooter!
@@ -44,6 +44,10 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     
     var userDetail:CTAUserDetailViewController?
     var userDetailTran:CTAPullUserDetailTransition?
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
     
     static var _instance:CTAUserPublishesViewController?;
     
@@ -65,31 +69,32 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if isDisAppear{
-            if viewUser == nil {
-                self.isLoginUser = true
-            }else {
-                self.isLoginUser = false
+        if viewUser == nil {
+            self.isLoginUser = true
+        }else {
+            self.isLoginUser = false
+        }
+        self.loadLocalUserModel()
+        if loginUser != nil {
+            if self.isLoginUser {
+                viewUser = loginUser
             }
-            self.loadLocalUserModel()
-            if loginUser != nil {
-                if self.isLoginUser {
-                    viewUser = loginUser
-                }
-                self.setViewNavigateBar()
-            }else {
-                self.setNavigateButton()
+            if self.viewUserID != self.viewUser!.userID{
+                self.resetView()
             }
+            self.setViewNavigateBar()
+        }else {
+            self.setNavigateButton()
         }
     }
     
     override func viewDidAppear(animated: Bool) {
-        if loginUser != nil {
-            if isDisAppear{
-                super.viewDidAppear(animated)
+        super.viewDidAppear(animated)
+        if loginUser != nil && self.viewUser != nil {
+            if self.viewUserID != self.viewUser!.userID{
+                self.viewUserID = self.viewUser!.userID
                 self.headerFresh.beginRefreshing()
             }
-            isDisAppear = false
         }
     }
     
@@ -98,15 +103,17 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.viewUser  = nil
         self.loginUser = nil
         self.isLoginUser = false
-        self.publishModelArray.removeAll()
-        self.collectionView.reloadData()
-        self.isDisAppear = true
-        self.previousScrollViewYOffset = 0.0
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func resetView(){
+        self.publishModelArray.removeAll()
+        self.collectionView.reloadData()
+        self.previousScrollViewYOffset = 0.0
     }
     
     func initCollectionView(){
@@ -196,6 +203,8 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
             self.homeViewButton.hidden = true
             self.backButton.hidden = false
         }
+        self.userNikenameLabel.text = ""
+        self.userIconImage.frame.origin.x = (UIScreen.mainScreen().bounds.width - self.userIconImage.frame.width)/2
     }
     
     func setViewNavigateBar(){
@@ -222,13 +231,9 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     }
     
     func settingButtonClick(sender: UIButton){
-        print("setting button click")
         
-        let vc = UIViewController()
-        vc.view.backgroundColor = UIColor.darkGrayColor()
-        self.presentViewController(vc, animated: true, completion: {
-            vc.dismissViewControllerAnimated(true, completion: nil)
-        })
+        let setting = CTASettingViewController()
+        self.presentViewController(setting, animated: true, completion: nil)
     }
     
     func backButtonClick(sender: UIButton){

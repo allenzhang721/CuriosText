@@ -39,6 +39,7 @@
 "UserNamePlaceholder" = "例如：李狗蛋";
 "CompleteButtonLabel" = "完成";
 "UserInfoLabel" = "完成你的资料";
+"SettingLabel" = "设置";
 
 "AlertOkLabel" = "确定";
 "AlertYesLabel" = "是";

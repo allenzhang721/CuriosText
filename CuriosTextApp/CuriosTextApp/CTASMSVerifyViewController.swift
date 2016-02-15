@@ -205,7 +205,7 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
                                     if result {
                                         self.loginComplete(userModel)
                                     }else {
-                                        self.pushSetPasswordView(userModel, setPasswordType: .resetPassword)
+                                        self.pushSetPasswordView(userModel, setPasswordType: .register)
                                     }
                                 })
                             }
@@ -288,18 +288,9 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
         let setView = CTASetPasswordViewController.getInstance()
         if self.smsType == .register {
             setView.userModel = userModel
-            if userModel != nil {
-                if userModel!.nikeName == "" || userModel!.userIconURL == "" {
-                    setView.setPasswordType = .register
-                }else {
-                    setView.setPasswordType = setPasswordType
-                }
-            }else {
-                setView.setPasswordType = setPasswordType
-            }
-            
+            setView.setPasswordType = setPasswordType
         }else if self.smsType == .resetPassword{
-            setView.setPasswordType = .resetPassword
+            setView.setPasswordType = setPasswordType
             setView.resetAreaCode = self.areaZone
             setView.resetPhone = self.phone
         }
@@ -316,7 +307,7 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
                 CTASocialManager.getVerificationCode(self.phone, zone: self.areaZone, completionHandler: { (result) -> Void in
                     dispatch_after(delay, dispatch_get_main_queue()) { [weak self] in
                         if let sf = self{
-                            self?.changeToUnloadingView()
+                            sf.changeToUnloadingView()
                         }
                     }
                 })

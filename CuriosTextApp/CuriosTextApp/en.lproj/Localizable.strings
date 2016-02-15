@@ -36,10 +36,11 @@
 "UserNamePlaceholder" = "John Frey";
 "CompleteButtonLabel" = "Done";
 "UserInfoLabel" = "Complete your profile";
+"SettingLabel" = "Settings";
 
 "AlertOkLabel" = "OK";
 "AlertYesLabel" = "Yes";
-"AlertNoLabel" = "No";
+"AlertNoLabel" = "No"; 
 "AlertCancelLabel" = "Cancel";
 "AlertResendLabel" = "Resend";
 "AlertTakePhotoLabel" = "Take Photo";

@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     // Override point for customization after application launch.
-    CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.Production.description
+    CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.Test.description
     
 //    let account = MonkeyKing.Account.WeChat(appID: CTAConfigs.weChat.appID, appKey: CTAConfigs.weChat.appKey)
 //    MonkeyKing.registerAccount(account)
