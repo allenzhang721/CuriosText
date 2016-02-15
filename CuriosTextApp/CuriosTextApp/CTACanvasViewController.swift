@@ -343,7 +343,7 @@ extension CTACanvasViewController: UICollectionViewDelegate, UICollectionViewDat
             
         case let imageContainer as ImageContainerVMProtocol where imageContainer.type == .Image:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ImageCell", forIndexPath: indexPath) as! CTACanvasImageCell
-            cell.imageView.image = nil
+            cell.imageView.image = CTAStyleKit.imageOfFontBarItemSelected
             return cell
             
         default:

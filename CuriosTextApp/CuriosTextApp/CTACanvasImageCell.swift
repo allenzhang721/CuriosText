@@ -13,19 +13,21 @@ class CTACanvasImageCell: CTACanvasCell {
     var imageView: UIImageView!
     
     override init(frame: CGRect) {
-        self.imageView = UIImageView()
+        
         super.init(frame: frame)
+        self.imageView = UIImageView(frame: bounds)
         imageView.layer.drawsAsynchronously = true
-        imageView.backgroundColor = UIColor.blueColor()
-        contentView.layer.addSublayer(imageView.layer)
+//        imageView.backgroundColor = UIColor.blueColor()
+        contentView.addSubview(imageView)
     }
     
     required init?(coder aDecoder: NSCoder) {
         self.imageView = UIImageView()
         super.init(coder: aDecoder)
+        self.imageView = UIImageView(frame: bounds)
         imageView.layer.drawsAsynchronously = true
-        imageView.backgroundColor = UIColor.blueColor()
-        contentView.layer.addSublayer(imageView.layer)
+//        imageView.backgroundColor = UIColor.blueColor()
+        contentView.addSubview(imageView)
     }
     
     override func layoutSubviews() {

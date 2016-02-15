@@ -34,6 +34,7 @@ class CTATabViewController: UIViewController {
         let layout = CTALineFlowLayout()
         layout.showCount = 4
         collectionView.setCollectionViewLayout(layout, animated: false)
+        collectionView.delegate = self
         
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         layout.scrollDirection = .Horizontal
@@ -64,6 +65,15 @@ extension CTATabViewController: UICollectionViewDataSource {
     }
 }
 
+extension CTATabViewController: UICollectionViewDelegate {
+    
+//    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+//        
+////        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredHorizontally, animated: true)
+////        collectionView.selectItemAtIndexPath(indexPath, animated: true, scrollPosition: .CenteredHorizontally)
+//    }
+}
+
 extension CTATabViewController: LineFlowLayoutDelegate {
     
     func didChangeTo(
@@ -71,11 +81,10 @@ extension CTATabViewController: LineFlowLayoutDelegate {
         itemAtIndexPath indexPath: NSIndexPath,
         oldIndexPath: NSIndexPath?) {
         
-        if collectionView.dragging || collectionView.decelerating || collectionView.tracking {
-            
+        if collectionView.dragging || collectionView.tracking {
+        
             delegate?.tabViewController(self, didChangedToIndexPath: indexPath, oldIndexPath: oldIndexPath)
         }
-        
     }
     
 }

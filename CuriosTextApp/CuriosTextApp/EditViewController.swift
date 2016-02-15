@@ -310,7 +310,6 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
             if let attri = self.tabViewController.collectionView.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: nextIndex, inSection: 0)) {
                 let cener = attri.center
                 self.tabViewController.collectionView.setContentOffset(CGPoint(x: cener.x - self.tabViewController.collectionView.bounds.width / 2.0, y: 0), animated: false)
-                
             }
             
 //            let time: NSTimeInterval = 0.1
