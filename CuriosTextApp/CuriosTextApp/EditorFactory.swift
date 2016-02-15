@@ -11,29 +11,32 @@ import UIKit
 
 class EditorFactory {
     
-    class func containerBy(page: PageVMProtocol) -> [ContainerView] {
-        
-        var containerViews = [ContainerView]()
-        
-        for (_, vm) in page.containerVMs.enumerate() {
-            let containerView = self.containerBy(vm)
-            containerViews += [containerView]
-        }
-        
-        return containerViews
-    }
+//    class func containerBy(page: PageVMProtocol) -> [ContainerView] {
+//        
+//        var containerViews = [ContainerView]()
+//        
+//        for (_, vm) in page.containerVMs.enumerate() {
+//            let containerView = self.containerBy(vm)
+//            containerViews += [containerView]
+//        }
+//        
+//        return containerViews
+//    }
     
-    class func containerBy(containerVM: ContainerVMProtocol) -> ContainerView {
-        
-        switch containerVM.type {
-        case .Empty:
-            return self.containerWithEmptyBy(containerVM)
-            
-        case .Text:
-            
-            return self.containerWithTextBy(containerVM as! TextContainerVMProtocol)
-        }
-    }
+//    class func containerBy(containerVM: ContainerVMProtocol) -> ContainerView {
+//        
+//        switch containerVM.type {
+//        case .Empty:
+//            return self.containerWithEmptyBy(containerVM)
+//            
+//        case .Text:
+//            
+//            return self.containerWithTextBy(containerVM as! TextContainerVMProtocol)
+//            
+//        case .Image:
+//            return self.containerWithImgBy(containerVM as! ImageContainerVMProtocol)
+//        }
+//    }
     
     class func canvasBy(page: CTAPage) -> CanvasView {
         
@@ -52,11 +55,22 @@ class EditorFactory {
         let n = 3
         for i in 0..<n {
             
-            let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "我叫陈星宇 \nWhat can i do for you ?", attributes: CTATextAttributes(), index: i, count: n)
-            containers += [con]
+//            let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "我叫陈星宇 \nWhat can i do for you ?", attributes: CTATextAttributes(), index: i, count: n)
+//            containers += [con]
+//            
+//            let ani = generateAnimationFor(con.iD, index: i)
+//            animations += [ani]
             
-            let ani = generateAnimationFor(con.iD, index: i)
-            animations += [ani]
+            if i % 2 == 0 {
+                let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "我叫陈星宇 \nWhat can i do for you ?", attributes: CTATextAttributes(), index: i, count: n)
+                containers += [con]
+                
+                let ani = generateAnimationFor(con.iD, index: i)
+                animations += [ani]
+            } else {
+                let con = self.generateImageContainer(320.0, pageHeigh: 320.0, imageSize: CGSize(width: 100, height: 100), imgName: "NoImgName", index: i, count: n)
+                containers += [con]
+            }
         }
         
         let page = CTAPage(containers: containers, anis: animations)
@@ -239,9 +253,10 @@ extension EditorFactory {
         return containerView
     }
     
-    //    class func containerWithImgBy(imgModel: TextRetrievable) -> CTAContainer {
-    //
-    //    }
+//    private class func containerWithImgBy(containerVM: ImageContainerVMProtocol) -> ContainerView {
+//        
+//        
+//    }
     
     
 }
@@ -281,6 +296,29 @@ extension EditorFactory {
                 scale: 1.0,
                 inset: CGPoint.zero,
                 element: textElement
+            )
+    }
+    
+    class func generateImageContainer(
+        pageWidth: Double,
+        pageHeigh: Double,
+        imageSize: CGSize,
+        imgName: String,
+        index: Int,
+        count: Int) -> CTAContainer {
+        
+            let imgElement = CTAImgElement()
+            
+            return CTAContainer(
+                x: pageWidth / 2.0,
+                y: 100,
+                width: Double(imageSize.width),
+                height: Double(imageSize.height),
+                rotation: 0.0,
+                alpha: 1.0,
+                scale: 1.0,
+                inset: CGPoint.zero,
+                element: imgElement
             )
     }
     

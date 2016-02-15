@@ -174,7 +174,6 @@ extension EditViewController {
             }
         }
     }
-    
 }
 
 
@@ -207,11 +206,21 @@ extension EditViewController: CTATabViewControllerDataSource, CTATabViewControll
     func tabViewControllerNumberOfItems(
         viewController: CTATabViewController)
         -> Int {
-            guard let _ = selectedContainer else {
+            guard let selectedContainer = selectedContainer else {
                 return 0
             }
             
-            return CTABarItemsFactory.textSelectorItems.count
+            switch selectedContainer {
+                
+                case let s where s.type == .Text:
+                return CTABarItemsFactory.textSelectorItems.count
+                
+            case let s where s.type == .Image:
+                return CTABarItemsFactory.imgSelectorItems.count
+                
+            default:
+                return CTABarItemsFactory.emptySelectorItems.count
+            }
     }
     
     func tabViewController(
@@ -219,7 +228,19 @@ extension EditViewController: CTATabViewControllerDataSource, CTATabViewControll
         tabItemAtIndexPath indexPath: NSIndexPath)
         -> CTABarItem {
             
-            return CTABarItemsFactory.textSelectorItems[indexPath.item]
+            switch selectedContainer! {
+                
+            case let s where s.type == .Text:
+                return CTABarItemsFactory.textSelectorItems[indexPath.item]
+                
+            case let s where s.type == .Image:
+                return CTABarItemsFactory.imgSelectorItems[indexPath.item]
+                
+            default:
+                return CTABarItemsFactory.emptySelectorItems[indexPath.item]
+            }
+            
+//            return CTABarItemsFactory.textSelectorItems[indexPath.item]
     }
     
     // MARK: - Delegate
@@ -278,8 +299,33 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
     
     // MARK: - Delegate
     func canvasViewController(viewCOntroller: CTACanvasViewController, didSelectedIndexPath indexPath: NSIndexPath) {
+        let preType = selectorViewController.currentType
+        let preCon = selectedContainer?.type
         selectedIndexPath = indexPath
-        tabViewController.collectionView.reloadData()
+        let nextCon = selectedContainer?.type
+        if (preCon != nextCon) { // need update tab
+           let nextIndex = selectedContainer?.featureTypes.indexOf(preType) ?? 0
+            tabViewController.collectionView.reloadData()
+            
+            if let attri = self.tabViewController.collectionView.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: nextIndex, inSection: 0)) {
+                let cener = attri.center
+                self.tabViewController.collectionView.setContentOffset(CGPoint(x: cener.x - self.tabViewController.collectionView.bounds.width / 2.0, y: 0), animated: false)
+            }
+            
+//            let time: NSTimeInterval = 0.1
+//            let delay = dispatch_time(DISPATCH_TIME_NOW,
+//                                      Int64(time * Double(NSEC_PER_SEC)))
+//            dispatch_after(delay, dispatch_get_main_queue()) {
+//                debug_print("nextIndex = \(nextIndex)")
+//                if let attri = self.tabViewController.collectionView.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: nextIndex, inSection: 0)) {
+//                                        let cener = attri.center
+//                                        self.tabViewController.collectionView.setContentOffset(CGPoint(x: cener.x - self.tabViewController.collectionView.bounds.width / 2.0, y: 0), animated: false)
+//                                        
+//                }
+////                self.tabViewController.collectionView.scrollToItemAtIndexPath(, atScrollPosition: .CenteredHorizontally, animated: false)
+//            }
+        }
+        
         selectorViewController.updateSelector()
     }
 }
@@ -294,6 +340,21 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     
     func selectorsViewControllerAnimation(ViewController: CTASelectorsViewController) -> CTAAnimationBinder? {
         return animation
+    }
+    
+    func selectorsViewController(viewController: CTASelectorsViewController, needChangedFromSelectorType type: CTAContainerFeatureType) -> CTAContainerFeatureType {
+        
+        guard let container = selectedContainer where container.featureTypes.count > 0 else {
+            return type
+        }
+        
+        if container.featureTypes.contains(type) {
+            return type
+        } else {
+            return container.featureTypes[0]
+        }
+        
+//        selectorViewController.changeToSelector(container.featureTypes[indexPath.item])
     }
     
     // MARK: - Delegate

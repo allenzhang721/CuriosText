@@ -21,8 +21,8 @@ final class CTAPage:NSObject, NSCoding {
     
     private(set) var width = 320.0
     private(set) var height = 320.0
-    private var containers = [CTAContainer]()
-    private var animatoins = [CTAAnimation]()
+    private(set) var containers = [CTAContainer]()
+    private(set) var animatoins = [CTAAnimation]()
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -71,17 +71,5 @@ final class CTAPage:NSObject, NSCoding {
         dispatch_sync(containerQueue) {
             self.containers = [CTAContainer]()
         }
-    }
-}
-
-extension CTAPage: PageVMProtocol {
-    
-    var containerVMs: [ContainerVMProtocol] {
-        return containers.map{$0 as ContainerVMProtocol}
-    }
-    
-    var animationBinders: [CTAAnimationBinder] {
-        
-        return animatoins.map { $0 as CTAAnimationBinder}
     }
 }

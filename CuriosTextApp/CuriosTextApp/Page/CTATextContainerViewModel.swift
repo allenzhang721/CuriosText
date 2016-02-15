@@ -1,86 +1,12 @@
 //
-//  Protocols.swift
+//  CTATextContainerViewModel.swift
 //  CuriosTextApp
 //
-//  Created by Emiaostein on 12/18/15.
-//  Copyright © 2015 botai. All rights reserved.
+//  Created by Emiaostein on 2/15/16.
+//  Copyright © 2016 botai. All rights reserved.
 //
 
 import Foundation
-import UIKit
-
-enum CTAContentsType {
-    
-    case Empty, Text
-}
-
-protocol PageVMProtocol {
-    
-    var containerVMs: [ContainerVMProtocol] { get }
-    var animationBinders: [CTAAnimationBinder] { get }
-}
-
-extension PageVMProtocol {
-    
-    func containerByID(id: String) -> ContainerVMProtocol? {
-        
-        guard let index = (containerVMs.indexOf{$0.iD == id}) else {
-            return nil
-        }
-        return containerVMs[index]
-    }
-    
-    func indexByID(id: String) -> Int? {
-        
-        guard let index = (containerVMs.indexOf{$0.iD == id}) else {
-            return nil
-        }
-        return index
-    }
-}
-
-extension PageVMProtocol {
-    
-    func containerShouldLoadBeforeAnimationBeganByID(iD: String) -> Bool {
-        
-        guard let aniFirstIndex = (animationBinders.indexOf{$0.targetiD == iD}) else {
-            return true
-        }
-        
-        let ani = animationBinders[aniFirstIndex]
-        return ani.name.shouldVisalbeBeforeBegan()
-    }
-    
-}
-
-protocol ContainerVMProtocol: viewPropertiesModifiable, contentsTypeRetrivevable, ContainerIdentifiable {
-    
-}
-
-extension ContainerVMProtocol {
-    
-    var featureTypes: [CTAContainerFeatureType] {
-        
-        switch type {
-            
-        case .Text:
-            let textTypes: [CTAContainerFeatureType] = [
-                .Fonts,
-                .Size,
-                .Rotator,
-                .Aligments,
-                .TextSpacing,
-                .Colors,
-                .Animation
-            ]
-            
-            return textTypes
-            
-        default:
-            return []
-        }
-    }
-}
 
 protocol TextContainerVMProtocol: ContainerVMProtocol {
     
@@ -92,15 +18,8 @@ protocol TextContainerVMProtocol: ContainerVMProtocol {
     func updateWithColor(hex: String, alpha: CGFloat)
 }
 
-// MARK: - ContainerEdit Protocols
-
-protocol ContainerIdentifiable {
-    
-    var iD: String { get }
-}
-
 protocol TextRetrievable: class {
-
+    
     var attributeString: NSAttributedString { get }
     var fontSize: CGFloat { get }
     var fontScale: CGFloat { get }
@@ -161,29 +80,75 @@ protocol TextModifiable: TextRetrievable {
     func resultWithLineSpacing(lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
 }
 
-protocol ViewPropertiesRetrivevale:class {
-    
-//    var origion: (x: Double, y: Double) { get }
-    var center: CGPoint { get }
-    var size: CGSize { get } // real size + inset
-    var scale: CGFloat { get }
-    var radius: CGFloat { get }
-    var inset: CGPoint { get }
-    
-    func updateWithScale(ascale: CGFloat, constraintSzie: CGSize)
-}
 
-protocol viewPropertiesModifiable: ViewPropertiesRetrivevale {
+// MARK: - TextModifiable, ViewModifiable
+extension CTAContainer: TextContainerVMProtocol {
     
-//    var origion: (x: Double, y: Double) { get set }
-    var center: CGPoint { set get }
-    var size: CGSize { get set }
-    var scale: CGFloat { get set }
-    var radius: CGFloat { get set }
-}
-
-protocol contentsTypeRetrivevable {
+    var textElement: protocol<CTAElement, TextModifiable>? {
+        guard let te = element as? CTATextElement else {
+            fatalError("This Contaienr do not contain Text Element")
+//            return nil
+        }
+        
+        return te
+    }
     
-    var type: CTAContentsType { get }
+    func updateWithFontFamily(family: String, FontName name: String, constraintSize: CGSize) {
+        
+        guard let textElement = textElement else {
+            fatalError("This Contaienr do not contain Text Element")
+        }
+        
+        textElement.fontFamily = family
+        textElement.fontName = name
+        
+        let newResult = textElement.resultWithFontFamily(family, fontName: name, constraintSize: constraintSize)
+        let contentSize = CGSize(width: ceil(newResult.size.width), height: ceil(newResult.size.height))
+        let inset = CGPoint(x: floor(newResult.inset.x), y: newResult.inset.y)
+        // new content size
+        let nextSize = CGSize(width: contentSize.width - 2 * inset.x, height: contentSize.height - 2 * inset.y)
+        
+        size = nextSize
+        contentInset = inset
+    }
+    
+    func updateWithTextAlignment(alignment: NSTextAlignment) {
+        guard let textElement = textElement else {
+            fatalError("This Contaienr do not contain Text Element")
+        }
+        
+        textElement.alignment = alignment
+        
+    }
+    
+    func updateWithTextSpacing(lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize) {
+        guard let textElement = textElement else {
+            fatalError("This Contaienr do not contain Text Element")
+        }
+        
+        textElement.lineSpacing = lineSpacing
+        textElement.textSpacing = textSpacing
+        
+        let newResult = textElement.resultWithLineSpacing(lineSpacing, textSpacing: textSpacing, constraintSize: constraintSize)
+        let contentSize = CGSize(width: ceil(newResult.size.width), height: ceil(newResult.size.height))
+        let inset = CGPoint(x: floor(newResult.inset.x), y: newResult.inset.y)
+        // new content size
+        let nextSize = CGSize(width: contentSize.width - 2 * inset.x, height: contentSize.height - 2 * inset.y)
+        
+        size = nextSize
+        contentInset = inset
+    }
+    
+    func updateWithColor(hex: String, alpha: CGFloat) {
+        
+        guard let textElement = textElement else {
+            fatalError("This Contaienr do not contain Text Element")
+        }
+        
+        textElement.colorHex = hex
+        textElement.colorAlpha = alpha
+        
+    }
+    
+    // TODO: CTAContainer, Calculate the position and origion if occur rotation -- Emiaostein; 2015-12-18-14:49
 }
-

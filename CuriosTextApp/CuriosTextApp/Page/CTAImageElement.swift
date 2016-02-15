@@ -8,8 +8,58 @@
 
 import Foundation
 
-struct ImageAttributeName {
+final class CTAImgElement: NSObject, NSCoding {
+    
+    init?(coder aDecoder: NSCoder) {
+
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        
+    }
+    
+    // TODO: need ImgElement init parameter -- Emiaostein, 15/02/16, 14:31
+    override init() {
+        
+        
+    }
 }
+
+extension CTAImgElement: CTAElement {
+    
+    var resourceName: String {
+        return ""
+    }
+    var scale: CGFloat {
+        get {
+            return 1.0
+        }
+        
+        set {
+            
+        }
+    }
+    //    var x: Double { get }
+    //    var y: Double { get }
+    //    var width: Double { get }
+    //    var height: Double { get }
+    
+    func resultWithScale(
+        scale: CGFloat,
+        preScale: CGFloat,
+        containerSize: CGSize,
+        constraintSzie: CGSize) -> (inset: CGPoint, size: CGSize) {
+        
+        let originWidth = containerSize.width / preScale
+        let originHeight = containerSize.height / preScale
+        
+        let nextSize = CGSize(width: originWidth * scale, height: originHeight * scale)
+        let inset = CGPoint.zero
+        
+        return (inset, nextSize)
+    }
+}
+
 //
 //final class CTAImageElement: NSObject, CTAElement {
 //    

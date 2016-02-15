@@ -56,7 +56,9 @@ final class CTACanvasViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = UIColor.lightGrayColor()
-        collectionView.registerClass(CTACanvasTextCell.self, forCellWithReuseIdentifier: "Cell")
+        collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        collectionView.registerClass(CTACanvasTextCell.self, forCellWithReuseIdentifier: "TextCell")
+        collectionView.registerClass(CTACanvasImageCell.self, forCellWithReuseIdentifier: "ImageCell")
         view.layer.addSublayer(collectionView.layer)
         //        view.addSubview(collectionView)
         
@@ -331,17 +333,25 @@ extension CTACanvasViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
-        
-        if let textContainer = containerAt(indexPath) as? TextContainerVMProtocol, let acell = cell as? CTACanvasTextCell {
+
+        switch containerAt(indexPath) {
             
-            acell.textView.attributedText = textContainer.textElement!.attributeString
+        case let textContainer as TextContainerVMProtocol where textContainer.type == .Text:
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TextCell", forIndexPath: indexPath) as! CTACanvasTextCell
+            cell.textView.attributedText = textContainer.textElement!.attributeString
+            return cell
+            
+        case let imageContainer as ImageContainerVMProtocol where imageContainer.type == .Image:
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ImageCell", forIndexPath: indexPath) as! CTACanvasImageCell
+            cell.imageView.image = CTAStyleKit.imageOfFontBarItemSelected
+            return cell
+            
+        default:
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
+            return cell
         }
         
-        //        cell.backgroundColor = UIColor.whiteColor()
-        
-        return cell
+       
     }
 }
 

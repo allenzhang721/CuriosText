@@ -38,35 +38,35 @@ struct TextAttributeName {
     static let shadowBlurRadius = "CTATextAttributeshadowBlurRadius"
 }
 
-let defaultTextAttributes: [String: AnyObject] = [
-    
-    TextAttributeName.fontFamily: CTAFontsManager.defaultFamily(),
-    TextAttributeName.fontName: CTAFontsManager.defaultFontName(),
-    TextAttributeName.fontSize: NSNumber(integer: Int(UIFont.labelFontSize())),
-    TextAttributeName.fontMatrix: [
-        TextAttributeName.fontMatrixScale: 3.0],
-    TextAttributeName.ForegroundColor: [
-        TextAttributeName.ForegroundColorR: 1.0,
-        TextAttributeName.ForegroundColorG: 1.0,
-        TextAttributeName.ForegroundColorB: 1.0,
-        TextAttributeName.ForegroundColorA: 1.0],
-    TextAttributeName.kern: NSNumber(integer: 0),
-    TextAttributeName.paragraph: [
-        TextAttributeName.paragraphLineSpacing: 0.0,
-        TextAttributeName.paragraphAlignment: NSTextAlignment.Right.rawValue],
-    TextAttributeName.shadowOn: NSNumber(bool: false),
-    TextAttributeName.shadow: [
-        TextAttributeName.shadowOffset: [
-            TextAttributeName.shadowOffsetWidth: 0,
-            TextAttributeName.shadowOffsetHeight: 0],
-        TextAttributeName.shadowColor: [
-            TextAttributeName.shadowColorR: 0.0,
-            TextAttributeName.shadowColorG: 0.0,
-            TextAttributeName.shadowColorB: 0.0,
-            TextAttributeName.shadowColorA: 1.0],
-        TextAttributeName.shadowBlurRadius: NSNumber(integer: 0)
-    ]
-]
+//let defaultTextAttributes: [String: AnyObject] = [
+//    
+//    TextAttributeName.fontFamily: CTAFontsManager.defaultFamily(),
+//    TextAttributeName.fontName: CTAFontsManager.defaultFontName(),
+//    TextAttributeName.fontSize: NSNumber(integer: Int(UIFont.labelFontSize())),
+//    TextAttributeName.fontMatrix: [
+//        TextAttributeName.fontMatrixScale: 3.0],
+//    TextAttributeName.ForegroundColor: [
+//        TextAttributeName.ForegroundColorR: 1.0,
+//        TextAttributeName.ForegroundColorG: 1.0,
+//        TextAttributeName.ForegroundColorB: 1.0,
+//        TextAttributeName.ForegroundColorA: 1.0],
+//    TextAttributeName.kern: NSNumber(integer: 0),
+//    TextAttributeName.paragraph: [
+//        TextAttributeName.paragraphLineSpacing: 0.0,
+//        TextAttributeName.paragraphAlignment: NSTextAlignment.Right.rawValue],
+//    TextAttributeName.shadowOn: NSNumber(bool: false),
+//    TextAttributeName.shadow: [
+//        TextAttributeName.shadowOffset: [
+//            TextAttributeName.shadowOffsetWidth: 0,
+//            TextAttributeName.shadowOffsetHeight: 0],
+//        TextAttributeName.shadowColor: [
+//            TextAttributeName.shadowColorR: 0.0,
+//            TextAttributeName.shadowColorG: 0.0,
+//            TextAttributeName.shadowColorB: 0.0,
+//            TextAttributeName.shadowColorA: 1.0],
+//        TextAttributeName.shadowBlurRadius: NSNumber(integer: 0)
+//    ]
+//]
 
 final class CTATextAttributes:NSObject, NSCoding {
     
@@ -334,6 +334,7 @@ final class CTATextElement: NSObject, CTAElement, TextModifiable {
     //    private(set) var width = 0.0
     //    private(set) var height = 0.0
     private(set) var text = ""
+    
     var attributes = CTATextAttributes()
     
     var resourceName: String {
@@ -387,7 +388,7 @@ final class CTATextElement: NSObject, CTAElement, TextModifiable {
     }
     
     
-    func resultWithScale(scale: CGFloat, constraintSzie: CGSize) -> (inset: CGPoint, size: CGSize) {
+    func resultWithScale(scale: CGFloat, preScale: CGFloat, containerSize: CGSize, constraintSzie: CGSize) -> (inset: CGPoint, size: CGSize) {
         
         let inset = CGPoint(x: 20.0 / 17.0 * fontSize * scale, y: 0)
         let str = attributeStringWithFontScale(scale)
