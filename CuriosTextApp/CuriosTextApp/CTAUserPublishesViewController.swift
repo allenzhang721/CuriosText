@@ -27,7 +27,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     var viewToolBar:UIView!
     var userHeaderView:UIView!
     var userIconImage:UIImageView!
-    var userNikenameLabel:UILabel!
+    var userNicknameLabel:UILabel!
     
     var backButton:UIButton!
     var homeViewButton:UIButton!
@@ -166,9 +166,9 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bounds.size.width-26)/2, y: 9, width: 26, height: 26));
         self.cropImageCircle(self.userIconImage)
         self.userIconImage.image = UIImage(named: "default-usericon")
-        self.userNikenameLabel = UILabel.init(frame: CGRect.init(x: (bounds.size.width-100)/2, y: 14, width: 100, height: 16))
-        self.userNikenameLabel.font = UIFont.systemFontOfSize(12)
-        self.userNikenameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        self.userNicknameLabel = UILabel.init(frame: CGRect.init(x: (bounds.size.width-100)/2, y: 14, width: 100, height: 16))
+        self.userNicknameLabel.font = UIFont.systemFontOfSize(12)
+        self.userNicknameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.settingButton = UIButton.init(frame: CGRect.init(x: bounds.size.width - 45, y: 2, width: 40, height: 40))
         self.settingButton.setImage(UIImage.init(named: "setting-button"), forState: .Normal)
         self.homeViewButton = UIButton.init(frame: CGRect.init(x: 5, y: 2, width: 40, height: 40))
@@ -179,7 +179,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.viewToolBar = UIView()
         self.viewToolBar.frame = CGRectMake(0, 0, self.view.frame.size.width, 44)
         self.userHeaderView.addSubview(self.userIconImage)
-        self.userHeaderView.addSubview(self.userNikenameLabel)
+        self.userHeaderView.addSubview(self.userNicknameLabel)
         self.viewToolBar.addSubview(self.userHeaderView)
         self.viewToolBar.addSubview(self.settingButton)
         self.viewToolBar.addSubview(self.homeViewButton)
@@ -203,22 +203,22 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
             self.homeViewButton.hidden = true
             self.backButton.hidden = false
         }
-        self.userNikenameLabel.text = ""
+        self.userNicknameLabel.text = ""
         self.userIconImage.frame.origin.x = (UIScreen.mainScreen().bounds.width - self.userIconImage.frame.width)/2
     }
     
     func setViewNavigateBar(){
         self.setNavigateButton()
-        self.userNikenameLabel.text = self.viewUser?.nikeName
-        self.userNikenameLabel.sizeToFit()
+        self.userNicknameLabel.text = self.viewUser?.nickName
+        self.userNicknameLabel.sizeToFit()
         let maxWidth = self.userHeaderView.frame.width - 30
-        var labelWidth = self.userNikenameLabel.frame.width
-        if self.userNikenameLabel.frame.width > maxWidth {
+        var labelWidth = self.userNicknameLabel.frame.width
+        if self.userNicknameLabel.frame.width > maxWidth {
             labelWidth = maxWidth
         }
         let imgX = (self.userHeaderView.frame.width - labelWidth - 30)/2
-        self.userNikenameLabel.frame.origin.x = imgX+30
-        self.userNikenameLabel.frame.size.width = labelWidth
+        self.userNicknameLabel.frame.origin.x = imgX+30
+        self.userNicknameLabel.frame.size.width = labelWidth
         self.userIconImage.frame.origin.x = imgX
         let imagePath = CTAFilePath.userFilePath+self.viewUser!.userIconURL
         let imageURL = NSURL(string: imagePath)!

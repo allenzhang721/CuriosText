@@ -13,7 +13,8 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     
     var backImageView:UIView!
     var userIconImageView:UIImageView!
-    var userNikeNameLabel:UILabel!
+    var userFollowingImageView:UIImageView!
+    var userNickNameLabel:UILabel!
     var userDescTextView:UITextView!
     var followButton:UIButton!
     var followButtonView:UIView!
@@ -61,11 +62,11 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
             self.setDefaultView()
         }
         self.fitView()
+        self.loadUserDetail()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        self.loadUserDetail();
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -87,18 +88,24 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         self.backImageView.backgroundColor = UIColor.whiteColor()
         self.cropImageRound(self.backImageView)
 
-        self.userIconImageView = UIImageView.init(frame:CGRect.init(x: (self.view.frame.size.width - 60)/2, y: self.backImageView.frame.origin.y + 14*rate, width: 60*rate, height: 60*rate ))
+        self.userIconImageView = UIImageView.init(frame:CGRect.init(x: (self.view.frame.size.width - 60)/2, y: self.backImageView.frame.origin.y + 14*rate, width: 60, height: 60))
         self.view.addSubview(self.userIconImageView)
         self.cropImageCircle(self.userIconImageView)
         
-        self.userNikeNameLabel = UILabel.init(frame: CGRect.init(x: 120, y: self.userIconImageView.frame.origin.y + 65*rate, width: 120, height: 28))
-        self.view.addSubview(self.userNikeNameLabel)
-        self.userNikeNameLabel.font = UIFont.systemFontOfSize(20)
-        self.userNikeNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        self.userNikeNameLabel.text = " "
-        self.userNikeNameLabel.sizeToFit()
+        let imgFrame = self.userIconImageView.frame
+        self.userFollowingImageView = UIImageView.init(frame: CGRect.init(x: (imgFrame.origin.x+imgFrame.size.width)-18, y: (imgFrame.origin.y+imgFrame.size.height)-18, width: 18, height: 18))
+        userFollowingImageView.image = UIImage.init(named: "following-icon")
+        self.view.addSubview(self.userFollowingImageView)
+        self.userFollowingImageView.hidden = true
         
-        self.lineImageView = UIImageView.init(frame: CGRect.init(x: self.view.frame.size.width / 2 - 1, y: self.userNikeNameLabel.frame.origin.y + 85*rate, width: 2, height: 18))
+        self.userNickNameLabel = UILabel.init(frame: CGRect.init(x: 120, y: self.userIconImageView.frame.origin.y + 65*rate, width: 120, height: 28))
+        self.view.addSubview(self.userNickNameLabel)
+        self.userNickNameLabel.font = UIFont.systemFontOfSize(20)
+        self.userNickNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        self.userNickNameLabel.text = " "
+        self.userNickNameLabel.sizeToFit()
+        
+        self.lineImageView = UIImageView.init(frame: CGRect.init(x: self.view.frame.size.width / 2 - 1, y: self.userNickNameLabel.frame.origin.y + 85*rate, width: 2, height: 18))
         self.lineImageView.image = UIImage.init(named: "follow-line")
         self.view.addSubview(self.lineImageView)
         
@@ -166,13 +173,13 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         self.userIconImageView.kf_showIndicatorWhenLoading = true
         self.userIconImageView.kf_setImageWithURL(imageURL, placeholderImage: UIImage.init(named: "default-usericon"), optionsInfo: [.Transition(ImageTransition.Fade(1))])
         
-        self.userNikeNameLabel.text = self.viewUser?.nikeName
+        self.userNickNameLabel.text = self.viewUser?.nickName
         self.userDescTextView.text  = self.viewUser?.userDesc
     }
     
     func setDefaultView(){
         self.userIconImageView.image = UIImage.init(named: "default-usericon")
-        self.userNikeNameLabel.text = "Curios"
+        self.userNickNameLabel.text = "Curios"
         self.userDescTextView.text  = "To be or not to be, That's a question!"
         self.followButtonView.hidden = true
         self.followCountLabel.text = "0"
@@ -188,11 +195,11 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     }
     
     func fitView(){
-        self.userNikeNameLabel.sizeToFit()
-        if self.userNikeNameLabel.frame.width > self.view.frame.width - 80 {
-            self.userNikeNameLabel.frame.size.width = self.view.frame.width - 80
+        self.userNickNameLabel.sizeToFit()
+        if self.userNickNameLabel.frame.width > self.view.frame.width - 80 {
+            self.userNickNameLabel.frame.size.width = self.view.frame.width - 80
         }
-        self.userNikeNameLabel.frame.origin.x = (self.view.frame.width - self.userNikeNameLabel.frame.width)/2
+        self.userNickNameLabel.frame.origin.x = (self.view.frame.width - self.userNickNameLabel.frame.width)/2
         
         self.followCountLabel.sizeToFit()
         self.followCountLabel.frame.origin.x = self.followLabel.frame.origin.x + (self.followLabel.frame.size.width - self.followCountLabel.frame.width)/2
@@ -219,6 +226,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     func setViewByDetailUser(){
         if userDetailModel == nil {
             self.followButtonView!.hidden = true
+            self.userFollowingImageView.hidden = true
             self.followButton.setTitle("", forState: .Normal)
             self.followCountLabel.text = "0"
             self.beFollowCountLabel.text = "0"
@@ -235,7 +243,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
             self.userIconImageView.kf_showIndicatorWhenLoading = true
             self.userIconImageView.kf_setImageWithURL(imageURL, placeholderImage: UIImage.init(named: "default-usericon"), optionsInfo: [.Transition(ImageTransition.Fade(1))])
             
-            self.userNikeNameLabel.text = self.userDetailModel!.nikeName
+            self.userNickNameLabel.text = self.userDetailModel!.nickName
             self.userDescTextView.text  = self.userDetailModel!.userDesc
         }
         self.fitView()
@@ -248,16 +256,20 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         switch  relationType{
         case -1:
             self.followButtonView.hidden = true
+            self.userFollowingImageView.hidden = true
         case 0, 3:
             if self.loginUserID == "" {
                self.followButtonView.hidden = true
             }else {
                buttonLabel = NSLocalizedString("FollowButtonLabel", comment: "")
             }
+            self.userFollowingImageView.hidden = true
         case 1, 5:
             buttonLabel = NSLocalizedString("UnFollowButtonLabel", comment: "")
+            self.userFollowingImageView.hidden = false
         case 2, 4, 6:
             self.followButtonView.hidden = true
+            self.userFollowingImageView.hidden = true
         default:
             buttonLabel = ""
         }

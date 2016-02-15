@@ -35,7 +35,7 @@
 "SetPasswordPlaceholder" = "密码长度为6-16位";
 "ConfirmPasswordLabel" = "确认密码";
 "ConfirmPasswordPlaceholder" = "请再输入一遍";
-"UserNameLabel" = "用户名";
+"UserNickNameLabel" = "昵称";
 "UserNamePlaceholder" = "例如：李狗蛋";
 "CompleteButtonLabel" = "完成";
 "UserInfoLabel" = "完成你的资料";

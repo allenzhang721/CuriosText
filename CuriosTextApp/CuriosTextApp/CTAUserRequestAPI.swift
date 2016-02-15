@@ -74,12 +74,12 @@ class CTAPhoneRegisterRequest: CTABaseRequest {
 
 class CTAWeixinRegisterRequest: CTABaseRequest {
     let weixinID:String;
-    let nikeName:String;
+    let nickName:String;
     let userIconURL:String;
     
-    init(weixinID:String, nikeName:String, userIconURL:String){
+    init(weixinID:String, nickName:String, userIconURL:String){
         self.weixinID    = weixinID;
-        self.nikeName    = nikeName;
+        self.nickName    = nickName;
         self.userIconURL = userIconURL;
     }
     
@@ -91,7 +91,7 @@ class CTAWeixinRegisterRequest: CTABaseRequest {
         
         let dic:Dictionary<String, AnyObject> = [
             key(.WeixinID)   : weixinID,
-            key(.NikeName)   : nikeName,
+            key(.NickName)   : nickName,
             key(.UserIconURL): userIconURL
         ];
         
@@ -101,12 +101,12 @@ class CTAWeixinRegisterRequest: CTABaseRequest {
 
 class CTAWeiboRegisterRequest: CTABaseRequest {
     let weiboID:String;
-    let nikeName:String;
+    let nickName:String;
     let userIconURL:String;
     
-    init(weiboID:String, nikeName:String, userIconURL:String){
+    init(weiboID:String, nickName:String, userIconURL:String){
         self.weiboID     = weiboID;
-        self.nikeName    = nikeName;
+        self.nickName    = nickName;
         self.userIconURL = userIconURL;
     }
     
@@ -118,7 +118,7 @@ class CTAWeiboRegisterRequest: CTABaseRequest {
         
         let dic:Dictionary<String, AnyObject> = [
             key(.WeiboID)    : weiboID,
-            key(.NikeName)   : nikeName,
+            key(.NickName)   : nickName,
             key(.UserIconURL): userIconURL
         ];
         
@@ -128,23 +128,23 @@ class CTAWeiboRegisterRequest: CTABaseRequest {
 
 class CTAUpdateUserInfoRequest: CTABaseRequest{
     let userID:String;
-    let nikeName:String;
+    let nickName:String;
     let userDesc:String;
     let userIconURL:String;
     let sex:Int;
-    let countryID:Int;
-    let provinceID:Int;
-    let cityID:Int;
+    let country:String;
+    let province:String;
+    let city:String;
     
     init(userModel:CTAUserModel){
         self.userID      = userModel.userID;
-        self.nikeName    = userModel.nikeName;
+        self.nickName    = userModel.nickName;
         self.userDesc    = userModel.userDesc;
         self.userIconURL = userModel.userIconURL;
         self.sex         = userModel.sex;
-        self.countryID   = userModel.countryID;
-        self.provinceID  = userModel.provinceID;
-        self.cityID      = userModel.cityID;
+        self.country     = userModel.country;
+        self.province    = userModel.province;
+        self.city        = userModel.city;
     }
     
     override func requestUrl() -> String {
@@ -155,39 +155,39 @@ class CTAUpdateUserInfoRequest: CTABaseRequest{
         
         let dic:Dictionary<String, AnyObject> = [
             key(.UserID): userID,
-            key(.NikeName): nikeName,
+            key(.NickName): nickName,
             key(.UserDesc): userDesc,
             key(.UserIconURL): userIconURL,
             key(.Sex): sex,
-            key(.CountryID): countryID,
-            key(.ProvinceID): provinceID,
-            key(.CityID): cityID
+            key(.Country): country,
+            key(.Province): province,
+            key(.City): city
         ];
         
         return self.getParameterString(dic, errorMessage: "CTAUpdateUserInfoRequest");
     }
 }
 
-class CTAUpdateUserNikenameRequest: CTABaseRequest{
+class CTAUpdateUserNicknameRequest: CTABaseRequest{
     let userID:String;
-    let nikeName:String;
+    let nickName:String;
     
-    init(userID:String, nikeName:String){
+    init(userID:String, nickName:String){
         self.userID   = userID;
-        self.nikeName = nikeName;
+        self.nickName = nickName;
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UpdateUserNikename.description;
+        return CTARequestUrl.UpdateUserNickname.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
             key(.UserID)  : userID,
-            key(.NikeName): nikeName
+            key(.NickName): nickName
         ];
-        return self.getParameterString(dic, errorMessage: "CTAUpdateUserNikenameRequest");
+        return self.getParameterString(dic, errorMessage: "CTAUpdateUserNicknameRequest");
     }
 }
 
@@ -239,15 +239,15 @@ class CTAUpdateUserIconURLRequest: CTABaseRequest{
 
 class CTAUpdateUserAddressRequest: CTABaseRequest{
     let userID:String;
-    let countryID:Int;
-    let provinceID:Int;
-    let cityID:Int;
+    let country:String;
+    let province:String;
+    let city:String;
     
-    init(userID:String, countryID:Int = -1, provinceID:Int = -1, cityID:Int = -1){
+    init(userID:String, country:String = "", province:String = "", city:String = ""){
         self.userID     = userID;
-        self.countryID  = countryID;
-        self.provinceID = provinceID;
-        self.cityID     = cityID;
+        self.country    = country;
+        self.province   = province;
+        self.city       = city;
     }
     
     override func requestUrl() -> String {
@@ -260,14 +260,14 @@ class CTAUpdateUserAddressRequest: CTABaseRequest{
             key(.UserID): userID
         ];
         
-        if self.countryID != -1{
-            dic[key(.CountryID)] = self.countryID;
+        if self.country != ""{
+            dic[key(.Country)] = self.country;
         }
-        if self.provinceID != -1{
-            dic[key(.ProvinceID)] = self.provinceID;
+        if self.province != ""{
+            dic[key(.Province)] = self.province;
         }
-        if self.cityID != -1{
-            dic[key(.CityID)] = self.cityID;
+        if self.city != ""{
+            dic[key(.City)] = self.city;
         }
         return self.getParameterString(dic, errorMessage: "CTAUpdateUserAddressRequest");
     }

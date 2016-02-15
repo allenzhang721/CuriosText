@@ -34,7 +34,7 @@ enum CTARequestHost: CustomStringConvertible {
     case .Test:
       return "http://182.92.150.178/CuriosTextServices"
     case .Debug:
-      return "http://192.168.1.100:8080/CuriosTextServices"
+      return "http://192.168.1.105:8080/CuriosTextServices"
     case .Production:
       return "http://cta.curiosapp.com"
     }
@@ -44,7 +44,7 @@ enum CTARequestHost: CustomStringConvertible {
 enum CTARequestUrl: CustomStringConvertible {
   case GetUserID,Login
   case PhoneRegister, WeixinRegister, WeiboRegister
-  case UpdateUserInfo, UpdateUserNikename, UpdateUserDesc, UpdateUserIconURL, UpdateUserAddress, UpdateUserSex
+  case UpdateUserInfo, UpdateUserNickname, UpdateUserDesc, UpdateUserIconURL, UpdateUserAddress, UpdateUserSex
   case CheckUserExist, BindingPhone, BindingWeixinID, UnbindingWeixinID, BingingWeiboID, UnbindingWeiboID
   case CheckPassword, UpdatePassword, ResetPassword, UserDetail
     
@@ -68,8 +68,8 @@ enum CTARequestUrl: CustomStringConvertible {
         return "/user/weiboRegister"
     case .UpdateUserInfo:
         return "/user/updateUserInfo"
-    case .UpdateUserNikename:
-        return "/user/updateUserNikename"
+    case .UpdateUserNickname:
+        return "/user/updateUserNickname"
     case .UpdateUserDesc:
         return "/user/updateUserDesc"
     case .UpdateUserIconURL:
@@ -148,7 +148,7 @@ enum CTARequestUrl: CustomStringConvertible {
 
 enum CTAParameterKey: CustomStringConvertible {
   case Data
-  case UserID, NikeName, UserDesc, UserIconURL, Sex, Email, Phone, AreaCode, Password, WeixinID, WeiboID, CountryID, ProvinceID, CityID, NewPassword
+  case UserID, NickName, UserDesc, UserIconURL, Sex, Email, Phone, AreaCode, Password, WeixinID, WeiboID, Country, Province, City, NewPassword
   case BeUserID, Start, Size, SharePlatform, List
   case PublishID, Title, PublishDesc, PublishIconURL, PreviewIconURL, PublishURL
   case RelationType, RelationUserID, FollowCount, BeFollowCount, PublishCount
@@ -162,8 +162,8 @@ enum CTAParameterKey: CustomStringConvertible {
       return "data"
     case .UserID:
         return "userID"
-    case .NikeName:
-        return "nikeName"
+    case .NickName:
+        return "nickName"
     case .UserDesc:
         return "userDesc"
     case .UserIconURL:
@@ -182,12 +182,12 @@ enum CTAParameterKey: CustomStringConvertible {
         return "weixinID"
     case .WeiboID:
         return "weiboID"
-    case .CountryID:
-        return "countryID"
-    case .ProvinceID:
-        return "provinceID"
-    case .CityID:
-        return "cityID"
+    case .Country:
+        return "country"
+    case .Province:
+        return "province"
+    case .City:
+        return "city"
     case .NewPassword:
         return "newPassword"
     case .BeUserID:

@@ -16,7 +16,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     var selectedPublishID:String = ""
 
     var userIconImage:UIImageView = UIImageView()
-    var userNikenameLabel:UILabel = UILabel()
+    var userNicknameLabel:UILabel = UILabel()
     var likeButton:UIButton = UIButton()
     
     var currentFullCell:CTAFullPublishesCell!
@@ -70,7 +70,6 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     }
     
     func loadNewPublishes(){
-        self.loadLocalUserModel()
         let userID = self.loginUser == nil ? "" : self.loginUser!.userID
         CTAPublishDomain.getInstance().newPublishList(userID, start: 0) { (info) -> Void in
             if info.result {

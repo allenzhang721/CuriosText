@@ -32,7 +32,7 @@
 "SetPasswordPlaceholder" = "6-16 characters";
 "ConfirmPasswordLabel" = "Confirm";
 "ConfirmPasswordPlaceholder" = "Confirm password";
-"UserNameLabel" = "User Name";
+"UserNickNameLabel" = "Nickname";
 "UserNamePlaceholder" = "John Frey";
 "CompleteButtonLabel" = "Done";
 "UserInfoLabel" = "Complete your profile";

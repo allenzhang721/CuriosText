@@ -24,7 +24,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         return _instance!
     }
     
-    var userNameTextInput:UITextField!
+    var userNickNameTextInput:UITextField!
     var completeButton:UIButton!
     var userIconImage:UIImageView!
     let imagePicker:UIImagePickerController = UIImagePickerController()
@@ -79,7 +79,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         userInfoLabel.frame.origin.x = (bouns.width - userInfoLabel.frame.width)/2
         self.view.addSubview(userInfoLabel)
         
-        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bouns.width - 60)/2, y: 170*self.getVerRate(), width: 60, height: 62))
+        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bouns.width - 60)/2, y: 170*self.getVerRate(), width: 60, height: 60))
         self.userIconImage.image = UIImage(named: "setimage-icon")
         self.cropImageCircle(self.userIconImage)
         self.view.addSubview(self.userIconImage)
@@ -90,18 +90,18 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         self.imagePicker.delegate = self
         
         
-        let userNameLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: 262*self.getVerRate(), width: 50, height: 25))
-        userNameLabel.font = UIFont.systemFontOfSize(18)
-        userNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        userNameLabel.text = NSLocalizedString("UserNameLabel", comment: "")
-        userNameLabel.sizeToFit()
-        self.view.addSubview(userNameLabel)
+        let userNickNameLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: 262*self.getVerRate(), width: 50, height: 25))
+        userNickNameLabel.font = UIFont.systemFontOfSize(18)
+        userNickNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        userNickNameLabel.text = NSLocalizedString("UserNickNameLabel", comment: "")
+        userNickNameLabel.sizeToFit()
+        self.view.addSubview(userNickNameLabel)
         
-        self.userNameTextInput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: 250*self.getVerRate(), width: 190*self.getHorRate(), height: 50))
-        self.userNameTextInput.placeholder = NSLocalizedString("UserNamePlaceholder", comment: "")
-        self.userNameTextInput.clearsOnBeginEditing = true
-        self.userNameTextInput.delegate = self
-        self.view.addSubview(self.userNameTextInput)
+        self.userNickNameTextInput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: 250*self.getVerRate(), width: 190*self.getHorRate(), height: 50))
+        self.userNickNameTextInput.placeholder = NSLocalizedString("UserNamePlaceholder", comment: "")
+        self.userNickNameTextInput.clearsOnBeginEditing = true
+        self.userNickNameTextInput.delegate = self
+        self.view.addSubview(self.userNickNameTextInput)
         let textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 299*self.getVerRate(), width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "textinput-line")
         self.view.addSubview(textLine)
@@ -136,9 +136,9 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
                 self.loadUserIcon(self.userIconPath)
             }
             if self.userModel != nil {
-                self.userNameTextInput.text = self.userModel!.nikeName
+                self.userNickNameTextInput.text = self.userModel!.nickName
             }else {
-                self.userNameTextInput.text = ""
+                self.userNickNameTextInput.text = ""
             }
             self.setCompleteButtonStyle()
         }
@@ -160,7 +160,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     }
     
     func setCompleteButtonStyle(){
-        let newText = self.userNameTextInput.text
+        let newText = self.userNickNameTextInput.text
         let newStr = NSString(string: newText!)
         if self.selectedImage != nil && newStr.length > 0{
             self.completeButton.enabled = true
@@ -230,7 +230,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
             if userIconURL != "" {
                 self.userModel!.userIconURL = userIconURL
             }
-            self.userModel!.nikeName = self.userNameTextInput.text!
+            self.userModel!.nickName = self.userNickNameTextInput.text!
             self.changeToLoadingView()
             CTAUserDomain.getInstance().updateUserInfo(self.userModel!, compelecationBlock: { (info) -> Void in
                 self.changeToUnloadingView()
@@ -243,7 +243,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
                         self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                         })
                     }else {
-                        let error = info.errorType as! CTARequestUserError
+                        //let error = info.errorType as! CTARequestUserError
                         self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                         })
                     }
@@ -278,7 +278,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
 extension CTASetUserNameViewController: UITextFieldDelegate{
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
-        let newText = self.userNameTextInput.text
+        let newText = self.userNickNameTextInput.text
         let newStr = NSString(string: newText!)
         let isDelete = string == "" ? true : false
         if isDelete {

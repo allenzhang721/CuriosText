@@ -22,7 +22,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
     var fullCellArray:Array<CTAFullPublishesCell> = []
     
     var userIconImage:UIImageView = UIImageView()
-    var userNikenameLabel:UILabel = UILabel()
+    var userNicknameLabel:UILabel = UILabel()
     var likeButton:UIButton = UIButton()
     
     var isLoading:Bool = false
