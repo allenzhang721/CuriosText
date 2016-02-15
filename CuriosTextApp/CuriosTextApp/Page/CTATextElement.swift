@@ -334,6 +334,7 @@ final class CTATextElement: NSObject, CTAElement, TextModifiable {
     //    private(set) var width = 0.0
     //    private(set) var height = 0.0
     private(set) var text = ""
+    
     var attributes = CTATextAttributes()
     
     var resourceName: String {

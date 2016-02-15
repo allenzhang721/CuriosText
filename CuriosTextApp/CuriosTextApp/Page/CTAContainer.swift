@@ -28,15 +28,15 @@ final class CTAContainer: NSObject, NSCoding {
         static let iD = "iD"
     }
     
-    private(set) var x = 0.0
-    private(set) var y = 0.0
-    private(set) var width = 50.0
-    private(set) var height = 50.0
-    private(set) var rotation = 0.0
-    private(set) var alpha = 1.0
-    private(set) var contentScale = 1.0
-    private(set) var contentInset = CGPoint.zero
-    private(set) var element: CTAElement?
+    var x = 0.0
+    var y = 0.0
+    var width = 50.0
+    var height = 50.0
+    var rotation = 0.0
+    var alpha = 1.0
+    var contentScale = 1.0
+    var contentInset = CGPoint.zero
+    var element: CTAElement?
     let iD: String
     
     required init?(coder aDecoder: NSCoder) {
@@ -77,166 +77,3 @@ final class CTAContainer: NSObject, NSCoding {
     }
 }
 
-extension CTAContainer {
-
-    
-}
-
-// MARK: - contentsTypeRetrivevable
-extension CTAContainer {
-    
-    var type: CTAContentsType {
-        switch element {
-    
-        case is CTATextElement:
-            return .Text
-            
-        default:
-            return .Empty
-        }
-    }
-}
-
-// MARK: - ContainerViewModel
-extension CTAContainer: ContainerVMProtocol {
-    
-    var center: CGPoint {
-        get {
-            return CGPoint(x: x, y: y)
-        }
-        
-        set {
-            x = Double(newValue.x)
-            y = Double(newValue.y)
-        }
-    }
-    
-    var size: CGSize {
-        
-        get {
-            return CGSize(width: width, height: height)
-        }
-        
-        set {
-            width = Double(newValue.width)
-            height = Double(newValue.height)
-        }
-        
-    }
-    
-    var radius: CGFloat {
-     
-        get {
-            return CGFloat(rotation)
-        }
-        
-        set {
-            rotation = Double(newValue)
-        }
-    }
-    
-    var scale: CGFloat {
-        
-        get {
-            return CGFloat(contentScale)
-        }
-        
-        set {
-            
-            contentScale = Double(newValue)
-            
-            
-        }
-    }
-    
-    var inset: CGPoint {
-        return contentInset
-    }
-    
-    func updateWithScale(ascale: CGFloat, constraintSzie: CGSize) {
-        
-        scale = ascale
-        element!.scale = ascale
-        let newResult = element!.resultWithScale(ascale, constraintSzie: constraintSzie)
-        let contentSize = CGSize(width: ceil(newResult.size.width), height: ceil(newResult.size.height))
-        let inset = CGPoint(x: floor(newResult.inset.x), y: newResult.inset.y)
-        // new content size
-        let nextSize = CGSize(width: contentSize.width - 2 * inset.x, height: contentSize.height - 2 * inset.y)
-        
-        size = nextSize
-        contentInset = inset
-    }
-}
-
-
-// MARK: - TextModifiable, ViewModifiable
-extension CTAContainer: TextContainerVMProtocol {
-    
-    var textElement: protocol<CTAElement, TextModifiable>? {
-        guard let te = element as? CTATextElement else {
-            return nil
-            fatalError("This Contaienr do not contain Text Element")
-        }
-        
-        return te
-    }
-    
-    func updateWithFontFamily(family: String, FontName name: String, constraintSize: CGSize) {
-        
-        guard let textElement = textElement else {
-            fatalError("This Contaienr do not contain Text Element")
-        }
-        
-        textElement.fontFamily = family
-        textElement.fontName = name
-        
-        let newResult = textElement.resultWithFontFamily(family, fontName: name, constraintSize: constraintSize)
-        let contentSize = CGSize(width: ceil(newResult.size.width), height: ceil(newResult.size.height))
-        let inset = CGPoint(x: floor(newResult.inset.x), y: newResult.inset.y)
-        // new content size
-        let nextSize = CGSize(width: contentSize.width - 2 * inset.x, height: contentSize.height - 2 * inset.y)
-        
-        size = nextSize
-        contentInset = inset
-    }
-    
-    func updateWithTextAlignment(alignment: NSTextAlignment) {
-        guard let textElement = textElement else {
-            fatalError("This Contaienr do not contain Text Element")
-        }
-        
-        textElement.alignment = alignment
-        
-    }
-    
-    func updateWithTextSpacing(lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize) {
-        guard let textElement = textElement else {
-            fatalError("This Contaienr do not contain Text Element")
-        }
-        
-        textElement.lineSpacing = lineSpacing
-        textElement.textSpacing = textSpacing
-        
-        let newResult = textElement.resultWithLineSpacing(lineSpacing, textSpacing: textSpacing, constraintSize: constraintSize)
-        let contentSize = CGSize(width: ceil(newResult.size.width), height: ceil(newResult.size.height))
-        let inset = CGPoint(x: floor(newResult.inset.x), y: newResult.inset.y)
-        // new content size
-        let nextSize = CGSize(width: contentSize.width - 2 * inset.x, height: contentSize.height - 2 * inset.y)
-        
-        size = nextSize
-        contentInset = inset
-    }
-    
-    func updateWithColor(hex: String, alpha: CGFloat) {
-        
-        guard let textElement = textElement else {
-            fatalError("This Contaienr do not contain Text Element")
-        }
-        
-        textElement.colorHex = hex
-        textElement.colorAlpha = alpha
-        
-    }
-    
-    // TODO: CTAContainer, Calculate the position and origion if occur rotation -- Emiaostein; 2015-12-18-14:49
-}

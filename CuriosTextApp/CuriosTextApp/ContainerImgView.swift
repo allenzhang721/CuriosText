@@ -9,13 +9,18 @@
 import UIKit
 
 class ContainerImgView: ContainerView {
+    
+    var imageView: UIImageView!
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    override func updateContents(contents: AnyObject, contentSize size: CGSize, drawInsets inset: CGPoint) {
+        
+        guard let contents = contents as? UIImage else {
+            fatalError("The contents is not Image")
+        }
+        
+        imageView.bounds.size = size
+//        textView.insets = inset
+        imageView.frame.origin = CGPoint(x: 0 - inset.x, y: 0 - inset.y)
+        imageView.image = contents
     }
-    */
-
 }
