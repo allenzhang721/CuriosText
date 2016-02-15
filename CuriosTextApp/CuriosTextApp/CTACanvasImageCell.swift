@@ -15,8 +15,8 @@ class CTACanvasImageCell: CTACanvasCell {
     override init(frame: CGRect) {
         self.imageView = UIImageView()
         super.init(frame: frame)
-
         imageView.layer.drawsAsynchronously = true
+        imageView.backgroundColor = UIColor.blueColor()
         contentView.layer.addSublayer(imageView.layer)
     }
     
@@ -24,6 +24,7 @@ class CTACanvasImageCell: CTACanvasCell {
         self.imageView = UIImageView()
         super.init(coder: aDecoder)
         imageView.layer.drawsAsynchronously = true
+        imageView.backgroundColor = UIColor.blueColor()
         contentView.layer.addSublayer(imageView.layer)
     }
     

@@ -336,12 +336,12 @@ extension CTACanvasViewController: UICollectionViewDelegate, UICollectionViewDat
 
         switch containerAt(indexPath) {
             
-        case let textContainer as TextContainerVMProtocol:
+        case let textContainer as TextContainerVMProtocol where textContainer.type == .Text:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TextCell", forIndexPath: indexPath) as! CTACanvasTextCell
             cell.textView.attributedText = textContainer.textElement!.attributeString
             return cell
             
-        case let imageContainer as ImageContainerVMProtocol:
+        case let imageContainer as ImageContainerVMProtocol where imageContainer.type == .Image:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ImageCell", forIndexPath: indexPath) as! CTACanvasImageCell
             cell.imageView.image = nil
             return cell

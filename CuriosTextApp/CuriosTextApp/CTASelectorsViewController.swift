@@ -33,7 +33,7 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
     private var animation: Bool = false
     var dataSource: CTASelectorsViewControllerDataSource?
     var delegate: CTASelectorViewControllerDelegate?
-    private var currentType: CTAContainerFeatureType = .Fonts
+    private var currentType: CTAContainerFeatureType = .Size
     private var container: ContainerVMProtocol? {
         return dataSource?.selectorsViewControllerContainer(self)
     }
@@ -95,8 +95,6 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
             return
         }
         
-        
-        
         if let cell = collectionview.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as? CTASelectorCell {
             cell.dataSource = nil
             cell.removeAllTarget()
@@ -141,7 +139,6 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
             }
         }
     }
-    
 }
 
 // MARK: - UIColletionViewDataSource
