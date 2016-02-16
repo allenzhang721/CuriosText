@@ -49,24 +49,14 @@ class ViewController: UIViewController, CTAAddBarProtocol{
             
             for subView in pageViewController.view.subviews {
                 if let scrolliew = subView as? UIScrollView {
-<<<<<<< HEAD
-                                    scrolliew.bounces = true
-=======
-                                    scrolliew.bounces = false
-//                    scrolliew.delegate = self
->>>>>>> develop
+                    scrolliew.bounces = true
                     break
                 }
             }
         } else {
             for subView in pageViewController.view.subviews {
                 if let scrolliew = subView as? UIScrollView {
-<<<<<<< HEAD
-                                    scrolliew.bounces = false
-=======
-                                    scrolliew.bounces = true
->>>>>>> develop
-//                    scrolliew.delegate = self
+                    scrolliew.bounces = false
                     break
                 }
             }
