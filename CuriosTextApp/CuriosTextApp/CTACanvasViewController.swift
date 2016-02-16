@@ -350,8 +350,6 @@ extension CTACanvasViewController: UICollectionViewDelegate, UICollectionViewDat
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
             return cell
         }
-        
-       
     }
 }
 

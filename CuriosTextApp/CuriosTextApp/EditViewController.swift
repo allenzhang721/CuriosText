@@ -65,6 +65,10 @@ class EditViewController: UIViewController {
         
         let pinch = UIPinchGestureRecognizer(target: self, action: "pinch:")
         canvasViewController.view.addGestureRecognizer(pinch)
+        
+        let doubleTap = UITapGestureRecognizer(target: self, action: "doubleTap:")
+        doubleTap.numberOfTapsRequired = 2
+        canvasViewController.view.addGestureRecognizer(doubleTap)
     }
     
     
@@ -150,6 +154,25 @@ class EditViewController: UIViewController {
         default:
             ()
         }
+    }
+    
+    func doubleTap(sender: UITapGestureRecognizer) {
+        guard let selectedIndexPath = selectedIndexPath, let container = selectedContainer else {
+            return
+        }
+        
+        switch container.type {
+            
+        case .Text:
+            debug_print("double tap TEXT ")
+            
+        case .Image:
+            debug_print("double tap Img")
+            
+        default:
+            ()
+        }
+        
     }
 }
 
@@ -311,19 +334,6 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
                 let cener = attri.center
                 self.tabViewController.collectionView.setContentOffset(CGPoint(x: cener.x - self.tabViewController.collectionView.bounds.width / 2.0, y: 0), animated: false)
             }
-            
-//            let time: NSTimeInterval = 0.1
-//            let delay = dispatch_time(DISPATCH_TIME_NOW,
-//                                      Int64(time * Double(NSEC_PER_SEC)))
-//            dispatch_after(delay, dispatch_get_main_queue()) {
-//                debug_print("nextIndex = \(nextIndex)")
-//                if let attri = self.tabViewController.collectionView.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: nextIndex, inSection: 0)) {
-//                                        let cener = attri.center
-//                                        self.tabViewController.collectionView.setContentOffset(CGPoint(x: cener.x - self.tabViewController.collectionView.bounds.width / 2.0, y: 0), animated: false)
-//                                        
-//                }
-////                self.tabViewController.collectionView.scrollToItemAtIndexPath(, atScrollPosition: .CenteredHorizontally, animated: false)
-//            }
         }
         
         selectorViewController.updateSelector()
