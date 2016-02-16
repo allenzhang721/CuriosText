@@ -14,7 +14,7 @@ class CTATextModifyViewController: UIViewController {
     
     
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
-    weak var bottomWithKeyBoardConstraint: NSLayoutConstraint?
+    var bottomWithKeyBoardConstraint: NSLayoutConstraint?
     @IBOutlet weak var textView: UITextView!
     private var text = "Emiaostein"
     private var attri = [String: AnyObject]()
@@ -28,10 +28,6 @@ class CTATextModifyViewController: UIViewController {
         keyboardChangedNotification()
         
         textView.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.New, context: nil)
-        
-        
-        
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -39,7 +35,6 @@ class CTATextModifyViewController: UIViewController {
     }
     
     override func viewWillDisappear(animated: Bool) {
-        
         textView.resignFirstResponder()
     }
     
@@ -55,13 +50,16 @@ class CTATextModifyViewController: UIViewController {
         
         if let t = object as? UITextView where t == textView && height > contentHeight && keyPath == "contentSize" {
             
-            let topOffset = (height - contentHeight) / 2.0
+            let topOffset = (height - contentHeight) / 2.0 - 10
             let aOffset = topOffset < 0.0 ? 0.0 : topOffset
             
-//            textView.contentOffset = CGPoint(x: textView.contentOffset.x, y: -aOffset)
-            textView.transform = CGAffineTransformMakeTranslation(0, aOffset)
-            debug_print("height = \(height), contentHeight = \(contentHeight), offsetY = \(textView.contentOffset.y)")
+            textView.setContentOffset(CGPoint(x: textView.contentOffset.x, y: -aOffset), animated: false)
+            textView.contentOffset = CGPoint(x: textView.contentOffset.x, y: -aOffset)
+//            textView.transform = CGAffineTransformMakeTranslation(0, aOffset)
+//            debug_print("height = \(height), contentHeight = \(contentHeight), offsetY = \(aOffset)")
         }
+        
+        debug_print("height = \(height), contentHeight = \(contentHeight), offsetY = \(textView.contentOffset.y)")
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -113,7 +111,6 @@ class CTATextModifyViewController: UIViewController {
     
     private func keyboardChangedNotification() {
         
-        
         keyboardMan.animateWhenKeyboardAppear = { [weak self] appearPostIndex, keyboardHeight, keyboardHeightIncrement in
             
             print("appear \(appearPostIndex), \(keyboardHeight), \(keyboardHeightIncrement)\n")
@@ -124,9 +121,16 @@ class CTATextModifyViewController: UIViewController {
                     bott.active = false
                 }
                 
-                if let bottomWithKeyboard = strongSelf.bottomWithKeyBoardConstraint where bottomWithKeyboard.active == false {
+                if let bottomWithKeyboard = strongSelf.bottomWithKeyBoardConstraint where bottomWithKeyboard.active == true {
                     
-                    bottomWithKeyboard.active = true
+                    bottomWithKeyboard.active = false
+                    
+                    strongSelf.textView.removeConstraint(bottomWithKeyboard)
+                    
+                    strongSelf.bottomWithKeyBoardConstraint = strongSelf.textView.bottomAnchor.constraintEqualToAnchor(strongSelf.view.bottomAnchor, constant: -keyboardHeight)
+                    
+                    strongSelf.bottomWithKeyBoardConstraint?.active = true
+                    
                 } else {
                     
                    strongSelf.bottomWithKeyBoardConstraint = strongSelf.textView.bottomAnchor.constraintEqualToAnchor(strongSelf.view.bottomAnchor, constant: -keyboardHeight)
@@ -134,24 +138,16 @@ class CTATextModifyViewController: UIViewController {
                     strongSelf.bottomWithKeyBoardConstraint?.active = true
                     
                 }
-//                
-//                strongSelf.bottomConstraint.active = false
-                strongSelf.textView.bottomAnchor.constraintEqualToAnchor(strongSelf.view.bottomAnchor, constant: -keyboardHeight).active = true
+
                 strongSelf.view.layoutIfNeeded()
                 
-                let height = strongSelf.textView.bounds.height
-                let contentHeight = strongSelf.textView.contentSize.height
-                if height > contentHeight {
-                    let topOffset = (height - contentHeight) / 2.0
-                    let aOffset = topOffset < 0.0 ? 0.0 : topOffset
-                    strongSelf.textView.contentOffset = CGPoint(x: strongSelf.textView.contentOffset.x, y: -aOffset)
-                }
-                
-//                let bottom = strongSelf.textView.bounds.height / 2.0
-//                let top = bottom
-//                let left: CGFloat = 0
-//                let right: CGFloat = 0
-//                strongSelf.textView.contentInset = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
+//                let height = strongSelf.textView.bounds.height
+//                let contentHeight = strongSelf.textView.contentSize.height
+//                if height > contentHeight {
+//                    let topOffset = (height - contentHeight) / 2.0
+//                    let aOffset = topOffset < 0.0 ? 0.0 : topOffset
+//                    strongSelf.textView.contentOffset = CGPoint(x: strongSelf.textView.contentOffset.x, y: -aOffset)
+//                }
             }
         }
         
@@ -166,13 +162,4 @@ class CTATextModifyViewController: UIViewController {
 //            }
 //        }
     }
-}
-
-extension CTATextModifyViewController: UITextViewDelegate {
-    
-//    func textViewDidChange(textView: UITextView) {
-//        
-//        let textSize = textView.layoutManager.textContainers.first?.size
-//        textView.setContentOffset(CGPoint(x: 0, y: textView.contentSize.height + textSize!.height / 2.0), animated: false)
-//    }
 }
