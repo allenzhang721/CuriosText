@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '80537A4C1BE7510749A9F746'
-               BlueprintName = 'Qiniu'
+               BlueprintIdentifier = 'C220A2A376937B32BFBC48ED'
+               BlueprintName = 'KeyboardMan'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Qiniu.framework'>
+               BuildableName = 'KeyboardMan.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

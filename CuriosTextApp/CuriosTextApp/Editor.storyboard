@@ -126,7 +126,7 @@
         <!--Text Modify View Controller-->
         <scene sceneID="Z9r-Iz-aEd">
             <objects>
-                <viewController id="LHx-HX-gyp" customClass="CTATextModifyViewController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TextModifyViewController" id="LHx-HX-gyp" customClass="CTATextModifyViewController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7Ps-ou-TKs"/>
                         <viewControllerLayoutGuide type="bottom" id="Qma-wh-2Ny"/>
@@ -151,8 +151,8 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="65M-gY-WAU">
-                                <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="65M-gY-WAU">
+                                <rect key="frame" x="20" y="44" width="280" height="524"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -163,11 +163,11 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="7ft-jk-rKX" secondAttribute="trailing" id="5nQ-8j-5ob"/>
                             <constraint firstItem="7ft-jk-rKX" firstAttribute="leading" secondItem="rYw-tZ-6hk" secondAttribute="leading" id="76q-Lp-XIn"/>
-                            <constraint firstItem="65M-gY-WAU" firstAttribute="leading" secondItem="7ft-jk-rKX" secondAttribute="leading" id="NOz-yj-Gkw"/>
+                            <constraint firstItem="65M-gY-WAU" firstAttribute="leading" secondItem="7ft-jk-rKX" secondAttribute="leading" constant="20" id="NOz-yj-Gkw"/>
                             <constraint firstItem="65M-gY-WAU" firstAttribute="bottom" secondItem="Qma-wh-2Ny" secondAttribute="top" id="VWM-b6-BGc"/>
                             <constraint firstItem="65M-gY-WAU" firstAttribute="top" secondItem="7ft-jk-rKX" secondAttribute="bottom" id="XNq-oJ-g6R"/>
                             <constraint firstItem="7ft-jk-rKX" firstAttribute="top" secondItem="rYw-tZ-6hk" secondAttribute="top" id="YZh-42-cFE"/>
-                            <constraint firstItem="65M-gY-WAU" firstAttribute="trailing" secondItem="7ft-jk-rKX" secondAttribute="trailing" id="as3-9U-es2"/>
+                            <constraint firstItem="65M-gY-WAU" firstAttribute="trailing" secondItem="7ft-jk-rKX" secondAttribute="trailing" constant="-20" id="as3-9U-es2"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>

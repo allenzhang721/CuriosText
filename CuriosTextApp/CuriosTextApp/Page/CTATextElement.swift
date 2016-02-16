@@ -387,6 +387,16 @@ final class CTATextElement: NSObject, CTAElement, TextModifiable {
         }
     }
     
+    func resultWithText(text: String, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize) {
+        
+        let inset = CGPoint(x: 20.0 / 17.0 * fontSize * scale, y: 0)
+        let str = attributeStringWithText(text)
+        let textSize = str.boundingRectWithSize(constraintSize, options: .UsesLineFragmentOrigin, context: nil).size
+        let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
+        
+        return (inset, size)
+    }
+    
     
     func resultWithScale(scale: CGFloat, preScale: CGFloat, containerSize: CGSize, constraintSzie: CGSize) -> (inset: CGPoint, size: CGSize) {
         
@@ -435,9 +445,25 @@ extension CTATextElement {
         return NSAttributedString(string: text, attributes: attributes.textAttributes)
     }
     
+    var textAttributes: [String: AnyObject] {
+        
+        return attributes.textAttributes
+    }
+    
     var fontSize: CGFloat {
         return CGFloat(attributes.fontSize)
         
+    }
+    
+    var texts: String {
+     
+        get {
+            return self.text
+        }
+        
+        set {
+            text = newValue
+        }
     }
     
     var fontScale: CGFloat {
@@ -526,6 +552,11 @@ extension CTATextElement {
     }
     var shadowBlurRadius: CGFloat {
         return CGFloat(attributes.textShadowBlurRadius)
+    }
+    
+    func attributeStringWithText(atext: String) -> NSAttributedString {
+        
+        return NSAttributedString(string: atext, attributes: attributes.textAttributes)
     }
     
     func attributeStringWithFontScale(scale: CGFloat) -> NSAttributedString {

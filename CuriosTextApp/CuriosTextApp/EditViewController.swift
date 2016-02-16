@@ -164,6 +164,26 @@ class EditViewController: UIViewController {
         switch container.type {
             
         case .Text:
+            let textmodifyVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("TextModifyViewController") as! CTATextModifyViewController
+            let textElement = (container as! TextContainerVMProtocol).textElement!
+            textmodifyVC.beganWith(textElement.texts, attributes: textElement.textAttributes)
+            
+            textmodifyVC.textModifyDidCompletion = {[weak self] text in
+                
+                if let strongSelf = self {
+                    let canvasSize = strongSelf.canvasViewController.view.bounds.size
+                    (container as! TextContainerVMProtocol).updateWithText(text, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
+                    
+                    strongSelf.canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+                }
+                
+            }
+            
+            presentViewController(textmodifyVC, animated: true, completion: { 
+                
+                
+            })
+            
             debug_print("double tap TEXT ")
             
         case .Image:
