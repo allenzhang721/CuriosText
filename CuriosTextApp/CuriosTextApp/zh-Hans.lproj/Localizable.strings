@@ -46,6 +46,7 @@
 "UserFemaleLabel" = "女";
 "UserRegion" = "地区";
 "UserDesc" = "简介";
+"SaveButtonLabel" = "保存";
 
 "AlertOkLabel" = "确定";
 "AlertYesLabel" = "是";

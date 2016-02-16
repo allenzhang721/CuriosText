@@ -305,11 +305,13 @@ extension CTASetPasswordViewController: UITextFieldDelegate{
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool{
-        textField.resignFirstResponder()
         if textField == self.confirmTextinput {
+            textField.resignFirstResponder()
             if self.submitButton.enabled {
                 self.submitHandler()
             }
+        }else if textField == self.passwordTextinput {
+            self.confirmTextinput.becomeFirstResponder()
         }
         return true
     }
