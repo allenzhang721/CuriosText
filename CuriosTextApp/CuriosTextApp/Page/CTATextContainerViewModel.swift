@@ -12,6 +12,7 @@ protocol TextContainerVMProtocol: ContainerVMProtocol {
     
     var textElement: protocol<CTAElement, TextModifiable>? { get }
     
+    func updateWithText(text: String, constraintSize: CGSize)
     func updateWithFontFamily(family: String, FontName name: String, constraintSize: CGSize)
     func updateWithTextAlignment(alignment: NSTextAlignment)
     func updateWithTextSpacing(lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize)
@@ -21,6 +22,7 @@ protocol TextContainerVMProtocol: ContainerVMProtocol {
 protocol TextRetrievable: class {
     
     var attributeString: NSAttributedString { get }
+    var textAttributes: [String: AnyObject] { get }
     var fontSize: CGFloat { get }
     var fontScale: CGFloat { get }
     var shadowOffset: CGPoint { get }
@@ -66,6 +68,7 @@ extension TextRetrievable {
 
 protocol TextModifiable: TextRetrievable {
     
+    var texts: String { get set }
     var fontScale: CGFloat { get set }
     var fontFamily: String { get set }
     var fontName: String { get set }
@@ -74,6 +77,8 @@ protocol TextModifiable: TextRetrievable {
     var textSpacing: CGFloat { get set }
     var colorHex: String { get set }
     var colorAlpha: CGFloat { get set }
+    
+    func resultWithText(text: String, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
     
     func resultWithFontFamily(family: String, fontName name: String, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
     
@@ -91,6 +96,25 @@ extension CTAContainer: TextContainerVMProtocol {
         }
         
         return te
+    }
+    
+    func updateWithText(text: String, constraintSize: CGSize) {
+        
+        guard let textElement = textElement else {
+            fatalError("This Contaienr do not contain Text Element")
+        }
+        
+        textElement.texts = text
+        
+        let newResult = textElement.resultWithText(text, constraintSize: constraintSize)
+        let contentSize = CGSize(width: ceil(newResult.size.width), height: ceil(newResult.size.height))
+        let inset = CGPoint(x: floor(newResult.inset.x), y: newResult.inset.y)
+        // new content size
+        let nextSize = CGSize(width: contentSize.width - 2 * inset.x, height: contentSize.height - 2 * inset.y)
+        
+        size = nextSize
+        contentInset = inset
+        
     }
     
     func updateWithFontFamily(family: String, FontName name: String, constraintSize: CGSize) {

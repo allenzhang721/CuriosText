@@ -99,6 +99,7 @@
 		2C5C24961C44F5D800A70F1B /* CTASelectorColorsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C24951C44F5D800A70F1B /* CTASelectorColorsCell.swift */; };
 		2C5C24981C44FA5600A70F1B /* CTAColorsManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C24971C44FA5600A70F1B /* CTAColorsManger.swift */; };
 		2C5EA2561C479CE000DCEE7B /* Print.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5EA2551C479CE000DCEE7B /* Print.swift */; };
+		2C5FF8181C72C85A00649FD7 /* CTATextModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5FF8171C72C85A00649FD7 /* CTATextModifyViewController.swift */; };
 		2C6017BD1C59D84C00EEB804 /* MonkeyKing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6017BC1C59D84C00EEB804 /* MonkeyKing.framework */; };
 		2C65B6681C4F514D007B4DEA /* Preview.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C65B6671C4F514D007B4DEA /* Preview.storyboard */; };
 		2C65B66A1C4F517A007B4DEA /* CTAPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C65B6691C4F517A007B4DEA /* CTAPreviewViewController.swift */; };
@@ -165,6 +166,7 @@
 		2CD488131C4E1A4900D11CB7 /* CTAPreviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD488121C4E1A4900D11CB7 /* CTAPreviewManager.swift */; };
 		2CD488151C4E1A7300D11CB7 /* CTAPreviewPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD488141C4E1A7300D11CB7 /* CTAPreviewPlay.swift */; };
 		2CD488171C4E53E500D11CB7 /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD488161C4E53E500D11CB7 /* pop.framework */; };
+		2CD71E311C72D5C6007B635C /* KeyboardMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD71E301C72D5C6007B635C /* KeyboardMan.framework */; };
 		2CD8F4091C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8F4081C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift */; };
 		2CDDF5091C5F3BE00019FC83 /* AESCrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDF5021C5F3BE00019FC83 /* AESCrypt.m */; };
 		2CDDF50A1C5F3BE00019FC83 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDF5041C5F3BE00019FC83 /* NSData+Base64.m */; };
@@ -318,6 +320,7 @@
 		2C5C24951C44F5D800A70F1B /* CTASelectorColorsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorColorsCell.swift; sourceTree = "<group>"; };
 		2C5C24971C44FA5600A70F1B /* CTAColorsManger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAColorsManger.swift; sourceTree = "<group>"; };
 		2C5EA2551C479CE000DCEE7B /* Print.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Print.swift; sourceTree = "<group>"; };
+		2C5FF8171C72C85A00649FD7 /* CTATextModifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATextModifyViewController.swift; sourceTree = "<group>"; };
 		2C6017BC1C59D84C00EEB804 /* MonkeyKing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MonkeyKing.framework; path = "Pods/../build/Debug-iphoneos/MonkeyKing.framework"; sourceTree = "<group>"; };
 		2C65B6671C4F514D007B4DEA /* Preview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Preview.storyboard; sourceTree = "<group>"; };
 		2C65B6691C4F517A007B4DEA /* CTAPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewViewController.swift; sourceTree = "<group>"; };
@@ -387,6 +390,7 @@
 		2CD488121C4E1A4900D11CB7 /* CTAPreviewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewManager.swift; sourceTree = "<group>"; };
 		2CD488141C4E1A7300D11CB7 /* CTAPreviewPlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewPlay.swift; sourceTree = "<group>"; };
 		2CD488161C4E53E500D11CB7 /* pop.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = pop.framework; path = "Pods/../build/Debug-iphoneos/pop.framework"; sourceTree = "<group>"; };
+		2CD71E301C72D5C6007B635C /* KeyboardMan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KeyboardMan.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/CuriosTextApp-ghmaohhqthcdzjazajbpgawqdsoq/Build/Products/Debug-iphonesimulator/KeyboardMan.framework"; sourceTree = "<group>"; };
 		2CD8F4081C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAVerticalItemFontsCollectionViewCell.swift; sourceTree = "<group>"; };
 		2CDDF5001C5F3B860019FC83 /* CuriosTextApp-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CuriosTextApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		2CDDF5011C5F3BE00019FC83 /* AESCrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AESCrypt.h; path = AESEncypt/AESCrypt.h; sourceTree = SOURCE_ROOT; };
@@ -434,6 +438,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CD71E311C72D5C6007B635C /* KeyboardMan.framework in Frameworks */,
 				2CC74C9F1C5A2BFA00B536C2 /* libstdc++.tbd in Frameworks */,
 				2CC74C9A1C5A28BA00B536C2 /* libicucore.tbd in Frameworks */,
 				2CC74C961C5A27D400B536C2 /* libz.tbd in Frameworks */,
@@ -867,6 +872,7 @@
 				2C1F01561C3BD5540033CED8 /* Cells_view */,
 				2CAEAC901C323F2600C9F9AC /* ElementProtocol.swift */,
 				2CAEAC8F1C323F2600C9F9AC /* EditViewController.swift */,
+				2C5FF8171C72C85A00649FD7 /* CTATextModifyViewController.swift */,
 				2CF24F4E1C70C4B300C9A73A /* CTACameraViewController.swift */,
 				2C0404551C3EBB7A00A5B017 /* CTASelectorsViewController.swift */,
 				2C0404531C3EBB6800A5B017 /* CTACanvasViewController.swift */,
@@ -909,6 +915,7 @@
 		3971561C9A2A856DEC31B599 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2CD71E301C72D5C6007B635C /* KeyboardMan.framework */,
 				2CC74C9E1C5A2BFA00B536C2 /* libstdc++.tbd */,
 				2CC74C991C5A28BA00B536C2 /* libicucore.tbd */,
 				2CC74C971C5A27F800B536C2 /* MessageUI.framework */,
@@ -1142,6 +1149,7 @@
 				2C1B88AD1C5F3741000403FD /* CTASMSVerifyViewController.swift in Sources */,
 				2CCD94DC1C43B4AA001E5D08 /* CTATextSpacingView.swift in Sources */,
 				661EFBC51C213282009CF87A /* CTAPublishDomain.swift in Sources */,
+				2C5FF8181C72C85A00649FD7 /* CTATextModifyViewController.swift in Sources */,
 				2CB380B71C4D0D1F009A681A /* CTAPreviewLayout.swift in Sources */,
 				2C2B45AC1C5CBCE7004A4809 /* CTAAddBarProtocol.swift in Sources */,
 				2C3CAD171C21825900D8DE4B /* CTAElement.swift in Sources */,
