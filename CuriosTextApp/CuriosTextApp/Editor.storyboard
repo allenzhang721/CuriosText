@@ -173,12 +173,13 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="bottomConstraint" destination="VWM-b6-BGc" id="EyY-Sy-Zdm"/>
                         <outlet property="textView" destination="65M-gY-WAU" id="ws9-d7-Z5h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="exZ-J7-Zz5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2447" y="591"/>
+            <point key="canvasLocation" x="2406" y="508"/>
         </scene>
         <!--Tab View Controller-->
         <scene sceneID="Vgo-GO-r2N">

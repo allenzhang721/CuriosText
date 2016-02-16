@@ -183,11 +183,13 @@ class EditViewController: UIViewController {
                 
                 
             })
-            
             debug_print("double tap TEXT ")
             
         case .Image:
             debug_print("double tap Img")
+            
+            
+            
             
         default:
             ()

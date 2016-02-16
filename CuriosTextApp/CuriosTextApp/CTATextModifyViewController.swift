@@ -13,6 +13,7 @@ import KeyboardMan
 class CTATextModifyViewController: UIViewController {
     
     
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var textView: UITextView!
     private var text = "Emiaostein"
     private var attri = [String: AnyObject]()
@@ -25,9 +26,9 @@ class CTATextModifyViewController: UIViewController {
         beganText()
         keyboardChangedNotification()
         
-        textView.delegate = self
-        
         textView.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.New, context: nil)
+        
+        
         
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
     }
@@ -51,25 +52,14 @@ class CTATextModifyViewController: UIViewController {
         let height = textView.bounds.height
         let contentHeight = textView.contentSize.height
         
-        if let t = object as? UITextView where t == textView && height < contentHeight && keyPath == "contentSize" {
+        if let t = object as? UITextView where t == textView && height > contentHeight && keyPath == "contentSize" {
             
-            debug_print("Text View ContentSize did changed")
             let topOffset = (height - contentHeight) / 2.0
             let aOffset = topOffset < 0.0 ? 0.0 : topOffset
-            textView.contentOffset = CGPoint(x: textView.contentOffset.x, y: -aOffset)
-
+            
+            textView.transform = CGAffineTransformMakeTranslation(0, aOffset)
+            debug_print("height = \(height), contentHeight = \(contentHeight), offsetY = \(textView.contentOffset.y)")
         }
-        
-//        if keyPath == "contentSize" && object as! NSObject == textView && height > contentHeight {
-//            //
-//            //      let height = textView.bounds.height
-//            //      let contentHeight = textView.contentSize.height
-            let topOffset = (height - contentHeight) / 2.0
-            let aOffset = topOffset < 0.0 ? 0.0 : topOffset
-            textView.contentOffset = CGPoint(x: textView.contentOffset.x, y: -aOffset)
-//
-//        }
-    
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -128,8 +118,21 @@ class CTATextModifyViewController: UIViewController {
             
             if let strongSelf = self {
                 
+                if let bott = strongSelf.bottomConstraint where bott.active == true {
+                    bott.active = false
+                }
+//                
+//                strongSelf.bottomConstraint.active = false
                 strongSelf.textView.bottomAnchor.constraintEqualToAnchor(strongSelf.view.bottomAnchor, constant: -keyboardHeight).active = true
                 strongSelf.view.layoutIfNeeded()
+                
+                let height = strongSelf.textView.bounds.height
+                let contentHeight = strongSelf.textView.contentSize.height
+                if height > contentHeight {
+                    let topOffset = (height - contentHeight) / 2.0
+                    let aOffset = topOffset < 0.0 ? 0.0 : topOffset
+                    strongSelf.textView.contentOffset = CGPoint(x: strongSelf.textView.contentOffset.x, y: -aOffset)
+                }
                 
 //                let bottom = strongSelf.textView.bounds.height / 2.0
 //                let top = bottom
@@ -139,16 +142,16 @@ class CTATextModifyViewController: UIViewController {
             }
         }
         
-        keyboardMan.animateWhenKeyboardDisappear = { [weak self] keyboardHeight in
-            
-            print("disappear \(keyboardHeight)\n")
-            
-            if let strongSelf = self {
-                
-                strongSelf.textView.bottomAnchor.constraintEqualToAnchor(strongSelf.view.bottomAnchor).active = true
-                strongSelf.view.layoutIfNeeded()
-            }
-        }
+//        keyboardMan.animateWhenKeyboardDisappear = { [weak self] keyboardHeight in
+//            
+//            print("disappear \(keyboardHeight)\n")
+//            
+//            if let strongSelf = self {
+//                
+//                strongSelf.textView.bottomAnchor.constraintEqualToAnchor(strongSelf.view.bottomAnchor).active = true
+//                strongSelf.view.layoutIfNeeded()
+//            }
+//        }
     }
 }
 
