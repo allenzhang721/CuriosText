@@ -42,6 +42,8 @@
 		2C30970A1C3F7FA800D996A4 /* CTAScrollSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3097091C3F7FA800D996A4 /* CTAScrollSelectView.swift */; };
 		2C31EB611C451AEE002A4D71 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C31EB601C451AEE002A4D71 /* UIColorExtensions.swift */; };
 		2C31EB631C452597002A4D71 /* SwiftHEXColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C31EB621C452597002A4D71 /* SwiftHEXColors.swift */; };
+		2C32653E1C7321A80000B89B /* CTAUploadIconProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C32653D1C7321A80000B89B /* CTAUploadIconProtocol.swift */; };
+		2C3265401C7321B60000B89B /* CTASetUserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C32653F1C7321B60000B89B /* CTASetUserInfoViewController.swift */; };
 		2C32BD491C4CA7A100788A97 /* CTAPreviewCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C32BD481C4CA7A100788A97 /* CTAPreviewCanvasView.swift */; };
 		2C32BD561C4CB89100788A97 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C32BD581C4CB89100788A97 /* Localizable.strings */; };
 		2C3AE3EC1C59EC9E004D62B4 /* CTASocialShareManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3AE3EB1C59EC9E004D62B4 /* CTASocialShareManager.swift */; };
@@ -253,6 +255,8 @@
 		2C3097091C3F7FA800D996A4 /* CTAScrollSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAScrollSelectView.swift; sourceTree = "<group>"; };
 		2C31EB601C451AEE002A4D71 /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
 		2C31EB621C452597002A4D71 /* SwiftHEXColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftHEXColors.swift; sourceTree = "<group>"; };
+		2C32653D1C7321A80000B89B /* CTAUploadIconProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUploadIconProtocol.swift; sourceTree = "<group>"; };
+		2C32653F1C7321B60000B89B /* CTASetUserInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASetUserInfoViewController.swift; sourceTree = "<group>"; };
 		2C32BD481C4CA7A100788A97 /* CTAPreviewCanvasView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewCanvasView.swift; sourceTree = "<group>"; };
 		2C32BD4B1C4CB5C400788A97 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		2C32BD4C1C4CB5C500788A97 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
@@ -591,6 +595,7 @@
 				2C8DD2121C4A34230035C52D /* CTAImageControllerProtocol.swift */,
 				2C2B45AB1C5CBCE7004A4809 /* CTAAddBarProtocol.swift */,
 				2C2B45AD1C5CBD16004A4809 /* CTAPublishProtocol.swift */,
+				2C32653D1C7321A80000B89B /* CTAUploadIconProtocol.swift */,
 			);
 			name = UseCase;
 			sourceTree = "<group>";
@@ -652,6 +657,7 @@
 				2C7A951E1C3A511B005B0EAE /* CTADocmentPreviewViewController.swift */,
 				2C7A95201C3A51D6005B0EAE /* CTAUserInfoViewController.swift */,
 				2C7A95241C3A520B005B0EAE /* CTASettingViewController.swift */,
+				2C32653F1C7321B60000B89B /* CTASetUserInfoViewController.swift */,
 				2C3B33CD1C1176D000738166 /* Main.storyboard */,
 				2C3B33D01C1176D000738166 /* Assets.xcassets */,
 				2C3B33D21C1176D000738166 /* LaunchScreen.storyboard */,
@@ -1158,6 +1164,7 @@
 				2C929DD71C60962B00F90BF4 /* CTAConfig.swift in Sources */,
 				2CF24F4F1C70C4B300C9A73A /* CTACameraViewController.swift in Sources */,
 				2CDDF5091C5F3BE00019FC83 /* AESCrypt.m in Sources */,
+				2C32653E1C7321A80000B89B /* CTAUploadIconProtocol.swift in Sources */,
 				2C5C24981C44FA5600A70F1B /* CTAColorsManger.swift in Sources */,
 				6628C7031C200C11007F873C /* CTAViewUserModel.swift in Sources */,
 				2C1B88AB1C5F371A000403FD /* CTAAlertProtocol.swift in Sources */,
@@ -1223,6 +1230,7 @@
 				2C30970A1C3F7FA800D996A4 /* CTAScrollSelectView.swift in Sources */,
 				2C3CAD0E1C21825100D8DE4B /* CTAIDGenerator.swift in Sources */,
 				2CFC65921C5630EA00E8ADE7 /* CTASystemLanguageProtocol.swift in Sources */,
+				2C3265401C7321B60000B89B /* CTASetUserInfoViewController.swift in Sources */,
 				2C3B33F91C11775E00738166 /* CTABaseRequest.swift in Sources */,
 				2C88A3751C51F0BA00C6D687 /* CTAAnimationController.swift in Sources */,
 				2C3CAD211C21826800D8DE4B /* CTACanvasLayer.swift in Sources */,

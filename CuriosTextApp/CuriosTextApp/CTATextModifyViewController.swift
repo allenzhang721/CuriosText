@@ -14,6 +14,7 @@ class CTATextModifyViewController: UIViewController {
     
     
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    weak var bottomWithKeyBoardConstraint: NSLayoutConstraint?
     @IBOutlet weak var textView: UITextView!
     private var text = "Emiaostein"
     private var attri = [String: AnyObject]()
@@ -57,6 +58,7 @@ class CTATextModifyViewController: UIViewController {
             let topOffset = (height - contentHeight) / 2.0
             let aOffset = topOffset < 0.0 ? 0.0 : topOffset
             
+//            textView.contentOffset = CGPoint(x: textView.contentOffset.x, y: -aOffset)
             textView.transform = CGAffineTransformMakeTranslation(0, aOffset)
             debug_print("height = \(height), contentHeight = \(contentHeight), offsetY = \(textView.contentOffset.y)")
         }
@@ -120,6 +122,17 @@ class CTATextModifyViewController: UIViewController {
                 
                 if let bott = strongSelf.bottomConstraint where bott.active == true {
                     bott.active = false
+                }
+                
+                if let bottomWithKeyboard = strongSelf.bottomWithKeyBoardConstraint where bottomWithKeyboard.active == false {
+                    
+                    bottomWithKeyboard.active = true
+                } else {
+                    
+                   strongSelf.bottomWithKeyBoardConstraint = strongSelf.textView.bottomAnchor.constraintEqualToAnchor(strongSelf.view.bottomAnchor, constant: -keyboardHeight)
+                    
+                    strongSelf.bottomWithKeyBoardConstraint?.active = true
+                    
                 }
 //                
 //                strongSelf.bottomConstraint.active = false
