@@ -34,12 +34,36 @@ class ViewController: UIViewController, CTAAddBarProtocol{
         addChildViewController(pageViewController)
         view.addSubview(pageViewController.view)
     
-        pageViewController.view.backgroundColor = UIColor.lightGrayColor()
+        pageViewController.view.backgroundColor = UIColor.whiteColor()
         pageViewController.dataSource = pageControllers
-
+        
+        
         pageViewController.setViewControllers([pageControllers.controllers[0]], direction: .Forward, animated: false, completion: nil)
         
         self.initAddBarView()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        if CTAUserManager.isLogin {
+            
+            for subView in pageViewController.view.subviews {
+                if let scrolliew = subView as? UIScrollView {
+                                    scrolliew.bounces = false
+//                    scrolliew.delegate = self
+                    break
+                }
+            }
+        } else {
+            for subView in pageViewController.view.subviews {
+                if let scrolliew = subView as? UIScrollView {
+                                    scrolliew.bounces = true
+//                    scrolliew.delegate = self
+                    break
+                }
+            }
+        }
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -73,5 +97,65 @@ class ViewController: UIViewController, CTAAddBarProtocol{
         }
         
     }
+    
+    var currentPageIndex: Int = 0
 }
+
+//extension ViewController: UIScrollViewDelegate {
+
+//    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        
+//        if let i = pageControllers.controllers.indexOf(pageViewController.viewControllers!.first!) where currentPageIndex != i {
+//            currentPageIndex = i
+//        }
+//       
+//        debugPrint(scrollView.contentOffset)
+//        let nextOffset = scrollView.contentOffset.x
+//        
+//        switch currentPageIndex {
+//            
+//        case 0:
+//            if nextOffset <= scrollView.bounds.width {
+//                //            scrollView.bounces = false
+//                scrollView.contentOffset = CGPoint(x: view.bounds.width, y: 0)
+//            }
+//            
+//        case 1:
+//            if nextOffset >= view.bounds.width {
+//                //            scrollView.bounces = false
+//                scrollView.contentOffset = CGPoint(x: view.bounds.width, y: 0)
+//            }
+//            
+//        default:
+//            ()
+//            
+//        }
+//    }
+//
+////    
+//    
+//    func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+//        
+//        let nextOffset = scrollView.contentOffset.x
+//        
+//        switch currentPageIndex {
+//            
+//        case 0:
+//            if nextOffset <= scrollView.bounds.width {
+//                //            scrollView.bounces = false
+//                targetContentOffset.memory = CGPointMake(scrollView.bounds.size.width * 2, 0);
+//            }
+//            
+//        case 1:
+//            if nextOffset >= view.bounds.width {
+//                //            scrollView.bounces = false
+//                targetContentOffset.memory = CGPointMake(scrollView.bounds.size.width * 2, 0);
+//            }
+//            
+//        default:
+//            ()
+//            
+//        }
+//    }
+//}
 

@@ -16,6 +16,9 @@ class CTAUserManager {
     static let service = "com.botai.curiosText"
     
     static private(set) var user: CTAUserModel?
+    static var isLogin: Bool {
+        return CTAUserManager.user != nil
+    }
     
     class func save(user: CTAUserModel) -> Bool {
         
