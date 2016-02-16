@@ -27,7 +27,14 @@ class CTATextModifyViewController: UIViewController {
         beganText()
         keyboardChangedNotification()
         
-        textView.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.New, context: nil)
+//        textView.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.New, context: nil)
+    }
+    
+    func beganWith(text: String, attributes: [String: AnyObject]?) {
+        self.text = text
+        if let attributes = attributes {
+            self.attri = attributes
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -57,22 +64,15 @@ class CTATextModifyViewController: UIViewController {
             textView.contentOffset = CGPoint(x: textView.contentOffset.x, y: -aOffset)
 //            textView.transform = CGAffineTransformMakeTranslation(0, aOffset)
 //            debug_print("height = \(height), contentHeight = \(contentHeight), offsetY = \(aOffset)")
+            
+            debug_print("height = \(height), contentHeight = \(contentHeight), offsetY = \(textView.contentOffset.y)")
         }
-        
-        debug_print("height = \(height), contentHeight = \(contentHeight), offsetY = \(textView.contentOffset.y)")
     }
     
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
-    
-    func beganWith(text: String, attributes: [String: AnyObject]?) {
-        self.text = text
-        if let attributes = attributes {
-            self.attri = attributes
-        }
-        
-    }
+
     
     @IBAction func cancelAction(sender: AnyObject) {
         cancel()
@@ -116,7 +116,6 @@ class CTATextModifyViewController: UIViewController {
             print("appear \(appearPostIndex), \(keyboardHeight), \(keyboardHeightIncrement)\n")
             
             if let strongSelf = self {
-                
                 if let bott = strongSelf.bottomConstraint where bott.active == true {
                     bott.active = false
                 }
@@ -124,42 +123,18 @@ class CTATextModifyViewController: UIViewController {
                 if let bottomWithKeyboard = strongSelf.bottomWithKeyBoardConstraint where bottomWithKeyboard.active == true {
                     
                     bottomWithKeyboard.active = false
-                    
                     strongSelf.textView.removeConstraint(bottomWithKeyboard)
-                    
                     strongSelf.bottomWithKeyBoardConstraint = strongSelf.textView.bottomAnchor.constraintEqualToAnchor(strongSelf.view.bottomAnchor, constant: -keyboardHeight)
-                    
                     strongSelf.bottomWithKeyBoardConstraint?.active = true
                     
                 } else {
                     
                    strongSelf.bottomWithKeyBoardConstraint = strongSelf.textView.bottomAnchor.constraintEqualToAnchor(strongSelf.view.bottomAnchor, constant: -keyboardHeight)
-                    
                     strongSelf.bottomWithKeyBoardConstraint?.active = true
-                    
                 }
 
                 strongSelf.view.layoutIfNeeded()
-                
-//                let height = strongSelf.textView.bounds.height
-//                let contentHeight = strongSelf.textView.contentSize.height
-//                if height > contentHeight {
-//                    let topOffset = (height - contentHeight) / 2.0
-//                    let aOffset = topOffset < 0.0 ? 0.0 : topOffset
-//                    strongSelf.textView.contentOffset = CGPoint(x: strongSelf.textView.contentOffset.x, y: -aOffset)
-//                }
             }
         }
-        
-//        keyboardMan.animateWhenKeyboardDisappear = { [weak self] keyboardHeight in
-//            
-//            print("disappear \(keyboardHeight)\n")
-//            
-//            if let strongSelf = self {
-//                
-//                strongSelf.textView.bottomAnchor.constraintEqualToAnchor(strongSelf.view.bottomAnchor).active = true
-//                strongSelf.view.layoutIfNeeded()
-//            }
-//        }
     }
 }
