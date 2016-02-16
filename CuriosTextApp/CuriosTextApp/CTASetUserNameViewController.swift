@@ -91,8 +91,8 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         
         self.userNickNameTextInput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: 250*self.getVerRate(), width: 190*self.getHorRate(), height: 50))
         self.userNickNameTextInput.placeholder = NSLocalizedString("UserNamePlaceholder", comment: "")
-        self.userNickNameTextInput.clearsOnBeginEditing = true
         self.userNickNameTextInput.delegate = self
+        self.userNickNameTextInput.clearButtonMode = .WhileEditing
         self.userNickNameTextInput.returnKeyType = .Done
         self.view.addSubview(self.userNickNameTextInput)
         
@@ -283,7 +283,7 @@ extension CTASetUserNameViewController: UITextFieldDelegate{
                 self.completeButton.enabled = true
             }
         }
-        if newStr.length < 20 || isDelete {
+        if newStr.length < 21 || isDelete {
             return true
         }else {
             return false

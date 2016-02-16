@@ -43,6 +43,7 @@
 "UserFemaleLabel" = "Female";
 "UserRegion" = "Region";
 "UserDesc" = "Bio";
+"SaveButtonLabel" = "Save";
 
 "AlertOkLabel" = "OK";
 "AlertYesLabel" = "Yes";

@@ -60,6 +60,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidAppear(animated)
+        self.resetView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -108,7 +109,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         
         self.userNickNameLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 112, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
         self.userNickNameLabel.font = UIFont.systemFontOfSize(18)
-        self.userNickNameLabel.textColor = UIColor.init(red: 144/255, green: 144/255, blue: 144/255, alpha: 1.0)
+        self.userNickNameLabel.textColor = UIColor.init(red: 108/255, green: 108/255, blue: 108/255, alpha: 1.0)
         self.userNickNameLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userNickNameLabel)
         let userNickNameTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y, width: 50, height: 25))
@@ -129,7 +130,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         
         self.userSexLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y+50, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
         self.userSexLabel.font = UIFont.systemFontOfSize(18)
-        self.userSexLabel.textColor = UIColor.init(red: 144/255, green: 144/255, blue: 144/255, alpha: 1.0)
+        self.userSexLabel.textColor = UIColor.init(red: 108/255, green: 108/255, blue: 108/255, alpha: 1.0)
         self.userSexLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userSexLabel)
         let userSexTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userSexLabel.frame.origin.y, width: 50, height: 25))
@@ -148,11 +149,11 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         let userSexTap = UITapGestureRecognizer(target: self, action: "userSexClick:")
         self.userSexLabel.addGestureRecognizer(userSexTap)
         
-//        self.userRegionLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+50, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
-//        self.userRegionLabel.font = UIFont.systemFontOfSize(18)
-//        self.userRegionLabel.textColor = UIColor.init(red: 144/255, green: 144/255, blue: 144/255, alpha: 1.0)
-//        self.userRegionLabel.textAlignment = .Right
-//        self.scrollView.addSubview(self.userRegionLabel)
+        self.userRegionLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+50, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
+        self.userRegionLabel.font = UIFont.systemFontOfSize(18)
+        self.userRegionLabel.textColor = UIColor.init(red: 108/255, green: 108/255, blue: 108/255, alpha: 1.0)
+        self.userRegionLabel.textAlignment = .Right
+        self.scrollView.addSubview(self.userRegionLabel)
 //        let userRegionTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userRegionLabel.frame.origin.y, width: 50, height: 25))
 //        userRegionTitle.font = UIFont.systemFontOfSize(18)
 //        userRegionTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
@@ -165,13 +166,14 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
 //        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userRegionLabel.frame.origin.y + 37, width: 330*self.getHorRate(), height: 1))
 //        textLine.image = UIImage(named: "textinput-line")
 //        self.scrollView.addSubview(textLine)
-//        self.userRegionLabel.userInteractionEnabled = true
-//        let userRegionTap = UITapGestureRecognizer(target: self, action: "userRegionClick:")
-//        self.userRegionLabel.addGestureRecognizer(userRegionTap)
+        self.userRegionLabel.userInteractionEnabled = true
+        let userRegionTap = UITapGestureRecognizer(target: self, action: "userRegionClick:")
+        self.userRegionLabel.addGestureRecognizer(userRegionTap)
+        self.userRegionLabel.hidden = true
         
         self.userDescTextView = UITextView.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+38, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
         self.userDescTextView.font = UIFont.systemFontOfSize(18)
-        self.userDescTextView.textColor = UIColor.init(red: 144/255, green: 144/255, blue: 144/255, alpha: 1.0)
+        self.userDescTextView.textColor = UIColor.init(red: 108/255, green: 108/255, blue: 108/255, alpha: 1.0)
         self.userDescTextView.editable = false
         self.userDescTextView.scrollEnabled = false
         self.userDescTextView.selectable = false
@@ -338,10 +340,21 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     
     func userSexClick(sender: UIPanGestureRecognizer){
         if isLogin {
-            let setInfo = CTASetUserInfoViewController.getInstance()
-            setInfo.setUser = self.loginUser!
-            setInfo.setType = .Sex
-            self.navigationController?.pushViewController(setInfo, animated: true)
+            var alertArray:Array<String> = []
+            alertArray.append(NSLocalizedString("UserMaleLabel", comment: ""))
+            alertArray.append(NSLocalizedString("UserFemaleLabel", comment: ""))
+            self.showSheetAlert(alertArray, cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: "")) { (index) -> Void in
+                if index != -1{
+                    let sexIndex = index + 1
+                    self.loginUser!.sex = sexIndex
+                    self.reloadSex()
+                    CTAUserDomain.getInstance().updateUserSex(self.loginUser!.userID, sex: sexIndex, compelecationBlock: { (info) -> Void in
+                        if info.result{
+                            self.changeLoginUser()
+                        }
+                    })
+                }
+            }
         }
     }
     
@@ -396,11 +409,11 @@ extension CTASettingViewController: CTAUploadIconProtocol{
     func uploadComplete(result:Bool, iconPath:String, icon:UIImage?){
         if result{
             CTAUserDomain.getInstance().updateUserIconURL(self.loginUser!.userID, userIconURL: iconPath, compelecationBlock: { (info) -> Void in
+                self.hideLoadingViewByView(nil)
                 if info.result{
                     self.loginUser!.userIconURL = iconPath
                     self.changeLoginUser()
                     self.reloadUserIcon(icon)
-                    self.hideLoadingViewByView(nil)
                 }else {
                     self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                     })
