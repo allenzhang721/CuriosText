@@ -38,7 +38,7 @@ extension CTAPhoneProtocol where Self: UIViewController{
         countryLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         countryLabel.text = NSLocalizedString("CountryLabel", comment: "")
         self.view.addSubview(countryLabel)
-        let nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 27*self.getHorRate() - 11, y: self.countryNameLabel.frame.origin.y+2, width: 11, height: 20))
+        let nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 11, y: self.countryNameLabel.frame.origin.y+2, width: 11, height: 20))
         nextImage.image = UIImage(named: "next-icon")
         self.view.addSubview(nextImage)
         var textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.countryNameLabel.frame.origin.y+37, width: 330*self.getHorRate(), height: 1))

@@ -25,10 +25,9 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-    
+
         self.initView()
         self.view.backgroundColor = UIColor.whiteColor()
-        CTAUserManager.logout()
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,6 +37,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.loadLocalUserModel()
         self.loadNewPublishes()
     }
     

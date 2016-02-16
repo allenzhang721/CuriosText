@@ -71,7 +71,7 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         let tap = UITapGestureRecognizer(target: self, action: "bgViewClick:")
         self.view.addGestureRecognizer(tap)
     
-        let backButton = UIButton.init(frame: CGRect.init(x: 5, y: 2, width: 40, height: 40))
+        let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)

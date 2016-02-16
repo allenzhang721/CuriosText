@@ -116,7 +116,6 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         self.loginButton.setTitle(NSLocalizedString("LoginButtonLabel", comment: ""), forState: .Normal)
         self.loginButton.setTitleColor(UIColor.init(red: 239/255, green: 51/255, blue: 74/255, alpha: 1.0), forState: .Normal)
         self.loginButton.setTitleColor(UIColor.init(red: 216/255, green: 216/255, blue: 216/255, alpha: 1.0), forState: .Disabled)
-        self.loginButton.setTitleColor(UIColor.init(red: 216/255, green: 216/255, blue: 216/255, alpha: 1.0), forState: .Disabled)
         self.loginButton.titleLabel?.font = UIFont.systemFontOfSize(20)
         self.loginButton.sizeToFit()
         self.loginButton.frame.origin.x = (bouns.width - self.loginButton.frame.width)/2

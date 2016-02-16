@@ -19,6 +19,7 @@
 "PasswordPlaceholder" = "Enter password";
 "SearchLabel" = "Region";
 "LoginButtonLabel" = "Login";
+"LogoutButtonLabel" = "Log Out";
 "OtherAccountLoginLabel" = "Other Account";
 "ForgetPasswordLabel" = "Forget password?";
 "RegisterLabel" = "Sign Up";
@@ -37,6 +38,11 @@
 "CompleteButtonLabel" = "Done";
 "UserInfoLabel" = "Complete your profile";
 "SettingLabel" = "Settings";
+"UserSexLabel" = "Gender";
+"UserMaleLabel" = "Male";
+"UserFemaleLabel" = "Female";
+"UserRegion" = "Region";
+"UserDesc" = "Bio";
 
 "AlertOkLabel" = "OK";
 "AlertYesLabel" = "Yes";

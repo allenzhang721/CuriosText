@@ -80,7 +80,12 @@ extension CTAPublishProtocol where Self: UIViewController{
         let imagePath = CTAFilePath.userFilePath+userModel.userIconURL
         let imageURL = NSURL(string: imagePath)!
         self.userIconImage.kf_showIndicatorWhenLoading = true
-        self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: UIImage.init(named: "default-usericon"), optionsInfo: [.Transition(ImageTransition.Fade(1))])
+        self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: UIImage.init(named: "default-usericon"), optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in
+            if error != nil {
+                self.userIconImage.image = UIImage.init(named: "default-usericon")
+            }
+            self.userIconImage.kf_showIndicatorWhenLoading = false
+        }
     }
     
     func likeHandler(userID:String, publishModel:CTAPublishModel){

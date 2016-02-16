@@ -25,8 +25,9 @@ class CTAUserManager {
             
             return true
             
-        } catch {
+        } catch let error {
             
+            debug_print("Error = \(error)")
             return false
         }
     }

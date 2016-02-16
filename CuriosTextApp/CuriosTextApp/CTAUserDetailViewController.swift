@@ -169,12 +169,21 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     func setViewByUserModel(){
         
         let imagePath = CTAFilePath.userFilePath+(self.viewUser?.userIconURL)!
-        let imageURL = NSURL(string: imagePath)!
-        self.userIconImageView.kf_showIndicatorWhenLoading = true
-        self.userIconImageView.kf_setImageWithURL(imageURL, placeholderImage: UIImage.init(named: "default-usericon"), optionsInfo: [.Transition(ImageTransition.Fade(1))])
+        self.loadUserIcon(imagePath)
         
         self.userNickNameLabel.text = self.viewUser?.nickName
         self.userDescTextView.text  = self.viewUser?.userDesc
+    }
+    
+    func loadUserIcon(imagePath:String){
+        let imageURL = NSURL(string: imagePath)!
+        self.userIconImageView.kf_showIndicatorWhenLoading = true
+        self.userIconImageView.kf_setImageWithURL(imageURL, placeholderImage: UIImage(named: "default-usericon"), optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in
+            if error != nil {
+                self.userIconImageView.image = UIImage(named: "default-usericon")
+            }
+            self.userIconImageView.kf_showIndicatorWhenLoading = false
+        }
     }
     
     func setDefaultView(){
@@ -239,9 +248,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
             self.beFollowCountLabel.text = self.changeCountToString(beFollowCount)
             
             let imagePath = CTAFilePath.userFilePath+self.userDetailModel!.userIconURL
-            let imageURL = NSURL(string: imagePath)!
-            self.userIconImageView.kf_showIndicatorWhenLoading = true
-            self.userIconImageView.kf_setImageWithURL(imageURL, placeholderImage: UIImage.init(named: "default-usericon"), optionsInfo: [.Transition(ImageTransition.Fade(1))])
+            self.loadUserIcon(imagePath)
             
             self.userNickNameLabel.text = self.userDetailModel!.nickName
             self.userDescTextView.text  = self.userDetailModel!.userDesc

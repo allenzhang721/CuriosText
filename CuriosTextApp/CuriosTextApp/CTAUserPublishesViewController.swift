@@ -173,7 +173,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.settingButton.setImage(UIImage.init(named: "setting-button"), forState: .Normal)
         self.homeViewButton = UIButton.init(frame: CGRect.init(x: 5, y: 2, width: 40, height: 40))
         self.homeViewButton.setImage(UIImage.init(named: "homeview-button"), forState: .Normal)
-        self.backButton = UIButton.init(frame: CGRect.init(x: 5, y: 2, width: 40, height: 40))
+        self.backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
         self.backButton.setImage(UIImage.init(named: "back-button"), forState: .Normal)
         
         self.viewToolBar = UIView()
@@ -223,7 +223,12 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         let imagePath = CTAFilePath.userFilePath+self.viewUser!.userIconURL
         let imageURL = NSURL(string: imagePath)!
         self.userIconImage.kf_showIndicatorWhenLoading = true
-        self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: UIImage.init(named: "default-usericon"), optionsInfo: [.Transition(ImageTransition.Fade(1))])
+        self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: UIImage(named: "default-usericon"), optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in
+            if error != nil {
+                self.userIconImage.image = UIImage(named: "default-usericon")
+            }
+            self.userIconImage.kf_showIndicatorWhenLoading = false
+        }
     }
     
     func userHeaderClick(sender: UITapGestureRecognizer){
@@ -231,9 +236,10 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     }
     
     func settingButtonClick(sender: UIButton){
-        
-        let setting = CTASettingViewController()
-        self.presentViewController(setting, animated: true, completion: nil)
+        let setting = CTASettingViewController.getInstance()
+        let navigationController = UINavigationController(rootViewController: setting)
+        navigationController.navigationBarHidden = true
+        self.presentViewController(navigationController, animated: true, completion: nil)
     }
     
     func backButtonClick(sender: UIButton){

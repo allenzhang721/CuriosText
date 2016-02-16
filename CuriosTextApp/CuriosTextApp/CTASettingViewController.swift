@@ -7,18 +7,59 @@
 //
 
 import UIKit
+import Kingfisher
 
-class CTASettingViewController: UIViewController {
-
+class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTALoadingProtocol{
+    
+    static var _instance:CTASettingViewController?;
+    
+    static func getInstance() -> CTASettingViewController{
+        if _instance == nil{
+            _instance = CTASettingViewController();
+        }
+        return _instance!
+    }
+    
+    var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
+    
+    var scrollView:UIScrollView!
+    var userIconImage:UIImageView!
+    let imagePicker:UIImagePickerController = UIImagePickerController()
+    
+    var userNickNameLabel:UILabel!
+    var userSexLabel:UILabel!
+    var userRegionLabel:UILabel!
+    var userDescTextView:UITextView!
+    var descNextImg:UIImageView!
+    var descLineImg:UIImageView!
+    
+    var logoutButton:UIButton!
+    
+    var isLogin:Bool = false
+    var loginUser:CTAUserModel?
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initView()
         self.view.backgroundColor = UIColor.whiteColor()
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.reloadView()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,14 +87,327 @@ class CTASettingViewController: UIViewController {
         settingLabel.textAlignment = .Center
         self.view.addSubview(settingLabel)
         
-        let backButton = UIButton.init(frame: CGRect.init(x: 5, y: 2, width: 40, height: 40))
+        let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
+        
+        self.scrollView = UIScrollView.init(frame: CGRect.init(x: 0, y: 44, width: bouns.width, height: bouns.height-44))
+        self.view.addSubview(self.scrollView)
+        
+        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bouns.width - 60)/2, y: 30, width: 60, height: 60))
+        self.userIconImage.image = UIImage(named: "default-usericon")
+        self.cropImageCircle(self.userIconImage)
+        self.scrollView.addSubview(self.userIconImage)
+        self.userIconImage.userInteractionEnabled = true
+        let iconTap = UITapGestureRecognizer(target: self, action: "userIconClick:")
+        self.userIconImage.addGestureRecognizer(iconTap)
+        
+        self.imagePicker.delegate = self
+        
+        
+        self.userNickNameLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 112, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
+        self.userNickNameLabel.font = UIFont.systemFontOfSize(18)
+        self.userNickNameLabel.textColor = UIColor.init(red: 144/255, green: 144/255, blue: 144/255, alpha: 1.0)
+        self.userNickNameLabel.textAlignment = .Right
+        self.scrollView.addSubview(self.userNickNameLabel)
+        let userNickNameTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y, width: 50, height: 25))
+        userNickNameTitle.font = UIFont.systemFontOfSize(18)
+        userNickNameTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        userNickNameTitle.text = NSLocalizedString("UserNickNameLabel", comment: "")
+        userNickNameTitle.sizeToFit()
+        self.scrollView.addSubview(userNickNameTitle)
+        var nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 11, y: self.userNickNameLabel.frame.origin.y+2, width: 11, height: 20))
+        nextImage.image = UIImage(named: "next-icon")
+        self.scrollView.addSubview(nextImage)
+        var textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y + 37, width: 330*self.getHorRate(), height: 1))
+        textLine.image = UIImage(named: "textinput-line")
+        self.scrollView.addSubview(textLine)
+        self.userNickNameLabel.userInteractionEnabled = true
+        let nickNameTap = UITapGestureRecognizer(target: self, action: "userNickNameClick:")
+        self.userNickNameLabel.addGestureRecognizer(nickNameTap)
+        
+        self.userSexLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y+50, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
+        self.userSexLabel.font = UIFont.systemFontOfSize(18)
+        self.userSexLabel.textColor = UIColor.init(red: 144/255, green: 144/255, blue: 144/255, alpha: 1.0)
+        self.userSexLabel.textAlignment = .Right
+        self.scrollView.addSubview(self.userSexLabel)
+        let userSexTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userSexLabel.frame.origin.y, width: 50, height: 25))
+        userSexTitle.font = UIFont.systemFontOfSize(18)
+        userSexTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        userSexTitle.text = NSLocalizedString("UserSexLabel", comment: "")
+        userSexTitle.sizeToFit()
+        self.scrollView.addSubview(userSexTitle)
+        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 11, y: self.userSexLabel.frame.origin.y+2, width: 11, height: 20))
+        nextImage.image = UIImage(named: "next-icon")
+        self.scrollView.addSubview(nextImage)
+        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userSexLabel.frame.origin.y + 37, width: 330*self.getHorRate(), height: 1))
+        textLine.image = UIImage(named: "textinput-line")
+        self.scrollView.addSubview(textLine)
+        self.userSexLabel.userInteractionEnabled = true
+        let userSexTap = UITapGestureRecognizer(target: self, action: "userSexClick:")
+        self.userSexLabel.addGestureRecognizer(userSexTap)
+        
+//        self.userRegionLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+50, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
+//        self.userRegionLabel.font = UIFont.systemFontOfSize(18)
+//        self.userRegionLabel.textColor = UIColor.init(red: 144/255, green: 144/255, blue: 144/255, alpha: 1.0)
+//        self.userRegionLabel.textAlignment = .Right
+//        self.scrollView.addSubview(self.userRegionLabel)
+//        let userRegionTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userRegionLabel.frame.origin.y, width: 50, height: 25))
+//        userRegionTitle.font = UIFont.systemFontOfSize(18)
+//        userRegionTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+//        userRegionTitle.text = NSLocalizedString("UserRegion", comment: "")
+//        userRegionTitle.sizeToFit()
+//        self.scrollView.addSubview(userRegionTitle)
+//        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 11, y: self.userRegionLabel.frame.origin.y+2, width: 11, height: 20))
+//        nextImage.image = UIImage(named: "next-icon")
+//        self.scrollView.addSubview(nextImage)
+//        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userRegionLabel.frame.origin.y + 37, width: 330*self.getHorRate(), height: 1))
+//        textLine.image = UIImage(named: "textinput-line")
+//        self.scrollView.addSubview(textLine)
+//        self.userRegionLabel.userInteractionEnabled = true
+//        let userRegionTap = UITapGestureRecognizer(target: self, action: "userRegionClick:")
+//        self.userRegionLabel.addGestureRecognizer(userRegionTap)
+        
+        self.userDescTextView = UITextView.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+38, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
+        self.userDescTextView.font = UIFont.systemFontOfSize(18)
+        self.userDescTextView.textColor = UIColor.init(red: 144/255, green: 144/255, blue: 144/255, alpha: 1.0)
+        self.userDescTextView.editable = false
+        self.userDescTextView.scrollEnabled = false
+        self.userDescTextView.selectable = false
+        self.userDescTextView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
+        self.userDescTextView.textAlignment = .Right
+        self.scrollView.addSubview(self.userDescTextView)
+        let userDesxTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userDescTextView.frame.origin.y+12, width: 50, height: 25))
+        userDesxTitle.font = UIFont.systemFontOfSize(18)
+        userDesxTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        userDesxTitle.text = NSLocalizedString("UserDesc", comment: "")
+        userDesxTitle.sizeToFit()
+        self.scrollView.addSubview(userDesxTitle)
+        self.descNextImg = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 11, y: self.userDescTextView.frame.origin.y+15, width: 11, height: 20))
+        self.descNextImg.image = UIImage(named: "next-icon")
+        self.scrollView.addSubview(self.descNextImg)
+        self.descLineImg = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userDescTextView.frame.origin.y + 49, width: 330*self.getHorRate(), height: 1))
+        self.descLineImg.image = UIImage(named: "textinput-line")
+        self.scrollView.addSubview(self.descLineImg)
+        let userDescTap = UITapGestureRecognizer(target: self, action: "userDescClick:")
+        self.userDescTextView.addGestureRecognizer(userDescTap)
+        
+        
+        self.logoutButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: self.descLineImg.frame.origin.y+21, width: 40, height: 28))
+        self.logoutButton.setTitle(NSLocalizedString("LogoutButtonLabel", comment: ""), forState: .Normal)
+        self.logoutButton.setTitleColor(UIColor.init(red: 239/255, green: 51/255, blue: 74/255, alpha: 1.0), forState: .Normal)
+        self.logoutButton.setTitleColor(UIColor.init(red: 216/255, green: 216/255, blue: 216/255, alpha: 1.0), forState: .Disabled)
+        self.logoutButton.titleLabel?.font = UIFont.systemFontOfSize(20)
+        self.logoutButton.sizeToFit()
+        self.logoutButton.frame.origin.x = (bouns.width - self.logoutButton.frame.width)/2
+        self.logoutButton.addTarget(self, action: "logoutButtonClick:", forControlEvents: .TouchUpInside)
+        self.scrollView.addSubview(self.logoutButton)
+    }
+    
+    func reloadView(){
+        self.loadLocalUserModel()
+        if self.isLogin{
+            self.reloadUserIcon()
+            self.reloadNickName()
+            self.reloadSex()
+            self.reloadRegion()
+            self.reloadDesc()
+            self.resetScrollView()
+        }else {
+            self.resetView()
+        }
+    }
+    
+    func resetView(){
+        self.userIconImage.image = UIImage(named: "setimage-icon")
+        self.userNickNameLabel.text = ""
+        self.userSexLabel.text = ""
+        self.userRegionLabel.text = ""
+        self.userDescTextView.text = ""
+        self.logoutButton.enabled = false
+    }
+    
+    func loadLocalUserModel(){
+        if CTAUserManager.load(){
+            self.loginUser = CTAUserManager.user
+            self.isLogin = true
+        }else {
+            self.loginUser = nil
+            self.isLogin = false
+        }
+    }
+    
+    func reloadUserIcon(loadImg:UIImage? = nil){
+        let imagePath = CTAFilePath.userFilePath+self.loginUser!.userIconURL
+        let imageURL = NSURL(string: imagePath)!
+        var defaultImg:UIImage!
+        if loadImg == nil{
+            defaultImg = UIImage.init(named: "default-usericon")
+            self.userIconImage.kf_showIndicatorWhenLoading = true
+        }else {
+            defaultImg = loadImg
+            self.userIconImage.kf_showIndicatorWhenLoading = false
+        }
+        self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: defaultImg, optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in
+            if error != nil {
+                self.userIconImage.image = defaultImg
+            }
+            self.userIconImage.kf_showIndicatorWhenLoading = false
+        }
+    }
+    
+    func reloadNickName(){
+        self.userNickNameLabel.text = self.loginUser!.nickName
+    }
+    
+    func reloadSex(){
+        if self.loginUser!.sex == 1{
+            self.userSexLabel.text = NSLocalizedString("UserMaleLabel", comment: "")
+        }else if self.loginUser!.sex == 2{
+            self.userSexLabel.text = NSLocalizedString("UserFemaleLabel", comment: "")
+        }else {
+            self.userSexLabel.text = "  "
+        }
+    }
+    
+    func reloadRegion(){
+        
+    }
+    
+    func reloadDesc(){
+        let bouns = UIScreen.mainScreen().bounds
+        self.userDescTextView.text = self.loginUser!.userDesc
+        self.userDescTextView.sizeToFit()
+        let maxW = bouns.width - 153*self.getHorRate() - 15
+        let textW = self.userDescTextView.frame.width
+        if textW < maxW - 10{
+            self.userDescTextView.frame.size.width = maxW
+            self.userDescTextView.textAlignment = .Right
+            self.descNextImg.frame.origin.y = self.userDescTextView.frame.origin.y+15
+            self.descLineImg.frame.origin.y = self.userDescTextView.frame.origin.y+49
+        }else {
+            self.userDescTextView.textAlignment = .Left
+            let maxHeight = self.userDescTextView.frame.height
+            self.descNextImg.frame.origin.y = self.userDescTextView.frame.origin.y + (maxHeight > 50 ? maxHeight - 28 : 15)
+            self.descLineImg.frame.origin.y = self.userDescTextView.frame.origin.y + (maxHeight > 50 ? maxHeight - 1 : 49)
+        }
+        
+        self.logoutButton.enabled = true
+        self.logoutButton.frame.origin.y = self.descLineImg.frame.origin.y + 21
+    }
+    
+    func resetScrollView(){
+        let bouns = UIScreen.mainScreen().bounds
+        let maxHeight = self.logoutButton.frame.origin.y + self.logoutButton.frame.width + 5
+        self.scrollView.contentSize = CGSize(width: bouns.width, height: maxHeight)
     }
     
     func backButtonClick(sender: UIButton){
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.dismissViewControllerAnimated(true, completion: { () -> Void in
+        })
     }
     
+    func userIconClick(sender: UIPanGestureRecognizer){
+        if self.isLogin{
+            var alertArray:Array<String> = []
+            alertArray.append(NSLocalizedString("AlertTakePhotoLabel", comment: ""))
+            alertArray.append(NSLocalizedString("AlertChoosePhoteLabel", comment: ""))
+            self.showSheetAlert(alertArray, cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: "")) { (index) -> Void in
+                if index == 0{
+                    self.imagePicker.allowsEditing = false
+                    self.imagePicker.sourceType = .Camera
+                    self.presentViewController(self.imagePicker, animated: true, completion: nil)
+                }else if index == 1{
+                    self.imagePicker.allowsEditing = false
+                    self.imagePicker.sourceType = .PhotoLibrary
+                    self.presentViewController(self.imagePicker, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    func userNickNameClick(sender: UIPanGestureRecognizer){
+        if isLogin {
+            let setInfo = CTASetUserInfoViewController.getInstance()
+            setInfo.setUser = self.loginUser!
+            setInfo.setType = .NickName
+            self.navigationController?.pushViewController(setInfo, animated: true)
+        }
+    }
+    
+    func userSexClick(sender: UIPanGestureRecognizer){
+        if isLogin {
+            let setInfo = CTASetUserInfoViewController.getInstance()
+            setInfo.setUser = self.loginUser!
+            setInfo.setType = .Sex
+            self.navigationController?.pushViewController(setInfo, animated: true)
+        }
+    }
+    
+    func userRegionClick(sender: UIPanGestureRecognizer){
+        print("userRegionClick")
+    }
+    
+    func userDescClick(sender: UIPanGestureRecognizer){
+        if isLogin {
+            let setInfo = CTASetUserInfoViewController.getInstance()
+            setInfo.setUser = self.loginUser!
+            setInfo.setType = .Desc
+            self.navigationController?.pushViewController(setInfo, animated: true)
+        }
+    }
+    
+    func logoutButtonClick(sender: UIButton){
+        print("logoutButtonClick")
+    }
+    
+    func changeUserIcon(icon:UIImage){
+        if self.isLogin{
+            self.uploadUserIcon(self.loginUser!, icon: icon)
+        }
+    }
+    
+    func changeLoginUser(){
+        CTAUserManager.logout()
+        CTAUserManager.save(self.loginUser!)
+    }
+
+}
+
+extension CTASettingViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]){
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            self.changeUserIcon(pickedImage)
+        }
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController){
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+}
+
+extension CTASettingViewController: CTAUploadIconProtocol{
+    func uploadBegin(){
+        self.showLoadingViewByView(nil)
+    }
+    
+    func uploadComplete(result:Bool, iconPath:String, icon:UIImage?){
+        if result{
+            CTAUserDomain.getInstance().updateUserIconURL(self.loginUser!.userID, userIconURL: iconPath, compelecationBlock: { (info) -> Void in
+                if info.result{
+                    self.loginUser!.userIconURL = iconPath
+                    self.changeLoginUser()
+                    self.reloadUserIcon(icon)
+                    self.hideLoadingViewByView(nil)
+                }else {
+                    self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                    })
+                }
+            })
+        }else {
+            self.hideLoadingViewByView(nil)
+        }
+    }
 }

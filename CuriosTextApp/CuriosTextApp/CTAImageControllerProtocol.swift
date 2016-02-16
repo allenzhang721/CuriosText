@@ -8,9 +8,9 @@
 
 import UIKit
 
-func compressIconImage(image:UIImage) -> NSData{
-    let newImage = compressImage(image, maxWidth: 600)
-    let newData = UIImageJPEGRepresentation(newImage, 0.3)
+func getIconData(image:UIImage) -> NSData{
+    let newImage = compressIconImage(image)
+    let newData = UIImageJPEGRepresentation(newImage, 0.5)
     return newData!
 }
 
@@ -26,6 +26,27 @@ func compressPNGImage(image:UIImage) -> NSData{
     return newData!
 }
 
+func compressIconImage(image:UIImage) -> UIImage{
+    let maxWidth:CGFloat = 600.0
+    let maxHeight = maxWidth
+    let imageSize = image.size
+    let imageRate = imageSize.width / imageSize.height
+    let maxRate = maxWidth / maxHeight
+    var rate:CGFloat
+    if maxRate > imageRate{
+        rate = maxWidth / imageSize.width
+    }else {
+        rate = maxHeight / imageSize.height
+    }
+    let newSize = CGSize.init(width: rate*image.size.width, height: rate*image.size.height)
+    let imgSize = CGSize.init(width: maxWidth, height: maxHeight)
+    UIGraphicsBeginImageContextWithOptions(imgSize, false, 1)
+    image.drawInRect(CGRect(x: (imgSize.width - newSize.width)/2, y: (imgSize.height - newSize.height)/2, width: newSize.width, height: newSize.height), blendMode: .Normal, alpha: 1.0)
+    let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return image
+}
+
 func compressImage(image:UIImage, maxWidth:CGFloat = UIScreen.mainScreen().bounds.width * 3) -> UIImage{
     let maxWidth = maxWidth
     let maxHeight = maxWidth
@@ -33,11 +54,11 @@ func compressImage(image:UIImage, maxWidth:CGFloat = UIScreen.mainScreen().bound
     var rate:CGFloat
     let imageRate = imageSize.width / imageSize.height
     let maxRate = maxWidth / maxHeight
-    if image.size.width > maxWidth*8 || image.size.height > maxHeight*8{
+    if image.size.width > maxWidth*6 || image.size.height > maxHeight*6{
         if maxRate > imageRate{
-            rate = maxHeight*8 / imageSize.height
+            rate = maxHeight*6 / imageSize.height
         }else {
-            rate = maxWidth*8 / imageSize.width
+            rate = maxWidth*6 / imageSize.width
         }
     }else {
         if maxRate > imageRate{

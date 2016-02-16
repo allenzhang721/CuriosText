@@ -32,11 +32,19 @@ class CTAPublishesCell: UICollectionViewCell, CTAImageControllerProtocol{
     }
     
     func reloadCell(){
-        let image = self.getDefaultIcon(self.bounds)
-        let imagePath = CTAFilePath.publishFilePath+self.publishModel!.publishIconURL
-        let imageURL = NSURL(string: imagePath)!
-        self.cellImageView.kf_showIndicatorWhenLoading = true
-        self.cellImageView.kf_setImageWithURL(imageURL, placeholderImage: image, optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in
+        let defaultImg = self.getDefaultIcon(self.bounds)
+        if publishModel != nil {
+            let imagePath = CTAFilePath.publishFilePath+self.publishModel!.publishIconURL
+            let imageURL = NSURL(string: imagePath)!
+            self.cellImageView.kf_showIndicatorWhenLoading = true
+            self.cellImageView.kf_setImageWithURL(imageURL, placeholderImage: defaultImg, optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in
+                if error != nil {
+                    self.cellImageView.image = defaultImg
+                }
+                self.cellImageView.kf_showIndicatorWhenLoading = false
+            }
+        }else {
+            self.cellImageView.image = defaultImg
         }
     }
 }

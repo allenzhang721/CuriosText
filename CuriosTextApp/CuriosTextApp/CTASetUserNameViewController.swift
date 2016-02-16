@@ -13,7 +13,7 @@ enum CTASetUserNameType{
     case register, registerWechat
 }
 
-class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CTAAlertProtocol, CTATextInputProtocol, CTALoadingProtocol, CTAImageControllerProtocol{
+class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CTATextInputProtocol, CTALoadingProtocol, CTAImageControllerProtocol{
     
     static var _instance:CTASetUserNameViewController?;
     
@@ -66,7 +66,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         let tap = UITapGestureRecognizer(target: self, action: "bgViewClick:")
         self.view.addGestureRecognizer(tap)
         
-        let backButton = UIButton.init(frame: CGRect.init(x: 5, y: 2, width: 40, height: 40))
+        let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
@@ -196,32 +196,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         if self.userNickNameTextInput.text != "" {
             if self.userModel != nil {
                 if self.isChangeImage {
-                    self.changeToLoadingView()
-                    let userID = self.userModel!.userID
-                    let uuid = NSUUID().UUIDString
-                    let uuidStr = NSString(string: uuid)
-                    let imageName = uuidStr.substringWithRange(NSMakeRange(0, 6))
-                    let userIconKey = userID+"/"+imageName+".jpg"
-                    let uptoken = CTAUpTokenModel.init(upTokenKey: userIconKey)
-                    CTAUpTokenDomain.getInstance().userUpToken([uptoken], compelecationBlock: { (listInfo) -> Void in
-                        if listInfo.result {
-                            let newToken = listInfo.modelArray![0] as! CTAUpTokenModel
-                            let imageData = compressIconImage(self.selectedImage!)
-                            let uploadModel = CTAUploadModel.init(key: userIconKey, token: newToken.upToken, fileData: imageData)
-                            CTAUploadAction.getInstance().uploadFile(userID, uploadModel: uploadModel, progress: { (_) -> Void in
-                                }, complete: { (info) -> Void in
-                                    if info.result{
-                                        self.uploadUserInfo(userIconKey)
-                                    }else {
-                                        self.changeToUnloadingView()
-                                        self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                        })
-                                    }
-                            })
-                        }else {
-                            self.changeToUnloadingView()
-                        }
-                    })
+                    self.uploadUserIcon(self.userModel!, icon: self.selectedImage!)
                 }else {
                     if self.userModel != nil {
                         if self.userModel!.nickName == self.userNickNameTextInput.text{
@@ -337,5 +312,19 @@ extension CTASetUserNameViewController: UIImagePickerControllerDelegate, UINavig
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController){
         dismissViewControllerAnimated(true, completion: nil)
+    }
+}
+
+extension CTASetUserNameViewController: CTAUploadIconProtocol{
+    func uploadBegin(){
+        self.changeToLoadingView()
+    }
+    
+    func uploadComplete(result:Bool, iconPath:String, icon:UIImage?){
+        if result{
+            self.uploadUserInfo(iconPath)
+        }else {
+            self.changeToUnloadingView()
+        }
     }
 }

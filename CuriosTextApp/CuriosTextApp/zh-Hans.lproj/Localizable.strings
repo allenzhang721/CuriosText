@@ -22,6 +22,7 @@
 "PasswordPlaceholder" = "请填写密码";
 "SearchLabel" = "选择国家和地区";
 "LoginButtonLabel" = "登录";
+"LogoutButtonLabel" = "退出登录";
 "OtherAccountLoginLabel" = "使用其他账号登录";
 "ForgetPasswordLabel" = "忘记密码?";
 "RegisterLabel" = "注册";
@@ -40,6 +41,11 @@
 "CompleteButtonLabel" = "完成";
 "UserInfoLabel" = "完成你的资料";
 "SettingLabel" = "设置";
+"UserSexLabel" = "性别";
+"UserMaleLabel" = "男";
+"UserFemaleLabel" = "女";
+"UserRegion" = "地区";
+"UserDesc" = "简介";
 
 "AlertOkLabel" = "确定";
 "AlertYesLabel" = "是";
