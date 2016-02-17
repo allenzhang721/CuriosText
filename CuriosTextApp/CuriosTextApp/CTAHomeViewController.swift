@@ -89,7 +89,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     }
     
     func loadLocalUserModel(){
-        if CTAUserManager.load(){
+        if CTAUserManager.isLogin{
             self.loginUser = CTAUserManager.user
         }else {
             self.loginUser = nil
@@ -128,7 +128,9 @@ extension CTAHomeViewController: CTAPublishProtocol{
     }
     
     func userIconClick(sender: UIPanGestureRecognizer) {
-        if let publishModel = self.currentFullCell.publishModel{
+        if self.loginUser == nil {
+            self.showLoginView()
+        }else if let publishModel = self.currentFullCell.publishModel{
             let userID = self.loginUser == nil ? "" : self.loginUser!.userID
             self.showUserDetailHandler(publishModel.userModel, loginUserID: userID)
         }

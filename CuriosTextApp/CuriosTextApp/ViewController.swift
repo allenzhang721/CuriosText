@@ -13,6 +13,8 @@ class ViewController: UIViewController, CTAAddBarProtocol{
     private let pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
     
     private let pageControllers = CTAPageControllers()
+    
+    var navigate:UINavigationController!
 
     override func prefersStatusBarHidden() -> Bool {
         return true
@@ -30,9 +32,14 @@ class ViewController: UIViewController, CTAAddBarProtocol{
                 CTAFilePath.userFilePath = userFilePath!
             }
         }
+        CTAUserManager.load()
     
-        addChildViewController(pageViewController)
-        view.addSubview(pageViewController.view)
+        
+        self.navigate = UINavigationController(rootViewController: pageViewController)
+        self.navigate.navigationBarHidden = true
+
+        addChildViewController(self.navigate)
+        view.addSubview(self.navigate.view)
     
         pageViewController.view.backgroundColor = UIColor.whiteColor()
         pageViewController.dataSource = pageControllers
@@ -40,7 +47,20 @@ class ViewController: UIViewController, CTAAddBarProtocol{
         
         pageViewController.setViewControllers([pageControllers.controllers[0]], direction: .Forward, animated: false, completion: nil)
         
-        self.initAddBarView()
+        self.initAddBarView(pageViewController.view)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showLoginView:", name: "showLoginView", object: nil)
+    }
+    
+    func showLoginView(noti: NSNotification) {
+        let login = CTALoginViewController.getInstance()
+        login.isChangeContry = true
+        let navigationController = UINavigationController(rootViewController: login)
+        navigationController.navigationBarHidden = true
+        self.presentViewController(navigationController, animated: false, completion: {
+            self.navigate.popToRootViewControllerAnimated(false)
+            self.pageViewController.setViewControllers([self.pageControllers.controllers[0]], direction: .Forward, animated: false, completion: nil)
+        })
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -49,19 +69,18 @@ class ViewController: UIViewController, CTAAddBarProtocol{
             
             for subView in pageViewController.view.subviews {
                 if let scrolliew = subView as? UIScrollView {
-                    scrolliew.bounces = true
+                    scrolliew.scrollEnabled = true
                     break
                 }
             }
         } else {
             for subView in pageViewController.view.subviews {
                 if let scrolliew = subView as? UIScrollView {
-                    scrolliew.bounces = false
+                    scrolliew.scrollEnabled = false
                     break
                 }
             }
         }
-
     }
     
     override func didReceiveMemoryWarning() {

@@ -12,7 +12,7 @@ enum CTASetPasswordType{
     case register, resetPassword, changePassword
 }
 
-class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CTATextInputProtocol, CTAAlertProtocol, CTALoadingProtocol{
+class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CTATextInputProtocol, CTAAlertProtocol, CTALoadingProtocol, CTALoginProtocol{
     
     static var _instance:CTASetPasswordViewController?;
     
@@ -76,7 +76,7 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
         
-        let setPasswordTitle = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 100*self.getVerRate(), width: 100, height: 40))
+        let setPasswordTitle = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 60*self.getVerRate(), width: 100, height: 40))
         setPasswordTitle.font = UIFont.systemFontOfSize(28)
         setPasswordTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         setPasswordTitle.text = NSLocalizedString("SetPasswordTitle", comment: "")
@@ -84,7 +84,7 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         setPasswordTitle.frame.origin.x = (bouns.width - setPasswordTitle.frame.width)/2
         self.view.addSubview(setPasswordTitle)
         
-        self.passwordTextinput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: 200*self.getVerRate(), width: 190*self.getHorRate(), height: 50))
+        self.passwordTextinput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: 150*self.getVerRate(), width: 190*self.getHorRate(), height: 50))
         self.passwordTextinput.placeholder = NSLocalizedString("SetPasswordPlaceholder", comment: "")
         self.passwordTextinput.secureTextEntry = true
         self.passwordTextinput.clearsOnBeginEditing = true
@@ -110,7 +110,7 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         self.confirmTextinput.secureTextEntry = true
         self.confirmTextinput.clearsOnBeginEditing = true
         self.confirmTextinput.delegate = self
-        self.confirmTextinput.returnKeyType = .Go
+        self.confirmTextinput.returnKeyType = .Done
         self.view.addSubview(self.confirmTextinput)
         let confirmLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.confirmTextinput.frame.origin.y + 12, width: 50, height: 25))
         confirmLabel.font = UIFont.systemFontOfSize(18)
@@ -198,9 +198,7 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
                         self.changeToUnloadingView()
                         if info.result{
                             let userModel = info.baseModel as! CTAUserModel
-                            CTAUserManager.save(userModel)
-                            self.navigationController?.dismissViewControllerAnimated(true, completion: { () -> Void in
-                            })
+                            self.loginComplete(userModel)
                         }else {
                             if info.errorType is CTAInternetError {
                                 self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in

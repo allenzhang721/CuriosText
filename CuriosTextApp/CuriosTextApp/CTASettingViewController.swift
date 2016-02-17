@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTALoadingProtocol{
+class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTALoadingProtocol, CTALoginProtocol{
     
     static var _instance:CTASettingViewController?;
     
@@ -231,7 +231,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     }
     
     func loadLocalUserModel(){
-        if CTAUserManager.load(){
+        if CTAUserManager.isLogin{
             self.loginUser = CTAUserManager.user
             self.isLogin = true
         }else {
@@ -306,8 +306,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     }
     
     func backButtonClick(sender: UIButton){
-        self.navigationController?.dismissViewControllerAnimated(true, completion: { () -> Void in
-        })
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func userIconClick(sender: UIPanGestureRecognizer){
@@ -372,7 +371,8 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     }
     
     func logoutButtonClick(sender: UIButton){
-        print("logoutButtonClick")
+        CTAUserManager.logout()
+        self.showLoginView()
     }
     
     func changeUserIcon(icon:UIImage){

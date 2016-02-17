@@ -20,7 +20,7 @@ class CTAPageControllers: NSObject, UIPageViewControllerDataSource {
             var controller: UIViewController?
             switch i {
             case 0:
-               controller = CTAHomeViewController()
+                controller = CTAHomeViewController()
             case 1:
                 controller = CTAUserPublishesViewController()
             default:

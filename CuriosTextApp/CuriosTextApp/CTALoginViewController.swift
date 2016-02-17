@@ -84,7 +84,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         closeButton.addTarget(self, action: "closeButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(closeButton)
         
-        let iconImage = UIImageView.init(frame: CGRect.init(x: (bouns.width - 60)/2, y: 100*self.getVerRate(), width: 60, height: 62))
+        let iconImage = UIImageView.init(frame: CGRect.init(x: (bouns.width - 60)/2, y: 60*self.getVerRate(), width: 60, height: 62))
         iconImage.image = UIImage(named: "defaultpublish-icon")
         self.view.addSubview(iconImage)
         

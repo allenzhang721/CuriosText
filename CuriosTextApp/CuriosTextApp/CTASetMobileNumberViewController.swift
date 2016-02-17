@@ -65,7 +65,7 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
         backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
 
-        let enterMobileLabel = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 100*self.getVerRate(), width: 100, height: 40))
+        let enterMobileLabel = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 60*self.getVerRate(), width: 100, height: 40))
         enterMobileLabel.font = UIFont.systemFontOfSize(28)
         enterMobileLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         enterMobileLabel.text = NSLocalizedString("EnterMobileLabel", comment: "")

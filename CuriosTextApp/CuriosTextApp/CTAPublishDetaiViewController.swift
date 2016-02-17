@@ -104,7 +104,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         self.previousFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
         
         self.initPublishSubView(self.currentFullCell.frame, horRate: self.getHorRate())
-        self.initAddBarView()
+        self.initAddBarView(nil)
         let pan = UIPanGestureRecognizer(target: self, action: "viewPanHandler:")
         self.view.addGestureRecognizer(pan)
         

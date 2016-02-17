@@ -16,13 +16,7 @@ protocol CTALoginProtocol{
 extension CTALoginProtocol where Self: UIViewController{
     
     func showLoginView(){
-        let login = CTALoginViewController.getInstance()
-        login.isChangeContry = true
-        let navigationController = UINavigationController(rootViewController: login)
-        navigationController.navigationBarHidden = true
-        self.presentViewController(navigationController, animated: false, completion: {
-            
-        })
+        NSNotificationCenter.defaultCenter().postNotificationName("showLoginView", object: nil)
     }
     
     func loginComplete(userModel:CTAUserModel){

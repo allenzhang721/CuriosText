@@ -13,7 +13,7 @@ enum CTASetUserNameType{
     case register, registerWechat
 }
 
-class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CTATextInputProtocol, CTALoadingProtocol, CTAImageControllerProtocol{
+class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CTATextInputProtocol, CTALoadingProtocol, CTAImageControllerProtocol, CTALoginProtocol{
     
     static var _instance:CTASetUserNameViewController?;
     
@@ -71,7 +71,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
         
-        let userInfoLabel = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 100*self.getVerRate(), width: 100, height: 40))
+        let userInfoLabel = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 60*self.getVerRate(), width: 100, height: 40))
         userInfoLabel.font = UIFont.systemFontOfSize(28)
         userInfoLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         userInfoLabel.text = NSLocalizedString("UserInfoLabel", comment: "")
@@ -79,7 +79,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         userInfoLabel.frame.origin.x = (bouns.width - userInfoLabel.frame.width)/2
         self.view.addSubview(userInfoLabel)
         
-        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bouns.width - 60)/2, y: 170*self.getVerRate(), width: 60, height: 60))
+        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bouns.width - 60)/2, y: 100*self.getVerRate()+20, width: 60, height: 60))
         self.userIconImage.image = UIImage(named: "setimage-icon")
         self.cropImageCircle(self.userIconImage)
         self.view.addSubview(self.userIconImage)
@@ -89,7 +89,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     
         self.imagePicker.delegate = self
         
-        self.userNickNameTextInput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: 250*self.getVerRate(), width: 190*self.getHorRate(), height: 50))
+        self.userNickNameTextInput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: 150*self.getVerRate()+50, width: 230*self.getHorRate(), height: 50))
         self.userNickNameTextInput.placeholder = NSLocalizedString("UserNamePlaceholder", comment: "")
         self.userNickNameTextInput.delegate = self
         self.userNickNameTextInput.clearButtonMode = .WhileEditing
@@ -241,9 +241,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     }
     
     func updateComplete(){
-        CTAUserManager.save(self.userModel!)
-        self.navigationController?.dismissViewControllerAnimated(true, completion: { () -> Void in
-        })
+        self.loginComplete(self.userModel!)
     }
     
     func userIconClick(sender: UIPanGestureRecognizer){

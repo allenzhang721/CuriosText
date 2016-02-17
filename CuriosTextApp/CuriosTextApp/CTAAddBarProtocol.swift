@@ -17,17 +17,22 @@ func setAddBarView(barView:CTAAddBarView, view:UIView){
 }
 
 protocol CTAAddBarProtocol{
-    func initAddBarView()
+    func initAddBarView(parentView:UIView?)
     func addBarViewClick(sender: UIPanGestureRecognizer)
     func addPublishHandler()
 }
 
 extension CTAAddBarProtocol where Self: UIViewController{
-    func initAddBarView(){
-        let barView = CTAAddBarView(frame: CGRect.zero)
-        self.view.addSubview(barView)
-        setAddBarView(barView, view: self.view)
+    func initAddBarView(parentView:UIView?){
         
+        let barView = CTAAddBarView(frame: CGRect.zero)
+        if parentView == nil {
+            self.view.addSubview(barView)
+            setAddBarView(barView, view: self.view)
+        }else {
+            parentView!.addSubview(barView)
+            setAddBarView(barView, view: parentView!)
+        }
         let addBarTap = UITapGestureRecognizer(target: self, action: "addBarViewClick:")
         barView.addGestureRecognizer(addBarTap)
     }

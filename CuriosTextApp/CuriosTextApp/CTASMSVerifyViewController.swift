@@ -75,7 +75,7 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
         backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
         
-        let enterVerifyCodeTitle = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 100*self.getVerRate(), width: 100, height: 40))
+        let enterVerifyCodeTitle = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 60*self.getVerRate(), width: 100, height: 40))
         enterVerifyCodeTitle.font = UIFont.systemFontOfSize(28)
         enterVerifyCodeTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         enterVerifyCodeTitle.text = NSLocalizedString("SMSVerifyTitle", comment: "")
@@ -83,7 +83,7 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
         enterVerifyCodeTitle.frame.origin.x = (bouns.width - enterVerifyCodeTitle.frame.width)/2
         self.view.addSubview(enterVerifyCodeTitle)
         
-        let enterVerifyCodeMess = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 150*self.getVerRate(), width: 100, height: 20))
+        let enterVerifyCodeMess = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: enterVerifyCodeTitle.frame.origin.y+40, width: 100, height: 20))
         enterVerifyCodeMess.font = UIFont.systemFontOfSize(14)
         enterVerifyCodeMess.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         enterVerifyCodeMess.text = NSLocalizedString("SMSVerifyMessage", comment: "")
@@ -91,51 +91,51 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
         enterVerifyCodeMess.frame.origin.x = (bouns.width - enterVerifyCodeMess.frame.width)/2
         self.view.addSubview(enterVerifyCodeMess)
         
-        self.phoneLabel = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 180*self.getVerRate(), width: 100, height: 20))
+        self.phoneLabel = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: enterVerifyCodeMess.frame.origin.y+20, width: 100, height: 20))
         self.phoneLabel.font = UIFont.systemFontOfSize(14)
         self.phoneLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.phoneLabel)
         
-        var line:UIImageView = UIImageView.init(frame: CGRect.init(x: bouns.width/2 - 60, y: 300*self.getVerRate(), width: 50, height: 1))
-        line.image = UIImage(named: "textinput-line")
-        self.view.addSubview(line)
-        line = UIImageView.init(frame: CGRect.init(x: bouns.width/2 + 10, y: 300*self.getVerRate(), width: 50, height: 1))
-        line.image = UIImage(named: "textinput-line")
-        self.view.addSubview(line)
-        
-        line = UIImageView.init(frame: CGRect.init(x: bouns.width/2 - 130, y: 300*self.getVerRate(), width: 50, height: 1))
-        line.image = UIImage(named: "textinput-line")
-        self.view.addSubview(line)
-        
-        line = UIImageView.init(frame: CGRect.init(x: bouns.width/2 + 80, y: 300*self.getVerRate(), width: 50, height: 1))
-        line.image = UIImage(named: "textinput-line")
-        self.view.addSubview(line)
-        
-        self.verifyLabel1 = UILabel.init(frame: CGRect.init(x: bouns.width/2 - 123, y: 230*self.getVerRate(), width: 36, height: 60))
+        self.verifyLabel1 = UILabel.init(frame: CGRect.init(x: bouns.width/2 - 123, y: 150*self.getVerRate()+50, width: 36, height: 60))
         self.verifyLabel1.font = UIFont.systemFontOfSize(40)
         self.verifyLabel1.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.verifyLabel1)
         self.verifyLabel1.textAlignment = .Center
         
-        self.verifyLabel2 = UILabel.init(frame: CGRect.init(x: bouns.width/2 - 53, y: 230*self.getVerRate(), width: 36, height: 60))
+        self.verifyLabel2 = UILabel.init(frame: CGRect.init(x: bouns.width/2 - 53, y: self.verifyLabel1.frame.origin.y, width: 36, height: 60))
         self.verifyLabel2.font = UIFont.systemFontOfSize(40)
         self.verifyLabel2.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.verifyLabel2)
         self.verifyLabel2.textAlignment = .Center
         
-        self.verifyLabel3 = UILabel.init(frame: CGRect.init(x: bouns.width/2 + 17, y: 230*self.getVerRate(), width: 36, height: 60))
+        self.verifyLabel3 = UILabel.init(frame: CGRect.init(x: bouns.width/2 + 17, y: self.verifyLabel1.frame.origin.y, width: 36, height: 60))
         self.verifyLabel3.font = UIFont.systemFontOfSize(40)
         self.verifyLabel3.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.verifyLabel3)
         self.verifyLabel3.textAlignment = .Center
         
-        self.verifyLabel4 = UILabel.init(frame: CGRect.init(x: bouns.width/2 + 87, y: 230*self.getVerRate(), width: 36, height: 60))
+        self.verifyLabel4 = UILabel.init(frame: CGRect.init(x: bouns.width/2 + 87, y: self.verifyLabel1.frame.origin.y, width: 36, height: 60))
         self.verifyLabel4.font = UIFont.systemFontOfSize(40)
         self.verifyLabel4.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.verifyLabel4)
         self.verifyLabel4.textAlignment = .Center
         
-        self.resendButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: 320*self.getVerRate(), width: 70, height: 20))
+        var line:UIImageView = UIImageView.init(frame: CGRect.init(x: bouns.width/2 - 60, y: self.verifyLabel1.frame.origin.y+60, width: 50, height: 1))
+        line.image = UIImage(named: "textinput-line")
+        self.view.addSubview(line)
+        line = UIImageView.init(frame: CGRect.init(x: bouns.width/2 + 10, y: self.verifyLabel1.frame.origin.y+60, width: 50, height: 1))
+        line.image = UIImage(named: "textinput-line")
+        self.view.addSubview(line)
+        
+        line = UIImageView.init(frame: CGRect.init(x: bouns.width/2 - 130, y: self.verifyLabel1.frame.origin.y+60, width: 50, height: 1))
+        line.image = UIImage(named: "textinput-line")
+        self.view.addSubview(line)
+        
+        line = UIImageView.init(frame: CGRect.init(x: bouns.width/2 + 80, y: self.verifyLabel1.frame.origin.y+60, width: 50, height: 1))
+        line.image = UIImage(named: "textinput-line")
+        self.view.addSubview(line)
+        
+        self.resendButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: self.verifyLabel1.frame.origin.y+70, width: 70, height: 20))
         self.resendButton.setTitle(NSLocalizedString("NoReceivedCodeLabel", comment: ""), forState: .Normal)
         self.resendButton.setTitleColor(UIColor.init(red: 0/255, green: 166/255, blue: 255/255, alpha: 1.0), forState: .Normal)
         self.resendButton.titleLabel?.font = UIFont.systemFontOfSize(14)

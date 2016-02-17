@@ -101,7 +101,7 @@ extension CTAImageControllerProtocol{
     func addImageShadow(imageView:UIView){
         imageView.layer.shadowPath = UIBezierPath(roundedRect: imageView.bounds, cornerRadius: 4).CGPath
         imageView.layer.shadowColor = UIColor.blackColor().CGColor
-        imageView.layer.shadowOffset = CGSize(width: 0, height: 10)
+        imageView.layer.shadowOffset = CGSize(width: 0, height: 2)
         imageView.layer.shadowOpacity = 0.4
         imageView.layer.shadowRadius = 5
     }

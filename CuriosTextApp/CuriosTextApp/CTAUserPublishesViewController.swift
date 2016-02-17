@@ -153,7 +153,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     }
     
     func loadLocalUserModel(){
-        if CTAUserManager.load(){
+        if CTAUserManager.isLogin{
             self.loginUser = CTAUserManager.user
         }else {
             self.loginUser = nil
@@ -237,9 +237,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     
     func settingButtonClick(sender: UIButton){
         let setting = CTASettingViewController.getInstance()
-        let navigationController = UINavigationController(rootViewController: setting)
-        navigationController.navigationBarHidden = true
-        self.presentViewController(navigationController, animated: true, completion: nil)
+        self.parentViewController?.navigationController?.pushViewController(setting, animated: true)
     }
     
     func backButtonClick(sender: UIButton){
