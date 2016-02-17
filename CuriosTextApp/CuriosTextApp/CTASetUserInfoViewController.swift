@@ -35,6 +35,7 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
     
     var descView:UIView!
     var userDescTextView:UITextView!
+    var descTextLine:UIImageView!
     
     var saveButton:UIButton!
     
@@ -79,7 +80,7 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
     func initView(){
         let bouns = UIScreen.mainScreen().bounds
         self.setInfoLabel = UILabel.init(frame: CGRect.init(x: 0, y: 8, width: bouns.width, height: 28))
-        self.setInfoLabel.font = UIFont.systemFontOfSize(20)
+        self.setInfoLabel.font = UIFont.systemFontOfSize(18)
         self.setInfoLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.setInfoLabel.text = NSLocalizedString("SettingLabel", comment: "")
         self.setInfoLabel.textAlignment = .Center
@@ -105,6 +106,19 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         
         self.descView = UIView.init(frame: CGRect.init(x: 0, y: 44, width: bouns.width, height: bouns.height-44))
         self.view.addSubview(self.descView)
+        self.userDescTextView = UITextView.init(frame: CGRect.init(x: 27*self.getHorRate(), y: 12, width: 280*self.getHorRate(), height: 50))
+        self.userDescTextView.center = CGPoint.init(x: bouns.width/2, y: 37)
+        self.userDescTextView.font = UIFont.systemFontOfSize(18)
+        self.userDescTextView.scrollEnabled = false
+        self.userDescTextView.backgroundColor = UIColor.whiteColor()
+        self.userDescTextView.delegate = self
+        self.userDescTextView.textAlignment = .Left
+        self.descView.addSubview(userDescTextView)
+        self.descTextLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userDescTextView.frame.origin.y + 49, width: 290*self.getHorRate(), height: 1))
+        self.descTextLine.image = UIImage(named: "textinput-line")
+        self.descTextLine.center = CGPoint.init(x: bouns.width/2, y: self.userDescTextView.frame.origin.y + 50)
+        self.descView.addSubview(self.descTextLine)
+        
         
         self.saveButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: 120, width: 40, height: 28))
         self.saveButton.setTitle(NSLocalizedString("SaveButtonLabel", comment: ""), forState: .Normal)
@@ -149,6 +163,21 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
     func reloadDescView(){
         self.setInfoLabel.text = NSLocalizedString("UserDesc", comment: "")
         self.descView.hidden = false
+        if self.setUser == nil {
+            self.userDescTextView.text = ""
+        }else {
+            self.userDescTextView.text = self.setUser!.userDesc
+        }
+        self.userDescTextView.becomeFirstResponder()
+        self.setDescView()
+    }
+    
+    func setDescView(){
+        self.userDescTextView.sizeToFit()
+        self.userDescTextView.frame.size.width = 280*self.getHorRate()
+        let maxHeight = self.userDescTextView.frame.height
+        self.descTextLine.frame.origin.y = self.userDescTextView.frame.origin.y + (maxHeight > 50 ? maxHeight - 1 : 49)
+        self.saveButton.frame.origin.y = self.descTextLine.frame.origin.y + 44
     }
     
     func backButtonClick(sender: UIButton){
@@ -192,11 +221,28 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
                 })
             }
         }
-        
     }
     
     func saveDescHandler(){
-        
+        if self.setUser != nil {
+            let newText = self.userDescTextView.text
+            let newStr = NSString(string: newText!)
+            if newStr.length > 0 && newStr.length < 101{
+                self.showLoadingViewByView(self.saveButton)
+                CTAUserDomain.getInstance().updateUserDesc(self.setUser!.userID, userDesc: newText!, compelecationBlock: { (info) -> Void in
+                    self.hideLoadingViewByView(self.saveButton)
+                    if info.result{
+                        self.setUser!.userDesc = newText!
+                        self.changeLoginUser()
+                        self.backHandler()
+                    }else {
+                        self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                            self.userNickNameTextInput.becomeFirstResponder()
+                        })
+                    }
+                })
+            }
+        }
     }
     
     func changeLoginUser(){
@@ -249,5 +295,44 @@ extension CTASetUserInfoViewController: UITextFieldDelegate{
             self.saveHandler()
         }
         return true
+    }
+}
+
+extension CTASetUserInfoViewController: UITextViewDelegate{
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool{
+        let isDelete = text == "" ? true : false
+        if isDelete {
+            return true
+        }else {
+            let newTextView = UITextView.init(frame: CGRect.init(x: 0, y: 0, width: 280*self.getHorRate(), height: 50))
+            newTextView.font = UIFont.systemFontOfSize(18)
+            newTextView.scrollEnabled = false
+            let viewText = textView.text
+            let newStr = NSString(string: viewText!)
+            newTextView.text = viewText + text
+            newTextView.sizeToFit()
+            newTextView.frame.size.width = 330*self.getHorRate()
+            let textHeight = newTextView.contentSize.height
+            if textHeight < 150{
+                if newStr.length < 101 {
+                    return true
+                }else {
+                    return false
+                }
+            }else {
+                return false
+            }
+        }
+    }
+    
+    func textViewDidChange(textView: UITextView){
+        self.setDescView()
+        let viewText = textView.text
+        if viewText == self.setUser!.userDesc {
+            self.saveButton.enabled = false
+        }else {
+            self.saveButton.enabled = true
+        }
     }
 }

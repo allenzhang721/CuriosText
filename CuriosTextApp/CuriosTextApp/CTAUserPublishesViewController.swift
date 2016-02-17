@@ -86,6 +86,12 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         }else {
             self.setNavigateButton()
         }
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
+            CTAUserDetailViewController.getInstance()
+            if self.isLoginUser{
+                CTASettingViewController.getInstance()
+            }
+        }
     }
     
     override func viewDidAppear(animated: Bool) {

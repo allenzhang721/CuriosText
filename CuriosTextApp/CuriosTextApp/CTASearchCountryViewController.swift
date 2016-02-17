@@ -77,7 +77,7 @@ class CTASearchCountryViewController: UIViewController{
         let bouns = UIScreen.mainScreen().bounds
         self.searchArray = self.allCountryLocale
         let searchLabel = UILabel.init(frame: CGRect.init(x: 0, y: 8, width: bouns.width, height: 28))
-        searchLabel.font = UIFont.systemFontOfSize(20)
+        searchLabel.font = UIFont.systemFontOfSize(18)
         searchLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         searchLabel.text = NSLocalizedString("SearchLabel", comment: "")
         searchLabel.textAlignment = .Center
