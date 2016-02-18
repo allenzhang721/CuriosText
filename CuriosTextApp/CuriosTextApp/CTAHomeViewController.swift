@@ -60,12 +60,19 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     */
     
     func initView(){
+        let bounds = UIScreen.mainScreen().bounds
         let fullSize = self.getFullCellRect(nil, rate: 1.0)
         self.currentFullCell = CTAFullPublishesCell.init(frame: CGRect.init(x: 0, y: 0, width: fullSize.width, height: fullSize.height))
         self.view.addSubview(self.currentFullCell!)
         self.currentFullCell!.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2)
        //self.currentFullCell.animationEnable = true
         self.currentFullCell.publishModel = nil
+        
+        let userButton = UIButton.init(frame: CGRect.init(x: bounds.size.width - 45, y: 2, width: 40, height: 40))
+        userButton.setImage(UIImage.init(named: "userview-button"), forState: .Normal)
+        userButton.setImage(UIImage.init(named: "userview-selected-button"), forState: .Highlighted)
+        userButton.addTarget(self, action: "userButtonClick:", forControlEvents: .TouchUpInside)
+        self.view.addSubview(userButton)
         
         self.initPublishSubView(CGRect.init(x: 0, y: 0, width: fullSize.width, height: fullSize.height), horRate: self.getHorRate())
     }
@@ -93,6 +100,14 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             self.loginUser = CTAUserManager.user
         }else {
             self.loginUser = nil
+        }
+    }
+    
+    func userButtonClick(sender: UIButton){
+        if self.loginUser == nil {
+            self.showLoginView()
+        }else {
+           NSNotificationCenter.defaultCenter().postNotificationName("changePageView", object: 1)
         }
     }
 

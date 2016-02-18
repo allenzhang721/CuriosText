@@ -88,12 +88,13 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         
         let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
+        backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
         backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
         
         self.nickNameView = UIView.init(frame: CGRect.init(x: 0, y: 44, width: bouns.width, height: bouns.height-44))
         self.view.addSubview(self.nickNameView)
-        self.userNickNameTextInput = UITextField.init(frame: CGRect.init(x:27*self.getHorRate(), y: 12, width: 326*self.getHorRate(), height: 50))
+        self.userNickNameTextInput = UITextField.init(frame: CGRect.init(x:27*self.getHorRate(), y: 12, width: 320*self.getHorRate(), height: 50))
         self.userNickNameTextInput.placeholder = NSLocalizedString("UserNamePlaceholder", comment: "")
         self.userNickNameTextInput.delegate = self
         self.userNickNameTextInput.clearButtonMode = .Always
@@ -146,6 +147,12 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         self.nickNameView.hidden = true
         self.descView.hidden = true
         self.saveButton.enabled = false
+        switch self.setType{
+        case .NickName:
+            self.resetNikeNameView()
+        case .Desc:
+            self.resetDescView()
+        }
     }
     
     func reloadNikeNameView(){
@@ -158,6 +165,7 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         }
         self.saveButton.frame.origin.y = self.userNickNameTextInput.frame.origin.y + 114
         self.userNickNameTextInput.becomeFirstResponder()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "textFieldEditChange:", name: "UITextFieldTextDidChangeNotification", object: self.userNickNameTextInput)
     }
     
     func reloadDescView(){
@@ -170,6 +178,15 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         }
         self.userDescTextView.becomeFirstResponder()
         self.setDescView()
+    }
+    
+    func resetNikeNameView(){
+        self.userNickNameTextInput.text = ""
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "UITextFieldTextDidChangeNotification", object: self.userNickNameTextInput)
+    }
+    
+    func resetDescView(){
+        self.userDescTextView.text = ""
     }
     
     func setDescView(){
@@ -205,7 +222,7 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         if self.setUser != nil {
             let newText = self.userNickNameTextInput.text
             let newStr = NSString(string: newText!)
-            if newStr.length > 0 && newStr.length < 21{
+            if newStr.length > 0 && newStr.length < 33{
                 self.showLoadingViewByView(self.saveButton)
                 CTAUserDomain.getInstance().updateNickname(self.setUser!.userID, nickName: newText!, compelecationBlock: { (info) -> Void in
                     self.hideLoadingViewByView(self.saveButton)
@@ -255,40 +272,6 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
 
 extension CTASetUserInfoViewController: UITextFieldDelegate{
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
-        let isDelete = string == "" ? true : false
-        if textField == self.userNickNameTextInput{
-            let newText = self.userNickNameTextInput.text
-            let newStr = NSString(string: newText!)
-            if isDelete {
-                if newStr.length <= 1{
-                    self.saveButton.enabled = false
-                }else {
-                    let delStr = newStr.substringToIndex(newStr.length-1)
-                    let delText = delStr as String
-                    if delText == self.setUser!.nickName {
-                        self.saveButton.enabled = false
-                    }else {
-                        self.saveButton.enabled = true
-                    }
-                }
-            }else{
-                if (newText! + string) == self.setUser!.nickName {
-                    self.saveButton.enabled = false
-                }else {
-                    self.saveButton.enabled = true
-                }
-            }
-            if newStr.length < 21 || isDelete {
-                return true
-            }else {
-                return false
-            }
-        }else {
-            return true
-        }
-    }
-    
     func textFieldShouldReturn(textField: UITextField) -> Bool{
         textField.resignFirstResponder()
         if self.saveButton.enabled {
@@ -296,43 +279,89 @@ extension CTASetUserInfoViewController: UITextFieldDelegate{
         }
         return true
     }
+    
+    func textFieldEditChange(noti: NSNotification) {
+        let textField = noti.object as! UITextField
+        self.checkTextField(textField)
+        textField.sizeToFit()
+        textField.frame.size.width = 320*self.getHorRate()
+        textField.frame.size.height = 50
+        let text = textField.text
+        if text == self.setUser!.nickName {
+            self.saveButton.enabled = false
+        }else {
+            self.saveButton.enabled = true
+        }
+    }
+    
+    func checkTextField(textField: UITextField) -> Bool{
+        textField.sizeToFit()
+        let viewText = textField.text
+        let textStr = NSString(string: viewText!)
+        let textWidth = textField.frame.width
+        var needReset:Bool = false
+        let textLimit = 32
+        let textWidthLimit = 320*self.getHorRate() - 15
+        if textWidth < textWidthLimit{
+            if textStr.length > textLimit {
+                needReset = true
+            }else {
+                needReset = false
+            }
+        }else {
+            needReset = true
+        }
+        if needReset {
+            let range = textField.selectedTextRange
+            let newText = textStr.substringToIndex(textStr.length - 1)
+            let newStr = NSString(string: newText)
+            textField.text = newText
+            let rageLength = textField.offsetFromPosition(textField.beginningOfDocument, toPosition: range!.start)
+            if rageLength < newStr.length{
+                textField.selectedTextRange = range
+            }
+            return self.checkTextField(textField)
+        }else {
+            return true
+        }
+    }
 }
 
 extension CTASetUserInfoViewController: UITextViewDelegate{
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool{
-        let isDelete = text == "" ? true : false
-        if isDelete {
-            return true
-        }else {
-            let newTextView = UITextView.init(frame: CGRect.init(x: 0, y: 0, width: 280*self.getHorRate(), height: 50))
-            newTextView.font = UIFont.systemFontOfSize(18)
-            newTextView.scrollEnabled = false
-            let viewText = textView.text
-            let newStr = NSString(string: viewText!)
-            newTextView.text = viewText + text
-            newTextView.sizeToFit()
-            newTextView.frame.size.width = 330*self.getHorRate()
-            let textHeight = newTextView.contentSize.height
-            if textHeight < 150{
-                if newStr.length < 101 {
-                    return true
-                }else {
-                    return false
-                }
-            }else {
-                return false
-            }
-        }
-    }
-    
     func textViewDidChange(textView: UITextView){
+        self.checkTextView(textView)
         self.setDescView()
         let viewText = textView.text
         if viewText == self.setUser!.userDesc {
             self.saveButton.enabled = false
         }else {
             self.saveButton.enabled = true
+        }
+    }
+    
+    func checkTextView(textView: UITextView) -> Bool{
+        textView.sizeToFit()
+        let viewText = textView.text
+        let textStr = NSString(string: viewText!)
+        let textHeight = textView.contentSize.height
+        var needReset:Bool = false
+        if textHeight < 150{
+            if textStr.length < 101 {
+                needReset = false
+            }else {
+                needReset = true
+            }
+        }else {
+            needReset = true
+        }
+        if needReset {
+            let newStr = textStr.substringToIndex(textStr.length - 1)
+            let newText = newStr as String
+            textView.text = newText
+            return self.checkTextView(textView)
+        }else {
+            return true
         }
     }
 }

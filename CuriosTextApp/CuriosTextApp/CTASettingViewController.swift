@@ -90,6 +90,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         
         let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
+        backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
         backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
         
@@ -104,8 +105,12 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         let iconTap = UITapGestureRecognizer(target: self, action: "userIconClick:")
         self.userIconImage.addGestureRecognizer(iconTap)
         
-        self.imagePicker.delegate = self
+        let imgFrame = self.userIconImage.frame
+        let cameraView = UIImageView.init(frame: CGRect.init(x: (imgFrame.origin.x+imgFrame.size.width)-20, y: (imgFrame.origin.y+imgFrame.size.height)-20, width: 20, height: 20))
+        cameraView.image = UIImage.init(named: "usercamera-icon")
+        self.scrollView.addSubview(cameraView)
         
+        self.imagePicker.delegate = self
         
         self.userNickNameLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 112, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
         self.userNickNameLabel.font = UIFont.systemFontOfSize(18)
@@ -222,7 +227,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     }
     
     func resetView(){
-        self.userIconImage.image = UIImage(named: "setimage-icon")
+        self.userIconImage.image = UIImage(named: "default-usericon")
         self.userNickNameLabel.text = ""
         self.userSexLabel.text = ""
         self.userRegionLabel.text = ""
@@ -246,16 +251,13 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         var defaultImg:UIImage!
         if loadImg == nil{
             defaultImg = UIImage.init(named: "default-usericon")
-            self.userIconImage.kf_showIndicatorWhenLoading = true
         }else {
             defaultImg = loadImg
-            self.userIconImage.kf_showIndicatorWhenLoading = false
         }
-        self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: defaultImg, optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in
+        self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: defaultImg, optionsInfo: nil) { (image, error, cacheType, imageURL) -> () in
             if error != nil {
                 self.userIconImage.image = defaultImg
             }
-            self.userIconImage.kf_showIndicatorWhenLoading = false
         }
     }
     

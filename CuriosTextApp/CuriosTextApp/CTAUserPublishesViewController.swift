@@ -177,10 +177,13 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.userNicknameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.settingButton = UIButton.init(frame: CGRect.init(x: bounds.size.width - 45, y: 2, width: 40, height: 40))
         self.settingButton.setImage(UIImage.init(named: "setting-button"), forState: .Normal)
+        self.settingButton.setImage(UIImage.init(named: "setting-selected-button"), forState: .Highlighted)
         self.homeViewButton = UIButton.init(frame: CGRect.init(x: 5, y: 2, width: 40, height: 40))
         self.homeViewButton.setImage(UIImage.init(named: "homeview-button"), forState: .Normal)
+        self.homeViewButton.setImage(UIImage.init(named: "homeview-selected-button"), forState: .Highlighted)
         self.backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
         self.backButton.setImage(UIImage.init(named: "back-button"), forState: .Normal)
+        self.backButton.setImage(UIImage.init(named: "back-selected-button"), forState: .Highlighted)
         
         self.viewToolBar = UIView()
         self.viewToolBar.frame = CGRectMake(0, 0, self.view.frame.size.width, 44)
@@ -251,7 +254,9 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     }
     
     func homeViewButtonClick(sender: UIButton){
-        print("homeView button click")
+        if self.isLoginUser {
+            NSNotificationCenter.defaultCenter().postNotificationName("changePageView", object: 0)
+        }
     }
     
     func loadFirstData(){

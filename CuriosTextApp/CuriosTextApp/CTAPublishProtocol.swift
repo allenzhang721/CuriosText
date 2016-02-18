@@ -36,23 +36,26 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.likeButton.frame = CGRect.init(x: 0, y: 0, width: 40, height: 40)
         self.likeButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 + 90*horRate,y: UIScreen.mainScreen().bounds.height/2 + publishRect.height/2 + 45*horRate)
         self.likeButton.setImage(UIImage.init(named: "like-button"), forState: .Normal)
+        self.likeButton.setImage(UIImage.init(named: "like-highlighted-button"), forState: .Highlighted)
         self.view.addSubview(self.likeButton)
         self.likeButton.addTarget(self, action: "likeButtonClick:", forControlEvents: .TouchUpInside)
         
         let shareButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
         shareButton.setImage(UIImage.init(named: "share-button"), forState: .Normal)
+        shareButton.setImage(UIImage.init(named: "share-selected-button"), forState: .Highlighted)
         shareButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 90*horRate, y: UIScreen.mainScreen().bounds.height/2 + publishRect.height/2 + 45*horRate)
         self.view.addSubview(shareButton)
         shareButton.addTarget(self, action: "shareButtonClick:", forControlEvents: .TouchUpInside)
         
         let rebuildButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
         rebuildButton.setImage(UIImage.init(named: "rebuild-button"), forState: .Normal)
+        rebuildButton.setImage(UIImage.init(named: "rebuild-selected-button"), forState: .Highlighted)
         rebuildButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2 + publishRect.height/2 + 45*horRate)
         self.view.addSubview(rebuildButton)
         rebuildButton.addTarget(self, action: "rebuildButtonClick:", forControlEvents: .TouchUpInside)
         
         self.userIconImage.frame = CGRect.init(x: UIScreen.mainScreen().bounds.width/2, y: 9, width: 60, height: 60)
-        self.userIconImage.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2 - publishRect.height/2 - 30 - 60*horRate)
+        self.userIconImage.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2 - publishRect.height/2 - 30 - 75*horRate)
         if self.userIconImage.frame.origin.y < 5 {
             self.userIconImage.frame.origin.y = 5
         }
@@ -64,7 +67,10 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.userIconImage.image = UIImage(named: "default-usericon")
         
         self.userNicknameLabel.frame = CGRect.init(x: 0, y: 0, width: 100, height: 25)
-        self.userNicknameLabel.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2 - publishRect.height/2 - 10 - 30*horRate)
+        self.userNicknameLabel.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2, y: self.userIconImage.center.y + 42 + 15*horRate)
+        if (self.userNicknameLabel.frame.origin.y + self.userNicknameLabel.frame.size.height) > (UIScreen.mainScreen().bounds.height/2 - publishRect.height/2){
+            self.userNicknameLabel.frame.origin.y = UIScreen.mainScreen().bounds.height/2 - publishRect.height/2 - 25
+        }
         if self.userNicknameLabel.frame.origin.y < 70 {
             self.userNicknameLabel.frame.origin.y = 70
         }
