@@ -187,9 +187,17 @@ class EditViewController: UIViewController {
             
         case .Image:
             debug_print("double tap Img")
+            let cameraVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("CameraViewController") as! CTACameraViewController
             
+            cameraVC.completionBlock = { image in
+                
+                
+            }
             
-            
+            presentViewController(cameraVC, animated: true, completion: { 
+                
+                
+            }) 
             
         default:
             ()

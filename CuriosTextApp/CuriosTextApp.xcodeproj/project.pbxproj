@@ -138,6 +138,7 @@
 		2C9706CB1C1E713A00FA2E17 /* CTABaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9706CA1C1E713A00FA2E17 /* CTABaseModel.swift */; };
 		2C9706CD1C1E794B00FA2E17 /* CTAError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9706CC1C1E794B00FA2E17 /* CTAError.swift */; };
 		2C9706D11C1E805D00FA2E17 /* CTARequestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9706D01C1E805D00FA2E17 /* CTARequestResult.swift */; };
+		2CA9933E1C75DD4700B5EEDC /* SimpleNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA9933D1C75DD4700B5EEDC /* SimpleNetworking.swift */; };
 		2CAEAC911C323F2600C9F9AC /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC8C1C323F2600C9F9AC /* Dynamic.swift */; };
 		2CAEAC921C323F2600C9F9AC /* Editor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CAEAC8D1C323F2600C9F9AC /* Editor.storyboard */; };
 		2CAEAC931C323F2600C9F9AC /* EditorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC8E1C323F2600C9F9AC /* EditorFactory.swift */; };
@@ -163,6 +164,8 @@
 		2CC74C981C5A27F800B536C2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC74C971C5A27F800B536C2 /* MessageUI.framework */; };
 		2CC74C9A1C5A28BA00B536C2 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC74C991C5A28BA00B536C2 /* libicucore.tbd */; };
 		2CC74C9F1C5A2BFA00B536C2 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC74C9E1C5A2BFA00B536C2 /* libstdc++.tbd */; };
+		2CC9307D1C74640300FB02A9 /* CTACameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9307C1C74640300FB02A9 /* CTACameraView.swift */; };
+		2CC9307F1C7464D000FB02A9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC9307E1C7464D000FB02A9 /* AVFoundation.framework */; };
 		2CCD94DC1C43B4AA001E5D08 /* CTATextSpacingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */; };
 		2CD08F5D1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD08F5C1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift */; };
 		2CD488131C4E1A4900D11CB7 /* CTAPreviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD488121C4E1A4900D11CB7 /* CTAPreviewManager.swift */; };
@@ -362,6 +365,7 @@
 		2C9706CA1C1E713A00FA2E17 /* CTABaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTABaseModel.swift; sourceTree = "<group>"; };
 		2C9706CC1C1E794B00FA2E17 /* CTAError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAError.swift; sourceTree = "<group>"; };
 		2C9706D01C1E805D00FA2E17 /* CTARequestResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTARequestResult.swift; sourceTree = "<group>"; };
+		2CA9933D1C75DD4700B5EEDC /* SimpleNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleNetworking.swift; sourceTree = "<group>"; };
 		2CAEAC8C1C323F2600C9F9AC /* Dynamic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 		2CAEAC8D1C323F2600C9F9AC /* Editor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Editor.storyboard; sourceTree = "<group>"; };
 		2CAEAC8E1C323F2600C9F9AC /* EditorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditorFactory.swift; path = ../EditorFactory.swift; sourceTree = "<group>"; };
@@ -389,6 +393,8 @@
 		2CC74C971C5A27F800B536C2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		2CC74C991C5A28BA00B536C2 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		2CC74C9E1C5A2BFA00B536C2 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		2CC9307C1C74640300FB02A9 /* CTACameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACameraView.swift; sourceTree = "<group>"; };
+		2CC9307E1C7464D000FB02A9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATextSpacingView.swift; sourceTree = "<group>"; };
 		2CD08F5C1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAnimationPlayNodeManager.swift; sourceTree = "<group>"; };
 		2CD488121C4E1A4900D11CB7 /* CTAPreviewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewManager.swift; sourceTree = "<group>"; };
@@ -442,6 +448,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CC9307F1C7464D000FB02A9 /* AVFoundation.framework in Frameworks */,
 				2CD71E311C72D5C6007B635C /* KeyboardMan.framework in Frameworks */,
 				2CC74C9F1C5A2BFA00B536C2 /* libstdc++.tbd in Frameworks */,
 				2CC74C9A1C5A28BA00B536C2 /* libicucore.tbd in Frameworks */,
@@ -807,6 +814,7 @@
 			isa = PBXGroup;
 			children = (
 				2C1B88941C5F357E000403FD /* AES256 */,
+				2CA9933D1C75DD4700B5EEDC /* SimpleNetworking.swift */,
 				2C929DD61C60962B00F90BF4 /* CTAConfig.swift */,
 				2C5ACC111C439E8100B96CCD /* CTAStyleKit.swift */,
 				2C3CAD0A1C21825100D8DE4B /* CTAIDGenerator.swift */,
@@ -871,6 +879,7 @@
 		2CAEAC8B1C323ED900C9F9AC /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+				2CC9307A1C74638B00FB02A9 /* Camera */,
 				2CAEAC8D1C323F2600C9F9AC /* Editor.storyboard */,
 				2C0404631C3EC35D00A5B017 /* Tools.playground */,
 				2CC1C9421C58D38100844A33 /* factory_model */,
@@ -918,9 +927,18 @@
 			path = SMS_SDK;
 			sourceTree = "<group>";
 		};
+		2CC9307A1C74638B00FB02A9 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				2CC9307C1C74640300FB02A9 /* CTACameraView.swift */,
+			);
+			name = Camera;
+			sourceTree = "<group>";
+		};
 		3971561C9A2A856DEC31B599 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2CC9307E1C7464D000FB02A9 /* AVFoundation.framework */,
 				2CD71E301C72D5C6007B635C /* KeyboardMan.framework */,
 				2CC74C9E1C5A2BFA00B536C2 /* libstdc++.tbd */,
 				2CC74C991C5A28BA00B536C2 /* libicucore.tbd */,
@@ -1208,6 +1226,7 @@
 				2C3B33FE1C117C8000738166 /* CTANetworkConig.swift in Sources */,
 				2CAEAC9D1C323F4300C9F9AC /* ContainerImgView.swift in Sources */,
 				2C247FEB1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift in Sources */,
+				2CA9933E1C75DD4700B5EEDC /* SimpleNetworking.swift in Sources */,
 				2C9706CD1C1E794B00FA2E17 /* CTAError.swift in Sources */,
 				661D29F61C2AD5E60073FC0E /* CTAUploadController.swift in Sources */,
 				2C3AE3EC1C59EC9E004D62B4 /* CTASocialShareManager.swift in Sources */,
@@ -1256,6 +1275,7 @@
 				2CB380B31C4D003B009A681A /* CTAAnimationConfig.swift in Sources */,
 				2CAEACA31C323F9700C9F9AC /* TexView.swift in Sources */,
 				2CAEAC9B1C323F4300C9F9AC /* CanvasView.swift in Sources */,
+				2CC9307D1C74640300FB02A9 /* CTACameraView.swift in Sources */,
 				66A072A91C156D1C0046C72F /* CTAUserRequestAPI.swift in Sources */,
 				2C47F8A01C7174D20068F215 /* CTATextContainerViewModel.swift in Sources */,
 				2C5C24921C44E82100A70F1B /* CTAPickerView.swift in Sources */,

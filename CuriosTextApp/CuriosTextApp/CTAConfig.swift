@@ -16,8 +16,8 @@ struct CTAConfigs {
     }
     
     struct weChat {
-        static let appID = "wx98ddaa7f04ba1e9b"
-        static let appKey = "c7d42e99a3a9686cadd2aa88fb889a43"
+        static let appID = "wx5b6644a480bce9f7"
+        static let appKey = "743e2f3269d7bbb4689e46147c304ea2"
     }
     
     struct SMS {
