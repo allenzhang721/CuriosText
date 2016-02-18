@@ -42,6 +42,8 @@ final class CTACanvasViewController: UIViewController {
     weak var dataSource: CanvasViewControllerDataSource!
     private var collectionView: UICollectionView!
     
+    var document: CTADocument?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -292,11 +294,22 @@ final class CTACanvasViewController: UIViewController {
             collectionView.collectionViewLayout.invalidateLayoutWithContext(context)
             
             if updateContents {
-                guard let cell = cell as? CTACanvasTextCell, let container = container as? TextContainerVMProtocol else {
-                    return
+                
+                switch (cell, container) {
+                    
+                case (let c as CTACanvasTextCell, let con as TextContainerVMProtocol):
+                    c.textView.attributedText = con.textElement?.attributeString
+                    
+                case (let c as CTACanvasImageCell, let con as ImageContainerVMProtocol):
+                    c.imageView.image = UIImage(data: (document?.resourceBy(con.imageElement!.resourceName))!)
+                    
+                default:
+                    ()
                 }
                 
-                cell.textView.attributedText = container.textElement?.attributeString
+//                guard let cell = cell as? CTACanvasTextCell, let container = container as? TextContainerVMProtocol else {
+//                    return
+//                }
             }
         }
     }

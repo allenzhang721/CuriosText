@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/EditViewController.swift"
-            timestampString = "477489214.601062"
+            timestampString = "477493723.95097"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
             landmarkName = "doubleTap(_:)"
             landmarkType = "5">
          </BreakpointContent>

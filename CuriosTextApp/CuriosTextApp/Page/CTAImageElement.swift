@@ -28,7 +28,7 @@ final class CTAImgElement: NSObject, NSCoding {
 extension CTAImgElement: CTAElement {
     
     var resourceName: String {
-        return ""
+        return "AAA"
     }
     var scale: CGFloat {
         get {

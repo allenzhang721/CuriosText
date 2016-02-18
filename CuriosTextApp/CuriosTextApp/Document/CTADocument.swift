@@ -87,6 +87,9 @@ class CTADocument: UIDocument {
     
     func storeResource(data: NSData, withName name: String) -> String {
         
+        if let file = res.fileWrappers?[name] {
+            res.removeFileWrapper(file)
+        }
         let resWrap = NSFileWrapper(regularFileWithContents: data)
         resWrap.preferredFilename = name
         return res.addFileWrapper(resWrap)

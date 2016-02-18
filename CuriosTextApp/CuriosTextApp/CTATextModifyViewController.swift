@@ -46,8 +46,8 @@ class CTATextModifyViewController: UIViewController {
     }
     
     deinit {
-        textView.removeObserver(self, forKeyPath: "contentSize")
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+//        textView.removeObserver(self, forKeyPath: "contentSize")
+//        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {

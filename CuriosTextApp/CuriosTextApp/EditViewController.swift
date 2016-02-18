@@ -43,6 +43,7 @@ class EditViewController: UIViewController {
             
         case let vc as CTACanvasViewController:
             canvasViewController = vc
+            canvasViewController.document = document
             canvasViewController.dataSource = self
             canvasViewController.delegate = self
             
@@ -194,6 +195,7 @@ class EditViewController: UIViewController {
                     let canvasSize = strongSelf.canvasViewController.view.bounds.size
                     (container as! ImageContainerVMProtocol).updateWithImageSize(image!.size, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
                     
+                    strongSelf.document.storeResource(UIImageJPEGRepresentation(image!, 0.1)!, withName: (container as! ImageContainerVMProtocol).imageElement!.resourceName)
                     strongSelf.canvasViewController.updateAt(selectedIndexPath, updateContents: true)
                 }
             }
