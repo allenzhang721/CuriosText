@@ -301,7 +301,7 @@ extension CTASetUserInfoViewController: UITextFieldDelegate{
         let textWidth = textField.frame.width
         var needReset:Bool = false
         let textLimit = 32
-        let textWidthLimit = 320*self.getHorRate() - 15
+        let textWidthLimit = 320*self.getHorRate() - 10
         if textWidth < textWidthLimit{
             if textStr.length > textLimit {
                 needReset = true

@@ -90,9 +90,9 @@ class CTAUserDomain: CTABaseDomain {
         }
     }
     
-    func weixinRegister(weixinID: String, nickName: String, userIconURL:String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func weixinRegister(weixinID:String, nickName:String, sex:Int, country:String, province:String, city:String, compelecationBlock: (CTADomainInfo!) -> Void) {
         
-        CTAWeixinRegisterRequest.init(weixinID: weixinID, nickName: nickName, userIconURL: userIconURL).startWithCompletionBlockWithSuccess{ (response) -> Void in
+        CTAWeixinRegisterRequest.init(weixinID: weixinID, nickName: nickName, sex: sex, country: country, province: province, city: city).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
             case .Success(let json):

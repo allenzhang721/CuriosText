@@ -155,6 +155,7 @@ enum CTAParameterKey: CustomStringConvertible {
   case PublishFilePath, UserFilePath
   case UpToken, UpTokenKey
   case ShareCount, RebuildCount, LikeCount, LikeStatus
+  case Openid, Headimgurl, WechatName
   
   var description: String {
     switch self {
@@ -238,6 +239,12 @@ enum CTAParameterKey: CustomStringConvertible {
         return "likeCount"
     case .LikeStatus:
         return "likeStatus"
+    case .Openid:
+        return "openid"
+    case .Headimgurl:
+        return "headimgurl"
+    case .WechatName:
+        return "nickname"
     }
   }
 }

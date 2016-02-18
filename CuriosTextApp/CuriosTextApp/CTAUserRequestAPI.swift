@@ -75,12 +75,18 @@ class CTAPhoneRegisterRequest: CTABaseRequest {
 class CTAWeixinRegisterRequest: CTABaseRequest {
     let weixinID:String;
     let nickName:String;
-    let userIconURL:String;
+    let sex:Int;
+    let country:String;
+    let province:String;
+    let city:String;
     
-    init(weixinID:String, nickName:String, userIconURL:String){
+    init(weixinID:String, nickName:String, sex:Int, country:String, province:String, city:String){
         self.weixinID    = weixinID;
         self.nickName    = nickName;
-        self.userIconURL = userIconURL;
+        self.sex         = sex;
+        self.country     = country;
+        self.province    = province;
+        self.city        = city;
     }
     
     override func requestUrl() -> String {
@@ -92,7 +98,10 @@ class CTAWeixinRegisterRequest: CTABaseRequest {
         let dic:Dictionary<String, AnyObject> = [
             key(.WeixinID)   : weixinID,
             key(.NickName)   : nickName,
-            key(.UserIconURL): userIconURL
+            key(.Sex): sex,
+            key(.Country): country,
+            key(.Province): province,
+            key(.City): city
         ];
         
         return self.getParameterString(dic, errorMessage: "CTAWeixinRegister");

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProtocol, CTALoginProtocol, CTAAlertProtocol{
     
@@ -196,11 +197,11 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         self.navigationController?.pushViewController(searchCountry, animated: true)
     }
     
-    func changeToLoadingView(button:UIButton){
+    func changeToLoadingView(button:UIButton?){
         self.showLoadingViewByView(button)
     }
     
-    func changeToUnloadingView(button:UIButton){
+    func changeToUnloadingView(button:UIButton?){
         self.hideLoadingViewByView(button)
     }
     
@@ -267,7 +268,55 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
     
     func wechatButtonClick(sender: UIButton){
         CTASocialManager.OAuth(.WeChat) { (resultDic, urlResponse, error) -> Void in
-            print(resultDic)
+            if resultDic != nil {
+                let weixinID:String = resultDic![key(.Openid)] as! String
+                let userIconURL:String = resultDic![key(.Headimgurl)] as! String
+                let nickName:String = resultDic![key(.WechatName)] as! String
+                let sex:Int = resultDic![key(.Sex)] as! Int
+                let country:String = resultDic![key(.Country)] as! String
+                let province:String = resultDic![key(.Province)] as! String
+                let city:String = resultDic![key(.City)] as! String
+                self.changeToLoadingView(nil)
+                CTAUserDomain.getInstance().weixinRegister(weixinID, nickName: nickName, sex: sex, country: country, province: province, city: city, compelecationBlock: { (info) -> Void in
+                    self.changeToUnloadingView(nil)
+                    if info.result{
+                        let userModel = info.baseModel as! CTAUserModel
+                        
+                        let setNameView = CTASetUserNameViewController.getInstance()
+                        setNameView.userNameType = .registerWechat
+                        setNameView.userModel = userModel
+                        setNameView.userIconPath = userIconURL
+                        self.navigationController?.pushViewController(setNameView, animated: true)
+                        
+//                        if info.successType == 0{
+//                            let setNameView = CTASetUserNameViewController.getInstance()
+//                            setNameView.userNameType = .registerWechat
+//                            setNameView.userModel = userModel
+//                            setNameView.userIconPath = userIconURL
+//                            self.navigationController?.pushViewController(setNameView, animated: true)
+//                        }else if info.successType == 2{
+//                            self.loginComplete(userModel)
+//                        }
+                    }else {
+                        if info.errorType is CTAInternetError {
+                            self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                            })
+                        }else {
+                            let error = info.errorType as! CTAWeixinRegisterError
+                            if error == .WeixinIDIsEmpty {
+                                self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                })
+                            }else if error == .DataIsEmpty{
+                                self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                })
+                            }else {
+                                self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                })
+                            }
+                        }
+                    }
+                })
+            }
         }
     }
 }
