@@ -181,6 +181,68 @@
             </objects>
             <point key="canvasLocation" x="2406" y="508"/>
         </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="tlt-qy-oSh">
+            <objects>
+                <viewController storyboardIdentifier="CameraViewController" id="NL5-fD-xOP" customClass="CTACameraViewController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nqc-Eg-SL1"/>
+                        <viewControllerLayoutGuide type="bottom" id="a2a-EW-UR2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PbB-uh-Oct">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PMi-2y-sgF" customClass="CTACameraView" customModule="CuriosTextApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="56" width="320" height="320"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="PMi-2y-sgF" secondAttribute="height" multiplier="1:1" id="Z07-9k-P9T"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OWt-wm-MI2">
+                                <rect key="frame" x="116" y="460" width="88" height="88"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="OWt-wm-MI2" secondAttribute="height" multiplier="1:1" id="9du-X8-DLg"/>
+                                    <constraint firstAttribute="height" constant="88" id="FXN-pL-6en"/>
+                                    <constraint firstAttribute="width" constant="88" id="GPQ-1S-COr"/>
+                                </constraints>
+                                <state key="normal" image="cameraButton"/>
+                                <connections>
+                                    <action selector="takePhotoClick:" destination="NL5-fD-xOP" eventType="touchUpInside" id="dLD-qU-Bg9"/>
+                                </connections>
+                            </button>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HVk-0a-kra">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <items>
+                                    <barButtonItem title="dismiss" id="BQj-5x-pLW">
+                                        <connections>
+                                            <action selector="dismissAction:" destination="NL5-fD-xOP" id="3fA-t2-rp4"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="a2a-EW-UR2" firstAttribute="top" secondItem="OWt-wm-MI2" secondAttribute="bottom" constant="20" id="FEN-OX-CGJ"/>
+                            <constraint firstItem="PMi-2y-sgF" firstAttribute="leading" secondItem="PbB-uh-Oct" secondAttribute="leading" id="SyD-kF-jbl"/>
+                            <constraint firstItem="PMi-2y-sgF" firstAttribute="top" secondItem="nqc-Eg-SL1" secondAttribute="bottom" constant="-20" id="cfs-9a-BXk"/>
+                            <constraint firstItem="OWt-wm-MI2" firstAttribute="centerX" secondItem="PbB-uh-Oct" secondAttribute="centerX" id="hCr-8u-idO"/>
+                            <constraint firstItem="PMi-2y-sgF" firstAttribute="width" secondItem="PbB-uh-Oct" secondAttribute="width" id="vCS-xn-HMw"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="cameraView" destination="PMi-2y-sgF" id="Z6E-cx-yRD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a65-rC-RQT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2927" y="524"/>
+        </scene>
         <!--Tab View Controller-->
         <scene sceneID="Vgo-GO-r2N">
             <objects>
@@ -342,4 +404,7 @@
             <point key="canvasLocation" x="2061.5" y="1072"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="cameraButton" width="88" height="88"/>
+    </resources>
 </document>

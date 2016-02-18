@@ -58,6 +58,27 @@ extension CTAImgElement: CTAElement {
         
         return (inset, nextSize)
     }
+    
+    func resultWithImgSize(originSize: CGSize, scale: CGFloat, containerSize: CGSize, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize) {
+        
+        
+        let s = max(
+            containerSize.width / originSize.width,
+            containerSize.height / originSize.height)
+        
+        let nextWidth = originSize.width * s
+        let nextHeight = originSize.height * s
+        
+        let nextSize = CGSize(width: nextWidth, height: nextHeight)
+        let inset = CGPoint.zero
+        
+        return (inset, nextSize)
+    }
+}
+
+extension CTAImgElement: ImageModifiable {
+    
+    
 }
 
 //

@@ -10,16 +10,29 @@ import Foundation
 
 protocol ImageContainerVMProtocol: ContainerVMProtocol {
     
-    var imageElement: protocol<CTAElement>? {get}
+    var imageElement: protocol<CTAElement, ImageModifiable>? {get}
+    
+//    func updateWithImage(image: UIImage, constraintSize: CGSize)
 }
+
+protocol ImageModifiable: class {
+    
+    func resultWithImgSize(originSize: CGSize, scale: CGFloat, containerSize: CGSize, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
+}
+
 
 extension CTAContainer: ImageContainerVMProtocol {
     
-    var imageElement: protocol<CTAElement>? {
-        guard let imgElement = element as? CTAImgElement else {
+    var imageElement: protocol<CTAElement, ImageModifiable>? {
+        guard let a = element as? CTAImgElement else {
             fatalError("This Contaienr do not contain Text Element")
         }
         
-        return imgElement
+        return a
     }
+    
+//    func updateWithImageSize(imageSize: CGSize, constraintSize: CGSize) {
+//        
+//        guard let
+//    }
 }

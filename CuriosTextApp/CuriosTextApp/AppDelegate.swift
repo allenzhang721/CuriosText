@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         
+        debug_print(url)
         if CTASocialManager.handleOpenURL(url) {
             return true
         }

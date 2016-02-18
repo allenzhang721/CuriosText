@@ -164,8 +164,12 @@ extension CTASocialOAuthable {
             
             MonkeyKing.OAuth(.WeChat, completionHandler: { (dictionary, response, error) -> Void in
                 
-                debug_print(dictionary)
-                completionHandler(dictionary, response, error)
+//                debug_print(dictionary)
+                
+                CTASocialManager.fetchUserInfo(dictionary, completeBlock: { (userInfoDictionary, response, error) in
+                    
+                    completionHandler(userInfoDictionary, response, error)
+                })
             })
             
         case .Weibo:
@@ -174,4 +178,45 @@ extension CTASocialOAuthable {
             ()
         }
     }
+}
+
+extension CTASocialOAuthable {
+    
+    private static func fetchUserInfo(OAuthInfo: NSDictionary?, completeBlock: (NSDictionary?, NSURLResponse?, NSError?) -> Void) {
+        
+        guard let token = OAuthInfo?["access_token"] as? String,
+            let openID = OAuthInfo?["openid"] as? String,
+            let refreshToken = OAuthInfo?["refresh_token"] as? String,
+            let expiresIn = OAuthInfo?["expires_in"] as? Int else {
+                return
+        }
+        
+        let userInfoAPI = "https://api.weixin.qq.com/sns/userinfo"
+        
+        let parameters = [
+            "openid": openID,
+            "access_token": token
+        ]
+        
+        // fetch UserInfo by userInfoAPI
+        SimpleNetworking.sharedInstance.request(userInfoAPI, method: .GET, parameters: parameters, completionHandler: { (userInfoDictionary, r, e) -> Void in
+            
+            guard let mutableDictionary = userInfoDictionary?.mutableCopy() as? NSMutableDictionary else {
+                return
+            }
+            
+            mutableDictionary["access_token"] = token
+            mutableDictionary["openid"] = openID
+            mutableDictionary["refresh_token"] = refreshToken
+            mutableDictionary["expires_in"] = expiresIn
+            
+            completeBlock(mutableDictionary, r, e)
+            
+            print("userInfoDictionary \(mutableDictionary)")
+        })
+        
+        // More API
+        // http://mp.weixin.qq.com/wiki/home/index.html
+    }
+    
 }
