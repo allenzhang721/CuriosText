@@ -189,9 +189,13 @@ class EditViewController: UIViewController {
             debug_print("double tap Img")
             let cameraVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("CameraViewController") as! CTACameraViewController
             
-            cameraVC.completionBlock = { image in
-                
-                
+            cameraVC.completionBlock = {[weak self] image in
+                if let strongSelf = self {
+                    let canvasSize = strongSelf.canvasViewController.view.bounds.size
+                    (container as! ImageContainerVMProtocol).updateWithImageSize(image!.size, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
+                    
+                    strongSelf.canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+                }
             }
             
             presentViewController(cameraVC, animated: true, completion: { 
