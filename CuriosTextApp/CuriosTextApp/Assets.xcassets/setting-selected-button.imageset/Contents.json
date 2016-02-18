@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "setimage-icon.png",
+      "filename" : "setting-selected-button.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "setimage-icon@2x.png",
+      "filename" : "setting-selected-button@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "setimage-icon@3x.png",
+      "filename" : "setting-selected-button@3x.png",
       "scale" : "3x"
     }
   ],

@@ -50,6 +50,7 @@ class ViewController: UIViewController, CTAAddBarProtocol{
         self.initAddBarView(pageViewController.view)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showLoginView:", name: "showLoginView", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "changePageView:", name: "changePageView", object: nil)
     }
     
     func showLoginView(noti: NSNotification) {
@@ -59,8 +60,27 @@ class ViewController: UIViewController, CTAAddBarProtocol{
         navigationController.navigationBarHidden = true
         self.presentViewController(navigationController, animated: false, completion: {
             self.navigate.popToRootViewControllerAnimated(false)
-            self.pageViewController.setViewControllers([self.pageControllers.controllers[0]], direction: .Forward, animated: false, completion: nil)
+            self.pageViewController.setViewControllers([self.pageControllers.controllers[0]], direction: .Reverse, animated: false, completion: nil)
         })
+    }
+    
+    func changePageView(noti: NSNotification) {
+        if noti.object != nil {
+            let index = noti.object as! Int
+            if index > -1 && index < self.pageControllers.controllers.count {
+                var dir:UIPageViewControllerNavigationDirection = .Forward
+                let currentControl = self.pageViewController.viewControllers
+                if currentControl != nil {
+                    let current = self.pageControllers.indexOfController(currentControl![0])
+                    if current > index{
+                        dir = .Reverse
+                    }else {
+                        dir = .Forward
+                    }
+                }
+                self.pageViewController.setViewControllers([self.pageControllers.controllers[index]], direction: dir, animated: true, completion: nil)
+            }
+        }
     }
     
     override func viewWillAppear(animated: Bool) {

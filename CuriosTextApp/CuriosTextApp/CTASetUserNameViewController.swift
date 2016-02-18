@@ -34,7 +34,6 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     var userNameType:CTASetUserNameType = .register
     var selectedImage:UIImage?
     var isChangeImage:Bool = false
-    var isResetView:Bool = false
     
     var userIconPath:String = ""
     var userModel:CTAUserModel?
@@ -58,7 +57,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
+        self.resetView()
     }
     
     func initView(){
@@ -68,6 +67,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         
         let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
+        backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
         backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
         
@@ -80,13 +80,18 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         self.view.addSubview(userInfoLabel)
         
         self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bouns.width - 60)/2, y: 100*self.getVerRate()+20, width: 60, height: 60))
-        self.userIconImage.image = UIImage(named: "setimage-icon")
+        self.userIconImage.image = UIImage(named: "default-usericon")
         self.cropImageCircle(self.userIconImage)
         self.view.addSubview(self.userIconImage)
         self.userIconImage.userInteractionEnabled = true
         let iconTap = UITapGestureRecognizer(target: self, action: "userIconClick:")
         self.userIconImage.addGestureRecognizer(iconTap)
     
+        let imgFrame = self.userIconImage.frame
+        let cameraView = UIImageView.init(frame: CGRect.init(x: (imgFrame.origin.x+imgFrame.size.width)-20, y: (imgFrame.origin.y+imgFrame.size.height)-20, width: 20, height: 20))
+        cameraView.image = UIImage.init(named: "usercamera-icon")
+        self.view.addSubview(cameraView)
+        
         self.imagePicker.delegate = self
         
         self.userNickNameTextInput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: 150*self.getVerRate()+50, width: 230*self.getHorRate(), height: 50))
@@ -119,42 +124,45 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     }
     
     func viewWillLoad(){
-        if self.isResetView {
-            self.selectedImage = nil
-            self.isChangeImage = false
-            if self.userIconPath == "" {
-                if self.userModel != nil {
-                    if self.userModel!.userIconURL != "" {
-                        let imagePath = CTAFilePath.userFilePath+self.userModel!.userIconURL
-                        self.loadUserIcon(imagePath)
-                    }else {
-                        self.userIconImage.image = UIImage(named: "setimage-icon")
-                    }
+        if self.userIconPath == "" {
+            if self.userModel != nil {
+                if self.userModel!.userIconURL != "" {
+                    let imagePath = CTAFilePath.userFilePath+self.userModel!.userIconURL
+                    self.loadUserIcon(imagePath)
                 }else {
-                    self.userIconImage.image = UIImage(named: "setimage-icon")
+                    self.userIconImage.image = UIImage(named: "default-usericon")
                 }
             }else {
-                self.loadUserIcon(self.userIconPath)
+                self.userIconImage.image = UIImage(named: "default-usericon")
             }
-            if self.userModel != nil {
-                self.userNickNameTextInput.text = self.userModel!.nickName
-            }else {
-                self.userNickNameTextInput.text = ""
-            }
-            self.setCompleteButtonStyle()
+        }else {
+            self.loadUserIcon(self.userIconPath)
         }
-        self.isResetView = false
+        if self.userModel != nil {
+            self.userNickNameTextInput.text = self.userModel!.nickName
+        }else {
+            self.userNickNameTextInput.text = ""
+        }
+        self.setCompleteButtonStyle()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "textFieldEditChange:", name: "UITextFieldTextDidChangeNotification", object: self.userNickNameTextInput)
+    }
+    
+    func resetView(){
+        self.selectedImage = nil
+        self.isChangeImage = false
+        self.completeButton.enabled = false
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "UITextFieldTextDidChangeNotification", object: self.userNickNameTextInput)
     }
     
     func loadUserIcon(iconPath:String){
         let imageURL = NSURL(string: iconPath)!
         self.userIconImage.kf_showIndicatorWhenLoading = true
-        self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: UIImage(named: "setimage-icon"), optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in
+        self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: UIImage(named: "default-usericon"), optionsInfo: nil) { (image, error, cacheType, imageURL) -> () in
             if error == nil {
                 self.selectedImage = self.userIconImage.image
                 self.setCompleteButtonStyle()
             }else {
-                self.userIconImage.image = UIImage(named: "setimage-icon")
+                self.userIconImage.image = UIImage(named: "default-usericon")
             }
             self.userIconImage.kf_showIndicatorWhenLoading = false
         }
@@ -268,26 +276,6 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
 
 extension CTASetUserNameViewController: UITextFieldDelegate{
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
-        let newText = self.userNickNameTextInput.text
-        let newStr = NSString(string: newText!)
-        let isDelete = string == "" ? true : false
-        if isDelete {
-            if newStr.length <= 1{
-                self.completeButton.enabled = false
-            }
-        }else{
-            if self.selectedImage != nil{
-                self.completeButton.enabled = true
-            }
-        }
-        if newStr.length < 21 || isDelete {
-            return true
-        }else {
-            return false
-        }
-    }
-    
     func textFieldShouldReturn(textField: UITextField) -> Bool{
         textField.resignFirstResponder()
         if self.completeButton.enabled {
@@ -295,12 +283,54 @@ extension CTASetUserNameViewController: UITextFieldDelegate{
         }
         return true
     }
+    
+    func textFieldEditChange(noti: NSNotification) {
+        let textField = noti.object as! UITextField
+        self.checkTextField(textField)
+        textField.sizeToFit()
+        textField.frame.size.width = 230*self.getHorRate()
+        textField.frame.size.height = 50
+        self.setCompleteButtonStyle()
+    }
+    
+    func checkTextField(textField: UITextField) -> Bool{
+        textField.sizeToFit()
+        let viewText = textField.text
+        let textStr = NSString(string: viewText!)
+        let textWidth = textField.frame.width
+        var needReset:Bool = false
+        let textLimit = 32
+        let textWidthLimit = 230*self.getHorRate() - 15
+        if textWidth < textWidthLimit{
+            if textStr.length > textLimit {
+                needReset = true
+            }else {
+                needReset = false
+            }
+        }else {
+            needReset = true
+        }
+        if needReset {
+            let range = textField.selectedTextRange
+            let newText = textStr.substringToIndex(textStr.length - 1)
+            let newStr = NSString(string: newText)
+            textField.text = newText
+            let rageLength = textField.offsetFromPosition(textField.beginningOfDocument, toPosition: range!.start)
+            if rageLength < newStr.length{
+                textField.selectedTextRange = range
+            }
+            return self.checkTextField(textField)
+        }else {
+            return true
+        }
+    }
+    
 }
 
 extension CTASetUserNameViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]){
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            self.userIconImage.image = pickedImage
+            self.userIconImage.image = compressIconImage(pickedImage)
             self.selectedImage = pickedImage
             self.setCompleteButtonStyle()
             self.isChangeImage = true

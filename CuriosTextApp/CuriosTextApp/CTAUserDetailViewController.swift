@@ -83,6 +83,9 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         let rate       = self.getHorRate()
         let backWidth  = rate * 300
         let backHeight = rate * 440
+        let shadowCanvas = UIView.init(frame: CGRect.init(x: (self.view.frame.width - backWidth)/2, y: (self.view.frame.height - backHeight)/2, width: backWidth, height: backHeight))
+        self.view.addSubview(shadowCanvas)
+        self.addImageShadow(shadowCanvas)
         self.backImageView = UIView.init(frame: CGRect.init(x: (self.view.frame.width - backWidth)/2, y: (self.view.frame.height - backHeight)/2, width: backWidth, height: backHeight))
         self.view.addSubview(self.backImageView!)
         self.backImageView.backgroundColor = UIColor.whiteColor()
@@ -139,11 +142,11 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         self.beFollowCountLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.beFollowCountLabel.text = "0"
         
-        self.userDescTextView = UITextView.init(frame: CGRect.init(x: (self.view.frame.width - 260*rate)/2, y: self.lineImageView.frame.origin.y + 52*rate, width: 260*rate, height: 140*rate))
+        self.userDescTextView = UITextView.init(frame: CGRect.init(x: (self.view.frame.width - 280*rate)/2, y: self.lineImageView.frame.origin.y + 52*rate, width: 280*rate, height: 140*rate))
         self.userDescTextView.editable = false
         self.userDescTextView.scrollEnabled = false
         self.userDescTextView.selectable = false
-        self.userDescTextView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
+        self.userDescTextView.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(self.userDescTextView)
         self.userDescTextView.font = UIFont.systemFontOfSize(14)
         self.userDescTextView.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)

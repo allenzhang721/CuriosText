@@ -73,6 +73,7 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
     
         let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
+        backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
         backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
         
@@ -177,7 +178,6 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
                             if info!.result{
                                 let setNameView = CTASetUserNameViewController.getInstance()
                                 setNameView.userNameType = .register
-                                setNameView.isResetView = true
                                 setNameView.userModel = self.userModel
                                 setNameView.userIconPath = ""
                                 self.navigationController?.pushViewController(setNameView, animated: true)
