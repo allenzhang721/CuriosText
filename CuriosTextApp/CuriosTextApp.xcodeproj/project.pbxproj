@@ -21,6 +21,7 @@
 		2C0C14E61C60D95A0011A31D /* CTASetUserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0C14E51C60D95A0011A31D /* CTASetUserNameViewController.swift */; };
 		2C0C14E91C60D9640011A31D /* CTASetMobileNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0C14E71C60D9640011A31D /* CTASetMobileNumberViewController.swift */; };
 		2C0C14EA1C60D9640011A31D /* CTASetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0C14E81C60D9640011A31D /* CTASetPasswordViewController.swift */; };
+		2C10F7981C77540F00CCE34A /* CTAMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C10F7971C77540F00CCE34A /* CTAMainViewController.swift */; };
 		2C1312361C59966C00346804 /* CTAUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1312351C59966C00346804 /* CTAUserManager.swift */; };
 		2C1B2AAC1C3520160053BE5E /* CTASelectorsReuseableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B2AAB1C3520160053BE5E /* CTASelectorsReuseableView.swift */; };
 		2C1B88961C5F35B9000403FD /* CTAEncryptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B88951C5F35B9000403FD /* CTAEncryptManager.swift */; };
@@ -237,6 +238,7 @@
 		2C0C14E51C60D95A0011A31D /* CTASetUserNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASetUserNameViewController.swift; sourceTree = "<group>"; };
 		2C0C14E71C60D9640011A31D /* CTASetMobileNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASetMobileNumberViewController.swift; sourceTree = "<group>"; };
 		2C0C14E81C60D9640011A31D /* CTASetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASetPasswordViewController.swift; sourceTree = "<group>"; };
+		2C10F7971C77540F00CCE34A /* CTAMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAMainViewController.swift; sourceTree = "<group>"; };
 		2C1312351C59966C00346804 /* CTAUserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUserManager.swift; sourceTree = "<group>"; };
 		2C1B2AAB1C3520160053BE5E /* CTASelectorsReuseableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorsReuseableView.swift; sourceTree = "<group>"; };
 		2C1B88951C5F35B9000403FD /* CTAEncryptManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAEncryptManager.swift; sourceTree = "<group>"; };
@@ -656,6 +658,7 @@
 				2C32BD4A1C4CB56E00788A97 /* UseCase */,
 				2C3AE3ED1C59F5A9004D62B4 /* SocialShareTest */,
 				2C3B33C91C1176D000738166 /* AppDelegate.swift */,
+				2C10F7971C77540F00CCE34A /* CTAMainViewController.swift */,
 				2C3B33CB1C1176D000738166 /* ViewController.swift */,
 				2C9043F71C589E0000E62B19 /* CTAAddBarView.swift */,
 				2C7A959E1C3A6A4F005B0EAE /* CTAPageControllers.swift */,
@@ -1230,6 +1233,7 @@
 				2C9706CD1C1E794B00FA2E17 /* CTAError.swift in Sources */,
 				661D29F61C2AD5E60073FC0E /* CTAUploadController.swift in Sources */,
 				2C3AE3EC1C59EC9E004D62B4 /* CTASocialShareManager.swift in Sources */,
+				2C10F7981C77540F00CCE34A /* CTAMainViewController.swift in Sources */,
 				2C401DB11C70D05400AE45FE /* CTACanvasImageCell.swift in Sources */,
 				2C3AE3EF1C59F5CD004D62B4 /* CTASocialTestViewController.swift in Sources */,
 				2C3FD9881C5E21260064179F /* CTAConfigSliderCell.swift in Sources */,
