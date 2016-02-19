@@ -47,6 +47,7 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         
         // Do any additional setup after loading the view.
         self.initView()
+        self.navigationController!.interactivePopGestureRecognizer?.delegate = self
         self.view.backgroundColor = UIColor.whiteColor()
     }
     
@@ -254,6 +255,15 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
     
     func backButtonClick(send: UIButton){
         self.resignView()
+        self.showSelectedAlert(NSLocalizedString("AlertTitlePasswordBack", comment: ""), alertMessage: "", okAlertLabel: NSLocalizedString("AlertOkLabel", comment: ""), cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: "")) { (result) -> Void in
+            if result {
+                self.backHandler()
+            }
+        }
+    }
+    
+    func backHandler(){
+        
         let mobile = CTASetMobileNumberViewController.getInstance()
         self.navigationController?.popToViewController(mobile, animated: true)
     }
@@ -313,4 +323,12 @@ extension CTASetPasswordViewController: UITextFieldDelegate{
         }
         return true
     }
+}
+
+extension CTASetPasswordViewController: UIGestureRecognizerDelegate{
+    
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
+    }
+    
 }

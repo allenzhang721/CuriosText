@@ -46,6 +46,7 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initView()
+        self.navigationController!.interactivePopGestureRecognizer!.delegate = self
         self.view.backgroundColor = UIColor.whiteColor()
         // Do any additional setup after loading the view.
     }
@@ -364,4 +365,12 @@ extension CTASetUserInfoViewController: UITextViewDelegate{
             return true
         }
     }
+}
+
+extension CTASetUserInfoViewController: UIGestureRecognizerDelegate{
+    
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
+    }
+    
 }

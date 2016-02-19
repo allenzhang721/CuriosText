@@ -17,6 +17,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     var viewUserID:String = ""
     var isLoginUser:Bool = false
     var isLoadingFirstData = false
+    var isDisMis:Bool = true
     var isLoadedAll = false
     var isCanChangeToolBar = true
     
@@ -69,29 +70,32 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if viewUser == nil {
-            self.isLoginUser = true
-        }else {
-            self.isLoginUser = false
-        }
-        self.loadLocalUserModel()
-        if loginUser != nil {
-            if self.isLoginUser {
-                viewUser = loginUser
+        if self.isDisMis {
+            if viewUser == nil {
+                self.isLoginUser = true
+            }else {
+                self.isLoginUser = false
             }
-            if self.viewUserID != self.viewUser!.userID{
-                self.resetView()
+            self.loadLocalUserModel()
+            if loginUser != nil {
+                if self.isLoginUser {
+                    viewUser = loginUser
+                }
+                if self.viewUserID != self.viewUser!.userID{
+                    self.resetView()
+                }
+                self.setViewNavigateBar()
+            }else {
+                self.setNavigateButton()
             }
-            self.setViewNavigateBar()
-        }else {
-            self.setNavigateButton()
-        }
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-            CTAUserDetailViewController.getInstance()
-            if self.isLoginUser{
-                CTASettingViewController.getInstance()
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
+                CTAUserDetailViewController.getInstance()
+                if self.isLoginUser{
+                    CTASettingViewController.getInstance()
+                }
             }
         }
+        self.isDisMis = false
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -109,6 +113,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.viewUser  = nil
         self.loginUser = nil
         self.isLoginUser = false
+        self.isDisMis = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -194,6 +199,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.viewToolBar.addSubview(self.homeViewButton)
         self.viewToolBar.addSubview(self.backButton)
         self.view.addSubview(self.viewToolBar)
+        self.viewToolBar.backgroundColor = UIColor.init(red: 1, green: 1, blue: 1, alpha: 0.0)
         
         let tap = UITapGestureRecognizer(target: self, action: "userHeaderClick:")
         self.userHeaderView.addGestureRecognizer(tap)
@@ -478,8 +484,8 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
         var scrollOffY = centY - selectedCellCenter.y
         let scrollHeight = self.collectionView.frame.size.height
         let scrollContentSizeHeight = self.collectionView.contentSize.height + self.collectionView.contentInset.bottom
-        if scrollOffY > 0 && scrollOffY + scrollHeight > scrollContentSizeHeight-5{
-            scrollOffY = scrollContentSizeHeight - scrollHeight-5
+        if scrollOffY > 0 && scrollOffY + scrollHeight > scrollContentSizeHeight{
+            scrollOffY = scrollContentSizeHeight - scrollHeight
         }
         self.isCanChangeToolBar = false
         if self.collectionView.contentOffset.y != scrollOffY {

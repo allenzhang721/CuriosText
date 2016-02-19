@@ -47,6 +47,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         
         // Do any additional setup after loading the view.
         self.initView()
+        self.navigationController!.interactivePopGestureRecognizer?.delegate = self
         self.view.backgroundColor = UIColor.whiteColor()
     }
     
@@ -55,8 +56,8 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         self.viewWillLoad()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
         self.resetView()
     }
     
@@ -94,19 +95,13 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         
         self.imagePicker.delegate = self
         
-        self.userNickNameTextInput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: 150*self.getVerRate()+50, width: 230*self.getHorRate(), height: 50))
-        self.userNickNameTextInput.placeholder = NSLocalizedString("UserNamePlaceholder", comment: "")
+        self.userNickNameTextInput = UITextField.init(frame: CGRect.init(x:27*self.getHorRate(), y: 150*self.getVerRate()+50, width: 320*self.getHorRate(), height: 50))
+        self.userNickNameTextInput.placeholder = NSLocalizedString("UserNickNameLabel", comment: "") + ":  "+NSLocalizedString("UserNamePlaceholder", comment: "")
         self.userNickNameTextInput.delegate = self
         self.userNickNameTextInput.clearButtonMode = .WhileEditing
         self.userNickNameTextInput.returnKeyType = .Done
         self.view.addSubview(self.userNickNameTextInput)
         
-        let userNickNameLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userNickNameTextInput.frame.origin.y + 12, width: 50, height: 25))
-        userNickNameLabel.font = UIFont.systemFontOfSize(18)
-        userNickNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        userNickNameLabel.text = NSLocalizedString("UserNickNameLabel", comment: "")
-        userNickNameLabel.sizeToFit()
-        self.view.addSubview(userNickNameLabel)
         
         let textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userNickNameTextInput.frame.origin.y + 49, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "textinput-line")
@@ -148,6 +143,8 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     }
     
     func resetView(){
+        self.userNameType = .register
+        self.userIconPath = ""
         self.selectedImage = nil
         self.isChangeImage = false
         self.completeButton.enabled = false
@@ -161,6 +158,9 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
             if error == nil {
                 self.selectedImage = self.userIconImage.image
                 self.setCompleteButtonStyle()
+                if self.userIconPath != "" {
+                    self.isChangeImage = true
+                }
             }else {
                 self.userIconImage.image = UIImage(named: "default-usericon")
             }
@@ -181,11 +181,20 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     func backButtonClick(sender: UIButton){
         self.showSelectedAlert(NSLocalizedString("AlertTitleUserNameBack", comment: ""), alertMessage: "", okAlertLabel: NSLocalizedString("AlertOkLabel", comment: ""), cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: "")) { (result) -> Void in
             if result {
-                let mobile = CTASetMobileNumberViewController.getInstance()
-                self.navigationController?.popToViewController(mobile, animated: true)
+                switch self.userNameType{
+                case .register:
+                    let mobile = CTASetMobileNumberViewController.getInstance()
+                    self.navigationController?.popToViewController(mobile, animated: true)
+                case .registerWechat:
+                    let login = CTALoginViewController.getInstance()
+                    self.navigationController?.popToViewController(login, animated: true)
+                }
+                
             }
         }
     }
+    
+    
     
     func changeToLoadingView() {
         self.resignView()
@@ -201,6 +210,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     }
     
     func completeHandler(){
+        self.userNickNameTextInput.resignFirstResponder()
         if self.userNickNameTextInput.text != "" {
             if self.userModel != nil {
                 if self.isChangeImage {
@@ -288,7 +298,7 @@ extension CTASetUserNameViewController: UITextFieldDelegate{
         let textField = noti.object as! UITextField
         self.checkTextField(textField)
         textField.sizeToFit()
-        textField.frame.size.width = 230*self.getHorRate()
+        textField.frame.size.width = 320*self.getHorRate()
         textField.frame.size.height = 50
         self.setCompleteButtonStyle()
     }
@@ -300,7 +310,7 @@ extension CTASetUserNameViewController: UITextFieldDelegate{
         let textWidth = textField.frame.width
         var needReset:Bool = false
         let textLimit = 32
-        let textWidthLimit = 230*self.getHorRate() - 15
+        let textWidthLimit = 320*self.getHorRate() - 15
         if textWidth < textWidthLimit{
             if textStr.length > textLimit {
                 needReset = true
@@ -355,4 +365,12 @@ extension CTASetUserNameViewController: CTAUploadIconProtocol{
             self.changeToUnloadingView()
         }
     }
+}
+
+extension CTASetUserNameViewController: UIGestureRecognizerDelegate{
+    
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
+    }
+    
 }

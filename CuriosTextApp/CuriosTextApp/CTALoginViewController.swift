@@ -43,6 +43,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
 
         // Do any additional setup after loading the view.
         self.initView()
+        self.navigationController!.interactivePopGestureRecognizer?.delegate = self
         self.view.backgroundColor = UIColor.whiteColor()
     }
     
@@ -80,8 +81,9 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         let tap = UITapGestureRecognizer(target: self, action: "bgViewClick:")
         self.view.addGestureRecognizer(tap)
         
-        let closeButton = UIButton.init(frame: CGRect.init(x: 10, y: 10, width: 35, height: 35))
+        let closeButton = UIButton.init(frame: CGRect.init(x: 5, y: 2, width: 40, height: 40))
         closeButton.setImage(UIImage(named: "close-button"), forState: .Normal)
+        closeButton.setImage(UIImage(named: "close-selected-button"), forState: .Highlighted)
         closeButton.addTarget(self, action: "closeButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(closeButton)
         
@@ -267,54 +269,57 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
     }
     
     func wechatButtonClick(sender: UIButton){
+        self.changeToLoadingView(nil)
         CTASocialManager.OAuth(.WeChat) { (resultDic, urlResponse, error) -> Void in
-            if resultDic != nil {
-                let weixinID:String = resultDic![key(.Openid)] as! String
-                let userIconURL:String = resultDic![key(.Headimgurl)] as! String
-                let nickName:String = resultDic![key(.WechatName)] as! String
-                let sex:Int = resultDic![key(.Sex)] as! Int
-                let country:String = resultDic![key(.Country)] as! String
-                let province:String = resultDic![key(.Province)] as! String
-                let city:String = resultDic![key(.City)] as! String
-                self.changeToLoadingView(nil)
-                CTAUserDomain.getInstance().weixinRegister(weixinID, nickName: nickName, sex: sex, country: country, province: province, city: city, compelecationBlock: { (info) -> Void in
-                    self.changeToUnloadingView(nil)
-                    if info.result{
-                        let userModel = info.baseModel as! CTAUserModel
-                        
-                        let setNameView = CTASetUserNameViewController.getInstance()
-                        setNameView.userNameType = .registerWechat
-                        setNameView.userModel = userModel
-                        setNameView.userIconPath = userIconURL
-                        self.navigationController?.pushViewController(setNameView, animated: true)
-                        
-//                        if info.successType == 0{
-//                            let setNameView = CTASetUserNameViewController.getInstance()
-//                            setNameView.userNameType = .registerWechat
-//                            setNameView.userModel = userModel
-//                            setNameView.userIconPath = userIconURL
-//                            self.navigationController?.pushViewController(setNameView, animated: true)
-//                        }else if info.successType == 2{
-//                            self.loginComplete(userModel)
-//                        }
-                    }else {
-                        if info.errorType is CTAInternetError {
-                            self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                            })
+            if error == nil {
+                if resultDic != nil {
+                    let weixinID:String = resultDic![key(.Openid)] as! String
+                    let userIconURL:String = resultDic![key(.Headimgurl)] as! String
+                    let nickName:String = resultDic![key(.WechatName)] as! String
+                    let sex:Int = resultDic![key(.Sex)] as! Int
+                    let country:String = resultDic![key(.Country)] as! String
+                    let province:String = resultDic![key(.Province)] as! String
+                    let city:String = resultDic![key(.City)] as! String
+                    CTAUserDomain.getInstance().weixinRegister(weixinID, nickName: nickName, sex: sex, country: country, province: province, city: city, compelecationBlock: { (info) -> Void in
+                        self.changeToUnloadingView(nil)
+                        if info.result{
+                            let userModel = info.baseModel as! CTAUserModel
+                            if info.successType == 0{
+                                let setNameView = CTASetUserNameViewController.getInstance()
+                                setNameView.userNameType = .registerWechat
+                                setNameView.userModel = userModel
+                                setNameView.userIconPath = userIconURL
+                                self.navigationController?.pushViewController(setNameView, animated: true)
+                            }else if info.successType == 2{
+                                self.loginComplete(userModel)
+                            }
                         }else {
-                            let error = info.errorType as! CTAWeixinRegisterError
-                            if error == .WeixinIDIsEmpty {
-                                self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                })
-                            }else if error == .DataIsEmpty{
-                                self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                            if info.errorType is CTAInternetError {
+                                self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                 })
                             }else {
-                                self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                })
+                                let error = info.errorType as! CTAWeixinRegisterError
+                                if error == .WeixinIDIsEmpty {
+                                    self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                    })
+                                }else if error == .DataIsEmpty{
+                                    self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                    })
+                                }else {
+                                    self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                    })
+                                }
                             }
                         }
-                    }
+                    })
+                }else {
+                    self.changeToUnloadingView(nil)
+                    self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                    })
+                }
+            }else {
+                self.changeToUnloadingView(nil)
+                self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                 })
             }
         }
@@ -385,4 +390,12 @@ extension CTALoginViewController: UITextFieldDelegate{
         }
         return true
     }
+}
+
+extension CTALoginViewController: UIGestureRecognizerDelegate{
+    
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
+    }
+    
 }

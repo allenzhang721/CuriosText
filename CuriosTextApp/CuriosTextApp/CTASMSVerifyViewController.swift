@@ -49,6 +49,7 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
         
         // Do any additional setup after loading the view.
         self.initView()
+        self.navigationController!.interactivePopGestureRecognizer?.delegate = self
         self.view.backgroundColor = UIColor.whiteColor()
     }
     
@@ -97,42 +98,42 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
         self.phoneLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.phoneLabel)
         
-        self.verifyLabel1 = UILabel.init(frame: CGRect.init(x: bouns.width/2 - 123, y: 150*self.getVerRate()+50, width: 36, height: 60))
+        self.verifyLabel1 = UILabel.init(frame: CGRect.init(x: bouns.width/2 - 123, y: 150*self.getVerRate()+50, width: 36, height: 50))
         self.verifyLabel1.font = UIFont.systemFontOfSize(40)
         self.verifyLabel1.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.verifyLabel1)
         self.verifyLabel1.textAlignment = .Center
         
-        self.verifyLabel2 = UILabel.init(frame: CGRect.init(x: bouns.width/2 - 53, y: self.verifyLabel1.frame.origin.y, width: 36, height: 60))
+        self.verifyLabel2 = UILabel.init(frame: CGRect.init(x: bouns.width/2 - 53, y: self.verifyLabel1.frame.origin.y, width: 36, height: 50))
         self.verifyLabel2.font = UIFont.systemFontOfSize(40)
         self.verifyLabel2.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.verifyLabel2)
         self.verifyLabel2.textAlignment = .Center
         
-        self.verifyLabel3 = UILabel.init(frame: CGRect.init(x: bouns.width/2 + 17, y: self.verifyLabel1.frame.origin.y, width: 36, height: 60))
+        self.verifyLabel3 = UILabel.init(frame: CGRect.init(x: bouns.width/2 + 17, y: self.verifyLabel1.frame.origin.y, width: 36, height: 50))
         self.verifyLabel3.font = UIFont.systemFontOfSize(40)
         self.verifyLabel3.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.verifyLabel3)
         self.verifyLabel3.textAlignment = .Center
         
-        self.verifyLabel4 = UILabel.init(frame: CGRect.init(x: bouns.width/2 + 87, y: self.verifyLabel1.frame.origin.y, width: 36, height: 60))
+        self.verifyLabel4 = UILabel.init(frame: CGRect.init(x: bouns.width/2 + 87, y: self.verifyLabel1.frame.origin.y, width: 36, height: 50))
         self.verifyLabel4.font = UIFont.systemFontOfSize(40)
         self.verifyLabel4.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.verifyLabel4)
         self.verifyLabel4.textAlignment = .Center
         
-        var line:UIImageView = UIImageView.init(frame: CGRect.init(x: bouns.width/2 - 60, y: self.verifyLabel1.frame.origin.y+60, width: 50, height: 1))
+        var line:UIImageView = UIImageView.init(frame: CGRect.init(x: bouns.width/2 - 60, y: self.verifyLabel1.frame.origin.y+49, width: 50, height: 1))
         line.image = UIImage(named: "textinput-line")
         self.view.addSubview(line)
-        line = UIImageView.init(frame: CGRect.init(x: bouns.width/2 + 10, y: self.verifyLabel1.frame.origin.y+60, width: 50, height: 1))
-        line.image = UIImage(named: "textinput-line")
-        self.view.addSubview(line)
-        
-        line = UIImageView.init(frame: CGRect.init(x: bouns.width/2 - 130, y: self.verifyLabel1.frame.origin.y+60, width: 50, height: 1))
+        line = UIImageView.init(frame: CGRect.init(x: bouns.width/2 + 10, y: self.verifyLabel1.frame.origin.y+49, width: 50, height: 1))
         line.image = UIImage(named: "textinput-line")
         self.view.addSubview(line)
         
-        line = UIImageView.init(frame: CGRect.init(x: bouns.width/2 + 80, y: self.verifyLabel1.frame.origin.y+60, width: 50, height: 1))
+        line = UIImageView.init(frame: CGRect.init(x: bouns.width/2 - 130, y: self.verifyLabel1.frame.origin.y+49, width: 50, height: 1))
+        line.image = UIImage(named: "textinput-line")
+        self.view.addSubview(line)
+        
+        line = UIImageView.init(frame: CGRect.init(x: bouns.width/2 + 80, y: self.verifyLabel1.frame.origin.y+49, width: 50, height: 1))
         line.image = UIImage(named: "textinput-line")
         self.view.addSubview(line)
         
@@ -366,4 +367,10 @@ extension CTASMSVerifyViewController: UITextFieldDelegate{
     }
 }
 
-
+extension CTASMSVerifyViewController: UIGestureRecognizerDelegate{
+    
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
+    }
+    
+}

@@ -42,6 +42,7 @@ class CTASearchCountryViewController: UIViewController{
         
         // Do any additional setup after loading the view.
         self.initView()
+        self.navigationController!.interactivePopGestureRecognizer!.delegate = self
         self.view.backgroundColor = UIColor.whiteColor()
     }
     
@@ -101,6 +102,10 @@ class CTASearchCountryViewController: UIViewController{
     }
     
     func backButtonClick(sender: UIButton){
+        self.backHandler()
+    }
+    
+    func backHandler(){
         self.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -296,5 +301,16 @@ class CTASearchTabelCell: UITableViewCell{
         self.countryCodeLabel.sizeToFit()
         self.countryCodeLabel.frame.origin.x = self.contentView.frame.width - 10 - self.countryCodeLabel.frame.width
     }
+}
+
+extension CTASearchCountryViewController: UIGestureRecognizerDelegate{
+    
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if self.searchBar.frame.origin.y == 0 {
+            return false
+        }
+        return true
+    }
+    
 }
 

@@ -64,27 +64,27 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
         if self.animationEnable{
             // add preview
             // refresh data
-            let preview = CTAPreviewCanvasView(frame: bounds)
-            preview.center = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0)
-            preview.datasource = self
-            addSubview(preview)
-            previewView = preview
+//            let preview = CTAPreviewCanvasView(frame: bounds)
+//            preview.center = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0)
+//            preview.datasource = self
+//            addSubview(preview)
+//            previewView = preview
         }
     }
     
     func playAnimation(){
         if self.animationEnable{
             // preview play
-            previewView.play()
+            //previewView.play()
         }
     }
     
     func pauseAnimation(){
-        previewView.pause()
+        //previewView.pause()
     }
     
     func stopAnimation(){
-        previewView.stop()
+        //previewView.stop()
     }
 }
 

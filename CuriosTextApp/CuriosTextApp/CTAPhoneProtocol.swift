@@ -168,7 +168,7 @@ extension CTAPhoneProtocol where Self: UIViewController{
 
 protocol CTATextInputProtocol{
     func resignView()
-    func resignHandler(sender: UIPanGestureRecognizer)
+    func resignHandler(sender: UIGestureRecognizer)
 }
 
 extension CTATextInputProtocol where Self: UIViewController{
@@ -181,7 +181,7 @@ extension CTATextInputProtocol where Self: UIViewController{
         }
     }
     
-    func resignHandler(sender: UIPanGestureRecognizer){
+    func resignHandler(sender: UIGestureRecognizer){
         var isHave:Bool = false
         let subViews = self.view.subviews
         for var i=0; i<subViews.count; i++ {

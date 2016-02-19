@@ -815,7 +815,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         var centY:CGFloat = 0.0
         let yIndex = Int(currentIndex / 2)
         centY = CGFloat(yIndex) * (space + cellRect.height) + cellRect.height/2 + 44
-        let maxY = UIScreen.mainScreen().bounds.height - space - cellRect.height/2
+        let maxY = UIScreen.mainScreen().bounds.height - 44 - cellRect.height/2
         if centY > maxY{
             centY = maxY
         }

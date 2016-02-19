@@ -33,7 +33,7 @@
 "SetPasswordPlaceholder" = "6-16 characters";
 "ConfirmPasswordLabel" = "Confirm";
 "ConfirmPasswordPlaceholder" = "Confirm password";
-"UserNickNameLabel" = "Nickname";
+"UserNickNameLabel" = "Name";
 "UserNamePlaceholder" = "John Frey";
 "CompleteButtonLabel" = "Done";
 "UserInfoLabel" = "Complete your profile";
@@ -55,7 +55,8 @@
 "AlertBackLabel" = "Back";
 "AlertWaitLabel" = "Wait";
 "AlertTitleSMSVerifyBack" = "Verification code SMS may be slightly delayed. Go back and start again now?";
-"AlertTitleUserNameBack" = "This is the last step. Are you sure you want go back?";
+"AlertTitlePasswordBack" = "Complete soon. Go back and start again now?";
+"AlertTitleUserNameBack" = "This is the last step. Go back and start again now?";
 "AlertTitleNumberConfirm" = "Mobile Number Confirmation";
 "AlertMessageNumberConfirm" = "We will send a verification code to the following number:";
 "AlertTitleNumberVerifyError" = "Unable to send verification code. Try again.";

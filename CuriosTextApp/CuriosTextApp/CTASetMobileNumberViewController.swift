@@ -42,6 +42,7 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
         
         // Do any additional setup after loading the view.
         self.initView()
+        self.navigationController!.interactivePopGestureRecognizer?.delegate = self
         self.view.backgroundColor = UIColor.whiteColor()
     }
     
@@ -106,6 +107,10 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
     }
     
     func backButtonClick(sender: UIButton){
+        self.backHandler()
+    }
+    
+    func backHandler(){
         self.resignView()
         self.navigationController?.popViewControllerAnimated(true)
     }
@@ -144,7 +149,6 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
         }else {
             self.registerButton.enabled = false
         }
-        
     }
     
     func bgViewClick(sender: UIPanGestureRecognizer){
@@ -188,4 +192,15 @@ extension CTASetMobileNumberViewController: UITextFieldDelegate{
             return false
         }
     }
+}
+
+extension CTASetMobileNumberViewController: UIGestureRecognizerDelegate{
+    
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if self.phoneTextinput.isFirstResponder() {
+            return false
+        }
+        return true
+    }
+    
 }

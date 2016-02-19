@@ -45,6 +45,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initView()
+        self.navigationController!.interactivePopGestureRecognizer!.delegate = self
         self.view.backgroundColor = UIColor.whiteColor()
         // Do any additional setup after loading the view.
     }
@@ -307,6 +308,10 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     }
     
     func backButtonClick(sender: UIButton){
+        self.backHandler()
+    }
+    
+    func backHandler(){
         self.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -424,4 +429,12 @@ extension CTASettingViewController: CTAUploadIconProtocol{
             self.hideLoadingViewByView(nil)
         }
     }
+}
+
+extension CTASettingViewController: UIGestureRecognizerDelegate{
+    
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
 }

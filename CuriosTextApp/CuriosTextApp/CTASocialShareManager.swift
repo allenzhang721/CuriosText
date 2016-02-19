@@ -211,8 +211,6 @@ extension CTASocialOAuthable {
             mutableDictionary["expires_in"] = expiresIn
             
             completeBlock(mutableDictionary, r, e)
-            
-            print("userInfoDictionary \(mutableDictionary)")
         })
         
         // More API
