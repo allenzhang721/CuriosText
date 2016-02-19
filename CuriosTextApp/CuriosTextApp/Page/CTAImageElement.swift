@@ -10,25 +10,32 @@ import Foundation
 
 final class CTAImgElement: NSObject, NSCoding {
     
+    struct ImgElementKey {
+        static let imageName = "imageName"
+    }
+    
+    private let imageName: String
+    
     init?(coder aDecoder: NSCoder) {
+        imageName = aDecoder.decodeObjectForKey(ImgElementKey.imageName) as! String
 
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
-        
+        aCoder.encodeObject(imageName, forKey: ImgElementKey.imageName)
     }
     
     // TODO: need ImgElement init parameter -- Emiaostein, 15/02/16, 14:31
     override init() {
-        
-        
+        imageName = CTAIDGenerator.generateID()
+        super.init()
     }
 }
 
 extension CTAImgElement: CTAElement {
     
     var resourceName: String {
-        return "AAA"
+        return imageName
     }
     var scale: CGFloat {
         get {

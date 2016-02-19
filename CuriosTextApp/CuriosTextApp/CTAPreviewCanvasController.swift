@@ -35,11 +35,14 @@ final class CTAPreviewCanvasController {
     
     class func configPreviewView(view: CTAPreviewView, container: ContainerVMProtocol, needLoadContents: Bool = true) {
         
+        
+        debug_print(container.type)
+        
         guard needLoadContents else {
             return
         }
         
-        guard let textContainer = container as? TextContainerVMProtocol else {
+        guard let textContainer = container as? TextContainerVMProtocol where container.type == .Text else {
             return
         }
         

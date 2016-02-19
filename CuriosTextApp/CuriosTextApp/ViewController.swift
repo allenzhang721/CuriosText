@@ -17,6 +17,7 @@ class ViewController: UIViewController, CTAAddBarProtocol{
     var navigate:UINavigationController!
 
     override func prefersStatusBarHidden() -> Bool {
+        
         return true
     }
     
@@ -124,7 +125,7 @@ class ViewController: UIViewController, CTAAddBarProtocol{
                         let editVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("EditViewController") as! EditViewController
                         editVC.document = openDocument
                         
-                        self.presentViewController(editVC, animated: false, completion: { () -> Void in
+                        self.presentViewController(editVC, animated: true, completion: { () -> Void in
                             
                             
                         })

@@ -74,7 +74,7 @@ final class CTATextAttributes:NSObject, NSCoding {
     var fontName: String = CTAFontsManager.defaultFontName()
     var fontSize = Double(UIFont.labelFontSize())
     var fontScale = 1.0
-    var textColorHex = "#FFFFFF"
+    var textColorHex = "#D0021B"
     var textColorAlpha = 1.0
     var textKern = 0.0
     var textlineSpacing = 0.0

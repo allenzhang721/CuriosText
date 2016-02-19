@@ -40,6 +40,7 @@ class CTAPreviewView: UIView {
         for (i, c) in string.characters.enumerate() {
             
             let textView = TextView(frame: CGRect(x: 12 * (i % 10), y: 22 * (i < 10 ? 0 : 1), width: Int(bounds.width), height: 22))
+            textView.textColor = UIColor.blueColor()
             textView.text = String(c)
             addSubview(textView)
             views.append(textView)

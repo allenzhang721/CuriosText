@@ -212,6 +212,15 @@ class EditViewController: UIViewController {
     }
 }
 
+// MARK: - Actions 
+extension EditViewController {
+    
+    @IBAction func cancelAction(sender: AnyObject) {
+        
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+}
+
 // MARK: - Publish
 extension EditViewController {
     
@@ -223,11 +232,11 @@ extension EditViewController {
                 
                 CTADocumentManager.uploadFiles({ (success, publishID, publishURL) -> Void in
                     
-                    debug_print("upload \(success)")
+                    debug_print("upload \(success)\n publishID = \(publishID)")
                     
-                    CTAPublishDomain().createPublishFile(publishID, userID: "ae7ca2d8590f4709ad73286920fa522f", title: "Emiaostein", publishDesc: "Emiaostein", publishIconURL: "", previewIconURL: "", publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
+                    CTAPublishDomain().createPublishFile(publishID, userID: CTAUserManager.user!.userID, title: "Emiaostein", publishDesc: "Emiaostein", publishIconURL: "", previewIconURL: "", publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
                         
-                        debug_print("publish \(domainInfo.result), publishURL = \(publishURL)")
+                        debug_print("publish \(domainInfo.result), publishURL = \(publishURL) \n \(domainInfo)")
                     })
                 })
             }
