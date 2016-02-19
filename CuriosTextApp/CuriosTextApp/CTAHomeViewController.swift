@@ -10,8 +10,6 @@ import UIKit
 
 class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginProtocol{
 
-    var loginUser:CTAUserModel?
-    
     var publishModelArray:Array<CTAPublishModel> = []
     var selectedPublishID:String = ""
 
@@ -37,7 +35,6 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.loadLocalUserModel()
         self.loadNewPublishes()
     }
     
@@ -78,7 +75,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     }
     
     func loadNewPublishes(){
-        let userID = self.loginUser == nil ? "" : self.loginUser!.userID
+        let userID = CTAUserManager.isLogin ? CTAUserManager.user!.userID : ""
         CTAPublishDomain.getInstance().newPublishList(userID, start: 0) { (info) -> Void in
             if info.result {
                 self.publishModelArray.removeAll()
@@ -95,16 +92,8 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         }
     }
     
-    func loadLocalUserModel(){
-        if CTAUserManager.isLogin{
-            self.loginUser = CTAUserManager.user
-        }else {
-            self.loginUser = nil
-        }
-    }
-    
     func userButtonClick(sender: UIButton){
-        if self.loginUser == nil {
+        if !CTAUserManager.isLogin {
             self.showLoginView()
         }else {
            NSNotificationCenter.defaultCenter().postNotificationName("changePageView", object: 1)
@@ -119,35 +108,40 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
 
 extension CTAHomeViewController: CTAPublishProtocol{
     func likeButtonClick(sender: UIButton){
-        if self.loginUser == nil {
+        if !CTAUserManager.isLogin {
             self.showLoginView()
         }else if let publishModel = self.currentFullCell.publishModel{
-            self.likeHandler(self.loginUser!.userID, publishModel: publishModel)
+            let user = CTAUserManager.user
+            self.likeHandler(user!.userID, publishModel: publishModel)
         }
     }
     
     func shareButtonClick(sender: UIButton){
-        if self.loginUser == nil {
+        if !CTAUserManager.isLogin {
             self.showLoginView()
         }else if let publishModel = self.currentFullCell.publishModel{
-            self.shareHandler(self.loginUser!.userID, publishModel: publishModel)
+            let user = CTAUserManager.user
+            self.shareHandler(user!.userID, publishModel: publishModel)
         }
     }
     
     func rebuildButtonClick(sender: UIButton){
-        if self.loginUser == nil {
+        if !CTAUserManager.isLogin {
             self.showLoginView()
         }else if let publishModel = self.currentFullCell.publishModel{
-            self.rebuildHandler(self.loginUser!.userID, publishModel: publishModel)
+            let user = CTAUserManager.user
+            self.rebuildHandler(user!.userID, publishModel: publishModel)
         }
     }
     
     func userIconClick(sender: UIPanGestureRecognizer) {
-        if self.loginUser == nil {
+        if !CTAUserManager.isLogin {
             self.showLoginView()
         }else if let publishModel = self.currentFullCell.publishModel{
-            let userID = self.loginUser == nil ? "" : self.loginUser!.userID
-            self.showUserDetailHandler(publishModel.userModel, loginUserID: userID)
+            let viewUserModel = publishModel.userModel
+            let userPublish = CTAUserPublishesViewController()
+            userPublish.viewUser = viewUserModel
+            self.navigationController?.pushViewController(userPublish, animated: true)
         }
     }
 }

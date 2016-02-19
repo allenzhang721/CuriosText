@@ -53,7 +53,12 @@ class CTAPullUserDetailTransition: NSObject, UIViewControllerTransitioningDelega
 extension CTAPullUserDetailTransition: UIViewControllerAnimatedTransitioning{
     
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval{
-        return 0.6
+        if isPersent{
+            return 1.0
+        }else {
+            return 0.1
+        }
+       
     }
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning){
@@ -61,7 +66,7 @@ extension CTAPullUserDetailTransition: UIViewControllerAnimatedTransitioning{
             if let toView = transitionContext.viewForKey(UITransitionContextToViewKey){
                 transitionContext.containerView()!.addSubview(toView)
                 toView.frame = CGRect.init(x: 0, y: 0-UIScreen.mainScreen().bounds.height, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
-                UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 5.0, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
+                UIView.animateWithDuration(1, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 5.0, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
                     toView.frame = UIScreen.mainScreen().bounds
                     }, completion: { (_) -> Void in
                         transitionContext.completeTransition(true)
@@ -70,12 +75,9 @@ extension CTAPullUserDetailTransition: UIViewControllerAnimatedTransitioning{
         }
         if !isPersent{
             if let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey){
-                UIView.animateWithDuration(1.0, delay: 0.5, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
-                    fromView.frame = CGRect.init(x: 0, y: 0-UIScreen.mainScreen().bounds.height, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
-                    }, completion: { (_) -> Void in
-                        fromView.removeFromSuperview()
-                        transitionContext.completeTransition(true)
-                })
+                fromView.frame = CGRect.init(x: 0, y: 0-UIScreen.mainScreen().bounds.height, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
+                fromView.removeFromSuperview()
+                transitionContext.completeTransition(true)
             }
         }
     }

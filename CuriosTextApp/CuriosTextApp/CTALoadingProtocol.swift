@@ -36,7 +36,7 @@ extension CTALoadingProtocol where Self: UIViewController{
         if self.loadingImageView != nil {
             if centerView != nil {
                 centerView!.hidden = true
-                self.loadingImageView!.center = centerView!.center
+                self.loadingImageView!.center = self.view.convertPoint(centerView!.center, fromView: centerView!.superview)
             }else {
                 let canvas = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 120, height: 90))
                 canvas.backgroundColor = UIColor.init(red: 155/255, green: 155/255, blue: 155/255, alpha: 1)

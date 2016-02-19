@@ -33,8 +33,13 @@ protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAUserDetailProtocol{
 extension CTAPublishProtocol where Self: UIViewController{
 
     func initPublishSubView(publishRect:CGRect, horRate:CGFloat){
+        let bounds = UIScreen.mainScreen().bounds
+        var butY  = bounds.height/2 + publishRect.height/2 + 50*horRate
+        if butY > bounds.height - 65{
+            butY = bounds.height - 65
+        }
         self.likeButton.frame = CGRect.init(x: 0, y: 0, width: 40, height: 40)
-        self.likeButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 + 90*horRate,y: UIScreen.mainScreen().bounds.height/2 + publishRect.height/2 + 45*horRate)
+        self.likeButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 + 90*horRate,y: butY)
         self.likeButton.setImage(UIImage.init(named: "like-button"), forState: .Normal)
         self.likeButton.setImage(UIImage.init(named: "like-highlighted-button"), forState: .Highlighted)
         self.view.addSubview(self.likeButton)
@@ -43,14 +48,14 @@ extension CTAPublishProtocol where Self: UIViewController{
         let shareButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
         shareButton.setImage(UIImage.init(named: "share-button"), forState: .Normal)
         shareButton.setImage(UIImage.init(named: "share-selected-button"), forState: .Highlighted)
-        shareButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 90*horRate, y: UIScreen.mainScreen().bounds.height/2 + publishRect.height/2 + 45*horRate)
+        shareButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 90*horRate, y: butY)
         self.view.addSubview(shareButton)
         shareButton.addTarget(self, action: "shareButtonClick:", forControlEvents: .TouchUpInside)
         
         let rebuildButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
         rebuildButton.setImage(UIImage.init(named: "rebuild-button"), forState: .Normal)
         rebuildButton.setImage(UIImage.init(named: "rebuild-selected-button"), forState: .Highlighted)
-        rebuildButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2 + publishRect.height/2 + 45*horRate)
+        rebuildButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: butY)
         self.view.addSubview(rebuildButton)
         rebuildButton.addTarget(self, action: "rebuildButtonClick:", forControlEvents: .TouchUpInside)
         

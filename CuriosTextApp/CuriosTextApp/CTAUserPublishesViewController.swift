@@ -65,6 +65,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         // Do any additional setup after loading the view.
         self.initCollectionView();
         self.initViewNavigateBar();
+        self.navigationController!.interactivePopGestureRecognizer?.delegate = self
         self.view.backgroundColor = UIColor.whiteColor()
     }
     
@@ -87,12 +88,6 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                 self.setViewNavigateBar()
             }else {
                 self.setNavigateButton()
-            }
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-                CTAUserDetailViewController.getInstance()
-                if self.isLoginUser{
-                    CTASettingViewController.getInstance()
-                }
             }
         }
         self.isDisMis = false
@@ -252,11 +247,11 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     
     func settingButtonClick(sender: UIButton){
         let setting = CTASettingViewController.getInstance()
-        self.parentViewController?.navigationController?.pushViewController(setting, animated: true)
+        NSNotificationCenter.defaultCenter().postNotificationName("showNavigationView", object: setting)
     }
     
     func backButtonClick(sender: UIButton){
-        print("back button click")
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func homeViewButtonClick(sender: UIButton){
@@ -268,6 +263,12 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     func loadFirstData(){
         self.isLoadingFirstData = true
         self.loadUserPublishes(0)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
+            CTAUserDetailViewController.getInstance()
+            if self.isLoginUser{
+                CTASettingViewController.getInstance()
+            }
+        }
     }
     
     func loadLastData(){
@@ -630,6 +631,17 @@ extension CTAUserPublishesViewController:CTALoadingProtocol{
     var loadingImageView:UIImageView?{
         return nil
     }
+}
+
+extension CTAUserPublishesViewController: UIGestureRecognizerDelegate{
+    
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if self.isLoginUser{
+            return false
+        }
+        return true
+    }
+    
 }
 
 class CTAPublishTransitionCell: UIView{

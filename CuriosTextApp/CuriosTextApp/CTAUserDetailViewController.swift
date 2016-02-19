@@ -11,6 +11,7 @@ import Kingfisher
 
 class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol, CTALoadingProtocol, CTASystemLanguageProtocol, CTAPublishCellProtocol{
     
+    var shadowCanvas:UIView!
     var backImageView:UIView!
     var userIconImageView:UIImageView!
     var userFollowingImageView:UIImageView!
@@ -32,7 +33,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     var loginUserID:String = ""
     var userDetailModel:CTAViewUserModel?
     
-    var loadingImageView:UIImageView? = UIImageView()
+    var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
     
     static var _instance:CTAUserDetailViewController?;
     
@@ -83,77 +84,81 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         let rate       = self.getHorRate()
         let backWidth  = rate * 300
         let backHeight = rate * 440
-        let shadowCanvas = UIView.init(frame: CGRect.init(x: (self.view.frame.width - backWidth)/2, y: (self.view.frame.height - backHeight)/2, width: backWidth, height: backHeight))
-        self.view.addSubview(shadowCanvas)
-        self.addImageShadow(shadowCanvas)
+        let canvasx    = (self.view.frame.width - backWidth)/2
+        self.shadowCanvas = UIView.init(frame: CGRect.init(x: canvasx, y: (self.view.frame.height - backHeight)/2, width: backWidth, height: backHeight))
+        self.view.addSubview(self.shadowCanvas)
+        self.addImageShadow(self.shadowCanvas)
         self.backImageView = UIView.init(frame: CGRect.init(x: (self.view.frame.width - backWidth)/2, y: (self.view.frame.height - backHeight)/2, width: backWidth, height: backHeight))
         self.view.addSubview(self.backImageView!)
         self.backImageView.backgroundColor = UIColor.whiteColor()
         self.cropImageRound(self.backImageView)
 
-        self.userIconImageView = UIImageView.init(frame:CGRect.init(x: (self.view.frame.size.width - 60)/2, y: self.backImageView.frame.origin.y + 14*rate, width: 60, height: 60))
-        self.view.addSubview(self.userIconImageView)
+        self.userIconImageView = UIImageView.init(frame:CGRect.init(x: (self.view.frame.size.width - 60)/2 - canvasx, y: 25*rate, width: 60, height: 60))
+        self.backImageView.addSubview(self.userIconImageView)
         self.cropImageCircle(self.userIconImageView)
         
         let imgFrame = self.userIconImageView.frame
         self.userFollowingImageView = UIImageView.init(frame: CGRect.init(x: (imgFrame.origin.x+imgFrame.size.width)-18, y: (imgFrame.origin.y+imgFrame.size.height)-18, width: 18, height: 18))
         userFollowingImageView.image = UIImage.init(named: "following-icon")
-        self.view.addSubview(self.userFollowingImageView)
+        self.backImageView.addSubview(self.userFollowingImageView)
         self.userFollowingImageView.hidden = true
         
-        self.userNickNameLabel = UILabel.init(frame: CGRect.init(x: 120, y: self.userIconImageView.frame.origin.y + 65, width: 120, height: 28))
-        self.view.addSubview(self.userNickNameLabel)
+        
+        self.userNickNameLabel = UILabel.init(frame: CGRect.init(x: 20, y: self.userIconImageView.frame.origin.y + 65, width: backWidth - 40, height: 28))
+        self.userNickNameLabel.textAlignment = .Center
+        self.backImageView.addSubview(self.userNickNameLabel)
+        self.userNickNameLabel.numberOfLines = 2
         self.userNickNameLabel.font = UIFont.systemFontOfSize(18)
         self.userNickNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.userNickNameLabel.text = " "
         self.userNickNameLabel.sizeToFit()
         
-        self.lineImageView = UIImageView.init(frame: CGRect.init(x: self.view.frame.size.width / 2 - 1, y: self.userNickNameLabel.frame.origin.y + 85*rate, width: 2, height: 18))
+        self.lineImageView = UIImageView.init(frame: CGRect.init(x: self.view.frame.size.width / 2 - 1 - canvasx, y: self.userNickNameLabel.frame.origin.y + 85*rate, width: 2, height: 18))
         self.lineImageView.image = UIImage.init(named: "follow-line")
-        self.view.addSubview(self.lineImageView)
+        self.backImageView.addSubview(self.lineImageView)
         
         self.followLabel = UILabel.init()
-        self.view.addSubview(self.followLabel)
+        self.backImageView.addSubview(self.followLabel)
         self.followLabel.font = UIFont.systemFontOfSize(10)
         self.followLabel.textColor = UIColor.init(red: 239/255, green: 51/255, blue: 74/255, alpha: 1.0)
         self.followLabel.text = NSLocalizedString("FollowLabel", comment: "")
         self.followLabel.sizeToFit()
-        self.followLabel.frame.origin.x = self.view.frame.size.width / 2 - self.followLabel.frame.width - 20
+        self.followLabel.frame.origin.x = self.view.frame.size.width / 2 - self.followLabel.frame.width - 20 - canvasx
         self.followLabel.frame.origin.y = self.lineImageView.frame.origin.y-self.followLabel.frame.height - 2
     
         self.followCountLabel = UILabel.init()
-        self.view.addSubview(self.followCountLabel)
+        self.backImageView.addSubview(self.followCountLabel)
         self.followCountLabel.font = UIFont.systemFontOfSize(18)
         self.followCountLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.followCountLabel.text = "0"
         
         self.beFollowLabel = UILabel.init()
-        self.view.addSubview(self.beFollowLabel)
+        self.backImageView.addSubview(self.beFollowLabel)
         self.beFollowLabel.font = UIFont.systemFontOfSize(10)
         self.beFollowLabel.textColor = UIColor.init(red: 239/255, green: 51/255, blue: 74/255, alpha: 1.0)
         self.beFollowLabel.text = NSLocalizedString("BeFollowLabel", comment: "")
         self.beFollowLabel.sizeToFit()
-        self.beFollowLabel.frame.origin.x = self.view.frame.size.width / 2  + 20
+        self.beFollowLabel.frame.origin.x = self.view.frame.size.width / 2  + 20 - canvasx
         self.beFollowLabel.frame.origin.y = self.lineImageView.frame.origin.y - self.beFollowLabel.frame.height - 2
     
         self.beFollowCountLabel = UILabel.init()
-        self.view.addSubview(self.beFollowCountLabel)
+        self.backImageView.addSubview(self.beFollowCountLabel)
         self.beFollowCountLabel.font = UIFont.systemFontOfSize(18)
         self.beFollowCountLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.beFollowCountLabel.text = "0"
         
-        self.userDescTextView = UITextView.init(frame: CGRect.init(x: (self.view.frame.width - 280*rate)/2, y: self.lineImageView.frame.origin.y + 52*rate, width: 280*rate, height: 140*rate))
+        self.userDescTextView = UITextView.init(frame: CGRect.init(x: (self.view.frame.width - 280*rate)/2 - canvasx, y: self.lineImageView.frame.origin.y + 52*rate, width: 280*rate, height: 140*rate))
         self.userDescTextView.editable = false
         self.userDescTextView.scrollEnabled = false
         self.userDescTextView.selectable = false
         self.userDescTextView.backgroundColor = UIColor.whiteColor()
-        self.view.addSubview(self.userDescTextView)
+        self.backImageView.addSubview(self.userDescTextView)
         self.userDescTextView.font = UIFont.systemFontOfSize(14)
         self.userDescTextView.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.userDescTextView.textAlignment = .Center
         
-        self.followButtonView = UIView.init(frame: CGRect.init(x: (self.view.frame.width - 120*rate)/2, y: (self.backImageView.frame.origin.y+self.backImageView.frame.height - 65*rate), width: 120*rate, height: 35*rate))
-        self.view.addSubview(self.followButtonView)
+        self.followButtonView = UIView.init(frame: CGRect.init(x: (self.view.frame.width - 120)/2 - canvasx, y: (self.backImageView.frame.height - 65*rate), width: 120, height: 35))
+        self.backImageView.addSubview(self.followButtonView)
         
         self.followButtonBgView = UIImageView.init(image: UIImage.init(named: "follow-button"))
         self.followButtonBgView.frame.size = self.followButtonView.frame.size
@@ -207,11 +212,10 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     }
     
     func fitView(){
+        let backWidth  = self.backImageView.frame.width
         self.userNickNameLabel.sizeToFit()
-        if self.userNickNameLabel.frame.width > self.view.frame.width - 80 {
-            self.userNickNameLabel.frame.size.width = self.view.frame.width - 80
-        }
-        self.userNickNameLabel.frame.origin.x = (self.view.frame.width - self.userNickNameLabel.frame.width)/2
+        self.userNickNameLabel.frame.size.width = backWidth - 40
+        self.userNickNameLabel.frame.origin.x = 20
         
         self.followCountLabel.sizeToFit()
         self.followCountLabel.frame.origin.x = self.followLabel.frame.origin.x + (self.followLabel.frame.size.width - self.followCountLabel.frame.width)/2
@@ -365,13 +369,15 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         let pt = sender.locationInView(self.backImageView)
         if !backImageView.pointInside(pt, withEvent: nil){
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
-                UIView.animateWithDuration(0.5, animations: { () -> Void in
-                    self.blackColorView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
-                })
+                self.blackColorView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+                self.shadowCanvas.frame.origin.y = 0-UIScreen.mainScreen().bounds.height
+                self.backImageView.frame.origin.y = 0-UIScreen.mainScreen().bounds.height
                 }, completion: { (_) -> Void in
-                    self.dismissViewControllerAnimated(true) { () -> Void in
-                        
-                    }
+                    self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                        self.shadowCanvas.frame.origin.y = (UIScreen.mainScreen().bounds.height - self.shadowCanvas.frame.height)/2
+                        self.backImageView.frame.origin.y = (UIScreen.mainScreen().bounds.height - self.shadowCanvas.frame.height)/2
+
+                    })
             })
         }
     }
