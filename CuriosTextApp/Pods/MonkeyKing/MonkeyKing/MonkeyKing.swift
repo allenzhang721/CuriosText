@@ -132,18 +132,24 @@ extension MonkeyKing {
         if URL.scheme.hasPrefix("wx") {
 
             // WeChat OAuth
-            if URL.absoluteString.containsString("&state=Weixinauth") {
+            if URL.absoluteString.containsString("state=Weixinauth") {
 
                 let queryItems = URL.monkeyking_queryItems
                 guard let code = queryItems["code"] as? String else {
+                    let error = NSError(domain: "social", code: -3, userInfo: nil)
+                    sharedMonkeyKing.oauthCompletionHandler?(nil, nil, error)
                     return false
                 }
-
-                // Login Succcess
-                fetchWeChatOAuthInfoByCode(code: code) { (info, response, error) -> Void in
-                    sharedMonkeyKing.oauthCompletionHandler?(info, response, error)
+                
+                if code == "authdeny" {
+                    let error = NSError(domain: "user cancel", code: -1, userInfo: nil)
+                    sharedMonkeyKing.oauthCompletionHandler?(nil, nil, error)
+                }else {
+                    // Login Succcess
+                    fetchWeChatOAuthInfoByCode(code: code) { (info, response, error) -> Void in
+                        sharedMonkeyKing.oauthCompletionHandler?(info, response, error)
+                    }
                 }
-
                 return true
             }
 
@@ -197,15 +203,15 @@ extension MonkeyKing {
 
             guard let data = UIPasteboard.generalPasteboard().dataForPasteboardType("com.tencent.tencent\(account.appID)"),
                 let dic = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? NSDictionary else {
-                    error = NSError(domain: "OAuth Error", code: -1, userInfo: nil)
+                    error = NSError(domain: "OAuth Error", code: -3, userInfo: nil)
                     return false
             }
 
             guard let result = dic["ret"]?.integerValue where result == 0 else {
                 if let errorDomatin = dic["user_cancelled"] as? String where errorDomatin == "YES" {
-                    error = NSError(domain: "User Cancelled", code: -2, userInfo: nil)
+                    error = NSError(domain: "User Cancelled", code: -1, userInfo: nil)
                 } else {
-                    error = NSError(domain: "OAuth Error", code: -1, userInfo: nil)
+                    error = NSError(domain: "OAuth Error", code: -3, userInfo: nil)
                 }
                 return false
             }
@@ -256,7 +262,7 @@ extension MonkeyKing {
                 userInfoDictionary = responseData
 
                 if statusCode != 0 {
-                    error = NSError(domain: "OAuth Error", code: -1, userInfo: nil)
+                    error = NSError(domain: "OAuth Error", code: -3, userInfo: nil)
                     return false
                 }
                 return true
@@ -781,10 +787,24 @@ extension MonkeyKing {
 // MARK: OAuth
 
 extension MonkeyKing {
-
-    public class func OAuth(platform: SupportedPlatform, scope: String? = nil, completionHandler: OAuthCompletionHandler) {
-
+    
+    public class func CheckCheckInstalled(platform: SupportedPlatform) -> Bool{
         guard let account = sharedMonkeyKing.accountSet[platform] else {
+            return false
+        }
+        
+        guard account.isAppInstalled || account.canWebOAuth else {
+            return false
+        }
+        
+        return true
+    }
+    
+    public class func OAuth(platform: SupportedPlatform, scope: String? = nil, completionHandler: OAuthCompletionHandler, shareCompleteHandler: SharedCompletionHandler? = nil) {
+  
+        guard let account = sharedMonkeyKing.accountSet[platform] else {
+            let error = NSError(domain: "App is not installed", code: -2, userInfo: nil)
+            completionHandler(nil, nil, error)
             return
         }
 
@@ -795,6 +815,7 @@ extension MonkeyKing {
         }
 
         sharedMonkeyKing.oauthCompletionHandler = completionHandler
+        sharedMonkeyKing.sharedCompletionHandler = shareCompleteHandler
 
         switch account {
 

@@ -64,6 +64,7 @@
 "AlertConfirmPasswordError" = "Passwords do not match";
 
 "AlertTitleLoginFaile" = "Account or password error. Enter again.";
+"AlertTitleWeChatUninstall" = "Not find weChat, Can't login with weChat";
 "AlertTitleInternetError" = "Internet error. Please try it again later.";
 "AlertTitleRegisterError" = "Sign up failed. Please try it again later.";
 "AlertTitleChangeError" = "Change failed. Please try it again later.";

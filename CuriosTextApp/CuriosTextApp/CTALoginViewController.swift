@@ -32,6 +32,9 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
     var selectedModel:CountryZone?
     var isChangeContry:Bool = false
     
+    var otherAccountView:UIView!
+    var wechatButton:UIButton!
+    
     var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
     
     override func prefersStatusBarHidden() -> Bool {
@@ -125,23 +128,26 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         self.loginButton.addTarget(self, action: "loginButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(self.loginButton)
         
+        self.otherAccountView = UIView.init(frame: CGRect.init(x: 0, y: bouns.height - 175*self.getVerRate(), width: bouns.width, height: 175*self.getVerRate()))
+        self.otherAccountView.backgroundColor = UIColor.whiteColor()
+        self.view.addSubview(self.otherAccountView)
         
-        let spaceView = UIImageView.init(frame: CGRect.init(x: (bouns.width - 215)/2, y: bouns.height - 170*self.getVerRate(), width: 215, height: 3))
+        let spaceView = UIImageView.init(frame: CGRect.init(x: (bouns.width - 215)/2, y: 5, width: 215, height: 3))
         spaceView.image = UIImage(named: "login-spaceline")
-        self.view.addSubview(spaceView)
+        self.otherAccountView.addSubview(spaceView)
         
-        let otherAccountLabel = UILabel.init(frame: CGRect.init(x: (bouns.width - 215)/2, y: bouns.height - 175*self.getVerRate(), width: 50, height: 14))
+        let otherAccountLabel = UILabel.init(frame: CGRect.init(x: (bouns.width - 215)/2, y: 0, width: 50, height: 14))
         otherAccountLabel.font = UIFont.systemFontOfSize(12)
         otherAccountLabel.textColor = UIColor.init(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0)
         otherAccountLabel.text = NSLocalizedString("OtherAccountLoginLabel", comment: "")
         otherAccountLabel.sizeToFit()
         otherAccountLabel.frame.origin.x = (bouns.width - otherAccountLabel.frame.width)/2
-        self.view.addSubview(otherAccountLabel)
+        self.otherAccountView.addSubview(otherAccountLabel)
         
-        let wechatButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 44)/2, y: bouns.height - 130*self.getVerRate(), width: 44, height: 44))
-        wechatButton.setImage(UIImage(named: "wechat-icon"), forState: .Normal)
-        wechatButton.addTarget(self, action: "wechatButtonClick:", forControlEvents: .TouchUpInside)
-        self.view.addSubview(wechatButton)
+        self.wechatButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 44)/2, y: 45, width: 44, height: 44))
+        self.wechatButton.setImage(UIImage(named: "wechat-icon"), forState: .Normal)
+        self.wechatButton.addTarget(self, action: "wechatButtonClick:", forControlEvents: .TouchUpInside)
+        self.otherAccountView.addSubview(self.wechatButton)
         
         let forgetButton = UIButton.init(frame: CGRect.init(x: 27, y: bouns.height - 52*self.getVerRate(), width: 20, height: 84))
         forgetButton.setTitle(NSLocalizedString("ForgetPasswordLabel", comment: ""), forState: .Normal)
@@ -170,8 +176,19 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
             self.loginButton.enabled = false
             self.selectedModel = self.getCurrentContryModel()
             self.changeCountryLabelByModel(self.selectedModel)
+            self.checkOtherAccount()
         }
         self.isChangeContry = false
+    }
+    
+    func checkOtherAccount(){
+        self.otherAccountView.hidden = false
+        if CTASocialManager.isAppInstaller(.WeChat){
+            self.wechatButton.hidden = false
+        }else {
+            self.wechatButton.hidden = true
+            self.otherAccountView.hidden = true
+        }
     }
     
     func bgViewClick(sender: UIPanGestureRecognizer){
@@ -314,13 +331,19 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
                     })
                 }else {
                     self.changeToUnloadingView(nil)
-                    self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                    })
                 }
             }else {
                 self.changeToUnloadingView(nil)
-                self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                })
+                if error!.code == -1{
+                    
+                }
+                else if error!.code == -2{
+                    self.showSingleAlert(NSLocalizedString("AlertTitleWeChatUninstall", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                    })
+                }else {
+                    self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                    })
+                }
             }
         }
     }

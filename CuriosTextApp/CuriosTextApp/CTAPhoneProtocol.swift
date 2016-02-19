@@ -69,7 +69,7 @@ extension CTAPhoneProtocol where Self: UIViewController{
     func getCurrentContryModel() -> CountryZone?{
         let language = self.getCurrentLanguage()
         var model:CountryZone?
-        if language == "zh-Hant-US" || language == "zh-Hans-US"{
+        if language.containsString("zh-Hans") || language.containsString("zh-Hans"){
             model = self.getChinaModel()
         }else if language == "zh-HK"{
             model = self.getHongkongModel()

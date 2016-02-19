@@ -155,21 +155,37 @@ protocol CTASocialOAuthable: class {
     static func OAuth(platform: CTASocialManager.CTASocialSharePlatformType, completionHandler: CTASocialManager.OAuthCompletionHandler)
 }
 
+extension CTASocialManager{
+    
+    static func isAppInstaller(platform: CTASocialManager.CTASocialSharePlatformType) -> Bool {
+        switch platform {
+        case .WeChat:
+            return MonkeyKing.CheckCheckInstalled(.WeChat)
+        case .Weibo:
+            return MonkeyKing.CheckCheckInstalled(.Weibo)
+        default:
+            return true
+        }
+    }
+}
+
 extension CTASocialOAuthable {
     
     static func OAuth(platform: CTASocialManager.CTASocialSharePlatformType, completionHandler: CTASocialManager.OAuthCompletionHandler) {
-        
         switch platform {
         case .WeChat:
-            
             MonkeyKing.OAuth(.WeChat, completionHandler: { (dictionary, response, error) -> Void in
-                
-//                debug_print(dictionary)
-                
-                CTASocialManager.fetchUserInfo(dictionary, completeBlock: { (userInfoDictionary, response, error) in
-                    
-                    completionHandler(userInfoDictionary, response, error)
-                })
+                if error == nil {
+                    CTASocialManager.fetchUserInfo(dictionary, completeBlock: { (userInfoDictionary, response, error) in
+                        
+                        completionHandler(userInfoDictionary, response, error)
+                    })
+                }else {
+                    completionHandler(nil, nil, error)
+                }
+                }, shareCompleteHandler: { (result) -> Void in
+                    let error = NSError(domain: "user cancel", code: -1, userInfo: nil)
+                    completionHandler(nil, nil, error)
             })
             
         case .Weibo:
@@ -188,6 +204,9 @@ extension CTASocialOAuthable {
             let openID = OAuthInfo?["openid"] as? String,
             let refreshToken = OAuthInfo?["refresh_token"] as? String,
             let expiresIn = OAuthInfo?["expires_in"] as? Int else {
+                
+                let error = NSError(domain: "social", code: -3, userInfo: nil)
+                completeBlock(nil, nil, error)
                 return
         }
         
@@ -202,6 +221,8 @@ extension CTASocialOAuthable {
         SimpleNetworking.sharedInstance.request(userInfoAPI, method: .GET, parameters: parameters, completionHandler: { (userInfoDictionary, r, e) -> Void in
             
             guard let mutableDictionary = userInfoDictionary?.mutableCopy() as? NSMutableDictionary else {
+                let error = NSError(domain: "social", code: -3, userInfo: nil)
+                completeBlock(nil, nil, error)
                 return
             }
             
