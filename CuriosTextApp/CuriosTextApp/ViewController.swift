@@ -8,13 +8,11 @@
 
 import UIKit
 
-class ViewController: UIViewController, CTAAddBarProtocol{
-    
-    private let pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
-    
-    private let pageControllers = CTAPageControllers()
+class ViewController: UIViewController{
     
     var navigate:UINavigationController!
+    
+    let mainView = CTAMainViewController()
 
     override func prefersStatusBarHidden() -> Bool {
         return true
@@ -33,109 +31,37 @@ class ViewController: UIViewController, CTAAddBarProtocol{
             }
         }
         CTAUserManager.load()
-    
         
-        self.navigate = UINavigationController(rootViewController: pageViewController)
+        self.navigate = UINavigationController(rootViewController: mainView)
         self.navigate.navigationBarHidden = true
 
         addChildViewController(self.navigate)
         view.addSubview(self.navigate.view)
-    
-        pageViewController.view.backgroundColor = UIColor.whiteColor()
-        pageViewController.dataSource = pageControllers
         
-        
-        pageViewController.setViewControllers([pageControllers.controllers[0]], direction: .Forward, animated: false, completion: nil)
-        
-        self.initAddBarView(pageViewController.view)
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showNavigationView:", name: "showNavigationView", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showLoginView:", name: "showLoginView", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "changePageView:", name: "changePageView", object: nil)
     }
     
-    func showLoginView(noti: NSNotification) {
+    func showNavigationView(noti: NSNotification){
+        let popView = noti.object as! UIViewController
+        self.navigate.pushViewController(popView, animated: true)
+    }
+    
+    func showLoginView(noti: NSNotification){
         let login = CTALoginViewController.getInstance()
         login.isChangeContry = true
         let navigationController = UINavigationController(rootViewController: login)
         navigationController.navigationBarHidden = true
         self.presentViewController(navigationController, animated: false, completion: {
             self.navigate.popToRootViewControllerAnimated(false)
-            self.pageViewController.setViewControllers([self.pageControllers.controllers[0]], direction: .Reverse, animated: false, completion: nil)
+            self.mainView.goToFirstView()
         })
-    }
-    
-    func changePageView(noti: NSNotification) {
-        if noti.object != nil {
-            let index = noti.object as! Int
-            if index > -1 && index < self.pageControllers.controllers.count {
-                var dir:UIPageViewControllerNavigationDirection = .Forward
-                let currentControl = self.pageViewController.viewControllers
-                if currentControl != nil {
-                    let current = self.pageControllers.indexOfController(currentControl![0])
-                    if current > index{
-                        dir = .Reverse
-                    }else {
-                        dir = .Forward
-                    }
-                }
-                self.pageViewController.setViewControllers([self.pageControllers.controllers[index]], direction: dir, animated: true, completion: nil)
-            }
-        }
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        
-        if CTAUserManager.isLogin {
-            
-            for subView in pageViewController.view.subviews {
-                if let scrolliew = subView as? UIScrollView {
-                    scrolliew.scrollEnabled = true
-                    break
-                }
-            }
-        } else {
-            for subView in pageViewController.view.subviews {
-                if let scrolliew = subView as? UIScrollView {
-                    scrolliew.scrollEnabled = false
-                    break
-                }
-            }
-        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    func addBarViewClick(sender: UIPanGestureRecognizer){
-//        self.addPublishHandler()
-        let page = EditorFactory.generateRandomPage()
-//        let doc = CTADocument(fileURL: <#T##NSURL#>, page: page)
-        let documentURL = try! NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
-        let fileUrl = CTADocumentManager.generateDocumentURL(documentURL)
-        CTADocumentManager.createNewDocumentAt(fileUrl, page: page) { (success) -> Void in
-            
-            if success {
-                CTADocumentManager.openDocument(fileUrl, completedBlock: { (success) -> Void in
-                    
-                    if let openDocument = CTADocumentManager.openedDocument {
-                        
-                        let editVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("EditViewController") as! EditViewController
-                        editVC.document = openDocument
-                        
-                        self.presentViewController(editVC, animated: false, completion: { () -> Void in
-                            
-                            
-                        })
-                    }
-                })
-            }
-        }
-        
-    }
-    
-    var currentPageIndex: Int = 0
 }
 
 //extension ViewController: UIScrollViewDelegate {

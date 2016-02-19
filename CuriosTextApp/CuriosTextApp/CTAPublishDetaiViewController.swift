@@ -883,6 +883,6 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
 
 extension CTAPublishDetailViewController: CTAAddBarProtocol{
     func addBarViewClick(sender: UIPanGestureRecognizer) {
-        self.addPublishHandler()
+        self.showEditView()
     }
 }

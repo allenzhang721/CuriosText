@@ -19,7 +19,7 @@ func setAddBarView(barView:CTAAddBarView, view:UIView){
 protocol CTAAddBarProtocol{
     func initAddBarView(parentView:UIView?)
     func addBarViewClick(sender: UIPanGestureRecognizer)
-    func addPublishHandler()
+    func showEditView()
 }
 
 extension CTAAddBarProtocol where Self: UIViewController{
@@ -37,7 +37,28 @@ extension CTAAddBarProtocol where Self: UIViewController{
         barView.addGestureRecognizer(addBarTap)
     }
     
-    func addPublishHandler(){
-        print("addPublishHandler")
+    func showEditView(){
+        let page = EditorFactory.generateRandomPage()
+        //        let doc = CTADocument(fileURL: <#T##NSURL#>, page: page)
+        let documentURL = try! NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
+        let fileUrl = CTADocumentManager.generateDocumentURL(documentURL)
+        CTADocumentManager.createNewDocumentAt(fileUrl, page: page) { (success) -> Void in
+            
+            if success {
+                CTADocumentManager.openDocument(fileUrl, completedBlock: { (success) -> Void in
+                    
+                    if let openDocument = CTADocumentManager.openedDocument {
+                        
+                        let editVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("EditViewController") as! EditViewController
+                        editVC.document = openDocument
+                        
+                        self.presentViewController(editVC, animated: false, completion: { () -> Void in
+                            
+                            
+                        })
+                    }
+                })
+            }
+        }
     }
 }
