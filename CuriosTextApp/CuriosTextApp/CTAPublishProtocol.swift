@@ -9,7 +9,7 @@
 import Foundation
 import Kingfisher
 
-protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAUserDetailProtocol{
+protocol CTAPublishProtocol:CTAImageControllerProtocol{
     var likeButton:UIButton{get}
     var userIconImage:UIImageView{get}
     var userNicknameLabel:UILabel{get}
@@ -27,7 +27,6 @@ protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAUserDetailProtocol{
     func rebuildButtonClick(sender: UIButton)
     
     func userIconClick(sender: UIPanGestureRecognizer)
-    func showUserDetailHandler(viewUser:CTAUserModel?, loginUserID:String)
 }
 
 extension CTAPublishProtocol where Self: UIViewController{
@@ -131,10 +130,6 @@ extension CTAPublishProtocol where Self: UIViewController{
                 self.likeButton.setImage(UIImage.init(named: "like-selected-button"), forState: .Normal)
             }
         }
-    }
-    
-    func showUserDetailHandler(viewUser:CTAUserModel?, loginUserID:String){
-        self.showUserDetailView(viewUser, loginUserID: loginUserID)
     }
     
     func shareHandler(userID:String, publishModel:CTAPublishModel){

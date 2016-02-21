@@ -18,6 +18,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     var likeButton:UIButton = UIButton()
     
     var currentFullCell:CTAFullPublishesCell!
+    var userDetail:CTAUserDetailViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()

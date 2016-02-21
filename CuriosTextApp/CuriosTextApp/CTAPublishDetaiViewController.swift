@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
+class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, CTAUserDetailProtocol{
 
     var viewUser:CTAUserModel?
     var loginUserID:String = ""
@@ -38,6 +38,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
     var verCellSpaceDic:Dictionary<String, CGPoint> = [String: CGPoint]()
     
     var delegate:CTAPublishDetailDelegate?
+    var userDetail:CTAUserDetailViewController?
     
     static var _instance:CTAPublishDetailViewController?;
     
@@ -877,7 +878,10 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
     }
     
     func userIconClick(sender: UIPanGestureRecognizer) {
-        self.showUserDetailHandler(self.viewUser, loginUserID: self.loginUserID)
+        if self.userDetail == nil {
+            self.userDetail = CTAUserDetailViewController()
+        }
+        self.showUserDetailView(self.viewUser, loginUserID: self.loginUserID)
     }
 }
 

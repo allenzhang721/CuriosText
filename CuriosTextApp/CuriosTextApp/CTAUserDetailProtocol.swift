@@ -9,17 +9,18 @@
 import UIKit
 
 protocol CTAUserDetailProtocol{
+    var userDetail:CTAUserDetailViewController?{get}
     func showUserDetailView(viewUser:CTAUserModel?, loginUserID:String)
 }
 
 extension CTAUserDetailProtocol where Self: UIViewController{
     func showUserDetailView(viewUser:CTAUserModel?, loginUserID:String) {
-        CTAUserDetailViewController.getInstance().viewUser = viewUser
-        CTAUserDetailViewController.getInstance().loginUserID = loginUserID
-        CTAUserDetailViewController.getInstance().transitioningDelegate = CTAPullUserDetailTransition.getInstance()
-        CTAUserDetailViewController.getInstance().modalPresentationStyle = .Custom
-        self.presentViewController(CTAUserDetailViewController.getInstance(), animated: true) { () -> Void in
-            CTAUserDetailViewController.getInstance().setBackgroundColor()
+        self.userDetail!.viewUser = viewUser
+        self.userDetail!.loginUserID = loginUserID
+        self.userDetail!.transitioningDelegate = CTAPullUserDetailTransition.getInstance()
+        self.userDetail!.modalPresentationStyle = .Custom
+        self.presentViewController(self.userDetail!, animated: true) { () -> Void in
+            self.userDetail!.setBackgroundColor()
         }
     }
 }

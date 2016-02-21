@@ -242,6 +242,9 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     }
     
     func userHeaderClick(sender: UITapGestureRecognizer){
+        if self.userDetail == nil {
+            self.userDetail = CTAUserDetailViewController()
+        }
         self.showUserDetailView(self.viewUser, loginUserID: (self.loginUser != nil ? self.loginUser!.userID : ""))
     }
     
@@ -263,12 +266,6 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     func loadFirstData(){
         self.isLoadingFirstData = true
         self.loadUserPublishes(0)
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-            CTAUserDetailViewController.getInstance()
-            if self.isLoginUser{
-                CTASettingViewController.getInstance()
-            }
-        }
     }
     
     func loadLastData(){
@@ -652,3 +649,4 @@ class CTAPublishTransitionCell: UIView{
         self.publishID = cellPublishID
     }
 }
+

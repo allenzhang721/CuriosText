@@ -29,7 +29,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     var userNickNameLabel:UILabel!
     var userSexLabel:UILabel!
     var userRegionLabel:UILabel!
-    var userDescTextView:UITextView!
+    var userDescLabel:UILabel!
     var descNextImg:UIImageView!
     var descLineImg:UIImageView!
     
@@ -114,7 +114,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.imagePicker.delegate = self
         
         self.userNickNameLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 112, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
-        self.userNickNameLabel.font = UIFont.systemFontOfSize(18)
+        self.userNickNameLabel.font = UIFont.systemFontOfSize(16)
         self.userNickNameLabel.textColor = UIColor.init(red: 108/255, green: 108/255, blue: 108/255, alpha: 1.0)
         self.userNickNameLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userNickNameLabel)
@@ -135,7 +135,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.userNickNameLabel.addGestureRecognizer(nickNameTap)
         
         self.userSexLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y+50, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
-        self.userSexLabel.font = UIFont.systemFontOfSize(18)
+        self.userSexLabel.font = UIFont.systemFontOfSize(16)
         self.userSexLabel.textColor = UIColor.init(red: 108/255, green: 108/255, blue: 108/255, alpha: 1.0)
         self.userSexLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userSexLabel)
@@ -156,7 +156,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.userSexLabel.addGestureRecognizer(userSexTap)
         
         self.userRegionLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+50, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
-        self.userRegionLabel.font = UIFont.systemFontOfSize(18)
+        self.userRegionLabel.font = UIFont.systemFontOfSize(16)
         self.userRegionLabel.textColor = UIColor.init(red: 108/255, green: 108/255, blue: 108/255, alpha: 1.0)
         self.userRegionLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userRegionLabel)
@@ -177,29 +177,27 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.userRegionLabel.addGestureRecognizer(userRegionTap)
         self.userRegionLabel.hidden = true
         
-        self.userDescTextView = UITextView.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+43, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
-        self.userDescTextView.font = UIFont.systemFontOfSize(18)
-        self.userDescTextView.textColor = UIColor.init(red: 108/255, green: 108/255, blue: 108/255, alpha: 1.0)
-        self.userDescTextView.editable = false
-        self.userDescTextView.scrollEnabled = false
-        self.userDescTextView.selectable = false
-        self.userDescTextView.backgroundColor = UIColor.whiteColor()
-        self.userDescTextView.textAlignment = .Right
-        self.scrollView.addSubview(self.userDescTextView)
-        let userDesxTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userDescTextView.frame.origin.y+7, width: 50, height: 25))
+        self.userDescLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+50, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
+        self.userDescLabel.numberOfLines = 12
+        self.userDescLabel.font = UIFont.systemFontOfSize(16)
+        self.userDescLabel.textColor = UIColor.init(red: 108/255, green: 108/255, blue: 108/255, alpha: 1.0)
+        self.userDescLabel.textAlignment = .Right
+        self.scrollView.addSubview(self.userDescLabel)
+        let userDesxTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userDescLabel.frame.origin.y, width: 50, height: 25))
         userDesxTitle.font = UIFont.systemFontOfSize(18)
         userDesxTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         userDesxTitle.text = NSLocalizedString("UserDesc", comment: "")
         userDesxTitle.sizeToFit()
         self.scrollView.addSubview(userDesxTitle)
-        self.descNextImg = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 11, y: self.userDescTextView.frame.origin.y+10, width: 11, height: 20))
+        self.descNextImg = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 11, y: self.userDescLabel.frame.origin.y+2, width: 11, height: 20))
         self.descNextImg.image = UIImage(named: "next-icon")
         self.scrollView.addSubview(self.descNextImg)
-        self.descLineImg = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userDescTextView.frame.origin.y + 44, width: 330*self.getHorRate(), height: 1))
+        self.descLineImg = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userDescLabel.frame.origin.y + 37, width: 330*self.getHorRate(), height: 1))
         self.descLineImg.image = UIImage(named: "textinput-line")
         self.scrollView.addSubview(self.descLineImg)
+        self.userDescLabel.userInteractionEnabled = true
         let userDescTap = UITapGestureRecognizer(target: self, action: "userDescClick:")
-        self.userDescTextView.addGestureRecognizer(userDescTap)
+        self.userDescLabel.addGestureRecognizer(userDescTap)
         
         
         self.logoutButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: self.descLineImg.frame.origin.y+21, width: 40, height: 28))
@@ -232,7 +230,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.userNickNameLabel.text = ""
         self.userSexLabel.text = ""
         self.userRegionLabel.text = ""
-        self.userDescTextView.text = ""
+        self.userDescLabel.text = ""
         self.logoutButton.enabled = false
     }
     
@@ -282,19 +280,19 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     
     func reloadDesc(){
         let bouns = UIScreen.mainScreen().bounds
-        self.userDescTextView.text = self.loginUser!.userDesc
-        self.userDescTextView.sizeToFit()
+        self.userDescLabel.text = self.loginUser!.userDesc
+        self.userDescLabel.sizeToFit()
         let maxW = bouns.width - 153*self.getHorRate() - 15
-        self.userDescTextView.frame.size.width = maxW
-        let texth = self.userDescTextView.contentSize.height
-        if texth < 50{
-            self.userDescTextView.textAlignment = .Right
-            self.descNextImg.frame.origin.y = self.userDescTextView.frame.origin.y+10
-            self.descLineImg.frame.origin.y = self.userDescTextView.frame.origin.y+44
+        self.userDescLabel.frame.size.width = maxW
+        let texth = self.userDescLabel.frame.height
+        if texth < 37{
+            self.userDescLabel.textAlignment = .Right
+            self.descNextImg.frame.origin.y = self.userDescLabel.frame.origin.y+2
+            self.descLineImg.frame.origin.y = self.userDescLabel.frame.origin.y+37
         }else {
-            self.userDescTextView.textAlignment = .Left
-            self.descNextImg.frame.origin.y = self.userDescTextView.frame.origin.y + texth - 22
-            self.descLineImg.frame.origin.y = self.userDescTextView.frame.origin.y + texth - 1
+            self.userDescLabel.textAlignment = .Left
+            self.descNextImg.frame.origin.y = self.userDescLabel.frame.origin.y + texth - 22
+            self.descLineImg.frame.origin.y = self.userDescLabel.frame.origin.y + texth
         }
         
         self.logoutButton.enabled = true

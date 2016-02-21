@@ -16,7 +16,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     var userIconImageView:UIImageView!
     var userFollowingImageView:UIImageView!
     var userNickNameLabel:UILabel!
-    var userDescTextView:UITextView!
+    var userDescLabel:UILabel!
     var followButton:UIButton!
     var followButtonView:UIView!
     var followButtonBgView:UIImageView!
@@ -34,15 +34,6 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     var userDetailModel:CTAViewUserModel?
     
     var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
-    
-    static var _instance:CTAUserDetailViewController?;
-    
-    static func getInstance() -> CTAUserDetailViewController{
-        if _instance == nil{
-            _instance = CTAUserDetailViewController();
-        }
-        return _instance!
-    }
     
     override func prefersStatusBarHidden() -> Bool {
         return true
@@ -111,7 +102,6 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         self.userNickNameLabel.font = UIFont.systemFontOfSize(18)
         self.userNickNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.userNickNameLabel.text = " "
-        self.userNickNameLabel.sizeToFit()
         
         self.lineImageView = UIImageView.init(frame: CGRect.init(x: self.view.frame.size.width / 2 - 1 - canvasx, y: self.userNickNameLabel.frame.origin.y + 85*rate, width: 2, height: 18))
         self.lineImageView.image = UIImage.init(named: "follow-line")
@@ -147,15 +137,13 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         self.beFollowCountLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.beFollowCountLabel.text = "0"
         
-        self.userDescTextView = UITextView.init(frame: CGRect.init(x: (self.view.frame.width - 280*rate)/2 - canvasx, y: self.lineImageView.frame.origin.y + 52*rate, width: 280*rate, height: 140*rate))
-        self.userDescTextView.editable = false
-        self.userDescTextView.scrollEnabled = false
-        self.userDescTextView.selectable = false
-        self.userDescTextView.backgroundColor = UIColor.whiteColor()
-        self.backImageView.addSubview(self.userDescTextView)
-        self.userDescTextView.font = UIFont.systemFontOfSize(14)
-        self.userDescTextView.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        self.userDescTextView.textAlignment = .Center
+        self.userDescLabel = UILabel.init(frame: CGRect.init(x: 20, y: self.lineImageView.frame.origin.y + 52*rate, width: backWidth - 40, height: 140*rate))
+        self.userDescLabel.numberOfLines = 8
+        self.userDescLabel.font = UIFont.systemFontOfSize(14)
+        self.userDescLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        self.userDescLabel.text = " "
+        self.userDescLabel.textAlignment = .Center
+        self.backImageView.addSubview(self.userDescLabel)
         
         self.followButtonView = UIView.init(frame: CGRect.init(x: (self.view.frame.width - 120)/2 - canvasx, y: (self.backImageView.frame.height - 65*rate), width: 120, height: 35))
         self.backImageView.addSubview(self.followButtonView)
@@ -180,7 +168,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         self.loadUserIcon(imagePath)
         
         self.userNickNameLabel.text = self.viewUser?.nickName
-        self.userDescTextView.text  = self.viewUser?.userDesc
+        self.userDescLabel.text  = self.viewUser?.userDesc
     }
     
     func loadUserIcon(imagePath:String){
@@ -197,7 +185,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     func setDefaultView(){
         self.userIconImageView.image = UIImage.init(named: "default-usericon")
         self.userNickNameLabel.text = "Curios"
-        self.userDescTextView.text  = "To be or not to be, That's a question!"
+        self.userDescLabel.text  = "To be or not to be, That's a question!"
         self.followButtonView.hidden = true
         self.followCountLabel.text = "0"
         self.beFollowCountLabel.text = "0"
@@ -212,10 +200,6 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     }
     
     func fitView(){
-        let backWidth  = self.backImageView.frame.width
-        self.userNickNameLabel.sizeToFit()
-        self.userNickNameLabel.frame.size.width = backWidth - 40
-        self.userNickNameLabel.frame.origin.x = 20
         
         self.followCountLabel.sizeToFit()
         self.followCountLabel.frame.origin.x = self.followLabel.frame.origin.x + (self.followLabel.frame.size.width - self.followCountLabel.frame.width)/2
@@ -258,7 +242,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
             self.loadUserIcon(imagePath)
             
             self.userNickNameLabel.text = self.userDetailModel!.nickName
-            self.userDescTextView.text  = self.userDetailModel!.userDesc
+            self.userDescLabel.text  = self.userDetailModel!.userDesc
         }
         self.fitView()
     }
