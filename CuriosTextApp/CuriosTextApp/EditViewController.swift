@@ -232,11 +232,11 @@ extension EditViewController {
                 
                 CTADocumentManager.uploadFiles({ (success, publishID, publishURL) -> Void in
                     
-                    debug_print("upload \(success)\n publishID = \(publishID)")
+                    debug_print("upload = \(success)\n publishID = \(publishID)", context: previewConttext)
                     
                     CTAPublishDomain().createPublishFile(publishID, userID: CTAUserManager.user!.userID, title: "Emiaostein", publishDesc: "Emiaostein", publishIconURL: "", previewIconURL: "", publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
                         
-                        debug_print("publish \(domainInfo.result), publishURL = \(publishURL) \n \(domainInfo)")
+                        debug_print("publish \(domainInfo.result), publishURL = \(publishURL) \n \(domainInfo)", context: previewConttext)
                     })
                 })
             }

@@ -76,32 +76,33 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     }
     
     func playAnimation(){
-        if self.animationEnable{
-            // preview play
-            previewView?.play()
-        }
+//        if self.animationEnable{
+//            // preview play
+//            previewView?.play()
+//        }
         
         if let publishModel = publishModel {
             
             let purl = CTAFilePath.publishFilePath
             let url = purl + publishModel.publishURL
+            debug_print("get Url = \(url)", context: previewConttext)
             BlackCatManager.sharedManager.retrieveDataWithURL(NSURL(string: url)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self] (data, error, cacheType, URL) in
                 
                 if let strongSelf = self {
                     if let data = data, let page = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
                         
-                        dispatch_async(dispatch_get_main_queue(), { 
+                        dispatch_async(dispatch_get_main_queue(), {
                             
                             for c in page.containers {
                                 if c.type == .Text {
-                                    debugPrint(c.textElement?.texts)
+                                    debug_print(c.textElement?.texts, context: previewConttext)
+                                    //                    debugPrint(c.textElement?.texts, context: previewConttext)
                                 }
                             }
                             
                             strongSelf.page = page
-                            strongSelf.previewView.reloadData(false)
+                            strongSelf.previewView.reloadData()
                             strongSelf.previewView.play()
-                            debugPrint("page = \(page), pageID = \(page)")
                         })
                     }
                 }

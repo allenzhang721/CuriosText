@@ -36,25 +36,40 @@ final class CTAPreviewCanvasController {
     class func configPreviewView(view: CTAPreviewView, container: ContainerVMProtocol, needLoadContents: Bool = true) {
         
         
-        debug_print(container.type)
+        debug_print(container.type, context: aniContext)
         
         guard needLoadContents else {
             return
         }
         
-        guard let textContainer = container as? TextContainerVMProtocol where container.type == .Text else {
-            return
+        switch container.type {
+            
+        case .Text:
+            let inset = container.inset
+            let size = container.size
+            let text = (container as! TextContainerVMProtocol).textElement?.attributeString
+            
+            let textView = TextView(frame: CGRect(origin: CGPoint.zero, size: size))
+            textView.insets = inset
+            textView.attributedText = text
+            textView.center = CGPoint(x: view.bounds.width / 2.0, y: view.bounds.height / 2.0)
+            view.appendView(textView)
+            
+        case .Image:
+//            let inset = container.inset
+            let size = container.size
+            let imageName = (container as! ImageContainerVMProtocol).imageElement?.resourceName
+            
+            let imageView = UIImageView(frame: CGRect(origin: CGPoint.zero, size: size))
+            imageView.image = CTAStyleKit.imageOfTextSpacingNormal
+            imageView.center = CGPoint(x: view.bounds.width / 2.0, y: view.bounds.height / 2.0)
+            view.appendView(imageView)
+            
+        default:
+            ()
+            
+            
         }
-        
-        let inset = textContainer.inset
-        let size = textContainer.size
-        let text = textContainer.textElement?.attributeString
-        
-        let textView = TextView(frame: CGRect(origin: CGPoint.zero, size: size))
-        textView.insets = inset
-        textView.attributedText = text
-        textView.center = CGPoint(x: view.bounds.width / 2.0, y: view.bounds.height / 2.0)
-        view.appendView(textView)
     }
     
     

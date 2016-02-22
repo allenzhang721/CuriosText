@@ -63,15 +63,40 @@ class CTADocumentManager {
             return
         }
         
-        openedDocument.savePresentedItemChangesWithCompletionHandler { (error) -> Void in
-            
-            if let _ = error {
-                completedBlock?(false)
-            } else {
-                completedBlock?(true)
+        openedDocument.saveToURL(openedDocument.fileURL, forSaveOperation: .ForOverwriting) { (success) in
+            if success {
+                
+                let urls = try! NSFileManager.defaultManager().contentsOfDirectoryAtURL(openedDocument.fileURL, includingPropertiesForKeys: nil, options: NSDirectoryEnumerationOptions(rawValue: 0))
+                
+                for u in urls {
+                    
+                    debug_print(u, context: previewConttext)
+                    
+                    if let data = NSData(contentsOfURL: u), let apage = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
+                        
+                        for c in apage.containers {
+                            if c.type == .Text {
+                                debug_print("didSavedData = \(c.textElement?.texts)", context: previewConttext)
+                                //                    debugPrint(c.textElement?.texts, context: previewConttext)
+                            }
+                        }
+                    }
+                }
             }
+            
+            
+            
+            
+            for c in openedDocument.page!.containers {
+                if c.type == .Text {
+                    debug_print("saved page = \(c.textElement?.texts)", context: previewConttext)
+//                    debugPrint(c.textElement?.texts, context: previewConttext)
+                }
+            }
+            
+            
+            completedBlock?(success)
         }
-        
     }
 }
 

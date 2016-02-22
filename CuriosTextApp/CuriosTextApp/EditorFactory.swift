@@ -62,7 +62,7 @@ class EditorFactory {
 //            animations += [ani]
             
             if i % 2 == 0 {
-                let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "我叫陈星宇 \nWhat can i do for you ?", attributes: CTATextAttributes(), index: i, count: n)
+                let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "Today is a good day !", attributes: CTATextAttributes(), index: i, count: n)
                 containers += [con]
                 
                 let ani = generateAnimationFor(con.iD, index: i)
