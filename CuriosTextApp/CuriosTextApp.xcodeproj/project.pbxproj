@@ -165,6 +165,13 @@
 		2CC74C981C5A27F800B536C2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC74C971C5A27F800B536C2 /* MessageUI.framework */; };
 		2CC74C9A1C5A28BA00B536C2 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC74C991C5A28BA00B536C2 /* libicucore.tbd */; };
 		2CC74C9F1C5A2BFA00B536C2 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC74C9E1C5A2BFA00B536C2 /* libstdc++.tbd */; };
+		2CC8115E1C79A6D5003CE8BF /* BlackCatCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC811571C79A6D5003CE8BF /* BlackCatCache.swift */; };
+		2CC8115F1C79A6D5003CE8BF /* BlackCatDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC811581C79A6D5003CE8BF /* BlackCatDownloader.swift */; };
+		2CC811601C79A6D5003CE8BF /* BlackCatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC811591C79A6D5003CE8BF /* BlackCatManager.swift */; };
+		2CC811611C79A6D5003CE8BF /* BlackCatOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC8115A1C79A6D5003CE8BF /* BlackCatOptions.swift */; };
+		2CC811621C79A6D5003CE8BF /* BlackCatOptionsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC8115B1C79A6D5003CE8BF /* BlackCatOptionsInfo.swift */; };
+		2CC811631C79A6D5003CE8BF /* BlackCatResultExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC8115C1C79A6D5003CE8BF /* BlackCatResultExtension.swift */; };
+		2CC811641C79A6D5003CE8BF /* String + bcMD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC8115D1C79A6D5003CE8BF /* String + bcMD5.swift */; };
 		2CC9307D1C74640300FB02A9 /* CTACameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9307C1C74640300FB02A9 /* CTACameraView.swift */; };
 		2CC9307F1C7464D000FB02A9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC9307E1C7464D000FB02A9 /* AVFoundation.framework */; };
 		2CCD94DC1C43B4AA001E5D08 /* CTATextSpacingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */; };
@@ -395,6 +402,13 @@
 		2CC74C971C5A27F800B536C2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		2CC74C991C5A28BA00B536C2 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		2CC74C9E1C5A2BFA00B536C2 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		2CC811571C79A6D5003CE8BF /* BlackCatCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackCatCache.swift; sourceTree = "<group>"; };
+		2CC811581C79A6D5003CE8BF /* BlackCatDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackCatDownloader.swift; sourceTree = "<group>"; };
+		2CC811591C79A6D5003CE8BF /* BlackCatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackCatManager.swift; sourceTree = "<group>"; };
+		2CC8115A1C79A6D5003CE8BF /* BlackCatOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackCatOptions.swift; sourceTree = "<group>"; };
+		2CC8115B1C79A6D5003CE8BF /* BlackCatOptionsInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackCatOptionsInfo.swift; sourceTree = "<group>"; };
+		2CC8115C1C79A6D5003CE8BF /* BlackCatResultExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackCatResultExtension.swift; sourceTree = "<group>"; };
+		2CC8115D1C79A6D5003CE8BF /* String + bcMD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String + bcMD5.swift"; sourceTree = "<group>"; };
 		2CC9307C1C74640300FB02A9 /* CTACameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACameraView.swift; sourceTree = "<group>"; };
 		2CC9307E1C7464D000FB02A9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATextSpacingView.swift; sourceTree = "<group>"; };
@@ -816,6 +830,7 @@
 		2C81B59E1C58B10600AE16E0 /* Gobal */ = {
 			isa = PBXGroup;
 			children = (
+				2CC811561C79A6D5003CE8BF /* BlackCat */,
 				2C1B88941C5F357E000403FD /* AES256 */,
 				2CA9933D1C75DD4700B5EEDC /* SimpleNetworking.swift */,
 				2C929DD61C60962B00F90BF4 /* CTAConfig.swift */,
@@ -928,6 +943,20 @@
 				2CC74C901C5A275C00B536C2 /* SMS_SDK.framework */,
 			);
 			path = SMS_SDK;
+			sourceTree = "<group>";
+		};
+		2CC811561C79A6D5003CE8BF /* BlackCat */ = {
+			isa = PBXGroup;
+			children = (
+				2CC811571C79A6D5003CE8BF /* BlackCatCache.swift */,
+				2CC811581C79A6D5003CE8BF /* BlackCatDownloader.swift */,
+				2CC811591C79A6D5003CE8BF /* BlackCatManager.swift */,
+				2CC8115A1C79A6D5003CE8BF /* BlackCatOptions.swift */,
+				2CC8115B1C79A6D5003CE8BF /* BlackCatOptionsInfo.swift */,
+				2CC8115C1C79A6D5003CE8BF /* BlackCatResultExtension.swift */,
+				2CC8115D1C79A6D5003CE8BF /* String + bcMD5.swift */,
+			);
+			path = BlackCat;
 			sourceTree = "<group>";
 		};
 		2CC9307A1C74638B00FB02A9 /* Camera */ = {
@@ -1170,6 +1199,7 @@
 				2C1B88961C5F35B9000403FD /* CTAEncryptManager.swift in Sources */,
 				2CFC65901C5630C700E8ADE7 /* CTAUserDetailProtocol.swift in Sources */,
 				2CAEAC9E1C323F4300C9F9AC /* ContainerTextView.swift in Sources */,
+				2CC811601C79A6D5003CE8BF /* BlackCatManager.swift in Sources */,
 				2C1B2AAC1C3520160053BE5E /* CTASelectorsReuseableView.swift in Sources */,
 				2C5C248C1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift in Sources */,
 				66C7BF251C3114BD00ADF251 /* CTADomainListInfo.swift in Sources */,
@@ -1188,6 +1218,7 @@
 				2C32653E1C7321A80000B89B /* CTAUploadIconProtocol.swift in Sources */,
 				2C5C24981C44FA5600A70F1B /* CTAColorsManger.swift in Sources */,
 				6628C7031C200C11007F873C /* CTAViewUserModel.swift in Sources */,
+				2CC811631C79A6D5003CE8BF /* BlackCatResultExtension.swift in Sources */,
 				2C1B88AB1C5F371A000403FD /* CTAAlertProtocol.swift in Sources */,
 				2C31EB631C452597002A4D71 /* SwiftHEXColors.swift in Sources */,
 				2C247FE91C5CA10E0069CFFC /* CTASelectorAnimationCell.swift in Sources */,
@@ -1206,6 +1237,7 @@
 				2C82FF551C4362FA001D927A /* CTASegementControl.swift in Sources */,
 				2C47F89C1C7171020068F215 /* CTAContainerViewModel.swift in Sources */,
 				2CDDF50B1C5F3BE00019FC83 /* NSData+CommonCrypto.m in Sources */,
+				2CC811641C79A6D5003CE8BF /* String + bcMD5.swift in Sources */,
 				2C65B6721C4F6F4C007B4DEA /* ValueExtension.swift in Sources */,
 				2CAEAC931C323F2600C9F9AC /* EditorFactory.swift in Sources */,
 				66A072AD1C186EFF0046C72F /* CTARelationRequestAPI.swift in Sources */,
@@ -1239,6 +1271,7 @@
 				2C3FD9881C5E21260064179F /* CTAConfigSliderCell.swift in Sources */,
 				2C3B34061C11B4F900738166 /* CTAConstants.swift in Sources */,
 				2CFC658E1C56305500E8ADE7 /* CTAFullPublishesCell.swift in Sources */,
+				2CC8115E1C79A6D5003CE8BF /* BlackCatCache.swift in Sources */,
 				2C47F8A21C7175A50068F215 /* CTAImgContainerViewModel.swift in Sources */,
 				66C7BF231C3111D700ADF251 /* CTADomainInfo.swift in Sources */,
 				2C5C248E1C44E1C900A70F1B /* CTAVerticalItemCollectionViewCell.swift in Sources */,
@@ -1282,6 +1315,7 @@
 				2CC9307D1C74640300FB02A9 /* CTACameraView.swift in Sources */,
 				66A072A91C156D1C0046C72F /* CTAUserRequestAPI.swift in Sources */,
 				2C47F8A01C7174D20068F215 /* CTATextContainerViewModel.swift in Sources */,
+				2CC811611C79A6D5003CE8BF /* BlackCatOptions.swift in Sources */,
 				2C5C24921C44E82100A70F1B /* CTAPickerView.swift in Sources */,
 				2CF5EB8B1C47B2CF009F0719 /* CTAFontsManager.swift in Sources */,
 				2C7A951D1C3A50F6005B0EAE /* CTATemplateViewController.swift in Sources */,
@@ -1296,6 +1330,7 @@
 				2C0404621C3EC31100A5B017 /* CTARotatorView.swift in Sources */,
 				2C8DD2111C4A33770035C52D /* CTAUserDetailViewController.swift in Sources */,
 				2C3CAD241C21826800D8DE4B /* CTANoDefaultActionLayer.swift in Sources */,
+				2CC8115F1C79A6D5003CE8BF /* BlackCatDownloader.swift in Sources */,
 				66ADD74D1C27F69900FD9BAF /* CTAUserRelationDomain.swift in Sources */,
 				2C65B66A1C4F517A007B4DEA /* CTAPreviewViewController.swift in Sources */,
 				2CAEAC941C323F2600C9F9AC /* EditViewController.swift in Sources */,
@@ -1321,6 +1356,7 @@
 				2C65B66C1C4F55F8007B4DEA /* CTAAnimation.swift in Sources */,
 				2C0C14EA1C60D9640011A31D /* CTASetPasswordViewController.swift in Sources */,
 				2C1B88A41C5F366F000403FD /* CTAPhoneProtocol.swift in Sources */,
+				2CC811621C79A6D5003CE8BF /* BlackCatOptionsInfo.swift in Sources */,
 				2CFC658C1C56301600E8ADE7 /* CTAPublishCellProtocol.swift in Sources */,
 				2C9706C71C1E6FE100FA2E17 /* CTAUserDomain.swift in Sources */,
 				2C3CAD181C21825900D8DE4B /* CTAImageElement.swift in Sources */,

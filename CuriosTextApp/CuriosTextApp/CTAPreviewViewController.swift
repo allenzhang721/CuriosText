@@ -37,7 +37,7 @@ class CTAPreviewViewController: UIViewController {
 
 extension CTAPreviewViewController: CTAPreviewCanvasViewDataSource {
     
-    func canvasViewWithPage(view: CTAPreviewCanvasView) -> PageVMProtocol {
+    func canvasViewWithPage(view: CTAPreviewCanvasView) -> PageVMProtocol? {
         return page
     }
 }

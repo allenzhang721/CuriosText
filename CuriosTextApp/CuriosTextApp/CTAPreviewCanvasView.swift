@@ -10,7 +10,7 @@ import UIKit
 
 protocol CTAPreviewCanvasViewDataSource: class {
     
-    func canvasViewWithPage(view: CTAPreviewCanvasView) -> PageVMProtocol
+    func canvasViewWithPage(view: CTAPreviewCanvasView) -> PageVMProtocol?
 }
 
 class CTAPreviewCanvasView: UIView {

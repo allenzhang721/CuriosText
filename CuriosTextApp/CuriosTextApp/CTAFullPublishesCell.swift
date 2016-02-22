@@ -11,7 +11,7 @@ import Kingfisher
 
 class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
-    private let page = EditorFactory.generateRandomPage()
+    private var page: CTAPage?
     
     var publishModel:CTAPublishModel?{
         didSet{
@@ -70,12 +70,42 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
             addSubview(preview)
             previewView = preview
         }
+        
+
+        
     }
     
     func playAnimation(){
         if self.animationEnable{
             // preview play
-            previewView.play()
+            previewView?.play()
+        }
+        
+        if let publishModel = publishModel {
+            
+            let purl = CTAFilePath.publishFilePath
+            let url = purl + publishModel.publishURL
+            BlackCatManager.sharedManager.retrieveDataWithURL(NSURL(string: url)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self] (data, error, cacheType, URL) in
+                
+                if let strongSelf = self {
+                    if let data = data, let page = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
+                        
+                        dispatch_async(dispatch_get_main_queue(), { 
+                            
+                            for c in page.containers {
+                                if c.type == .Text {
+                                    debugPrint(c.textElement?.texts)
+                                }
+                            }
+                            
+                            strongSelf.page = page
+                            strongSelf.previewView.reloadData(false)
+                            strongSelf.previewView.play()
+                            debugPrint("page = \(page), pageID = \(page)")
+                        })
+                    }
+                }
+            })
         }
     }
     
@@ -90,7 +120,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
 
 extension CTAFullPublishesCell: CTAPreviewCanvasViewDataSource {
     
-    func canvasViewWithPage(view: CTAPreviewCanvasView) -> PageVMProtocol {
+    func canvasViewWithPage(view: CTAPreviewCanvasView) -> PageVMProtocol? {
         
         return page
     }

@@ -23,7 +23,7 @@ struct CTARequestResultKey {
 struct CTAFilePath {
 
     static var userFilePath = "https://dn-tu-curiosapp.qbox.me/"
-    static var publishFilePath = "https://dn-tp-curiosapp.qbox.me/"
+    static var publishFilePath = "https://o2w6twocj.qnssl.com/"
 }
 
 enum CTARequestHost: CustomStringConvertible {
