@@ -117,12 +117,12 @@ extension CTAHomeViewController: CTAPublishProtocol{
         }
     }
     
-    func shareButtonClick(sender: UIButton){
+    func moreButtonClick(sender: UIButton){
         if !CTAUserManager.isLogin {
             self.showLoginView()
         }else if let publishModel = self.currentFullCell.publishModel{
             let user = CTAUserManager.user
-            self.shareHandler(user!.userID, publishModel: publishModel)
+            self.moreSelectionHandler(user!.userID, publishModel: publishModel)
         }
     }
     

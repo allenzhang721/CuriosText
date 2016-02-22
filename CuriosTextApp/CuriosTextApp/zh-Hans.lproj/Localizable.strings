@@ -23,6 +23,7 @@
 "SearchLabel" = "选择国家和地区";
 "LoginButtonLabel" = "登录";
 "LogoutButtonLabel" = "退出登录";
+"ConfirmLogoutLabel" = "退出后不会删除任何数据，下次登录依然可以使用本账号。";
 "OtherAccountLoginLabel" = "使用其他账号登录";
 "ForgetPasswordLabel" = "忘记密码?";
 "RegisterLabel" = "注册";

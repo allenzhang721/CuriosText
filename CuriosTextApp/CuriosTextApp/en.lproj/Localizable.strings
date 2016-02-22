@@ -20,6 +20,7 @@
 "SearchLabel" = "Region";
 "LoginButtonLabel" = "Login";
 "LogoutButtonLabel" = "Log Out";
+"ConfirmLogoutLabel" = "Logout will not delete any data. You can still log in with this account";
 "OtherAccountLoginLabel" = "Other Account";
 "ForgetPasswordLabel" = "Forget password?";
 "RegisterLabel" = "Sign Up";

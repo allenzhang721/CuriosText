@@ -95,15 +95,18 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         
         self.nickNameView = UIView.init(frame: CGRect.init(x: 0, y: 44, width: bouns.width, height: bouns.height-44))
         self.view.addSubview(self.nickNameView)
-        self.userNickNameTextInput = UITextField.init(frame: CGRect.init(x:27*self.getHorRate(), y: 12, width: 320*self.getHorRate(), height: 50))
+        self.userNickNameTextInput = UITextField.init(frame: CGRect.init(x:27*self.getHorRate(), y: 12, width: 280*self.getHorRate(), height: 50))
+        self.userNickNameTextInput.center = CGPoint.init(x: bouns.width/2, y: 37)
         self.userNickNameTextInput.placeholder = NSLocalizedString("UserNamePlaceholder", comment: "")
         self.userNickNameTextInput.delegate = self
         self.userNickNameTextInput.clearButtonMode = .Always
         self.userNickNameTextInput.returnKeyType = .Done
         self.nickNameView.addSubview(self.userNickNameTextInput)
-        let textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userNickNameTextInput.frame.origin.y + 49, width: 330*self.getHorRate(), height: 1))
+        let textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userNickNameTextInput.frame.origin.y + 49, width: 290*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "textinput-line")
+        textLine.center = CGPoint.init(x: bouns.width/2, y: self.userNickNameTextInput.frame.origin.y + 49)
         self.nickNameView.addSubview(textLine)
+        
         
         
         self.descView = UIView.init(frame: CGRect.init(x: 0, y: 44, width: bouns.width, height: bouns.height-44))
@@ -118,7 +121,7 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         self.descView.addSubview(userDescTextView)
         self.descTextLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userDescTextView.frame.origin.y + 49, width: 290*self.getHorRate(), height: 1))
         self.descTextLine.image = UIImage(named: "textinput-line")
-        self.descTextLine.center = CGPoint.init(x: bouns.width/2, y: self.userDescTextView.frame.origin.y + 50)
+        self.descTextLine.center = CGPoint.init(x: bouns.width/2, y: self.userDescTextView.frame.origin.y + 49)
         self.descView.addSubview(self.descTextLine)
         
         
@@ -285,7 +288,7 @@ extension CTASetUserInfoViewController: UITextFieldDelegate{
         let textField = noti.object as! UITextField
         self.checkTextField(textField)
         textField.sizeToFit()
-        textField.frame.size.width = 320*self.getHorRate()
+        textField.frame.size.width = 280*self.getHorRate()
         textField.frame.size.height = 50
         let text = textField.text
         if text == self.setUser!.nickName {
@@ -302,7 +305,7 @@ extension CTASetUserInfoViewController: UITextFieldDelegate{
         let textWidth = textField.frame.width
         var needReset:Bool = false
         let textLimit = 32
-        let textWidthLimit = 320*self.getHorRate() - 10
+        let textWidthLimit = 280*self.getHorRate() - 30
         if textWidth < textWidthLimit{
             if textStr.length > textLimit {
                 needReset = true

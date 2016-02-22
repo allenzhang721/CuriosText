@@ -20,8 +20,8 @@ protocol CTAPublishProtocol:CTAImageControllerProtocol{
     func setLikeButtonStyle(publishModel:CTAPublishModel?)
     func likeButtonClick(sender: UIButton)
     
-    func shareHandler(userID:String, publishModel:CTAPublishModel)
-    func shareButtonClick(sender: UIButton)
+    func moreSelectionHandler(userID:String, publishModel:CTAPublishModel)
+    func moreButtonClick(sender: UIButton)
     
     func rebuildHandler(userID:String, publishModel:CTAPublishModel)
     func rebuildButtonClick(sender: UIButton)
@@ -33,10 +33,10 @@ extension CTAPublishProtocol where Self: UIViewController{
 
     func initPublishSubView(publishRect:CGRect, horRate:CGFloat){
         let bounds = UIScreen.mainScreen().bounds
-        var butY  = bounds.height/2 + publishRect.height/2 + 50*horRate
-        if butY > bounds.height - 65{
-            butY = bounds.height - 65
-        }
+        let butY   = bounds.height - 65 //bounds.height/2 + publishRect.height/2 + 50*horRate
+//        if butY > bounds.height - 65{
+//            butY = bounds.height - 65
+//        }
         self.likeButton.frame = CGRect.init(x: 0, y: 0, width: 40, height: 40)
         self.likeButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 + 90*horRate,y: butY)
         self.likeButton.setImage(UIImage.init(named: "like-button"), forState: .Normal)
@@ -44,12 +44,12 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.view.addSubview(self.likeButton)
         self.likeButton.addTarget(self, action: "likeButtonClick:", forControlEvents: .TouchUpInside)
         
-        let shareButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
-        shareButton.setImage(UIImage.init(named: "share-button"), forState: .Normal)
-        shareButton.setImage(UIImage.init(named: "share-selected-button"), forState: .Highlighted)
-        shareButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 90*horRate, y: butY)
-        self.view.addSubview(shareButton)
-        shareButton.addTarget(self, action: "shareButtonClick:", forControlEvents: .TouchUpInside)
+        let moreButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
+        moreButton.setImage(UIImage.init(named: "moreSelection-button"), forState: .Normal)
+        moreButton.setImage(UIImage.init(named: "moreSelection-selected-button"), forState: .Highlighted)
+        moreButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 90*horRate, y: butY)
+        self.view.addSubview(moreButton)
+        moreButton.addTarget(self, action: "moreButtonClick:", forControlEvents: .TouchUpInside)
         
         let rebuildButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
         rebuildButton.setImage(UIImage.init(named: "rebuild-button"), forState: .Normal)
@@ -132,7 +132,7 @@ extension CTAPublishProtocol where Self: UIViewController{
         }
     }
     
-    func shareHandler(userID:String, publishModel:CTAPublishModel){
+    func moreSelectionHandler(userID:String, publishModel:CTAPublishModel){
         print("shareHandler")
     }
     

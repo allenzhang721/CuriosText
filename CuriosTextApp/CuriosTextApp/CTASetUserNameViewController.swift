@@ -266,7 +266,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         var alertArray:Array<String> = []
         alertArray.append(NSLocalizedString("AlertTakePhotoLabel", comment: ""))
         alertArray.append(NSLocalizedString("AlertChoosePhoteLabel", comment: ""))
-        self.showSheetAlert(alertArray, cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: "")) { (index) -> Void in
+        self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: "")) { (index) -> Void in
             if index == 0{
                 self.imagePicker.allowsEditing = false
                 self.imagePicker.sourceType = .Camera

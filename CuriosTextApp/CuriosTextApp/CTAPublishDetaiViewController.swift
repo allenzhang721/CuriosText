@@ -865,9 +865,9 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
         }
     }
     
-    func shareButtonClick(sender: UIButton){
+    func moreButtonClick(sender: UIButton){
         if let publishModel = self.currentFullCell.publishModel{
-            self.shareHandler(self.loginUserID, publishModel: publishModel)
+            self.moreSelectionHandler(self.loginUserID, publishModel: publishModel)
         }
     }
     
