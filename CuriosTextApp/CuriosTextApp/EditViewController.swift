@@ -10,6 +10,7 @@ import UIKit
 
 class EditViewController: UIViewController {
     
+    @IBOutlet weak var addView: CTAEditAddView!
     private var tabViewController: CTATabViewController!
     private var canvasViewController: CTACanvasViewController!
     private var selectorViewController: CTASelectorsViewController!
@@ -32,6 +33,7 @@ class EditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addGestures()
+        setup()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -53,6 +55,17 @@ class EditViewController: UIViewController {
             selectorViewController.delegate = self
         default:
             ()
+        }
+    }
+    
+    // MARK: - Setup
+    func setup() {
+        
+        addView.didClickHandler = {[weak self] in
+            
+            if let strongSelf = self {
+                strongSelf.addText()
+            }
         }
     }
     
@@ -208,12 +221,19 @@ class EditViewController: UIViewController {
         default:
             ()
         }
-        
     }
 }
 
 // MARK: - Actions 
 extension EditViewController {
+    
+    func addText(s: String = "") {
+        
+        let textContainer = EditorFactory.generateTextContainer(page.width, pageHeigh: page.height, text: s.isEmpty ? "Double click to Edit" : s)
+        
+        page.append(textContainer)
+        canvasViewController.insertAt(NSIndexPath(forItem: page.containers.count - 1, inSection: 0))
+    }
     
     @IBAction func cancelAction(sender: AnyObject) {
         

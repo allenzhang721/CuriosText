@@ -63,6 +63,23 @@
                                     <segue destination="qne-Oy-fsc" kind="embed" id="eNp-UJ-leQ"/>
                                 </connections>
                             </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cNn-AO-UPu" customClass="CTAEditAddView" customModule="CuriosTextApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="618" width="49" height="49"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="cNn-AO-UPu" secondAttribute="height" multiplier="1:1" id="4HU-WA-pSR"/>
+                                    <constraint firstAttribute="width" constant="49" id="NMA-yk-RJF"/>
+                                    <constraint firstAttribute="height" constant="49" id="QoD-YK-xet"/>
+                                    <constraint firstAttribute="height" constant="49" id="SlP-wk-edl"/>
+                                    <constraint firstAttribute="width" constant="49" id="gw8-Ti-CAD"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="NMA-yk-RJF"/>
+                                        <exclude reference="SlP-wk-edl"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -70,14 +87,20 @@
                             <constraint firstAttribute="trailingMargin" secondItem="UV4-IL-VCX" secondAttribute="trailing" constant="-20" id="35J-Mj-PnT"/>
                             <constraint firstItem="aV6-Ee-4qV" firstAttribute="centerX" secondItem="w2g-1j-cAV" secondAttribute="centerX" id="40s-6S-53e"/>
                             <constraint firstItem="O59-ti-f4e" firstAttribute="top" secondItem="UV4-IL-VCX" secondAttribute="bottom" id="4w9-hh-uOL"/>
+                            <constraint firstItem="cNn-AO-UPu" firstAttribute="bottom" secondItem="AXi-ce-yHq" secondAttribute="top" id="AsF-j1-5pL"/>
+                            <constraint firstItem="cNn-AO-UPu" firstAttribute="leading" secondItem="O59-ti-f4e" secondAttribute="leading" id="Bwp-1q-oCd"/>
                             <constraint firstItem="UV4-IL-VCX" firstAttribute="leading" secondItem="w2g-1j-cAV" secondAttribute="leadingMargin" constant="-20" id="CGj-T2-6W2"/>
                             <constraint firstItem="aT5-ah-Tch" firstAttribute="top" secondItem="w2g-1j-cAV" secondAttribute="top" constant="20" id="D3M-Nn-Iqp"/>
                             <constraint firstItem="O59-ti-f4e" firstAttribute="top" secondItem="UV4-IL-VCX" secondAttribute="bottom" constant="8" id="EJQ-SH-sQJ"/>
                             <constraint firstItem="O59-ti-f4e" firstAttribute="leading" secondItem="w2g-1j-cAV" secondAttribute="leading" id="H6Q-Nc-CSB"/>
+                            <constraint firstAttribute="trailing" secondItem="cNn-AO-UPu" secondAttribute="trailing" constant="326" id="HZR-6j-5l1"/>
                             <constraint firstItem="aV6-Ee-4qV" firstAttribute="top" secondItem="ueh-u7-QEU" secondAttribute="bottom" constant="60" id="LUb-N9-aDh"/>
                             <constraint firstAttribute="trailing" secondItem="UV4-IL-VCX" secondAttribute="trailing" id="MRS-1u-ipg"/>
                             <constraint firstItem="aT5-ah-Tch" firstAttribute="leading" secondItem="w2g-1j-cAV" secondAttribute="leading" id="VW0-Lu-swc"/>
+                            <constraint firstItem="cNn-AO-UPu" firstAttribute="top" secondItem="O59-ti-f4e" secondAttribute="top" id="e8z-Tl-xLC"/>
                             <constraint firstItem="AXi-ce-yHq" firstAttribute="top" secondItem="O59-ti-f4e" secondAttribute="bottom" id="fNW-Ki-ECW"/>
+                            <constraint firstItem="cNn-AO-UPu" firstAttribute="leading" secondItem="w2g-1j-cAV" secondAttribute="leading" id="fwU-Wt-12F"/>
+                            <constraint firstItem="AXi-ce-yHq" firstAttribute="top" secondItem="cNn-AO-UPu" secondAttribute="bottom" id="lEo-jk-v3p"/>
                             <constraint firstAttribute="trailing" secondItem="aT5-ah-Tch" secondAttribute="trailing" id="oj6-Dc-kmd"/>
                             <constraint firstItem="UV4-IL-VCX" firstAttribute="width" secondItem="w2g-1j-cAV" secondAttribute="width" id="ov3-94-6SC"/>
                             <constraint firstAttribute="trailing" secondItem="O59-ti-f4e" secondAttribute="trailing" id="qvr-ir-UxA"/>
@@ -90,10 +113,17 @@
                                 <exclude reference="CGj-T2-6W2"/>
                                 <exclude reference="ov3-94-6SC"/>
                                 <exclude reference="EJQ-SH-sQJ"/>
+                                <exclude reference="AsF-j1-5pL"/>
+                                <exclude reference="Bwp-1q-oCd"/>
+                                <exclude reference="HZR-6j-5l1"/>
+                                <exclude reference="e8z-Tl-xLC"/>
                             </mask>
                         </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="addView" destination="cNn-AO-UPu" id="yLB-5w-URv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vNG-Ne-lhB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

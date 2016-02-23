@@ -263,6 +263,30 @@ extension EditorFactory {
 
 extension EditorFactory {
     
+    class func generateTextContainer(
+        pageWidth: Double,
+        pageHeigh: Double,
+        text: String,
+        attributes: CTATextAttributes = CTATextAttributes()
+        ) -> CTAContainer {
+            
+            let textElement = CTATextElement(text: text, attributes: attributes)
+            let textSize = textElement.textSizeWithConstraintSize(CGSize(width: pageWidth, height: pageHeigh * 2))
+            
+            
+            return CTAContainer(
+                x: pageWidth / 2.0,
+                y: pageHeigh / 2.0,
+                width: Double(textSize.width),
+                height: Double(textSize.height),
+                rotation: 0.0,
+                alpha: 1.0,
+                scale: 1.0,
+                inset: CGPoint.zero,
+                element: textElement
+            )
+    }
+    
     class func generateAnimationFor (
         targetID: String,
         index: Int) -> CTAAnimation {

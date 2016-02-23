@@ -49,16 +49,19 @@ final class CTAPreviewCanvasController {
             let size = container.size
             let text = (container as! TextContainerVMProtocol).textElement?.attributeString
             
-            let textView = TextView(frame: CGRect(origin: CGPoint.zero, size: size))
+            let textView = TextView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: size.width + inset.x * 2, height: size.height + inset.y * 2)))
             textView.insets = inset
             textView.attributedText = text
             textView.center = CGPoint(x: view.bounds.width / 2.0, y: view.bounds.height / 2.0)
+            
+//            debug_print("\(container.iD): \(textView.frame)", context: previewConttext)
+            
             view.appendView(textView)
             
         case .Image:
 //            let inset = container.inset
             let size = container.size
-            let imageName = (container as! ImageContainerVMProtocol).imageElement?.resourceName
+//            let imageName = (container as! ImageContainerVMProtocol).imageElement?.resourceName
             
             let imageView = UIImageView(frame: CGRect(origin: CGPoint.zero, size: size))
             imageView.image = CTAStyleKit.imageOfTextSpacingNormal

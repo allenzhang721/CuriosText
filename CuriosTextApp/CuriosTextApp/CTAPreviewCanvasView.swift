@@ -96,6 +96,10 @@ class CTAPreviewCanvasView: UIView {
         collectionView.frame = bounds
     }
     
+    /*
+     clear all the views on the cell
+     
+     */
     func reloadData(needReloadAnimation: Bool = true) {
         
         cleanViews()
@@ -110,6 +114,7 @@ class CTAPreviewCanvasView: UIView {
         }
     }
 
+    // Clear all the views on the cell
     func cleanViews() {
         
         let visualCells = collectionView.visibleCells() as! [CTAPreviewCell]

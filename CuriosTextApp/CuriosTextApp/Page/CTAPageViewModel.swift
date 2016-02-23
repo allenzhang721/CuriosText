@@ -10,6 +10,8 @@ import Foundation
 
 protocol PageVMProtocol {
     
+    var size: CGSize { get }
+    
     var containerVMs: [ContainerVMProtocol] { get }
     var animationBinders: [CTAAnimationBinder] { get }
 }
@@ -48,6 +50,11 @@ extension PageVMProtocol {
 }
 
 extension CTAPage: PageVMProtocol {
+    
+    
+    var size: CGSize {
+        return CGSize(width: width, height: height)
+    }
     
     var containerVMs: [ContainerVMProtocol] {
         return containers.map{$0 as ContainerVMProtocol}

@@ -263,6 +263,10 @@ final class CTACanvasViewController: UIViewController {
     //        }
     //    }
     
+    func insertAt(indexPath: NSIndexPath) {
+        collectionView.insertItemsAtIndexPaths([indexPath])
+    }
+    
     
     func updateAt(indexPath: NSIndexPath, updateContents: Bool = false) {
         let cell = collectionView.cellForItemAtIndexPath(indexPath)
