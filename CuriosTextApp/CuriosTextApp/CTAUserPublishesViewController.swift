@@ -296,17 +296,14 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                 }
                 for var i=0; i < modelArray!.count; i++ {
                     let publishModel = modelArray![i] as! CTAPublishModel
-                    if self.isLoadingFirstData{
-                        if self.checkPublishModelIsHave(publishModel.publishID){
-                            self.removePublishModelByID(publishModel.publishID)
-                        }
-                        if i < self.publishModelArray.count {
-                            self.publishModelArray.insert(publishModel, atIndex: i)
-                        }else{
-                            self.publishModelArray.append(publishModel)
-                        }
-                    } else {
-                        if !self.checkPublishModelIsHave(publishModel.publishID){
+                    if !self.checkPublishModelIsHave(publishModel.publishID){
+                        if self.isLoadingFirstData{
+                            if i < self.publishModelArray.count {
+                                self.publishModelArray.insert(publishModel, atIndex: i)
+                            }else{
+                                self.publishModelArray.append(publishModel)
+                            }
+                        } else {
                             self.publishModelArray.append(publishModel)
                         }
                     }
