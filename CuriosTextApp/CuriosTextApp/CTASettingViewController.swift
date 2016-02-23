@@ -152,6 +152,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         textLine.image = UIImage(named: "textinput-line")
         self.scrollView.addSubview(textLine)
         self.userSexLabel.userInteractionEnabled = true
+        
         let userSexTap = UITapGestureRecognizer(target: self, action: "userSexClick:")
         self.userSexLabel.addGestureRecognizer(userSexTap)
         
@@ -292,7 +293,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         }else {
             self.userDescLabel.textAlignment = .Left
             self.descNextImg.frame.origin.y = self.userDescLabel.frame.origin.y + texth - 22
-            self.descLineImg.frame.origin.y = self.userDescLabel.frame.origin.y + texth
+            self.descLineImg.frame.origin.y = self.userDescLabel.frame.origin.y + texth + 12
         }
         
         self.logoutButton.enabled = true
@@ -318,7 +319,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
             var alertArray:Array<String> = []
             alertArray.append(NSLocalizedString("AlertTakePhotoLabel", comment: ""))
             alertArray.append(NSLocalizedString("AlertChoosePhoteLabel", comment: ""))
-            self.showSheetAlert(alertArray, cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: "")) { (index) -> Void in
+            self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: "")) { (index) -> Void in
                 if index == 0{
                     self.imagePicker.allowsEditing = false
                     self.imagePicker.sourceType = .Camera
@@ -346,7 +347,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
             var alertArray:Array<String> = []
             alertArray.append(NSLocalizedString("UserMaleLabel", comment: ""))
             alertArray.append(NSLocalizedString("UserFemaleLabel", comment: ""))
-            self.showSheetAlert(alertArray, cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: "")) { (index) -> Void in
+            self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: "")) { (index) -> Void in
                 if index != -1{
                     let sexIndex = index + 1
                     self.loginUser!.sex = sexIndex
@@ -375,8 +376,17 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     }
     
     func logoutButtonClick(sender: UIButton){
-        CTAUserManager.logout()
-        self.showLoginView()
+        if isLogin{
+            var alertArray:Array<String> = []
+            alertArray.append(NSLocalizedString("LogoutButtonLabel", comment: ""))
+            let alertTile = NSLocalizedString("ConfirmLogoutLabel", comment: "")
+            self.showSheetAlert(alertTile, okAlertArray: alertArray, cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: "")) { (index) -> Void in
+                if index != -1{
+                    CTAUserManager.logout()
+                    self.showLoginView()
+                }
+            }
+        }
     }
     
     func changeUserIcon(icon:UIImage){

@@ -305,7 +305,7 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
     
     func reSendButtonClick(sender: UIButton){
         self.hideTextInput.resignFirstResponder()
-        self.showSheetAlert([NSLocalizedString("AlertResendLabel", comment: "")], cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: ""), compelecationBlock: { (result) -> Void in
+        self.showSheetAlert(nil, okAlertArray:[NSLocalizedString("AlertResendLabel", comment: "")], cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: ""), compelecationBlock: { (result) -> Void in
             if result != -1{
                 self.changeToLoadingView()
                 let delay = dispatch_time(DISPATCH_TIME_NOW,

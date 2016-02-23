@@ -12,7 +12,7 @@ protocol CTAAlertProtocol{
     
     func showSelectedAlert(alertTile:String, alertMessage:String, okAlertLabel:String, cancelAlertLabel:String, compelecationBlock: (Bool) -> Void)
     func showSingleAlert(alertTile:String, alertMessage:String, compelecationBlock: () -> Void)
-    func showSheetAlert(okAlertArray:Array<String>, cancelAlertLabel:String, compelecationBlock: (index:Int) -> Void)
+    func showSheetAlert(alertTile:String?, okAlertArray:Array<String>, cancelAlertLabel:String, compelecationBlock: (index:Int) -> Void)
 }
 
 extension CTAAlertProtocol where Self: UIViewController{
@@ -36,8 +36,8 @@ extension CTAAlertProtocol where Self: UIViewController{
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    func showSheetAlert(okAlertArray:Array<String>, cancelAlertLabel:String, compelecationBlock: (index:Int) -> Void){
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+    func showSheetAlert(alertTile:String?, okAlertArray:Array<String>, cancelAlertLabel:String, compelecationBlock: (index:Int) -> Void){
+        let alert = UIAlertController(title: alertTile, message: nil, preferredStyle: .ActionSheet)
         for var i:Int=0; i < okAlertArray.count; i++ {
             let alertIndex = i
             alert.addAction(UIAlertAction(title: okAlertArray[i], style: .Default, handler: { (_) -> Void in

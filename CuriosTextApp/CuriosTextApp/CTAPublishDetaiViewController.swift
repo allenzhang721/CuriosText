@@ -194,7 +194,6 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
         self.currentFullCell!.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2)
         self.currentFullCell!.alpha = 1.0
         self.currentFullCell!.playAnimation()
-        
         self.setLikeButtonStyle(self.currentFullCell.publishModel)
     }
     
@@ -318,22 +317,18 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                 }
                 for var i=0; i < modelArray!.count; i++ {
                     let publishModel = modelArray![i] as! CTAPublishModel
-                    if self.isLoadingFirstData{
-                        if self.checkPublishModelIsHave(publishModel.publishID){
-                            self.removePublishModelByID(publishModel.publishID)
-                        }
-                        if i < self.publishModelArray.count {
-                            self.publishModelArray.insert(publishModel, atIndex: i)
-                        }else{
-                            self.publishModelArray.append(publishModel)
-                        }
-                    } else {
-                        if !self.checkPublishModelIsHave(publishModel.publishID){
+                    if !self.checkPublishModelIsHave(publishModel.publishID){
+                        if self.isLoadingFirstData{
+                            if i < self.publishModelArray.count {
+                                self.publishModelArray.insert(publishModel, atIndex: i)
+                            }else{
+                                self.publishModelArray.append(publishModel)
+                            }
+                        } else {
                             self.publishModelArray.append(publishModel)
                         }
                     }
                 }
-                self.reloadCells()
             }
         }
     }
@@ -865,9 +860,9 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
         }
     }
     
-    func shareButtonClick(sender: UIButton){
+    func moreButtonClick(sender: UIButton){
         if let publishModel = self.currentFullCell.publishModel{
-            self.shareHandler(self.loginUserID, publishModel: publishModel)
+            self.moreSelectionHandler(self.loginUserID, publishModel: publishModel)
         }
     }
     
