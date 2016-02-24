@@ -246,7 +246,7 @@ extension EditViewController {
     
     func addImage(s: UIImage, size: CGSize) {
         
-        let ID = CTAIDGenerator.generateID()
+        let ID = CTAIDGenerator.fileID()
         let imageName = document.resourcePath + ID + ".jpg"
         
         let name = document.storeResource(compressJPGImage(s), withName: imageName)
