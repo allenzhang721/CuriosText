@@ -36,13 +36,11 @@ class CTAUserDomain: CTABaseDomain {
                     let data = json[key(.Data)].string
                     compelecationBlock(data)
                 } else{
-                    uuid = NSUUID().UUIDString
-                    uuid = self.changeUUID(uuid)
+                    uuid = CTAIDGenerator.generateID()
                     compelecationBlock(uuid)
                 }
             case .Failure( _):
-                uuid = NSUUID().UUIDString
-                uuid = self.changeUUID(uuid)
+                uuid = CTAIDGenerator.generateID()
                 compelecationBlock(uuid)
             }
         }

@@ -17,9 +17,7 @@ protocol CTAUploadIconProtocol: CTAAlertProtocol{
 extension CTAUploadIconProtocol{
     func uploadUserIcon(user:CTAUserModel, icon:UIImage){
         let userID = user.userID
-        let uuid = NSUUID().UUIDString
-        let uuidStr = NSString(string: uuid)
-        let imageName = uuidStr.substringWithRange(NSMakeRange(0, 6))
+        let imageName = CTAIDGenerator.fileID()
         let userIconKey = userID+"/"+imageName+".jpg"
         let uptoken = CTAUpTokenModel.init(upTokenKey: userIconKey)
         self.uploadBegin()

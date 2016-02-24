@@ -57,7 +57,7 @@ class UploadTests: XCTestCase {
 extension UploadTests {
     
     func upTokenRequest(){
-        let publishID = self.changeUUID(NSUUID().UUIDString)
+        let publishID = CTAIDGenerator.generateID()
         
         let publishIconURL = generateTempFileBy(1024*1024)
         let publishIconKey = publishID+"/icon.jpg"
@@ -115,15 +115,6 @@ extension UploadTests {
                 print("index = \(i+1) key = \(model.key) token = \(model.token)")
             }
         }
-    }
-    
-    func changeUUID(uuid:String) ->String{
-        var newID:String = uuid;
-        while  newID.rangeOfString("-") != nil{
-            let range = newID.rangeOfString("-")
-            newID.replaceRange(range!, with: "")
-        }
-        return newID;
     }
 }
 

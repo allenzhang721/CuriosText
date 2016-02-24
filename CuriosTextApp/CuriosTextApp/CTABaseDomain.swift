@@ -11,7 +11,6 @@ import SwiftyJSON
 
 protocol CTABaseDomain{
     func checkJsonResult(json: JSON) -> Bool;
-    func changeUUID(uuid:String) ->String;
 }
 
 extension CTABaseDomain {
@@ -23,14 +22,5 @@ extension CTABaseDomain {
         }else{
             return false;
         }
-    }
-    
-    func changeUUID(uuid:String) ->String{
-        var newID:String = uuid;
-        while  newID.rangeOfString("-") != nil{
-            let range = newID.rangeOfString("-")
-            newID.replaceRange(range!, with: "")
-        }
-        return newID;
     }
 }

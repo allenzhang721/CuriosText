@@ -60,6 +60,13 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     func initView(){
         let bounds = UIScreen.mainScreen().bounds
         let fullSize = self.getFullCellRect(nil, rate: 1.0)
+        let handView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: bounds.width, height: fullSize.height + 20))
+        handView.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2)
+        handView.backgroundColor = UIColor.grayColor()
+        let pan = UIPanGestureRecognizer(target: self, action: "viewPanHandler:")
+        handView.addGestureRecognizer(pan)
+        self.view.addSubview(handView)
+        
         self.currentFullCell = CTAFullPublishesCell.init(frame: CGRect.init(x: 0, y: 0, width: fullSize.width, height: fullSize.height))
         self.view.addSubview(self.currentFullCell!)
         self.currentFullCell!.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2)
@@ -91,6 +98,10 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             }
             
         }
+    }
+    
+    func viewPanHandler(sender: UIPanGestureRecognizer) {
+        print("viewPanHandler")
     }
     
     func userButtonClick(sender: UIButton){
