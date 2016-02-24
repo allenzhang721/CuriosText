@@ -26,8 +26,8 @@ final class CTAImgElement: NSObject, NSCoding {
     }
     
     // TODO: need ImgElement init parameter -- Emiaostein, 15/02/16, 14:31
-    override init() {
-        imageName = CTAIDGenerator.generateID()
+    init(imageName: String) {
+        self.imageName = imageName
         super.init()
     }
 }

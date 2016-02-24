@@ -113,6 +113,8 @@ extension CTADocumentManager {
         let publishPath = result.0
         let tokenModels = Array(files.keys).map {CTAUpTokenModel(upTokenKey: $0)}
         
+        debug_print(files)
+        
         CTAUpTokenDomain().publishUpToken(tokenModels) { (domainListInfo) -> Void in
             
             if let models = domainListInfo.modelArray as? [CTAUpTokenModel] {

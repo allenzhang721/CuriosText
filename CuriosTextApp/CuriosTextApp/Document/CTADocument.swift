@@ -45,6 +45,11 @@ class CTADocument: UIDocument {
         }
     }
     
+    var resourcePath: String {
+//        return fileURL.lastPathComponent! + "/" + "\(WrapperKey.resource)" + "/"
+        return ""
+    }
+    
     init(fileURL url: NSURL, page: CTAPage?) {
         self.page = page ?? CTAPage(containers: [])
         super.init(fileURL: url)

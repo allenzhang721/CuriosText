@@ -379,7 +379,7 @@
 		2CA9933D1C75DD4700B5EEDC /* SimpleNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleNetworking.swift; sourceTree = "<group>"; };
 		2CAEAC8C1C323F2600C9F9AC /* Dynamic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 		2CAEAC8D1C323F2600C9F9AC /* Editor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Editor.storyboard; sourceTree = "<group>"; };
-		2CAEAC8E1C323F2600C9F9AC /* EditorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditorFactory.swift; path = ../EditorFactory.swift; sourceTree = "<group>"; };
+		2CAEAC8E1C323F2600C9F9AC /* EditorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorFactory.swift; sourceTree = "<group>"; };
 		2CAEAC8F1C323F2600C9F9AC /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		2CAEAC901C323F2600C9F9AC /* ElementProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementProtocol.swift; sourceTree = "<group>"; };
 		2CAEAC961C323F4300C9F9AC /* CanvasView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
@@ -756,7 +756,6 @@
 		2C3CAD101C21825900D8DE4B /* Page_model */ = {
 			isa = PBXGroup;
 			children = (
-				2CAEAC8E1C323F2600C9F9AC /* EditorFactory.swift */,
 				2C3CAD141C21825900D8DE4B /* CTAPage.swift */,
 				2C3CAD111C21825900D8DE4B /* CTAContainer.swift */,
 				2C47F89D1C7171380068F215 /* CTAPageViewModel.swift */,
@@ -932,6 +931,7 @@
 		2CC1C9421C58D38100844A33 /* factory_model */ = {
 			isa = PBXGroup;
 			children = (
+				2CAEAC8E1C323F2600C9F9AC /* EditorFactory.swift */,
 				2C0404591C3EBDBF00A5B017 /* CTATabItemFactory.swift */,
 				2CC1C9401C58D36800844A33 /* CTABarItemsFactory.swift */,
 			);

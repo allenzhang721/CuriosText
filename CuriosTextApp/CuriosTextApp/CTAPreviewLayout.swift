@@ -34,6 +34,7 @@ class CTAPreviewLayout: UICollectionViewFlowLayout {
                 
                 attribute.size = container.size
                 attribute.center = container.center
+                attribute.zIndex = indexPath.item
                 attribute.transform = CGAffineTransformMakeRotation(container.radius)
             }
         }

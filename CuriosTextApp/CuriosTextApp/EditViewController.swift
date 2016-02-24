@@ -63,9 +63,26 @@ class EditViewController: UIViewController {
         
         addView.didClickHandler = {[weak self] in
             
+//            if let strongSelf = self {
+//                strongSelf.addText()
+//            }
+            
             if let strongSelf = self {
-                strongSelf.addText()
+                
+                let cameraVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("CameraViewController") as! CTACameraViewController
+                
+                cameraVC.completionBlock = {[weak self] image in
+                    if let strongSelf = self, let image = image {
+                        strongSelf.addImage(image, size: image.size)
+                    }
+                }
+                
+                strongSelf.presentViewController(cameraVC, animated: true, completion: {
+                    
+                    
+                })
             }
+            
         }
     }
     
@@ -226,6 +243,18 @@ class EditViewController: UIViewController {
 
 // MARK: - Actions 
 extension EditViewController {
+    
+    func addImage(s: UIImage, size: CGSize) {
+        
+        let ID = CTAIDGenerator.generateID()
+        let imageName = document.resourcePath + ID + ".jpg"
+        
+        let name = document.storeResource(compressJPGImage(s), withName: imageName)
+       let imgContainer = EditorFactory.generateImageContainer(page.width, pageHeigh: page.height, imageSize: size, imgName: name)
+        
+        page.append(imgContainer)
+        canvasViewController.insertAt(NSIndexPath(forItem: page.containers.count - 1, inSection: 0))
+    }
     
     func addText(s: String = "") {
         

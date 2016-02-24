@@ -19,7 +19,7 @@ class CTAPreviewCanvasView: UIView {
     var collectionView: UICollectionView!
     let animationNodeManager = CTAAnimationPlayNodeManager()
     var splitedControllers: [[CTAAnimationController]]?
-    
+    var publishID = ""
     var page: PageVMProtocol? {
         return datasource?.canvasViewWithPage(self)
     }
@@ -85,6 +85,7 @@ class CTAPreviewCanvasView: UIView {
         collectionView.registerClass(CTAPreviewCell.self, forCellWithReuseIdentifier: "ContainerCell")
         
         collectionView.dataSource = self
+        collectionView.delegate = self
         layout.dataSource = self
         animationNodeManager.dataSource = self
 //        layer.addSublayer(collectionView.layer)
@@ -175,21 +176,30 @@ extension CTAPreviewCanvasView: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ContainerCell", forIndexPath: indexPath) as! CTAPreviewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ContainerCell", forIndexPath: indexPath)
+
+        return cell
+    }
+}
+
+extension CTAPreviewCanvasView: UICollectionViewDelegate {
+    
+    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        
+        let acell = cell as! CTAPreviewCell
         
         let container = page!.containerVMs[indexPath.item]
         
         let id = container.iD
         let needLoadContents = page!.containerShouldLoadBeforeAnimationBeganByID(id)
         
-        debug_print(" \(needLoadContents) load \(cell.previewView)", context: aniContext)
+        debug_print(" \(needLoadContents) load \(acell.previewView)", context: aniContext)
         
         CTAPreviewCanvasController.configPreviewView(
-            cell.previewView,
+            acell.previewView,
             container: container,
+            publishID: publishID,
             needLoadContents: needLoadContents)
-        
-        return cell
     }
 }
 

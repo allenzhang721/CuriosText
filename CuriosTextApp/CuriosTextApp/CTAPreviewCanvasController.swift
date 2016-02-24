@@ -21,22 +21,22 @@ final class CTAPreviewCanvasController {
     
     
 
-    class func configPreviewView(view: CTAPreviewView, container: ContainerVMProtocol, animationBinder: CTAAnimationBinder?, loadAnimation: Bool = false) {
+    class func configPreviewView(view: CTAPreviewView, container: ContainerVMProtocol, animationBinder: CTAAnimationBinder?, publishID: String, loadAnimation: Bool = false) {
         
         view.clearViews()
         
         guard let binder = animationBinder else {
-            configPreviewView(view, container: container)
+            configPreviewView(view, container: container, publishID: publishID)
             return
         }
         
-        configPreviewView(view, container: container)
+        configPreviewView(view, container: container, publishID: publishID)
     }
     
-    class func configPreviewView(view: CTAPreviewView, container: ContainerVMProtocol, needLoadContents: Bool = true) {
+    class func configPreviewView(view: CTAPreviewView, container: ContainerVMProtocol, publishID: String, needLoadContents: Bool = true) {
         
         
-        debug_print(container.type, context: aniContext)
+//        debug_print(container.type, context: aniContext)
         
         guard needLoadContents else {
             return
@@ -52,9 +52,11 @@ final class CTAPreviewCanvasController {
             let textView = TextView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: size.width + inset.x * 2, height: size.height + inset.y * 2)))
             textView.insets = inset
             textView.attributedText = text
-            textView.center = CGPoint(x: view.bounds.width / 2.0, y: view.bounds.height / 2.0)
+
+            textView.center = CGPoint(x: size.width / 2.0, y: size.height / 2.0)
             
-//            debug_print("\(container.iD): \(textView.frame)", context: previewConttext)
+//            debug_print("text: \(text?.string) viewSize: \(view.bounds.size) center = \(textView.center)", context: previewConttext)
+//            let color = UIColor(red: CGFloat(random() % 255) / 255.0, green: CGFloat(random() % 255) / 255.0, blue: CGFloat(random() % 255) / 255.0, alpha: 1)
             
             view.appendView(textView)
             
@@ -64,8 +66,12 @@ final class CTAPreviewCanvasController {
 //            let imageName = (container as! ImageContainerVMProtocol).imageElement?.resourceName
             
             let imageView = UIImageView(frame: CGRect(origin: CGPoint.zero, size: size))
-            imageView.image = CTAStyleKit.imageOfTextSpacingNormal
-            imageView.center = CGPoint(x: view.bounds.width / 2.0, y: view.bounds.height / 2.0)
+            let url = CTAFilePath.publishFilePath + "\(publishID)/" + (container as!ImageContainerVMProtocol).imageElement!.resourceName
+            imageView.kf_setImageWithURL(NSURL(string: url)!)
+            
+            debug_print(url)
+            
+            imageView.center = CGPoint(x: size.width / 2.0, y: size.height / 2.0)
             view.appendView(imageView)
             
         default:

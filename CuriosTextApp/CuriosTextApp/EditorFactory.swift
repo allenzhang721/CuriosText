@@ -55,22 +55,22 @@ class EditorFactory {
         let n = 3
         for i in 0..<n {
             
-//            let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "我叫陈星宇 \nWhat can i do for you ?", attributes: CTATextAttributes(), index: i, count: n)
-//            containers += [con]
-//            
-//            let ani = generateAnimationFor(con.iD, index: i)
-//            animations += [ani]
+            let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "today is a good Day !", attributes: CTATextAttributes(), index: i, count: n)
+            containers += [con]
             
-            if i % 2 == 0 {
-                let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "Today is a good day !", attributes: CTATextAttributes(), index: i, count: n)
-                containers += [con]
-                
-                let ani = generateAnimationFor(con.iD, index: i)
-                animations += [ani]
-            } else {
-                let con = self.generateImageContainer(320.0, pageHeigh: 320.0, imageSize: CGSize(width: 100, height: 100), imgName: "NoImgName", index: i, count: n)
-                containers += [con]
-            }
+            let ani = generateAnimationFor(con.iD, index: i)
+            animations += [ani]
+            
+//            if i % 2 == 0 {
+//                let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "Today is a good day !", attributes: CTATextAttributes(), index: i, count: n)
+//                containers += [con]
+//                
+//                let ani = generateAnimationFor(con.iD, index: i)
+//                animations += [ani]
+//            } else {
+//                let con = self.generateImageContainer(320.0, pageHeigh: 320.0, imageSize: CGSize(width: 100, height: 100), imgName: "NoImgName", index: i, count: n)
+//                containers += [con]
+//            }
         }
         
         let page = CTAPage(containers: containers, anis: animations)
@@ -287,6 +287,30 @@ extension EditorFactory {
             )
     }
     
+    class func generateImageContainer(
+        pageWidth: Double,
+        pageHeigh: Double,
+        imageSize: CGSize,
+        imgName: String
+        ) -> CTAContainer {
+        
+        let imgElement = CTAImgElement(imageName: imgName)
+        
+        return CTAContainer(
+            x: pageWidth / 2.0,
+            y: pageHeigh / 2.0,
+            width: Double(imageSize.width),
+            height: Double(imageSize.height),
+            rotation: 0.0,
+            alpha: 1.0,
+            scale: 1.0,
+            inset: CGPoint.zero,
+            element: imgElement
+        )
+    }
+    
+    
+    
     class func generateAnimationFor (
         targetID: String,
         index: Int) -> CTAAnimation {
@@ -331,7 +355,7 @@ extension EditorFactory {
         index: Int,
         count: Int) -> CTAContainer {
         
-            let imgElement = CTAImgElement()
+            let imgElement = CTAImgElement(imageName: imgName)
             
             return CTAContainer(
                 x: pageWidth / 2.0,

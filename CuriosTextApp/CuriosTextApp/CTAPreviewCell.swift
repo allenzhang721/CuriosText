@@ -12,6 +12,10 @@ class CTAPreviewCell: UICollectionViewCell {
     
     var previewView: CTAPreviewView!
     
+//    override func awakeFromNib() {
+//        setup()
+//    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -22,13 +26,18 @@ class CTAPreviewCell: UICollectionViewCell {
         setup()
     }
     
+    func injected() {
+        
+        setup()
+    }
+    
     func setup() {
         previewView = CTAPreviewView(frame: bounds)
-        addSubview(previewView)
+        contentView.addSubview(previewView)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        previewView.bounds = bounds
+        previewView.frame = bounds
     }
 }
