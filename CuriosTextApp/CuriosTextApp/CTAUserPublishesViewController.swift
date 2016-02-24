@@ -294,15 +294,17 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                 if modelArray!.count < size {
                     self.isLoadedAll = true
                 }
+                var firstDataIndex:Int = 0
                 for var i=0; i < modelArray!.count; i++ {
                     let publishModel = modelArray![i] as! CTAPublishModel
                     if !self.checkPublishModelIsHave(publishModel.publishID){
                         if self.isLoadingFirstData{
-                            if i < self.publishModelArray.count {
-                                self.publishModelArray.insert(publishModel, atIndex: i)
+                            if firstDataIndex < self.publishModelArray.count {
+                                self.publishModelArray.insert(publishModel, atIndex: firstDataIndex)
                             }else{
                                 self.publishModelArray.append(publishModel)
                             }
+                            firstDataIndex++
                         } else {
                             self.publishModelArray.append(publishModel)
                         }
