@@ -22,3 +22,15 @@ extension UIColor {
         return (hex, a)
     }
 }
+
+extension UIColor {
+    
+    class func randomColor() -> UIColor {
+        
+        return UIColor(
+            red: CGFloat(random() % 255) / 255.0,
+            green: CGFloat(random() % 255) / 255.0,
+            blue: CGFloat(random() % 255) / 255.0,
+            alpha: 1)
+    }
+}

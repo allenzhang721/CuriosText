@@ -52,7 +52,7 @@ extension CTAAddBarProtocol where Self: UIViewController{
                         let editVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("EditViewController") as! EditViewController
                         editVC.document = openDocument
                         
-                        self.presentViewController(editVC, animated: false, completion: { () -> Void in
+                        self.presentViewController(editVC, animated: true, completion: { () -> Void in
                             
                             
                         })

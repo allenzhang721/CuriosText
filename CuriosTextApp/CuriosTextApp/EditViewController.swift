@@ -36,6 +36,10 @@ class EditViewController: UIViewController {
         setup()
     }
     
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         switch segue.destinationViewController {
         case let vc as CTATabViewController:
