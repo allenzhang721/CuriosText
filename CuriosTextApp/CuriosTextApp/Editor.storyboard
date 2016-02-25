@@ -18,23 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aT5-ah-Tch">
-                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                                <items>
-                                    <barButtonItem title="取消" id="bJT-yt-IZM">
-                                        <connections>
-                                            <action selector="cancelAction:" destination="qRf-5N-mQJ" id="BsN-Ox-ynQ"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="vMw-Cu-dGI"/>
-                                    <barButtonItem title="发布" id="AZ3-Xf-rl7">
-                                        <connections>
-                                            <action selector="publish:" destination="qRf-5N-mQJ" id="1St-gW-9rg"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aV6-Ee-4qV">
+                            <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aV6-Ee-4qV">
                                 <rect key="frame" x="0.0" y="80" width="375" height="375"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="aV6-Ee-4qV" secondAttribute="height" multiplier="1:1" id="5m5-v3-F04"/>
@@ -80,6 +64,22 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aT5-ah-Tch">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem title="取消" id="bJT-yt-IZM">
+                                        <connections>
+                                            <action selector="cancelAction:" destination="qRf-5N-mQJ" id="BsN-Ox-ynQ"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="vMw-Cu-dGI"/>
+                                    <barButtonItem title="发布" id="AZ3-Xf-rl7">
+                                        <connections>
+                                            <action selector="publish:" destination="qRf-5N-mQJ" id="1St-gW-9rg"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -90,7 +90,7 @@
                             <constraint firstItem="cNn-AO-UPu" firstAttribute="bottom" secondItem="AXi-ce-yHq" secondAttribute="top" id="AsF-j1-5pL"/>
                             <constraint firstItem="cNn-AO-UPu" firstAttribute="leading" secondItem="O59-ti-f4e" secondAttribute="leading" id="Bwp-1q-oCd"/>
                             <constraint firstItem="UV4-IL-VCX" firstAttribute="leading" secondItem="w2g-1j-cAV" secondAttribute="leadingMargin" constant="-20" id="CGj-T2-6W2"/>
-                            <constraint firstItem="aT5-ah-Tch" firstAttribute="top" secondItem="w2g-1j-cAV" secondAttribute="top" constant="20" id="D3M-Nn-Iqp"/>
+                            <constraint firstItem="aT5-ah-Tch" firstAttribute="top" secondItem="w2g-1j-cAV" secondAttribute="top" id="D3M-Nn-Iqp"/>
                             <constraint firstItem="O59-ti-f4e" firstAttribute="top" secondItem="UV4-IL-VCX" secondAttribute="bottom" constant="8" id="EJQ-SH-sQJ"/>
                             <constraint firstItem="O59-ti-f4e" firstAttribute="leading" secondItem="w2g-1j-cAV" secondAttribute="leading" id="H6Q-Nc-CSB"/>
                             <constraint firstAttribute="trailing" secondItem="cNn-AO-UPu" secondAttribute="trailing" constant="326" id="HZR-6j-5l1"/>
@@ -120,6 +120,8 @@
                             </mask>
                         </variation>
                     </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="addView" destination="cNn-AO-UPu" id="yLB-5w-URv"/>
