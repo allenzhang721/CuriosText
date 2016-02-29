@@ -21,6 +21,7 @@ extension CTALoginProtocol where Self: UIViewController{
     
     func loginComplete(userModel:CTAUserModel){
         CTAUserManager.save(userModel)
+        NSNotificationCenter.defaultCenter().postNotificationName("loginComplete", object: nil)
         self.navigationController?.dismissViewControllerAnimated(true, completion: { () -> Void in
         })
     }

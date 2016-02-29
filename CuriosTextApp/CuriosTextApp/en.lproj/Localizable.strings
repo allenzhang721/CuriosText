@@ -5,6 +5,7 @@
   Created by Emiaostein on 1/18/16.
 
 */
+"DefaultName" = "Curios";
 "FollowLabel" = "following";
 "BeFollowLabel" = "followers";
 "FollowButtonLabel" = "Follow";
@@ -55,9 +56,9 @@
 "AlertChoosePhoteLabel" = "Choose from Photos";
 "AlertBackLabel" = "Back";
 "AlertWaitLabel" = "Wait";
-"AlertTitleSMSVerifyBack" = "Verification code SMS may be slightly delayed. Go back and start again now?";
-"AlertTitlePasswordBack" = "Complete soon. Go back and start again now?";
-"AlertTitleUserNameBack" = "This is the last step. Go back and start again now?";
+"AlertTitleSMSVerifyBack" = "Verification code SMS may be slightly delayed. Are you sure go back and start again?";
+"AlertTitlePasswordBack" = "Complete soon. Are you sure go back and start again?";
+"AlertTitleUserNameBack" = "This is the last step. Are you sure go back and start again?";
 "AlertTitleNumberConfirm" = "Mobile Number Confirmation";
 "AlertMessageNumberConfirm" = "We will send a verification code to the following number:";
 "AlertTitleNumberVerifyError" = "Unable to send verification code. Try again.";

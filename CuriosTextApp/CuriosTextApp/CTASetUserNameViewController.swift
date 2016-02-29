@@ -95,7 +95,8 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         
         self.imagePicker.delegate = self
         
-        self.userNickNameTextInput = UITextField.init(frame: CGRect.init(x:27*self.getHorRate(), y: 150*self.getVerRate()+50, width: 320*self.getHorRate(), height: 50))
+        self.userNickNameTextInput = UITextField.init(frame: CGRect.init(x:27*self.getHorRate(), y: 150*self.getVerRate()+50, width: 280*self.getHorRate(), height: 50))
+        self.userNickNameTextInput.center = CGPoint.init(x: bouns.width/2, y: 150*self.getVerRate()+75)
         self.userNickNameTextInput.placeholder = NSLocalizedString("UserNickNameLabel", comment: "") + ":  "+NSLocalizedString("UserNamePlaceholder", comment: "")
         self.userNickNameTextInput.delegate = self
         self.userNickNameTextInput.clearButtonMode = .WhileEditing
@@ -103,7 +104,8 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         self.view.addSubview(self.userNickNameTextInput)
         
         
-        let textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userNickNameTextInput.frame.origin.y + 49, width: 330*self.getHorRate(), height: 1))
+        let textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userNickNameTextInput.frame.origin.y + 49, width: 290*self.getHorRate(), height: 1))
+        textLine.center = CGPoint.init(x: bouns.width/2, y: self.userNickNameTextInput.frame.origin.y+49)
         textLine.image = UIImage(named: "textinput-line")
         self.view.addSubview(textLine)
         
@@ -298,7 +300,7 @@ extension CTASetUserNameViewController: UITextFieldDelegate{
         let textField = noti.object as! UITextField
         self.checkTextField(textField)
         textField.sizeToFit()
-        textField.frame.size.width = 320*self.getHorRate()
+        textField.frame.size.width = 280*self.getHorRate()
         textField.frame.size.height = 50
         self.setCompleteButtonStyle()
     }
@@ -310,7 +312,7 @@ extension CTASetUserNameViewController: UITextFieldDelegate{
         let textWidth = textField.frame.width
         var needReset:Bool = false
         let textLimit = 32
-        let textWidthLimit = 320*self.getHorRate() - 15
+        let textWidthLimit = 280*self.getHorRate() - 30
         if textWidth < textWidthLimit{
             if textStr.length > textLimit {
                 needReset = true

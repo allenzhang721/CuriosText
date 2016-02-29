@@ -7,7 +7,7 @@
 */
 
 //默认使用方法: NSLocalizedString("Localizable", comment: "")
-
+"DefaultName" = "奇思";
 "Localizable" = "本地化";
 "FollowLabel" = "关注";
 "BeFollowLabel" = "粉丝";

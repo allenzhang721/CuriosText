@@ -43,8 +43,9 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     var selectedRect:CGRect?
     var isPersent:Bool = false
     
+    var publishDetail:CTAPublishDetailViewController?
+    
     var userDetail:CTAUserDetailViewController?
-    var userDetailTran:CTAPullUserDetailTransition?
     
     override func prefersStatusBarHidden() -> Bool {
         return true
@@ -90,17 +91,19 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                 self.setNavigateButton()
             }
         }
-        self.isDisMis = false
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        if loginUser != nil && self.viewUser != nil {
-            if self.viewUserID != self.viewUser!.userID{
-                self.viewUserID = self.viewUser!.userID
-                self.headerFresh.beginRefreshing()
+        if self.isDisMis {
+            if loginUser != nil && self.viewUser != nil {
+                if self.viewUserID != self.viewUser!.userID{
+                    self.viewUserID = self.viewUser!.userID
+                    self.headerFresh.beginRefreshing()
+                }
             }
         }
+        self.isDisMis = false
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -385,15 +388,16 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
             self.selectedPublishID = self.publishModelArray[index].publishID
         }
         if self.selectedPublishID != "" {
-            CTAPublishDetailViewController.getInstance().setPublishData(self.selectedPublishID, publishModelArray: self.publishModelArray)
-            CTAPublishDetailViewController.getInstance().loginUserID = (self.loginUser != nil ? self.loginUser!.userID : "")
-            CTAPublishDetailViewController.getInstance().viewUser = self.viewUser
-            CTAPublishDetailViewController.getInstance().delegate = self
-            CTAPublishDetailViewController.getInstance().transitioningDelegate = self
-            CTAPublishDetailViewController.getInstance().modalPresentationStyle = .Custom
-            self.presentViewController(CTAPublishDetailViewController.getInstance(), animated: true) { () -> Void in
-                
+            if self.publishDetail == nil {
+                self.publishDetail = CTAPublishDetailViewController()
             }
+            self.publishDetail!.setPublishData(self.selectedPublishID, publishModelArray: self.publishModelArray)
+            self.publishDetail!.loginUserID = (self.loginUser != nil ? self.loginUser!.userID : "")
+            self.publishDetail!.viewUser = self.viewUser
+            self.publishDetail!.delegate = self
+            self.publishDetail!.transitioningDelegate = self
+            self.publishDetail!.modalPresentationStyle = .Custom
+            self.presentViewController(self.publishDetail!, animated: true, completion: nil)
         }
     }
     
