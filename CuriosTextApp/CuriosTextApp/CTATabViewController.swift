@@ -67,11 +67,18 @@ extension CTATabViewController: UICollectionViewDataSource {
 
 extension CTATabViewController: UICollectionViewDelegate {
     
-//    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-//        
-////        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredHorizontally, animated: true)
-////        collectionView.selectItemAtIndexPath(indexPath, animated: true, scrollPosition: .CenteredHorizontally)
-//    }
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        if let att = collectionView.layoutAttributesForItemAtIndexPath(indexPath) {
+            let center = att.center
+            let offset = CGPoint(x: center.x - collectionView.bounds.width / 2.0, y: 0)
+            collectionView.setContentOffset(offset, animated: true)
+            delegate?.tabViewController(self, didChangedToIndexPath: indexPath, oldIndexPath: nil)
+        }
+        
+//        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredHorizontally, animated: true)
+//        collectionView.selectItemAtIndexPath(indexPath, animated: true, scrollPosition: .CenteredHorizontally)
+    }
 }
 
 extension CTATabViewController: LineFlowLayoutDelegate {
