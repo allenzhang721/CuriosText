@@ -83,25 +83,25 @@ class EditViewController: UIViewController {
         addView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.1)
         addView.didClickHandler = {[weak self] in
             
-//            if let strongSelf = self {
-//                strongSelf.addText()
-//            }
-            
             if let strongSelf = self {
-                
-                let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
-                
-                cameraVC.didSelectedImageHandler = {[weak self] image in
-                    if let strongSelf = self, let image = image {
-                        strongSelf.addImage(image, size: image.size)
-                    }
-                }
-                
-                strongSelf.presentViewController(cameraVC, animated: true, completion: {
-                    
-                    
-                })
+                strongSelf.addText()
             }
+            
+//            if let strongSelf = self {
+//                
+//                let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
+//                
+//                cameraVC.didSelectedImageHandler = {[weak self] image in
+//                    if let strongSelf = self, let image = image {
+//                        strongSelf.addImage(image, size: image.size)
+//                    }
+//                }
+//                
+//                strongSelf.presentViewController(cameraVC, animated: true, completion: {
+//                    
+//                    
+//                })
+//            }
             
         }
     }
@@ -630,8 +630,6 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
                 
             }
         }
-        
-        
     }
     
     func animationWillChanged(a: CTAAnimationName) {

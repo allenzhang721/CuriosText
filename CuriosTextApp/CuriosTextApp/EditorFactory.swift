@@ -52,28 +52,17 @@ class EditorFactory {
         
         var containers = [CTAContainer]()
         var animations = [CTAAnimation]()
-        let n = 3
-        for i in 0..<n {
-            
-            let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "today is a good Day !", attributes: CTATextAttributes(), index: i, count: n)
-            containers += [con]
-            
-            if i != (n - 1) {
-            let ani = generateAnimationFor(con.iD, index: i)
-            animations += [ani]
-            }
-            
-//            if i % 2 == 0 {
-//                let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "Today is a good day !", attributes: CTATextAttributes(), index: i, count: n)
-//                containers += [con]
-//                
-//                let ani = generateAnimationFor(con.iD, index: i)
-//                animations += [ani]
-//            } else {
-//                let con = self.generateImageContainer(320.0, pageHeigh: 320.0, imageSize: CGSize(width: 100, height: 100), imgName: "NoImgName", index: i, count: n)
-//                containers += [con]
+//        let n = 3
+//        for i in 0..<n {
+//            
+//            let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "today is a good Day !", attributes: CTATextAttributes(), index: i, count: n)
+//            containers += [con]
+//            
+//            if i != (n - 1) {
+//            let ani = generateAnimationFor(con.iD, index: i)
+//            animations += [ani]
 //            }
-        }
+//        }
         
         let page = CTAPage(containers: containers, anis: animations)
         return page
@@ -298,11 +287,13 @@ extension EditorFactory {
         
         let imgElement = CTAImgElement(imageName: imgName)
         
+        let scale = min(CGFloat(pageWidth) / imageSize.width, CGFloat(pageWidth) / imageSize.height)
+        
         return CTAContainer(
             x: pageWidth / 2.0,
             y: pageHeigh / 2.0,
-            width: Double(imageSize.width),
-            height: Double(imageSize.height),
+            width: Double(imageSize.width * scale),
+            height: Double(imageSize.height * scale),
             rotation: 0.0,
             alpha: 1.0,
             scale: 1.0,

@@ -36,7 +36,7 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.tabBarItem = UITabBarItem(tabBarSystemItem: .MostViewed, tag: 1)
+        self.tabBarItem = UITabBarItem(title: "Photo", image: ImagePickerResource.imageOfPhotoLibrary, selectedImage: nil)
     }
     
 //    private var thumbnailSize
@@ -61,15 +61,23 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate {
     }
     
     private func setup() {
-//        setupGesture()
         
         setupDelegateAndDataSource()
         setupFetchPhotos()
         updatePhotoCacheAssets()
         
-//        if let assetFetchResults = assetFetchResults where assetFetchResults.count > 0 {
-//            thumbCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .Top)
-//        }
+        if let assetFetchResults = assetFetchResults where assetFetchResults.count > 0, let asset = assetFetchResults[0] as? PHAsset {
+            
+            imageManager.requestImageForAsset(asset, targetSize: previewView.bounds.size, contentMode: .AspectFill, options: nil) {[weak self] (image, info) in
+                
+                if let strongSelf = self, let image = image {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        strongSelf.previewView.image = image
+//                        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
+                    })
+                }
+            }
+        }
     }
     
     private func checkLibraryStatus(completed: ((Bool) -> ())?) {
@@ -182,6 +190,13 @@ extension CTAPhotoViewController: UICollectionViewDataSource {
                     }
                 }
             }
+            
+            if cell.selectedBackgroundView == nil {
+                let v = UIView(frame: cell.bounds)
+                v.backgroundColor = UIColor.yellowColor()
+                cell.selectedBackgroundView = v
+            }
+            
         }
         
         return cell
@@ -266,11 +281,6 @@ extension CTAPhotoViewController: UICollectionViewDelegate {
                         dispatch_async(dispatch_get_main_queue(), { 
                             strongSelf.previewView.image = image
                             collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
-//                            if CGAffineTransformEqualToTransform(strongSelf.previewView.transform, CGAffineTransformIdentity) {
-//                                UIView.animateWithDuration(0.3, animations: {
-//                                    strongSelf.previewView.transform = CGAffineTransformIdentity
-//                                })
-//                            }
                         })
                     }
                 }
@@ -327,8 +337,8 @@ extension CTAPhotoViewController {
         let w = thumbCollectionView.bounds.width
         let columCount: CGFloat = 4
         let edgeInsets = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
-        let itemSpacing: CGFloat = 1
-        let lineSpacing: CGFloat = 1
+        let itemSpacing: CGFloat = 0
+        let lineSpacing: CGFloat = 0
         
         let itemW = Int((w - edgeInsets.left - edgeInsets.right - itemSpacing * (columCount)) / columCount)
         let itemSize = CGSize(width: itemW, height: itemW)

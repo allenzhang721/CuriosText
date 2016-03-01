@@ -103,7 +103,7 @@
         <scene sceneID="lyT-2W-BV5">
             <objects>
                 <tabBarController id="g9Z-Ve-Gjy" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" shadowImage="Image" id="5al-X9-fPa">
+                    <tabBar key="tabBar" contentMode="scaleAspectFit" shadowImage="Image" id="5al-X9-fPa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
