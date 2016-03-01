@@ -225,7 +225,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.publishModelArray.removeAll()
         self.loadDataCompleteFuc = self.firstLoadComplete
         self.loadingImageView?.frame.size = CGSize(width: 80, height: 80)
-        self.showLoadingViewByRect(self.currentFullCell.bounds)
+        self.showLoadingViewByRect(self.handView.frame)
         self.loadNewPublishes(0)
     }
     
