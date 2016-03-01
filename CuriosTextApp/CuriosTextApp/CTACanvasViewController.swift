@@ -304,8 +304,8 @@ final class CTACanvasViewController: UIViewController {
                 case (let c as CTACanvasTextCell, let con as TextContainerVMProtocol):
                     c.textView.attributedText = con.textElement?.attributeString
                     
-//                case (let c as CTACanvasImageCell, let con as ImageContainerVMProtocol):
-//                    c.imageView.image = UIImage(data: (document?.resourceBy(con.imageElement!.resourceName))!)
+                case (let c as CTACanvasImageCell, let con as ImageContainerVMProtocol):
+                    c.imageView.image = UIImage(data: (document?.resourceBy(con.imageElement!.resourceName))!)
                     
                 default:
                     ()
