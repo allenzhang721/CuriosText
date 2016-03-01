@@ -39,15 +39,15 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
     
     var delegate:CTAPublishDetailDelegate?
     var userDetail:CTAUserDetailViewController?
-    
-    static var _instance:CTAPublishDetailViewController?;
-    
-    static func getInstance() -> CTAPublishDetailViewController{
-        if _instance == nil{
-            _instance = CTAPublishDetailViewController();
-        }
-        return _instance!
-    }
+//    
+//    static var _instance:CTAPublishDetailViewController?;
+//    
+//    static func getInstance() -> CTAPublishDetailViewController{
+//        if _instance == nil{
+//            _instance = CTAPublishDetailViewController();
+//        }
+//        return _instance!
+//    }
     
     override func prefersStatusBarHidden() -> Bool {
         return true
@@ -361,13 +361,13 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
     func viewPanHandler(sender: UIPanGestureRecognizer) {
         switch sender.state {
         case .Began:
-            beganLocation = sender.locationInView(view)
-            panDirection = .None
+            self.beganLocation = sender.locationInView(view)
+            self.panDirection = .None
             self.currentFullCell!.pauseAnimation()
         case .Changed:
             let newLocation = sender.locationInView(view)
-            if panDirection == .None {
-                if abs(newLocation.x - beganLocation!.x) > abs(newLocation.y - beganLocation!.y){
+            if self.panDirection == .None {
+                if abs(newLocation.x - self.beganLocation!.x) > abs(newLocation.y - self.beganLocation!.y){
                     self.nextCenter = self.nextFullCell.center
                     self.preCenter = self.previousFullCell.center
                     self.currentCenter = self.currentFullCell.center
@@ -379,9 +379,9 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                     self.viewVerPanHandler(newLocation)
                     self.panDirection = .Ver
                 }
-            }else if panDirection == .Hor{
+            }else if self.panDirection == .Hor{
                 self.viewHorPanHandler(newLocation)
-            }else if panDirection == .Ver{
+            }else if self.panDirection == .Ver{
                 self.viewVerPanHandler(newLocation)
             }
         case .Ended, .Cancelled, .Failed:
@@ -847,7 +847,7 @@ enum CTAPanDirection: String {
 }
 
 enum CTAPanHorDirection{
-    case Next, Previous
+    case None, Next, Previous
 }
 
 enum CTAPanVerDirection{

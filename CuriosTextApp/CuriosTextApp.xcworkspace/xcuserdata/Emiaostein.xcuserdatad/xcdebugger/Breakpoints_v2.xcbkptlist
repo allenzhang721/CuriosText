@@ -4,6 +4,7 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
+<<<<<<< HEAD
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
@@ -20,6 +21,8 @@
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
+=======
+>>>>>>> develop
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
@@ -29,9 +32,15 @@
             timestampString = "478512062.74438"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
             startingLineNumber = "238"
             endingLineNumber = "238"
             landmarkName = "doubleTap(_:)"
+=======
+            startingLineNumber = "456"
+            endingLineNumber = "456"
+            landmarkName = "selectorsViewControllerAnimation(_:)"
+>>>>>>> develop
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

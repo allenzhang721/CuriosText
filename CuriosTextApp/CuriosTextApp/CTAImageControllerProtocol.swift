@@ -79,7 +79,8 @@ protocol CTAImageControllerProtocol{
     func cropImageCircle(imageView:UIView)
     func cropImageRound(imageView:UIView)
     func addImageShadow(imageView:UIView)
-    func getDefaultIcon(size:CGRect) -> UIImage
+    func getDefaultIcon(rect:CGRect) -> UIImage
+    func getWhiteBg(rect:CGRect) -> UIImage
 }
 
 extension CTAImageControllerProtocol{
@@ -115,6 +116,15 @@ extension CTAImageControllerProtocol{
         let imgWidth = 50 * rate
         let imgHeight = 52 * rate
         iconImage?.drawInRect(CGRect(x: (rect.size.width - imgWidth)/2, y: (rect.size.height - imgHeight)/2, width: imgWidth, height: imgHeight), blendMode: .Normal, alpha: 1.0)
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image;
+    }
+    
+    func getWhiteBg(rect:CGRect) -> UIImage{
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
+        UIColor.whiteColor().setFill()
+        UIRectFill(rect)
         let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image;

@@ -44,8 +44,8 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     }
     
     func reloadCell(){
-        let defaultImg = self.getDefaultIcon(self.bounds)
         if publishModel != nil {
+            let defaultImg = self.getDefaultIcon(self.bounds)
             let imagePath = CTAFilePath.publishFilePath+self.publishModel!.publishIconURL
             let imageURL = NSURL(string: imagePath)!
             self.cellImageView.kf_showIndicatorWhenLoading = true
@@ -56,7 +56,8 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                 self.cellImageView.kf_showIndicatorWhenLoading = false
             }
         }else{
-            self.cellImageView.image = defaultImg
+            let whiteImg = self.getWhiteBg(self.bounds)
+            self.cellImageView.image = whiteImg
         }
     }
     
