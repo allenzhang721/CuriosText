@@ -138,7 +138,10 @@ extension CTAPhotoViewController {
         
         if let items = thumbCollectionView.indexPathsForSelectedItems() where items.count > 0, let asset = assetFetchResults?[items.first!.item] as? PHAsset {
             
-            imageManager.requestImageForAsset(asset, targetSize: CGSize(width: asset.pixelWidth, height: asset.pixelHeight), contentMode: .AspectFill, options: nil, resultHandler: {[weak self] (image, info) in
+            let option = PHImageRequestOptions()
+            option.synchronous = true
+            
+            imageManager.requestImageForAsset(asset, targetSize: CGSize(width: asset.pixelWidth, height: asset.pixelHeight), contentMode: .AspectFill, options: option, resultHandler: {[weak self] (image, info) in
                 
                 if let strongSelf = self {
                     if let image = image {

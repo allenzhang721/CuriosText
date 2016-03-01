@@ -35,6 +35,20 @@ class EditViewController: UIViewController {
         super.viewDidLoad()
         addGestures()
         setup()
+        
+        
+        let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
+        
+        cameraVC.didSelectedImageHandler = {[weak self] image in
+            if let strongSelf = self, let image = image {
+                strongSelf.addImage(image, size: image.size)
+                cameraVC.removeFromParentViewController()
+                cameraVC.view.removeFromSuperview()
+            }
+        }
+     
+        addChildViewController(cameraVC)
+        view.addSubview(cameraVC.view)
     }
     
     override func prefersStatusBarHidden() -> Bool {
