@@ -25,6 +25,11 @@ protocol CTASelectorScaleable: CTASelectorable {
     func alignmentDidChanged(alignment: NSTextAlignment)
     func spacingDidChanged(lineSpacing: CGFloat, textSpacing: CGFloat)
     func colorDidChanged(item: CTAColorItem)
+    func animationDurationDidChanged(t: CGFloat)
+    func animationDelayDidChanged(t: CGFloat)
+    func animationWillBeDeleted(completedBlock:(() -> ())?)
+    func animationWillBeInserted(a: CTAAnimationName, completedBlock:(() -> ())?)
+    func animationWillChanged(a: CTAAnimationName)
 }
 
 typealias CTASelectorViewControllerDelegate = protocol<CTASelectorScaleable>
@@ -157,6 +162,11 @@ extension CTASelectorsViewController {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Selector\(currentType.rawValue)Cell", forIndexPath: indexPath) as! CTASelectorCell
         
         cell.dataSource = self
+        
+        if let cell = cell as? CTASelectorAnimationCell {
+            cell.delegate = self
+        }
+        
         cell.beganLoad()
         if action.characters.count > 0 {
             cell.addTarget(self, action: Selector(action), forControlEvents: .ValueChanged)
@@ -295,5 +305,31 @@ extension CTASelectorsViewController {
     
     func animationChanged(sender: AnyObject) {
         
+    }
+}
+
+extension CTASelectorsViewController: CTASelectorAnimationCellDelegate {
+    
+    func animationCellWillDeleteAnimation(cell: CTASelectorAnimationCell, completedBlock:(() -> ())?) {
+        delegate?.animationWillBeDeleted({ 
+            completedBlock?()
+        })
+        
+    }
+    func animationCell(cell: CTASelectorAnimationCell, WillAppendAnimation ani: CTAAnimationName, completedBlock:(() -> ())?) {
+        delegate?.animationWillBeInserted(ani, completedBlock: { 
+            completedBlock?()
+        })
+        
+    }
+    func animationCell(cell: CTASelectorAnimationCell, didChangedToAniamtion ani: CTAAnimationName) {
+        delegate?.animationWillChanged(ani)
+    }
+    
+    func animationCell(cell: CTASelectorAnimationCell, durationDidChanged duration: CGFloat) {
+        delegate?.animationDurationDidChanged(duration)
+    }
+    func animationCell(cell: CTASelectorAnimationCell, delayDidChanged delay: CGFloat) {
+        delegate?.animationDelayDidChanged(delay)
     }
 }

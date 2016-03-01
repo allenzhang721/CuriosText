@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10102" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="UKS-Xn-QHu">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10080"/>
+    </dependencies>
+    <scenes>
+        <!--Image Crop View Controller-->
+        <scene sceneID="m92-3a-AKt">
+            <objects>
+                <viewController id="UKS-Xn-QHu" customClass="CTAImageCropViewController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FCH-vx-5Iu"/>
+                        <viewControllerLayoutGuide type="bottom" id="N5X-MX-uWw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Rtt-oa-8ql">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="CGS-Af-YG3">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem title="Cancel" id="6r3-y1-2xZ"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="aPB-zZ-ESo"/>
+                                    <barButtonItem title="Done" id="v4z-Py-5or"/>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="CGS-Af-YG3" firstAttribute="bottom" secondItem="N5X-MX-uWw" secondAttribute="top" id="fZG-ai-JBa"/>
+                            <constraint firstAttribute="trailing" secondItem="CGS-Af-YG3" secondAttribute="trailing" id="g6g-m2-q4W"/>
+                            <constraint firstItem="CGS-Af-YG3" firstAttribute="leading" secondItem="Rtt-oa-8ql" secondAttribute="leading" id="uYc-dA-2OF"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2QV-lv-iIk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="250.5" y="425.5"/>
+        </scene>
+    </scenes>
+</document>

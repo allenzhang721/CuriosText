@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10102" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="u8L-Ej-xMD">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10080"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <scenes>
+        <!--Camera-->
+        <scene sceneID="EnX-ai-dmo">
+            <objects>
+                <viewController storyboardIdentifier="CameraViewController" title="Camera" id="u8L-Ej-xMD" customClass="CTACameraViewController" customModule="ImagePickerApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="u9D-bv-hg4"/>
+                        <viewControllerLayoutGuide type="bottom" id="Rrc-Wb-XPJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="91a-Mm-bxj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JN5-7R-VTh">
+                                <rect key="frame" x="0.0" y="44" width="375" height="375"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gjj-Vk-IWJ" customClass="CTACameraPreviewView" customModule="ImagePickerApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                        <color key="backgroundColor" red="0.20392156859999999" green="0.20392156859999999" blue="0.20392156859999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fLu-aW-f78" customClass="CTACropOverlayView" customModule="ImagePickerApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="fLu-aW-f78" firstAttribute="trailing" secondItem="Gjj-Vk-IWJ" secondAttribute="trailing" id="2Zs-jF-dNo"/>
+                                    <constraint firstItem="fLu-aW-f78" firstAttribute="leading" secondItem="Gjj-Vk-IWJ" secondAttribute="leading" id="Cgx-YZ-zBx"/>
+                                    <constraint firstItem="fLu-aW-f78" firstAttribute="bottom" secondItem="Gjj-Vk-IWJ" secondAttribute="bottom" id="Ekc-Ry-etV"/>
+                                    <constraint firstItem="fLu-aW-f78" firstAttribute="top" secondItem="Gjj-Vk-IWJ" secondAttribute="top" id="U0M-pI-iaO"/>
+                                    <constraint firstAttribute="trailing" secondItem="Gjj-Vk-IWJ" secondAttribute="trailing" id="V4z-8j-im8"/>
+                                    <constraint firstItem="Gjj-Vk-IWJ" firstAttribute="top" secondItem="JN5-7R-VTh" secondAttribute="top" id="XMi-5L-RYc"/>
+                                    <constraint firstAttribute="width" secondItem="JN5-7R-VTh" secondAttribute="height" multiplier="1:1" id="jtB-KX-VIS"/>
+                                    <constraint firstAttribute="bottom" secondItem="Gjj-Vk-IWJ" secondAttribute="bottom" id="nBR-9G-guk"/>
+                                    <constraint firstItem="Gjj-Vk-IWJ" firstAttribute="leading" secondItem="JN5-7R-VTh" secondAttribute="leading" id="nFb-fg-4Qp"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="epT-35-su2" customClass="CTACameraCaptureButton" customModule="ImagePickerApp" customModuleProvider="target">
+                                <rect key="frame" x="143" y="465" width="88" height="88"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="88" id="0uV-Wy-Lv2"/>
+                                    <constraint firstAttribute="width" constant="88" id="Kgp-SM-Rl1"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="captureClick:" destination="u8L-Ej-xMD" eventType="touchUpInside" id="HD2-cm-iIJ"/>
+                                </connections>
+                            </view>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bhK-JC-FC8">
+                                <rect key="frame" x="0.0" y="420" width="375" height="44"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <collectionViewLayout key="collectionViewLayout" id="t6U-CY-4t9" customClass="CTACollectionViewActiveFlowLayout" customModule="ImagePickerApp" customModuleProvider="target"/>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AspectRatioCell" id="FuJ-Jh-EHf" customClass="CTACameraAspectRatioCollectionViewCell" customModule="ImagePickerApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="48"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="48"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <size key="customSize" width="50" height="48"/>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="u8L-Ej-xMD" id="H3f-Kp-u8z"/>
+                                    <outlet property="delegate" destination="u8L-Ej-xMD" id="UQl-eb-dbQ"/>
+                                </connections>
+                            </collectionView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sUj-BH-diQ">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem title="取消" id="Ur5-PZ-KKn">
+                                        <connections>
+                                            <action selector="dismiss:" destination="u8L-Ej-xMD" id="lJv-Oa-83f"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="JN5-7R-VTh" firstAttribute="top" secondItem="u9D-bv-hg4" secondAttribute="bottom" constant="44" id="2LY-G8-5tJ"/>
+                            <constraint firstItem="sUj-BH-diQ" firstAttribute="top" secondItem="u9D-bv-hg4" secondAttribute="bottom" id="2Tb-u5-Yv0"/>
+                            <constraint firstItem="bhK-JC-FC8" firstAttribute="top" secondItem="JN5-7R-VTh" secondAttribute="bottom" constant="1" id="FiX-TW-ZXO"/>
+                            <constraint firstItem="epT-35-su2" firstAttribute="top" secondItem="bhK-JC-FC8" secondAttribute="bottom" constant="1" id="Fyq-jJ-Zd6"/>
+                            <constraint firstItem="sUj-BH-diQ" firstAttribute="trailing" secondItem="JN5-7R-VTh" secondAttribute="trailing" id="MEL-Ia-lW7"/>
+                            <constraint firstItem="epT-35-su2" firstAttribute="top" secondItem="Gjj-Vk-IWJ" secondAttribute="bottom" constant="46" id="Phe-Xd-Frg"/>
+                            <constraint firstItem="JN5-7R-VTh" firstAttribute="centerX" secondItem="91a-Mm-bxj" secondAttribute="centerX" id="TPQ-JF-LSQ"/>
+                            <constraint firstItem="bhK-JC-FC8" firstAttribute="trailing" secondItem="JN5-7R-VTh" secondAttribute="trailing" id="cUt-2h-VSr"/>
+                            <constraint firstItem="JN5-7R-VTh" firstAttribute="width" secondItem="91a-Mm-bxj" secondAttribute="width" id="fCs-NP-MCW"/>
+                            <constraint firstItem="epT-35-su2" firstAttribute="top" secondItem="JN5-7R-VTh" secondAttribute="bottom" constant="85" id="feP-Q9-lC1"/>
+                            <constraint firstItem="epT-35-su2" firstAttribute="centerX" secondItem="JN5-7R-VTh" secondAttribute="centerX" id="nvw-PO-JGA"/>
+                            <constraint firstItem="Rrc-Wb-XPJ" firstAttribute="top" secondItem="epT-35-su2" secondAttribute="bottom" constant="75" id="ops-Ho-Jta"/>
+                            <constraint firstItem="sUj-BH-diQ" firstAttribute="leading" secondItem="JN5-7R-VTh" secondAttribute="leading" id="p2N-Qz-2qa"/>
+                            <constraint firstItem="bhK-JC-FC8" firstAttribute="leading" secondItem="JN5-7R-VTh" secondAttribute="leading" id="tMR-kk-qU7"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="feP-Q9-lC1"/>
+                                <exclude reference="ops-Ho-Jta"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" id="OEl-PQ-RF1"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="cameraView" destination="Gjj-Vk-IWJ" id="JMr-dp-egu"/>
+                        <outlet property="cropView" destination="fLu-aW-f78" id="lfC-fZ-jYq"/>
+                        <outlet property="ratioCollectionView" destination="bhK-JC-FC8" id="Y65-cB-kDD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RoI-A3-bQO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="729.5" y="415.5"/>
+        </scene>
+    </scenes>
+</document>

@@ -27,7 +27,8 @@ class EditViewController: UIViewController {
     }
     private var animation: CTAAnimationBinder? {
         guard let container = selectedContainer else {return nil}
-        return page.animationBinders.filter{$0.targetiD == container.iD}.first
+        let anis = page.animationBinders.filter{$0.targetiD == container.iD}
+        return anis.count > 0 ? anis.first : nil
     }
     
     override func viewDidLoad() {
@@ -65,6 +66,7 @@ class EditViewController: UIViewController {
     // MARK: - Setup
     func setup() {
         
+        addView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.1)
         addView.didClickHandler = {[weak self] in
             
 //            if let strongSelf = self {
@@ -73,9 +75,9 @@ class EditViewController: UIViewController {
             
             if let strongSelf = self {
                 
-                let cameraVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("CameraViewController") as! CTACameraViewController
+                let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
                 
-                cameraVC.completionBlock = {[weak self] image in
+                cameraVC.didSelectedImageHandler = {[weak self] image in
                     if let strongSelf = self, let image = image {
                         strongSelf.addImage(image, size: image.size)
                     }
@@ -222,15 +224,19 @@ class EditViewController: UIViewController {
             
         case .Image:
             debug_print("double tap Img")
-            let cameraVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("CameraViewController") as! CTACameraViewController
+            let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
             
-            cameraVC.completionBlock = {[weak self] image in
+            cameraVC.didSelectedImageHandler = {[weak self] image in
                 if let strongSelf = self {
+                    dispatch_async(dispatch_get_main_queue(), { 
                     let canvasSize = strongSelf.canvasViewController.view.bounds.size
                     (container as! ImageContainerVMProtocol).updateWithImageSize(image!.size, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
                     
                     strongSelf.document.storeResource(UIImageJPEGRepresentation(image!, 0.1)!, withName: (container as! ImageContainerVMProtocol).imageElement!.resourceName)
-                    strongSelf.canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+                    
+                        
+                        strongSelf.canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+                    })
                 }
             }
             
@@ -447,6 +453,8 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     }
     
     func selectorsViewControllerAnimation(ViewController: CTASelectorsViewController) -> CTAAnimationBinder? {
+        
+        debug_print("animation= \(animation) load", context: animationChangedContext)
         return animation
     }
     
@@ -466,6 +474,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     }
     
     // MARK: - Delegate
+    // MARK: - ScaleChanged
     func scaleDidChanged(scale: CGFloat) {
         guard
             let selectedIndexPath = selectedIndexPath,
@@ -481,6 +490,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         canvasViewController.updateAt(selectedIndexPath, updateContents: true)
     }
     
+    // MARK: - RadianChanged
     func radianDidChanged(radian: CGFloat) {
         guard
             let selectedIndexPath = selectedIndexPath,
@@ -492,6 +502,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         canvasViewController.updateAt(selectedIndexPath, updateContents: false)
     }
     
+    // MARK: - Font Changed
     func fontDidChanged(fontFamily: String, fontName: String) {
         guard
             let selectedIndexPath = selectedIndexPath,
@@ -510,6 +521,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         canvasViewController.updateAt(selectedIndexPath, updateContents: true)
     }
     
+    // MARK: - Alignment Changed
     func alignmentDidChanged(alignment: NSTextAlignment) {
         guard
             let selectedIndexPath = selectedIndexPath,
@@ -521,6 +533,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         canvasViewController.updateAt(selectedIndexPath, updateContents: true)
     }
     
+    // MARK: - Spacing Changed
     func spacingDidChanged(lineSpacing: CGFloat, textSpacing: CGFloat) {
         guard
             let selectedIndexPath = selectedIndexPath,
@@ -537,6 +550,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         canvasViewController.updateAt(selectedIndexPath, updateContents: true)
     }
     
+    // MARK: - Color Changed
     func colorDidChanged(item: CTAColorItem) {
         guard
             let selectedIndexPath = selectedIndexPath,
@@ -549,6 +563,68 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             alpha: item.colorHexAlpha
         )
         canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+    }
+    
+    // MARK: - Animation Changed
+    func animationDurationDidChanged(t: CGFloat) {
+        guard var animation = animation else {
+            return
+        }
+        animation.duration = Float(t)
+    }
+    
+    func animationDelayDidChanged(t: CGFloat) {
+        guard var animation = animation else {
+            return
+        }
+        animation.delay = Float(t)
+    }
+    
+    func animationWillBeDeleted(completedBlock:(() -> ())?) {
+        
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            
+            guard let strongSelf = self else {
+                return
+            }
+            
+            if let animation = strongSelf.animation, let index = (strongSelf.page.animationBinders.indexOf {$0.iD == animation.iD}) {
+                let id = animation.targetiD
+                debug_print("animation targetID = \(!id.isEmpty ? id.substringFromIndex(id.endIndex.advancedBy(-4)) : "None") will delete", context: animationChangedContext)
+                strongSelf.page.removeAnimationAtIndex(index) {
+                    debug_print("animation targetID = \(!id.isEmpty ? id.substringFromIndex(id.endIndex.advancedBy(-4)) : "None") delete completed", context: animationChangedContext)
+                    completedBlock?()
+                }
+                
+            }
+        }
+    }
+    func animationWillBeInserted(a: CTAAnimationName, completedBlock:(() -> ())?) {
+        
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            if let container = strongSelf.selectedContainer {
+                
+                let a = EditorFactory.generateAnimationFor(container.iD, animationName: a)
+                debug_print("animation will add", context: animationChangedContext)
+                strongSelf.page.appendAnimation(a) {
+                    debug_print("animation add completed", context: animationChangedContext)
+                    completedBlock?()
+                }
+                
+            }
+        }
+        
+        
+    }
+    
+    func animationWillChanged(a: CTAAnimationName) {
+        
+        if var animation = animation {
+            animation.updateAnimationName(a)
+        }
     }
 }
 

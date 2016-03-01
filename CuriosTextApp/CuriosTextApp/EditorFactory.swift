@@ -58,8 +58,10 @@ class EditorFactory {
             let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "today is a good Day !", attributes: CTATextAttributes(), index: i, count: n)
             containers += [con]
             
+            if i != (n - 1) {
             let ani = generateAnimationFor(con.iD, index: i)
             animations += [ani]
+            }
             
 //            if i % 2 == 0 {
 //                let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "Today is a good day !", attributes: CTATextAttributes(), index: i, count: n)
@@ -309,6 +311,14 @@ extension EditorFactory {
         )
     }
     
+    class func generateAnimationFor (
+        targetID: String,
+        animationName: CTAAnimationName) -> CTAAnimation {
+        
+        let ani = CTAAnimation(targetID: targetID, animationName: animationName)
+        
+        return ani
+    }
     
     
     class func generateAnimationFor (

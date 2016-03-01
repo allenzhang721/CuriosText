@@ -57,7 +57,7 @@ final class CTACanvasViewController: UIViewController {
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: canvasLayout)
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = UIColor.lightGrayColor()
+        collectionView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.1)
         collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         collectionView.registerClass(CTACanvasTextCell.self, forCellWithReuseIdentifier: "TextCell")
         collectionView.registerClass(CTACanvasImageCell.self, forCellWithReuseIdentifier: "ImageCell")
