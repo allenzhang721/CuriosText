@@ -22,8 +22,8 @@ let defaultContext = PrintContext(shouldPrint: true, context: "default Print")
 let fdContext = PrintContext(shouldPrint: false, context: "First Dispaly Font Name")
 let colorContext = PrintContext(shouldPrint: false, context: "First Dispaly Color")
 let aniContext = PrintContext(shouldPrint: false, context: "animation")
-let previewConttext = PrintContext(shouldPrint: true, context: "Preview")
-
+let previewConttext = PrintContext(shouldPrint: false, context: "Preview")
+let animationChangedContext = PrintContext(shouldPrint: true, context: "animation Changed")
 
 // other swift flags : -D DEBUG
 public func debug_print<T>(value: T,file: String = __FILE__, line: Int = __LINE__ ,function: String = __FUNCTION__, context: PrintContext = defaultContext) {

@@ -72,4 +72,28 @@ final class CTAPage:NSObject, NSCoding {
             self.containers = [CTAContainer]()
         }
     }
+    
+    func removeAnimationAtIndex(i: Int, completedHandler:(() -> ())?) {
+        dispatch_sync(containerQueue) { 
+            
+            self.animatoins.removeAtIndex(i)
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                completedHandler?()
+            })
+        }
+    }
+    
+    func appendAnimation(a: CTAAnimation, completedHandler:(() -> ())?) {
+        
+        dispatch_sync(containerQueue) {
+            
+            self.animatoins.append(a)
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                completedHandler?()
+            })
+        }
+        
+    }
 }

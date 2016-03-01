@@ -8,9 +8,21 @@
 
 import UIKit
 
+protocol CTAConfigANimationCellDataSource: class {
+    
+    func configAnimationCellBeganIndexPath(cell: CTAConfigAnimationCell) -> NSIndexPath
+}
+
+protocol CTAConfigAnimationCellDelegate: class {
+    
+    func configAnimationCell(cell: CTAConfigAnimationCell, DidSelectedIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?)
+}
+
 class CTAConfigAnimationCell: CTAConfigCell {
 
     var collectionView: UICollectionView!
+    weak var dataSource: CTAConfigANimationCellDataSource?
+    weak var delegate: CTAConfigAnimationCellDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,13 +38,14 @@ class CTAConfigAnimationCell: CTAConfigCell {
         
         let lineLayout = CTALineFlowLayout()
         lineLayout.delegate = self
-        
+        lineLayout.showCount = 4
         lineLayout.scrollDirection = .Horizontal
         collectionView = UICollectionView(frame: bounds, collectionViewLayout: lineLayout)
         collectionView.dataSource = self
-        collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "AnimatoinCell")
+        collectionView.registerClass(CTAAnimationNameCell.self, forCellWithReuseIdentifier: "AnimatoinCell")
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         collectionView.backgroundColor = UIColor.whiteColor()
         contentView.addSubview(collectionView)
         
@@ -41,32 +54,56 @@ class CTAConfigAnimationCell: CTAConfigCell {
         collectionView.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
         collectionView.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
         collectionView.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
+//        collectionView.reloadData()
     }
-
 }
 
 extension CTAConfigAnimationCell: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return CTAColorsManger.colors["red"]!.count
+        return CTAAnimationName.names.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("AnimatoinCell", forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("AnimatoinCell", forIndexPath: indexPath) as! CTAAnimationNameCell
         
-        cell.backgroundColor = CTAColorsManger.colors["red"]![indexPath.item].color
+        cell.text = CTAAnimationName.names[indexPath.item].description
         
         return cell
-        
     }
 }
 
 extension CTAConfigAnimationCell: LineFlowLayoutDelegate {
     
     func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
+
+        if collectionView.dragging || collectionView.decelerating || collectionView.tracking {
+            delegate?.configAnimationCell(self, DidSelectedIndexPath: indexPath, oldIndexPath: oldIndexPath)
+        }
         
-        
+    }
+}
+
+extension CTAConfigAnimationCell: CTACellDisplayProtocol {
+    
+    func willBeDisplayed() {
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            
+            if let strongSelf = self {
+                let beganIndexPath = strongSelf.dataSource?.configAnimationCellBeganIndexPath(strongSelf) ?? NSIndexPath(forItem: 2, inSection: 0)
+                
+                if let acenter = strongSelf.collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(beganIndexPath)?.center {
+                    strongSelf.collectionView.setContentOffset(CGPoint(x: acenter.x - strongSelf.bounds.width / 2.0, y: 0), animated: false)
+                }
+            }
+        }
+//        collectionView.scrollToItemAtIndexPath(beganIndexPath, atScrollPosition: .CenteredHorizontally, animated: false)
+    }
+    
+    func didEndDisplayed() {
+        dataSource = nil
+        delegate = nil
     }
 }

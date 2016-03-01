@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10102" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="cMe-yS-ZkE">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10080"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <scenes>
+        <!--Photo-->
+        <scene sceneID="rtl-R9-Q5z">
+            <objects>
+                <viewController storyboardIdentifier="PhotoViewController" title="Photo" id="cMe-yS-ZkE" customClass="CTAPhotoViewController" customModule="ImagePickerApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wFo-TF-POz"/>
+                        <viewControllerLayoutGuide type="bottom" id="4ro-Yb-eJe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="b0U-Fz-KW6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5If-cP-INt" customClass="CTAPhotoPreviewView" customModule="ImagePickerApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="375" height="375"/>
+                                <color key="backgroundColor" red="0.20392156859999999" green="0.20392156859999999" blue="0.20392156859999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="5If-cP-INt" secondAttribute="height" multiplier="1:1" id="u9N-09-9pL"/>
+                                </constraints>
+                            </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NBJ-oU-lGk">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem title="取消" id="7ve-Kd-YWw">
+                                        <connections>
+                                            <action selector="dismiss:" destination="cMe-yS-ZkE" id="4ac-gK-XFF"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="8IV-1l-2tv"/>
+                                    <barButtonItem title="确定" id="qJs-Tb-L3B">
+                                        <connections>
+                                            <action selector="confirm:" destination="cMe-yS-ZkE" id="6Ub-dm-WRx"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dye-4U-kio">
+                                <rect key="frame" x="0.0" y="418" width="375" height="249"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Uzk-NF-SxV">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ThumbnailCell" id="Rm9-eC-FDk" customClass="CTAPhotoThumbnailCollectionViewCell" customModule="ImagePickerApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mDT-Wy-8dJ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="mDT-Wy-8dJ" firstAttribute="top" secondItem="Rm9-eC-FDk" secondAttribute="top" id="0Ri-Aq-TwD"/>
+                                            <constraint firstAttribute="bottom" secondItem="mDT-Wy-8dJ" secondAttribute="bottom" id="iY8-yu-q4N"/>
+                                            <constraint firstItem="mDT-Wy-8dJ" firstAttribute="leading" secondItem="Rm9-eC-FDk" secondAttribute="leading" id="idj-Ow-B1X"/>
+                                            <constraint firstAttribute="trailing" secondItem="mDT-Wy-8dJ" secondAttribute="trailing" id="lIg-4w-4Bx"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="imageView" destination="mDT-Wy-8dJ" id="4jC-tI-szj"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="5If-cP-INt" firstAttribute="width" secondItem="b0U-Fz-KW6" secondAttribute="width" id="5tM-ZH-0cR"/>
+                            <constraint firstItem="4ro-Yb-eJe" firstAttribute="top" secondItem="dye-4U-kio" secondAttribute="bottom" id="6em-hY-chp"/>
+                            <constraint firstItem="5If-cP-INt" firstAttribute="centerX" secondItem="b0U-Fz-KW6" secondAttribute="centerX" id="FtE-Dh-elV"/>
+                            <constraint firstItem="NBJ-oU-lGk" firstAttribute="leading" secondItem="5If-cP-INt" secondAttribute="leading" id="GPL-yU-tDQ"/>
+                            <constraint firstItem="NBJ-oU-lGk" firstAttribute="top" secondItem="wFo-TF-POz" secondAttribute="bottom" id="L9c-ri-qj7"/>
+                            <constraint firstItem="5If-cP-INt" firstAttribute="top" secondItem="wFo-TF-POz" secondAttribute="bottom" constant="44" id="Tpr-PZ-KEr"/>
+                            <constraint firstItem="NBJ-oU-lGk" firstAttribute="trailing" secondItem="5If-cP-INt" secondAttribute="trailing" id="d3i-aL-qIB"/>
+                            <constraint firstItem="dye-4U-kio" firstAttribute="top" secondItem="5If-cP-INt" secondAttribute="bottom" constant="-1" id="mk3-Dd-rc2"/>
+                            <constraint firstItem="dye-4U-kio" firstAttribute="leading" secondItem="b0U-Fz-KW6" secondAttribute="leading" id="qky-YZ-4UX"/>
+                            <constraint firstAttribute="trailing" secondItem="dye-4U-kio" secondAttribute="trailing" id="uSW-TE-Tgw"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="previewView" destination="5If-cP-INt" id="lfP-Hb-cr2"/>
+                        <outlet property="thumbCollectionView" destination="dye-4U-kio" id="dJW-Ps-bR9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="laE-5D-1de" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="287.5" y="369.5"/>
+        </scene>
+    </scenes>
+</document>

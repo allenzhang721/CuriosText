@@ -185,7 +185,7 @@ extension CTAScrollTuneView: UIScrollViewDelegate {
         
         if fabs((nextValue * 100.0 - value * 100.0)) > 0.1 {
             
-            if scrollView.dragging {
+            if scrollView.dragging || scrollView.tracking || scrollView.decelerating {
                 sendActionsForControlEvents(.ValueChanged)
             }
         }

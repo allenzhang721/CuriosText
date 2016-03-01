@@ -420,7 +420,6 @@ final class CTATextElement: NSObject, CTAElement, TextModifiable {
         //        print("need TextSize = \(textSize)")
         
         return (inset, size)
-        
     }
     
     func resultWithLineSpacing(lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize) {

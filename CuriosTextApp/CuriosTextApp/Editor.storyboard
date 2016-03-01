@@ -219,13 +219,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PMi-2y-sgF" customClass="CTACameraView" customModule="CuriosTextApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="56" width="320" height="320"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="PMi-2y-sgF" secondAttribute="height" multiplier="1:1" id="Z07-9k-P9T"/>
-                                </constraints>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OWt-wm-MI2">
                                 <rect key="frame" x="116" y="460" width="88" height="88"/>
                                 <constraints>
@@ -238,11 +231,11 @@
                                     <action selector="takePhotoClick:" destination="NL5-fD-xOP" eventType="touchUpInside" id="dLD-qU-Bg9"/>
                                 </connections>
                             </button>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HVk-0a-kra">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HVk-0a-kra">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
-                                    <barButtonItem title="dismiss" id="BQj-5x-pLW">
+                                    <barButtonItem title="取消" id="BQj-5x-pLW">
                                         <connections>
                                             <action selector="dismissAction:" destination="NL5-fD-xOP" id="3fA-t2-rp4"/>
                                         </connections>
@@ -250,16 +243,33 @@
                                 </items>
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </toolbar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PMi-2y-sgF" customClass="CTACameraView" customModule="CuriosTextApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="320" height="320"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="PMi-2y-sgF" secondAttribute="height" multiplier="1:1" id="TEM-pW-yJc"/>
+                                    <constraint firstAttribute="width" secondItem="PMi-2y-sgF" secondAttribute="height" multiplier="1:1" id="Z07-9k-P9T"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Z07-9k-P9T"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="PMi-2y-sgF" firstAttribute="top" secondItem="HVk-0a-kra" secondAttribute="bottom" id="2L0-rI-fvk"/>
+                            <constraint firstItem="PMi-2y-sgF" firstAttribute="width" secondItem="PbB-uh-Oct" secondAttribute="width" id="7PK-sa-rnk"/>
+                            <constraint firstItem="PMi-2y-sgF" firstAttribute="leading" secondItem="HVk-0a-kra" secondAttribute="leading" id="ASg-lv-Jez"/>
                             <constraint firstItem="a2a-EW-UR2" firstAttribute="top" secondItem="OWt-wm-MI2" secondAttribute="bottom" constant="20" id="FEN-OX-CGJ"/>
-                            <constraint firstItem="PMi-2y-sgF" firstAttribute="leading" secondItem="PbB-uh-Oct" secondAttribute="leading" id="SyD-kF-jbl"/>
-                            <constraint firstItem="PMi-2y-sgF" firstAttribute="top" secondItem="nqc-Eg-SL1" secondAttribute="bottom" constant="-20" id="cfs-9a-BXk"/>
+                            <constraint firstItem="PMi-2y-sgF" firstAttribute="centerX" secondItem="PbB-uh-Oct" secondAttribute="centerX" id="UUy-Dc-a4x"/>
                             <constraint firstItem="OWt-wm-MI2" firstAttribute="centerX" secondItem="PbB-uh-Oct" secondAttribute="centerX" id="hCr-8u-idO"/>
-                            <constraint firstItem="PMi-2y-sgF" firstAttribute="width" secondItem="PbB-uh-Oct" secondAttribute="width" id="vCS-xn-HMw"/>
+                            <constraint firstItem="PMi-2y-sgF" firstAttribute="trailing" secondItem="HVk-0a-kra" secondAttribute="trailing" id="rjO-eD-zmR"/>
+                            <constraint firstItem="OWt-wm-MI2" firstAttribute="top" secondItem="PMi-2y-sgF" secondAttribute="bottom" constant="96" id="vvA-Oh-OZ4"/>
                         </constraints>
                     </view>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="cameraView" destination="PMi-2y-sgF" id="Z6E-cx-yRD"/>

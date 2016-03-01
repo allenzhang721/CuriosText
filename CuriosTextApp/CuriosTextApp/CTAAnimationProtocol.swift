@@ -10,8 +10,9 @@ import Foundation
 import UIKit
 import pop
 
-enum CTAAnimationName: Int {
+enum CTAAnimationName: Int, CustomStringConvertible {
     
+    case None
     case MoveIn, FlyIn
     case MoveOut, FlyOut
     
@@ -21,6 +22,27 @@ enum CTAAnimationName: Int {
             return false
         case .MoveOut, .FlyOut:
             return true
+        case .None:
+            return true
+        }
+    }
+    
+    static var names: [CTAAnimationName] {
+        return [.None, .MoveIn, .FlyIn, .MoveOut, .FlyOut]
+    }
+    
+    var description: String {
+        switch self {
+        case .None:
+            return "None"
+        case .MoveIn:
+            return "Move In"
+        case .FlyIn:
+            return "Fly In"
+        case .MoveOut:
+            return "Move Out"
+        case .FlyOut:
+            return "Fly Out"
         }
     }
 }
@@ -29,29 +51,51 @@ protocol CTAAnimationBinder {
     
     var iD: String { get }
     var targetiD: String { get }
-    var name: CTAAnimationName { get }
-    var config: CTAAnimationConfig { get }
+    var name: CTAAnimationName { get set }
+    var config: CTAAnimationConfig { get set }
 }
 
 extension CTAAnimationBinder {
     
+    mutating func updateAnimationName(a: CTAAnimationName) {
+        name = a
+    }
+    
     var animationName: CTAAnimationName {
-        return name
+        get {
+            return name
+        }
+        
+        set {
+            name = newValue
+        }
     }
     var duration: Float {
-        return config.duration
+        get {
+            return config.duration
+        }
+        
+        set {
+            config.duration = newValue
+        }
     }
     var delay: Float {
-        return config.delay
+        get {
+            return config.delay
+        }
+        
+        set {
+            config.delay = newValue
+        }
     }
 }
 
-protocol CTAAnimationRetriveable: CTAAnimationBinder {
-    
-    var animationName: CTAAnimationName { get }
-    var duration: Float { get }
-    var delay: Float { get }
-}
+//protocol CTAAnimationRetriveable: CTAAnimationBinder {
+//    
+//    var animationName: CTAAnimationName { get }
+//    var duration: Float { get }
+//    var delay: Float { get }
+//}
 
 extension CTAAnimationBinder {
     
@@ -66,8 +110,9 @@ extension CTAAnimationBinder {
             moveOut(view, index: index)
         case .FlyOut:
             flyOut(view, index: index)
+        case .None:
+            ()
         }
-        
     }
 }
 
