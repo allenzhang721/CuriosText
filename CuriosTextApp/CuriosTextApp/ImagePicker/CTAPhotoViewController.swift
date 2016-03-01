@@ -29,7 +29,7 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate {
     private var accessPhotoEnable = false
     private var previewfolded = false
     private var previewFoldBeganPosition: CGPoint?
-    private var selectedIndexPath: NSIndexPath?
+    private var oldSelectedIndexPath: NSIndexPath?
     
     weak var pickerDelegate: CTAPhotoPickerProtocol?
     
@@ -68,11 +68,13 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate {
         
         if let assetFetchResults = assetFetchResults where assetFetchResults.count > 0, let asset = assetFetchResults[0] as? PHAsset {
             
+            thumbCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
             imageManager.requestImageForAsset(asset, targetSize: previewView.bounds.size, contentMode: .AspectFill, options: nil) {[weak self] (image, info) in
                 
                 if let strongSelf = self, let image = image {
                     dispatch_async(dispatch_get_main_queue(), {
                         strongSelf.previewView.image = image
+                        
 //                        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
                     })
                 }
@@ -273,14 +275,20 @@ extension CTAPhotoViewController: UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
+        
         if accessPhotoEnable {
+            if let old = oldSelectedIndexPath where old.compare(indexPath) == .OrderedSame {
+                return
+            }
             if let asset = assetFetchResults?[indexPath.item] as? PHAsset {
+                oldSelectedIndexPath = indexPath
+                collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
                 imageManager.requestImageForAsset(asset, targetSize: previewView.bounds.size, contentMode: .AspectFill, options: nil) {[weak self] (image, info) in
                     
                     if let strongSelf = self, let image = image {
                         dispatch_async(dispatch_get_main_queue(), { 
                             strongSelf.previewView.image = image
-                            collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
+                            
                         })
                     }
                 }
