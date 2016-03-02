@@ -40,7 +40,7 @@ class CTAScrollTuneAttributes {
     }
 }
 
-class CTAScrollTuneView: UIControl, ValueTuneable {
+class CTASliderView: UIControl, ValueTuneable {
     
     var maxiumValue: CGFloat = 5.0
     var minumValue: CGFloat = 0.5
@@ -150,7 +150,7 @@ class CTAScrollTuneView: UIControl, ValueTuneable {
     }
 }
 
-extension CTAScrollTuneView {
+extension CTASliderView {
     
     func updateValue(v: CGFloat) {
         
@@ -175,7 +175,7 @@ extension CTAScrollTuneView {
     }
 }
 
-extension CTAScrollTuneView: UIScrollViewDelegate {
+extension CTASliderView: UIScrollViewDelegate {
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
@@ -194,7 +194,7 @@ extension CTAScrollTuneView: UIScrollViewDelegate {
     }
 }
 
-extension CTAScrollTuneView {
+extension CTASliderView {
     
     func path(frame: CGRect, attributes: CTAScrollTuneAttributes) -> UIBezierPath {
         let a = attributes

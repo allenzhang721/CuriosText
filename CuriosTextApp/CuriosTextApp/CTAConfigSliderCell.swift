@@ -10,7 +10,7 @@ import UIKit
 
 class CTAConfigSliderCell: CTAConfigCell {
 
-    var slider: CTAScrollTuneView!
+    var slider: CTASliderView!
     var beganValueBlock: (() -> CGFloat)?
     var valueDidChangedBlock: ((CGFloat) -> ())?
     
@@ -26,7 +26,7 @@ class CTAConfigSliderCell: CTAConfigCell {
     
     func setup() {
         
-        slider = CTAScrollTuneView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)), attributes: CTAScrollTuneAttributes(showShortLine: false))
+        slider = CTASliderView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)), attributes: CTAScrollTuneAttributes(showShortLine: false))
         slider.addTarget(self, action: "sliderValueChanged:", forControlEvents: .ValueChanged)
         slider.maxiumValue = 5
         slider.minumValue = 0
@@ -40,7 +40,7 @@ class CTAConfigSliderCell: CTAConfigCell {
         slider.frame = bounds
     }
     
-    func sliderValueChanged(sender: CTAScrollTuneView) {
+    func sliderValueChanged(sender: CTASliderView) {
         valueDidChangedBlock?(sender.value)
     }
 }

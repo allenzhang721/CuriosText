@@ -262,7 +262,7 @@ extension CTASelectorsViewController: CTASelectorDataSource {
 
 // MARK: - Actions
 extension CTASelectorsViewController {
-    func scaleChanged(sender: CTAScrollTuneView) {
+    func scaleChanged(sender: CTASliderView) {
         let v = CGFloat(Int(sender.value * 100.0)) / 100.0
         delegate?.scaleDidChanged(v)
     }
