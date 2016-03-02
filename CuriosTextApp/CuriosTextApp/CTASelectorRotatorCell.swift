@@ -11,6 +11,7 @@ import UIKit
 class CTASelectorRotatorCell: CTASelectorCell {
 
     let view: CTARotatorView
+    let hudLabel = CTAHUDLabel()
     
     override init(frame: CGRect) {
         self.view = CTARotatorView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)))
@@ -22,12 +23,19 @@ class CTASelectorRotatorCell: CTASelectorCell {
         self.view = CTARotatorView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)))
         super.init(coder: aDecoder)
         contentView.addSubview(view)
+        
+        hudLabel.textColor = CTAStyleKit.selectedColor
+        hudLabel.showGradient = false
+        contentView.addSubview(hudLabel)
     }
     
     override func layoutSubviews() {
         
         super.layoutSubviews()
         view.frame = bounds
+        let hr: CGFloat = 0.55
+        let yr = 1 - hr
+        hudLabel.frame = CGRect(x: bounds.maxX - 40, y: bounds.height * yr, width: 40, height: bounds.height * hr)
     }
     
     override func retriveBeganValue() {
@@ -35,13 +43,15 @@ class CTASelectorRotatorCell: CTASelectorCell {
         guard let dataSource = dataSource else {
             return
         }
-        
-        view.radian = dataSource.selectorBeganRadian(self)
+        let radian = dataSource.selectorBeganRadian(self)
+        view.radian = radian
+        hudLabel.text = "\(Int(ceil(view.radian / CGFloat(M_PI) * 180)))º"
     }
     
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
         
         view.addTarget(target, action: action, forControlEvents: controlEvents)
+        view.addTarget(self, action: "valueChanged:", forControlEvents: controlEvents)
     }
     
     override func removeAllTarget() {
@@ -56,5 +66,10 @@ class CTASelectorRotatorCell: CTASelectorCell {
                 view.removeTarget(target, action: Selector(action), forControlEvents: view.allControlEvents())
             }
         }
+    }
+    
+    func valueChanged(sender: AnyObject) {
+        
+        hudLabel.text = "\(Int(ceil(view.radian / CGFloat(M_PI) * 180)))º"
     }
 }

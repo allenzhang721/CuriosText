@@ -16,7 +16,7 @@
 		2C04045A1C3EBDBF00A5B017 /* CTATabItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0404591C3EBDBF00A5B017 /* CTATabItemFactory.swift */; };
 		2C04045C1C3EC25A00A5B017 /* CTACanvasTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C04045B1C3EC25A00A5B017 /* CTACanvasTextCell.swift */; };
 		2C04045E1C3EC29800A5B017 /* CanvasLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C04045D1C3EC29800A5B017 /* CanvasLayout.swift */; };
-		2C0404601C3EC2C500A5B017 /* CTAScrollTuneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C04045F1C3EC2C500A5B017 /* CTAScrollTuneView.swift */; };
+		2C0404601C3EC2C500A5B017 /* CTASliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C04045F1C3EC2C500A5B017 /* CTASliderView.swift */; };
 		2C0404621C3EC31100A5B017 /* CTARotatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0404611C3EC31100A5B017 /* CTARotatorView.swift */; };
 		2C0404661C3EC58100A5B017 /* CTASelectorsFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0404651C3EC58100A5B017 /* CTASelectorsFlowLayout.swift */; };
 		2C0404681C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0404671C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift */; };
@@ -143,6 +143,7 @@
 		2C9706CB1C1E713A00FA2E17 /* CTABaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9706CA1C1E713A00FA2E17 /* CTABaseModel.swift */; };
 		2C9706CD1C1E794B00FA2E17 /* CTAError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9706CC1C1E794B00FA2E17 /* CTAError.swift */; };
 		2C9706D11C1E805D00FA2E17 /* CTARequestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9706D01C1E805D00FA2E17 /* CTARequestResult.swift */; };
+		2C98D6CF1C86EBFA007AB3F7 /* CTAHUDLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98D6CE1C86EBFA007AB3F7 /* CTAHUDLabel.swift */; };
 		2CA9933E1C75DD4700B5EEDC /* SimpleNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA9933D1C75DD4700B5EEDC /* SimpleNetworking.swift */; };
 		2CAEAC911C323F2600C9F9AC /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC8C1C323F2600C9F9AC /* Dynamic.swift */; };
 		2CAEAC921C323F2600C9F9AC /* Editor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CAEAC8D1C323F2600C9F9AC /* Editor.storyboard */; };
@@ -263,7 +264,7 @@
 		2C0404591C3EBDBF00A5B017 /* CTATabItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATabItemFactory.swift; sourceTree = "<group>"; };
 		2C04045B1C3EC25A00A5B017 /* CTACanvasTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACanvasTextCell.swift; sourceTree = "<group>"; };
 		2C04045D1C3EC29800A5B017 /* CanvasLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasLayout.swift; sourceTree = "<group>"; };
-		2C04045F1C3EC2C500A5B017 /* CTAScrollTuneView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAScrollTuneView.swift; sourceTree = "<group>"; };
+		2C04045F1C3EC2C500A5B017 /* CTASliderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASliderView.swift; sourceTree = "<group>"; };
 		2C0404611C3EC31100A5B017 /* CTARotatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTARotatorView.swift; sourceTree = "<group>"; };
 		2C0404631C3EC35D00A5B017 /* Tools.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Tools.playground; sourceTree = "<group>"; };
 		2C0404651C3EC58100A5B017 /* CTASelectorsFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorsFlowLayout.swift; sourceTree = "<group>"; };
@@ -392,6 +393,7 @@
 		2C8DD2121C4A34230035C52D /* CTAImageControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAImageControllerProtocol.swift; sourceTree = "<group>"; };
 		2C8DD2141C4A342C0035C52D /* CTALoadingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTALoadingProtocol.swift; sourceTree = "<group>"; };
 		2C9043F71C589E0000E62B19 /* CTAAddBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAddBarView.swift; sourceTree = "<group>"; };
+		2C915AFC1C86A78F0024DFC3 /* SpecialViews.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = SpecialViews.playground; sourceTree = "<group>"; };
 		2C929DD51C60809D00F90BF4 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		2C929DD61C60962B00F90BF4 /* CTAConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAConfig.swift; sourceTree = "<group>"; };
 		2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Locksmith.framework; path = "Pods/../build/Debug-iphoneos/Locksmith.framework"; sourceTree = "<group>"; };
@@ -402,6 +404,7 @@
 		2C9706CA1C1E713A00FA2E17 /* CTABaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTABaseModel.swift; sourceTree = "<group>"; };
 		2C9706CC1C1E794B00FA2E17 /* CTAError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAError.swift; sourceTree = "<group>"; };
 		2C9706D01C1E805D00FA2E17 /* CTARequestResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTARequestResult.swift; sourceTree = "<group>"; };
+		2C98D6CE1C86EBFA007AB3F7 /* CTAHUDLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAHUDLabel.swift; sourceTree = "<group>"; };
 		2CA9933D1C75DD4700B5EEDC /* SimpleNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleNetworking.swift; sourceTree = "<group>"; };
 		2CAEAC8C1C323F2600C9F9AC /* Dynamic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 		2CAEAC8D1C323F2600C9F9AC /* Editor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Editor.storyboard; sourceTree = "<group>"; };
@@ -861,14 +864,16 @@
 		2C7C27DC1C58B5CA00975D4A /* SpecialView_view */ = {
 			isa = PBXGroup;
 			children = (
+				2C915AFC1C86A78F0024DFC3 /* SpecialViews.playground */,
 				2CAEACA11C323F9700C9F9AC /* TexView.swift */,
+				2C04045F1C3EC2C500A5B017 /* CTASliderView.swift */,
+				2C98D6CE1C86EBFA007AB3F7 /* CTAHUDLabel.swift */,
 				2C7C27DD1C58B83F00975D4A /* CTABarItemView.swift */,
 				2C22FAC11C7C299C00667295 /* CTAEditAddView.swift */,
 				2CAEAC961C323F4300C9F9AC /* CanvasView.swift */,
 				2CAEAC9A1C323F4300C9F9AC /* ContainerView.swift */,
 				2CAEAC991C323F4300C9F9AC /* ContainerTextView.swift */,
 				2CAEAC981C323F4300C9F9AC /* ContainerImgView.swift */,
-				2C04045F1C3EC2C500A5B017 /* CTAScrollTuneView.swift */,
 				2C0404611C3EC31100A5B017 /* CTARotatorView.swift */,
 				2C3097091C3F7FA800D996A4 /* CTAScrollSelectView.swift */,
 				2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */,
@@ -1334,7 +1339,7 @@
 				2C3CAD0F1C21825100D8DE4B /* CTAPresenter.swift in Sources */,
 				2CD8F4091C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift in Sources */,
 				2CED15AE1C5F65E10086976E /* CTADocumentProtocol.swift in Sources */,
-				2C0404601C3EC2C500A5B017 /* CTAScrollTuneView.swift in Sources */,
+				2C0404601C3EC2C500A5B017 /* CTASliderView.swift in Sources */,
 				2C9043F81C589E0000E62B19 /* CTAAddBarView.swift in Sources */,
 				2C3B33FC1C11798F00738166 /* CTANetworkAgent.swift in Sources */,
 				2C0C14E61C60D95A0011A31D /* CTASetUserNameViewController.swift in Sources */,
@@ -1400,6 +1405,7 @@
 				2C2B45AE1C5CBD16004A4809 /* CTAPublishProtocol.swift in Sources */,
 				2C9706D11C1E805D00FA2E17 /* CTARequestResult.swift in Sources */,
 				66ADD74F1C28011B00FD9BAF /* CTAUpTokenModel.swift in Sources */,
+				2C98D6CF1C86EBFA007AB3F7 /* CTAHUDLabel.swift in Sources */,
 				2C0404681C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift in Sources */,
 				2C7A95251C3A520B005B0EAE /* CTASettingViewController.swift in Sources */,
 				2CE063E21C857D2F001F7F4E /* CTACameraHelper.swift in Sources */,

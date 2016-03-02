@@ -11,6 +11,16 @@ import UIKit
 class CTASelectorSizeCell: CTASelectorCell {
     
     var sizeView: CTASliderView!
+    let hudLabel = CTAHUDLabel()
+    var text: String {
+        get {
+            return hudLabel.text ?? ""
+        }
+        
+        set {
+            hudLabel.text = newValue
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -18,14 +28,20 @@ class CTASelectorSizeCell: CTASelectorCell {
     }
     
     func setup() {
-        sizeView = CTASliderView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)))
+        sizeView = CTASliderView(frame: bounds, attribute: CTASliderAttributes(showMinorLine: true, seniorRatio: 0.5))
+        sizeView.minumValue = 0.5
+        sizeView.maxiumValue = 5.0
         addSubview(sizeView)
+        hudLabel.textAlignment = .Center
+        hudLabel.textColor = CTAStyleKit.selectedColor
+        addSubview(hudLabel)
     }
     
     override func layoutSubviews() {
         
         super.layoutSubviews()
         sizeView.frame = bounds
+        hudLabel.frame = CGRect(x: bounds.maxX - 60, y: bounds.height * 0.25, width: 60, height: bounds.height * 0.75)
     }
     
 
@@ -35,13 +51,17 @@ class CTASelectorSizeCell: CTASelectorCell {
         guard let dataSource = dataSource else {
             return
         }
+        let scale = dataSource.selectorBeganScale(self)
+        sizeView.value = scale
+        text = "\(Int(scale * 100))%"
         
-        sizeView.updateValue(dataSource.selectorBeganScale(self))
+//        sizeView.updateValue(dataSource.selectorBeganScale(self))
     }
     
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
         
         sizeView.addTarget(target, action: action, forControlEvents: controlEvents)
+        sizeView.addTarget(self, action: "valueChanged:", forControlEvents: controlEvents)
     }
     
     override func removeAllTarget() {
@@ -56,5 +76,10 @@ class CTASelectorSizeCell: CTASelectorCell {
                 sizeView.removeTarget(target, action: Selector(action), forControlEvents: sizeView.allControlEvents())
             }
         }
+    }
+    
+    func valueChanged(sender: AnyObject) {
+        
+        text = "\(Int(sizeView.value * 100))%"
     }
 }

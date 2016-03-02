@@ -330,7 +330,7 @@ final class CTACanvasViewController: UIViewController {
         
         for cell in reverseCell {
             
-            let onCellPoint = cell.convertPoint(point, fromView: collectionView)
+            let onCellPoint = collectionView.convertPoint(point, toView: cell)
             
             if cell.pointInside(onCellPoint, withEvent: nil) {
                 

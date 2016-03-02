@@ -26,7 +26,7 @@ class CTAConfigSliderCell: CTAConfigCell {
     
     func setup() {
         
-        slider = CTASliderView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)), attributes: CTAScrollTuneAttributes(showShortLine: false))
+        slider = CTASliderView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)), attribute: CTASliderAttributes(showMinorLine: false, seniorRatio: 0.7))
         slider.addTarget(self, action: "sliderValueChanged:", forControlEvents: .ValueChanged)
         slider.maxiumValue = 5
         slider.minumValue = 0
@@ -51,7 +51,7 @@ extension CTAConfigSliderCell: CTACellDisplayProtocol {
         let value = beganValueBlock?() ?? 0
         
         debug_print("animation value = \(value)", context: aniContext)
-        slider.updateValue(value)
+        slider.value = value
     }
     
     func didEndDisplayed() {

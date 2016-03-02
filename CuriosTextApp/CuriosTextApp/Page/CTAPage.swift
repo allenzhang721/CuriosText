@@ -76,9 +76,9 @@ final class CTAPage:NSObject, NSCoding {
     func removeAnimationAtIndex(i: Int, completedHandler:(() -> ())?) {
         dispatch_sync(containerQueue) { 
             
-            self.animatoins.removeAtIndex(i)
+            
             dispatch_async(dispatch_get_main_queue(), {
-                
+                self.animatoins.removeAtIndex(i)
                 completedHandler?()
             })
         }
@@ -88,9 +88,9 @@ final class CTAPage:NSObject, NSCoding {
         
         dispatch_sync(containerQueue) {
             
-            self.animatoins.append(a)
+            
             dispatch_async(dispatch_get_main_queue(), {
-                
+                self.animatoins.append(a)
                 completedHandler?()
             })
         }

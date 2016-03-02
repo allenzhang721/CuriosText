@@ -10,7 +10,7 @@ import UIKit
 
 class CTAAnimation: NSObject, NSCoding, CTAAnimationBinder {
 
-    var iD: String = ""
+    var iD: String = CTAIDGenerator.fileID()
     var targetiD: String = ""
     var name: CTAAnimationName = .MoveIn
     var config: CTAAnimationConfig = CTAAnimationConfig.defaultConfig

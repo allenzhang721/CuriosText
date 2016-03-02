@@ -496,6 +496,8 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             return
         }
         
+        print("Scale did Changed = \(scale)")
+        
         let canvasSize = canvasViewController.view.bounds.size
         container.updateWithScale(
             scale,
@@ -604,12 +606,11 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             
             if let animation = strongSelf.animation, let index = (strongSelf.page.animationBinders.indexOf {$0.iD == animation.iD}) {
                 let id = animation.targetiD
-                debug_print("animation targetID = \(!id.isEmpty ? id.substringFromIndex(id.endIndex.advancedBy(-4)) : "None") will delete", context: animationChangedContext)
+                debug_print("animation targetID = \(!id.isEmpty ? id.substringFromIndex(id.endIndex.advancedBy(-4)) : "None") will delete index \(index)", context: animationChangedContext)
                 strongSelf.page.removeAnimationAtIndex(index) {
-                    debug_print("animation targetID = \(!id.isEmpty ? id.substringFromIndex(id.endIndex.advancedBy(-4)) : "None") delete completed", context: animationChangedContext)
+//                    debug_print("animation targetID = \(!id.isEmpty ? id.substringFromIndex(id.endIndex.advancedBy(-4)) : "None") delete completed", context: animationChangedContext)
                     completedBlock?()
                 }
-                
             }
         }
     }
