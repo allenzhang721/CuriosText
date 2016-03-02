@@ -195,7 +195,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             if !self.isLoadLocal{
                 self.firstLoadCellData()
             }else {
-                
+                self.loadNewCellData()
             }
         }
     }
@@ -222,7 +222,6 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     }
     
     func firstLoadCellData(){
-        self.publishModelArray.removeAll()
         self.loadDataCompleteFuc = self.firstLoadComplete
         self.loadingImageView?.frame.size = CGSize(width: 80, height: 80)
         self.showLoadingViewByRect(self.handView.frame)
@@ -234,17 +233,19 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.changeViewButtonStatus(true)
         if info.result {
             let modelArray = info.modelArray
-            self.loadFirstModelArray(modelArray!)
-            self.currentPublishIndex = 0
-            self.setCellPublishModel()
+            if self.loadFirstModelArray(modelArray!){
+                self.currentPublishIndex = 0
+                self.setCellPublishModel()
+            }
         }else{
             self.loadDataError(info.errorType)
         }
     }
     
     func loadNewCellData(){
-        self.loadDataCompleteFuc = self.loadNewComplete
+        self.firstLoadViewMove(-100)
         self.showLoadingView()
+        self.loadDataCompleteFuc = self.loadNewComplete
         self.loadNewPublishes(0)
     }
     
@@ -254,9 +255,16 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         })
         if info.result {
             let modelArray = info.modelArray
-            self.loadFirstModelArray(modelArray!)
-            self.currentPublishIndex = 0
-            self.setCellPublishModel()
+            if self.loadFirstModelArray(modelArray!){
+                self.currentPublishIndex = 0
+                self.setCellPublishModel()
+            }else {
+                self.setCellsPosition()
+                self.currentFullCell!.playAnimation()
+            }
+        }else {
+            self.setCellsPosition()
+            self.currentFullCell!.playAnimation()
         }
     }
     
@@ -273,18 +281,25 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     }
     
     
-    func loadFirstModelArray(modelArray:Array<AnyObject>){
-        var firstDataIndex = 0
-        for var i=0; i < modelArray.count; i++ {
-            let publishModel = modelArray[i] as! CTAPublishModel
-            if !self.checkPublishModelIsHave(publishModel.publishID){
-                if firstDataIndex < self.publishModelArray.count {
-                    self.publishModelArray.insert(publishModel, atIndex: firstDataIndex)
-                }else{
-                    self.publishModelArray.append(publishModel)
+    func loadFirstModelArray(modelArray:Array<AnyObject>) -> Bool{
+        if modelArray.count > 0{
+            if self.publishModelArray.count > 0{
+                let newmodel = modelArray[0] as! CTAPublishModel
+                let oldModel = self.publishModelArray[0]
+                if newmodel.publishID != oldModel.publishID{
+                    self.publishModelArray.removeAll()
+                    self.loadMoreModelArray(modelArray)
+                    return true
+                }else {
+                    return false
                 }
-                firstDataIndex++
+            }else {
+                self.publishModelArray.removeAll()
+                self.loadMoreModelArray(modelArray)
+                return true
             }
+        }else {
+            return false
         }
     }
     
@@ -467,16 +482,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 let nextSizeChange = self.moreSpace*percent - self.moreSpace
                 self.changeCellSizeBySpace(nextSizeChange, ischangeCurrent: true)
             }else {
-                if !self.loadingImageView!.isDescendantOfView(self.view){
-                    self.view.addSubview(self.loadingImageView!)
-                    self.loadingImageView?.image = UIImage(named: "fresh-icon-1")
-                    self.loadingImageView?.frame = CGRect.init(x: bounds.width, y: self.handView.frame.origin.y+self.handView.frame.height/2-20, width: 40, height: 40)
-                }
-                xChange = xChange/4
-                self.currentFullCell.center = CGPoint.init(x: bounds.width/2+xChange, y: fullSize.height/2)
-                self.nextMoreCell.center = CGPoint.init(x: bounds.width/2+xChange, y: moreSpace*3+fullSize.height/2)
-                self.nextFullCell.center = CGPoint.init(x: bounds.width/2+xChange, y: moreSpace*1.5+fullSize.height/2)
-                self.loadingImageView?.center = CGPoint.init(x: bounds.width+xChange+20, y: self.handView.frame.origin.y+self.handView.frame.height/2)
+                self.firstLoadViewMove(xChange/4)
             }
         }
     }
@@ -576,6 +582,26 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         }
     }
     
+    func firstLoadViewMove(xMove:CGFloat){
+        let bounds = UIScreen.mainScreen().bounds
+        let fullSize = self.getCellSize()
+
+        if !self.loadingImageView!.isDescendantOfView(self.view){
+            self.view.addSubview(self.loadingImageView!)
+            self.loadingImageView?.image = UIImage(named: "fresh-icon-1")
+            self.loadingImageView?.frame = CGRect.init(x: bounds.width, y: self.handView.frame.origin.y+self.handView.frame.height/2-20, width: 40, height: 40)
+        }
+        var xChange = xMove
+        let maxSpace = (fullSize.width - bounds.width)/2 - 40
+        if xChange < maxSpace {
+            xChange = maxSpace
+        }
+        self.currentFullCell.center = CGPoint.init(x: bounds.width/2+xChange, y: fullSize.height/2)
+        self.nextMoreCell.center = CGPoint.init(x: bounds.width/2+xChange, y: moreSpace*3+fullSize.height/2)
+        self.nextFullCell.center = CGPoint.init(x: bounds.width/2+xChange, y: moreSpace*1.5+fullSize.height/2)
+        self.loadingImageView?.center = CGPoint.init(x: bounds.width+xChange+20, y: self.handView.frame.origin.y+self.handView.frame.height/2)
+    }
+    
     func resetFirstLoadView(completion: (() -> Void)?){
         let bounds = UIScreen.mainScreen().bounds
         let fullSize = self.getCellSize()
@@ -659,27 +685,37 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
 }
 
 extension CTAHomeViewController: CTAPublishProtocol{
+    
+    var publishModel:CTAPublishModel{
+        let publishModel = self.currentFullCell.publishModel
+        return publishModel!
+    }
+    
+    var userModel:CTAUserModel?{
+        return self.loginUser
+    }
+    
     func likeButtonClick(sender: UIButton){
         if self.loginUser == nil {
             self.showLoginView()
-        }else if let publishModel = self.currentFullCell.publishModel{
-            self.likeHandler(self.loginUser!.userID, publishModel: publishModel)
+        }else if self.currentFullCell.publishModel != nil{
+            self.likeHandler()
         }
     }
     
     func moreButtonClick(sender: UIButton){
         if self.loginUser == nil {
             self.showLoginView()
-        }else if let publishModel = self.currentFullCell.publishModel{
-            self.moreSelectionHandler(self.loginUser!.userID, publishModel: publishModel)
+        }else if self.currentFullCell.publishModel != nil{
+            self.moreSelectionHandler(false)
         }
     }
     
     func rebuildButtonClick(sender: UIButton){
         if self.loginUser == nil {
             self.showLoginView()
-        }else if let publishModel = self.currentFullCell.publishModel{
-            self.rebuildHandler(self.loginUser!.userID, publishModel: publishModel)
+        }else if self.currentFullCell.publishModel != nil{
+            self.rebuildHandler()
         }
     }
     

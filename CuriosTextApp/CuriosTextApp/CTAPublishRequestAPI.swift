@@ -55,10 +55,12 @@ class CTACreatePublishRequest: CTABaseRequest {
 }
 
 class CTADeletePublishRequest: CTABaseRequest {
+    let userID:String;
     let publishID:String;
     
-    init(publishID:String) {
+    init(publishID:String, userID:String) {
         self.publishID = publishID;
+        self.userID    = userID;
     }
     
     override func requestUrl() -> String {
@@ -67,7 +69,8 @@ class CTADeletePublishRequest: CTABaseRequest {
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.PublishID): publishID
+            key(.PublishID): publishID,
+            key(.UserID)   : userID
         ];
         return self.getParameterString(dic, errorMessage: "CTADeletePublishRequest");
     }

@@ -64,9 +64,9 @@ class CTAPublishDomain: CTABaseDomain {
         }
     }
     
-    func deletePublishFile(publishID:String, compelecationBlock: (CTADomainInfo!) -> Void){
+    func deletePublishFile(publishID:String, userID:String, compelecationBlock: (CTADomainInfo!) -> Void){
         
-        CTADeletePublishRequest.init(publishID: publishID).startWithCompletionBlockWithSuccess{ (response) -> Void in
+        CTADeletePublishRequest.init(publishID: publishID, userID: userID).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
             case .Success(let json):

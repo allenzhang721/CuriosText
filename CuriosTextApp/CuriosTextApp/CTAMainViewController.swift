@@ -9,9 +9,19 @@
 import Foundation
 class CTAMainViewController: UIViewController, CTAAddBarProtocol, CTALoginProtocol{
     
+    static var _instance:CTAMainViewController?;
+    
+    static func getInstance() -> CTAMainViewController{
+        if _instance == nil{
+            _instance = CTAMainViewController()
+        }
+        return _instance!
+    }
+    
     private let pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
     
     private let pageControllers = CTAPageControllers()
+    
     
     override func prefersStatusBarHidden() -> Bool {
         return true
