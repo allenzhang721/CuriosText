@@ -9,22 +9,25 @@
 import Foundation
 import Kingfisher
 
-protocol CTAPublishProtocol:CTAImageControllerProtocol{
+protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAShareViewProtocol{
     var likeButton:UIButton{get}
     var userIconImage:UIImageView{get}
     var userNicknameLabel:UILabel{get}
+    var publishModel:CTAPublishModel{get}
+    var userModel:CTAUserModel?{get}
     func initPublishSubView(publishRect:CGRect, horRate:CGFloat)
     func changeUserView(userModel:CTAUserModel)
     func changeDetailUser()
     
-    func likeHandler(userID:String, publishModel:CTAPublishModel)
+    func likeHandler()
+    
     func setLikeButtonStyle(publishModel:CTAPublishModel?)
     func likeButtonClick(sender: UIButton)
     
-    func moreSelectionHandler(userID:String, publishModel:CTAPublishModel)
+    func moreSelectionHandler(isSelf:Bool)
     func moreButtonClick(sender: UIButton)
     
-    func rebuildHandler(userID:String, publishModel:CTAPublishModel)
+    func rebuildHandler()
     func rebuildButtonClick(sender: UIButton)
     
     func userIconClick(sender: UIPanGestureRecognizer)
@@ -34,9 +37,9 @@ extension CTAPublishProtocol where Self: UIViewController{
 
     func initPublishSubView(publishRect:CGRect, horRate:CGFloat){
         let bounds = UIScreen.mainScreen().bounds
-        var butY   = bounds.height - 70
-        let originy = (publishRect.origin.y + publishRect.height + 20)
-        if butY < originy{
+        var butY   = publishRect.origin.y + publishRect.height + 20 + 10*horRate
+        let originy = bounds.height - 60
+        if butY > originy{
             butY = originy
         }
         self.likeButton.frame = CGRect.init(x: 0, y: 0, width: 40, height: 40)
@@ -122,19 +125,20 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.userIconImage.image = UIImage.init(named: "default-usericon")
     }
     
-    func likeHandler(userID:String, publishModel:CTAPublishModel){
+    func likeHandler(){
+        let userID = self.userModel == nil ? "" : self.userModel!.userID
         if publishModel.likeStatus == 0{
             CTAPublishDomain.getInstance().likePublish(userID, publishID: publishModel.publishID, compelecationBlock: { (info) -> Void in
                 if info.result {
-                    publishModel.likeStatus = 1
-                    self.setLikeButtonStyle(publishModel)
+                    self.publishModel.likeStatus = 1
+                    self.setLikeButtonStyle(self.publishModel)
                 }
             })
         }else {
             CTAPublishDomain.getInstance().unLikePublish(userID, publishID: publishModel.publishID, compelecationBlock: { (info) -> Void in
                 if info.result {
-                    publishModel.likeStatus = 0
-                    self.setLikeButtonStyle(publishModel)
+                    self.publishModel.likeStatus = 0
+                    self.setLikeButtonStyle(self.publishModel)
                 }
             })
         }
@@ -144,17 +148,46 @@ extension CTAPublishProtocol where Self: UIViewController{
         if let model = publishModel{
             if model.likeStatus == 0{
                 self.likeButton.setImage(UIImage.init(named: "like-button"), forState: .Normal)
+                self.likeButton.setImage(UIImage.init(named: "like-highlighted-button"), forState: .Highlighted)
             }else {
                 self.likeButton.setImage(UIImage.init(named: "like-selected-button"), forState: .Normal)
+                self.likeButton.setImage(UIImage.init(named: "like-selected-button"), forState: .Highlighted)
             }
         }
     }
     
-    func moreSelectionHandler(userID:String, publishModel:CTAPublishModel){
-        print("shareHandler")
+    func moreSelectionHandler(isSelf:Bool){
+        let shareView = CTAShareView.getInstance()
+        shareView.delegate = self
+        let mainController = CTAMainViewController.getInstance()
+        if self.view.isDescendantOfView(mainController.view){
+            mainController.view.addSubview(shareView)
+        }else {
+            self.view.superview?.addSubview(shareView)
+        }
+        shareView.showViewHandler(isSelf)
     }
     
-    func rebuildHandler(userID:String, publishModel:CTAPublishModel){
+    func rebuildHandler(){
         print("rebuildHandler ")
+    }
+}
+
+extension CTAPublishProtocol{
+    
+    func weChatShareHandler(){
+        print("weChatShareHandler")
+    }
+    
+    func momentsShareHandler(){
+        print("momentsShareHandler")
+    }
+    
+    func deleteHandler(){
+        
+    }
+    
+    func copyLinkHandler(){
+        print("copyLinkHandler")
     }
 }

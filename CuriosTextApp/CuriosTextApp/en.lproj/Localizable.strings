@@ -46,6 +46,10 @@
 "UserRegion" = "Region";
 "UserDesc" = "Bio";
 "SaveButtonLabel" = "Save";
+"WechatShareLabel" = "Friends";
+"MomentsShareLabel" = "Moments";
+"DeleteFileLabel" = "Delete";
+"CopyLinkLabel" = "Copy URL";
 
 "AlertOkLabel" = "OK";
 "AlertYesLabel" = "Yes";
@@ -56,6 +60,7 @@
 "AlertChoosePhoteLabel" = "Choose from Photos";
 "AlertBackLabel" = "Back";
 "AlertWaitLabel" = "Wait";
+"AlertTitleDeleteFile" = "Confirm deletion?";
 "AlertTitleSMSVerifyBack" = "Verification code SMS may be slightly delayed. Are you sure go back and start again?";
 "AlertTitlePasswordBack" = "Complete soon. Are you sure go back and start again?";
 "AlertTitleUserNameBack" = "This is the last step. Are you sure go back and start again?";

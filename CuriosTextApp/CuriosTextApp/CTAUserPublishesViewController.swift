@@ -297,26 +297,41 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                 if modelArray!.count < size {
                     self.isLoadedAll = true
                 }
-                var firstDataIndex:Int = 0
-                for var i=0; i < modelArray!.count; i++ {
-                    let publishModel = modelArray![i] as! CTAPublishModel
-                    if !self.checkPublishModelIsHave(publishModel.publishID){
-                        if self.isLoadingFirstData{
-                            if firstDataIndex < self.publishModelArray.count {
-                                self.publishModelArray.insert(publishModel, atIndex: firstDataIndex)
-                            }else{
-                                self.publishModelArray.append(publishModel)
+                if self.isLoadingFirstData{
+                    if modelArray!.count > 0{
+                        if self.publishModelArray.count > 0{
+                            var isChange:Bool = false
+                            for var i=0; i<modelArray!.count; i++ {
+                                let newmodel = modelArray![i] as! CTAPublishModel
+                                if !self.checkPublishModelIsHave(newmodel.publishID){
+                                    isChange = true
+                                    break
+                                }
                             }
-                            firstDataIndex++
-                        } else {
-                            self.publishModelArray.append(publishModel)
+                            if isChange{
+                                self.publishModelArray.removeAll()
+                                self.loadMoreModelArray(modelArray!)
+                            }
+                        }else {
+                            self.loadMoreModelArray(modelArray!)
                         }
                     }
+                }else {
+                    self.loadMoreModelArray(modelArray!)
                 }
             }
-            self.collectionView.reloadData()
         }
         self.freshComplete();
+    }
+    
+    func loadMoreModelArray(modelArray:Array<AnyObject>){
+        for var i=0; i < modelArray.count; i++ {
+            let publishModel = modelArray[i] as! CTAPublishModel
+            if !self.checkPublishModelIsHave(publishModel.publishID){
+                self.publishModelArray.append(publishModel)
+            }
+        }
+        self.collectionView.reloadData()
     }
     
     func freshComplete(){
@@ -392,7 +407,7 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
                 self.publishDetail = CTAPublishDetailViewController()
             }
             self.publishDetail!.setPublishData(self.selectedPublishID, publishModelArray: self.publishModelArray)
-            self.publishDetail!.loginUserID = (self.loginUser != nil ? self.loginUser!.userID : "")
+            self.publishDetail!.loginUser = self.loginUser
             self.publishDetail!.viewUser = self.viewUser
             self.publishDetail!.delegate = self
             self.publishDetail!.transitioningDelegate = self
@@ -465,9 +480,26 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
     }
     
     func setPublishData(selectedPublishID:String, publishModelArray:Array<CTAPublishModel>, selectedCellCenter:CGPoint){
-        self.publishModelArray.removeAll()
+        var isChange:Bool = false
+        if publishModelArray.count == self.publishModelArray.count {
+            for var i=0; i<publishModelArray.count; i++ {
+                let oldModel = self.publishModelArray[i]
+                let newModel = publishModelArray[i]
+                if oldModel.publishID != newModel.publishID {
+                    isChange = true
+                    break
+                }
+            }
+        }else {
+            isChange = true
+        }
+        if isChange{
+            self.publishModelArray.removeAll()
+            self.publishModelArray = self.publishModelArray + publishModelArray
+            self.collectionView.reloadData()
+        }
+        
         self.selectedPublishID = selectedPublishID
-        self.publishModelArray = self.publishModelArray + publishModelArray
         self.viewToolBar.frame.origin.y = 0
         self.collectionView.frame.origin.y = self.viewToolBar.frame.height
         self.collectionView.frame.size.height = self.view.frame.height - self.viewToolBar.frame.height
@@ -492,7 +524,7 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
         if self.collectionView.contentOffset.y != scrollOffY {
             self.collectionView.contentOffset.y = scrollOffY
             self.previousScrollViewYOffset = scrollOffY
-            self.collectionView.reloadData()
+            
         }
         self.isCanChangeToolBar = true
     }

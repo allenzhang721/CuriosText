@@ -12,7 +12,7 @@ class ViewController: UIViewController{
     
     var navigate:UINavigationController!
     
-    let mainView = CTAMainViewController()
+    let mainView = CTAMainViewController.getInstance()
 
     override func prefersStatusBarHidden() -> Bool {
         return true

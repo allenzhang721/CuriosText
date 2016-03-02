@@ -8,10 +8,10 @@
 
 import UIKit
 
-class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, CTAUserDetailProtocol{
+class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, CTAUserDetailProtocol, CTALoadingProtocol, CTAAlertProtocol{
 
     var viewUser:CTAUserModel?
-    var loginUserID:String = ""
+    var loginUser:CTAUserModel?
     
     var publishModelArray:Array<CTAPublishModel> = []
     var selectedPublishID:String = ""
@@ -39,6 +39,8 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
     
     var delegate:CTAPublishDetailDelegate?
     var userDetail:CTAUserDetailViewController?
+    
+    var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
 //    
 //    static var _instance:CTAPublishDetailViewController?;
 //    
@@ -208,10 +210,14 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
     
     func resetCells(currentIndex:Int, arrayCount:Int){
         self.previousFullCell!.isVisible = false
+        self.previousFullCell!.alpha = 0.0
         self.nextFullCell!.isVisible = false
+        self.nextFullCell!.alpha = 0.0
         self.currentFullCell!.isVisible = false
+        self.currentFullCell!.alpha = 0.0
         for var i=0; i < self.fullCellArray.count; i++ {
             self.fullCellArray[i].isVisible = false
+            self.fullCellArray[i].alpha = 0.0
         }
     }
     
@@ -302,7 +308,8 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
         }
         self.isLoading = true
         self.isLoadedAll = false
-        CTAPublishDomain.getInstance().userPublishList(self.loginUserID, beUserID: self.viewUser!.userID, start: start, size: size) { (info) -> Void in
+        let userID = self.loginUser == nil ? "" : self.loginUser!.userID
+        CTAPublishDomain.getInstance().userPublishList(userID, beUserID: self.viewUser!.userID, start: start, size: size) { (info) -> Void in
             self.isLoading = false
             self.loadPublishesComplete(info, size: size)
         }
@@ -315,22 +322,31 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                 if modelArray!.count < size {
                     self.isLoadedAll = true
                 }
-                var firstDataIndex:Int = 0
-                for var i=0; i < modelArray!.count; i++ {
-                    let publishModel = modelArray![i] as! CTAPublishModel
-                    if !self.checkPublishModelIsHave(publishModel.publishID){
-                        if self.isLoadingFirstData{
-                            if firstDataIndex < self.publishModelArray.count {
-                                self.publishModelArray.insert(publishModel, atIndex: firstDataIndex)
-                            }else{
-                                self.publishModelArray.append(publishModel)
+                if self.isLoadingFirstData{
+                    if modelArray!.count > 0{
+                        if self.publishModelArray.count > 0{
+                            let newmodel = modelArray![0] as! CTAPublishModel
+                            let oldModel = self.publishModelArray[0]
+                            if newmodel.publishID != oldModel.publishID{
+                                self.publishModelArray.removeAll()
+                                self.loadMoreModelArray(modelArray!)
                             }
-                            firstDataIndex++
-                        } else {
-                            self.publishModelArray.append(publishModel)
+                        }else {
+                            self.loadMoreModelArray(modelArray!)
                         }
                     }
+                }else {
+                    self.loadMoreModelArray(modelArray!)
                 }
+            }
+        }
+    }
+    
+    func loadMoreModelArray(modelArray:Array<AnyObject>){
+        for var i=0; i < modelArray.count; i++ {
+            let publishModel = modelArray[i] as! CTAPublishModel
+            if !self.checkPublishModelIsHave(publishModel.publishID){
+                self.publishModelArray.append(publishModel)
             }
         }
     }
@@ -760,7 +776,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                 self.currentFullCell.alpha = 1
             }
         }else {
-            
+            self.currentFullCell!.playAnimation()
         }
     }
     
@@ -856,21 +872,34 @@ enum CTAPanVerDirection{
 
 extension CTAPublishDetailViewController: CTAPublishProtocol{
     
+    var publishModel:CTAPublishModel{
+        let publishModel = self.currentFullCell.publishModel
+        return publishModel!
+    }
+    
+    var userModel:CTAUserModel?{
+        return self.loginUser
+    }
+    
     func likeButtonClick(sender: UIButton){
-        if let publishModel = self.currentFullCell.publishModel{
-            self.likeHandler(self.loginUserID, publishModel: publishModel)
+        if self.currentFullCell.publishModel != nil{
+            self.likeHandler()
         }
     }
     
     func moreButtonClick(sender: UIButton){
-        if let publishModel = self.currentFullCell.publishModel{
-            self.moreSelectionHandler(self.loginUserID, publishModel: publishModel)
+        if self.currentFullCell.publishModel != nil{
+            if self.viewUser?.userID != self.loginUser!.userID{
+               self.moreSelectionHandler(false)
+            }else {
+               self.moreSelectionHandler(true)
+            }
         }
     }
     
     func rebuildButtonClick(sender: UIButton){
-        if let publishModel = self.currentFullCell.publishModel{
-            self.rebuildHandler(self.loginUserID, publishModel: publishModel)
+        if self.currentFullCell.publishModel != nil{
+            self.rebuildHandler()
         }
     }
     
@@ -878,7 +907,39 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
         if self.userDetail == nil {
             self.userDetail = CTAUserDetailViewController()
         }
-        self.showUserDetailView(self.viewUser, loginUserID: self.loginUserID)
+        let userID = self.loginUser == nil ? "" : self.loginUser!.userID
+        self.showUserDetailView(self.viewUser, loginUserID: userID)
+    }
+    
+    func deleteHandler(){
+        if let publish = self.currentFullCell.publishModel{
+            self.showSelectedAlert(NSLocalizedString("AlertTitleDeleteFile", comment: ""), alertMessage: "", okAlertLabel: NSLocalizedString("DeleteFileLabel", comment: ""), cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: ""), compelecationBlock: { (result) -> Void in
+                if result{
+                    self.showLoadingViewByView(nil)
+                    let userID = self.loginUser == nil ? "" : self.viewUser!.userID
+                    CTAPublishDomain.getInstance().deletePublishFile(publish.publishID, userID: userID, compelecationBlock: { (info) -> Void in
+                        self.hideLoadingViewByView(nil)
+                        if info.result{
+                            let selectedIndex = self.getPublishIndex(self.selectedPublishID)
+                            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                                self.currentFullCell.alpha = 0
+                                }, completion: { (_) -> Void in
+                                    self.nextCenter = self.nextFullCell.center
+                                    self.preCenter = self.previousFullCell.center
+                                    self.currentCenter = self.currentFullCell.center
+                                    if selectedIndex < self.publishModelArray.count - 1 {
+                                        self.currentFullCell.hidden = true
+                                        self.horPanAnimation(-1)
+                                    }else {
+                                        self.horPanAnimation(1)
+                                    }
+                                    self.publishModelArray.removeAtIndex(selectedIndex)
+                            })
+                        }
+                    })
+                }
+            })
+        }
     }
 }
 
