@@ -139,7 +139,7 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
             switch collectionview.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) {
                 
             case let cell as CTASelectorSizeCell:
-                cell.sizeView.updateValue(container.scale)
+                cell.sizeView.value = container.scale
                 
             case let cell as CTASelectorRotatorCell:
                 cell.view.radian = container.radius
