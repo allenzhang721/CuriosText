@@ -180,6 +180,7 @@
 		2CC811641C79A6D5003CE8BF /* String + bcMD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC8115D1C79A6D5003CE8BF /* String + bcMD5.swift */; };
 		2CC9307D1C74640300FB02A9 /* CTACameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9307C1C74640300FB02A9 /* CTACameraView.swift */; };
 		2CC9307F1C7464D000FB02A9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC9307E1C7464D000FB02A9 /* AVFoundation.framework */; };
+		2CCBE4961C870AA4001E1CD8 /* CTAShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCBE4951C870AA4001E1CD8 /* CTAShareView.swift */; };
 		2CCD94DC1C43B4AA001E5D08 /* CTATextSpacingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */; };
 		2CD08F5D1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD08F5C1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift */; };
 		2CD488131C4E1A4900D11CB7 /* CTAPreviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD488121C4E1A4900D11CB7 /* CTAPreviewManager.swift */; };
@@ -443,6 +444,7 @@
 		2CC8115D1C79A6D5003CE8BF /* String + bcMD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String + bcMD5.swift"; sourceTree = "<group>"; };
 		2CC9307C1C74640300FB02A9 /* CTACameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACameraView.swift; sourceTree = "<group>"; };
 		2CC9307E1C7464D000FB02A9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		2CCBE4951C870AA4001E1CD8 /* CTAShareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAShareView.swift; sourceTree = "<group>"; };
 		2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATextSpacingView.swift; sourceTree = "<group>"; };
 		2CD08F5C1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAnimationPlayNodeManager.swift; sourceTree = "<group>"; };
 		2CD488121C4E1A4900D11CB7 /* CTAPreviewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewManager.swift; sourceTree = "<group>"; };
@@ -662,6 +664,7 @@
 		2C32BD4A1C4CB56E00788A97 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				2CCBE4951C870AA4001E1CD8 /* CTAShareView.swift */,
 				2C1B88AA1C5F371A000403FD /* CTAAlertProtocol.swift */,
 				2C1B88A31C5F366F000403FD /* CTAPhoneProtocol.swift */,
 				2C2B45A91C5CBCC8004A4809 /* CTALoginProtocol.swift */,
@@ -1411,6 +1414,7 @@
 				2CE063E21C857D2F001F7F4E /* CTACameraHelper.swift in Sources */,
 				2C04045A1C3EBDBF00A5B017 /* CTATabItemFactory.swift in Sources */,
 				2C8DD2151C4A342C0035C52D /* CTALoadingProtocol.swift in Sources */,
+				2CCBE4961C870AA4001E1CD8 /* CTAShareView.swift in Sources */,
 				2C1F015C1C3CE3770033CED8 /* CTACanvasCell.swift in Sources */,
 				2C65B66E1C4F690C007B4DEA /* CTAPreviewVIew.swift in Sources */,
 				2C2B45AA1C5CBCC8004A4809 /* CTALoginProtocol.swift in Sources */,
