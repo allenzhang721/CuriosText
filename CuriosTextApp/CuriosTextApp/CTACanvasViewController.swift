@@ -79,7 +79,7 @@ final class CTACanvasViewController: UIViewController {
     }
     
     override func viewWillLayoutSubviews() {
-        
+        super.viewWillLayoutSubviews()
         collectionView.frame = view.bounds
     }
     
@@ -326,18 +326,19 @@ final class CTACanvasViewController: UIViewController {
             return nil
         }
         
-        let reverseCell = visualCells
-        
-        for cell in reverseCell {
+        if let indexPaths = (visualCells.map{collectionView.indexPathForCell($0)}.sort{$0.0?.item > $0.1?.item}) as? [NSIndexPath] {
             
-            let onCellPoint = collectionView.convertPoint(point, toView: cell)
-            
-            if cell.pointInside(onCellPoint, withEvent: nil) {
+            for indexPath in indexPaths {
                 
-                return collectionView.indexPathForCell(cell)
+                let cell = collectionView.cellForItemAtIndexPath(indexPath)!
+                let onCellPoint = collectionView.convertPoint(point, toView: cell)
+                
+                if cell.pointInside(onCellPoint, withEvent: nil) {
+                    
+                    return indexPath
+                }
             }
         }
-        
         return nil
     }
 }
