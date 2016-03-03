@@ -48,6 +48,7 @@
 		2C31EB631C452597002A4D71 /* SwiftHEXColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C31EB621C452597002A4D71 /* SwiftHEXColors.swift */; };
 		2C32653E1C7321A80000B89B /* CTAUploadIconProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C32653D1C7321A80000B89B /* CTAUploadIconProtocol.swift */; };
 		2C3265401C7321B60000B89B /* CTASetUserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C32653F1C7321B60000B89B /* CTASetUserInfoViewController.swift */; };
+		2C32B4D31C880E01004390DD /* Extension+BlackCatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C32B4D21C880E01004390DD /* Extension+BlackCatManager.swift */; };
 		2C32BD491C4CA7A100788A97 /* CTAPreviewCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C32BD481C4CA7A100788A97 /* CTAPreviewCanvasView.swift */; };
 		2C32BD561C4CB89100788A97 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C32BD581C4CB89100788A97 /* Localizable.strings */; };
 		2C3AE3EC1C59EC9E004D62B4 /* CTASocialShareManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3AE3EB1C59EC9E004D62B4 /* CTASocialShareManager.swift */; };
@@ -298,6 +299,7 @@
 		2C31EB621C452597002A4D71 /* SwiftHEXColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftHEXColors.swift; sourceTree = "<group>"; };
 		2C32653D1C7321A80000B89B /* CTAUploadIconProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUploadIconProtocol.swift; sourceTree = "<group>"; };
 		2C32653F1C7321B60000B89B /* CTASetUserInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASetUserInfoViewController.swift; sourceTree = "<group>"; };
+		2C32B4D21C880E01004390DD /* Extension+BlackCatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+BlackCatManager.swift"; sourceTree = "<group>"; };
 		2C32BD481C4CA7A100788A97 /* CTAPreviewCanvasView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewCanvasView.swift; sourceTree = "<group>"; };
 		2C32BD4B1C4CB5C400788A97 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		2C32BD4C1C4CB5C500788A97 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
@@ -1011,6 +1013,7 @@
 				2CC811571C79A6D5003CE8BF /* BlackCatCache.swift */,
 				2CC811581C79A6D5003CE8BF /* BlackCatDownloader.swift */,
 				2CC811591C79A6D5003CE8BF /* BlackCatManager.swift */,
+				2C32B4D21C880E01004390DD /* Extension+BlackCatManager.swift */,
 				2CC8115A1C79A6D5003CE8BF /* BlackCatOptions.swift */,
 				2CC8115B1C79A6D5003CE8BF /* BlackCatOptionsInfo.swift */,
 				2CC8115C1C79A6D5003CE8BF /* BlackCatResultExtension.swift */,
@@ -1336,6 +1339,7 @@
 				2CC811641C79A6D5003CE8BF /* String + bcMD5.swift in Sources */,
 				2C65B6721C4F6F4C007B4DEA /* ValueExtension.swift in Sources */,
 				2C8A84C51C7EEC4B0017F81F /* CTACellDisplayProtocol.swift in Sources */,
+				2C32B4D31C880E01004390DD /* Extension+BlackCatManager.swift in Sources */,
 				2CE063EA1C857D2F001F7F4E /* CTAPhotoPreviewView.swift in Sources */,
 				2CAEAC931C323F2600C9F9AC /* EditorFactory.swift in Sources */,
 				66A072AD1C186EFF0046C72F /* CTARelationRequestAPI.swift in Sources */,
