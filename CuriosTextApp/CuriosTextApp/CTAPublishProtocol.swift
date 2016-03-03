@@ -9,7 +9,7 @@
 import Foundation
 import Kingfisher
 
-protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAShareViewProtocol{
+protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAShareViewProtocol, CTAAlertProtocol{
     var likeButton:UIButton{get}
     var userIconImage:UIImageView{get}
     var userNicknameLabel:UILabel{get}
@@ -176,11 +176,53 @@ extension CTAPublishProtocol where Self: UIViewController{
 extension CTAPublishProtocol{
     
     func weChatShareHandler(){
-        print("weChatShareHandler")
+        if CTASocialManager.isAppInstaller(.WeChat){
+            let imagePath = CTAFilePath.publishFilePath+self.publishModel.publishIconURL
+            let imageURL = NSURL(string: imagePath)!
+            let message = CTASocialManager.Message
+                .WeChat(
+                    .Session(
+                        info: (
+                            title: "",
+                            description: "",
+                            thumbnail: nil,
+                            media: .URL(imageURL)
+                        )
+                    )
+            )
+            
+            CTASocialManager.shareMessage(message) { (result) -> Void in
+                debug_print("shareMessage result = \(result)")
+            }
+        }else {
+            self.showSingleAlert(NSLocalizedString("AlertTitleNoInstallWechat", comment: ""), alertMessage: "", compelecationBlock: nil)
+        }
     }
     
     func momentsShareHandler(){
-        print("momentsShareHandler")
+        if CTASocialManager.isAppInstaller(.WeChat){
+//            let imagePath = CTAFilePath.publishFilePath+self.publishModel.publishIconURL
+//            let imageURL = NSURL(string: imagePath)!
+//            let img = UIImage.init(CGImage: <#T##CGImage#>)
+            let message = CTASocialManager.Message
+                .WeChat(
+                    .Timeline(
+                        info: (
+                            title: "",
+                            description: "",
+                            thumbnail: nil,
+                            media: nil
+                        )
+                    )
+            )
+            
+            CTASocialManager.shareMessage(message) { (result) -> Void in
+                
+                debug_print("shareMessage result = \(result)")
+            }
+        }else {
+            self.showSingleAlert(NSLocalizedString("AlertTitleNoInstallWechat", comment: ""), alertMessage: "", compelecationBlock: nil)
+        }
     }
     
     func deleteHandler(){

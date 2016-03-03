@@ -41,6 +41,17 @@ class CTASocialTestViewController: UIViewController {
         
         let url = NSURL(string: "")
         
+        let a = CTASocialManager.Message
+            .WeChat(.Timeline(info: (
+                    title: "title",
+                    description: "description",
+                    thumbnail: nil,
+                    media: .URL(url!)
+                )
+            )
+        )
+        
+        
         let message = CTASocialManager.Message
             .WeChat(
                 .Session(

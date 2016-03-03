@@ -61,6 +61,7 @@
 "AlertBackLabel" = "Back";
 "AlertWaitLabel" = "Wait";
 "AlertTitleDeleteFile" = "Confirm deletion?";
+"AlertTitleNoInstallWechat" = "Wechat has not been installed";
 "AlertTitleSMSVerifyBack" = "Verification code SMS may be slightly delayed. Are you sure go back and start again?";
 "AlertTitlePasswordBack" = "Complete soon. Are you sure go back and start again?";
 "AlertTitleUserNameBack" = "This is the last step. Are you sure go back and start again?";
