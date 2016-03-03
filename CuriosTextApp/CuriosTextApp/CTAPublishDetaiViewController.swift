@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, CTAUserDetailProtocol, CTALoadingProtocol, CTAAlertProtocol{
+class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, CTAUserDetailProtocol, CTALoadingProtocol{
 
     var viewUser:CTAUserModel?
     var loginUser:CTAUserModel?

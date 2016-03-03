@@ -11,7 +11,7 @@ import UIKit
 protocol CTAAlertProtocol{
     
     func showSelectedAlert(alertTile:String, alertMessage:String, okAlertLabel:String, cancelAlertLabel:String, compelecationBlock: (Bool) -> Void)
-    func showSingleAlert(alertTile:String, alertMessage:String, compelecationBlock: () -> Void)
+    func showSingleAlert(alertTile:String, alertMessage:String, compelecationBlock: (() -> Void)?)
     func showSheetAlert(alertTile:String?, okAlertArray:Array<String>, cancelAlertLabel:String, compelecationBlock: (index:Int) -> Void)
 }
 
@@ -28,10 +28,12 @@ extension CTAAlertProtocol where Self: UIViewController{
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    func showSingleAlert(alertTile:String, alertMessage:String, compelecationBlock: () -> Void){
+    func showSingleAlert(alertTile:String, alertMessage:String, compelecationBlock: (() -> Void)?){
         let alert = UIAlertController(title: alertTile, message: alertMessage, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("AlertOkLabel", comment: ""), style: .Default, handler: { (_) -> Void in
-            compelecationBlock()
+            if compelecationBlock != nil {
+                compelecationBlock!()
+            }
         }))
         self.presentViewController(alert, animated: true, completion: nil)
     }

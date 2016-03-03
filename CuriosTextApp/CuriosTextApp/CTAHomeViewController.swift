@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginProtocol, CTALoadingProtocol, CTAAlertProtocol{
+class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginProtocol, CTALoadingProtocol{
 
     var currentPublishIndex:Int = -1
     var publishModelArray:Array<CTAPublishModel> = []

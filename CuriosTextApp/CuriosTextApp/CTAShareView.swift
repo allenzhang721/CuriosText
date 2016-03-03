@@ -68,9 +68,11 @@ class CTAShareView: UIView{
         wechatButton.addTarget(self, action: "weChatButtonClick:", forControlEvents: .TouchUpInside)
         self.wechatShareView.addSubview(wechatButton)
         let wechatLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
+        wechatLabel.font = UIFont.systemFontOfSize(12)
+        wechatLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         wechatLabel.text = NSLocalizedString("WechatShareLabel", comment: "")
         wechatLabel.sizeToFit()
-        wechatLabel.center = CGPoint.init(x: wechatButton.center.x, y: buttonW+25)
+        wechatLabel.center = CGPoint.init(x: wechatButton.center.x, y: buttonW+20)
         self.wechatShareView.addSubview(wechatLabel)
         self.wechatShareView.sizeToFit()
         self.wechatShareView.frame.origin.x = (bounds.width/2 - buttonW*3/2 - space) - (self.wechatShareView.frame.width - buttonW)/2
@@ -82,9 +84,11 @@ class CTAShareView: UIView{
         momentsButton.addTarget(self, action: "momentsButtonClick:", forControlEvents: .TouchUpInside)
         self.momentsShareView.addSubview(momentsButton)
         let momentsLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
+        momentsLabel.font = UIFont.systemFontOfSize(12)
+        momentsLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         momentsLabel.text = NSLocalizedString("MomentsShareLabel", comment: "")
         momentsLabel.sizeToFit()
-        momentsLabel.center = CGPoint.init(x: momentsButton.center.x, y: buttonW+25)
+        momentsLabel.center = CGPoint.init(x: momentsButton.center.x, y: buttonW+20)
         self.momentsShareView.addSubview(momentsLabel)
         self.momentsShareView.sizeToFit()
         self.momentsShareView.frame.origin.x = (bounds.width/2 - buttonW/2) - (self.momentsShareView.frame.width - buttonW)/2
@@ -96,9 +100,11 @@ class CTAShareView: UIView{
         deleteButton.addTarget(self, action: "deleteButtonClick:", forControlEvents: .TouchUpInside)
         self.deleteView.addSubview(deleteButton)
         let deleteLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
+        deleteLabel.font = UIFont.systemFontOfSize(12)
+        deleteLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         deleteLabel.text = NSLocalizedString("DeleteFileLabel", comment: "")
         deleteLabel.sizeToFit()
-        deleteLabel.center = CGPoint.init(x: deleteButton.center.x, y: buttonW+25)
+        deleteLabel.center = CGPoint.init(x: deleteButton.center.x, y: buttonW+20)
         self.deleteView.addSubview(deleteLabel)
         self.deleteView.sizeToFit()
         self.deleteView.frame.origin.x = (bounds.width/2 + space + buttonW/2) - (self.deleteView.frame.width - buttonW)/2
@@ -110,6 +116,8 @@ class CTAShareView: UIView{
 //        copyLinkButton.addTarget(self, action: "copyLinkButtonClick:", forControlEvents: .TouchUpInside)
 //        self.copyLinkView.addSubview(copyLinkButton)
 //        let copyLinkLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
+//        copyLinkLabel.font = UIFont.systemFontOfSize(14)
+//        copyLinkLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
 //        copyLinkLabel.text = NSLocalizedString("CopyLinkLabel", comment: "")
 //        copyLinkLabel.sizeToFit()
 //        copyLinkLabel.center = CGPoint.init(x: copyLinkButton.center.x, y: buttonW+25)
@@ -130,8 +138,8 @@ class CTAShareView: UIView{
         }else {
             self.deleteView.hidden = true
             //self.copyLinkView.hidden = true
-            self.wechatShareView.frame.origin.x = (bounds.width/2 - buttonW*2) - (self.wechatShareView.frame.width - buttonW)/2
-            self.momentsShareView.frame.origin.x = (bounds.width/2 + buttonW ) - (self.momentsShareView.frame.width - buttonW)/2
+            self.wechatShareView.frame.origin.x = (bounds.width/2 - buttonW - space) - (self.wechatShareView.frame.width - buttonW)/2
+            self.momentsShareView.frame.origin.x = (bounds.width/2 + space ) - (self.momentsShareView.frame.width - buttonW)/2
         }
         UIView.animateWithDuration(0.3) { () -> Void in
             self.buttonView.frame.origin.y = bounds.height - 170
