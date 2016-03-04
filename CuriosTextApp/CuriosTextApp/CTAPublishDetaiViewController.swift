@@ -325,9 +325,15 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                 if self.isLoadingFirstData{
                     if modelArray!.count > 0{
                         if self.publishModelArray.count > 0{
-                            let newmodel = modelArray![0] as! CTAPublishModel
-                            let oldModel = self.publishModelArray[0]
-                            if newmodel.publishID != oldModel.publishID{
+                            var isChange:Bool = false
+                            for var i=0; i<modelArray!.count; i++ {
+                                let newmodel = modelArray![i] as! CTAPublishModel
+                                if !self.checkPublishModelIsHave(newmodel.publishID){
+                                    isChange = true
+                                    break
+                                }
+                            }
+                            if isChange{
                                 self.publishModelArray.removeAll()
                                 self.loadMoreModelArray(modelArray!)
                             }

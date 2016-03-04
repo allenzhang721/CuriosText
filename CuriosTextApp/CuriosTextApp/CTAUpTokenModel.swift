@@ -29,6 +29,13 @@ final class CTAUpTokenModel: CTABaseModel {
     func save() throws {
         
     }
+    
+    func getData() -> [String: AnyObject]{
+        return [
+            key(.UpTokenKey):self.upTokenKey,
+            key(.UpToken):self.upToken
+        ]
+    }
 }
 
 extension CTAUpTokenModel {

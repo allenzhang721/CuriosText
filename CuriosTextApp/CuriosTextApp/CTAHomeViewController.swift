@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginProtocol, CTALoadingProtocol{
+class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginProtocol, CTALoadingProtocol, CTAPublishCacheProtocol{
 
     var currentPublishIndex:Int = -1
     var publishModelArray:Array<CTAPublishModel> = []
@@ -33,8 +33,8 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     
     var beganLocation: CGPoint! = CGPoint(x: 0, y: 0)
     var panDirection:CTAPanHorDirection = .None
-    
-    
+
+    var loadMoreChangeView:Bool = false
     
     var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 80, height: 80))
     
@@ -157,7 +157,15 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     }
     
     func getLoadCellData(){
-        self.isLoadLocal = false
+        let userID = (self.loginUser == nil) ? "" : self.loginUser!.userID
+        let request = CTANewPublishListRequest.init(userID: userID, start: 0)
+        let data = self.getPublishArray(request)
+        if data == nil {
+            self.isLoadLocal = false
+        }else {
+            self.isLoadLocal = true
+            self.publishModelArray = data!
+        }
     }
     
     func getLoginUser(){
@@ -183,7 +191,8 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 self.resetView()
                 self.publishModelArray.removeAll()
             }else {
-                
+                self.currentPublishIndex = 0
+                self.setCellPublishModel()
             }
         }
     }
@@ -267,8 +276,9 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             self.currentFullCell!.playAnimation()
         }
     }
-    
-    func loadMoreCellData(){
+
+    func loadMoreCellData(isChangeView:Bool){
+        self.loadMoreChangeView = isChangeView
         self.loadDataCompleteFuc = self.loadMoreComplete
         self.loadNewPublishes(self.publishModelArray.count)
     }
@@ -277,27 +287,33 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         if info.result {
             let modelArray = info.modelArray
             self.loadMoreModelArray(modelArray!)
+            if self.loadMoreChangeView{
+                self.setCellPublishModel()
+            }
         }
     }
     
     
     func loadFirstModelArray(modelArray:Array<AnyObject>) -> Bool{
+        var isChange = false
         if modelArray.count > 0{
             if self.publishModelArray.count > 0{
-                let newmodel = modelArray[0] as! CTAPublishModel
-                let oldModel = self.publishModelArray[0]
-                if newmodel.publishID != oldModel.publishID{
-                    self.publishModelArray.removeAll()
-                    self.loadMoreModelArray(modelArray)
-                    return true
-                }else {
-                    return false
+                for var i=0; i<modelArray.count; i++ {
+                    let newmodel = modelArray[i] as! CTAPublishModel
+                    if !self.checkPublishModelIsHave(newmodel.publishID){
+                        isChange = true
+                        break
+                    }
                 }
             }else {
-                self.publishModelArray.removeAll()
-                self.loadMoreModelArray(modelArray)
-                return true
+                isChange = true
             }
+        }
+        if isChange{
+            self.publishModelArray.removeAll()
+            self.loadMoreModelArray(modelArray)
+            self.saveArrayToLocaol()
+            return true
         }else {
             return false
         }
@@ -421,6 +437,12 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         }
     }
     
+    func saveArrayToLocaol(){
+        let userID = (self.loginUser == nil) ? "" : self.loginUser!.userID
+        let request = CTANewPublishListRequest.init(userID: userID, start: 0)
+        self.savePublishArray(request, modelArray: self.publishModelArray)
+    }
+    
     func viewPanHandler(sender: UIPanGestureRecognizer) {
         switch sender.state{
         case .Began:
@@ -519,6 +541,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                     })
                 }else {
                     self.horPanResetAnimation(xRate)
+                    self.loadMoreCellData(true)
                 }
             }
         }else {
@@ -655,7 +678,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                     self.currentPublishIndex = self.publishModelArray.count-1
                 }
                 if self.currentPublishIndex > self.publishModelArray.count-5{
-                    self.loadMoreCellData()
+                    self.loadMoreCellData(false)
                 }
             }else if dir == .Previous{
                 let currentFull = self.currentFullCell
