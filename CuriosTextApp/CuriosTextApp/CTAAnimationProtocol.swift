@@ -27,6 +27,17 @@ enum CTAAnimationName: Int, CustomStringConvertible {
         }
     }
     
+    func shouldVisableAfterEnd() -> Bool {
+        switch self {
+        case .MoveIn, .FlyIn:
+            return true
+        case .MoveOut, .FlyOut:
+            return false
+        case .None:
+            return true
+        }
+    }
+    
     static var names: [CTAAnimationName] {
         return [.None, .MoveIn, .FlyIn, .MoveOut, .FlyOut]
     }

@@ -292,6 +292,35 @@ extension EditViewController {
         
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    @IBAction func publishPreviewClick(sender: AnyObject) {
+        CTADocumentManager.saveDoucment {[weak self] (success) -> Void in
+            
+            if let strongSelf = self where success {
+                
+                draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath) { (r) in
+                    
+                    switch r {
+                    case .Success(let image):
+                        dispatch_async(dispatch_get_main_queue(), {
+                            
+                            let previewVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("PublishImageViewController") as! CTAPublishImageViewController
+                            
+                            previewVC.image = image
+                            
+                            strongSelf.presentViewController(previewVC, animated: true, completion: nil)
+                        })
+                        
+                    default:
+                        debug_print("Fail", context: defaultContext)
+                    }
+                }
+            }
+        }
+        
+        
+    }
+    
 }
 
 // MARK: - Publish
