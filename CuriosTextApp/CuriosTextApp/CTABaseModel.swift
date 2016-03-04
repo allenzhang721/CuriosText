@@ -14,5 +14,6 @@ protocol CTABaseModel {
     
     static func generateFrom(json: JSON) throws -> Self
     func save() throws
+    func getData() -> [String: AnyObject]
 }
     

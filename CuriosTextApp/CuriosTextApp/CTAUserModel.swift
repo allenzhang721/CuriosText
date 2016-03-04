@@ -79,6 +79,10 @@ final class CTAUserModel: CTABaseModel {
             throw error
         } catch {}
     }
+    
+    func getData() -> [String: AnyObject]{
+        return self.data
+    }
 }
 
 extension CTAUserModel: CreateableSecureStorable, GenericPasswordSecureStorable {

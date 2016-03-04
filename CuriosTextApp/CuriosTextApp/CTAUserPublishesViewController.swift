@@ -10,7 +10,7 @@ import UIKit
 import Kingfisher
 import MJRefresh
 
-class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTAPublishDetailDelegate, CTAUserDetailProtocol{
+class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTAPublishDetailDelegate, CTAUserDetailProtocol, CTAPublishCacheProtocol{
     
     var viewUser:CTAUserModel?
     var loginUser:CTAUserModel?
@@ -44,8 +44,8 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     var isPersent:Bool = false
     
     var publishDetail:CTAPublishDetailViewController?
-    
     var userDetail:CTAUserDetailViewController?
+    var setting:CTASettingViewController?
     
     override func prefersStatusBarHidden() -> Bool {
         return true
@@ -84,7 +84,18 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                     viewUser = loginUser
                 }
                 if self.viewUserID != self.viewUser!.userID{
-                    self.resetView()
+                    self.publishModelArray.removeAll()
+                    if self.isLoginUser {
+                        let userID = self.loginUser!.userID
+                        let beUserID = self.viewUser!.userID
+                        let request = CTAUserPublishListRequest.init(userID: userID, beUserID: beUserID, start: 0)
+                        let data = self.getPublishArray(request)
+                        if data != nil {
+                            self.publishModelArray = data!
+                        }
+                    }
+                    self.collectionView.reloadData()
+                    self.previousScrollViewYOffset = 0.0
                 }
                 self.setViewNavigateBar()
             }else {
@@ -119,10 +130,13 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         // Dispose of any resources that can be recreated.
     }
     
-    func resetView(){
-        self.publishModelArray.removeAll()
-        self.collectionView.reloadData()
-        self.previousScrollViewYOffset = 0.0
+    func saveArrayToLocaol(){
+        if self.isLoginUser {
+            let userID = self.loginUser!.userID
+            let beUserID = self.viewUser!.userID
+            let request = CTAUserPublishListRequest.init(userID: userID, beUserID: beUserID, start: 0)
+            self.savePublishArray(request, modelArray: self.publishModelArray)
+        }
     }
     
     func initCollectionView(){
@@ -252,8 +266,8 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     }
     
     func settingButtonClick(sender: UIButton){
-        let setting = CTASettingViewController.getInstance()
-        NSNotificationCenter.defaultCenter().postNotificationName("showNavigationView", object: setting)
+        self.setting = CTASettingViewController()
+        NSNotificationCenter.defaultCenter().postNotificationName("showNavigationView", object: self.setting)
     }
     
     func backButtonClick(sender: UIButton){
@@ -298,9 +312,9 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                     self.isLoadedAll = true
                 }
                 if self.isLoadingFirstData{
+                    var isChange:Bool = false
                     if modelArray!.count > 0{
                         if self.publishModelArray.count > 0{
-                            var isChange:Bool = false
                             for var i=0; i<modelArray!.count; i++ {
                                 let newmodel = modelArray![i] as! CTAPublishModel
                                 if !self.checkPublishModelIsHave(newmodel.publishID){
@@ -308,13 +322,14 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                                     break
                                 }
                             }
-                            if isChange{
-                                self.publishModelArray.removeAll()
-                                self.loadMoreModelArray(modelArray!)
-                            }
                         }else {
-                            self.loadMoreModelArray(modelArray!)
+                            isChange = true
                         }
+                    }
+                    if isChange{
+                        self.publishModelArray.removeAll()
+                        self.loadMoreModelArray(modelArray!)
+                        self.saveArrayToLocaol()
                     }
                 }else {
                     self.loadMoreModelArray(modelArray!)

@@ -155,16 +155,25 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                 self.setPublishCellRect(previousCell)
             }
             if i == currentIndex - 1 {
-                self.previousFullCell!.publishModel = publishArray[i]
+                let preModel = publishArray[i]
+                if self.previousFullCell!.publishModel == nil || self.previousFullCell!.publishModel!.publishID != preModel.publishID {
+                    self.previousFullCell!.publishModel = preModel
+                }
                 self.previousFullCell!.isVisible = true
                 self.setPublishCellRect(previousFullCell)
             }
             if i == currentIndex{
-                self.currentFullCell!.publishModel = publishArray[i]
+                let currentModel = publishArray[i]
+                if self.currentFullCell!.publishModel == nil || self.currentFullCell!.publishModel!.publishID != currentModel.publishID {
+                    self.currentFullCell!.publishModel = currentModel
+                }
                 self.currentFullCell!.isVisible = true
             }
             if i == currentIndex + 1 {
-                self.nextFullCell!.publishModel = publishArray[i]
+                let proModel = publishArray[i]
+                if self.nextFullCell!.publishModel == nil || self.nextFullCell!.publishModel!.publishID != proModel.publishID {
+                    self.nextFullCell!.publishModel = proModel
+                }
                 self.nextFullCell!.isVisible = true
                 self.setPublishCellRect(nextFullCell)
             }
@@ -325,9 +334,15 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                 if self.isLoadingFirstData{
                     if modelArray!.count > 0{
                         if self.publishModelArray.count > 0{
-                            let newmodel = modelArray![0] as! CTAPublishModel
-                            let oldModel = self.publishModelArray[0]
-                            if newmodel.publishID != oldModel.publishID{
+                            var isChange:Bool = false
+                            for var i=0; i<modelArray!.count; i++ {
+                                let newmodel = modelArray![i] as! CTAPublishModel
+                                if !self.checkPublishModelIsHave(newmodel.publishID){
+                                    isChange = true
+                                    break
+                                }
+                            }
+                            if isChange{
                                 self.publishModelArray.removeAll()
                                 self.loadMoreModelArray(modelArray!)
                             }

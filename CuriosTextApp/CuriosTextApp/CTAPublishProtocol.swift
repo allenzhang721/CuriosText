@@ -43,7 +43,7 @@ extension CTAPublishProtocol where Self: UIViewController{
             butY = originy
         }
         self.likeButton.frame = CGRect.init(x: 0, y: 0, width: 40, height: 40)
-        self.likeButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 + 90*horRate,y: butY)
+        self.likeButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 100*horRate,y: butY)
         self.likeButton.setImage(UIImage.init(named: "like-button"), forState: .Normal)
         self.likeButton.setImage(UIImage.init(named: "like-highlighted-button"), forState: .Highlighted)
         self.likeButton.setImage(UIImage.init(named: "like-disable-button"), forState: .Disabled)
@@ -54,7 +54,7 @@ extension CTAPublishProtocol where Self: UIViewController{
         moreButton.setImage(UIImage.init(named: "moreSelection-button"), forState: .Normal)
         moreButton.setImage(UIImage.init(named: "moreSelection-selected-button"), forState: .Highlighted)
         moreButton.setImage(UIImage.init(named: "moreSelection-disable-button"), forState: .Disabled)
-        moreButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 90*horRate, y: butY)
+        moreButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 + 100*horRate, y: butY)
         self.view.addSubview(moreButton)
         moreButton.addTarget(self, action: "moreButtonClick:", forControlEvents: .TouchUpInside)
         

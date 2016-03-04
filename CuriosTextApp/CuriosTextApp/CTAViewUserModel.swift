@@ -60,4 +60,21 @@ final class CTAViewUserModel: CTABaseModel {
     func save() throws {
         
     }
+    
+    func getData() -> [String: AnyObject]{
+        return [
+            key(.UserID)  :self.userID,
+            key(.NickName):self.nickName,
+            key(.UserDesc):self.userDesc,
+            key(.UserIconURL):self.userIconURL,
+            key(.Sex):self.sex,
+            key(.Country):self.country,
+            key(.Province):self.province,
+            key(.City):self.city,
+            key(.FollowCount):self.followCount,
+            key(.BeFollowCount):self.beFollowCount,
+            key(.PublishCount):self.publishCount,
+            key(.RelationType):self.relationType
+        ]
+    }
 }

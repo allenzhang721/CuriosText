@@ -11,15 +11,6 @@ import Kingfisher
 
 class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTALoadingProtocol, CTALoginProtocol{
     
-    static var _instance:CTASettingViewController?;
-    
-    static func getInstance() -> CTASettingViewController{
-        if _instance == nil{
-            _instance = CTASettingViewController();
-        }
-        return _instance!
-    }
-    
     var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
     
     var scrollView:UIScrollView!
@@ -81,6 +72,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     */
     
     func initView(){
+        
         let bouns = UIScreen.mainScreen().bounds
         let settingLabel = UILabel.init(frame: CGRect.init(x: 0, y: 8, width: bouns.width, height: 28))
         settingLabel.font = UIFont.systemFontOfSize(18)
@@ -152,7 +144,6 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         textLine.image = UIImage(named: "textinput-line")
         self.scrollView.addSubview(textLine)
         self.userSexLabel.userInteractionEnabled = true
-        
         let userSexTap = UITapGestureRecognizer(target: self, action: "userSexClick:")
         self.userSexLabel.addGestureRecognizer(userSexTap)
         
@@ -199,7 +190,6 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.userDescLabel.userInteractionEnabled = true
         let userDescTap = UITapGestureRecognizer(target: self, action: "userDescClick:")
         self.userDescLabel.addGestureRecognizer(userDescTap)
-        
         
         self.logoutButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: self.descLineImg.frame.origin.y+21, width: 40, height: 28))
         self.logoutButton.setTitle(NSLocalizedString("LogoutButtonLabel", comment: ""), forState: .Normal)

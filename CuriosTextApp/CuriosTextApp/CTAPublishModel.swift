@@ -64,4 +64,25 @@ final class CTAPublishModel: CTABaseModel{
     func save() throws {
         
     }
+    
+    func getData() -> [String: AnyObject]{
+        return [
+            key(.PublishID)  :self.publishID,
+            key(.Title):self.title,
+            key(.PublishDesc):self.publishDesc,
+            key(.PublishIconURL):self.publishIconURL,
+            key(.PreviewIconURL):self.previewIconURL,
+            key(.PublishURL):self.publishURL,
+            key(.UserID):self.userModel.userID,
+            key(.NickName):self.userModel.nickName,
+            key(.UserDesc):self.userModel.userDesc,
+            key(.UserIconURL):self.userModel.userIconURL,
+            key(.Sex):self.userModel.sex,
+            key(.RelationType):self.relationType,
+            key(.ShareCount):self.shareCount,
+            key(.RebuildCount):self.rebuildCount,
+            key(.LikeCount):self.likeCount,
+            key(.LikeStatus):self.likeStatus
+        ]
+    }
 }
