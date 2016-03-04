@@ -155,16 +155,25 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                 self.setPublishCellRect(previousCell)
             }
             if i == currentIndex - 1 {
-                self.previousFullCell!.publishModel = publishArray[i]
+                let preModel = publishArray[i]
+                if self.previousFullCell!.publishModel == nil || self.previousFullCell!.publishModel!.publishID != preModel.publishID {
+                    self.previousFullCell!.publishModel = preModel
+                }
                 self.previousFullCell!.isVisible = true
                 self.setPublishCellRect(previousFullCell)
             }
             if i == currentIndex{
-                self.currentFullCell!.publishModel = publishArray[i]
+                let currentModel = publishArray[i]
+                if self.currentFullCell!.publishModel == nil || self.currentFullCell!.publishModel!.publishID != currentModel.publishID {
+                    self.currentFullCell!.publishModel = currentModel
+                }
                 self.currentFullCell!.isVisible = true
             }
             if i == currentIndex + 1 {
-                self.nextFullCell!.publishModel = publishArray[i]
+                let proModel = publishArray[i]
+                if self.nextFullCell!.publishModel == nil || self.nextFullCell!.publishModel!.publishID != proModel.publishID {
+                    self.nextFullCell!.publishModel = proModel
+                }
                 self.nextFullCell!.isVisible = true
                 self.setPublishCellRect(nextFullCell)
             }
