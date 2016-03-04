@@ -8,6 +8,7 @@
 
 import Foundation
 import PromiseKit
+import Kingfisher
 
 func asyncImage(imagePicker: ((UIImage) -> ()) -> (), position: CGPoint, rotation: CGFloat, size: CGSize) -> Promise<Drawable> {
     
@@ -19,21 +20,33 @@ func asyncImage(imagePicker: ((UIImage) -> ()) -> (), position: CGPoint, rotatio
     }
 }
 
-func retriveImageBy(imgeID: String, baseURL: NSURL) -> ((UIImage) -> ()) -> () {
+func retriveImageBy(imgeID: String, baseURL: NSURL, local: Bool) -> ((UIImage) -> ()) -> () {
     
     func finished(f: (UIImage) -> ()) {
         
 //        debug_print(baseURL.URLByAppendingPathComponent(imgeID).path!, context: defaultContext)
-        let image = UIImage(contentsOfFile: baseURL.URLByAppendingPathComponent(imgeID).path!)!
-        
-        f(image)
+        if local {
+            let image = UIImage(contentsOfFile: baseURL.URLByAppendingPathComponent(imgeID).path!)!
+            f(image)
+        } else {
+            let imageURL = baseURL.URLByAppendingPathComponent(imgeID)
+//            let imageURL = NSURL(string: "https://d13yacurqjgara.cloudfront.net/users/458522/screenshots/2561596/untitled-1_1x.jpg")!
+            KingfisherManager.sharedManager.retrieveImageWithURL(imageURL, optionsInfo: nil, progressBlock: nil, completionHandler: { (image, error, cacheType, imageURL) in
+                
+                if let image = image {
+                    f(image)
+                } else {
+                    f(UIImage())
+                }
+            })
+        }  
     }
     
     return finished
     
 }
 
-func draw(page: CTAPage, atBegan: Bool, baseURL: NSURL, completedHandler:(Result<UIImage>) -> ()) {
+func draw(page: CTAPage, atBegan: Bool, baseURL: NSURL, local: Bool, completedHandler:(Result<UIImage>) -> ()) {
     
     let animations = atBegan ? page.animatoins : page.animatoins.reverse()
     let needContainers = page.containers
@@ -64,7 +77,7 @@ func draw(page: CTAPage, atBegan: Bool, baseURL: NSURL, completedHandler:(Result
         } else if let imageContainer = container as? ImageContainerVMProtocol where container.type == .Image {
             let imageName = imageContainer.imageElement!.resourceName
             
-            return asyncImage(retriveImageBy(imageName, baseURL: baseURL), position: position, rotation: rotation, size: size)
+            return asyncImage(retriveImageBy(imageName, baseURL: baseURL, local: local), position: position, rotation: rotation, size: size)
         }
         
         fatalError("Container can not map to Promise<Drawable>")

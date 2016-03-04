@@ -298,7 +298,7 @@ extension EditViewController {
             
             if let strongSelf = self where success {
                 
-                draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath) { (r) in
+                draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, local: false) { (r) in
                     
                     switch r {
                     case .Success(let image):
