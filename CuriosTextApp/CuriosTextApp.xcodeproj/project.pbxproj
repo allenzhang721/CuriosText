@@ -20,6 +20,7 @@
 		2C0404621C3EC31100A5B017 /* CTARotatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0404611C3EC31100A5B017 /* CTARotatorView.swift */; };
 		2C0404661C3EC58100A5B017 /* CTASelectorsFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0404651C3EC58100A5B017 /* CTASelectorsFlowLayout.swift */; };
 		2C0404681C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0404671C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift */; };
+		2C09F2471C896EED00F6034F /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C09F2461C896EED00F6034F /* PromiseKit.framework */; };
 		2C0C14E61C60D95A0011A31D /* CTASetUserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0C14E51C60D95A0011A31D /* CTASetUserNameViewController.swift */; };
 		2C0C14E91C60D9640011A31D /* CTASetMobileNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0C14E71C60D9640011A31D /* CTASetMobileNumberViewController.swift */; };
 		2C0C14EA1C60D9640011A31D /* CTASetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0C14E81C60D9640011A31D /* CTASetPasswordViewController.swift */; };
@@ -271,6 +272,7 @@
 		2C0404631C3EC35D00A5B017 /* Tools.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Tools.playground; sourceTree = "<group>"; };
 		2C0404651C3EC58100A5B017 /* CTASelectorsFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorsFlowLayout.swift; sourceTree = "<group>"; };
 		2C0404671C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorRotatorCell.swift; sourceTree = "<group>"; };
+		2C09F2461C896EED00F6034F /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = "Pods/../build/Debug-iphoneos/PromiseKit.framework"; sourceTree = "<group>"; };
 		2C0C14E51C60D95A0011A31D /* CTASetUserNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASetUserNameViewController.swift; sourceTree = "<group>"; };
 		2C0C14E71C60D9640011A31D /* CTASetMobileNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASetMobileNumberViewController.swift; sourceTree = "<group>"; };
 		2C0C14E81C60D9640011A31D /* CTASetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASetPasswordViewController.swift; sourceTree = "<group>"; };
@@ -519,6 +521,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C09F2471C896EED00F6034F /* PromiseKit.framework in Frameworks */,
 				2CC9307F1C7464D000FB02A9 /* AVFoundation.framework in Frameworks */,
 				2CD71E311C72D5C6007B635C /* KeyboardMan.framework in Frameworks */,
 				2CC74C9F1C5A2BFA00B536C2 /* libstdc++.tbd in Frameworks */,
@@ -1061,6 +1064,7 @@
 		3971561C9A2A856DEC31B599 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2C09F2461C896EED00F6034F /* PromiseKit.framework */,
 				2CC9307E1C7464D000FB02A9 /* AVFoundation.framework */,
 				2CD71E301C72D5C6007B635C /* KeyboardMan.framework */,
 				2CC74C9E1C5A2BFA00B536C2 /* libstdc++.tbd */,

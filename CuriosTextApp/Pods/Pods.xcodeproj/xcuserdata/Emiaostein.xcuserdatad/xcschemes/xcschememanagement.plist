@@ -44,7 +44,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>OMGHTTPURLRQ.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-CuriosTextApp.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>PromiseKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -67,12 +77,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>247E5F827909B1FA8B3407B8CE08A7C3</key>
+		<key>190ACD3A51BC90B85EADB13E9CDD207B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>2A525E701E9F82D30612B67E978E969E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2CBC66189F974F481C69C261E1A48F8D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -87,12 +102,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>39DDA11B399DCB1884C3997AD5393EF1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>432ECC54282C84882B482CCB4CF227FC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>43EDE2A33B46252D89B018158D0CA67D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>4878C70B21CA37D7CB8A476BF986741B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5EA2E4907627B0A42C8636E7F5BDA7E5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -107,17 +137,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E71DC9F5E491800C8B576EBFB8BF02F8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>EFE4EE20AE9245CD89C76AB6D57671E4</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F676A7EDDB79524EDB64F84A65BB1779</key>
+		<key>E55CF8C381E409BA83F290F0F646772F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
