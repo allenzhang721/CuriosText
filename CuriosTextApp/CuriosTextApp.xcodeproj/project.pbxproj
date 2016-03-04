@@ -166,6 +166,7 @@
 		2CB380B91C4D20E5009A681A /* CTAPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB380B81C4D20E5009A681A /* CTAPreviewCell.swift */; };
 		2CB3C8C21C859B8E00CF2BD2 /* ImagePickerResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB3C8C11C859B8E00CF2BD2 /* ImagePickerResource.swift */; };
 		2CC1C9411C58D36800844A33 /* CTABarItemsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC1C9401C58D36800844A33 /* CTABarItemsFactory.swift */; };
+		2CC5744B1C89D3F70083DFFF /* CTAPublishCacheProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC5744A1C89D3F70083DFFF /* CTAPublishCacheProtocol.swift */; };
 		2CC5A7CB1C89B82100A773E9 /* AsyncDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC5A7CA1C89B82100A773E9 /* AsyncDrawing.swift */; };
 		2CC5A7CD1C89B85100A773E9 /* AsyncDrawing+Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC5A7CC1C89B85100A773E9 /* AsyncDrawing+Container.swift */; };
 		2CC5A7CF1C89C72F00A773E9 /* CTAPublishImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC5A7CE1C89C72F00A773E9 /* CTAPublishImageViewController.swift */; };
@@ -434,6 +435,7 @@
 		2CB380B81C4D20E5009A681A /* CTAPreviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewCell.swift; sourceTree = "<group>"; };
 		2CB3C8C11C859B8E00CF2BD2 /* ImagePickerResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerResource.swift; sourceTree = "<group>"; };
 		2CC1C9401C58D36800844A33 /* CTABarItemsFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTABarItemsFactory.swift; sourceTree = "<group>"; };
+		2CC5744A1C89D3F70083DFFF /* CTAPublishCacheProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishCacheProtocol.swift; sourceTree = "<group>"; };
 		2CC5A7CA1C89B82100A773E9 /* AsyncDrawing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncDrawing.swift; sourceTree = "<group>"; };
 		2CC5A7CC1C89B85100A773E9 /* AsyncDrawing+Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AsyncDrawing+Container.swift"; sourceTree = "<group>"; };
 		2CC5A7CE1C89C72F00A773E9 /* CTAPublishImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishImageViewController.swift; sourceTree = "<group>"; };
@@ -686,6 +688,7 @@
 				2C8DD2121C4A34230035C52D /* CTAImageControllerProtocol.swift */,
 				2C2B45AB1C5CBCE7004A4809 /* CTAAddBarProtocol.swift */,
 				2C2B45AD1C5CBD16004A4809 /* CTAPublishProtocol.swift */,
+				2CC5744A1C89D3F70083DFFF /* CTAPublishCacheProtocol.swift */,
 				2C32653D1C7321A80000B89B /* CTAUploadIconProtocol.swift */,
 			);
 			name = UseCase;
@@ -1310,6 +1313,7 @@
 				2CC811601C79A6D5003CE8BF /* BlackCatManager.swift in Sources */,
 				2C1B2AAC1C3520160053BE5E /* CTASelectorsReuseableView.swift in Sources */,
 				2C5C248C1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift in Sources */,
+				2CC5744B1C89D3F70083DFFF /* CTAPublishCacheProtocol.swift in Sources */,
 				66C7BF251C3114BD00ADF251 /* CTADomainListInfo.swift in Sources */,
 				2C1B88AD1C5F3741000403FD /* CTASMSVerifyViewController.swift in Sources */,
 				2CE063E31C857D2F001F7F4E /* CTACameraPreviewView.swift in Sources */,
