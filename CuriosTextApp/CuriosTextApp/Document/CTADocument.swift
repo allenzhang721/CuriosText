@@ -50,6 +50,10 @@ class CTADocument: UIDocument {
         return ""
     }
     
+    var imagePath: NSURL {
+        return fileURL.URLByAppendingPathComponent(WrapperKey.resource)
+    }
+    
     init(fileURL url: NSURL, page: CTAPage?) {
         self.page = page ?? CTAPage(containers: [])
         super.init(fileURL: url)
