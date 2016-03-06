@@ -97,8 +97,9 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                                 debug_print("--- Play Animation ---")
                                 strongSelf.page = page
                                 strongSelf.previewView.publishID = publishModel.publishID
-                                strongSelf.previewView.reloadData()
-//                                strongSelf.previewView.play()
+                                strongSelf.previewView.reloadData() {
+                                    strongSelf.previewView.play()
+                                }
                             })
                         }
                     }

@@ -181,7 +181,7 @@ class CTAPreviewCanvasView: UIView {
      clear all the views on the cell
      
      */
-    func reloadData(needReloadAnimation: Bool = true) {
+    func reloadData(needReloadAnimation: Bool = true, compeletedHander:(() -> ())?) {
         
         cleanViewAndCache()
         
@@ -199,6 +199,8 @@ class CTAPreviewCanvasView: UIView {
                         strongSelf.animationNodeManager.reloadNodes()
                     }
                 })
+                
+                compeletedHander?()
             }
             
         }
@@ -228,8 +230,12 @@ extension CTAPreviewCanvasView: CTAPreviewControl {
         }
         
         if animationNodeManager.stoped {
-            reloadData()
-            animationNodeManager.play()
+            reloadData() {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.animationNodeManager.play()
+                }
+            }
+            
         } else if animationNodeManager.paused {
             animationNodeManager.play()
         }
@@ -242,8 +248,12 @@ extension CTAPreviewCanvasView: CTAPreviewControl {
     func stop() {
         
         if animationNodeManager.playing {
-            reloadData(false)
-            animationNodeManager.stop()
+            reloadData(false) {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.animationNodeManager.stop()
+                }
+            }
+            
         }
     }
     
