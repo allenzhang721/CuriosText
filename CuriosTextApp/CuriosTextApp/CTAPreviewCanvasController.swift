@@ -55,9 +55,6 @@ final class CTAPreviewCanvasController {
 
             textView.center = CGPoint(x: size.width / 2.0, y: size.height / 2.0)
             
-//            debug_print("text: \(text?.string) viewSize: \(view.bounds.size) center = \(textView.center)", context: previewConttext)
-//            let color = UIColor(red: CGFloat(random() % 255) / 255.0, green: CGFloat(random() % 255) / 255.0, blue: CGFloat(random() % 255) / 255.0, alpha: 1)
-            
             view.appendView(textView)
             
         case .Image:
@@ -68,11 +65,8 @@ final class CTAPreviewCanvasController {
             let imageView = UIImageView(frame: CGRect(origin: CGPoint.zero, size: size))
 //            let url = CTAFilePath.publishFilePath + "\(publishID)/" + (container as!ImageContainerVMProtocol).imageElement!.resourceName
             let imageName = (container as!ImageContainerVMProtocol).imageElement!.resourceName
-            imageView.image = cache?.imageForKey(imageName)
-            
-//            imageView.kf_setImageWithURL(NSURL(string: url)!)
-            
-//            debug_print(url)
+            let image = cache?.imageForKey(imageName)
+            imageView.image = image
             
             imageView.center = CGPoint(x: size.width / 2.0, y: size.height / 2.0)
             view.appendView(imageView)

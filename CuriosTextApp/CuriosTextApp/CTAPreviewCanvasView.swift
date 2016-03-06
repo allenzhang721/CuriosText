@@ -102,9 +102,15 @@ class CTAPreviewCanvasView: UIView {
         collectionView.backgroundColor = UIColor.clearColor()
         collectionView.registerClass(CTAPreviewCell.self, forCellWithReuseIdentifier: "ContainerCell")
         
-         load()
+//         load()
 //        layer.addSublayer(collectionView.layer)
         addSubview(collectionView)
+    }
+    
+    func cleanViewAndCache() {
+        cleanViews()
+        cleanCache()
+        unload()
     }
     
     func downloadImage(baseURL: NSURL, imageName: String) -> Promise<Result<CTAImageCache>> {
@@ -141,7 +147,7 @@ class CTAPreviewCanvasView: UIView {
                 return (container as! ImageContainerVMProtocol).imageElement!.resourceName
         }
         
-        let url = NSURL(string: CTAFilePath.publishFilePath + "/" + publishID)
+        let url = NSURL(string: CTAFilePath.publishFilePath + publishID)
         cache.saveAsyncImagesForKeys(imageNames, baseURL: url!, f: downloadImage, completedHandler: nil)
     }
     
@@ -177,21 +183,35 @@ class CTAPreviewCanvasView: UIView {
      */
     func reloadData(needReloadAnimation: Bool = true) {
         
-        cleanViews()
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        collectionView.reloadSections(NSIndexSet(index: 0))
-        CATransaction.commit()
+        cleanViewAndCache()
         
-        if needReloadAnimation {
-            splitedControllers = nil
-            animationNodeManager.reloadNodes()
+        didCachedCompletedHandler = {[weak self] success in
+            if let strongSelf = self where success {
+                dispatch_async(dispatch_get_main_queue(), {
+                    strongSelf.load()
+                    CATransaction.begin()
+                    CATransaction.setDisableActions(true)
+                    strongSelf.collectionView.reloadSections(NSIndexSet(index: 0))
+                    CATransaction.commit()
+                    
+                    if needReloadAnimation {
+                        strongSelf.splitedControllers = nil
+                        strongSelf.animationNodeManager.reloadNodes()
+                    }
+                })
+            }
+            
         }
+        
+        beganCache()
+        
+
+        
+        
     }
 
     // Clear all the views on the cell
     func cleanViews() {
-        
         let visualCells = collectionView.visibleCells() as! [CTAPreviewCell]
         
         for cell in visualCells {
@@ -268,6 +288,7 @@ extension CTAPreviewCanvasView: UICollectionViewDelegate {
         let needLoadContents = page!.containerShouldLoadBeforeAnimationBeganByID(id)
         
         debug_print(" \(needLoadContents) load \(acell.previewView)", context: aniContext)
+        
         
         CTAPreviewCanvasController.configPreviewView(
             acell.previewView,

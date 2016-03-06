@@ -4,28 +4,66 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            scope = "0"
-            stopOnStyle = "0">
+            filePath = "CuriosTextApp/CTAPreviewCanvasView.swift"
+            timestampString = "478955220.375021"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
+            landmarkName = "reloadData(_:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CuriosTextApp.CTAPreviewCanvasView.(reloadData (Swift.Bool) -&gt; ()).(closure #1)"
+                  moduleName = "CuriosTextApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTAPreviewCanvasView.swift"
+                  timestampString = "478955325.267668"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "189"
+                  endingLineNumber = "189"
+                  offsetFromSymbolStart = "60">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CuriosTextApp.CTAPreviewCanvasView.(reloadData (Swift.Bool) -&gt; ()).(closure #1)"
+                  moduleName = "CuriosTextApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTAPreviewCanvasView.swift"
+                  timestampString = "478955325.267997"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "189"
+                  endingLineNumber = "189"
+                  offsetFromSymbolStart = "104">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CuriosTextApp/CTASelectorAnimationCell.swift"
-            timestampString = "478609446.498111"
+            filePath = "CuriosTextApp/CTACache.swift"
+            timestampString = "478955270.138019"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
-            landmarkName = "tabView(_:didSelectedIndexPath:oldIndexPath:)"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "saveAsyncImagesForKeys(_:baseURL:f:completedHandler:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -35,44 +73,44 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CuriosTextApp/Page/CTAPage.swift"
-            timestampString = "478609601.620329"
+            filePath = "CuriosTextApp/CTAPreviewCanvasController.swift"
+            timestampString = "478955953.512983"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "removeAnimationAtIndex(_:completedHandler:)"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "configPreviewView(_:container:publishID:cache:needLoadContents:)"
             landmarkType = "5">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "CuriosTextApp.CTAPage.(removeAnimationAtIndex (Swift.Int, completedHandler : Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()).(closure #1)"
+                  symbolName = "static CuriosTextApp.CTAPreviewCanvasController.configPreviewView (CuriosTextApp.CTAPreviewView, container : CuriosTextApp.ContainerVMProtocol, publishID : Swift.String, cache : Swift.Optional&lt;CuriosTextApp.CTACache&gt;, needLoadContents : Swift.Bool) -&gt; ()"
                   moduleName = "CuriosTextApp"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/Page/CTAPage.swift"
-                  timestampString = "478952196.275748"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTAPreviewCanvasController.swift"
+                  timestampString = "478956040.217765"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "80"
-                  endingLineNumber = "80"
-                  offsetFromSymbolStart = "84">
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "828">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "CuriosTextApp.CTAPage.(removeAnimationAtIndex (Swift.Int, completedHandler : Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()).(closure #1).(closure #1)"
+                  symbolName = "static CuriosTextApp.CTAPreviewCanvasController.configPreviewView (CuriosTextApp.CTAPreviewView, container : CuriosTextApp.ContainerVMProtocol, publishID : Swift.String, cache : Swift.Optional&lt;CuriosTextApp.CTACache&gt;, needLoadContents : Swift.Bool) -&gt; ()"
                   moduleName = "CuriosTextApp"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/Page/CTAPage.swift"
-                  timestampString = "478952196.27598"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTAPreviewCanvasController.swift"
+                  timestampString = "478956040.218061"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "12">
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "908">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -83,60 +121,44 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CuriosTextApp/EditViewController.swift"
-            timestampString = "478793435.836695"
+            filePath = "CuriosTextApp/CTAPreviewCanvasController.swift"
+            timestampString = "478955898.180966"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "638"
-            endingLineNumber = "638"
-            landmarkName = "animationWillBeDeleted(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CuriosTextApp/EditViewController.swift"
-            timestampString = "478792873.323712"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "300"
-            endingLineNumber = "300"
-            landmarkName = "publishPreviewClick(_:)"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "configPreviewView(_:container:publishID:cache:needLoadContents:)"
             landmarkType = "5">
             <Locations>
                <Location
-                  shouldBeEnabled = "No"
+                  shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "CuriosTextApp.EditViewController.(publishPreviewClick (Swift.AnyObject) -&gt; ()).(closure #1)"
+                  symbolName = "static CuriosTextApp.CTAPreviewCanvasController.configPreviewView (CuriosTextApp.CTAPreviewView, container : CuriosTextApp.ContainerVMProtocol, publishID : Swift.String, cache : Swift.Optional&lt;CuriosTextApp.CTACache&gt;, needLoadContents : Swift.Bool) -&gt; ()"
                   moduleName = "CuriosTextApp"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/EditViewController.swift"
-                  timestampString = "478792887.323937"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTAPreviewCanvasController.swift"
+                  timestampString = "478956040.229621"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "301"
-                  endingLineNumber = "301"
-                  offsetFromSymbolStart = "112">
+                  startingLineNumber = "71"
+                  endingLineNumber = "71"
+                  offsetFromSymbolStart = "1592">
                </Location>
                <Location
-                  shouldBeEnabled = "No"
+                  shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "CuriosTextApp.EditViewController.(publishPreviewClick (Swift.AnyObject) -&gt; ()).(closure #1).(closure #1)"
+                  symbolName = "static CuriosTextApp.CTAPreviewCanvasController.configPreviewView (CuriosTextApp.CTAPreviewView, container : CuriosTextApp.ContainerVMProtocol, publishID : Swift.String, cache : Swift.Optional&lt;CuriosTextApp.CTACache&gt;, needLoadContents : Swift.Bool) -&gt; ()"
                   moduleName = "CuriosTextApp"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/EditViewController.swift"
-                  timestampString = "478792887.324075"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTAPreviewCanvasController.swift"
+                  timestampString = "478956040.230175"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "36">
+                  startingLineNumber = "71"
+                  endingLineNumber = "71"
+                  offsetFromSymbolStart = "1668">
                </Location>
             </Locations>
          </BreakpointContent>

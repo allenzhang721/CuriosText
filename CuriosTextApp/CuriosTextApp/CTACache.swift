@@ -43,6 +43,14 @@ public class CTACache {
         return cache.objectForKey(key) as? NSAttributedString
     }
     
+//    public func saveImageCache(c: CTAImageCache, forKey key: String) {
+//        save(c, forKey: key)
+//    }
+//    
+//    public func imageCacheForKey(key: String) -> CTAImageCache? {
+//        return cache.objectForKey(key) as? CTAImageCache
+//    }
+    
     public func cleanALLObject() {
         cacheFinished = false
         cache.removeAllObjects()
@@ -65,14 +73,18 @@ public class CTACache {
             for r in results {
                 switch r {
                 case .Success(let imageCache):
-                    strongSelf.saveImage(imageCache.image, forKey: imageCache.name)
+                    let image = imageCache.image
+                    let key = imageCache.name
+                    strongSelf.saveImage(image, forKey: key)
                 default:
                     ()
                 }
             }
             
             dispatch_async(dispatch_get_main_queue(), {
+                strongSelf.cacheFinished = true
                 completedHandler?(true)
+                strongSelf.cacheDidFinishedHandler?(true)
             })
         }
     }

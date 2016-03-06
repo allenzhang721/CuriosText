@@ -98,7 +98,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                                 strongSelf.page = page
                                 strongSelf.previewView.publishID = publishModel.publishID
                                 strongSelf.previewView.reloadData()
-                                strongSelf.previewView.play()
+//                                strongSelf.previewView.play()
                             })
                         }
                     }
