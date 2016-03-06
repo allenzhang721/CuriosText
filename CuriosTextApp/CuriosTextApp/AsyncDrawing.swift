@@ -24,7 +24,7 @@ protocol ImageDrawable: Drawable {
     var image: UIImage { get }
 }
 
-enum Result<T> {
+public enum Result<T> {
     case Success(T)
     case Failure()
 }

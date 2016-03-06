@@ -72,6 +72,8 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
             preview.datasource = self
             addSubview(preview)
             previewView = preview
+            
+            
         }
     }
     
@@ -103,8 +105,6 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                     })
             }
         }
-        
-        
     }
     
     func pauseAnimation(){

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import PromiseKit
+import Kingfisher
 
 protocol CTAPreviewCanvasViewDataSource: class {
     
@@ -23,6 +25,22 @@ class CTAPreviewCanvasView: UIView {
     var page: PageVMProtocol? {
         return datasource?.canvasViewWithPage(self)
     }
+    let cache = CTACache()
+    var isCached: Bool {
+        return cache.cacheFinished
+    }
+    
+    var didCachedCompletedHandler: ((Bool) -> ())? {
+        
+        get {
+            return cache.cacheDidFinishedHandler
+        }
+        
+        set {
+            cache.cacheDidFinishedHandler = newValue
+        }
+    }
+    
     
     var controllers: [[CTAAnimationController]] {
         guard let page = page else {
@@ -84,12 +102,68 @@ class CTAPreviewCanvasView: UIView {
         collectionView.backgroundColor = UIColor.clearColor()
         collectionView.registerClass(CTAPreviewCell.self, forCellWithReuseIdentifier: "ContainerCell")
         
+         load()
+//        layer.addSublayer(collectionView.layer)
+        addSubview(collectionView)
+    }
+    
+    func downloadImage(baseURL: NSURL, imageName: String) -> Promise<Result<CTAImageCache>> {
+        
+        let imageURL = baseURL.URLByAppendingPathComponent(imageName)
+        return Promise { fullfill, reject in
+            
+            KingfisherManager.sharedManager.retrieveImageWithURL(imageURL, optionsInfo: nil, progressBlock: nil, completionHandler: { (image, error, cacheType, imageURL) in
+                
+                if let image = image {
+                    let cache = CTAImageCache(name: imageName, image: image)
+                    fullfill(Result.Success(cache))
+                } else {
+                    fullfill(Result.Failure())
+                }
+            })
+            
+        }
+    }
+    
+    func beganCache() {
+        guard let page = page else {
+            return
+        }
+        
+        let imageNames = page.containerVMs.filter { container in
+            if container.type == .Image {
+                return true
+            } else {
+                return false
+            }
+            }.map { container in
+               
+                return (container as! ImageContainerVMProtocol).imageElement!.resourceName
+        }
+        
+        let url = NSURL(string: CTAFilePath.publishFilePath + "/" + publishID)
+        cache.saveAsyncImagesForKeys(imageNames, baseURL: url!, f: downloadImage, completedHandler: nil)
+    }
+    
+    func cleanCache() {
+        cache.cacheDidFinishedHandler = nil
+        cache.cleanALLObject()
+    }
+    
+    func load() {
+        let layout = collectionView.collectionViewLayout as! CTAPreviewLayout
         collectionView.dataSource = self
         collectionView.delegate = self
         layout.dataSource = self
         animationNodeManager.dataSource = self
-//        layer.addSublayer(collectionView.layer)
-        addSubview(collectionView)
+    }
+    
+    func unload() {
+        let layout = collectionView.collectionViewLayout as! CTAPreviewLayout
+        collectionView.dataSource = nil
+        collectionView.delegate = nil
+        layout.dataSource = nil
+        animationNodeManager.dataSource = nil
     }
     
     override func layoutSubviews() {
@@ -199,6 +273,7 @@ extension CTAPreviewCanvasView: UICollectionViewDelegate {
             acell.previewView,
             container: container,
             publishID: publishID,
+            cache: cache,
             needLoadContents: needLoadContents)
     }
 }

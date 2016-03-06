@@ -25,15 +25,15 @@ final class CTAPreviewCanvasController {
         
         view.clearViews()
         
-        guard let binder = animationBinder else {
-            configPreviewView(view, container: container, publishID: publishID)
-            return
-        }
-        
-        configPreviewView(view, container: container, publishID: publishID)
+//        guard let binder = animationBinder else {
+//            configPreviewView(view, container: container, publishID: publishID)
+//            return
+//        }
+//        
+//        configPreviewView(view, container: container, publishID: publishID)
     }
     
-    class func configPreviewView(view: CTAPreviewView, container: ContainerVMProtocol, publishID: String, needLoadContents: Bool = true) {
+    class func configPreviewView(view: CTAPreviewView, container: ContainerVMProtocol, publishID: String, cache: CTACache?, needLoadContents: Bool = true) {
         
         
 //        debug_print(container.type, context: aniContext)
@@ -66,10 +66,13 @@ final class CTAPreviewCanvasController {
 //            let imageName = (container as! ImageContainerVMProtocol).imageElement?.resourceName
             
             let imageView = UIImageView(frame: CGRect(origin: CGPoint.zero, size: size))
-            let url = CTAFilePath.publishFilePath + "\(publishID)/" + (container as!ImageContainerVMProtocol).imageElement!.resourceName
-            imageView.kf_setImageWithURL(NSURL(string: url)!)
+//            let url = CTAFilePath.publishFilePath + "\(publishID)/" + (container as!ImageContainerVMProtocol).imageElement!.resourceName
+            let imageName = (container as!ImageContainerVMProtocol).imageElement!.resourceName
+            imageView.image = cache?.imageForKey(imageName)
             
-            debug_print(url)
+//            imageView.kf_setImageWithURL(NSURL(string: url)!)
+            
+//            debug_print(url)
             
             imageView.center = CGPoint(x: size.width / 2.0, y: size.height / 2.0)
             view.appendView(imageView)
