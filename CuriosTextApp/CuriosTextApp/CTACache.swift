@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import PromiseKit
+import Kingfisher
 
 public class CTAImageCache {
     
@@ -95,6 +96,24 @@ public class CTACache {
     
     func dealloc() {
         cache.removeAllObjects()
+    }
+}
+
+func downloadImage(baseURL: NSURL, imageName: String) -> Promise<Result<CTAImageCache>> {
+    
+    let imageURL = baseURL.URLByAppendingPathComponent(imageName)
+    return Promise { fullfill, reject in
+        
+        KingfisherManager.sharedManager.retrieveImageWithURL(imageURL, optionsInfo: nil, progressBlock: nil, completionHandler: { (image, error, cacheType, imageURL) in
+            
+            if let image = image {
+                let cache = CTAImageCache(name: imageName, image: image)
+                fullfill(Result.Success(cache))
+            } else {
+                fullfill(Result.Failure())
+            }
+        })
+        
     }
 }
 

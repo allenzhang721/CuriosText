@@ -10,12 +10,21 @@ import UIKit
 
 class EditViewController: UIViewController {
     
+    struct TempValues {
+        var beganPosition = CGPoint.zero
+        var beganRadian: CGFloat = 0
+        var beganScale: CGFloat = 0
+        var oldScale: CGFloat = 0
+    }
+    
     @IBOutlet weak var addView: CTAEditAddView!
     private var tabViewController: CTATabViewController!
     private var canvasViewController: CTACanvasViewController!
     private var selectorViewController: CTASelectorsViewController!
     private var selectedIndexPath: NSIndexPath?
     var document: CTADocument!
+    
+    var tempValues = TempValues()
     
     private var page: CTAPage {
         return document.page!
@@ -77,32 +86,14 @@ class EditViewController: UIViewController {
         }
     }
     
-    // MARK: - Setup
+    // MARK: - Style
     func setup() {
-        
         addView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.1)
         addView.didClickHandler = {[weak self] in
             
             if let strongSelf = self {
                 strongSelf.addText()
             }
-            
-//            if let strongSelf = self {
-//                
-//                let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
-//                
-//                cameraVC.didSelectedImageHandler = {[weak self] image in
-//                    if let strongSelf = self, let image = image {
-//                        strongSelf.addImage(image, size: image.size)
-//                    }
-//                }
-//                
-//                strongSelf.presentViewController(cameraVC, animated: true, completion: {
-//                    
-//                    
-//                })
-//            }
-            
         }
     }
     
@@ -122,22 +113,82 @@ class EditViewController: UIViewController {
         canvasViewController.view.addGestureRecognizer(doubleTap)
     }
     
-    
-    private var beganPosition: CGPoint!
     func pan(sender: UIPanGestureRecognizer) {
-        guard let selectedIndexPath = selectedIndexPath, let container = selectedContainer else {
-            return
-        }
+        guard let selectedIndexPath = selectedIndexPath, let container = selectedContainer else { return }
+        
+        move(container, atIndexPath: selectedIndexPath, by: sender)
+    }
+    
+    func rotation(sender: UIRotationGestureRecognizer) {
+        guard let selectedIndexPath = selectedIndexPath, let container = selectedContainer else { return }
+        
+        rotate(container, atIndexPath: selectedIndexPath, by: sender)
+    }
+    
+    func pinch(sender: UIPinchGestureRecognizer) {
+        guard let selectedIndexPath = selectedIndexPath, let container = selectedContainer else { return }
+        
+        resize(container, atIndexPath: selectedIndexPath, by: sender)
+    }
+    
+    func doubleTap(sender: UITapGestureRecognizer) {
+        guard let selectedIndexPath = selectedIndexPath, let container = selectedContainer else { return }
+        
+        showModifyViewControllerWith(container, atIndexPath: selectedIndexPath)
+    }
+}
+
+// MARK: - Actions 
+extension EditViewController {
+    
+    @IBAction func cancelAction(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func publish(sender: AnyObject) {
+        showPublishViewController()
+    }
+    
+    @IBAction func publishPreviewClick(sender: AnyObject) {
+        showPublishPreview()
+    }
+}
+
+// MARK: - Logics
+extension EditViewController {
+    
+    func addImage(s: UIImage, size: CGSize) {
+        
+        let ID = CTAIDGenerator.fileID()
+        let imageName = document.resourcePath + ID + ".jpg"
+        
+        let name = document.storeResource(compressJPGImage(s), withName: imageName)
+        let imgContainer = EditorFactory.generateImageContainer(page.width, pageHeigh: page.height, imageSize: size, imgName: name)
+        
+        page.append(imgContainer)
+        canvasViewController.insertAt(NSIndexPath(forItem: page.containers.count - 1, inSection: 0))
+    }
+    
+    func addText(s: String = "") {
+        
+        let textContainer = EditorFactory.generateTextContainer(page.width, pageHeigh: page.height, text: s.isEmpty ? "Double click to Edit" : s)
+        
+        page.append(textContainer)
+        canvasViewController.insertAt(NSIndexPath(forItem: page.containers.count - 1, inSection: 0))
+    }
+    
+    func move(container: ContainerVMProtocol, atIndexPath indexPath: NSIndexPath, by sender: UIPanGestureRecognizer) {
         
         let translation = sender.translationInView(sender.view)
         
         switch sender.state {
         case .Began:
-            beganPosition = container.center
+            tempValues.beganPosition = container.center
         case .Changed:
+            let beganPosition = tempValues.beganPosition
             let nextPosition = CGPoint(x: beganPosition.x + translation.x, y: beganPosition.y + translation.y)
             container.center = nextPosition
-            canvasViewController.updateAt(selectedIndexPath)
+            canvasViewController.updateAt(indexPath)
             
         case .Ended:
             ()
@@ -146,23 +197,17 @@ class EditViewController: UIViewController {
         }
     }
     
-    // TODO: Need Update RotatorSelector -- Emiaostein; 2016-01-13-18:13
-    private var beganRadian: CGFloat = 0
-    func rotation(sender: UIRotationGestureRecognizer) {
-        guard let selectedIndexPath = selectedIndexPath, let container = selectedContainer else {
-            return
-        }
-        
+    func rotate(container: ContainerVMProtocol, atIndexPath indexPath: NSIndexPath, by sender: UIRotationGestureRecognizer) {
         let rotRadian = sender.rotation
         
         switch sender.state {
         case .Began:
-            beganRadian = CGFloat(container.radius)
+            tempValues.beganRadian = CGFloat(container.radius)
             
         case .Changed:
-            let nextRotation = beganRadian + rotRadian
+            let nextRotation = tempValues.beganRadian + rotRadian
             container.radius = nextRotation
-            canvasViewController.updateAt(selectedIndexPath)
+            canvasViewController.updateAt(indexPath)
             selectorViewController.updateIfNeed()
             
         case .Ended:
@@ -173,30 +218,24 @@ class EditViewController: UIViewController {
         }
     }
     
-    // TODO: Need Update SizeSelector -- Emiaostein; 2016-01-13-18:14
-    private var beganScale: CGFloat = 0
-    private var oldScale: CGFloat = 0
-    func pinch(sender: UIPinchGestureRecognizer) {
-        guard let selectedIndexPath = selectedIndexPath, let container = selectedContainer else {
-            return
-        }
+    func resize(container: ContainerVMProtocol, atIndexPath indexPath: NSIndexPath, by sender: UIPinchGestureRecognizer) {
         
         let scale = sender.scale
         
         switch sender.state {
         case .Began:
-            beganScale = container.scale
-            oldScale = container.scale
+            tempValues.beganScale = container.scale
+            tempValues.oldScale = container.scale
             
         case .Changed:
-            let nextScale = scale * beganScale
+            let nextScale = scale * tempValues.beganScale
             
-            if fabs(nextScale * 100.0 - oldScale * 100.0) > 0.1 {
+            if fabs(nextScale * 100.0 - tempValues.oldScale * 100.0) > 0.1 {
                 let ascale = floor(nextScale * 100) / 100.0
                 let canvasSize = canvasViewController.view.bounds.size
                 container.updateWithScale(ascale, constraintSzie: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
                 
-                canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+                canvasViewController.updateAt(indexPath, updateContents: true)
                 selectorViewController.updateIfNeed()
             }
             
@@ -207,10 +246,7 @@ class EditViewController: UIViewController {
         }
     }
     
-    func doubleTap(sender: UITapGestureRecognizer) {
-        guard let selectedIndexPath = selectedIndexPath, let container = selectedContainer else {
-            return
-        }
+    func showModifyViewControllerWith(container: ContainerVMProtocol, atIndexPath indexPath: NSIndexPath) {
         
         switch container.type {
             
@@ -225,12 +261,11 @@ class EditViewController: UIViewController {
                     let canvasSize = strongSelf.canvasViewController.view.bounds.size
                     (container as! TextContainerVMProtocol).updateWithText(text, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
                     
-                    strongSelf.canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+                    strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
                 }
-                
             }
             
-            presentViewController(textmodifyVC, animated: true, completion: { 
+            presentViewController(textmodifyVC, animated: true, completion: {
                 
                 
             })
@@ -242,58 +277,81 @@ class EditViewController: UIViewController {
             
             cameraVC.didSelectedImageHandler = {[weak self] image in
                 if let strongSelf = self {
-                    dispatch_async(dispatch_get_main_queue(), { 
-                    let canvasSize = strongSelf.canvasViewController.view.bounds.size
-                    (container as! ImageContainerVMProtocol).updateWithImageSize(image!.size, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
-                    
-                    strongSelf.document.storeResource(UIImageJPEGRepresentation(image!, 0.1)!, withName: (container as! ImageContainerVMProtocol).imageElement!.resourceName)
-                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        let canvasSize = strongSelf.canvasViewController.view.bounds.size
+                        (container as! ImageContainerVMProtocol).updateWithImageSize(image!.size, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
                         
-                        strongSelf.canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+                        strongSelf.document.storeResource(UIImageJPEGRepresentation(image!, 0.1)!, withName: (container as! ImageContainerVMProtocol).imageElement!.resourceName)
+                        
+                        
+                        strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
                     })
                 }
             }
             
-            presentViewController(cameraVC, animated: true, completion: { 
+            presentViewController(cameraVC, animated: true, completion: {
                 
-                
-            }) 
+            })
             
         default:
             ()
         }
     }
-}
+    
+    func showPublishViewController() {
+        
+        let publishViewController = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("PublishViewController") as! CTAPublishViewController
+        
+        publishViewController.page = page
+//        publishViewController.publishID = document.documentName
+        publishViewController.baseURL = document.imagePath
+        publishViewController.imageAccess = document.accessImage
+        publishViewController.publishDismiss = { [weak self] in
+            
+            guard let strongSelf = self else {
+                return
+            }
+            
+            strongSelf.navigationController?.popViewControllerAnimated(true)
+        }
+        
+        publishViewController.publishWillBegan = { [weak self] in
+            
+            guard let _ = self else {
+                return
+            }
+            
+            CTADocumentManager.saveDoucment {[weak self] (success) -> Void in
+                
+                if let strongSelf = self where success {
+                    
+                    CTADocumentManager.uploadFiles({ (success, publishID, publishURL) -> Void in
+                        
+                        debug_print("upload = \(success)\n publishID = \(publishID)", context: previewConttext)
+                        
+                        CTAPublishDomain().createPublishFile(publishID, userID: CTAUserManager.user!.userID, title: "Emiaostein", publishDesc: "Emiaostein", publishIconURL: "", previewIconURL: "", publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
+                            
+                            dispatch_async(dispatch_get_main_queue(), { 
+                                
+                                strongSelf.dismissViewControllerAnimated(true, completion: {
+                                    
+                                })
+                            })
+                            
+//                            debug_print("publish \(domainInfo.result), publishURL = \(publishURL) \n \(domainInfo)", context: previewConttext)
+                        })
+                    })
+                }
+            }
+        }
+        
+        navigationController?.pushViewController(publishViewController, animated: true)
 
-// MARK: - Actions 
-extension EditViewController {
-    
-    func addImage(s: UIImage, size: CGSize) {
-        
-        let ID = CTAIDGenerator.fileID()
-        let imageName = document.resourcePath + ID + ".jpg"
-        
-        let name = document.storeResource(compressJPGImage(s), withName: imageName)
-       let imgContainer = EditorFactory.generateImageContainer(page.width, pageHeigh: page.height, imageSize: size, imgName: name)
-        
-        page.append(imgContainer)
-        canvasViewController.insertAt(NSIndexPath(forItem: page.containers.count - 1, inSection: 0))
     }
     
-    func addText(s: String = "") {
-        
-        let textContainer = EditorFactory.generateTextContainer(page.width, pageHeigh: page.height, text: s.isEmpty ? "Double click to Edit" : s)
-        
-        page.append(textContainer)
-        canvasViewController.insertAt(NSIndexPath(forItem: page.containers.count - 1, inSection: 0))
-    }
     
-    @IBAction func cancelAction(sender: AnyObject) {
+    func showPublishPreview() {
         
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    @IBAction func publishPreviewClick(sender: AnyObject) {
         CTADocumentManager.saveDoucment {[weak self] (success) -> Void in
             
             if let strongSelf = self where success {
@@ -308,7 +366,8 @@ extension EditViewController {
                             
                             previewVC.image = image
                             
-                            strongSelf.presentViewController(previewVC, animated: true, completion: nil)
+                            strongSelf.navigationController!.pushViewController(previewVC, animated: true)
+                            
                         })
                         
                     default:
@@ -317,38 +376,8 @@ extension EditViewController {
                 }
             }
         }
-        
-        
-    }
-    
-}
-
-// MARK: - Publish
-extension EditViewController {
-    
-    @IBAction func publish(sender: AnyObject) {
-        
-        CTADocumentManager.saveDoucment { (success) -> Void in
-            
-            if success {
-                
-                CTADocumentManager.uploadFiles({ (success, publishID, publishURL) -> Void in
-                    
-                    debug_print("upload = \(success)\n publishID = \(publishID)", context: previewConttext)
-                    
-                    CTAPublishDomain().createPublishFile(publishID, userID: CTAUserManager.user!.userID, title: "Emiaostein", publishDesc: "Emiaostein", publishIconURL: "", previewIconURL: "", publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
-                        
-                        debug_print("publish \(domainInfo.result), publishURL = \(publishURL) \n \(domainInfo)", context: previewConttext)
-                    })
-                })
-            }
-        }
     }
 }
-
-
-
-
 
 
 
@@ -637,7 +666,6 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
                 let id = animation.targetiD
                 debug_print("animation targetID = \(!id.isEmpty ? id.substringFromIndex(id.endIndex.advancedBy(-4)) : "None") will delete index \(index)", context: animationChangedContext)
                 strongSelf.page.removeAnimationAtIndex(index) {
-//                    debug_print("animation targetID = \(!id.isEmpty ? id.substringFromIndex(id.endIndex.advancedBy(-4)) : "None") delete completed", context: animationChangedContext)
                     completedBlock?()
                 }
             }

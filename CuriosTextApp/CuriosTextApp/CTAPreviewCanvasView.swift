@@ -30,6 +30,10 @@ class CTAPreviewCanvasView: UIView {
         return cache.cacheFinished
     }
     
+//    var isLocal: Bool = false
+    var imageAccessBaseURL: NSURL? // documentImage + publishID or serverURL + publishID
+    var imageAccess: ((NSURL, String) -> Promise<Result<CTAImageCache>>)?
+    
     var didCachedCompletedHandler: ((Bool) -> ())? {
         
         get {
@@ -113,24 +117,6 @@ class CTAPreviewCanvasView: UIView {
         unload()
     }
     
-    func downloadImage(baseURL: NSURL, imageName: String) -> Promise<Result<CTAImageCache>> {
-        
-        let imageURL = baseURL.URLByAppendingPathComponent(imageName)
-        return Promise { fullfill, reject in
-            
-            KingfisherManager.sharedManager.retrieveImageWithURL(imageURL, optionsInfo: nil, progressBlock: nil, completionHandler: { (image, error, cacheType, imageURL) in
-                
-                if let image = image {
-                    let cache = CTAImageCache(name: imageName, image: image)
-                    fullfill(Result.Success(cache))
-                } else {
-                    fullfill(Result.Failure())
-                }
-            })
-            
-        }
-    }
-    
     func beganCache() {
         guard let page = page else {
             return
@@ -147,8 +133,9 @@ class CTAPreviewCanvasView: UIView {
                 return (container as! ImageContainerVMProtocol).imageElement!.resourceName
         }
         
-        let url = NSURL(string: CTAFilePath.publishFilePath + publishID)
-        cache.saveAsyncImagesForKeys(imageNames, baseURL: url!, f: downloadImage, completedHandler: nil)
+//        let url = NSURL(string: CTAFilePath.publishFilePath + publishID)
+        let url = imageAccessBaseURL
+        cache.saveAsyncImagesForKeys(imageNames, baseURL: url!, f: imageAccess!, completedHandler: nil)
     }
     
     func cleanCache() {

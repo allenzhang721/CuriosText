@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10102" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qRf-5N-mQJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10102" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gJw-VA-uNJ">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10080"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aV6-Ee-4qV">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aV6-Ee-4qV">
                                 <rect key="frame" x="0.0" y="80" width="375" height="375"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="aV6-Ee-4qV" secondAttribute="height" multiplier="1:1" id="5m5-v3-F04"/>
@@ -100,7 +100,7 @@
                             <constraint firstItem="O59-ti-f4e" firstAttribute="top" secondItem="UV4-IL-VCX" secondAttribute="bottom" constant="8" id="EJQ-SH-sQJ"/>
                             <constraint firstItem="O59-ti-f4e" firstAttribute="leading" secondItem="w2g-1j-cAV" secondAttribute="leading" id="H6Q-Nc-CSB"/>
                             <constraint firstAttribute="trailing" secondItem="cNn-AO-UPu" secondAttribute="trailing" constant="326" id="HZR-6j-5l1"/>
-                            <constraint firstItem="aV6-Ee-4qV" firstAttribute="top" secondItem="ueh-u7-QEU" secondAttribute="bottom" constant="60" id="LUb-N9-aDh"/>
+                            <constraint firstItem="aV6-Ee-4qV" firstAttribute="top" secondItem="ueh-u7-QEU" secondAttribute="bottom" constant="80" id="LUb-N9-aDh"/>
                             <constraint firstAttribute="trailing" secondItem="UV4-IL-VCX" secondAttribute="trailing" id="MRS-1u-ipg"/>
                             <constraint firstItem="aT5-ah-Tch" firstAttribute="leading" secondItem="w2g-1j-cAV" secondAttribute="leading" id="VW0-Lu-swc"/>
                             <constraint firstItem="cNn-AO-UPu" firstAttribute="top" secondItem="O59-ti-f4e" secondAttribute="top" id="e8z-Tl-xLC"/>
@@ -126,6 +126,7 @@
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="7Av-gb-3Hw"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -135,7 +136,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vNG-Ne-lhB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1539.5" y="494.5"/>
+            <point key="canvasLocation" x="2351.5" y="494.5"/>
         </scene>
         <!--Canvas View Controller-->
         <scene sceneID="21T-lx-I6T">
@@ -153,7 +154,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n0w-LA-dYR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2052.5" y="494.5"/>
+            <point key="canvasLocation" x="2864.5" y="494.5"/>
         </scene>
         <!--Text Modify View Controller-->
         <scene sceneID="Z9r-Iz-aEd">
@@ -211,7 +212,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="exZ-J7-Zz5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2406" y="508"/>
+            <point key="canvasLocation" x="3218" y="508"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="tlt-qy-oSh">
@@ -283,7 +284,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a65-rC-RQT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2927" y="524"/>
+            <point key="canvasLocation" x="3739" y="524"/>
         </scene>
         <!--Publish Image View Controller-->
         <scene sceneID="Uhe-Bu-K1f">
@@ -333,6 +334,72 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3201.5" y="1215.5"/>
+        </scene>
+        <!--Publish View Controller-->
+        <scene sceneID="LLk-i8-Udm">
+            <objects>
+                <viewController storyboardIdentifier="PublishViewController" id="ka6-cO-1SF" customClass="CTAPublishViewController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="EJH-ey-LLy"/>
+                        <viewControllerLayoutGuide type="bottom" id="42G-98-Hn9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WVK-lA-JyR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fgd-Eu-hft" customClass="CTAPreviewCanvasView" customModule="CuriosTextApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="66" width="320" height="320"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="fgd-Eu-hft" secondAttribute="height" multiplier="1:1" id="c3W-9A-3tf"/>
+                                </constraints>
+                            </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N2r-a8-P18">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <items>
+                                    <barButtonItem title="取消" id="KQs-0R-srN">
+                                        <connections>
+                                            <action selector="dismiss:" destination="ka6-cO-1SF" id="NYN-OW-Cc3"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hLk-nB-9zZ" customClass="CTAPublishButton" customModule="CuriosTextApp" customModuleProvider="target">
+                                <rect key="frame" x="100" y="409" width="120" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="aRO-y1-LD0"/>
+                                    <constraint firstAttribute="height" constant="44" id="fpk-RC-JcL"/>
+                                </constraints>
+                                <state key="normal" title="发布"/>
+                                <connections>
+                                    <action selector="publishClick:" destination="ka6-cO-1SF" eventType="touchUpInside" id="61n-EZ-gwj"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="N2r-a8-P18" firstAttribute="leading" secondItem="WVK-lA-JyR" secondAttribute="leading" id="AOp-Ax-U79"/>
+                            <constraint firstItem="N2r-a8-P18" firstAttribute="top" secondItem="WVK-lA-JyR" secondAttribute="top" id="CKZ-Wd-HiF"/>
+                            <constraint firstItem="hLk-nB-9zZ" firstAttribute="centerX" secondItem="WVK-lA-JyR" secondAttribute="centerX" id="CXY-yk-0O9"/>
+                            <constraint firstAttribute="trailing" secondItem="N2r-a8-P18" secondAttribute="trailing" id="Igf-3A-DhT"/>
+                            <constraint firstItem="N2r-a8-P18" firstAttribute="trailing" secondItem="fgd-Eu-hft" secondAttribute="trailing" id="K8r-iv-I1b"/>
+                            <constraint firstItem="hLk-nB-9zZ" firstAttribute="top" secondItem="fgd-Eu-hft" secondAttribute="bottom" constant="23" id="YYc-To-pMg"/>
+                            <constraint firstItem="N2r-a8-P18" firstAttribute="leading" secondItem="fgd-Eu-hft" secondAttribute="leading" id="caV-oD-dg6"/>
+                            <constraint firstItem="fgd-Eu-hft" firstAttribute="top" secondItem="N2r-a8-P18" secondAttribute="bottom" constant="22" id="joK-Ai-tnW"/>
+                            <constraint firstItem="N2r-a8-P18" firstAttribute="centerX" secondItem="hLk-nB-9zZ" secondAttribute="centerX" id="xmG-1w-2DE"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="previewView" destination="fgd-Eu-hft" id="B1y-ej-1X4"/>
+                        <outlet property="publishButton" destination="hLk-nB-9zZ" id="vRO-Bs-Lk9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I0B-Mf-59d" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3762" y="1182"/>
         </scene>
         <!--Tab View Controller-->
         <scene sceneID="Vgo-GO-r2N">
@@ -493,6 +560,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wEk-D6-ljE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2061.5" y="1072"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="98X-WP-iTj">
+            <objects>
+                <navigationController storyboardIdentifier="EditorNavigationController" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="gJw-VA-uNJ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="y7P-SP-uQo">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="qRf-5N-mQJ" kind="relationship" relationship="rootViewController" id="Von-Ig-d9o"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IKE-nz-fvE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1539" y="494"/>
         </scene>
     </scenes>
     <resources>

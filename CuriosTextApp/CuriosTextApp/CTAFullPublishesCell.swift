@@ -96,7 +96,10 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                                 
                                 debug_print("--- Play Animation ---")
                                 strongSelf.page = page
-                                strongSelf.previewView.publishID = publishModel.publishID
+                                let url = NSURL(string: CTAFilePath.publishFilePath + publishModel.publishID)
+                                
+                                strongSelf.previewView.imageAccessBaseURL = url
+                                strongSelf.previewView.imageAccess = downloadImage
                                 strongSelf.previewView.reloadData() {
                                     strongSelf.previewView.play()
                                 }
@@ -107,6 +110,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
             }
         }
     }
+    
     
     func pauseAnimation(){
         previewView.pause()

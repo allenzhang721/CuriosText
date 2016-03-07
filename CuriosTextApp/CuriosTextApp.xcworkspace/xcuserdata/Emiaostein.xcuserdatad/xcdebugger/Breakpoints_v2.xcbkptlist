@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/CTAPreviewCanvasView.swift"
-            timestampString = "478955220.375021"
+            timestampString = "479033658.42968"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "189"
-            endingLineNumber = "189"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
             landmarkName = "reloadData(_:compeletedHander:)"
             landmarkType = "5">
             <Locations>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/CTACache.swift"
-            timestampString = "478955270.138019"
+            timestampString = "479033658.42968"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
             landmarkName = "saveAsyncImagesForKeys(_:baseURL:f:completedHandler:)"
             landmarkType = "5">
          </BreakpointContent>
