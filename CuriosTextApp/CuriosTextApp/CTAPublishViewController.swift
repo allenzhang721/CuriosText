@@ -47,6 +47,8 @@ class CTAPublishViewController: UIViewController {
     var publishID: String!
     var baseURL: NSURL!
     var imageAccess: ((baseURL: NSURL, imageName: String) -> Promise<Result<CTAImageCache>>)!
+    
+    var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 80, height: 80))
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +62,10 @@ class CTAPublishViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
 //        previewView.publishID = publishID
-        previewView.reloadData(compeletedHander: nil)
+        previewView.reloadData { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.previewView.play()
+        }
     }
 }
 
@@ -78,9 +83,10 @@ extension CTAPublishViewController {
 }
 
 // MARK: - Actions
-extension CTAPublishViewController {
+extension CTAPublishViewController: CTALoadingProtocol {
     
     @IBAction func publishClick(sender: AnyObject) {
+        showLoadingViewByView(publishButton)
         publish()
     }
     

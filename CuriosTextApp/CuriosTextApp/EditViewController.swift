@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol CTAEditViewControllerDelegate: class {
+    
+    func EditControllerDidPublished(viewController: EditViewController)
+}
+
 class EditViewController: UIViewController {
     
     struct TempValues {
@@ -23,8 +28,9 @@ class EditViewController: UIViewController {
     private var selectorViewController: CTASelectorsViewController!
     private var selectedIndexPath: NSIndexPath?
     var document: CTADocument!
-    
     var tempValues = TempValues()
+    
+    weak var delegate: CTAEditViewControllerDelegate?
     
     private var page: CTAPage {
         return document.page!
@@ -317,36 +323,61 @@ extension EditViewController {
         
         publishViewController.publishWillBegan = { [weak self] in
             
-            guard let _ = self else {
+            guard let strongSelf = self else {
                 return
             }
             
-            CTADocumentManager.saveDoucment {[weak self] (success) -> Void in
-                
-                if let strongSelf = self where success {
-                    
-                    CTADocumentManager.uploadFiles({ (success, publishID, publishURL) -> Void in
-                        
-                        debug_print("upload = \(success)\n publishID = \(publishID)", context: previewConttext)
-                        
-                        CTAPublishDomain().createPublishFile(publishID, userID: CTAUserManager.user!.userID, title: "Emiaostein", publishDesc: "Emiaostein", publishIconURL: "", previewIconURL: "", publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
-                            
-                            dispatch_async(dispatch_get_main_queue(), { 
-                                
-                                strongSelf.dismissViewControllerAnimated(true, completion: {
-                                    
-                                })
-                            })
-                            
-//                            debug_print("publish \(domainInfo.result), publishURL = \(publishURL) \n \(domainInfo)", context: previewConttext)
-                        })
-                    })
-                }
-            }
+            strongSelf.beganGeneratePublishIconAndPublish()
         }
         
         navigationController?.pushViewController(publishViewController, animated: true)
 
+    }
+    
+    func beganGeneratePublishIconAndPublish() {
+        
+        
+        draw(page, atBegan: true, baseURL: document.imagePath, imageAccess: document.imageBy ,local: true) { [weak self] (r) in
+            guard let strongSelf = self else { return }
+            
+            switch r {
+            case .Success(let image):
+                let publishName = CTAIDGenerator.fileID() + ".jpg"
+                strongSelf.document.storeResource(UIImageJPEGRepresentation(image, 1.0)!, withName: publishName)
+                
+                CTADocumentManager.saveDoucment {[weak self] (success) -> Void in
+                    
+                    if let strongSelf = self where success {
+                        
+                        CTADocumentManager.uploadFiles({ (success, publishID, publishURL) -> Void in
+                            
+                            debug_print("upload = \(success)\n publishID = \(publishID)", context: previewConttext)
+                            
+                            let publishIconURL = publishID + "/" + publishName
+                            
+                            CTAPublishDomain().createPublishFile(publishID, userID: CTAUserManager.user!.userID, title: "Emiaostein", publishDesc: "Emiaostein", publishIconURL: publishIconURL, previewIconURL: "", publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
+                                
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    strongSelf.delegate?.EditControllerDidPublished(strongSelf)
+                                    strongSelf.dismissViewControllerAnimated(true, completion: {
+                                        
+                                    })
+                                })
+                                
+                                //                            debug_print("publish \(domainInfo.result), publishURL = \(publishURL) \n \(domainInfo)", context: previewConttext)
+                            })
+                        })
+                    }
+                }
+                
+            default:
+                debug_print("Fail", context: defaultContext)
+            }
+        }
+        
+        
+        
+        
     }
     
     

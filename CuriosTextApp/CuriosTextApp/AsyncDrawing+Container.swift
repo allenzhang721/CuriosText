@@ -20,14 +20,18 @@ func asyncImage(imagePicker: ((UIImage) -> ()) -> (), position: CGPoint, rotatio
     }
 }
 
-func retriveImageBy(imgeID: String, baseURL: NSURL, local: Bool) -> ((UIImage) -> ()) -> () {
+func retriveImageBy(imgeID: String, baseURL: NSURL, imageAccess:((String) -> UIImage?)? = nil ,local: Bool) -> ((UIImage) -> ()) -> () {
     
     func finished(f: (UIImage) -> ()) {
-        
 //        debug_print(baseURL.URLByAppendingPathComponent(imgeID).path!, context: defaultContext)
         if local {
-            let image = UIImage(contentsOfFile: baseURL.URLByAppendingPathComponent(imgeID).path!)!
-            f(image)
+            if let imageAccess = imageAccess, let image = imageAccess(imgeID) {
+                f(image)
+            } else {
+                f(UIImage())
+            }
+//            let image = UIImage(contentsOfFile: baseURL.URLByAppendingPathComponent(imgeID).path!)!
+            
         } else {
             let imageURL = baseURL.URLByAppendingPathComponent(imgeID)
 //            let imageURL = NSURL(string: "https://d13yacurqjgara.cloudfront.net/users/458522/screenshots/2561596/untitled-1_1x.jpg")!
@@ -46,7 +50,7 @@ func retriveImageBy(imgeID: String, baseURL: NSURL, local: Bool) -> ((UIImage) -
     
 }
 
-func draw(page: CTAPage, atBegan: Bool, baseURL: NSURL, local: Bool, completedHandler:(Result<UIImage>) -> ()) {
+func draw(page: CTAPage, atBegan: Bool, baseURL: NSURL, imageAccess:((String) -> UIImage?)? = nil ,local: Bool, completedHandler:(Result<UIImage>) -> ()) {
     
     let animations = atBegan ? page.animatoins : page.animatoins.reverse()
     let needContainers = page.containers
@@ -77,7 +81,7 @@ func draw(page: CTAPage, atBegan: Bool, baseURL: NSURL, local: Bool, completedHa
         } else if let imageContainer = container as? ImageContainerVMProtocol where container.type == .Image {
             let imageName = imageContainer.imageElement!.resourceName
             
-            return asyncImage(retriveImageBy(imageName, baseURL: baseURL, local: local), position: position, rotation: rotation, size: size)
+            return asyncImage(retriveImageBy(imageName, baseURL: baseURL, imageAccess: imageAccess ,local: local), position: position, rotation: rotation, size: size)
         }
         
         fatalError("Container can not map to Promise<Drawable>")
