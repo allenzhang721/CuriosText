@@ -61,9 +61,18 @@ final class CTAPage:NSObject, NSCoding {
         }
     }
     
+    func insert(container: CTAContainer) {
+        dispatch_sync(containerQueue) {
+            self.containers.insert(container, atIndex: 0)
+        }
+    }
+    
     func removeAt(index: Int) {
         dispatch_sync(containerQueue) {
-            self.containers.removeAtIndex(index)
+            
+            let container = self.containers.removeAtIndex(index)
+            let anis = self.animatoins.filter{container.iD != $0.targetiD}
+            self.animatoins = anis
         }
     }
     
@@ -74,7 +83,7 @@ final class CTAPage:NSObject, NSCoding {
     }
     
     func removeAnimationAtIndex(i: Int, completedHandler:(() -> ())?) {
-        dispatch_sync(containerQueue) { 
+        dispatch_sync(containerQueue) {
             
             
             dispatch_async(dispatch_get_main_queue(), {
@@ -87,13 +96,21 @@ final class CTAPage:NSObject, NSCoding {
     func appendAnimation(a: CTAAnimation, completedHandler:(() -> ())?) {
         
         dispatch_sync(containerQueue) {
-            
-            
             dispatch_async(dispatch_get_main_queue(), {
                 self.animatoins.append(a)
                 completedHandler?()
             })
         }
-        
+    }
+}
+
+extension CTAPage {
+    
+    func removeLastImageContainer() {
+        dispatch_sync(containerQueue) {
+            if let container = self.containers.first as? ImageContainerVMProtocol where container.type == .Image {
+                self.removeAt(0)
+            }
+        }
     }
 }

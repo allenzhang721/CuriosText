@@ -56,7 +56,7 @@ class EditViewController: UIViewController {
         
         cameraVC.didSelectedImageHandler = {[weak self] image in
             if let strongSelf = self, let image = image {
-                strongSelf.addImage(image, size: image.size)
+                strongSelf.insertImage(image, size: image.size)
                 cameraVC.removeFromParentViewController()
                 cameraVC.view.removeFromSuperview()
             }
@@ -162,6 +162,18 @@ extension EditViewController {
 
 // MARK: - Logics
 extension EditViewController {
+    
+    func insertImage(s: UIImage, size: CGSize) {
+        
+        let ID = CTAIDGenerator.fileID()
+        let imageName = document.resourcePath + ID + ".jpg"
+        
+        let name = document.storeResource(compressJPGImage(s), withName: imageName)
+        let imgContainer = EditorFactory.generateImageContainer(page.width, pageHeigh: page.height, imageSize: size, imgName: name)
+        
+        page.append(imgContainer)
+        canvasViewController.insertAt(NSIndexPath(forItem: page.containers.count - 1, inSection: 0))
+    }
     
     func addImage(s: UIImage, size: CGSize) {
         
@@ -335,7 +347,6 @@ extension EditViewController {
     }
     
     func beganGeneratePublishIconAndPublish() {
-        
         
         draw(page, atBegan: true, baseURL: document.imagePath, imageAccess: document.imageBy ,local: true) { [weak self] (r) in
             guard let strongSelf = self else { return }

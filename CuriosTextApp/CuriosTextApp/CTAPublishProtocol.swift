@@ -168,8 +168,51 @@ extension CTAPublishProtocol where Self: UIViewController{
         shareView.showViewHandler(isSelf)
     }
     
-    func rebuildHandler(){
-        print("rebuildHandler ")
+    func rebuildHandlerWith(publishModel: CTAPublishModel?, rootController: UIViewController){
+//        print("rebuildHandler ")
+        if let publishModel = publishModel {
+            
+            let purl = CTAFilePath.publishFilePath
+            let url = purl + publishModel.publishURL
+            debug_print("get Url = \(url)", context: previewConttext)
+            BlackCatManager.sharedManager.retrieveDataWithURL(NSURL(string: url)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self] (data, error, cacheType, URL) in
+                
+                if let _ = self {
+                    if let data = data,
+                        let apage = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
+                        apage.removeLastImageContainer()
+                        dispatch_async(dispatch_get_main_queue(), {
+                            
+                            let page = apage
+                            //        let doc = CTADocument(fileURL: <#T##NSURL#>, page: page)
+                            let documentURL = try! NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
+                            let fileUrl = CTADocumentManager.generateDocumentURL(documentURL)
+                            CTADocumentManager.createNewDocumentAt(fileUrl, page: page) { (success) -> Void in
+                                
+                                if success {
+                                    CTADocumentManager.openDocument(fileUrl, completedBlock: { (success) -> Void in
+                                        
+                                        if let openDocument = CTADocumentManager.openedDocument {
+                                            
+                                            let editNaviVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("EditorNavigationController") as! UINavigationController
+                                            
+                                            let editVC = editNaviVC.topViewController as! EditViewController
+                                            
+                                            editVC.document = openDocument
+                                            
+                                            rootController.presentViewController(editNaviVC, animated: true, completion: { () -> Void in
+                                                
+                                            })
+                                        }
+                                    })
+                                }
+                            }
+                            
+                        })
+                    }
+                }
+                })
+        }
     }
 }
 
