@@ -709,13 +709,17 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
 
 extension CTAHomeViewController: CTAPublishProtocol{
     
-    var publishModel:CTAPublishModel{
+    var publishModel:CTAPublishModel?{
         let publishModel = self.currentFullCell.publishModel
-        return publishModel!
+        return publishModel
     }
     
     var userModel:CTAUserModel?{
         return self.loginUser
+    }
+    
+    var publishCell:CTAFullPublishesCell{
+        return self.currentFullCell
     }
     
     func likeButtonClick(sender: UIButton){

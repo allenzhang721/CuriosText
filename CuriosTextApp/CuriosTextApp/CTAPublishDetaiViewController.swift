@@ -205,7 +205,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
         self.currentFullCell!.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2)
         self.currentFullCell!.alpha = 1.0
         self.currentFullCell!.playAnimation()
-        self.setLikeButtonStyle(self.currentFullCell.publishModel)
+        self.setLikeButtonStyle()
     }
     
     func getNextEnableCell() -> CTAFullPublishesCell? {
@@ -887,13 +887,17 @@ enum CTAPanVerDirection{
 
 extension CTAPublishDetailViewController: CTAPublishProtocol{
     
-    var publishModel:CTAPublishModel{
+    var publishModel:CTAPublishModel?{
         let publishModel = self.currentFullCell.publishModel
-        return publishModel!
+        return publishModel
     }
     
     var userModel:CTAUserModel?{
         return self.loginUser
+    }
+    
+    var publishCell:CTAFullPublishesCell{
+        return self.currentFullCell
     }
     
     func likeButtonClick(sender: UIButton){

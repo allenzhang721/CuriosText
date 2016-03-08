@@ -13,15 +13,16 @@ protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAShareViewProtocol, CT
     var likeButton:UIButton{get}
     var userIconImage:UIImageView{get}
     var userNicknameLabel:UILabel{get}
-    var publishModel:CTAPublishModel{get}
+    var publishModel:CTAPublishModel?{get}
     var userModel:CTAUserModel?{get}
+    var publishCell:CTAFullPublishesCell{get}
     func initPublishSubView(publishRect:CGRect, horRate:CGFloat)
     func changeUserView(userModel:CTAUserModel)
     func changeDetailUser()
     
     func likeHandler()
     
-    func setLikeButtonStyle(publishModel:CTAPublishModel?)
+    func setLikeButtonStyle()
     func likeButtonClick(sender: UIButton)
     
     func moreSelectionHandler(isSelf:Bool)
@@ -127,25 +128,27 @@ extension CTAPublishProtocol where Self: UIViewController{
     
     func likeHandler(){
         let userID = self.userModel == nil ? "" : self.userModel!.userID
-        if publishModel.likeStatus == 0{
-            CTAPublishDomain.getInstance().likePublish(userID, publishID: publishModel.publishID, compelecationBlock: { (info) -> Void in
-                if info.result {
-                    self.publishModel.likeStatus = 1
-                    self.setLikeButtonStyle(self.publishModel)
-                }
-            })
-        }else {
-            CTAPublishDomain.getInstance().unLikePublish(userID, publishID: publishModel.publishID, compelecationBlock: { (info) -> Void in
-                if info.result {
-                    self.publishModel.likeStatus = 0
-                    self.setLikeButtonStyle(self.publishModel)
-                }
-            })
+        if self.publishModel != nil {
+            if self.publishModel!.likeStatus == 0{
+                CTAPublishDomain.getInstance().likePublish(userID, publishID: self.publishModel!.publishID, compelecationBlock: { (info) -> Void in
+                    if info.result {
+                        self.publishModel!.likeStatus = 1
+                        self.setLikeButtonStyle()
+                    }
+                })
+            }else {
+                CTAPublishDomain.getInstance().unLikePublish(userID, publishID: self.publishModel!.publishID, compelecationBlock: { (info) -> Void in
+                    if info.result {
+                        self.publishModel!.likeStatus = 0
+                        self.setLikeButtonStyle()
+                    }
+                })
+            }
         }
     }
     
-    func setLikeButtonStyle(publishModel:CTAPublishModel?){
-        if let model = publishModel{
+    func setLikeButtonStyle(){
+        if let model = self.publishModel{
             if model.likeStatus == 0{
                 self.likeButton.setImage(UIImage.init(named: "like-button"), forState: .Normal)
                 self.likeButton.setImage(UIImage.init(named: "like-highlighted-button"), forState: .Highlighted)
@@ -169,16 +172,24 @@ extension CTAPublishProtocol where Self: UIViewController{
     }
     
     func rebuildHandler() {
-        rebuildHandlerWith()
+        if let model = self.publishModel{ 
+            let mainController = CTAMainViewController.getInstance()
+            var rootController:UIViewController?
+            if self.view.isDescendantOfView(mainController.view){
+                rootController = mainController
+            }else {
+                rootController = self
+            }
+            self.rebuildHandlerWith(model, rootController: rootController)
+        }
     }
     
     func rebuildHandlerWith(publishModel: CTAPublishModel? = nil, rootController: UIViewController? = nil){
-//        print("rebuildHandler ")
         if let publishModel = publishModel, let rootController = rootController {
             
             let purl = CTAFilePath.publishFilePath
             let url = purl + publishModel.publishURL
-            debug_print("get Url = \(url)", context: previewConttext)
+            
             BlackCatManager.sharedManager.retrieveDataWithURL(NSURL(string: url)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self] (data, error, cacheType, URL) in
                 
                 if let _ = self {
@@ -188,7 +199,6 @@ extension CTAPublishProtocol where Self: UIViewController{
                         dispatch_async(dispatch_get_main_queue(), {
                             
                             let page = apage
-                            //        let doc = CTADocument(fileURL: <#T##NSURL#>, page: page)
                             let documentURL = try! NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
                             let fileUrl = CTADocumentManager.generateDocumentURL(documentURL)
                             CTADocumentManager.createNewDocumentAt(fileUrl, page: page) { (success) -> Void in
@@ -224,23 +234,22 @@ extension CTAPublishProtocol{
     
     func weChatShareHandler(){
         if CTASocialManager.isAppInstaller(.WeChat){
-            let imagePath = CTAFilePath.publishFilePath+self.publishModel.publishIconURL
-            let imageURL = NSURL(string: imagePath)!
-            let message = CTASocialManager.Message
-                .WeChat(
-                    .Session(
-                        info: (
-                            title: "",
-                            description: "",
-                            thumbnail: nil,
-                            media: .URL(imageURL)
+            self.publishCell.getEndImg({ (img) -> () in
+                let message = CTASocialManager.Message
+                    .WeChat(
+                        .Session(
+                            info: (
+                                title: "",
+                                description: "",
+                                thumbnail: img,
+                                media: nil
+                            )
                         )
                     )
-            )
-            
-            CTASocialManager.shareMessage(message) { (result) -> Void in
-                debug_print("shareMessage result = \(result)")
-            }
+                CTASocialManager.shareMessage(message) { (result) -> Void in
+                    debug_print("shareMessage result = \(result)")
+                }
+            })
         }else {
             self.showSingleAlert(NSLocalizedString("AlertTitleNoInstallWechat", comment: ""), alertMessage: "", compelecationBlock: nil)
         }
@@ -248,25 +257,22 @@ extension CTAPublishProtocol{
     
     func momentsShareHandler(){
         if CTASocialManager.isAppInstaller(.WeChat){
-//            let imagePath = CTAFilePath.publishFilePath+self.publishModel.publishIconURL
-//            let imageURL = NSURL(string: imagePath)!
-//            let img = UIImage.init(CGImage: <#T##CGImage#>)
-            let message = CTASocialManager.Message
-                .WeChat(
-                    .Timeline(
-                        info: (
-                            title: "",
-                            description: "",
-                            thumbnail: nil,
-                            media: nil
+            self.publishCell.getEndImg({ (img) -> () in
+                let message = CTASocialManager.Message
+                    .WeChat(
+                        .Timeline(
+                            info: (
+                                title: "",
+                                description: "",
+                                thumbnail: img,
+                                media: nil
+                            )
                         )
-                    )
-            )
-            
-            CTASocialManager.shareMessage(message) { (result) -> Void in
-                
-                debug_print("shareMessage result = \(result)")
-            }
+                )
+                CTASocialManager.shareMessage(message) { (result) -> Void in
+                    debug_print("shareMessage result = \(result)")
+                }
+            })
         }else {
             self.showSingleAlert(NSLocalizedString("AlertTitleNoInstallWechat", comment: ""), alertMessage: "", compelecationBlock: nil)
         }
@@ -277,6 +283,6 @@ extension CTAPublishProtocol{
     }
     
     func copyLinkHandler(){
-        print("copyLinkHandler")
+       
     }
 }

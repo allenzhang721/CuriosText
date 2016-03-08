@@ -30,6 +30,8 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
     var isLoadComplete:Bool = false
     
+    var imgLoaded:Bool = false
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.cellImageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
@@ -44,15 +46,16 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
     func reloadCell(){
         if publishModel != nil {
+            self.imgLoaded = false
             let defaultImg = self.getDefaultIcon(self.bounds)
             let imagePath = CTAFilePath.publishFilePath+self.publishModel!.publishIconURL
             let imageURL = NSURL(string: imagePath)!
-            self.cellImageView.kf_showIndicatorWhenLoading = true
             self.cellImageView.kf_setImageWithURL(imageURL, placeholderImage: defaultImg, optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in
                 if error != nil {
                     self.cellImageView.image = defaultImg
+                }else{
+                    self.imgLoaded = true
                 }
-                self.cellImageView.kf_showIndicatorWhenLoading = false
             }
         }else{
             self.setDefaultImg()
@@ -134,15 +137,32 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
         }
     }
     
-    func getEndImg(completionHandler: ((data: UIImage?) -> ())?){
-//        if self.isLoadComplete{
-//            if self.publishModel != nil {
-//                let url = NSURL(string: CTAFilePath.publishFilePath + strongSelf.publishModel!.publishID)
-//                draw(self.page, atBegan: false, baseURL: url, local: false) { (response) -> () in
-//                    
-//                }
-//            }
-//        }
+    func getEndImg(completionHandler: ((img: UIImage?) -> ())){
+        if self.isLoadComplete{
+            if self.publishModel != nil {
+                let url = NSURL(string: CTAFilePath.publishFilePath + self.publishModel!.publishID)
+                draw(self.page!, atBegan: false, baseURL: url!, local: false) { (response) -> () in
+                    switch response {
+                    case .Success(let image):
+                        completionHandler(img: image)
+                    default:
+                        let defaultImg = self.getDefaultIcon(self.bounds)
+                        completionHandler(img: defaultImg)
+                    }
+                }
+            }else {
+                let defaultImg = self.getDefaultIcon(self.bounds)
+                completionHandler(img: defaultImg)
+            }
+        }else {
+            if self.imgLoaded{
+                let img = self.cellImageView.image
+                completionHandler(img: img)
+            }else {
+                let defaultImg = self.getDefaultIcon(self.bounds)
+                completionHandler(img: defaultImg)
+            }
+        }
         
     }
 }
