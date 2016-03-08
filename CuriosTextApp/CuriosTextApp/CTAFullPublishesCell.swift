@@ -74,6 +74,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                     self.addSubview(preview)
                     self.previewView = preview
                     self.previewView.hidden = true
+                    self.previewView.backgroundColor = UIColor.whiteColor()
                     self.cropImageRound(self.previewView)
                     self.bringSubviewToFront(self.cellImageView)
                 }
