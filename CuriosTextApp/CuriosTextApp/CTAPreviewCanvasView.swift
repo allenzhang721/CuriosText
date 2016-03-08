@@ -229,14 +229,17 @@ extension CTAPreviewCanvasView: CTAPreviewControl {
         }
         
         if animationNodeManager.stoped {
-            reloadData() {
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.animationNodeManager.play()
-                }
+            dispatch_async(dispatch_get_main_queue()) {
+                self.animationNodeManager.play()
             }
+//            reloadData() {
+//                
+//            }
             
         } else if animationNodeManager.paused {
-            animationNodeManager.play()
+            dispatch_async(dispatch_get_main_queue()) {
+                self.animationNodeManager.play()
+            }
         }
     }
     
@@ -294,8 +297,8 @@ extension CTAPreviewCanvasView: UICollectionViewDelegate {
         let container = page!.containerVMs[indexPath.item]
         
         let id = container.iD
+        let isImageContainer = (container.type == .Image)
         let needLoadContents = page!.containerShouldLoadBeforeAnimationBeganByID(id)
-        
         debug_print(" \(needLoadContents) load \(acell.previewView)", context: aniContext)
         
         

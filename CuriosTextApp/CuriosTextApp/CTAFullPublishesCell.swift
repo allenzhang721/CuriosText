@@ -81,7 +81,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                 self.isLoadComplete = false
                 let purl = CTAFilePath.publishFilePath
                 let url = purl + publishModel!.publishURL
-                self.previewView.hidden = true
+                self.previewView.hidden = false
                 self.cellImageView.hidden = false
                 BlackCatManager.sharedManager.retrieveDataWithURL(NSURL(string: url)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self](data, error, cacheType, URL) -> () in
                     if let strongSelf = self {
@@ -93,9 +93,12 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                                 strongSelf.previewView.imageAccessBaseURL = url
                                 strongSelf.previewView.imageAccess = downloadImage
                                 strongSelf.previewView.reloadData() {
+                                   dispatch_async(dispatch_get_main_queue(), { 
+                                    
                                     strongSelf.isLoadComplete = true
-                                    strongSelf.previewView.hidden = false
+//                                    strongSelf.previewView.hidden = false
                                     strongSelf.cellImageView.hidden = true
+                                   })
                                 }
                             })
                         }
