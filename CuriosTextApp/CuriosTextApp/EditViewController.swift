@@ -56,9 +56,13 @@ class EditViewController: UIViewController {
         
         cameraVC.didSelectedImageHandler = {[weak self] image in
             if let strongSelf = self, let image = image {
-                strongSelf.insertImage(image, size: image.size)
-                cameraVC.removeFromParentViewController()
-                cameraVC.view.removeFromSuperview()
+//                dispatch_async(dispatch_get_main_queue(), { 
+                
+                    
+                    strongSelf.insertImage(image, size: image.size)
+                    cameraVC.removeFromParentViewController()
+                    cameraVC.view.removeFromSuperview()
+//                })
             }
         }
      
@@ -171,8 +175,18 @@ extension EditViewController {
         let name = document.storeResource(compressJPGImage(s), withName: imageName)
         let imgContainer = EditorFactory.generateImageContainer(page.width, pageHeigh: page.height, imageSize: size, imgName: name)
         
-        page.append(imgContainer)
-        canvasViewController.insertAt(NSIndexPath(forItem: page.containers.count - 1, inSection: 0))
+        page.insert(imgContainer, atIndex: 0)
+        
+        
+//        CATransaction.begin()
+//        CATransaction.setDisableActions(true)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.canvasViewController.reloadSection()
+//           self.canvasViewController.insertAt(NSIndexPath(forItem: 0, inSection: 0))
+            
+        }
+        
+//        CATransaction.commit()
     }
     
     func addImage(s: UIImage, size: CGSize) {
@@ -184,7 +198,12 @@ extension EditViewController {
         let imgContainer = EditorFactory.generateImageContainer(page.width, pageHeigh: page.height, imageSize: size, imgName: name)
         
         page.append(imgContainer)
-        canvasViewController.insertAt(NSIndexPath(forItem: page.containers.count - 1, inSection: 0))
+        let count = page.containers.count
+        dispatch_async(dispatch_get_main_queue()) {
+            self.canvasViewController.insertAt(NSIndexPath(forItem: count - 1, inSection: 0))
+            
+        }
+        
     }
     
     func addText(s: String = "") {
@@ -192,7 +211,13 @@ extension EditViewController {
         let textContainer = EditorFactory.generateTextContainer(page.width, pageHeigh: page.height, text: s.isEmpty ? "Double click to Edit" : s)
         
         page.append(textContainer)
-        canvasViewController.insertAt(NSIndexPath(forItem: page.containers.count - 1, inSection: 0))
+        let count = page.containers.count
+        
+        page.containers.forEach{debug_print($0.type, context: defaultContext)}
+        
+//        dispatch_async(dispatch_get_main_queue()) {
+           self.canvasViewController.insertAt(NSIndexPath(forItem: count - 1, inSection: 0))
+//        }
     }
     
     func move(container: ContainerVMProtocol, atIndexPath indexPath: NSIndexPath, by sender: UIPanGestureRecognizer) {
@@ -531,7 +556,7 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
     
     // MARK: - DataSource
     func canvasViewControllerNumberOfContainers(viewcontroller: CTACanvasViewController) -> Int {
-        return page.containerVMs.count
+        return page.containers.count
     }
     
     func canvasViewControllerContainerAtIndexPath(indexPath: NSIndexPath) -> ContainerVMProtocol {

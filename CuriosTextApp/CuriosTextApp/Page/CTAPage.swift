@@ -48,69 +48,71 @@ final class CTAPage:NSObject, NSCoding {
     subscript(idx: Int) -> CTAContainer {
         var container: CTAContainer!
         
-        dispatch_sync(containerQueue) {
+//        dispatch_sync(containerQueue) {
             container = self.containers[idx]
-        }
+//        }
         
         return container
     }
     
     func append(container: CTAContainer) {
-        dispatch_sync(containerQueue) {
-            self.containers += [container]
-        }
+//        dispatch_sync(containerQueue) {
+            containers.append(container)
+//        }
     }
     
-    func insert(container: CTAContainer) {
-        dispatch_sync(containerQueue) {
-            self.containers.insert(container, atIndex: 0)
-        }
+    func insert(container: CTAContainer, atIndex index: Int = 0) {
+//        dispatch_sync(containerQueue) {
+            containers.insert(container, atIndex: index)
+//        }
     }
     
     func removeAt(index: Int) {
-        dispatch_sync(containerQueue) {
-            
+//        dispatch_sync(containerQueue) {
+        
             let container = self.containers.removeAtIndex(index)
             let anis = self.animatoins.filter{container.iD != $0.targetiD}
             self.animatoins = anis
-        }
+//        }
     }
     
     func removeAll() {
-        dispatch_sync(containerQueue) {
+//        dispatch_sync(containerQueue) {
             self.containers = [CTAContainer]()
-        }
+//        }
     }
     
     func removeAnimationAtIndex(i: Int, completedHandler:(() -> ())?) {
-        dispatch_sync(containerQueue) {
-            
+//        dispatch_sync(containerQueue) {
+        
             
             dispatch_async(dispatch_get_main_queue(), {
                 self.animatoins.removeAtIndex(i)
                 completedHandler?()
             })
-        }
+//        }
     }
     
     func appendAnimation(a: CTAAnimation, completedHandler:(() -> ())?) {
         
-        dispatch_sync(containerQueue) {
+//        dispatch_sync(containerQueue) {
             dispatch_async(dispatch_get_main_queue(), {
                 self.animatoins.append(a)
                 completedHandler?()
             })
-        }
+//        }
     }
 }
 
 extension CTAPage {
     
     func removeLastImageContainer() {
-        dispatch_sync(containerQueue) {
+//        dispatch_sync(containerQueue) {
             if let container = self.containers.first as? ImageContainerVMProtocol where container.type == .Image {
-                self.removeAt(0)
+                let container = self.containers.removeAtIndex(0)
+                let anis = self.animatoins.filter{container.iD != $0.targetiD}
+                self.animatoins = anis
             }
         }
-    }
+//    }
 }

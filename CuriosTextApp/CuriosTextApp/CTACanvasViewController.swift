@@ -265,6 +265,12 @@ final class CTACanvasViewController: UIViewController {
     
     func insertAt(indexPath: NSIndexPath) {
         collectionView.insertItemsAtIndexPaths([indexPath])
+//        collectionView.reloadSections(NSIndexSet(index: 0))
+//        collectionView.reloadItemsAtIndexPaths([indexPath])
+    }
+    
+    func reloadSection() {
+        collectionView.reloadSections(NSIndexSet(index: 0))
     }
     
     

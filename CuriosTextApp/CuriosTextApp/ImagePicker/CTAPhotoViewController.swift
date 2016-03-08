@@ -157,7 +157,7 @@ extension CTAPhotoViewController {
                     if let image = image {
                         strongSelf.pickerDelegate?.pickerDidSelectedImage(image)
                     }
-                    strongSelf.dismiss(nil)
+//                    strongSelf.dismiss(nil)
                 }
             })
         }
