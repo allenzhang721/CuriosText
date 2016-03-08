@@ -27,6 +27,8 @@ protocol CanvasViewControllerDelegate: class {
     // DidSelect
     // DidUpdateValueAtIndexPath
     func canvasViewController(viewCOntroller: CTACanvasViewController, didSelectedIndexPath indexPath: NSIndexPath)
+    
+    func canvasViewControllerWillDeleted(viewController: CTACanvasViewController)
 }
 
 protocol CanvasViewControllerDataSource: class {
@@ -76,6 +78,7 @@ final class CTACanvasViewController: UIViewController {
         //        let pinch = UIPinchGestureRecognizer(target: self, action: "pinch:")
         //        self.view.addGestureRecognizer(pinch)
         
+        
     }
     
     override func viewWillLayoutSubviews() {
@@ -83,12 +86,40 @@ final class CTACanvasViewController: UIViewController {
         collectionView.frame = view.bounds
     }
     
+    
+    override func canBecomeFirstResponder() -> Bool {
+        return true
+    }
+    
+    func showMenu(indexPath: NSIndexPath) {
+        
+        self.becomeFirstResponder()
+        let cell = collectionView.cellForItemAtIndexPath(indexPath)!
+        let deleteMenu = UIMenuItem(title: "删除", action: "deleteItem:")
+        UIMenuController.sharedMenuController().menuItems = [deleteMenu]
+        UIMenuController.sharedMenuController().setTargetRect(CGRect(origin: cell.center, size: CGSize.zero), inView: view)
+        UIMenuController.sharedMenuController().setMenuVisible(true, animated: true)
+        
+    }
+    
+    
+    // MARK: - Actions
+        
+        func deleteItem(sender: AnyObject) {
+            delegate?.canvasViewControllerWillDeleted(self)
+        }
+    
     func tap(sender: UITapGestureRecognizer) {
         
         let location = sender.locationInView(collectionView)
         guard let index = indexPathAtPoint(location) else {
             return
         }
+        
+        if index.item > 0 {
+            showMenu(index)
+        }
+        
         
         if let selectedIndexPath = collectionView.indexPathsForSelectedItems()?.first {
             guard index.compare(selectedIndexPath) != .OrderedSame else {
@@ -269,6 +300,10 @@ final class CTACanvasViewController: UIViewController {
 //        collectionView.reloadItemsAtIndexPaths([indexPath])
     }
     
+    func removeAt(indexPath: NSIndexPath) {
+        collectionView.deleteItemsAtIndexPaths([indexPath])
+    }
+    
     func reloadSection() {
         collectionView.reloadSections(NSIndexSet(index: 0))
     }
@@ -347,8 +382,10 @@ final class CTACanvasViewController: UIViewController {
         }
         return nil
     }
+
 }
 
+// MARK: - UICollectionViewDataSource and Delegate
 extension CTACanvasViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -380,7 +417,24 @@ extension CTACanvasViewController: UICollectionViewDelegate, UICollectionViewDat
             return cell
         }
     }
+    
+    // MARK: - Menu 
+    
+    func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+        
+        return true
+    }
+    
+    func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
+        
+        if action != "deleteItem:" {
+            return false
+        } else {
+            return true
+        }
+    }
 }
+
 
 extension CTACanvasViewController: CanvasDelegateLayout {
     
