@@ -16,6 +16,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     var publishModel:CTAPublishModel?{
         didSet{
             self.reloadCell()
+            self.loadAnimation()
         }
     }
     
@@ -25,17 +26,15 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
     var previewView: CTAPreviewCanvasView!
     
-    var animationEnable:Bool = false{
-        didSet{
-            self.loadAnimation()
-        }
-    }
+    var animationEnable:Bool = false
+    
+    var isLoadComplete:Bool = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.cellImageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
-        self.cropImageRound(self.cellImageView)
         self.addImageShadow(self)
+        self.cropImageRound(self.cellImageView)
         self.addSubview(self.cellImageView)
     }
 
@@ -56,68 +55,91 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                 self.cellImageView.kf_showIndicatorWhenLoading = false
             }
         }else{
-            let whiteImg = self.getWhiteBg(self.bounds)
-            self.cellImageView.image = whiteImg
+            self.setDefaultImg()
         }
+    }
+    
+    func setDefaultImg(){
+        let whiteImg = self.getWhiteBg(self.bounds)
+        self.cellImageView.image = whiteImg
     }
     
     func loadAnimation(){
         if self.animationEnable{
-            
-            debug_print("Load Animation", context: previewConttext)
-            // add preview
-            // refresh data
-            let preview = CTAPreviewCanvasView(frame: bounds)
-            preview.center = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0)
-            preview.datasource = self
-            addSubview(preview)
-            previewView = preview
-            
-            
-        }
-    }
-    
-    func playAnimation(){
-        if self.animationEnable{
-//            // preview play
-//            previewView?.play()
-            
-            if let publishModel = publishModel {
-                
+            if publishModel != nil {
+                if self.previewView == nil {
+                    let preview = CTAPreviewCanvasView(frame: bounds)
+                    preview.center = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0)
+                    preview.datasource = self
+                    self.addSubview(preview)
+                    self.previewView = preview
+                    self.previewView.hidden = true
+                    self.cropImageRound(self.previewView)
+                    self.bringSubviewToFront(self.cellImageView)
+                }
+                self.isLoadComplete = false
                 let purl = CTAFilePath.publishFilePath
-                let url = purl + publishModel.publishURL
-                debug_print("get Url = \(url)", context: previewConttext)
-                BlackCatManager.sharedManager.retrieveDataWithURL(NSURL(string: url)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self] (data, error, cacheType, URL) in
-                    
+                let url = purl + publishModel!.publishURL
+                self.previewView.hidden = true
+                self.cellImageView.hidden = false
+                BlackCatManager.sharedManager.retrieveDataWithURL(NSURL(string: url)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self](data, error, cacheType, URL) -> () in
                     if let strongSelf = self {
                         if let data = data,
                             let page = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
-                            dispatch_async(dispatch_get_main_queue(), {
-                                
-                                debug_print("--- Play Animation ---")
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                 strongSelf.page = page
-                                let url = NSURL(string: CTAFilePath.publishFilePath + publishModel.publishID)
-                                
+                                let url = NSURL(string: CTAFilePath.publishFilePath + strongSelf.publishModel!.publishID)
                                 strongSelf.previewView.imageAccessBaseURL = url
                                 strongSelf.previewView.imageAccess = downloadImage
                                 strongSelf.previewView.reloadData() {
-                                    strongSelf.previewView.play()
+                                    strongSelf.isLoadComplete = true
+                                    strongSelf.previewView.hidden = false
+                                    strongSelf.cellImageView.hidden = true
                                 }
                             })
                         }
                     }
-                    })
+                })
+            }
+        }
+    }
+    
+    func playAnimation(){
+        if self.isLoadComplete{
+            if self.publishModel != nil {
+                self.previewView.play()
             }
         }
     }
     
     
     func pauseAnimation(){
-        previewView.pause()
+        if self.isLoadComplete{
+            if self.publishModel != nil {
+                self.previewView.pause()
+            }
+        }
+        
     }
     
     func stopAnimation(){
-        previewView.stop()
+        if self.isLoadComplete{
+            if self.publishModel != nil {
+                self.previewView.stop()
+            }
+        }
+    }
+    
+    func getEndImg(completionHandler: ((data: UIImage?) -> ())?){
+//        if self.isLoadComplete{
+//            if self.publishModel != nil {
+//                let url = NSURL(string: CTAFilePath.publishFilePath + strongSelf.publishModel!.publishID)
+//                draw(self.page, atBegan: false, baseURL: url, local: false) { (response) -> () in
+//                    
+//                }
+//            }
+//        }
+        
     }
 }
 
