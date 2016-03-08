@@ -30,7 +30,11 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
     var isLoadComplete:Bool = false
     
+    var loadCompeteHandler:(() -> Void)?
+    
     var imgLoaded:Bool = false
+    
+    var isPlaying:Bool = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -100,6 +104,10 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                                     strongSelf.isLoadComplete = true
                                     strongSelf.previewView.hidden = false
                                     strongSelf.cellImageView.hidden = true
+                                    if strongSelf.loadCompeteHandler != nil {
+                                        strongSelf.loadCompeteHandler!()
+                                        strongSelf.loadCompeteHandler = nil
+                                    }
                                    })
                                 }
                             })
@@ -113,8 +121,13 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     func playAnimation(){
         if self.isLoadComplete{
             if self.publishModel != nil {
-                self.previewView.play()
+                if !self.isPlaying{
+                    self.previewView.play()
+                    self.isPlaying = true
+                }
             }
+        }else {
+            self.loadCompeteHandler = self.playAnimation
         }
     }
     
@@ -122,7 +135,10 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     func pauseAnimation(){
         if self.isLoadComplete{
             if self.publishModel != nil {
-                self.previewView.pause()
+                if self.isPlaying {
+                    self.previewView.pause()
+                }
+                self.isPlaying = false
             }
         }
         
@@ -131,7 +147,10 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     func stopAnimation(){
         if self.isLoadComplete{
             if self.publishModel != nil {
-                self.previewView.stop()
+                if self.isPlaying {
+                    self.previewView.stop()
+                }
+                self.isPlaying = false
             }
         }
     }

@@ -34,6 +34,8 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     var homeViewButton:UIButton!
     var settingButton:UIButton!
     
+    var noContentView:UIImageView!
+    
     var previousScrollViewYOffset:CGFloat = 0.0
     var isLoading:Bool = false
     
@@ -173,6 +175,12 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.footerFresh.setTitle("", forState: .NoMoreData)
         self.footerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Refreshing)
         self.collectionView.mj_footer = footerFresh;
+        
+        self.noContentView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 200, height: 300))
+        self.noContentView.center = self.collectionView.center
+        self.noContentView.image = UIImage.init(named: "no-content")
+        self.view.addSubview(self.noContentView)
+        self.noContentView.hidden = true
     }
     
     func loadLocalUserModel(){
@@ -218,6 +226,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.settingButton.addTarget(self, action: "settingButtonClick:", forControlEvents: .TouchUpInside)
         self.homeViewButton.addTarget(self, action: "homeViewButtonClick:", forControlEvents: .TouchUpInside)
         self.backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
+        
     }
     
     func setNavigateButton(){
@@ -352,6 +361,11 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     func freshComplete(){
         if self.isLoadingFirstData {
             self.headerFresh.endRefreshing()
+            if self.isLoginUser && self.publishModelArray.count == 0{
+                self.noContentView.hidden = false
+            }else {
+                self.noContentView.hidden = true
+            }
         }else {
             if self.isLoadedAll {
                 self.footerFresh.endRefreshingWithNoMoreData()
