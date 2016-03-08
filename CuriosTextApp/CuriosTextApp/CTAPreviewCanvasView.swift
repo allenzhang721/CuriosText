@@ -102,9 +102,12 @@ class CTAPreviewCanvasView: UIView {
     
     private func setup() {
         let layout = CTAPreviewLayout()
-        collectionView = UICollectionView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 320, height: 320)), collectionViewLayout: layout)
+        
+        let defaultSide: CGFloat = 414.0
+        
+        collectionView = UICollectionView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: defaultSide, height: defaultSide)), collectionViewLayout: layout)
         collectionView.backgroundColor = UIColor.clearColor()
-        let scale = min(bounds.width / 320.0 , bounds.height / 320.0)
+        let scale = min(bounds.width / defaultSide , bounds.height / defaultSide)
 //        let scaleSize = CGSize(width: 320 * scale, height: 320 * scale)
 //        collectionView.bounds.size = scaleSize
         collectionView.center = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0)

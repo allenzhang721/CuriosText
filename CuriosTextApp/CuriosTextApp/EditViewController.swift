@@ -275,7 +275,7 @@ extension EditViewController {
             
             if fabs(nextScale * 100.0 - tempValues.oldScale * 100.0) > 0.1 {
                 let ascale = floor(nextScale * 100) / 100.0
-                let canvasSize = canvasViewController.view.bounds.size
+                let canvasSize = page.size
                 container.updateWithScale(ascale, constraintSzie: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
                 
                 canvasViewController.updateAt(indexPath, updateContents: true)
@@ -659,7 +659,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         
         print("Scale did Changed = \(scale)")
         
-        let canvasSize = canvasViewController.view.bounds.size
+        let canvasSize = page.size
         container.updateWithScale(
             scale,
             constraintSzie: CGSize(width: canvasSize.width, height: canvasSize.height * 2)

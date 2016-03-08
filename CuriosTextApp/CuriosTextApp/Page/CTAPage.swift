@@ -19,8 +19,8 @@ final class CTAPage:NSObject, NSCoding {
         static let animations = "animations"
     }
     
-    private(set) var width = 320.0
-    private(set) var height = 320.0
+    private(set) var width = 414.0
+    private(set) var height = 414.0
     private(set) var containers = [CTAContainer]()
     private(set) var animatoins = [CTAAnimation]()
     

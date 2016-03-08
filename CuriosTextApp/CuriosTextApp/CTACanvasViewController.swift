@@ -43,7 +43,7 @@ final class CTACanvasViewController: UIViewController {
     weak var delegate: CanvasViewControllerDelegate?
     weak var dataSource: CanvasViewControllerDataSource!
     private var collectionView: UICollectionView!
-    
+    var scale: CGFloat = 1.0
     var document: CTADocument?
     
     override func viewDidLoad() {
@@ -56,7 +56,12 @@ final class CTACanvasViewController: UIViewController {
         
         let canvasLayout = CanvasLayout()
         
-        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: canvasLayout)
+        let defaultSide: CGFloat = 414.0
+        collectionView = UICollectionView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: defaultSide, height: defaultSide)), collectionViewLayout: canvasLayout)
+        scale = min(view.bounds.width / defaultSide, view.bounds.height / defaultSide)
+        
+        collectionView.transform = CGAffineTransformMakeScale(scale, scale)
+        
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.1)
@@ -83,7 +88,8 @@ final class CTACanvasViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        collectionView.frame = view.bounds
+        collectionView.bounds.size = CGSize(width: 414.0, height: 414.0)
+        collectionView.center = CGPoint(x: view.bounds.width / 2.0, y: view.bounds.height / 2.0)
     }
     
     
@@ -97,7 +103,9 @@ final class CTACanvasViewController: UIViewController {
         let cell = collectionView.cellForItemAtIndexPath(indexPath)!
         let deleteMenu = UIMenuItem(title: "删除", action: "deleteItem:")
         UIMenuController.sharedMenuController().menuItems = [deleteMenu]
-        UIMenuController.sharedMenuController().setTargetRect(CGRect(origin: cell.center, size: CGSize.zero), inView: view)
+//        let point = CGPointApplyAffineTransform(cell.center, CGAffineTransformMakeScale(scale, scale))
+        let point = cell.center
+        UIMenuController.sharedMenuController().setTargetRect(CGRect(origin: point, size: CGSize.zero), inView: collectionView)
         UIMenuController.sharedMenuController().setMenuVisible(true, animated: true)
         
     }

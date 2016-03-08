@@ -52,17 +52,6 @@ class EditorFactory {
         
         var containers = [CTAContainer]()
         var animations = [CTAAnimation]()
-//        let n = 3
-//        for i in 0..<n {
-//            
-//            let con = self.generateTextContainer(320.0, pageHeigh: 320.0, text: "today is a good Day !", attributes: CTATextAttributes(), index: i, count: n)
-//            containers += [con]
-//            
-//            if i != (n - 1) {
-//            let ani = generateAnimationFor(con.iD, index: i)
-//            animations += [ani]
-//            }
-//        }
         
         let page = CTAPage(containers: containers, anis: animations)
         return page
@@ -220,7 +209,7 @@ extension EditorFactory {
         
         let str = containerVM.textElement!.attributeString
         let textViewInset = containerVM.textElement!.rectInset()
-        let textSize = containerVM.textElement!.textSizeWithConstraintSize(CGSize(width: 320, height: 568 * 2))
+        let textSize = containerVM.textElement!.textSizeWithConstraintSize(CGSize(width: 414.0, height: 568 * 2))
         let textRect = containerVM.textElement!.textFrameWithTextSize(textsize: textSize)
         let containerView = ContainerTextView(
             frame: CGRect(
