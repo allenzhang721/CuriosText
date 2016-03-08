@@ -235,19 +235,21 @@ extension CTAPublishProtocol{
     func weChatShareHandler(){
         if CTASocialManager.isAppInstaller(.WeChat){
             self.publishCell.getEndImg({ (img) -> () in
-                let message = CTASocialManager.Message
-                    .WeChat(
-                        .Session(
-                            info: (
-                                title: "",
-                                description: "",
-                                thumbnail: img,
-                                media: nil
+                if let image = img{
+                    let thumb = compressImage(image, maxWidth: image.size.width/2)
+                    let message = CTASocialManager.Message
+                        .WeChat(
+                            .Session(
+                                info: (
+                                    title: "",
+                                    description: "",
+                                    thumbnail: thumb,
+                                    media: .Image(img!)
+                                )
                             )
-                        )
                     )
-                CTASocialManager.shareMessage(message) { (result) -> Void in
-                    debug_print("shareMessage result = \(result)")
+                    CTASocialManager.shareMessage(message) { (result) -> Void in
+                    }
                 }
             })
         }else {
@@ -258,19 +260,21 @@ extension CTAPublishProtocol{
     func momentsShareHandler(){
         if CTASocialManager.isAppInstaller(.WeChat){
             self.publishCell.getEndImg({ (img) -> () in
-                let message = CTASocialManager.Message
-                    .WeChat(
-                        .Timeline(
-                            info: (
-                                title: "",
-                                description: "",
-                                thumbnail: img,
-                                media: nil
+                if let image = img{
+                    let thumb = compressImage(image, maxWidth: image.size.width/2)
+                    let message = CTASocialManager.Message
+                        .WeChat(
+                            .Timeline(
+                                info: (
+                                    title: "",
+                                    description: "",
+                                    thumbnail: thumb,
+                                    media: .Image(img!)
+                                )
                             )
-                        )
-                )
-                CTASocialManager.shareMessage(message) { (result) -> Void in
-                    debug_print("shareMessage result = \(result)")
+                    )
+                    CTASocialManager.shareMessage(message) { (result) -> Void in
+                    }
                 }
             })
         }else {
