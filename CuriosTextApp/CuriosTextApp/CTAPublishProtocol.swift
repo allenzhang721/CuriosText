@@ -168,9 +168,13 @@ extension CTAPublishProtocol where Self: UIViewController{
         shareView.showViewHandler(isSelf)
     }
     
-    func rebuildHandlerWith(publishModel: CTAPublishModel?, rootController: UIViewController){
+    func rebuildHandler() {
+        rebuildHandlerWith()
+    }
+    
+    func rebuildHandlerWith(publishModel: CTAPublishModel? = nil, rootController: UIViewController? = nil){
 //        print("rebuildHandler ")
-        if let publishModel = publishModel {
+        if let publishModel = publishModel, let rootController = rootController {
             
             let purl = CTAFilePath.publishFilePath
             let url = purl + publishModel.publishURL
