@@ -149,6 +149,7 @@
 		2C98D6CF1C86EBFA007AB3F7 /* CTAHUDLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98D6CE1C86EBFA007AB3F7 /* CTAHUDLabel.swift */; };
 		2CA3AA531C8D472400CE8191 /* CTAPublishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA3AA521C8D472400CE8191 /* CTAPublishViewController.swift */; };
 		2CA3AA551C8D7A0E00CE8191 /* Extension+Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA3AA541C8D7A0E00CE8191 /* Extension+Document.swift */; };
+		2CA860C01C8FC157000BCF8A /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA860BF1C8FC157000BCF8A /* LocalizationManager.swift */; };
 		2CA9933E1C75DD4700B5EEDC /* SimpleNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA9933D1C75DD4700B5EEDC /* SimpleNetworking.swift */; };
 		2CAEAC911C323F2600C9F9AC /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC8C1C323F2600C9F9AC /* Dynamic.swift */; };
 		2CAEAC921C323F2600C9F9AC /* Editor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CAEAC8D1C323F2600C9F9AC /* Editor.storyboard */; };
@@ -420,6 +421,7 @@
 		2C98D6CE1C86EBFA007AB3F7 /* CTAHUDLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAHUDLabel.swift; sourceTree = "<group>"; };
 		2CA3AA521C8D472400CE8191 /* CTAPublishViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishViewController.swift; sourceTree = "<group>"; };
 		2CA3AA541C8D7A0E00CE8191 /* Extension+Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+Document.swift"; sourceTree = "<group>"; };
+		2CA860BF1C8FC157000BCF8A /* LocalizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		2CA9933D1C75DD4700B5EEDC /* SimpleNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleNetworking.swift; sourceTree = "<group>"; };
 		2CAEAC8C1C323F2600C9F9AC /* Dynamic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 		2CAEAC8D1C323F2600C9F9AC /* Editor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Editor.storyboard; sourceTree = "<group>"; };
@@ -868,6 +870,7 @@
 		2C5C24991C44FA8B00A70F1B /* Mangers_model */ = {
 			isa = PBXGroup;
 			children = (
+				2CA860BF1C8FC157000BCF8A /* LocalizationManager.swift */,
 				2C5C24971C44FA5600A70F1B /* CTAColorsManger.swift */,
 				2CF5EB8A1C47B2CF009F0719 /* CTAFontsManager.swift */,
 				2C1312351C59966C00346804 /* CTAUserManager.swift */,
@@ -1455,6 +1458,7 @@
 				2C2B45AA1C5CBCC8004A4809 /* CTALoginProtocol.swift in Sources */,
 				2C6C67FF1C350A4800CCE81C /* CTALineFlowLayout.swift in Sources */,
 				2CB380B31C4D003B009A681A /* CTAAnimationConfig.swift in Sources */,
+				2CA860C01C8FC157000BCF8A /* LocalizationManager.swift in Sources */,
 				2CAEACA31C323F9700C9F9AC /* TexView.swift in Sources */,
 				2CAEAC9B1C323F4300C9F9AC /* CanvasView.swift in Sources */,
 				2CC9307D1C74640300FB02A9 /* CTACameraView.swift in Sources */,
