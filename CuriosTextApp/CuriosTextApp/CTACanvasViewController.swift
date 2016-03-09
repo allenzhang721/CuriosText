@@ -54,6 +54,8 @@ final class CTACanvasViewController: UIViewController {
     
     func setup() {
         
+        view.backgroundColor = CTAStyleKit.ediorBackgroundColor
+        
         let canvasLayout = CanvasLayout()
         
         let defaultSide: CGFloat = 414.0
@@ -64,7 +66,7 @@ final class CTACanvasViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.1)
+        collectionView.backgroundColor = CTAStyleKit.commonBackgroundColor
         collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         collectionView.registerClass(CTACanvasTextCell.self, forCellWithReuseIdentifier: "TextCell")
         collectionView.registerClass(CTACanvasImageCell.self, forCellWithReuseIdentifier: "ImageCell")

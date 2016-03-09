@@ -79,9 +79,10 @@
                                         </connections>
                                     </barButtonItem>
                                 </items>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </toolbar>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.91364538669586182" green="0.91377681493759155" blue="0.9136165976524353" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="UV4-IL-VCX" secondAttribute="trailing" constant="-20" id="35J-Mj-PnT"/>
@@ -177,6 +178,7 @@
                                         </connections>
                                     </barButtonItem>
                                 </items>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </toolbar>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="65M-gY-WAU">
                                 <rect key="frame" x="20" y="44" width="280" height="524"/>
@@ -342,7 +344,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fgd-Eu-hft" customClass="CTAPreviewCanvasView" customModule="CuriosTextApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="66" width="320" height="320"/>
+                                <rect key="frame" x="0.0" y="80" width="320" height="320"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="fgd-Eu-hft" secondAttribute="height" multiplier="1:1" id="c3W-9A-3tf"/>
@@ -350,6 +352,7 @@
                             </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N2r-a8-P18">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
                                     <barButtonItem title="取消" id="KQs-0R-srN">
                                         <connections>
@@ -357,31 +360,55 @@
                                         </connections>
                                     </barButtonItem>
                                 </items>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </toolbar>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hLk-nB-9zZ" customClass="CTAPublishButton" customModule="CuriosTextApp" customModuleProvider="target">
-                                <rect key="frame" x="100" y="409" width="120" height="44"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ud8-zM-9P3">
+                                <rect key="frame" x="0.0" y="431" width="320" height="137"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hLk-nB-9zZ" customClass="CTAPublishButton" customModule="CuriosTextApp" customModuleProvider="target">
+                                        <rect key="frame" x="100" y="44" width="120" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="VLC-Cf-yLf"/>
+                                            <constraint firstAttribute="height" constant="44" id="hxI-l3-tXm"/>
+                                        </constraints>
+                                        <state key="normal" title="发布"/>
+                                        <connections>
+                                            <action selector="publishClick:" destination="ka6-cO-1SF" eventType="touchUpInside" id="61n-EZ-gwj"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="120" id="aRO-y1-LD0"/>
-                                    <constraint firstAttribute="height" constant="44" id="fpk-RC-JcL"/>
+                                    <constraint firstAttribute="height" constant="137" id="986-1m-LBT"/>
+                                    <constraint firstItem="hLk-nB-9zZ" firstAttribute="top" secondItem="ud8-zM-9P3" secondAttribute="top" constant="44" id="KWy-At-Rbv"/>
+                                    <constraint firstItem="hLk-nB-9zZ" firstAttribute="centerX" secondItem="ud8-zM-9P3" secondAttribute="centerX" id="YPy-S0-0Yh"/>
+                                    <constraint firstItem="hLk-nB-9zZ" firstAttribute="centerY" secondItem="ud8-zM-9P3" secondAttribute="centerY" constant="-2.5" id="fJ9-SD-gIB"/>
                                 </constraints>
-                                <state key="normal" title="发布"/>
-                                <connections>
-                                    <action selector="publishClick:" destination="ka6-cO-1SF" eventType="touchUpInside" id="61n-EZ-gwj"/>
-                                </connections>
-                            </button>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="KWy-At-Rbv"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.91364538669586182" green="0.91377681493759155" blue="0.9136165976524353" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="N2r-a8-P18" firstAttribute="leading" secondItem="WVK-lA-JyR" secondAttribute="leading" id="AOp-Ax-U79"/>
                             <constraint firstItem="N2r-a8-P18" firstAttribute="top" secondItem="WVK-lA-JyR" secondAttribute="top" id="CKZ-Wd-HiF"/>
-                            <constraint firstItem="hLk-nB-9zZ" firstAttribute="centerX" secondItem="WVK-lA-JyR" secondAttribute="centerX" id="CXY-yk-0O9"/>
                             <constraint firstAttribute="trailing" secondItem="N2r-a8-P18" secondAttribute="trailing" id="Igf-3A-DhT"/>
                             <constraint firstItem="N2r-a8-P18" firstAttribute="trailing" secondItem="fgd-Eu-hft" secondAttribute="trailing" id="K8r-iv-I1b"/>
-                            <constraint firstItem="hLk-nB-9zZ" firstAttribute="top" secondItem="fgd-Eu-hft" secondAttribute="bottom" constant="23" id="YYc-To-pMg"/>
+                            <constraint firstItem="ud8-zM-9P3" firstAttribute="top" secondItem="fgd-Eu-hft" secondAttribute="bottom" constant="36" id="NmC-oA-N0l"/>
+                            <constraint firstItem="ud8-zM-9P3" firstAttribute="bottom" secondItem="42G-98-Hn9" secondAttribute="top" id="ODp-go-eW7"/>
                             <constraint firstItem="N2r-a8-P18" firstAttribute="leading" secondItem="fgd-Eu-hft" secondAttribute="leading" id="caV-oD-dg6"/>
-                            <constraint firstItem="fgd-Eu-hft" firstAttribute="top" secondItem="N2r-a8-P18" secondAttribute="bottom" constant="22" id="joK-Ai-tnW"/>
-                            <constraint firstItem="N2r-a8-P18" firstAttribute="centerX" secondItem="hLk-nB-9zZ" secondAttribute="centerX" id="xmG-1w-2DE"/>
+                            <constraint firstItem="fgd-Eu-hft" firstAttribute="top" secondItem="N2r-a8-P18" secondAttribute="bottom" constant="36" id="joK-Ai-tnW"/>
+                            <constraint firstItem="ud8-zM-9P3" firstAttribute="leading" secondItem="fgd-Eu-hft" secondAttribute="leading" id="oBI-Rb-f0a"/>
+                            <constraint firstItem="ud8-zM-9P3" firstAttribute="trailing" secondItem="fgd-Eu-hft" secondAttribute="trailing" id="toE-6H-eEq"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="NmC-oA-N0l"/>
+                            </mask>
+                        </variation>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
