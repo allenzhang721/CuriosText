@@ -369,13 +369,13 @@ final class CTACanvasViewController: UIViewController {
     
     func indexPathAtPoint(point: CGPoint) -> NSIndexPath? {
         
-        let visualCells = collectionView.visibleCells()
+        let indexPaths = quickSort(collectionView.indexPathsForVisibleItems()) {$0.item > $1.item}
         
-        guard visualCells.count > 0 else {
+        guard indexPaths.count > 0 else {
             return nil
         }
-        
-        if let indexPaths = (visualCells.map{collectionView.indexPathForCell($0)}.sort{$0.0?.item > $0.1?.item}) as? [NSIndexPath] {
+            
+            debug_print(indexPaths, context: defaultContext)
             
             for indexPath in indexPaths {
                 
@@ -387,10 +387,43 @@ final class CTACanvasViewController: UIViewController {
                     return indexPath
                 }
             }
-        }
+        
         return nil
     }
+}
 
+public func quickSort<T: NSIndexPath>(items: [T], @noescape by compare: (T, T) -> Bool) -> [T] {
+    guard items.count > 1 else {
+        return items
+    }
+    var items = items
+    
+    func partition(inout items: [T], left: Int, right: Int, @noescape by compare: (T, T) -> Bool) -> Int {
+        let random = left + Int(arc4random_uniform(UInt32(right-left)))
+        let key = items[random]
+        (items[left], items[random]) = (items[random], items[left])
+        var j = left
+        for i in (left+1)...right {
+            if compare(items[i], key) {
+                j+=1
+                if i != j {
+                    (items[i], items[j]) = (items[j], items[i])
+                }
+            }
+        }
+        (items[left], items[j]) = (items[j], items[left])
+        return j
+    }
+    func quickSortIter(inout items: [T], left: Int, right: Int, @noescape by compare: (T, T) -> Bool) {
+        if left < right {
+            let middle = partition(&items, left: left, right: right, by: compare)
+            quickSortIter(&items, left: left, right: middle-1, by: compare)
+            quickSortIter(&items, left: middle+1, right: right, by: compare)
+        }
+    }
+    
+    quickSortIter(&items, left: 0, right: items.count-1, by: compare)
+    return items
 }
 
 // MARK: - UICollectionViewDataSource and Delegate
