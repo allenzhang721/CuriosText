@@ -107,5 +107,6 @@
 "AnimationDelay" = "Delay";
 
 // MARK: - AnimationName
+"None" = "None";
 "MoveIn" = "Move In";
 "MoveOut" = "Move Out";

@@ -14,7 +14,7 @@ enum LocalStrings: CustomStringConvertible {
     case Camera, Photo  // Image Picker
     case Publish , EditTextPlaceHolder  // Editor
     case Size, Rotation, Font, Spacing, Alignment, Color, Animation, AnimationType, AnimationDuration, AnimationDelay    // Edior Tab
-    case MoveIn, MoveOut //Animations
+    case None, MoveIn, MoveOut //Animations
     
     var description: String {
         
@@ -60,6 +60,8 @@ enum LocalStrings: CustomStringConvertible {
             return NSLocalizedString("AnimationDelay", comment: "")
             
             // Animation
+        case .None:
+            return NSLocalizedString("None", comment: "")
         case .MoveIn:
             return NSLocalizedString("MoveIn", comment: "")
         case .MoveOut:

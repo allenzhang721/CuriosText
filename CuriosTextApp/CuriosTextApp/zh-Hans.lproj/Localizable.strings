@@ -109,5 +109,6 @@
 "AnimationDelay" = "延时";
 
 // MARK: - AnimationName
+"None" = "无";
 "MoveIn" = "移入";
 "MoveOut" = "移出";

@@ -45,7 +45,7 @@ enum CTAAnimationName: Int, CustomStringConvertible {
     var description: String {
         switch self {
         case .None:
-            return "None"
+            return LocalStrings.None.description
         case .MoveIn:
             return LocalStrings.MoveIn.description
 //        case .FlyIn:
