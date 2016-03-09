@@ -199,6 +199,8 @@ public class CTAStyleKit : NSObject {
         static let monoPolygons6: UIColor = UIColor(red: 0.675, green: 0.600, blue: 0.655, alpha: 1.000)
         static let monoPolygons7: UIColor = UIColor(red: 0.737, green: 0.686, blue: 0.710, alpha: 1.000)
         static let monoPolygons8: UIColor = UIColor(red: 0.808, green: 0.784, blue: 0.761, alpha: 1.000)
+        static let ediorBackgroundColor: UIColor = UIColor(red: 0.827, green: 0.827, blue: 0.827, alpha: 1.000)
+        static let commonBackgroundColor: UIColor = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1.000)
         static var imageOfAlignmentRightSelected: UIImage?
         static var alignmentRightSelectedTargets: [AnyObject]?
         static var imageOfAlignmentRightNormal: UIImage?
@@ -445,6 +447,8 @@ public class CTAStyleKit : NSObject {
     public class var monoPolygons6: UIColor { return Cache.monoPolygons6 }
     public class var monoPolygons7: UIColor { return Cache.monoPolygons7 }
     public class var monoPolygons8: UIColor { return Cache.monoPolygons8 }
+    public class var ediorBackgroundColor: UIColor { return Cache.ediorBackgroundColor }
+    public class var commonBackgroundColor: UIColor { return Cache.commonBackgroundColor }
 
     //// Drawing Methods
 
@@ -957,8 +961,6 @@ public class CTAStyleKit : NSObject {
     }
 
     public class func drawFontBarItemNormal() {
-        //// Color Declarations
-        let fillColor4 = UIColor(red: 0.608, green: 0.608, blue: 0.608, alpha: 1.000)
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -1006,7 +1008,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.closePath()
         bezierPath.usesEvenOddFillRule = true;
 
-        fillColor4.setFill()
+        CTAStyleKit.normalColor.setFill()
         bezierPath.fill()
     }
 
@@ -1063,8 +1065,6 @@ public class CTAStyleKit : NSObject {
     }
 
     public class func drawSizeBarItemNormal() {
-        //// Color Declarations
-        let fillColor4 = UIColor(red: 0.608, green: 0.608, blue: 0.608, alpha: 1.000)
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -1090,7 +1090,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.closePath()
         bezierPath.usesEvenOddFillRule = true;
 
-        fillColor4.setFill()
+        CTAStyleKit.normalColor.setFill()
         bezierPath.fill()
     }
 
@@ -1190,8 +1190,6 @@ public class CTAStyleKit : NSObject {
     }
 
     public class func drawColorBarItemNormal() {
-        //// Color Declarations
-        let fillColor4 = UIColor(red: 0.608, green: 0.608, blue: 0.608, alpha: 1.000)
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -1252,7 +1250,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.closePath()
         bezierPath.usesEvenOddFillRule = true;
 
-        fillColor4.setFill()
+        CTAStyleKit.normalColor.setFill()
         bezierPath.fill()
     }
 
@@ -1297,8 +1295,6 @@ public class CTAStyleKit : NSObject {
     }
 
     public class func drawRotationBarItemNormal() {
-        //// Color Declarations
-        let fillColor4 = UIColor(red: 0.608, green: 0.608, blue: 0.608, alpha: 1.000)
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -1334,13 +1330,11 @@ public class CTAStyleKit : NSObject {
         bezierPath.closePath()
         bezierPath.usesEvenOddFillRule = true;
 
-        fillColor4.setFill()
+        CTAStyleKit.normalColor.setFill()
         bezierPath.fill()
     }
 
     public class func drawAlignmentBarItemNormal() {
-        //// Color Declarations
-        let fillColor4 = UIColor(red: 0.608, green: 0.608, blue: 0.608, alpha: 1.000)
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -1370,7 +1364,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.closePath()
         bezierPath.usesEvenOddFillRule = true;
 
-        fillColor4.setFill()
+        CTAStyleKit.normalColor.setFill()
         bezierPath.fill()
     }
 
@@ -1656,7 +1650,6 @@ public class CTAStyleKit : NSObject {
 
         //// Color Declarations
         let fillColor5 = UIColor(red: 0.329, green: 0.321, blue: 0.321, alpha: 0.000)
-        let strokeColor = UIColor(red: 0.937, green: 0.200, blue: 0.290, alpha: 1.000)
 
         //// Group
         CGContextSaveGState(context)
@@ -1751,7 +1744,7 @@ public class CTAStyleKit : NSObject {
         bezier4Path.addCurveToPoint(CGPointMake(0, 44), controlPoint1: CGPointMake(19.7, 0), controlPoint2: CGPointMake(0, 19.7))
         bezier4Path.addCurveToPoint(CGPointMake(44, 88), controlPoint1: CGPointMake(0, 68.3), controlPoint2: CGPointMake(19.7, 88))
         bezier4Path.closePath()
-        strokeColor.setStroke()
+        CTAStyleKit.selectedColor.setStroke()
         bezier4Path.lineWidth = 2
         bezier4Path.stroke()
 

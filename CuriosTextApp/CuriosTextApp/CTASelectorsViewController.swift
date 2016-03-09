@@ -63,6 +63,8 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = CTAStyleKit.commonBackgroundColor
     }
     
     func changeToSelector(type: CTAContainerFeatureType) {

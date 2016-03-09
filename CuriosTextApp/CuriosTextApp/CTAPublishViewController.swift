@@ -79,6 +79,8 @@ extension CTAPublishViewController {
     }
     
     func setupStyles() {
+        previewView.backgroundColor = CTAStyleKit.commonBackgroundColor
+        view.backgroundColor = CTAStyleKit.ediorBackgroundColor
     }
 }
 

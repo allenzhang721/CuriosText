@@ -39,6 +39,8 @@ class CTATabViewController: UIViewController {
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         layout.scrollDirection = .Horizontal
         layout.delegate = self
+        
+        view.backgroundColor = CTAStyleKit.commonBackgroundColor
     }
 }
 
