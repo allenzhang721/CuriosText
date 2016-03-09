@@ -27,6 +27,8 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate {
     private var cameraResult: CTACameraResult = .Authorized
     private var stillImageOutput: AVCaptureStillImageOutput?
     
+    var ratio: CTAImageCropAspectRatio = .Square
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
@@ -52,7 +54,7 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate {
             
             if let strongSelf = self {
                 let ratio = CTAImageCropAspectRatio.defaultRatio[indexPath.item]
-                
+                strongSelf.ratio = ratio
                 strongSelf.cropView.positionByAspectRatio(ratio, animated: true)
             }
             
@@ -181,16 +183,40 @@ extension CTACameraViewController {
             
             let connection = output.connectionWithMediaType(AVMediaTypeVideo)
             
-            strongSelf.stillImageOutput?.captureStillImageAsynchronouslyFromConnection(connection, completionHandler: { (buffer, error) in
-                
+            strongSelf.stillImageOutput?.captureStillImageAsynchronouslyFromConnection(connection, completionHandler: {[weak self] (buffer, error) in
+                guard let strongSelf = self else {
+                    return
+                }
                 if let buffer = buffer {
                     let data = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(buffer)
-                    handler?(data)
+                    let image = UIImage(data: data)!.cropImageWith(strongSelf.ratio)
+                    handler?(UIImagePNGRepresentation(image))
                 } else {
                     handler?(nil)
                 }
             })
         }
+    }
+}
+
+extension UIImage {
+    
+    private func cropImageWith(ratio: CTAImageCropAspectRatio) -> UIImage {
+        
+        let originSize = size
+        let targetSize = CGSize(width: originSize.width, height: originSize.height)
+        let ratioMinSize = ratio.minumSize()
+        let minScale = min(targetSize.width / ratioMinSize.width, targetSize.height / ratioMinSize.height)
+        let cropSize = CGSize(width: ratioMinSize.width * minScale, height: ratioMinSize.height * minScale)
+        let cropOrigin = CGPoint(x: (targetSize.width - cropSize.width) / 2.0, y: (targetSize.height - cropSize.height) / 2.0)
+        let cropFrame = CGRect(origin: cropOrigin, size: cropSize)
+        let drawOrigin = CGPoint(x: -cropOrigin.x, y: -cropOrigin.y)
+        
+        UIGraphicsBeginImageContext(cropSize)
+        drawInRect(CGRect(origin: drawOrigin, size: originSize))
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
     }
 }
 
