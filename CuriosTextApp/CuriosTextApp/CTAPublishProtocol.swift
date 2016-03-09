@@ -9,7 +9,7 @@
 import Foundation
 import Kingfisher
 
-protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAShareViewProtocol, CTAAlertProtocol{
+protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAAlertProtocol, CTAShareViewDelegate,CTAEditViewControllerDelegate{
     var likeButton:UIButton{get}
     var userIconImage:UIImageView{get}
     var userNicknameLabel:UILabel{get}
@@ -213,9 +213,8 @@ extension CTAPublishProtocol where Self: UIViewController{
                                             let editVC = editNaviVC.topViewController as! EditViewController
                                             
                                             editVC.document = openDocument
-                                            
+                                            editVC.delegate = self
                                             rootController.presentViewController(editNaviVC, animated: true, completion: { () -> Void in
-                                                
                                             })
                                         }
                                     })
@@ -227,6 +226,13 @@ extension CTAPublishProtocol where Self: UIViewController{
                 }
                 })
         }
+    }
+}
+
+extension CTAPublishProtocol{
+    
+    func EditControllerDidPublished(viewController: EditViewController){
+        NSNotificationCenter.defaultCenter().postNotificationName("publishEditFile", object: nil)
     }
 }
 

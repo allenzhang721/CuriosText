@@ -16,7 +16,7 @@ func getIconData(image:UIImage) -> NSData{
 
 func compressJPGImage(image:UIImage) -> NSData{
     let newImage = compressImage(image)
-    let newData = UIImageJPEGRepresentation(newImage, 0.4)
+    let newData = UIImageJPEGRepresentation(newImage, 0.2)
     return newData!
 }
 
@@ -47,7 +47,7 @@ func compressIconImage(image:UIImage) -> UIImage{
     return image
 }
 
-func compressImage(image:UIImage, maxWidth:CGFloat = UIScreen.mainScreen().bounds.width * 3) -> UIImage{
+func compressImage(image:UIImage, maxWidth:CGFloat = 1280.00) -> UIImage{
     let maxWidth = maxWidth
     let maxHeight = maxWidth
     let imageSize = image.size

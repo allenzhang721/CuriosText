@@ -76,6 +76,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
         super.viewDidDisappear(animated)
     }
     
+    
     func initView(){
         let fullSize = self.getFullCellRect(nil, rate: 1.0)
         let horSpace = self.getFullHorSpace()
@@ -959,6 +960,10 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
                 }
             })
         }
+    }
+    
+    func EditControllerDidPublished(viewController: EditViewController){
+        NSNotificationCenter.defaultCenter().postNotificationName("publishEditFile", object: nil)
     }
 }
 

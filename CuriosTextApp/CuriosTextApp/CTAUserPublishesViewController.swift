@@ -21,6 +21,8 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     var isLoadedAll = false
     var isCanChangeToolBar = true
     
+    var isAddOber:Bool = false
+    
     var publishModelArray:Array<CTAPublishModel> = []
     var selectedPublishID:String = ""
     
@@ -70,20 +72,24 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.initViewNavigateBar();
         self.navigationController!.interactivePopGestureRecognizer?.delegate = self
         self.view.backgroundColor = UIColor.whiteColor()
+        if self.viewUser == nil {
+            self.isLoginUser = true
+        }else {
+            self.isLoginUser = false
+        }
+        if self.isLoginUser && !self.isAddOber{
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadViewHandler:", name: "publishEditFile", object: nil)
+            self.isAddOber = true
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if self.isDisMis {
-            if viewUser == nil {
-                self.isLoginUser = true
-            }else {
-                self.isLoginUser = false
-            }
             self.loadLocalUserModel()
             if loginUser != nil {
                 if self.isLoginUser {
-                    viewUser = loginUser
+                    self.viewUser = self.loginUser
                 }
                 if self.viewUserID != self.viewUser!.userID{
                     self.publishModelArray.removeAll()
@@ -121,15 +127,18 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        self.viewUser  = nil
-        self.loginUser = nil
-        self.isLoginUser = false
         self.isDisMis = true
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func reloadViewHandler(noti: NSNotification){
+        if self.isLoginUser{
+            self.viewUserID = ""
+        }
     }
     
     func saveArrayToLocaol(){

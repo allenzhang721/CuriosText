@@ -16,7 +16,7 @@ func setAddBarView(barView:CTAAddBarView, view:UIView){
     barView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor).active = true
 }
 
-protocol CTAAddBarProtocol{
+protocol CTAAddBarProtocol: CTAEditViewControllerDelegate{
     func initAddBarView(parentView:UIView?)
     func addBarViewClick(sender: UIPanGestureRecognizer)
     func showEditView()
@@ -54,7 +54,7 @@ extension CTAAddBarProtocol where Self: UIViewController{
                         let editVC = editNaviVC.topViewController as! EditViewController
                         
                         editVC.document = openDocument
-                        
+                        editVC.delegate = self
                         self.presentViewController(editNaviVC, animated: true, completion: { () -> Void in
                             
                             
@@ -63,5 +63,11 @@ extension CTAAddBarProtocol where Self: UIViewController{
                 })
             }
         }
+    }
+}
+
+extension CTAAddBarProtocol{
+    func EditControllerDidPublished(viewController: EditViewController){
+        NSNotificationCenter.defaultCenter().postNotificationName("publishEditFile", object: nil)
     }
 }

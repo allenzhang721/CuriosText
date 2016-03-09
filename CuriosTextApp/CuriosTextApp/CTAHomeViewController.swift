@@ -55,6 +55,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         super.viewWillAppear(animated)
         if self.isDisMis{
             self.reloadView()
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadViewHandler:", name: "loginComplete", object: nil)
         }
     }
     
@@ -70,6 +71,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         super.viewDidDisappear(animated)
         self.loginUser = nil
         self.isDisMis = true
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginComplete", object: nil)
     }
 
     /*
@@ -121,8 +123,6 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         userButton.addTarget(self, action: "userButtonClick:", forControlEvents: .TouchUpInside)
         self.view.addSubview(userButton)
         self.initPublishSubView(self.handView.frame, horRate: self.getHorRate())
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginCompleteHandler:", name: "loginComplete", object: nil)
     }
     
     func setCellsPosition(){
@@ -176,7 +176,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         }
     }
     
-    func loginCompleteHandler(noti: NSNotification){
+    func reloadViewHandler(noti: NSNotification){
         self.reloadView()
         self.viewAppearBegin()
     }

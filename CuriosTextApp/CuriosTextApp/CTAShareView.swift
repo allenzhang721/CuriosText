@@ -10,7 +10,7 @@ import Foundation
 
 class CTAShareView: UIView{
     
-    var delegate:CTAShareViewProtocol?
+    var delegate:CTAShareViewDelegate?
     
     var buttonView:UIView!
     
@@ -199,7 +199,7 @@ class CTAShareView: UIView{
     }
 }
 
-protocol CTAShareViewProtocol{
+protocol CTAShareViewDelegate{
     func weChatShareHandler()
     func momentsShareHandler()
     func deleteHandler()
