@@ -81,3 +81,6 @@
 "AlertTitlePhoneNil" = "Mobile Number null";
 "AlertTitleConnectUs" = "Please connect service.";
 "AlertTitleDataNil" = "Data null";
+
+// MARK: - Editor
+"EditTextPlaceHolder" = "Double Click to Edit";

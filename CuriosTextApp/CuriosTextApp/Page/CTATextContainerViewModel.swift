@@ -68,6 +68,7 @@ extension TextRetrievable {
 
 protocol TextModifiable: TextRetrievable {
     
+    var isEmpty: Bool { get }
     var texts: String { get set }
     var fontScale: CGFloat { get set }
     var fontFamily: String { get set }
@@ -105,8 +106,8 @@ extension CTAContainer: TextContainerVMProtocol {
         }
         
         textElement.texts = text
-        
-        let newResult = textElement.resultWithText(text, constraintSize: constraintSize)
+        let aText = text.isEmpty ? LocalStrings.EditTextPlaceHolder.description : text
+        let newResult = textElement.resultWithText(aText, constraintSize: constraintSize)
         let contentSize = CGSize(width: ceil(newResult.size.width), height: ceil(newResult.size.height))
         let inset = CGPoint(x: floor(newResult.inset.x), y: newResult.inset.y)
         // new content size

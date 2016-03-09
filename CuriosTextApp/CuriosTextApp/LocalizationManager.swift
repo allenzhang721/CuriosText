@@ -8,17 +8,16 @@
 
 import Foundation
 
-//enum LocalStrings: CustomStringConvertible {
+enum LocalStrings: CustomStringConvertible {
 
-    // Editor
-//    case TextPlaceHolder
-//    
-//    var description: String {
-//        
-//        switch self {
-//        case .EditTextPlaceHolder:
-//            return NSLocalizedString("AlertTitleInternetError", comment: "")
-//        }
-//        
-//    }
-//}
+    case EditTextPlaceHolder
+    
+    var description: String {
+        
+        switch self {
+        case .EditTextPlaceHolder:
+            return NSLocalizedString("EditTextPlaceHolder", comment: "")
+        }
+        
+    }
+}

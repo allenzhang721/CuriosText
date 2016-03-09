@@ -104,19 +104,10 @@ class CTAPreviewCanvasView: UIView {
         let layout = CTAPreviewLayout()
         
         let defaultSide: CGFloat = 414.0
-        
         collectionView = UICollectionView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: defaultSide, height: defaultSide)), collectionViewLayout: layout)
         collectionView.backgroundColor = UIColor.clearColor()
-        let scale = min(bounds.width / defaultSide , bounds.height / defaultSide)
-//        let scaleSize = CGSize(width: 320 * scale, height: 320 * scale)
-//        collectionView.bounds.size = scaleSize
-        collectionView.center = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0)
-        collectionView.transform = CGAffineTransformMakeScale(scale, scale)
-
         collectionView.registerClass(CTAPreviewCell.self, forCellWithReuseIdentifier: "ContainerCell")
-        
-//         load()
-//        layer.addSublayer(collectionView.layer)
+
         addSubview(collectionView)
     }
     
@@ -170,13 +161,10 @@ class CTAPreviewCanvasView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-//        if let page = page {
-//            let scale = min(page.size.width / bounds.width, page.size.height / bounds.height)
-//            let scaleSize = CGSize(width: page.size.width * scale, height: page.size.height * scale)
-//            collectionView.bounds.size = scaleSize
-//
-//        }
-        
+        let defaultSide: CGFloat = 414.0
+        let scale = min(bounds.width / defaultSide , bounds.height / defaultSide)
+        collectionView.transform = CGAffineTransformMakeScale(scale, scale)
+        collectionView.center = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0)
     }
     
     /*

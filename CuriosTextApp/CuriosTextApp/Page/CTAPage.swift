@@ -114,14 +114,15 @@ extension CTAPage {
             }
     }
     
-    func cleanEmptyContainers() {
+    func cleanEmptyContainers() -> CTAPage {
         
-        let c = containers.filter{ $0.type != .Text ? true : !($0.textElement!.texts.isEmpty) }
+        let c = containers.filter{ $0.type != .Text ? true : !($0.textElement!.isEmpty) }
         let ids = c.map{$0.iD}
         let a = animatoins.filter{ids.contains($0.targetiD)}
         
-        containers = c
-        animatoins = a
+//        containers = c
+//        animatoins = a
         
+        return CTAPage(containers: c, anis: a)
     }
 }

@@ -83,3 +83,6 @@
 "AlertTitlePhoneNil" = "手机号码为空";
 "AlertTitleConnectUs" = "请联系客服";
 "AlertTitleDataNil" = "数据为空";
+
+// MARK: - Editor
+"EditTextPlaceHolder" = "双击编辑";

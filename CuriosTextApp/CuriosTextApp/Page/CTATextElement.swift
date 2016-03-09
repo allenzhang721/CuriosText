@@ -316,7 +316,7 @@ final class CTATextAttributes:NSObject, NSCoding {
 }
 
 
-final class CTATextElement: NSObject, CTAElement, TextModifiable {
+final class CTATextElement: NSObject, CTAElement {
     
     private struct SerialKeys {
         static private let prefix = "com.botai.curiosText.TextElment."
@@ -437,11 +437,11 @@ final class CTATextElement: NSObject, CTAElement, TextModifiable {
 }
 
 // MARK: - TextModify
-extension CTATextElement {
+extension CTATextElement: TextModifiable {
     
     var attributeString: NSAttributedString {
         
-        return NSAttributedString(string: text, attributes: attributes.textAttributes)
+        return NSAttributedString(string: texts, attributes: attributes.textAttributes)
     }
     
     var textAttributes: [String: AnyObject] {
@@ -451,18 +451,21 @@ extension CTATextElement {
     
     var fontSize: CGFloat {
         return CGFloat(attributes.fontSize)
-        
     }
     
     var texts: String {
      
         get {
-            return self.text
+            return text.isEmpty ? LocalStrings.EditTextPlaceHolder.description : text
         }
         
         set {
             text = newValue
         }
+    }
+    
+    var isEmpty: Bool {
+        return text.isEmpty
     }
     
     var fontScale: CGFloat {

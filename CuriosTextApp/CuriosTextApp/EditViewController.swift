@@ -208,7 +208,7 @@ extension EditViewController {
     
     func addText(s: String = "") {
         
-        let textContainer = EditorFactory.generateTextContainer(page.width, pageHeigh: page.height, text: s.isEmpty ? "Double click to Edit" : s)
+        let textContainer = EditorFactory.generateTextContainer(page.width, pageHeigh: page.height, text:s)
         
         page.append(textContainer)
         let count = page.containers.count
@@ -296,13 +296,14 @@ extension EditViewController {
         case .Text:
             let textmodifyVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("TextModifyViewController") as! CTATextModifyViewController
             let textElement = (container as! TextContainerVMProtocol).textElement!
-            textmodifyVC.beganWith(textElement.texts, attributes: textElement.textAttributes)
+            textmodifyVC.beganWith(textElement.isEmpty ? "" : textElement.texts, attributes: textElement.textAttributes)
             
             textmodifyVC.textModifyDidCompletion = {[weak self] text in
                 
                 if let strongSelf = self {
-                    let canvasSize = strongSelf.canvasViewController.view.bounds.size
-                    (container as! TextContainerVMProtocol).updateWithText(text, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
+                    let size = strongSelf.page.size
+//                    let canvasSize = strongSelf.canvasViewController.view.bounds.size
+                    (container as! TextContainerVMProtocol).updateWithText(text, constraintSize: CGSize(width: size.width, height: size.height * 2))
                     
                     strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
                 }
@@ -346,8 +347,8 @@ extension EditViewController {
         let publishViewController = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("PublishViewController") as! CTAPublishViewController
         
         
-        
-        publishViewController.page = page
+        let cleanPage = page.cleanEmptyContainers()
+        publishViewController.page = cleanPage
 //        publishViewController.publishID = document.documentName
         publishViewController.baseURL = document.imagePath
         publishViewController.imageAccess = document.accessImage
@@ -366,16 +367,16 @@ extension EditViewController {
                 return
             }
             
-            strongSelf.beganGeneratePublishIconAndPublish()
+            strongSelf.beganGeneratePublishIconAndPublishWith(cleanPage)
         }
         
         navigationController?.pushViewController(publishViewController, animated: true)
 
     }
     
-    func beganGeneratePublishIconAndPublish() {
+    func beganGeneratePublishIconAndPublishWith(aPage: CTAPage) {
         
-        draw(page, atBegan: true, baseURL: document.imagePath, imageAccess: document.imageBy ,local: true) { [weak self] (r) in
+        draw(aPage, atBegan: true, baseURL: document.imagePath, imageAccess: document.imageBy ,local: true) { [weak self] (r) in
             guard let strongSelf = self else { return }
             
             switch r {
