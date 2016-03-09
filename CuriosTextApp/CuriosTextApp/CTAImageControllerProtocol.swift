@@ -16,7 +16,7 @@ func getIconData(image:UIImage) -> NSData{
 
 func compressJPGImage(image:UIImage) -> NSData{
     let newImage = compressImage(image)
-    let newData = UIImageJPEGRepresentation(newImage, 0.1)
+    let newData = UIImageJPEGRepresentation(newImage, 0.4)
     return newData!
 }
 
@@ -51,6 +51,7 @@ func compressImage(image:UIImage, maxWidth:CGFloat = UIScreen.mainScreen().bound
     let maxWidth = maxWidth
     let maxHeight = maxWidth
     let imageSize = image.size
+
     var rate:CGFloat
     let imageRate = imageSize.width / imageSize.height
     let maxRate = maxWidth / maxHeight
@@ -67,12 +68,17 @@ func compressImage(image:UIImage, maxWidth:CGFloat = UIScreen.mainScreen().bound
             rate = maxHeight / imageSize.height
         }
     }
-    let newSize = CGSize.init(width: rate*image.size.width, height: rate*image.size.height)
-    UIGraphicsBeginImageContextWithOptions(newSize, false, 1)
-    image.drawInRect(CGRect(x: 0, y: 0, width: newSize.width, height: newSize.width), blendMode: .Normal, alpha: 1.0)
-    let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-    UIGraphicsEndImageContext()
-    return image
+    var newImage:UIImage!
+    if rate < 1{
+        let newSize = CGSize.init(width: rate*image.size.width, height: rate*image.size.height)
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1)
+        image.drawInRect(CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height), blendMode: .Normal, alpha: 1.0)
+        newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+    }else {
+        newImage = image
+    }
+    return newImage
 }
 
 protocol CTAImageControllerProtocol{
