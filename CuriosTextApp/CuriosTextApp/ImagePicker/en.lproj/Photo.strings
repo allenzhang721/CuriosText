@@ -1,0 +1,9 @@
+
+/* Class = "UIBarButtonItem"; title = "取消"; ObjectID = "7ve-Kd-YWw"; */
+"7ve-Kd-YWw.title" = "Cancel";
+
+/* Class = "UIViewController"; title = "Photo"; ObjectID = "cMe-yS-ZkE"; */
+"cMe-yS-ZkE.title" = "Photo";
+
+/* Class = "UIBarButtonItem"; title = "确定"; ObjectID = "qJs-Tb-L3B"; */
+"qJs-Tb-L3B.title" = "Done";
