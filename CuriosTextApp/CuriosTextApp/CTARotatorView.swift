@@ -11,8 +11,8 @@ import UIKit
 class CTARotatorView: UIControl {
     
     var maximumRadian: CGFloat = CGFloat(M_PI * 2)
-    var minimumRadian: CGFloat = 0.0
-    var currentValue: CGFloat = 0.5
+    var minimumRadian: CGFloat = -CGFloat(M_PI * 2)
+    var currentValue: CGFloat = 0
     
     private var validRadian: CGFloat = 1000.0
     var radianUnit: CGFloat {

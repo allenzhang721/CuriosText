@@ -23,7 +23,7 @@ class CTASelectorRotatorCell: CTASelectorCell {
         self.view = CTARotatorView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)))
         super.init(coder: aDecoder)
         contentView.addSubview(view)
-        
+        hudLabel.textAlignment = .Right
         hudLabel.textColor = CTAStyleKit.selectedColor
         hudLabel.showGradient = false
         contentView.addSubview(hudLabel)
@@ -32,10 +32,11 @@ class CTASelectorRotatorCell: CTASelectorCell {
     override func layoutSubviews() {
         
         super.layoutSubviews()
+        
         view.frame = bounds
         let hr: CGFloat = 0.55
         let yr = 1 - hr
-        hudLabel.frame = CGRect(x: bounds.maxX - 40, y: bounds.height * yr, width: 40, height: bounds.height * hr)
+        hudLabel.frame = CGRect(x: bounds.maxX - 70, y: bounds.height * yr, width: 60, height: bounds.height * hr)
     }
     
     override func retriveBeganValue() {

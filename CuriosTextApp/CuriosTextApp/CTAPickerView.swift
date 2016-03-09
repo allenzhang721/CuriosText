@@ -125,7 +125,7 @@ extension CTAPickerView: UICollectionViewDataSource, UICollectionViewDelegate {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CTAVerticalCell", forIndexPath: indexPath) as! CTASelectorVerticalCell
         
-        cell.backgroundColor = (indexPath.section == 0) ? UIColor.yellowColor() : UIColor.blueColor()
+        cell.backgroundColor = UIColor.whiteColor()
         cell.verticalDataSource = self
         cell.verticalDelegate = self
         cell.section = indexPath.section

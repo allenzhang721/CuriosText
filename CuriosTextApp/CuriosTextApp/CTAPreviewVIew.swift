@@ -40,7 +40,7 @@ class CTAPreviewView: UIView {
         for (i, c) in string.characters.enumerate() {
             
             let textView = TextView(frame: CGRect(x: 12 * (i % 10), y: 22 * (i < 10 ? 0 : 1), width: Int(bounds.width), height: 22))
-            textView.textColor = UIColor.blueColor()
+            textView.textColor = UIColor.whiteColor()
             textView.text = String(c)
             addSubview(textView)
             views.append(textView)
@@ -71,12 +71,6 @@ class CTAPreviewView: UIView {
                 
                 animation.paused = true
             }
-            
-//            let animation = POPBasicAnimation(propertyNamed: kPOPLayerTranslationXY)
-//            animation.toValue = NSValue(CGPoint: CGPoint(x: 50 + 50 * i, y: 0))
-//            animation.beginTime = CACurrentMediaTime() + 1.0 * Double(i)
-//            animation.duration = 2.0
-//            view.layer.pop_addAnimation(animation, forKey: "tranXY")
         }
         
     }

@@ -73,17 +73,6 @@ final class CTACanvasViewController: UIViewController {
         
         let tap = UITapGestureRecognizer(target: self, action: "tap:")
         view.addGestureRecognizer(tap)
-        
-        //        let pan = UIPanGestureRecognizer(target: self, action: "pan:")
-        //        self.view.addGestureRecognizer(pan)
-        
-        //        let rotation = UIRotationGestureRecognizer(target: self, action: "rotation:")
-        //        self.view.addGestureRecognizer(rotation)
-        //
-        //        let pinch = UIPinchGestureRecognizer(target: self, action: "pinch:")
-        //        self.view.addGestureRecognizer(pinch)
-        
-        
     }
     
     override func viewWillLayoutSubviews() {
@@ -113,9 +102,9 @@ final class CTACanvasViewController: UIViewController {
     
     // MARK: - Actions
         
-        func deleteItem(sender: AnyObject) {
+    func deleteItem(sender: AnyObject) {
             delegate?.canvasViewControllerWillDeleted(self)
-        }
+    }
     
     func tap(sender: UITapGestureRecognizer) {
         
@@ -135,173 +124,9 @@ final class CTACanvasViewController: UIViewController {
             }
         }
         
-        collectionView.selectItemAtIndexPath(index, animated: false, scrollPosition: .None)
-        delegate?.canvasViewController(self, didSelectedIndexPath: index)
-        
-        let context = UICollectionViewFlowLayoutInvalidationContext()
-        context.invalidateItemsAtIndexPaths([index])
-        collectionView.collectionViewLayout.invalidateLayoutWithContext(context)
+        selectAt(index)
     }
-    
-    //    var selCotainerVM: ContainerVMProtocol?
-    //    var beginPosition: CGPoint!
-    //    var selectedIndexPath: NSIndexPath!
-    //    func pan(sender: UIPanGestureRecognizer) {
-    //
-    //        guard let selectedIndexPaths = collectionView.indexPathsForSelectedItems() where selectedIndexPaths.count > 0  else {
-    //            return
-    //        }
-    //
-    //        let translation = sender.translationInView(self.view)
-    //
-    //        switch sender.state {
-    //        case .Began:
-    //            selectedIndexPath = selectedIndexPaths.first!
-    //            selCotainerVM = containerAt(selectedIndexPath)
-    //            beginPosition = CGPoint(x: selCotainerVM!.position.x, y: selCotainerVM!.position.y)
-    //
-    //        case .Changed:
-    //
-    //            let nextPosition = CGPoint(x: beginPosition.x + translation.x, y: beginPosition.y + translation.y)
-    //            selCotainerVM!.position = (Double(nextPosition.x), Double(nextPosition.y))
-    //
-    //            let cell = collectionView.cellForItemAtIndexPath(selectedIndexPath)
-    //            if cell == nil {
-    //
-    //                let frame: CGRect
-    //                if fabs(selCotainerVM!.radius) > 0 {
-    //
-    //                    let size = CGSize(width: selCotainerVM!.size.width, height: selCotainerVM!.size.height)
-    //                    let rect = CGRect(origin: CGPoint.zero, size: size)
-    //                    let r = CGRectApplyAffineTransform(rect, CGAffineTransformMakeRotation(-(CGFloat(selCotainerVM!.radius))))
-    //                    frame = CGRect(x: nextPosition.x - CGRectGetWidth(r) / 2.0 , y: nextPosition.y - CGRectGetHeight(r) / 2.0, width: CGRectGetWidth(r), height: CGRectGetHeight(r))
-    //                } else {
-    //                    let size = CGSize(width: selCotainerVM!.size.width, height: selCotainerVM!.size.height)
-    //                    let origin = CGPoint(x: nextPosition.x - CGFloat(size.width) / 2.0, y: nextPosition.y - CGFloat(size.height) / 2.0)
-    //                    frame = CGRect(origin: origin, size: size)
-    //                }
-    //
-    //                if CGRectIntersectsRect(collectionView.bounds, frame) {
-    //                    collectionView.reloadItemsAtIndexPaths(selectedIndexPaths)
-    //                    collectionView.selectItemAtIndexPath(selectedIndexPath, animated: false, scrollPosition: .None)
-    //                }
-    //
-    //            } else {
-    //                let context = UICollectionViewFlowLayoutInvalidationContext()
-    //                context.invalidateItemsAtIndexPaths(selectedIndexPaths)
-    //                collectionView.collectionViewLayout.invalidateLayoutWithContext(context)
-    //            }
-    //
-    //        case .Ended:
-    //            ()
-    //        default:
-    //            ()
-    //        }
-    //    }
-    
-    //    var beganRadian: CGFloat = 0.0
-    //    func rotation(sender: UIRotationGestureRecognizer) {
-    //
-    //        guard let selectedIndexPaths = collectionView.indexPathsForSelectedItems() where selectedIndexPaths.count > 0  else {
-    //            return
-    //        }
-    //
-    //        let rotRadian = sender.rotation
-    //
-    //        switch sender.state {
-    //        case .Began:
-    //            selectedIndexPath = selectedIndexPaths.first!
-    //            selCotainerVM = containerAt(selectedIndexPath)
-    //            beganRadian = CGFloat(selCotainerVM!.radius)
-    //
-    //        case .Changed:
-    //            let nextRotation = beganRadian + rotRadian
-    //            selCotainerVM!.radius = Double(nextRotation)
-    //            if let _ = collectionView.cellForItemAtIndexPath(selectedIndexPath) {
-    //                let context = UICollectionViewFlowLayoutInvalidationContext()
-    //                context.invalidateItemsAtIndexPaths(selectedIndexPaths)
-    //                collectionView.collectionViewLayout.invalidateLayoutWithContext(context)
-    //            }
-    //
-    //        case .Ended:
-    //            ()
-    //
-    //        default:
-    //            ()
-    //        }
-    //    }
-    
-    //    var beginScale: CGFloat = 1.0
-    //    func pinch(sender: UIPinchGestureRecognizer) {
-    //
-    //        guard let selectedIndexPaths = collectionView.indexPathsForSelectedItems() where selectedIndexPaths.count > 0  else {
-    //            return
-    //        }
-    //
-    //        let scale = sender.scale
-    //
-    //        switch sender.state {
-    //        case .Began:
-    //            selectedIndexPath = selectedIndexPaths.first!
-    //            selCotainerVM = containerAt(selectedIndexPath)
-    //            beginScale = (selCotainerVM as! TextContainerVMProtocol).textElement.fontScale
-    //
-    //        case .Changed:
-    //            let nextPosition = CGPoint(x: selCotainerVM!.position.x, y: selCotainerVM!.position.y)
-    //            let nextfontSize = beginScale * scale
-    //            let r = (selCotainerVM as! TextContainerVMProtocol).textElement.textResultWithScale(
-    //                nextfontSize,
-    //                constraintSzie: CGSize(width: CGRectGetWidth(collectionView.bounds), height: CGRectGetHeight(collectionView.bounds) * 2))
-    //
-    //            let size = CGSize(width: r.1.width, height: r.1.height)
-    //
-    //            selCotainerVM!.size = (Double(size.width), Double(size.height))
-    //            (selCotainerVM as! TextContainerVMProtocol).textElement.fontScale = nextfontSize
-    //
-    //            let cell = collectionView.cellForItemAtIndexPath(selectedIndexPath)
-    //            if cell == nil {
-    //
-    //                let frame: CGRect
-    //
-    //                if fabs(selCotainerVM!.radius) > 0 {
-    //
-    ////                    let size = CGSize(width: selCotainerVM!.size.width, height: selCotainerVM!.size.height)
-    //                    let rect = CGRect(origin: CGPoint.zero, size: size)
-    //                    let r = CGRectApplyAffineTransform(rect, CGAffineTransformMakeRotation(-(CGFloat(selCotainerVM!.radius))))
-    //                    frame = CGRect(x: nextPosition.x - CGRectGetWidth(r) / 2.0 , y: nextPosition.y - CGRectGetHeight(r) / 2.0, width: CGRectGetWidth(r), height: CGRectGetHeight(r))
-    //                } else {
-    //                    let size = CGSize(width: selCotainerVM!.size.width, height: selCotainerVM!.size.height)
-    //                    let origin = CGPoint(x: nextPosition.x - CGFloat(size.width) / 2.0, y: nextPosition.y - CGFloat(size.height) / 2.0)
-    //                    frame = CGRect(origin: origin, size: size)
-    //                }
-    //
-    //                if CGRectIntersectsRect(collectionView.bounds, frame) {
-    //                    collectionView.reloadItemsAtIndexPaths(selectedIndexPaths)
-    //                    collectionView.selectItemAtIndexPath(selectedIndexPath, animated: false, scrollPosition: .None)
-    //                }
-    //
-    //            } else {
-    //                let context = UICollectionViewFlowLayoutInvalidationContext()
-    //                context.invalidateItemsAtIndexPaths(selectedIndexPaths)
-    //                collectionView.collectionViewLayout.invalidateLayoutWithContext(context)
-    //                (cell as! CTACanvasTextCell).textView.attributedText = (selCotainerVM as! TextContainerVMProtocol).textElement.attributeString
-    //            }
-    //
-    ////            selContainerView.bounds.size = r.1
-    ////            selContainerView.updateContents(r.3, contentSize: r.2.size, drawInsets: r.0)
-    //
-    //        case .Ended:
-    //            ()
-    ////            let nextfontSize = beginScale * scale
-    ////            let size = selContainerView.bounds.size
-    ////            selContainer.size = (Double(size.width), Double(size.height))
-    ////            selContainer.textElement.fontScale = nextfontSize
-    //
-    //        default:
-    //            ()
-    //        }
-    //    }
-    
+
     func insertAt(indexPath: NSIndexPath) {
         collectionView.insertItemsAtIndexPaths([indexPath])
 //        collectionView.reloadSections(NSIndexSet(index: 0))
@@ -314,6 +139,16 @@ final class CTACanvasViewController: UIViewController {
     
     func reloadSection() {
         collectionView.reloadSections(NSIndexSet(index: 0))
+    }
+    
+    func selectAt(indexPath: NSIndexPath) {
+        
+        collectionView.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+        delegate?.canvasViewController(self, didSelectedIndexPath: indexPath)
+        
+        let context = UICollectionViewFlowLayoutInvalidationContext()
+        context.invalidateItemsAtIndexPaths([indexPath])
+        collectionView.collectionViewLayout.invalidateLayoutWithContext(context)
     }
     
     

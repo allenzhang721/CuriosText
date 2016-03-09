@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/EditViewController.swift"
-            timestampString = "479122429.688509"
+            timestampString = "479198418.627276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
             landmarkName = "viewDidLoad()"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/CTACanvasViewController.swift"
-            timestampString = "479133116.194703"
+            timestampString = "479198418.627276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "307"
-            endingLineNumber = "307"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
             landmarkName = "insertAt(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/CTACanvasViewController.swift"
-            timestampString = "479133116.194703"
+            timestampString = "479198418.627276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
             landmarkName = "tap(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/EditViewController.swift"
-            timestampString = "479192890.244196"
+            timestampString = "479199200.743491"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "593"
-            endingLineNumber = "593"
+            startingLineNumber = "632"
+            endingLineNumber = "632"
             landmarkName = "canvasViewControllerWillDeleted(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/EditViewController.swift"
-            timestampString = "479192890.244196"
+            timestampString = "479199200.743491"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "351"
-            endingLineNumber = "351"
+            startingLineNumber = "390"
+            endingLineNumber = "390"
             landmarkName = "showPublishViewController()"
             landmarkType = "5">
          </BreakpointContent>

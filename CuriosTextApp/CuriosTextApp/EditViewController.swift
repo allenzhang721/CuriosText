@@ -29,6 +29,7 @@ class EditViewController: UIViewController {
     private var selectedIndexPath: NSIndexPath?
     var document: CTADocument!
     var tempValues = TempValues()
+    var isFirstAppear: Bool = true
     
     weak var delegate: CTAEditViewControllerDelegate?
     
@@ -68,6 +69,14 @@ class EditViewController: UIViewController {
      
         addChildViewController(cameraVC)
         view.addSubview(cameraVC.view)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        if isFirstAppear {
+            isFirstAppear = false
+            
+            
+        }
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -167,6 +176,19 @@ extension EditViewController {
 // MARK: - Logics
 extension EditViewController {
     
+    func selectBottomContainer() {
+        if page.containers.count > 0 {
+            canvasViewController.selectAt(NSIndexPath(forItem: 0, inSection: 0))
+        }
+    }
+    
+    func selectTopContainer() {
+        let count = page.containers.count
+        if count > 0 {
+            canvasViewController.selectAt(NSIndexPath(forItem: count - 1, inSection: 0))
+        }
+    }
+    
     func insertImage(s: UIImage, size: CGSize) {
         
         let ID = CTAIDGenerator.fileID()
@@ -180,8 +202,12 @@ extension EditViewController {
         
 //        CATransaction.begin()
 //        CATransaction.setDisableActions(true)
-        dispatch_async(dispatch_get_main_queue()) {
-            self.canvasViewController.reloadSection()
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            if let strongSelf = self {
+                strongSelf.canvasViewController.reloadSection()
+                strongSelf.selectBottomContainer()
+            }
+            
 //           self.canvasViewController.insertAt(NSIndexPath(forItem: 0, inSection: 0))
             
         }
@@ -215,9 +241,13 @@ extension EditViewController {
         
         page.containers.forEach{debug_print($0.type, context: defaultContext)}
         
-//        dispatch_async(dispatch_get_main_queue()) {
-           self.canvasViewController.insertAt(NSIndexPath(forItem: count - 1, inSection: 0))
-//        }
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            if let strongSelf = self {
+                strongSelf.canvasViewController.insertAt(NSIndexPath(forItem: count - 1, inSection: 0))
+                strongSelf.selectTopContainer()
+                strongSelf.showTopContainerModifyViewController()
+            }
+        }
     }
     
     func move(container: ContainerVMProtocol, atIndexPath indexPath: NSIndexPath, by sender: UIPanGestureRecognizer) {
@@ -287,6 +317,15 @@ extension EditViewController {
         default:
             ()
         }
+    }
+    
+    func showTopContainerModifyViewController() {
+        guard let topContainer = page.containerVMs.last else {
+            return
+        }
+        
+        let indexPath = NSIndexPath(forItem: page.containerVMs.count - 1, inSection: 0)
+        showModifyViewControllerWith(topContainer, atIndexPath: indexPath)
     }
     
     func showModifyViewControllerWith(container: ContainerVMProtocol, atIndexPath indexPath: NSIndexPath) {
