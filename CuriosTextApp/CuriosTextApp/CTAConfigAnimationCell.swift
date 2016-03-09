@@ -42,6 +42,7 @@ class CTAConfigAnimationCell: CTAConfigCell {
         lineLayout.scrollDirection = .Horizontal
         collectionView = UICollectionView(frame: bounds, collectionViewLayout: lineLayout)
         collectionView.dataSource = self
+//        collectionView.delegate = self
         collectionView.registerClass(CTAAnimationNameCell.self, forCellWithReuseIdentifier: "AnimatoinCell")
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
@@ -73,6 +74,16 @@ extension CTAConfigAnimationCell: UICollectionViewDataSource {
         
         return cell
     }
+}
+
+extension CTAConfigAnimationCell: UICollectionViewDelegate {
+    
+//    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+//        
+//        if let acenter = collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(indexPath)?.center {
+//            collectionView.setContentOffset(CGPoint(x: acenter.x - collectionView.bounds.width / 2.0, y: 0), animated: true)
+//        }
+//    }
 }
 
 extension CTAConfigAnimationCell: LineFlowLayoutDelegate {

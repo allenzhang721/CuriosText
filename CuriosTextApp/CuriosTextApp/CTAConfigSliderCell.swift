@@ -11,8 +11,19 @@ import UIKit
 class CTAConfigSliderCell: CTAConfigCell {
 
     var slider: CTASliderView!
+    let hudLabel = CTAHUDLabel()
     var beganValueBlock: (() -> CGFloat)?
     var valueDidChangedBlock: ((CGFloat) -> ())?
+    
+    var text: String {
+        get {
+            return hudLabel.text ?? ""
+        }
+        
+        set {
+            hudLabel.text = newValue
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,26 +43,35 @@ class CTAConfigSliderCell: CTAConfigCell {
         slider.minumValue = 0
         
         contentView.addSubview(slider)
+        
+        hudLabel.textAlignment = .Center
+        hudLabel.textColor = CTAStyleKit.selectedColor
+        contentView.addSubview(hudLabel)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
         slider.frame = bounds
+        hudLabel.frame = CGRect(x: bounds.maxX - 60, y: 0, width: 60, height: bounds.height)
     }
     
     func sliderValueChanged(sender: CTASliderView) {
-        valueDidChangedBlock?(sender.value)
+        
+        let realValue = min(slider.maxiumValue, max(sender.value, slider.minumValue))
+        valueDidChangedBlock?(realValue)
+        text = "\(CGFloat(Int(realValue * 10)) / 10) s"
     }
 }
 
 extension CTAConfigSliderCell: CTACellDisplayProtocol {
     
     func willBeDisplayed() {
-        let value = beganValueBlock?() ?? 0
-        
+        let value = max(0, beganValueBlock?() ?? 0)
+        let realValue = min(slider.maxiumValue, max(value, slider.minumValue))
         debug_print("animation value = \(value)", context: aniContext)
-        slider.value = value
+        slider.value = realValue
+        text = "\(CGFloat(Int(realValue * 10)) / 10) s"
     }
     
     func didEndDisplayed() {

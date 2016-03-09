@@ -59,6 +59,7 @@ class CTATabView: UIControl {
         tabCollectionView.showsVerticalScrollIndicator = false
         tabCollectionView.registerClass(CTALabelCollectionViewCell.self, forCellWithReuseIdentifier: "LabelCell")
         tabCollectionView.dataSource = self
+        tabCollectionView.delegate = self
         addSubview(tabCollectionView)
         
         let selectorLayout = CTASelectorsFlowLayout()
@@ -215,6 +216,13 @@ extension CTATabView: CTAConfigAnimationCellDelegate {
 }
 
 extension CTATabView: UICollectionViewDelegate {
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        if let acenter = collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(indexPath)?.center {
+            collectionView.setContentOffset(CGPoint(x: acenter.x - collectionView.bounds.width / 2.0, y: 0), animated: true)
+        }
+    }
     
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         
