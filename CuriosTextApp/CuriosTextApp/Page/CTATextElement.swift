@@ -563,22 +563,22 @@ extension CTATextElement: TextModifiable {
     
     func attributeStringWithFontScale(scale: CGFloat) -> NSAttributedString {
         
-        return NSAttributedString(string: text, attributes: attributes.textAttributesWithFontScale(scale))
+        return NSAttributedString(string: texts, attributes: attributes.textAttributesWithFontScale(scale))
     }
     
     func attributeStringWithFontFamily(family: String, fontName name: String) -> NSAttributedString {
         
-        return NSAttributedString(string: text, attributes: attributes.textAttributesWithFontScaleWithFontFamily(family, fontName: name))
+        return NSAttributedString(string: texts, attributes: attributes.textAttributesWithFontScaleWithFontFamily(family, fontName: name))
     }
     
     func attributeStringWithAlignment(alignment: NSTextAlignment) -> NSAttributedString {
         
-        return NSAttributedString(string: text, attributes: attributes.textAttributesWithTextAlignment(alignment))
+        return NSAttributedString(string: texts, attributes: attributes.textAttributesWithTextAlignment(alignment))
     }
     
     func attributeStringWithLineSpacing(lineSpacing: CGFloat, textSpacing: CGFloat) -> NSAttributedString {
         
-        return NSAttributedString(string: text, attributes: attributes.textAttributesWithLineSpacing(lineSpacing, textSpacing: textSpacing))
+        return NSAttributedString(string: texts, attributes: attributes.textAttributesWithLineSpacing(lineSpacing, textSpacing: textSpacing))
     }
     
 }
