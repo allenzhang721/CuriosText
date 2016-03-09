@@ -420,7 +420,7 @@ extension EditViewController {
             switch r {
             case .Success(let image):
                 let publishName = CTAIDGenerator.fileID() + ".jpg"
-                strongSelf.document.storeResource(UIImageJPEGRepresentation(image, 1.0)!, withName: publishName)
+                strongSelf.document.storeResource(compressJPGImage(image), withName: publishName)
                 
                 CTADocumentManager.saveDoucment {[weak self] (success) -> Void in
                     

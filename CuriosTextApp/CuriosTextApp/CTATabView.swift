@@ -122,13 +122,13 @@ extension CTATabView: UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("LabelCell", forIndexPath: indexPath) as! CTALabelCollectionViewCell
             switch indexPath.item {
             case 0:
-                cell.text = "Animation"
+                cell.text = LocalStrings.AnimationType.description
                 
             case 1:
-                cell.text = "Duration"
+                cell.text = LocalStrings.AnimationDuration.description
                 
             case 2:
-                cell.text = "Delay"
+                cell.text = LocalStrings.AnimationDelay.description
             default:
                 ()
             }

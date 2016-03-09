@@ -13,14 +13,14 @@ import pop
 enum CTAAnimationName: Int, CustomStringConvertible {
     
     case None
-    case MoveIn, FlyIn
-    case MoveOut, FlyOut
+    case MoveIn //FlyIn
+    case MoveOut //FlyOut
     
     func shouldVisalbeBeforeBegan() -> Bool {
         switch self {
-        case .MoveIn, .FlyIn:
+        case .MoveIn:
             return false
-        case .MoveOut, .FlyOut:
+        case .MoveOut:
             return true
         case .None:
             return true
@@ -29,9 +29,9 @@ enum CTAAnimationName: Int, CustomStringConvertible {
     
     func shouldVisableAfterEnd() -> Bool {
         switch self {
-        case .MoveIn, .FlyIn:
+        case .MoveIn:
             return true
-        case .MoveOut, .FlyOut:
+        case .MoveOut:
             return false
         case .None:
             return true
@@ -39,7 +39,7 @@ enum CTAAnimationName: Int, CustomStringConvertible {
     }
     
     static var names: [CTAAnimationName] {
-        return [.None, .MoveIn, .FlyIn, .MoveOut, .FlyOut]
+        return [.None, .MoveIn, .MoveOut]
     }
     
     var description: String {
@@ -47,13 +47,13 @@ enum CTAAnimationName: Int, CustomStringConvertible {
         case .None:
             return "None"
         case .MoveIn:
-            return "Move In"
-        case .FlyIn:
-            return "Fly In"
+            return LocalStrings.MoveIn.description
+//        case .FlyIn:
+//            return "Fly In"
         case .MoveOut:
-            return "Move Out"
-        case .FlyOut:
-            return "Fly Out"
+            return LocalStrings.MoveOut.description
+//        case .FlyOut:
+//            return "Fly Out"
         }
     }
 }
@@ -115,12 +115,12 @@ extension CTAAnimationBinder {
         switch name {
         case .MoveIn:
             moveIn(view, index: index)
-        case .FlyIn:
-            flyIn(view, index: index)
+//        case .FlyIn:
+//            flyIn(view, index: index)
         case .MoveOut:
             moveOut(view, index: index)
-        case .FlyOut:
-            flyOut(view, index: index)
+//        case .FlyOut:
+//            flyOut(view, index: index)
         case .None:
             ()
         }

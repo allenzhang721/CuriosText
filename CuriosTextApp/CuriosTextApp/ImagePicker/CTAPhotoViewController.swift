@@ -36,7 +36,7 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.tabBarItem = UITabBarItem(title: "Photo", image: ImagePickerResource.imageOfPhotoLibrary, selectedImage: nil)
+        self.tabBarItem = UITabBarItem(title: LocalStrings.Photo.description, image: ImagePickerResource.imageOfPhotoLibrary, selectedImage: nil)
     }
     
 //    private var thumbnailSize

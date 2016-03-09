@@ -33,14 +33,14 @@ class CTABarItemsFactory {
             selectedImage: CTAStyleKit.imageOfSizeBarItemSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: "Size"),
+            title: LocalStrings.Size.description),
         
         CTABarItem(
             normalImage: CTAStyleKit.imageOfRotationBarItemNormal,
             selectedImage: CTAStyleKit.imageOfRotationBarItemSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: "Rotation")
+            title: LocalStrings.Rotation.description)
     ]
     
     static let textSelectorItems = [
@@ -50,49 +50,49 @@ class CTABarItemsFactory {
             selectedImage: CTAStyleKit.imageOfFontBarItemSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: "Font"),
+            title: LocalStrings.Font.description),
         
         CTABarItem(
             normalImage: CTAStyleKit.imageOfSizeBarItemNormal,
             selectedImage: CTAStyleKit.imageOfSizeBarItemSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: "Size"),
+            title: LocalStrings.Size.description),
         
         CTABarItem(
             normalImage: CTAStyleKit.imageOfRotationBarItemNormal,
             selectedImage: CTAStyleKit.imageOfRotationBarItemSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: "Rotation"),
+            title: LocalStrings.Rotation.description),
         
         CTABarItem(
             normalImage: CTAStyleKit.imageOfSpacingBarItemNormal,
             selectedImage: CTAStyleKit.imageOfSpacingBarItemSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: "Spacing"),
+            title: LocalStrings.Spacing.description),
         
         CTABarItem(
             normalImage: CTAStyleKit.imageOfAlignmentBarItemNormal,
             selectedImage: CTAStyleKit.imageOfAlignmentBarItemSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: "Alignment"),
+            title: LocalStrings.Alignment.description),
         
         CTABarItem(
             normalImage: CTAStyleKit.imageOfColorBarItemNormal,
             selectedImage: CTAStyleKit.imageOfColorBarItemSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: "Color"),
+            title: LocalStrings.Color.description),
         
         CTABarItem(
             normalImage: CTAStyleKit.imageOfAnimationBarItemNormal,
             selectedImage: CTAStyleKit.imageOfAnimationBarItemSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: "Animation")
+            title: LocalStrings.Animation.description)
     
     ]
 }
