@@ -107,7 +107,6 @@ class EditViewController: UIViewController {
     
     // MARK: - Style
     func setup() {
-        addView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.1)
         addView.didClickHandler = {[weak self] in
             
             if let strongSelf = self {

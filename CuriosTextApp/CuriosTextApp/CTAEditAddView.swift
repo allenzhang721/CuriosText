@@ -32,13 +32,18 @@ class CTAEditAddView: UIView {
         addButton.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
         addButton.topAnchor.constraintEqualToAnchor(topAnchor).active = true
         
-        addButton.setImage(CTAStyleKit.imageOfAdd, forState: .Normal)
+        addButton.setImage(CTAStyleKit.imageOfAddInEditor, forState: .Normal)
         addButton.addTarget(self, action: "addClick:", forControlEvents: .TouchUpInside)
     }
     
     func addClick(sender: AnyObject) {
         
         didClickHandler?()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        backgroundColor = UIColor.init(patternImage: CTAStyleKit.imageOfGradientInEditor(frame: bounds))
     }
 
 }
