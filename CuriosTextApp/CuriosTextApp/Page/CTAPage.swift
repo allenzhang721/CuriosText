@@ -107,12 +107,21 @@ final class CTAPage:NSObject, NSCoding {
 extension CTAPage {
     
     func removeLastImageContainer() {
-//        dispatch_sync(containerQueue) {
             if let container = self.containers.first as? ImageContainerVMProtocol where container.type == .Image {
                 let container = self.containers.removeAtIndex(0)
                 let anis = self.animatoins.filter{container.iD != $0.targetiD}
                 self.animatoins = anis
             }
-        }
-//    }
+    }
+    
+    func cleanEmptyContainers() {
+        
+        let c = containers.filter{ $0.type != .Text ? true : !($0.textElement!.texts.isEmpty) }
+        let ids = c.map{$0.iD}
+        let a = animatoins.filter{ids.contains($0.targetiD)}
+        
+        containers = c
+        animatoins = a
+        
+    }
 }

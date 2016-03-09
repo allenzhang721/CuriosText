@@ -345,6 +345,8 @@ extension EditViewController {
         
         let publishViewController = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("PublishViewController") as! CTAPublishViewController
         
+        
+        
         publishViewController.page = page
 //        publishViewController.publishID = document.documentName
         publishViewController.baseURL = document.imagePath

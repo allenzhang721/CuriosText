@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'AFB16252126B639889A53C71'
+               BlueprintIdentifier = '245E0C39EAEB3E2483830773'
                BlueprintName = 'Pods-CuriosTextApp'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Pods_CuriosTextApp.framework'>
