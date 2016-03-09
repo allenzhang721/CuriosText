@@ -40,28 +40,59 @@ protocol CanvasViewControllerDataSource: class {
 
 final class CTACanvasViewController: UIViewController {
     
+    struct OverlayAttributes {
+        let postioin: CGPoint
+        let size: CGSize
+        let transform: CGAffineTransform
+    }
+    
     weak var delegate: CanvasViewControllerDelegate?
     weak var dataSource: CanvasViewControllerDataSource!
     private var collectionView: UICollectionView!
     var scale: CGFloat = 1.0
     var document: CTADocument?
     
+    let selectedOverlayLayer = CAShapeLayer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setup()
     }
     
     func setup() {
         
+        setupViews()
+        setupStyles()
+        setupGestures()
+        setupRegisterNotifiction()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        let defaultSize = 414.0
+        collectionView.bounds.size = CGSize(width: defaultSize, height: defaultSize)
+        collectionView.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY)
+    }
+    
+    override func canBecomeFirstResponder() -> Bool {
+        return true
+    }
+    
+    deinit {
+        removeNotification()
+    }
+}
+
+// MARK: - Setup
+extension CTACanvasViewController {
+    
+    func setupViews() {
         view.backgroundColor = CTAStyleKit.ediorBackgroundColor
         
         let canvasLayout = CanvasLayout()
-        
         let defaultSide: CGFloat = 414.0
         collectionView = UICollectionView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: defaultSide, height: defaultSide)), collectionViewLayout: canvasLayout)
         scale = min(view.bounds.width / defaultSide, view.bounds.height / defaultSide)
-        
         collectionView.transform = CGAffineTransformMakeScale(scale, scale)
         
         collectionView.dataSource = self
@@ -71,88 +102,198 @@ final class CTACanvasViewController: UIViewController {
         collectionView.registerClass(CTACanvasTextCell.self, forCellWithReuseIdentifier: "TextCell")
         collectionView.registerClass(CTACanvasImageCell.self, forCellWithReuseIdentifier: "ImageCell")
         view.layer.addSublayer(collectionView.layer)
-        //        view.addSubview(collectionView)
         
+        // overLay
+        view.layer.addSublayer(selectedOverlayLayer)
+    }
+    
+    func setupGestures() {
         let tap = UITapGestureRecognizer(target: self, action: "tap:")
         view.addGestureRecognizer(tap)
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        collectionView.bounds.size = CGSize(width: 414.0, height: 414.0)
-        collectionView.center = CGPoint(x: view.bounds.width / 2.0, y: view.bounds.height / 2.0)
+    func setupStyles() {
+        selectedOverlayLayer.fillColor = UIColor.clearColor().CGColor
+        selectedOverlayLayer.strokeColor = UIColor.yellowColor().CGColor
     }
     
-    
-    override func canBecomeFirstResponder() -> Bool {
-        return true
+    func setupRegisterNotifiction() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "menuWillHidden:", name:
+            UIMenuControllerWillHideMenuNotification, object: nil)
     }
     
-    func showMenu(indexPath: NSIndexPath) {
-        
-        self.becomeFirstResponder()
-        let cell = collectionView.cellForItemAtIndexPath(indexPath)!
-        let deleteMenu = UIMenuItem(title: "删除", action: "deleteItem:")
-        UIMenuController.sharedMenuController().menuItems = [deleteMenu]
-//        let point = CGPointApplyAffineTransform(cell.center, CGAffineTransformMakeScale(scale, scale))
-        let point = cell.center
-        UIMenuController.sharedMenuController().setTargetRect(CGRect(origin: point, size: CGSize.zero), inView: collectionView)
-        UIMenuController.sharedMenuController().setMenuVisible(true, animated: true)
-        
+    func removeNotification() {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
-    
-    
-    // MARK: - Actions
-        
-    func deleteItem(sender: AnyObject) {
-            delegate?.canvasViewControllerWillDeleted(self)
-    }
-    
+
+}
+
+
+
+
+// MARK: - Actions
+extension CTACanvasViewController {
     func tap(sender: UITapGestureRecognizer) {
-        
         let location = sender.locationInView(collectionView)
-        guard let index = indexPathAtPoint(location) else {
-            return
-        }
+        guard let index = indexPathAtPoint(location) else { return }
         
         if index.item > 0 {
-            showMenu(index)
+            
+            let attributes = collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(index)!
+            let size = attributes.size
+            let position = collectionView.convertPoint(attributes.center, toView: view)
+            let transform = attributes.transform
+            
+            let attr = OverlayAttributes(postioin: position, size: size, transform: transform)
+            
+            menuShowAt(index)
+            overlayShowWith(attr)
         }
         
-        
         if let selectedIndexPath = collectionView.indexPathsForSelectedItems()?.first {
-            guard index.compare(selectedIndexPath) != .OrderedSame else {
-                return
-            }
+            guard index.compare(selectedIndexPath) != .OrderedSame else { return }
         }
         
         selectAt(index)
     }
+}
 
+// MARK: - Logic
+extension CTACanvasViewController {
+    
+    func menuShowAt(indexPath: NSIndexPath) {
+        self.becomeFirstResponder()
+        let cell = collectionView.cellForItemAtIndexPath(indexPath)!
+        let deleteMenu = UIMenuItem(title: "删除", action: "deleteItem:")
+        UIMenuController.sharedMenuController().menuItems = [deleteMenu]
+        let point = cell.center
+        UIMenuController.sharedMenuController().setTargetRect(CGRect(origin: point, size: CGSize.zero), inView: collectionView)
+        UIMenuController.sharedMenuController().setMenuVisible(true, animated: true)
+    }
+    
+    func menuWillHidden(sender: NSNotification) {
+        overlayHidden()
+    }
+    
+    func overlayShowWith(attribute: OverlayAttributes) {
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        selectedOverlayLayer.opacity = 0.0
+        let path = UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: attribute.size))
+        selectedOverlayLayer.path = path.CGPath
+        
+        selectedOverlayLayer.bounds.size = attribute.size
+        selectedOverlayLayer.position = attribute.postioin
+        selectedOverlayLayer.setAffineTransform(attribute.transform)
+        
+        
+        CATransaction.commit()
+        
+        UIView.animateWithDuration(0.3) { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.selectedOverlayLayer.opacity = 1.0
+        }
+    }
+    
+    func overlayHidden() {
+        UIView.animateWithDuration(0.3) { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.selectedOverlayLayer.opacity = 0.0
+        }
+    }
+    
+    // MARK: - Items
+    func indexPathAtPoint(point: CGPoint) -> NSIndexPath? {
+        let indexPaths = quickSort(collectionView.indexPathsForVisibleItems()) {$0.item > $1.item}
+        
+        guard indexPaths.count > 0 else { return nil }
+        
+        for indexPath in indexPaths {
+            let cell = collectionView.cellForItemAtIndexPath(indexPath)!
+            let onCellPoint = collectionView.convertPoint(point, toView: cell)
+            if cell.pointInside(onCellPoint, withEvent: nil) {
+                return indexPath
+            }
+        }
+        return nil
+    }
+    
+    func quickSort<T: NSIndexPath>(items: [T], @noescape by compare: (T, T) -> Bool) -> [T] {
+        guard items.count > 1 else {
+            return items
+        }
+        var items = items
+        
+        func partition(inout items: [T], left: Int, right: Int, @noescape by compare: (T, T) -> Bool) -> Int {
+            let random = left + Int(arc4random_uniform(UInt32(right-left)))
+            let key = items[random]
+            (items[left], items[random]) = (items[random], items[left])
+            var j = left
+            for i in (left+1)...right {
+                if compare(items[i], key) {
+                    j+=1
+                    if i != j {
+                        (items[i], items[j]) = (items[j], items[i])
+                    }
+                }
+            }
+            (items[left], items[j]) = (items[j], items[left])
+            return j
+        }
+        func quickSortIter(inout items: [T], left: Int, right: Int, @noescape by compare: (T, T) -> Bool) {
+            if left < right {
+                let middle = partition(&items, left: left, right: right, by: compare)
+                quickSortIter(&items, left: left, right: middle-1, by: compare)
+                quickSortIter(&items, left: middle+1, right: right, by: compare)
+            }
+        }
+        
+        quickSortIter(&items, left: 0, right: items.count-1, by: compare)
+        return items
+    }
+    
+    func deleteItem(sender: AnyObject) {
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.canvasViewControllerWillDeleted(strongSelf)
+        }
+        
+    }
+    
     func insertAt(indexPath: NSIndexPath) {
-        collectionView.insertItemsAtIndexPaths([indexPath])
-//        collectionView.reloadSections(NSIndexSet(index: 0))
-//        collectionView.reloadItemsAtIndexPaths([indexPath])
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.collectionView.insertItemsAtIndexPaths([indexPath])
+        }
     }
     
     func removeAt(indexPath: NSIndexPath) {
-        collectionView.deleteItemsAtIndexPaths([indexPath])
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.collectionView.deleteItemsAtIndexPaths([indexPath])
+        }
+        
     }
     
     func reloadSection() {
-        collectionView.reloadSections(NSIndexSet(index: 0))
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.collectionView.reloadSections(NSIndexSet(index: 0))
+        }
     }
     
     func selectAt(indexPath: NSIndexPath) {
-        
-        collectionView.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: .None)
-        delegate?.canvasViewController(self, didSelectedIndexPath: indexPath)
-        
-        let context = UICollectionViewFlowLayoutInvalidationContext()
-        context.invalidateItemsAtIndexPaths([indexPath])
-        collectionView.collectionViewLayout.invalidateLayoutWithContext(context)
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            strongSelf.collectionView.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+            strongSelf.delegate?.canvasViewController(strongSelf, didSelectedIndexPath: indexPath)
+            
+            let context = UICollectionViewFlowLayoutInvalidationContext()
+            context.invalidateItemsAtIndexPaths([indexPath])
+            strongSelf.collectionView.collectionViewLayout.invalidateLayoutWithContext(context)
+        }
     }
-    
     
     func updateAt(indexPath: NSIndexPath, updateContents: Bool = false) {
         let cell = collectionView.cellForItemAtIndexPath(indexPath)
@@ -196,72 +337,14 @@ final class CTACanvasViewController: UIViewController {
                 default:
                     ()
                 }
-                
-//                guard let cell = cell as? CTACanvasTextCell, let container = container as? TextContainerVMProtocol else {
-//                    return
-//                }
             }
         }
-    }
-    
-    func indexPathAtPoint(point: CGPoint) -> NSIndexPath? {
-        
-        let indexPaths = quickSort(collectionView.indexPathsForVisibleItems()) {$0.item > $1.item}
-        
-        guard indexPaths.count > 0 else {
-            return nil
-        }
-            
-            debug_print(indexPaths, context: defaultContext)
-            
-            for indexPath in indexPaths {
-                
-                let cell = collectionView.cellForItemAtIndexPath(indexPath)!
-                let onCellPoint = collectionView.convertPoint(point, toView: cell)
-                
-                if cell.pointInside(onCellPoint, withEvent: nil) {
-                    
-                    return indexPath
-                }
-            }
-        
-        return nil
     }
 }
 
-public func quickSort<T: NSIndexPath>(items: [T], @noescape by compare: (T, T) -> Bool) -> [T] {
-    guard items.count > 1 else {
-        return items
-    }
-    var items = items
-    
-    func partition(inout items: [T], left: Int, right: Int, @noescape by compare: (T, T) -> Bool) -> Int {
-        let random = left + Int(arc4random_uniform(UInt32(right-left)))
-        let key = items[random]
-        (items[left], items[random]) = (items[random], items[left])
-        var j = left
-        for i in (left+1)...right {
-            if compare(items[i], key) {
-                j+=1
-                if i != j {
-                    (items[i], items[j]) = (items[j], items[i])
-                }
-            }
-        }
-        (items[left], items[j]) = (items[j], items[left])
-        return j
-    }
-    func quickSortIter(inout items: [T], left: Int, right: Int, @noescape by compare: (T, T) -> Bool) {
-        if left < right {
-            let middle = partition(&items, left: left, right: right, by: compare)
-            quickSortIter(&items, left: left, right: middle-1, by: compare)
-            quickSortIter(&items, left: middle+1, right: right, by: compare)
-        }
-    }
-    
-    quickSortIter(&items, left: 0, right: items.count-1, by: compare)
-    return items
-}
+
+
+
 
 // MARK: - UICollectionViewDataSource and Delegate
 extension CTACanvasViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -293,22 +376,6 @@ extension CTACanvasViewController: UICollectionViewDelegate, UICollectionViewDat
         default:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
             return cell
-        }
-    }
-    
-    // MARK: - Menu 
-    
-    func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        
-        return true
-    }
-    
-    func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-        
-        if action != "deleteItem:" {
-            return false
-        } else {
-            return true
         }
     }
 }
