@@ -135,7 +135,6 @@
 		2C82FF571C437F58001D927A /* CTASelectorAligmentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82FF561C437F58001D927A /* CTASelectorAligmentsCell.swift */; };
 		2C88A3731C50EBE700C6D687 /* CTAPreviewCanvasController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88A3721C50EBE700C6D687 /* CTAPreviewCanvasController.swift */; };
 		2C88A3751C51F0BA00C6D687 /* CTAAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88A3741C51F0BA00C6D687 /* CTAAnimationController.swift */; };
-		2C88A3771C5212F900C6D687 /* CTAAnimationPlayNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88A3761C5212F900C6D687 /* CTAAnimationPlayNode.swift */; };
 		2C8A84C51C7EEC4B0017F81F /* CTACellDisplayProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8A84C41C7EEC4B0017F81F /* CTACellDisplayProtocol.swift */; };
 		2C8DD2111C4A33770035C52D /* CTAUserDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8DD2101C4A33770035C52D /* CTAUserDetailViewController.swift */; };
 		2C8DD2131C4A34230035C52D /* CTAImageControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8DD2121C4A34230035C52D /* CTAImageControllerProtocol.swift */; };
@@ -413,7 +412,6 @@
 		2C82FF561C437F58001D927A /* CTASelectorAligmentsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorAligmentsCell.swift; sourceTree = "<group>"; };
 		2C88A3721C50EBE700C6D687 /* CTAPreviewCanvasController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewCanvasController.swift; sourceTree = "<group>"; };
 		2C88A3741C51F0BA00C6D687 /* CTAAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAnimationController.swift; sourceTree = "<group>"; };
-		2C88A3761C5212F900C6D687 /* CTAAnimationPlayNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAnimationPlayNode.swift; sourceTree = "<group>"; };
 		2C8A84C41C7EEC4B0017F81F /* CTACellDisplayProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACellDisplayProtocol.swift; sourceTree = "<group>"; };
 		2C8DD2101C4A33770035C52D /* CTAUserDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUserDetailViewController.swift; sourceTree = "<group>"; };
 		2C8DD2121C4A34230035C52D /* CTAImageControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAImageControllerProtocol.swift; sourceTree = "<group>"; };
@@ -678,7 +676,6 @@
 				2CD488141C4E1A7300D11CB7 /* CTAPreviewPlay.swift */,
 				2C32BD481C4CA7A100788A97 /* CTAPreviewCanvasView.swift */,
 				2CD08F5C1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift */,
-				2C88A3761C5212F900C6D687 /* CTAAnimationPlayNode.swift */,
 				2C88A3721C50EBE700C6D687 /* CTAPreviewCanvasController.swift */,
 				2C88A3741C51F0BA00C6D687 /* CTAAnimationController.swift */,
 				2CB380B81C4D20E5009A681A /* CTAPreviewCell.swift */,
@@ -1444,7 +1441,6 @@
 				2C88A3751C51F0BA00C6D687 /* CTAAnimationController.swift in Sources */,
 				2C3CAD211C21826800D8DE4B /* CTACanvasLayer.swift in Sources */,
 				665B97861C23CD950082A51C /* CTAPublishModel.swift in Sources */,
-				2C88A3771C5212F900C6D687 /* CTAAnimationPlayNode.swift in Sources */,
 				2C7336DF1C43CFCD00E1D511 /* CTASelectorSpacingCell.swift in Sources */,
 				66A072AB1C1811810046C72F /* CTAPublishRequestAPI.swift in Sources */,
 				2C0404581C3EBBB800A5B017 /* CTATabViewController.swift in Sources */,

@@ -117,11 +117,15 @@ class CTAAnimationController: NSObject {
         
         switch container {
         case let textContainer as TextContainerVMProtocol:
+            
+//            let textElement = CTATextElement(text: text, attributes: attributes)
+//            let textSize = textElement.textSizeWithConstraintSize(CGSize(width: pageWidth, height: pageHeigh * 2))
+            
             let inset = textContainer.inset
             let size = textContainer.size
             let text = textContainer.textElement?.attributeString
             
-            let textView = TextView(frame: CGRect(origin: CGPoint.zero, size: size))
+            let textView = TextView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: size.width + inset.x * 2, height: size.height + inset.y * 2)))
             textView.insets = inset
             textView.attributedText = text
             textView.center = CGPoint(x: container.size.width / 2.0, y: container.size.height / 2.0)

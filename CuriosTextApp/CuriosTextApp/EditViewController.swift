@@ -245,7 +245,7 @@ extension EditViewController {
             if let strongSelf = self {
                 strongSelf.canvasViewController.insertAt(NSIndexPath(forItem: count - 1, inSection: 0))
                 strongSelf.selectTopContainer()
-                strongSelf.showTopContainerModifyViewController()
+//                strongSelf.showTopContainerModifyViewController()
             }
         }
     }

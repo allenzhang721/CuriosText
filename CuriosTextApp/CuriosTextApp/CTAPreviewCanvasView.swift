@@ -195,11 +195,7 @@ class CTAPreviewCanvasView: UIView {
             
         }
         
-        beganCache()
-        
-
-        
-        
+        beganCache() 
     }
 
     // Clear all the views on the cell
