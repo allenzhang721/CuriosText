@@ -84,5 +84,30 @@
 "AlertTitleConnectUs" = "请联系客服";
 "AlertTitleDataNil" = "数据为空";
 
+
+// MARK: - Common
+"Cancel" = "取消";
+"Done" = "完成";
+
+// MARK: - Image Picker
+"Camera" = "相机";
+"Photo" = "相册";
+
 // MARK: - Editor
 "EditTextPlaceHolder" = "双击编辑";
+"Publish" = "发布";
+
+"Size" = "大小";
+"Rotation" = "旋转";
+"Font" = "字体";
+"Spacing" = "间距";
+"Alignment" = "对齐";
+"Color" = "颜色";
+"Animation" = "动画";
+"AnimationType" = "类型";
+"AnimationDuration" = "时间";
+"AnimationDelay" = "延时";
+
+// MARK: - AnimationName
+"MoveIn" = "移入";
+"MoveOut" = "移出";

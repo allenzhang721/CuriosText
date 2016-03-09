@@ -82,5 +82,30 @@
 "AlertTitleConnectUs" = "Please connect service.";
 "AlertTitleDataNil" = "Data null";
 
+
+// MARK: - Common
+"Cancel" = "Cancel";
+"Done" = "Done";
+
+// MARK: - Image Picker
+"Camera" = "Camera";
+"Photo" = "Photo";
+
 // MARK: - Editor
 "EditTextPlaceHolder" = "Double Click to Edit";
+"Publish" = "Publish";
+
+"Size" = "Size";
+"Rotation" = "Rotation";
+"Font" = "Font";
+"Spacing" = "Spacing";
+"Alignment" = "Alignment";
+"Color" = "Color";
+"Animation" = "Animation";
+"AnimationType" = "Type";
+"AnimationDuration" = "Duration";
+"AnimationDelay" = "Delay";
+
+// MARK: - AnimationName
+"MoveIn" = "Move In";
+"MoveOut" = "Move Out";
