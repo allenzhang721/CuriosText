@@ -173,7 +173,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     func setCompleteButtonStyle(){
         let newText = self.userNickNameTextInput.text
         let newStr = NSString(string: newText!)
-        if self.selectedImage != nil && newStr.length > 0{
+        if newStr.length > 0{
             self.completeButton.enabled = true
         }else {
             self.completeButton.enabled = false

@@ -504,94 +504,85 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
     
     func horPanAnimation(xRate:CGFloat){
         if xRate > 0 {
-            if self.previousFullCell.isVisible {
-                if self.preCenter != nil && self.currentCenter != nil{
-                    let xChange = self.currentCenter!.x - self.previousFullCell.center.x
-                    let yChange = self.currentCenter!.y - self.previousFullCell.center.y
-                    
-                    UIView.animateWithDuration(0.3, animations: { () -> Void in
-                        self.changCellsCenter(xChange, yChange: yChange)
-                        if self.previousFullCell.isVisible {
-                            self.previousFullCell.transform = CGAffineTransformMakeScale(1, 1)
-                            self.previousFullCell.alpha = 1
-                        }
-                        if self.currentFullCell.isVisible {
-                            self.currentFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
-                            self.currentFullCell.alpha = 0.2
-                        }
-                        }, completion: { (_) -> Void in
-                            self.horPanComplete(.Previous, isChange: true)
-                    })
-                }
+            if self.preCenter != nil && self.currentCenter != nil{
+                let xChange = self.currentCenter!.x - self.previousFullCell.center.x
+                let yChange = self.currentCenter!.y - self.previousFullCell.center.y
+                
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.changCellsCenter(xChange, yChange: yChange)
+                    if self.previousFullCell.isVisible {
+                        self.previousFullCell.transform = CGAffineTransformMakeScale(1, 1)
+                        self.previousFullCell.alpha = 1
+                    }
+                    if self.currentFullCell.isVisible {
+                        self.currentFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+                        self.currentFullCell.alpha = 0.2
+                    }
+                    }, completion: { (_) -> Void in
+                        self.horPanComplete(.Previous, isChange: true)
+                })
             }
         }else {
-            if self.nextFullCell.isVisible {
-                if self.nextCenter != nil && self.nextCenter != nil{
-                    let xChange = self.currentCenter!.x - self.nextFullCell!.center.x
-                    let yChange = self.currentCenter!.y - self.nextFullCell!.center.y
-                    
-                    UIView.animateWithDuration(0.3, animations: { () -> Void in
-                        self.changCellsCenter(xChange, yChange: yChange)
-                        if self.nextFullCell.isVisible {
-                            self.nextFullCell.transform = CGAffineTransformMakeScale(1, 1)
-                            self.nextFullCell.alpha = 1
-                        }
-                        if self.currentFullCell.isVisible {
-                            self.currentFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
-                            self.currentFullCell.alpha = 0.2
-                        }
-                        }, completion: { (_) -> Void in
-                            self.horPanComplete(.Next, isChange: true)
-                    })
-                    
-                }
+            if self.nextCenter != nil && self.nextCenter != nil{
+                let xChange = self.currentCenter!.x - self.nextFullCell!.center.x
+                let yChange = self.currentCenter!.y - self.nextFullCell!.center.y
+                
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.changCellsCenter(xChange, yChange: yChange)
+                    if self.nextFullCell.isVisible {
+                        self.nextFullCell.transform = CGAffineTransformMakeScale(1, 1)
+                        self.nextFullCell.alpha = 1
+                    }
+                    if self.currentFullCell.isVisible {
+                        self.currentFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+                        self.currentFullCell.alpha = 0.2
+                    }
+                    }, completion: { (_) -> Void in
+                        self.horPanComplete(.Next, isChange: true)
+                })
+                
             }
         }
     }
     
     func horPanResetAnimation(xRate:CGFloat){
         if xRate > 0 {
-            if self.previousFullCell.isVisible {
-                if self.preCenter != nil && self.currentCenter != nil{
-                    let xChange = self.preCenter!.x - self.previousFullCell.center.x
-                    let yChange = self.preCenter!.y - self.previousFullCell.center.y
-                    
-                    UIView.animateWithDuration(0.3, animations: { () -> Void in
-                        self.changCellsCenter(xChange, yChange: yChange)
-                        if self.previousFullCell.isVisible {
-                            self.previousFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
-                            self.previousFullCell.alpha = 0.2
-                        }
-                        if self.currentFullCell.isVisible {
-                            self.currentFullCell.transform = CGAffineTransformMakeScale(1, 1)
-                            self.currentFullCell.alpha = 1
-                        }
-                        }, completion: { (_) -> Void in
-                            self.horPanComplete(.Previous, isChange: false)
-                    })
-                }
+            if self.preCenter != nil && self.currentCenter != nil{
+                let xChange = self.preCenter!.x - self.previousFullCell.center.x
+                let yChange = self.preCenter!.y - self.previousFullCell.center.y
+                
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.changCellsCenter(xChange, yChange: yChange)
+                    if self.previousFullCell.isVisible {
+                        self.previousFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+                        self.previousFullCell.alpha = 0.2
+                    }
+                    if self.currentFullCell.isVisible {
+                        self.currentFullCell.transform = CGAffineTransformMakeScale(1, 1)
+                        self.currentFullCell.alpha = 1
+                    }
+                    }, completion: { (_) -> Void in
+                        self.horPanComplete(.Previous, isChange: false)
+                })
             }
         }else {
-            if self.nextFullCell.isVisible {
-                if self.nextCenter != nil && self.nextCenter != nil{
-                    let xChange = self.nextCenter!.x - self.nextFullCell!.center.x
-                    let yChange = self.nextCenter!.y - self.nextFullCell!.center.y
-                    
-                    UIView.animateWithDuration(0.3, animations: { () -> Void in
-                        self.changCellsCenter(xChange, yChange: yChange)
-                        if self.nextFullCell.isVisible {
-                            self.nextFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
-                            self.nextFullCell.alpha = 0.2
-                        }
-                        if self.currentFullCell.isVisible {
-                            self.currentFullCell.transform = CGAffineTransformMakeScale(1, 1)
-                            self.currentFullCell.alpha = 1
-                        }
-                        }, completion: { (_) -> Void in
-                            self.horPanComplete(.Next, isChange: false)
-                    })
-                    
-                }
+            if self.nextCenter != nil && self.nextCenter != nil{
+                let xChange = self.nextCenter!.x - self.nextFullCell!.center.x
+                let yChange = self.nextCenter!.y - self.nextFullCell!.center.y
+                
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.changCellsCenter(xChange, yChange: yChange)
+                    if self.nextFullCell.isVisible {
+                        self.nextFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+                        self.nextFullCell.alpha = 0.2
+                    }
+                    if self.currentFullCell.isVisible {
+                        self.currentFullCell.transform = CGAffineTransformMakeScale(1, 1)
+                        self.currentFullCell.alpha = 1
+                    }
+                    }, completion: { (_) -> Void in
+                        self.horPanComplete(.Next, isChange: false)
+                })
             }
         }
     }
