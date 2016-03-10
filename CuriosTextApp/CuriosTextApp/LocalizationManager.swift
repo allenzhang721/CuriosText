@@ -10,11 +10,20 @@ import Foundation
 
 enum LocalStrings: CustomStringConvertible {
 
-    case Cancel, Done         // Common
-    case Camera, Photo  // Image Picker
-    case Publish , EditTextPlaceHolder  // Editor
-    case Size, Rotation, Font, Spacing, Alignment, Color, Animation, AnimationType, AnimationDuration, AnimationDelay    // Edior Tab
-    case None, MoveIn, MoveOut //Animations
+    // Common
+    case Cancel, Done, Delete
+    
+    // Image Picker
+    case Camera, Photo
+    
+    // Editor
+    case Publish , EditTextPlaceHolder
+    
+    // Edior Tab
+    case Size, Rotation, Font, Spacing, Alignment, Color, Animation, AnimationType, AnimationDuration, AnimationDelay
+    
+    //Animations
+    case None, MoveIn, MoveOut
     
     var description: String {
         
@@ -24,6 +33,8 @@ enum LocalStrings: CustomStringConvertible {
             return NSLocalizedString("Cancel", comment: "")
         case .Done:
             return NSLocalizedString("Done", comment: "")
+        case .Delete:
+            return NSLocalizedString("Delete", comment: "")
             
             // Image Picker
         case .Camera:

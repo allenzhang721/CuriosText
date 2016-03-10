@@ -86,6 +86,7 @@
 // MARK: - Common
 "Cancel" = "Cancel";
 "Done" = "Done";
+"Delete" = "Delete";
 
 // MARK: - Image Picker
 "Camera" = "Camera";

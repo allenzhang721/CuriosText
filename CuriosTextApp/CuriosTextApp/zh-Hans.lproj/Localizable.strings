@@ -88,6 +88,7 @@
 // MARK: - Common
 "Cancel" = "取消";
 "Done" = "完成";
+"Delete" = "删除";
 
 // MARK: - Image Picker
 "Camera" = "相机";

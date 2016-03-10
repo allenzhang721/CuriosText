@@ -163,10 +163,10 @@ extension CTACanvasViewController {
     
     func menuShowAt(indexPath: NSIndexPath) {
         self.becomeFirstResponder()
-        let cell = collectionView.cellForItemAtIndexPath(indexPath)!
-        let deleteMenu = UIMenuItem(title: "删除", action: "deleteItem:")
+        let atrributes = collectionView.layoutAttributesForItemAtIndexPath(indexPath)!
+        let deleteMenu = UIMenuItem(title: LocalStrings.Delete.description, action: "deleteItem:")
         UIMenuController.sharedMenuController().menuItems = [deleteMenu]
-        let point = cell.center
+        let point = CGPoint(x: atrributes.center.x, y: atrributes.center.y - atrributes.bounds.height / 2.0)
         UIMenuController.sharedMenuController().setTargetRect(CGRect(origin: point, size: CGSize.zero), inView: collectionView)
         UIMenuController.sharedMenuController().setMenuVisible(true, animated: true)
     }
