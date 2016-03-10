@@ -367,7 +367,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.94842630624771118" green="0.95011311769485474" blue="0.96408551931381226" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="fgd-Eu-hft" firstAttribute="centerX" secondItem="bOF-iL-7LA" secondAttribute="centerX" id="BPR-gL-19L"/>
                                     <constraint firstItem="fgd-Eu-hft" firstAttribute="centerY" secondItem="bOF-iL-7LA" secondAttribute="centerY" id="knh-2k-WSF"/>

@@ -227,9 +227,7 @@ extension EditViewController {
         let count = page.containers.count
         dispatch_async(dispatch_get_main_queue()) {
             self.canvasViewController.insertAt(NSIndexPath(forItem: count - 1, inSection: 0))
-            
         }
-        
     }
     
     func addText(s: String = "") {
