@@ -10,6 +10,7 @@ import UIKit
 
 class CTAPhotoThumbnailCollectionViewCell: UICollectionViewCell {
     
+    var assetIdentifier = ""
     @IBOutlet weak var imageView: UIImageView!
     
     

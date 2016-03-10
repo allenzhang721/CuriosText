@@ -17,38 +17,50 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate {
         let lineSpacing: CGFloat
         let edgeInsets: UIEdgeInsets
     }
-
+    
+    struct Inner {
+        // asset cache
+        let imageManager = PHCachingImageManager()
+        var previousPreheatRect = CGRect.zero
+        
+        // asset
+        var assetFetchResults: PHFetchResult?
+        var assetCollection: PHAssetCollection?
+        
+        // layout
+        var layoutAttributes: CTAPhotoThumbnailLayoutAttributes?
+        
+        // gestures
+        var panGesture: UIPanGestureRecognizer?
+        
+        // status
+        var accessPhotoEnable = false
+        var oldSelectedIndexPath: NSIndexPath?
+        //  var previewfolded = false
+        //  private var previewFoldBeganPosition: CGPoint?
+    }
+    
     @IBOutlet weak var thumbCollectionView: UICollectionView!
     @IBOutlet weak var previewView: CTAPhotoPreviewView!
-    private var layoutAttributes: CTAPhotoThumbnailLayoutAttributes?
-    private let imageManager = PHCachingImageManager()
-    private var assetFetchResults: PHFetchResult?
-    private var assetCollection: PHAssetCollection?
-    private var panGesture: UIPanGestureRecognizer?
-    
-    private var accessPhotoEnable = false
-    private var previewfolded = false
-    private var previewFoldBeganPosition: CGPoint?
-    private var oldSelectedIndexPath: NSIndexPath?
-    
     weak var pickerDelegate: CTAPhotoPickerProtocol?
+    private var inner = Inner()
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        resetCacheSets()
         
         self.tabBarItem = UITabBarItem(title: LocalStrings.Photo.description, image: ImagePickerResource.imageOfPhotoLibrary, selectedImage: nil)
     }
     
-//    private var thumbnailSize
+    //    private var thumbnailSize
     override func viewDidLoad() {
         super.viewDidLoad()
         
         checkLibraryStatus {[weak self] (success) in
             dispatch_async(dispatch_get_main_queue(), {
-                guard let Strongself = self else {
-                    return
-                }
-                Strongself.accessPhotoEnable = success
+                guard let Strongself = self else { return }
+                Strongself.inner.accessPhotoEnable = success
                 if success {
                     Strongself.setup()
                 }
@@ -60,28 +72,94 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate {
         return true
     }
     
+    override func viewDidAppear(animated: Bool) {
+        caculateLayoutAttributes()
+        updateCacheSets()
+    }
+    
+    deinit {
+        resetCacheSets()
+    }
+}
+
+// MARK: - Setup
+extension CTAPhotoViewController {
+    
     private func setup() {
         
         setupDelegateAndDataSource()
         setupFetchPhotos()
-        updatePhotoCacheAssets()
         
-        if let assetFetchResults = assetFetchResults where assetFetchResults.count > 0, let asset = assetFetchResults[0] as? PHAsset {
+        if let assetFetchResults = inner.assetFetchResults where assetFetchResults.count > 0, let asset = assetFetchResults[0] as? PHAsset {
             
             thumbCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
-            imageManager.requestImageForAsset(asset, targetSize: previewView.bounds.size, contentMode: .AspectFill, options: nil) {[weak self] (image, info) in
+            inner.imageManager.requestImageForAsset(asset, targetSize: previewView.bounds.size, contentMode: .AspectFill, options: nil) {[weak self] (image, info) in
                 
                 if let strongSelf = self, let image = image {
                     dispatch_async(dispatch_get_main_queue(), {
                         strongSelf.previewView.image = image
-                        
-//                        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
                     })
                 }
             }
         }
     }
     
+    private func setupDelegateAndDataSource() {
+        thumbCollectionView.delegate = self
+        thumbCollectionView.dataSource = self
+        thumbCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
+    }
+    
+    private func setupFetchPhotos() { // fetch Photo Assets
+        // 1. fetch options
+        let allPhotos = PHFetchOptions()
+        let dateSortDescritor = NSSortDescriptor(key: "creationDate", ascending: true)
+        allPhotos.sortDescriptors = [dateSortDescritor]
+        
+        // 2. fetch result and collection
+        let result = PHAsset.fetchAssetsWithOptions(allPhotos)
+        let collection = result[0] as? PHAssetCollection
+        inner.assetFetchResults = result
+        inner.assetCollection = collection
+    }
+}
+
+
+// MARK: - Action
+extension CTAPhotoViewController {
+    
+    @IBAction func dismiss(sender: AnyObject?) {
+        
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func confirm(sender: AnyObject) {
+        
+        if let items = thumbCollectionView.indexPathsForSelectedItems() where items.count > 0, let asset = inner.assetFetchResults?[items.first!.item] as? PHAsset {
+            
+            let option = PHImageRequestOptions()
+            option.synchronous = true
+            
+            inner.imageManager.requestImageForAsset(asset, targetSize: CGSize(width: asset.pixelWidth, height: asset.pixelHeight), contentMode: .AspectFill, options: option, resultHandler: {[weak self] (image, info) in
+                
+                if let strongSelf = self {
+                    if let image = image {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            strongSelf.pickerDelegate?.pickerDidSelectedImage(image)
+                            strongSelf.dismiss(nil)
+                        })
+                    }
+                    //                    strongSelf.dismiss(nil)
+                }
+                })
+        }
+    }
+}
+
+// MARK: - Logics
+extension CTAPhotoViewController {
+    
+    // MARK: - Check PhotoLibrary Authorzied Status
     private func checkLibraryStatus(completed: ((Bool) -> ())?) {
         let status = PHPhotoLibrary.authorizationStatus()
         switch status {
@@ -102,247 +180,81 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate {
         }
     }
     
-//    private func setupGesture() {
-//        if panGesture == nil {
-//            panGesture = UIPanGestureRecognizer(target: self, action: "pan:")
-//            panGesture?.delegate = self
-//            thumbCollectionView.addGestureRecognizer(panGesture!)
-//        }
-//    }
-    
-    private func setupDelegateAndDataSource() {
-        thumbCollectionView.delegate = self
-        thumbCollectionView.dataSource = self
-        thumbCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
+    // MARK: - Assets
+    private func resetCacheSets() {
+        inner.imageManager.stopCachingImagesForAllAssets()
+        inner.previousPreheatRect = CGRect.zero
     }
     
-    private func setupFetchPhotos() { // fetch Photo Assets
-        // 1. fetch options
-        let allPhotos = PHFetchOptions()
-        let dateSortDescritor = NSSortDescriptor(key: "creationDate", ascending: true)
-        allPhotos.sortDescriptors = [dateSortDescritor]
-
-        // 2. fetch result and collection
-        let result = PHAsset.fetchAssetsWithOptions(allPhotos)
-        let collection = result[0] as? PHAssetCollection
-        assetFetchResults = result
-        assetCollection = collection
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        caculateLayoutAttributes()
-//        updatePhotoCacheAssets()
-    }
-}
-
-
-// MARK: - Action
-extension CTAPhotoViewController {
-    
-    @IBAction func dismiss(sender: AnyObject?) {
+    private func updateCacheSets() {
+        guard isViewLoaded() && view.window != nil else { return }
         
-        dismissViewControllerAnimated(true, completion: nil)
+        let bounds = thumbCollectionView.bounds
+        let nextPreheadRect = CGRectInset(bounds, 0, -bounds.height * 0.5)
+        
+        let delta = fabs(nextPreheadRect.midY - inner.previousPreheatRect.midY)
+        guard delta > (bounds.height / 3.0) else { return }
+        
+        // caculate the need add and delete asset items
+        let diffRects = differentItemsRectBetween(inner.previousPreheatRect, newRect: nextPreheadRect)
+        let startIndexPaths = thumbCollectionView.p_indexPathsForItemsInRect(diffRects.startRect)
+        let stopIndexPaths = thumbCollectionView.p_indexPathsForItemsInRect(diffRects.stopRect)
+        
+        guard
+            let fetchResult = inner.assetFetchResults where fetchResult.count > 0,
+            let startAssets = (startIndexPaths.map{fetchResult[$0.item]}) as? [PHAsset],
+            let stopAssets = (stopIndexPaths.map{fetchResult[$0.item]}) as? [PHAsset]
+            else { return }
+        
+        inner.imageManager
+            .stopCachingImagesForAssets(
+                stopAssets,
+                targetSize: inner.layoutAttributes!.itemSize,
+                contentMode: .AspectFill,
+                options: nil)
+        
+        inner.imageManager
+            .startCachingImagesForAssets(
+                startAssets,
+                targetSize: inner.layoutAttributes!.itemSize,
+                contentMode: .AspectFill,
+                options: nil)
+        
+        inner.previousPreheatRect = nextPreheadRect
     }
     
-    @IBAction func confirm(sender: AnyObject) {
+    // TODO: Implement "differentItemsRectBetween::" -- Emiaostein, 10/03/16, 11:03
+    private func differentItemsRectBetween(oldRect: CGRect, newRect: CGRect) -> (stopRect: CGRect, startRect: CGRect) {
         
-        if let items = thumbCollectionView.indexPathsForSelectedItems() where items.count > 0, let asset = assetFetchResults?[items.first!.item] as? PHAsset {
-            
-            let option = PHImageRequestOptions()
-            option.synchronous = true
-            
-            imageManager.requestImageForAsset(asset, targetSize: CGSize(width: asset.pixelWidth, height: asset.pixelHeight), contentMode: .AspectFill, options: option, resultHandler: {[weak self] (image, info) in
-                
-                if let strongSelf = self {
-                    if let image = image {
-                        dispatch_async(dispatch_get_main_queue(), { 
-                            strongSelf.pickerDelegate?.pickerDidSelectedImage(image)
-                            strongSelf.dismiss(nil)
-                        })
-                    }
-//                    strongSelf.dismiss(nil)
-                }
-            })
-        }
-    }
-    
-    
-}
-
-
-
-// MARK: - UICollectionViewDataSource
-extension CTAPhotoViewController: UICollectionViewDataSource {
-    
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        var stopRect = oldRect
+        var startRect = newRect
         
-        if accessPhotoEnable {
-            return assetFetchResults?.count ?? 0
-        } else {
-            return 0
-        }
-    }
-    
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ThumbnailCell", forIndexPath: indexPath) as! CTAPhotoThumbnailCollectionViewCell
+        let newMaxY = newRect.maxY
+        let newMinY = newRect.minY
+        let oldMaxY = oldRect.maxY
+        let oldMinY = oldRect.minY
         
-        if accessPhotoEnable {
-            if let asset = assetFetchResults?[indexPath.item] as? PHAsset {
-                imageManager.requestImageForAsset(asset, targetSize: layoutAttributes!.itemSize, contentMode: .AspectFill, options: nil) { (image, info) in
-                    
-                    if let image = image {
-                        cell.imageView.image = image
-                    }
-                }
-            }
-            
-            if cell.selectedBackgroundView == nil {
-                let v = UIView(frame: cell.bounds)
-                v.backgroundColor = UIColor.yellowColor()
-                cell.selectedBackgroundView = v
-            }
-            
+        if newMaxY > oldMaxY {
+            startRect = CGRect(x: newRect.minX, y: oldMaxY, width: newRect.width, height: newMaxY - oldMaxY)
         }
         
-        return cell
-    }
-}
+        if newMaxY < oldMaxY {
+            stopRect = CGRect(x: newRect.minX, y: newMaxY, width: newRect.width, height: oldMaxY - newMaxY)
+        }
+        
+        if oldMinY > newMinY {
+            startRect = CGRect(x: newRect.minX, y: newMinY, width: newRect.width, height: oldMinY - newMinY)
+        }
 
-
-// MARK: - UICollectionViewDelegate
-extension CTAPhotoViewController: UICollectionViewDelegate {
-    
-//    func scrollViewDidScroll(scrollView: UIScrollView) {
-//        if accessPhotoEnable {
-//            
-//            let dragging = scrollView.dragging
-//            let expended = !previewfolded
-//            
-//            switch (dragging, expended) {
-//                
-//            case (true, true):
-//                let pan = scrollView.panGestureRecognizer
-//                let position = pan.locationInView(previewView)
-//                
-//                if CGRectContainsPoint(previewView.bounds, position) {
-//                    if previewFoldBeganPosition == nil {
-//                        previewFoldBeganPosition = pan.locationInView(view)
-//                    }
-//                    
-//                    let nextPosition = pan.locationInView(view)
-//                    let transitionY = nextPosition.y - previewFoldBeganPosition!.y
-//                    if transitionY < 0 {
-//                        previewView.transform = CGAffineTransformMakeTranslation(0, transitionY)
-//                    }
-//                }
-//                
-//            case (true, false):
-//                if scrollView.contentOffset.y <= previewView.bounds.height - 44 && !CGAffineTransformEqualToTransform(previewView.transform, CGAffineTransformIdentity) {
-//                    previewView.transform = CGAffineTransformMakeTranslation(0, -scrollView.contentOffset.y)
-//                }
-//                
-//                
-//                
-//                
-//            case (false, false):
-//                ()
-//            case (false, true):
-//                ()
-//            }
-//        }
-//    }
-//    
-//    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        
-//        if previewfolded == false {
-//             previewfolded = true
-//            if  previewFoldBeganPosition != nil {
-//               
-//                previewFoldBeganPosition = nil
-//                UIView.animateWithDuration(0.3, animations: {
-//                    
-//                    self.previewView.transform = CGAffineTransformMakeTranslation(0, -self.previewView.bounds.height + 44)
-//                })
-//            }
-//            
-//        } else {
-//            previewfolded = false
-//            if previewFoldBeganPosition != nil {
-//            UIView.animateWithDuration(0.3, animations: { 
-//                self.previewView.transform = CGAffineTransformIdentity
-//            })
-//            }
-//        }
-//        
-//    }
-    
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
-        
-        if accessPhotoEnable {
-            if let old = oldSelectedIndexPath where old.compare(indexPath) == .OrderedSame {
-                return
-            }
-            if let asset = assetFetchResults?[indexPath.item] as? PHAsset {
-                oldSelectedIndexPath = indexPath
-                collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
-                imageManager.requestImageForAsset(asset, targetSize: previewView.bounds.size, contentMode: .AspectFill, options: nil) {[weak self] (image, info) in
-                    
-                    if let strongSelf = self, let image = image {
-                        dispatch_async(dispatch_get_main_queue(), { 
-                            strongSelf.previewView.image = image
-                            
-                        })
-                    }
-                }
-            }
-        }
-    }
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-extension CTAPhotoViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
-        if layoutAttributes == nil {
-            caculateLayoutAttributes()
+        if oldMinY < newMinY {
+            stopRect = CGRect(x: newRect.minX, y: oldMinY, width: newRect.width, height: newMinY - oldMinY)
         }
         
-        return layoutAttributes!.itemSize
-        
+        return (stopRect, startRect)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        
-        if layoutAttributes == nil {
-            caculateLayoutAttributes()
-        }
-        
-        return layoutAttributes!.edgeInsets
-    }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-        
-        if layoutAttributes == nil {
-            caculateLayoutAttributes()
-        }
-        
-        return layoutAttributes!.lineSpacing
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-        
-        if layoutAttributes == nil {
-            caculateLayoutAttributes()
-        }
-        
-        return layoutAttributes!.itemSpacing
-    }
-}
-
-// MARK: - Helper
-extension CTAPhotoViewController {
+    // MARK: - LayoutAttributes
     private func caculateLayoutAttributes() {
         
         let w = thumbCollectionView.bounds.width
@@ -354,45 +266,179 @@ extension CTAPhotoViewController {
         let itemW = Int((w - edgeInsets.left - edgeInsets.right - itemSpacing * (columCount)) / columCount)
         let itemSize = CGSize(width: itemW, height: itemW)
         
-        layoutAttributes = CTAPhotoThumbnailLayoutAttributes(
+        inner.layoutAttributes = CTAPhotoThumbnailLayoutAttributes(
             itemSize: itemSize,
             itemSpacing: itemSpacing,
             lineSpacing: lineSpacing,
             edgeInsets: edgeInsets)
     }
-    
-    private func updatePhotoCacheAssets() {
+}
+
+
+// MARK: - Delegate and DataSource
+
+extension CTAPhotoViewController: UICollectionViewDataSource {
+    // MARK: - UICollectionViewDataSource
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        var indexPaths = [NSIndexPath]()
-        for i in 0..<assetFetchResults!.count {
-            let indexPath = NSIndexPath(forItem: i, inSection: 0)
-            indexPaths.append(indexPath)
+        if inner.accessPhotoEnable {
+            return inner.assetFetchResults?.count ?? 0
+        } else {
+            return 0
+        }
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ThumbnailCell", forIndexPath: indexPath) as! CTAPhotoThumbnailCollectionViewCell
+        
+        if inner.accessPhotoEnable {
+            if let asset = inner.assetFetchResults?[indexPath.item] as? PHAsset {
+                let localIdentifier = asset.localIdentifier
+                cell.assetIdentifier = localIdentifier
+                
+                inner.imageManager
+                    .requestImageForAsset(
+                        asset,
+                        targetSize: inner.layoutAttributes!.itemSize,
+                        contentMode: .AspectFill,
+                        options: nil) { (image, info) in
+                            guard  cell.assetIdentifier == localIdentifier, let image = image else { return }
+                            cell.imageView.image = image
+                }
+            }
         }
         
-        let startAssets = assetToStartCaching(indexPaths)
+        if cell.selectedBackgroundView == nil {
+            let v = UIView(frame: cell.bounds)
+            v.backgroundColor = UIColor.yellowColor()
+            cell.selectedBackgroundView = v
+        }
         
-        if layoutAttributes == nil {
+        return cell
+    }
+}
+
+
+
+extension CTAPhotoViewController: UICollectionViewDelegate {
+    // MARK: - UICollectionViewDelegate
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        if inner.accessPhotoEnable {
+            if let old = inner.oldSelectedIndexPath where old.compare(indexPath) == .OrderedSame {
+                return
+            }
+            if let asset = inner.assetFetchResults?[indexPath.item] as? PHAsset {
+                inner.oldSelectedIndexPath = indexPath
+                collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
+                inner.imageManager.requestImageForAsset(asset, targetSize: previewView.bounds.size, contentMode: .AspectFill, options: nil) {[weak self] (image, info) in
+                    
+                    if let strongSelf = self, let image = image {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            strongSelf.previewView.image = image
+                            
+                        })
+                    }
+                }
+            }
+        }
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        updateCacheSets()
+    }
+}
+
+extension CTAPhotoViewController: UICollectionViewDelegateFlowLayout {
+    // MARK: - UICollectionViewDelegateFlowLayout
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        if inner.layoutAttributes == nil {
             caculateLayoutAttributes()
         }
         
-        let itemSize = layoutAttributes!.itemSize
-        let scale = UIScreen.mainScreen().scale
+        return inner.layoutAttributes!.itemSize
         
-        imageManager
-            .startCachingImagesForAssets(
-                startAssets,
-                targetSize: CGSize(width: itemSize.width * scale, height: itemSize.height * scale),
-                contentMode: .AspectFill,
-                options: nil)
     }
     
-    private func assetToStartCaching(indexPaths: [NSIndexPath]) -> [PHAsset] {
-        var assets = [PHAsset]()
-        for i in indexPaths {
-            let asset = assetFetchResults![i.item]  as! PHAsset
-            assets.append(asset)
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        
+        if inner.layoutAttributes == nil {
+            caculateLayoutAttributes()
         }
         
-        return assets
+        return inner.layoutAttributes!.edgeInsets
     }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        
+        if inner.layoutAttributes == nil {
+            caculateLayoutAttributes()
+        }
+        
+        return inner.layoutAttributes!.lineSpacing
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        
+        if inner.layoutAttributes == nil {
+            caculateLayoutAttributes()
+        }
+        
+        return inner.layoutAttributes!.itemSpacing
+    }
+}
+
+// MARK: - Helper
+extension UICollectionView {
+    
+    // TODO: Implement "indexPathsForItemsInRect:" -- Emiaostein, 10/03/16, 11:02
+    func p_indexPathsForItemsInRect(rect: CGRect) -> [NSIndexPath] {
+        
+        if let layoutAttributes = collectionViewLayout.layoutAttributesForElementsInRect(rect) where layoutAttributes.count > 0 {
+            
+            return layoutAttributes.map{$0.indexPath}
+        } else {
+          return []
+        }
+    }
+}
+
+extension CTAPhotoViewController {
+
+    
+//    private func updatePhotoCacheAssets() {
+//        
+//        var indexPaths = [NSIndexPath]()
+//        for i in 0..<inner.assetFetchResults!.count {
+//            let indexPath = NSIndexPath(forItem: i, inSection: 0)
+//            indexPaths.append(indexPath)
+//        }
+//        
+//        let startAssets = assetToStartCaching(indexPaths)
+//        
+//        if inner.layoutAttributes == nil {
+//            caculateLayoutAttributes()
+//        }
+//        
+//        let itemSize = inner.layoutAttributes!.itemSize
+//        let scale = UIScreen.mainScreen().scale
+//        
+//        inner.imageManager
+//            .startCachingImagesForAssets(
+//                startAssets,
+//                targetSize: CGSize(width: itemSize.width * scale, height: itemSize.height * scale),
+//                contentMode: .AspectFill,
+//                options: nil)
+//    }
+    
+//    private func assetToStartCaching(indexPaths: [NSIndexPath]) -> [PHAsset] {
+//        var assets = [PHAsset]()
+//        for i in indexPaths {
+//            let asset = inner.assetFetchResults![i.item]  as! PHAsset
+//            assets.append(asset)
+//        }
+//        
+//        return assets
+//    }
 }

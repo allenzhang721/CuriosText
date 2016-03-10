@@ -10,6 +10,7 @@ import UIKit
 
 class CTACameraAspectRatioCollectionViewCell: UICollectionViewCell {
     
+    
     private var actived: Bool = false
     private var label: UILabel!
     var text: String? {

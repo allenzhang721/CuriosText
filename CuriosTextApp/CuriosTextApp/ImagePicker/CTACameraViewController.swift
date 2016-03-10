@@ -11,6 +11,14 @@ import AVFoundation
 
 class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate {
     
+    private struct Inner {
+        private let session = AVCaptureSession()
+        private let sessionQueue = dispatch_queue_create("Session.Queue", DISPATCH_QUEUE_SERIAL)
+        private var cameraResult: CTACameraResult = .Authorized
+        private var stillImageOutput: AVCaptureStillImageOutput?
+        private var ratio: CTAImageCropAspectRatio = .Square
+    }
+    
     enum CTACameraResult {
         case Authorized
         case NotAuthorized, SessionConfigFailed
@@ -19,15 +27,10 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate {
     weak var pickerDelegate: CTAPhotoPickerProtocol?
     
     @IBOutlet weak var cameraView: CTACameraPreviewView!
-    
     @IBOutlet weak var cropView: CTACropOverlayView!
     @IBOutlet weak var ratioCollectionView: UICollectionView!
-    private let session = AVCaptureSession()
-    private let sessionQueue = dispatch_queue_create("Session.Queue", DISPATCH_QUEUE_SERIAL)
-    private var cameraResult: CTACameraResult = .Authorized
-    private var stillImageOutput: AVCaptureStillImageOutput?
     
-    var ratio: CTAImageCropAspectRatio = .Square
+    private var inner = Inner()
     
     override func prefersStatusBarHidden() -> Bool {
         return true
@@ -54,46 +57,44 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate {
             
             if let strongSelf = self {
                 let ratio = CTAImageCropAspectRatio.defaultRatio[indexPath.item]
-                strongSelf.ratio = ratio
+                strongSelf.inner.ratio = ratio
                 strongSelf.cropView.positionByAspectRatio(ratio, animated: true)
             }
-            
         }
         
         cameraView.videoGravity = .ResizeAspectFill
         cameraView.clipsToBounds = true
         
         // 1. connect session to previewLayer
-        cameraView.session = session
+        cameraView.session = inner.session
         
         // 1.1. check camera authorized result
         switch AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo) {
         case .Authorized:
-            cameraResult = .Authorized
+            inner.cameraResult = .Authorized
             
         case .NotDetermined:
-            dispatch_suspend(sessionQueue)
+            dispatch_suspend(inner.sessionQueue)
             AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo, completionHandler: { [weak self] (authorized) in
                 
                 if authorized {
-                    self?.cameraResult = .Authorized
+                    self?.inner.cameraResult = .Authorized
                 } else {
-                    self?.cameraResult = .NotAuthorized
+                    self?.inner.cameraResult = .NotAuthorized
                 }
                 if let strongSelf = self {
-                    dispatch_resume(strongSelf.sessionQueue)
+                    dispatch_resume(strongSelf.inner.sessionQueue)
                 }
                 }
             )
             
         default:
-            cameraResult = .NotAuthorized
+            inner.cameraResult = .NotAuthorized
         }
         
         // config session
-        dispatch_async(sessionQueue) { [weak self] in
-            
-            guard let strongSelf = self where strongSelf.cameraResult == .Authorized else {
+        dispatch_async(inner.sessionQueue) { [weak self] in
+            guard let strongSelf = self where strongSelf.inner.cameraResult == .Authorized else {
                 return
             }
             
@@ -103,42 +104,42 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate {
             
             
             // 3. begin config session
-            strongSelf.session.beginConfiguration()
+            strongSelf.inner.session.beginConfiguration()
             
             // 3.1. craete input and add it to session
-            if strongSelf.session.canAddInput(deviceInput) {
-                strongSelf.session.addInput(deviceInput)
+            if strongSelf.inner.session.canAddInput(deviceInput) {
+                strongSelf.inner.session.addInput(deviceInput)
             } else {
-                strongSelf.cameraResult = .SessionConfigFailed
+                strongSelf.inner.cameraResult = .SessionConfigFailed
             }
             
             // 3.2. create output and add it to session
             let stillImageOutput = AVCaptureStillImageOutput()
-            if strongSelf.session.canAddOutput(stillImageOutput) {
+            if strongSelf.inner.session.canAddOutput(stillImageOutput) {
                 stillImageOutput.outputSettings = [AVVideoCodecKey: AVVideoCodecJPEG]
-                strongSelf.session.addOutput(stillImageOutput)
-                strongSelf.stillImageOutput = stillImageOutput
+                strongSelf.inner.session.addOutput(stillImageOutput)
+                strongSelf.inner.stillImageOutput = stillImageOutput
             } else {
-                strongSelf.cameraResult = .SessionConfigFailed
+                strongSelf.inner.cameraResult = .SessionConfigFailed
             }
             
                     // 3.3. end config session
-            strongSelf.session.commitConfiguration()
+            strongSelf.inner.session.commitConfiguration()
         }
     }
     
     override func viewWillAppear(animated: Bool) {
         // sessioin begin running
-        dispatch_async(sessionQueue) { [weak self] in
+        dispatch_async(inner.sessionQueue) { [weak self] in
             guard let strongSelf = self else {
                 return
             }
             
-            switch strongSelf.cameraResult {
+            switch strongSelf.inner.cameraResult {
                 
             case .Authorized:
                 dispatch_async(dispatch_get_main_queue(), {
-                    strongSelf.session.startRunning()
+                    strongSelf.inner.session.startRunning()
                 })
                 
             default:
@@ -155,6 +156,8 @@ extension CTACameraViewController {
     
     @IBAction func captureClick(sender: AnyObject) {
         
+        guard inner.cameraResult == .Authorized else { return }
+        
         captureStillImage {[weak self] (data) in
             if let data = data {
                 dispatch_async(dispatch_get_main_queue(), {
@@ -169,27 +172,28 @@ extension CTACameraViewController {
     }
 }
 
-// MARK: - Capture Still Image
+// MARK: - Logics
 extension CTACameraViewController {
     
+    // MARK: - Capture Still Image
     typealias CaptureStillImageCompletedHander = (NSData?) -> ()
     
-    func captureStillImage(handler: CaptureStillImageCompletedHander?) {
-        dispatch_async(sessionQueue) { [weak self] in
-            guard let strongSelf = self, let output = self?.stillImageOutput else {
+    private func captureStillImage(handler: CaptureStillImageCompletedHander?) {
+        dispatch_async(inner.sessionQueue) { [weak self] in
+            guard let strongSelf = self, let output = self?.inner.stillImageOutput else {
                 handler?(nil)
                 return
             }
             
             let connection = output.connectionWithMediaType(AVMediaTypeVideo)
             
-            strongSelf.stillImageOutput?.captureStillImageAsynchronouslyFromConnection(connection, completionHandler: {[weak self] (buffer, error) in
+            strongSelf.inner.stillImageOutput?.captureStillImageAsynchronouslyFromConnection(connection, completionHandler: {[weak self] (buffer, error) in
                 guard let strongSelf = self else {
                     return
                 }
                 if let buffer = buffer {
                     let data = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(buffer)
-                    let image = UIImage(data: data)!.cropImageWith(strongSelf.ratio)
+                    let image = UIImage(data: data)!.cropImageWith(strongSelf.inner.ratio)
                     handler?(UIImagePNGRepresentation(image))
                 } else {
                     handler?(nil)
@@ -197,6 +201,9 @@ extension CTACameraViewController {
             })
         }
     }
+    
+    // MARK: - Photo Snapshot
+    
 }
 
 extension UIImage {
@@ -220,8 +227,9 @@ extension UIImage {
     }
 }
 
-// MARK: - UICollectionViewDataSource
+// MARK: - Deleagete and DataSource
 extension CTACameraViewController: UICollectionViewDataSource {
+    // MARK: - UICollectionViewDataSource
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
