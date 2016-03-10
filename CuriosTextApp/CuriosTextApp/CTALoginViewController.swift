@@ -91,7 +91,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         self.view.addSubview(closeButton)
         
         let iconImage = UIImageView.init(frame: CGRect.init(x: (bouns.width - 60)/2, y: 60*self.getVerRate(), width: 60, height: 62))
-        iconImage.image = UIImage(named: "defaultpublish-icon")
+        iconImage.image = UIImage(named: "Launch-icon")
         self.view.addSubview(iconImage)
         
         self.initPhoneView()

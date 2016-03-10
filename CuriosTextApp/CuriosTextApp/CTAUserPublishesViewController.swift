@@ -370,17 +370,21 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     func freshComplete(){
         if self.isLoadingFirstData {
             self.headerFresh.endRefreshing()
-            if self.isLoginUser && self.publishModelArray.count == 0{
-                self.noContentView.hidden = false
-            }else {
-                self.noContentView.hidden = true
-            }
+            self.showNoContentView()
         }else {
             if self.isLoadedAll {
                 self.footerFresh.endRefreshingWithNoMoreData()
             } else {
                 self.footerFresh.endRefreshing()
             }
+        }
+    }
+    
+    func showNoContentView(){
+        if self.isLoginUser && self.publishModelArray.count == 0{
+            self.noContentView.hidden = false
+        }else {
+            self.noContentView.hidden = true
         }
     }
     
@@ -533,8 +537,10 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
         }
         if isChange{
             self.publishModelArray.removeAll()
-            self.publishModelArray = self.publishModelArray + publishModelArray
+            self.publishModelArray = publishModelArray
             self.collectionView.reloadData()
+            self.saveArrayToLocaol()
+            self.showNoContentView()
         }
         
         self.selectedPublishID = selectedPublishID
