@@ -47,7 +47,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         // Do any additional setup after loading the view.
         self.initView()
         self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -129,7 +129,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         self.view.addSubview(self.loginButton)
         
         self.otherAccountView = UIView.init(frame: CGRect.init(x: 0, y: bouns.height - 175*self.getVerRate(), width: bouns.width, height: 175*self.getVerRate()))
-        self.otherAccountView.backgroundColor = UIColor.whiteColor()
+        self.otherAccountView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
         self.view.addSubview(self.otherAccountView)
         
         let spaceView = UIImageView.init(frame: CGRect.init(x: (bouns.width - 215)/2, y: 5, width: 215, height: 3))

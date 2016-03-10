@@ -60,7 +60,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
         
         // Do any additional setup after loading the view.
         self.initView();
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -86,6 +86,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
             let fullCell:CTAFullPublishesCell = CTAFullPublishesCell.init(frame: CGRect.init(x: 0, y: 0, width: fullSize.width, height: fullSize.height))
             fullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
             fullCell.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: 0-fullSize.height)
+            fullCell.addShadow()
             self.view.addSubview(fullCell)
             self.fullCellArray.append(fullCell)
         }
@@ -93,18 +94,21 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
         self.view.addSubview(self.currentFullCell!)
         self.currentFullCell!.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2)
         self.currentFullCell.animationEnable = true
+        self.currentFullCell.addShadow()
         self.currentFullCell.transform = CGAffineTransformMakeScale(1, 1)
         
         self.nextFullCell = CTAFullPublishesCell.init(frame: CGRect.init(x: 0, y: 0, width: fullSize.width, height: fullSize.height))
         self.view.addSubview(self.nextFullCell!)
         self.nextFullCell!.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - horSpace, y: UIScreen.mainScreen().bounds.height/2)
         self.nextFullCell.animationEnable = true
+        self.nextFullCell.addShadow()
         self.nextFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
         
         self.previousFullCell = CTAFullPublishesCell.init(frame: CGRect.init(x: 0, y: 0, width: fullSize.width, height: fullSize.height))
         self.view.addSubview(self.previousFullCell!)
         self.previousFullCell!.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 + horSpace, y: UIScreen.mainScreen().bounds.height/2)
         self.previousFullCell.animationEnable = true
+        self.previousFullCell.addShadow()
         self.previousFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
         
         self.initPublishSubView(self.currentFullCell.frame, horRate: self.getHorRate())

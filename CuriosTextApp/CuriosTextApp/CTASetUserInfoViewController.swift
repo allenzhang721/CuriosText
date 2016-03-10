@@ -47,7 +47,7 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         super.viewDidLoad()
         self.initView()
         self.navigationController!.interactivePopGestureRecognizer!.delegate = self
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
         // Do any additional setup after loading the view.
     }
     
@@ -115,7 +115,7 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         self.userDescTextView.center = CGPoint.init(x: bouns.width/2, y: 37)
         self.userDescTextView.font = UIFont.systemFontOfSize(18)
         self.userDescTextView.scrollEnabled = false
-        self.userDescTextView.backgroundColor = UIColor.whiteColor()
+        self.userDescTextView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
         self.userDescTextView.delegate = self
         self.userDescTextView.textAlignment = .Left
         self.descView.addSubview(userDescTextView)

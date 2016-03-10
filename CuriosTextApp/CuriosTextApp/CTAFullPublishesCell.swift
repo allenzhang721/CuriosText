@@ -36,16 +36,38 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
     var isPlaying:Bool = false
     
+    var cellColorView:UIView?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.cellImageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
-        self.addImageShadow(self)
         self.cropImageRound(self.cellImageView)
         self.addSubview(self.cellImageView)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func addShadow(){
+        self.addImageShadow(self)
+    }
+    
+    func setViewColor(color:UIColor){
+        if self.cellColorView == nil {
+            self.cellColorView = UIView.init(frame: self.bounds)
+            self.cropImageRound(self.cellColorView!)
+            self.addSubview(self.cellColorView!)
+            self.bringSubviewToFront(self.cellColorView!)
+        }
+        self.cellColorView?.backgroundColor = color
+    }
+    
+    func removeViewColor(){
+        if self.cellColorView != nil {
+            self.cellColorView!.removeFromSuperview()
+            self.cellColorView = nil
+        }
     }
     
     func reloadCell(){
@@ -84,6 +106,9 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                     self.previewView.backgroundColor = UIColor.whiteColor()
                     self.cropImageRound(self.previewView)
                     self.bringSubviewToFront(self.cellImageView)
+                    if self.cellColorView != nil {
+                        self.bringSubviewToFront(self.cellColorView!)
+                    }
                 }
                 self.isLoadComplete = false
                 let purl = CTAFilePath.publishFilePath

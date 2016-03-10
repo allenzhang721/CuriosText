@@ -71,7 +71,7 @@ extension CTAPublishCellProtocol{
     }
     
     func getFullCellRect(cellRect:CGSize?, rate:CGFloat) -> CGSize{
-        let fullWidth  = 325 * self.getHorRate()
+        let fullWidth  = 340 * self.getHorRate()
         var fullHeight:CGFloat
         if cellRect == nil{
             fullHeight = fullWidth

@@ -50,7 +50,7 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
         // Do any additional setup after loading the view.
         self.initView()
         self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
     }
     
     override func viewWillAppear(animated: Bool) {
