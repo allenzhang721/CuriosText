@@ -41,7 +41,7 @@
                                 </items>
                             </toolbar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dye-4U-kio">
-                                <rect key="frame" x="0.0" y="418" width="375" height="249"/>
+                                <rect key="frame" x="0.0" y="419" width="375" height="248"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Uzk-NF-SxV">
                                     <size key="itemSize" width="50" height="50"/>
@@ -77,27 +77,37 @@
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="NBJ-oU-lGk" firstAttribute="leading" secondItem="b0U-Fz-KW6" secondAttribute="leading" id="5sT-ja-1cv"/>
                             <constraint firstItem="5If-cP-INt" firstAttribute="width" secondItem="b0U-Fz-KW6" secondAttribute="width" id="5tM-ZH-0cR"/>
                             <constraint firstItem="4ro-Yb-eJe" firstAttribute="top" secondItem="dye-4U-kio" secondAttribute="bottom" id="6em-hY-chp"/>
+                            <constraint firstAttribute="trailing" secondItem="NBJ-oU-lGk" secondAttribute="trailing" id="8w3-ae-tqo"/>
                             <constraint firstItem="5If-cP-INt" firstAttribute="centerX" secondItem="b0U-Fz-KW6" secondAttribute="centerX" id="FtE-Dh-elV"/>
-                            <constraint firstItem="NBJ-oU-lGk" firstAttribute="leading" secondItem="5If-cP-INt" secondAttribute="leading" id="GPL-yU-tDQ"/>
-                            <constraint firstItem="NBJ-oU-lGk" firstAttribute="top" secondItem="wFo-TF-POz" secondAttribute="bottom" id="L9c-ri-qj7"/>
+                            <constraint firstItem="5If-cP-INt" firstAttribute="top" secondItem="NBJ-oU-lGk" secondAttribute="bottom" id="IfF-yj-6h0"/>
                             <constraint firstItem="5If-cP-INt" firstAttribute="top" secondItem="wFo-TF-POz" secondAttribute="bottom" constant="44" id="Tpr-PZ-KEr"/>
-                            <constraint firstItem="NBJ-oU-lGk" firstAttribute="trailing" secondItem="5If-cP-INt" secondAttribute="trailing" id="d3i-aL-qIB"/>
-                            <constraint firstItem="dye-4U-kio" firstAttribute="top" secondItem="5If-cP-INt" secondAttribute="bottom" constant="-1" id="mk3-Dd-rc2"/>
+                            <constraint firstItem="dye-4U-kio" firstAttribute="top" secondItem="5If-cP-INt" secondAttribute="bottom" id="mk3-Dd-rc2"/>
                             <constraint firstItem="dye-4U-kio" firstAttribute="leading" secondItem="b0U-Fz-KW6" secondAttribute="leading" id="qky-YZ-4UX"/>
                             <constraint firstAttribute="trailing" secondItem="dye-4U-kio" secondAttribute="trailing" id="uSW-TE-Tgw"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="ecc-45-ae0" appends="YES" id="YDU-Sz-71f"/>
+                        </connections>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="previewView" destination="5If-cP-INt" id="lfP-Hb-cr2"/>
                         <outlet property="thumbCollectionView" destination="dye-4U-kio" id="dJW-Ps-bR9"/>
+                        <outlet property="topConstraint" destination="Tpr-PZ-KEr" id="KPJ-ge-1zb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="laE-5D-1de" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="ecc-45-ae0">
+                    <connections>
+                        <action selector="pan:" destination="cMe-yS-ZkE" id="yQ7-KT-RUL"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="287.5" y="369.5"/>
         </scene>

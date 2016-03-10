@@ -30,22 +30,24 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate {
         // layout
         var layoutAttributes: CTAPhotoThumbnailLayoutAttributes?
         
-        // gestures
-        var panGesture: UIPanGestureRecognizer?
-        
         // status
         var accessPhotoEnable = false
         var oldSelectedIndexPath: NSIndexPath?
-        //  var previewfolded = false
-        //  private var previewFoldBeganPosition: CGPoint?
+        
+        // preview scroll
+        var beganPosition = CGPoint.zero
+        let originTopConstraintCostant: CGFloat = 44
+        var topConstraintTargetScrollDistance: CGFloat = 250
+        let triggScrollDistance: CGFloat = 50
     }
     
     @IBOutlet weak var thumbCollectionView: UICollectionView!
     @IBOutlet weak var previewView: CTAPhotoPreviewView!
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
+    
     weak var pickerDelegate: CTAPhotoPickerProtocol?
     private var inner = Inner()
-    
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         resetCacheSets()
@@ -128,6 +130,28 @@ extension CTAPhotoViewController {
 // MARK: - Action
 extension CTAPhotoViewController {
     
+    @IBAction func pan(sender: UIPanGestureRecognizer) {
+        
+        let translation = sender.translationInView(view)
+        switch sender.state {
+        case .Began:
+            inner.beganPosition = sender.locationInView(view)
+            
+        case .Changed:
+            previewScroll(.Scroll(deltaY: translation.y))
+            
+        case .Ended, .Cancelled:
+            let position = sender.locationInView(view)
+            let offset = position.y - inner.beganPosition.y
+            previewScroll(.End(translation: offset))
+            
+        default:
+            ()
+        }
+        sender.setTranslation(CGPoint.zero, inView: view)
+        
+    }
+    
     @IBAction func dismiss(sender: AnyObject?) {
         
         dismissViewControllerAnimated(true, completion: nil)
@@ -159,7 +183,46 @@ extension CTAPhotoViewController {
 // MARK: - Logics
 extension CTAPhotoViewController {
     
-    // MARK: - Check PhotoLibrary Authorzied Status
+    // MARK: - Preview Scroll
+    enum PreviewStatus {
+        case Scroll(deltaY: CGFloat)
+        case End(translation: CGFloat)
+    }
+    func previewScroll(status: PreviewStatus, compeletedHandler:(() -> ())? = nil) {
+        
+        let originConstant = inner.originTopConstraintCostant
+        let distance = inner.topConstraintTargetScrollDistance
+        let triggerDistance = inner.triggScrollDistance
+        switch status {
+        case .Scroll(let deltaY):
+            if topConstraint.constant < originConstant {
+                topConstraint.constant += deltaY
+                view.layoutIfNeeded()
+            } else {
+                if deltaY < 0 {
+                    topConstraint.constant += deltaY
+                    view.layoutIfNeeded()
+                }
+            }
+        case .End(let translationY):
+            if topConstraint.constant < originConstant {
+                topConstraint.constant = (translationY <= originConstant) ? -distance : (translationY >= triggerDistance) ? originConstant : -distance
+            } else {
+                topConstraint.constant = (translationY <= -triggerDistance) ? -distance : originConstant
+            }
+            
+            UIView.animateWithDuration(0.3, animations: {
+                self.view.layoutIfNeeded()
+                }, completion: { finished in
+                    if finished {
+                        compeletedHandler?()
+                    }
+            })
+        }
+    }
+    
+    
+    // MARK: - Authorzied Status
     private func checkLibraryStatus(completed: ((Bool) -> ())?) {
         let status = PHPhotoLibrary.authorizationStatus()
         switch status {
@@ -223,7 +286,6 @@ extension CTAPhotoViewController {
         inner.previousPreheatRect = nextPreheadRect
     }
     
-    // TODO: Implement "differentItemsRectBetween::" -- Emiaostein, 10/03/16, 11:03
     private func differentItemsRectBetween(oldRect: CGRect, newRect: CGRect) -> (stopRect: CGRect, startRect: CGRect) {
         
         var stopRect = oldRect
@@ -271,6 +333,8 @@ extension CTAPhotoViewController {
             itemSpacing: itemSpacing,
             lineSpacing: lineSpacing,
             edgeInsets: edgeInsets)
+        
+        inner.topConstraintTargetScrollDistance = w * 0.5 + (w * 0.5 - inner.originTopConstraintCostant) - inner.originTopConstraintCostant
     }
 }
 
@@ -330,14 +394,19 @@ extension CTAPhotoViewController: UICollectionViewDelegate {
             }
             if let asset = inner.assetFetchResults?[indexPath.item] as? PHAsset {
                 inner.oldSelectedIndexPath = indexPath
-                collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
+                
+                dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                    guard let strongSelf = self else { return }
+                    strongSelf.previewScroll(.End(translation: 60)) {
+                        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
+                    }
+//                    strongSelf.previewView.image = image
+                })
+                
                 inner.imageManager.requestImageForAsset(asset, targetSize: previewView.bounds.size, contentMode: .AspectFill, options: nil) {[weak self] (image, info) in
                     
                     if let strongSelf = self, let image = image {
-                        dispatch_async(dispatch_get_main_queue(), {
-                            strongSelf.previewView.image = image
-                            
-                        })
+                        strongSelf.previewView.image = image
                     }
                 }
             }
@@ -392,7 +461,6 @@ extension CTAPhotoViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - Helper
 extension UICollectionView {
     
-    // TODO: Implement "indexPathsForItemsInRect:" -- Emiaostein, 10/03/16, 11:02
     func p_indexPathsForItemsInRect(rect: CGRect) -> [NSIndexPath] {
         
         if let layoutAttributes = collectionViewLayout.layoutAttributesForElementsInRect(rect) where layoutAttributes.count > 0 {
