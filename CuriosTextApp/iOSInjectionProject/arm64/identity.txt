@@ -1,0 +1,2 @@
+/Users/Emiaostein/Library/Developer/Xcode/DerivedData/CuriosTextApp-fautmptwwqsnzzdttqsmapzvdhka/Build/Products/Debug-iphoneos/CuriosTextApp.app
+iPhone Developer
