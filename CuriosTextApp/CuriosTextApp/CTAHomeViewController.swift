@@ -73,6 +73,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         super.viewDidDisappear(animated)
         self.loginUser = nil
         self.isDisMis = true
+        self.hideLoadingView()
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginComplete", object: nil)
     }
 
@@ -96,6 +97,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         let pan = UIPanGestureRecognizer(target: self, action: "viewPanHandler:")
         self.handView.addGestureRecognizer(pan)
         self.view.addSubview(self.handView)
+
         
         self.nextMoreCell = CTAFullPublishesCell.init(frame: CGRect.init(x: (bounds.width - fullSize.width*2)/2, y: 0, width: fullSize.width, height: fullSize.height))
         self.handView.addSubview(self.nextMoreCell!)
@@ -117,11 +119,13 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.preFullCell.animationEnable = true
         self.preFullCell.publishModel = nil
         
-        self.setCellsPosition()
         let shadeFrame = self.nextMoreCell.frame
         self.shadeView = UIView.init(frame: CGRect.init(x: shadeFrame.origin.x, y: shadeFrame.origin.y+shadeFrame.height-15, width: shadeFrame.width, height: 20))
         self.handView.addSubview(self.shadeView)
         addCellShadow(self.shadeView)
+        self.shadeView.superview?.sendSubviewToBack(self.shadeView)
+        
+        self.setCellsPosition()
         
         let userButton = UIButton.init(frame: CGRect.init(x: bounds.size.width - 45, y: 2, width: 40, height: 40))
         userButton.setImage(UIImage.init(named: "userview-button"), forState: .Normal)
@@ -139,24 +143,31 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.nextMoreCell.center = CGPoint.init(x: bounds.width/2, y: moreSpace*3+fullSize.height/2)
         self.nextMoreCell.transform = CGAffineTransformMakeScale(rateW, rateH)
         self.nextMoreCell.setViewColor(UIColor.init(red: 194/255, green: 194/255, blue: 194/255, alpha: 1))
+        self.nextMoreCell.alpha = 1
         
         rateW  = (fullSize.width  - moreSpace)/fullSize.width
         rateH = (fullSize.height - moreSpace)/fullSize.height
         self.nextFullCell.center = CGPoint.init(x: bounds.width/2, y: moreSpace*1.5+fullSize.height/2)
         self.nextFullCell.transform = CGAffineTransformMakeScale(rateW, rateH)
         self.nextFullCell.setViewColor(UIColor.init(red: 180/255, green: 180/255, blue: 180/255, alpha: 1))
+        self.nextFullCell.alpha = 1
         
         rateW  = 1
         rateH = 1
         self.currentFullCell.center = CGPoint.init(x: bounds.width/2, y: fullSize.height/2)
         self.currentFullCell.transform = CGAffineTransformMakeScale(rateW, rateH)
         self.currentFullCell.removeViewColor()
+        self.currentFullCell.alpha = 1
         
         rateW  = 1
         rateH = 1
         self.preFullCell.center = CGPoint.init(x: bounds.width*3/2, y: fullSize.height*3/2)
         self.preFullCell.transform = CGAffineTransformMakeScale(rateW, rateH)
         self.preFullCell.removeViewColor()
+        self.preFullCell.alpha = 1
+        
+        
+        self.shadeView.center = CGPoint.init(x: bounds.width/2, y: self.nextFullCell.frame.origin.y+self.nextFullCell.frame.height-5)
     }
     
     func getCellSize() -> CGSize{
@@ -501,9 +512,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             
             let nextSizeChange = self.moreSpace*percent
             self.changeCellSizeBySpace(nextSizeChange, ischangeCurrent: false)
-            if !self.nextFullCell.hidden {
-                self.nextFullCell.setViewColor(UIColor.init(red: 180/255, green: 180/255, blue: 180/255, alpha: 1*(1-percent)))
-            }
+            self.changeViewColor(percent)
         }else {
             self.panDirection = .Previous
             if self.currentPublishIndex > 0 {
@@ -517,15 +526,47 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 
                 let nextSizeChange = self.moreSpace*percent - self.moreSpace
                 self.changeCellSizeBySpace(nextSizeChange, ischangeCurrent: true)
-                if !self.currentFullCell.hidden {
-                    self.currentFullCell.setViewColor(UIColor.init(red: 180/255, green: 180/255, blue: 180/255, alpha: 1*(1-percent)))
-                }
+                self.changeViewColor(percent)
             }else {
                 self.firstLoadViewMove(xChange/4)
             }
         }
     }
     
+    func changeViewColor(percent:CGFloat){
+        switch self.panDirection{
+        case .Next:
+            self.changeNextViewColor(percent)
+        case .Previous:
+            self.changePreViewColor(percent)
+        default:
+            ()
+        }
+    }
+
+    func changeNextViewColor(percent:CGFloat){
+        if !self.nextFullCell.hidden {
+            self.nextFullCell.setViewColor(UIColor.init(red: 180/255, green: 180/255, blue: 180/255, alpha: 1*(1-percent)))
+        }
+        if !self.nextMoreCell.hidden {
+            let rate = 194 - (194 - 180) * percent
+            self.nextMoreCell.setViewColor(UIColor.init(red: rate/255, green: rate/255, blue: rate/255, alpha: 1))
+        }
+    }
+
+    func changePreViewColor(percent:CGFloat){
+        if !self.currentFullCell.hidden {
+            self.currentFullCell.setViewColor(UIColor.init(red: 180/255, green: 180/255, blue: 180/255, alpha: 1*(1-percent)))
+        }
+        if !self.nextFullCell.hidden {
+            let rate = 194 - (194 - 180) * percent
+            self.nextFullCell.setViewColor(UIColor.init(red: rate/255, green: rate/255, blue: rate/255, alpha: 1))
+        }
+        if !self.nextMoreCell.hidden {
+            self.nextMoreCell.alpha = 1*percent
+        }
+    }
+
     func viewHorComplete(newLocation:CGPoint){
         let maxDir = (UIScreen.mainScreen().bounds.width * 0.7)
         let xRate = newLocation.x - beganLocation.x
@@ -553,9 +594,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                         self.currentFullCell.center = CGPoint.init(x: bounds.width/2+maxX, y: fullSize.height/2+maxY)
                         let nextSizeChange = self.moreSpace
                         self.changeCellSizeBySpace(nextSizeChange, ischangeCurrent: false)
-                        if !self.nextFullCell.hidden {
-                            self.nextFullCell.setViewColor(UIColor.init(red: 180/255, green: 180/255, blue: 180/255, alpha: 0))
-                        }
+                        self.changeViewColor(1)
                         }, completion: { (_) -> Void in
                             self.horPanComplete(.Next, isChange: true)
                     })
@@ -574,9 +613,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                         self.preFullCell.center = CGPoint.init(x: bounds.width/2, y: fullSize.height/2)
                         let nextSizeChange = 0 - self.moreSpace
                         self.changeCellSizeBySpace(nextSizeChange, ischangeCurrent: true)
-                        if !self.currentFullCell.hidden {
-                            self.currentFullCell.setViewColor(UIColor.init(red: 180/255, green: 180/255, blue: 180/255, alpha: 1))
-                        }
+                        self.changeViewColor(0)
                         }, completion: { (_) -> Void in
                             self.horPanComplete(.Previous, isChange: true)
                     })
@@ -600,9 +637,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 self.currentFullCell.transform = CGAffineTransformMakeRotation(rChangePI)
                 self.currentFullCell.center = CGPoint.init(x: bounds.width/2, y: fullSize.height/2)
                 self.changeCellSizeBySpace(0, ischangeCurrent: false)
-                if !self.nextFullCell.hidden {
-                    self.nextFullCell.setViewColor(UIColor.init(red: 169/255, green: 169/255, blue: 169/255, alpha: 1))
-                }
+                self.changeViewColor(0)
                 }, completion: { (_) -> Void in
                     self.horPanComplete(.Next, isChange: false)
             })
@@ -616,9 +651,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                     self.preFullCell.transform = CGAffineTransformMakeRotation(rChangePI)
                     self.preFullCell.center = CGPoint.init(x: bounds.width/2+xChange, y: fullSize.height/2+yChange)
                     self.changeCellSizeBySpace(0, ischangeCurrent: true)
-                    if !self.currentFullCell.hidden {
-                        self.currentFullCell.setViewColor(UIColor.init(red: 169/255, green: 169/255, blue: 169/255, alpha: 0))
-                    }
+                    self.changeViewColor(1)
                     }, completion: { (_) -> Void in
                         self.horPanComplete(.Previous, isChange: false)
                 })
@@ -708,27 +741,18 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 if self.currentPublishIndex > self.publishModelArray.count-5{
                     self.loadMoreCellData(false)
                 }
-                self.setCellPublishModel()
             }else if dir == .Previous{
-                UIView.animateWithDuration(0.4, animations: { () -> Void in
-                    self.nextMoreCell.alpha = 0
-                    }, completion: { (_) -> Void in
-                        self.nextMoreCell.hidden = true
-                        self.nextMoreCell.alpha = 1
-                        let currentFull = self.currentFullCell
-                        self.currentFullCell = self.preFullCell
-                        self.preFullCell = self.nextMoreCell
-                        self.nextMoreCell = self.nextFullCell
-                        self.nextFullCell = currentFull
-                        self.currentPublishIndex--
-                        if self.currentPublishIndex < 0{
-                            self.currentPublishIndex = 0
-                        }
-                        self.setCellPublishModel()
-                })
-                
+                let currentFull = self.currentFullCell
+                self.currentFullCell = self.preFullCell
+                self.preFullCell = self.nextMoreCell
+                self.nextMoreCell = self.nextFullCell
+                self.nextFullCell = currentFull
+                self.currentPublishIndex--
+                if self.currentPublishIndex < 0{
+                    self.currentPublishIndex = 0
+                }
             }
-            
+            self.setCellPublishModel()
         }else {
             self.setCellsPosition()
             self.currentFullCell!.playAnimation()
