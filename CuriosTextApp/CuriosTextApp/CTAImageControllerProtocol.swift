@@ -81,6 +81,14 @@ func compressImage(image:UIImage, maxWidth:CGFloat = 1280.00) -> UIImage{
     return newImage
 }
 
+func addCellShadow(cell:UIView){
+    cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: 0).CGPath
+    cell.layer.shadowColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.67).CGColor
+    cell.layer.shadowOffset = CGSize(width: 0, height: 2)
+    cell.layer.shadowOpacity = 1
+    cell.layer.shadowRadius = 13
+}
+
 protocol CTAImageControllerProtocol{
     func cropImageCircle(imageView:UIView)
     func cropImageRound(imageView:UIView)
@@ -108,8 +116,8 @@ extension CTAImageControllerProtocol{
     func addImageShadow(imageView:UIView){
         imageView.layer.shadowPath = UIBezierPath(roundedRect: imageView.bounds, cornerRadius: 4).CGPath
         imageView.layer.shadowColor = UIColor.blackColor().CGColor
-        imageView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        imageView.layer.shadowOpacity = 0.4
+        imageView.layer.shadowOffset = CGSize(width: 0, height: 4)
+        imageView.layer.shadowOpacity = 0.2
         imageView.layer.shadowRadius = 5
     }
     
@@ -119,8 +127,8 @@ extension CTAImageControllerProtocol{
         UIColor.whiteColor().setFill()
         UIRectFill(rect)
         let iconImage = UIImage(named: "defaultpublish-icon")
-        let imgWidth = 50 * rate
-        let imgHeight = 52 * rate
+        let imgWidth = 22 * rate
+        let imgHeight = 23 * rate
         iconImage?.drawInRect(CGRect(x: (rect.size.width - imgWidth)/2, y: (rect.size.height - imgHeight)/2, width: imgWidth, height: imgHeight), blendMode: .Normal, alpha: 1.0)
         let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()

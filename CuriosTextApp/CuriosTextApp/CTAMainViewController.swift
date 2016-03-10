@@ -33,7 +33,7 @@ class CTAMainViewController: UIViewController, CTAAddBarProtocol, CTALoginProtoc
         // Do any additional setup after loading the view.
         
         self.initView()
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
     }
     
     override func didReceiveMemoryWarning() {
@@ -48,7 +48,7 @@ class CTAMainViewController: UIViewController, CTAAddBarProtocol, CTALoginProtoc
         self.addChildViewController(pageNavigate)
         self.view.addSubview(pageNavigate.view)
         
-        pageViewController.view.backgroundColor = UIColor.whiteColor()
+        pageViewController.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
         pageViewController.dataSource = pageControllers
         
         

@@ -51,9 +51,9 @@ class CTAAddBarView: UIControl {
             
             shapeLayer.path = path
             shapeLayer.shadowPath = path
-            shapeLayer.shadowColor = UIColor.blackColor().CGColor
+            shapeLayer.shadowColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.7).CGColor
             shapeLayer.shadowOffset = CGSize(width: 0, height: -0.0)
-            shapeLayer.shadowOpacity = 0.4
+            shapeLayer.shadowOpacity = 0.2
             shapeLayer.shadowRadius = 2.0
         }
         

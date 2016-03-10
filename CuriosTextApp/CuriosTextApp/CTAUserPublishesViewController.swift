@@ -71,7 +71,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.initCollectionView();
         self.initViewNavigateBar();
         self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
         if self.viewUser == nil {
             self.isLoginUser = true
         }else {
@@ -165,7 +165,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.collectionView.dataSource = self
         self.collectionView.registerClass(CTAPublishesCell.self, forCellWithReuseIdentifier: "ctaPublishesCell")
         self.view.addSubview(self.collectionView!);
-        self.collectionView.backgroundColor = UIColor.whiteColor()
+        self.collectionView.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
     
         let freshIcon1:UIImage = UIImage.init(named: "fresh-icon-1")!
         

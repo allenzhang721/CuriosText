@@ -37,7 +37,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         super.viewDidLoad()
         self.initView()
         self.navigationController!.interactivePopGestureRecognizer!.delegate = self
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
         // Do any additional setup after loading the view.
     }
     
@@ -277,6 +277,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.userDescLabel.frame.size.width = maxW
         let texth = self.userDescLabel.frame.height
         if texth < 37{
+            self.userDescLabel.frame.size.height = 25
             self.userDescLabel.textAlignment = .Right
             self.descNextImg.frame.origin.y = self.userDescLabel.frame.origin.y+2
             self.descLineImg.frame.origin.y = self.userDescLabel.frame.origin.y+37

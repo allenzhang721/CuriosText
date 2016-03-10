@@ -38,6 +38,8 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     var userIconPath:String = ""
     var userModel:CTAUserModel?
     
+    var isChange:Bool = false
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
@@ -48,17 +50,22 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         // Do any additional setup after loading the view.
         self.initView()
         self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.viewWillLoad()
+        if !self.isChange {
+            self.viewWillLoad()
+        }
+        self.isChange = false
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        self.resetView()
+        if !self.isChange {
+            self.resetView()
+        }
     }
     
     func initView(){
@@ -173,7 +180,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     func setCompleteButtonStyle(){
         let newText = self.userNickNameTextInput.text
         let newStr = NSString(string: newText!)
-        if self.selectedImage != nil && newStr.length > 0{
+        if newStr.length > 0{
             self.completeButton.enabled = true
         }else {
             self.completeButton.enabled = false
@@ -272,10 +279,12 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
             if index == 0{
                 self.imagePicker.allowsEditing = false
                 self.imagePicker.sourceType = .Camera
+                self.isChange = true
                 self.presentViewController(self.imagePicker, animated: true, completion: nil)
             }else if index == 1{
                 self.imagePicker.allowsEditing = false
                 self.imagePicker.sourceType = .PhotoLibrary
+                self.isChange = true
                 self.presentViewController(self.imagePicker, animated: true, completion: nil)
             }
         }

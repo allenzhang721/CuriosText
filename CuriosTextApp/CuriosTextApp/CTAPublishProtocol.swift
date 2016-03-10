@@ -38,9 +38,9 @@ extension CTAPublishProtocol where Self: UIViewController{
 
     func initPublishSubView(publishRect:CGRect, horRate:CGFloat){
         let bounds = UIScreen.mainScreen().bounds
-        var butY   = publishRect.origin.y + publishRect.height + 20 + 10*horRate
-        let originy = bounds.height - 60
-        if butY > originy{
+        var butY   =  bounds.height - 80 //publishRect.origin.y + publishRect.height + 20 + 10*horRate
+        let originy = publishRect.origin.y + publishRect.height + 20 + 10*horRate //bounds.height - 60
+        if butY < originy{
             butY = originy
         }
         self.likeButton.frame = CGRect.init(x: 0, y: 0, width: 40, height: 40)
@@ -67,8 +67,8 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.view.addSubview(rebuildButton)
         rebuildButton.addTarget(self, action: "rebuildButtonClick:", forControlEvents: .TouchUpInside)
         
-        self.userIconImage.frame = CGRect.init(x: UIScreen.mainScreen().bounds.width/2, y: 9, width: 60, height: 60)
-        self.userIconImage.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: publishRect.origin.y - 30 - 65*horRate)
+        self.userIconImage.frame = CGRect.init(x: UIScreen.mainScreen().bounds.width/2, y: 9, width: 40, height: 40)
+        self.userIconImage.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: publishRect.origin.y - 20 - 65*horRate)
         if self.userIconImage.frame.origin.y < 5 {
             self.userIconImage.frame.origin.y = 5
         }
@@ -80,7 +80,7 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.userIconImage.image = UIImage(named: "default-usericon")
         
         self.userNicknameLabel.frame = CGRect.init(x: 0, y: 0, width: 100, height: 25)
-        self.userNicknameLabel.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2, y: self.userIconImage.center.y + 42 + 15*horRate)
+        self.userNicknameLabel.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2, y: self.userIconImage.center.y + 32 + 5*horRate)
         if (self.userNicknameLabel.frame.origin.y + self.userNicknameLabel.frame.size.height) > publishRect.origin.y{
             self.userNicknameLabel.frame.origin.y = publishRect.origin.y - self.userNicknameLabel.frame.size.height
             self.userNicknameLabel.font = UIFont.systemFontOfSize(16)
