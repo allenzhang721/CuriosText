@@ -216,12 +216,12 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         self.navigationController?.pushViewController(searchCountry, animated: true)
     }
     
-    func changeToLoadingView(button:UIButton?){
-        self.showLoadingViewByView(button)
+    func changeToLoadingView(view:UIView?){
+        self.showLoadingViewByView(view)
     }
     
-    func changeToUnloadingView(button:UIButton?){
-        self.hideLoadingViewByView(button)
+    func changeToUnloadingView(view:UIView?){
+        self.hideLoadingViewByView(view)
     }
     
     func loginButtonClick(sender: UIButton){
@@ -286,7 +286,6 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
     }
     
     func wechatButtonClick(sender: UIButton){
-        self.changeToLoadingView(nil)
         CTASocialManager.OAuth(.WeChat) { (resultDic, urlResponse, error) -> Void in
             if error == nil {
                 if resultDic != nil {
@@ -297,8 +296,9 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
                     let country:String = resultDic![key(.Country)] as! String
                     let province:String = resultDic![key(.Province)] as! String
                     let city:String = resultDic![key(.City)] as! String
+                    self.changeToLoadingView(self.otherAccountView)
                     CTAUserDomain.getInstance().weixinRegister(weixinID, nickName: nickName, sex: sex, country: country, province: province, city: city, compelecationBlock: { (info) -> Void in
-                        self.changeToUnloadingView(nil)
+                        self.changeToUnloadingView(self.otherAccountView)
                         if info.result{
                             let userModel = info.baseModel as! CTAUserModel
                             if info.successType == 0{
@@ -330,10 +330,10 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
                         }
                     })
                 }else {
-                    self.changeToUnloadingView(nil)
+                    //self.changeToUnloadingView(nil)
                 }
             }else {
-                self.changeToUnloadingView(nil)
+                //self.changeToUnloadingView(nil)
                 if error!.code == -1{
                     
                 }

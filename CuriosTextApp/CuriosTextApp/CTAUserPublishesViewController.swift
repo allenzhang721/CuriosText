@@ -145,8 +145,15 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         if self.isLoginUser {
             let userID = self.loginUser!.userID
             let beUserID = self.viewUser!.userID
+            var savePublishModel:Array<CTAPublishModel> = []
+            if self.publishModelArray.count < 40 {
+                savePublishModel = self.publishModelArray
+            }else {
+                let slice = self.publishModelArray[0...40]
+                savePublishModel = Array(slice)
+            }
             let request = CTAUserPublishListRequest.init(userID: userID, beUserID: beUserID, start: 0)
-            self.savePublishArray(request, modelArray: self.publishModelArray)
+            self.savePublishArray(request, modelArray: savePublishModel)
         }
     }
     

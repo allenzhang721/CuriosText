@@ -47,8 +47,8 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.initView()
         self.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
     }
-
     override func didReceiveMemoryWarning() {
+
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
@@ -120,7 +120,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.preFullCell.publishModel = nil
         
         let shadeFrame = self.nextMoreCell.frame
-        self.shadeView = UIView.init(frame: CGRect.init(x: shadeFrame.origin.x, y: shadeFrame.origin.y+shadeFrame.height-15, width: shadeFrame.width, height: 20))
+        self.shadeView = UIView.init(frame: CGRect.init(x: shadeFrame.origin.x, y: shadeFrame.origin.y+shadeFrame.height-15, width: shadeFrame.width - 26, height: 20))
         self.handView.addSubview(self.shadeView)
         addCellShadow(self.shadeView)
         self.shadeView.superview?.sendSubviewToBack(self.shadeView)
@@ -462,7 +462,14 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     func saveArrayToLocaol(){
         let userID = (self.loginUser == nil) ? "" : self.loginUser!.userID
         let request = CTANewPublishListRequest.init(userID: userID, start: 0)
-        self.savePublishArray(request, modelArray: self.publishModelArray)
+        var savePublishModel:Array<CTAPublishModel> = []
+        if self.publishModelArray.count < 40 {
+            savePublishModel = self.publishModelArray
+        }else {
+            let slice = self.publishModelArray[0...40]
+            savePublishModel = Array(slice)
+        }
+        self.savePublishArray(request, modelArray: savePublishModel)
     }
     
     func viewPanHandler(sender: UIPanGestureRecognizer) {
@@ -498,15 +505,14 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         var xChange = location.x - self.beganLocation.x
         if xChange > 0{
             self.panDirection = .Next
-            let percent = xChange / maxX
-            let rChange = 0+maxR*percent
-            var rChangePI=rChange/360*CGFloat(M_PI)
-            var yChange = abs(percent*maxY)
+            var percent = xChange / maxX
             if self.currentPublishIndex > self.publishModelArray.count - 2 {
-                xChange = xChange/4
-                yChange = yChange/4
-                rChangePI = rChangePI/4
+                xChange = 0
+                percent = 0
             }
+            let rChange = 0+maxR*percent
+            let rChangePI=rChange/360*CGFloat(M_PI)
+            let yChange = abs(percent*maxY)
             self.currentFullCell.transform = CGAffineTransformMakeRotation(rChangePI)
             self.currentFullCell.center = CGPoint.init(x: bounds.width/2+xChange, y: fullSize.height/2+yChange)
             
