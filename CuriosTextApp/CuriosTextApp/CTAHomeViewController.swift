@@ -47,8 +47,8 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.initView()
         self.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
     }
-
     override func didReceiveMemoryWarning() {
+
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
@@ -120,7 +120,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.preFullCell.publishModel = nil
         
         let shadeFrame = self.nextMoreCell.frame
-        self.shadeView = UIView.init(frame: CGRect.init(x: shadeFrame.origin.x, y: shadeFrame.origin.y+shadeFrame.height-15, width: shadeFrame.width, height: 20))
+        self.shadeView = UIView.init(frame: CGRect.init(x: shadeFrame.origin.x, y: shadeFrame.origin.y+shadeFrame.height-15, width: shadeFrame.width - 26, height: 20))
         self.handView.addSubview(self.shadeView)
         addCellShadow(self.shadeView)
         self.shadeView.superview?.sendSubviewToBack(self.shadeView)
@@ -507,6 +507,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             self.panDirection = .Next
             var percent = xChange / maxX
             if self.currentPublishIndex > self.publishModelArray.count - 2 {
+                xChange = 0
                 percent = 0
             }
             let rChange = 0+maxR*percent

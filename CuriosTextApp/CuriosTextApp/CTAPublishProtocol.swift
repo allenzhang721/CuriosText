@@ -80,12 +80,12 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.userIconImage.image = UIImage(named: "default-usericon")
         
         self.userNicknameLabel.frame = CGRect.init(x: 0, y: 0, width: 100, height: 25)
-        self.userNicknameLabel.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2, y: self.userIconImage.center.y + 32 + 5*horRate)
+        self.userNicknameLabel.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2, y: self.userIconImage.center.y + 32 + 10*horRate)
         if (self.userNicknameLabel.frame.origin.y + self.userNicknameLabel.frame.size.height) > publishRect.origin.y{
             self.userNicknameLabel.frame.origin.y = publishRect.origin.y - self.userNicknameLabel.frame.size.height
             self.userNicknameLabel.font = UIFont.systemFontOfSize(16)
         }else {
-            self.userNicknameLabel.font = UIFont.systemFontOfSize(18)
+            self.userNicknameLabel.font = UIFont.systemFontOfSize(16)
         }
         
         self.userNicknameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
