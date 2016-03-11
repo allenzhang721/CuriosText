@@ -88,25 +88,15 @@ class CTADocument: UIDocument {
     override func contentsForType(typeName: String) throws -> AnyObject {
         
 //        if root.fileWrappers?[WrapperKey.page] == nil {
-        let pageData = NSKeyedArchiver.archivedDataWithRootObject(page!)
+        let cleanPage = page!.cleanEmptyContainers()
+        let pageData = NSKeyedArchiver.archivedDataWithRootObject(cleanPage)
         let pageWrapper = NSFileWrapper(regularFileWithContents: pageData)
         if let prePage = root.fileWrappers?[WrapperKey.page] {
             root.removeFileWrapper(prePage)
         }
         pageWrapper.preferredFilename = WrapperKey.page
         root.addFileWrapper(pageWrapper)
-       
-        for c in page!.containers {
-            if c.type == .Text {
-                debug_print("contents = \(c.textElement?.texts)", context: previewConttext)
-                //                    debugPrint(c.textElement?.texts, context: previewConttext)
-            }
-        }
-//        }
-        
-//        if root.fileWrappers?[WrapperKey.resource] == nil {
-            root.addFileWrapper(res)
-//        }
+        root.addFileWrapper(res)
 
         return rootWrapper
     }
