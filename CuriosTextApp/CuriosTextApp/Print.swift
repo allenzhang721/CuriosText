@@ -28,7 +28,7 @@ let animationChangedContext = PrintContext(shouldPrint: true, context: "animatio
 // other swift flags : -D DEBUG
 public func debug_print<T>(value: T,file: String = __FILE__, line: Int = __LINE__ ,function: String = __FUNCTION__, context: PrintContext = defaultContext) {
     
-//    #if DEBUG
+    #if DEBUG
     if context.shouldPrint {
         print("<\(((file as NSString).lastPathComponent as NSString).stringByDeletingPathExtension) : \(line)>: \(function)")
         print(value)
@@ -39,7 +39,7 @@ public func debug_print<T>(value: T,file: String = __FILE__, line: Int = __LINE_
 //
 //        print(value)
 //        
-//    #endif
+    #endif
     
 }
 
