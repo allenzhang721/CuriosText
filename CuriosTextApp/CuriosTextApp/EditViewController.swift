@@ -431,7 +431,7 @@ extension EditViewController {
                             
                             let publishIconURL = publishID + "/" + publishName
                             
-                            CTAPublishDomain().createPublishFile(publishID, userID: CTAUserManager.user!.userID, title: "Emiaostein", publishDesc: "Emiaostein", publishIconURL: publishIconURL, previewIconURL: "", publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
+                            CTAPublishDomain().createPublishFile(publishID, userID: CTAUserManager.user!.userID, title: "", publishDesc: "Emiaostein", publishIconURL: publishIconURL, previewIconURL: "", publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
                                 
                                 dispatch_async(dispatch_get_main_queue(), {
                                     strongSelf.delegate?.EditControllerDidPublished(strongSelf)
@@ -439,8 +439,6 @@ extension EditViewController {
                                         
                                     })
                                 })
-                                
-                                //                            debug_print("publish \(domainInfo.result), publishURL = \(publishURL) \n \(domainInfo)", context: previewConttext)
                             })
                         })
                     }
@@ -450,10 +448,6 @@ extension EditViewController {
                 debug_print("Fail", context: defaultContext)
             }
         }
-        
-        
-        
-        
     }
     
     
