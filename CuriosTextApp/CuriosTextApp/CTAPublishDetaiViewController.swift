@@ -145,6 +145,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
             }
         }
         self.reloadCells()
+        self.currentFullCell!.playAnimation()
     }
     
     func reloadCells(){
@@ -209,7 +210,6 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
         }
         self.currentFullCell!.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2)
         self.currentFullCell!.alpha = 1.0
-        self.currentFullCell!.playAnimation()
         self.setLikeButtonStyle()
     }
     
@@ -508,43 +508,47 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
     
     func horPanAnimation(xRate:CGFloat){
         if xRate > 0 {
-            if self.preCenter != nil && self.currentCenter != nil{
-                let xChange = self.currentCenter!.x - self.previousFullCell.center.x
-                let yChange = self.currentCenter!.y - self.previousFullCell.center.y
-                
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
-                    self.changCellsCenter(xChange, yChange: yChange)
-                    if self.previousFullCell.isVisible {
-                        self.previousFullCell.transform = CGAffineTransformMakeScale(1, 1)
-                        self.previousFullCell.alpha = 1
-                    }
-                    if self.currentFullCell.isVisible {
-                        self.currentFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
-                        self.currentFullCell.alpha = 0.2
-                    }
-                    }, completion: { (_) -> Void in
-                        self.horPanComplete(.Previous, isChange: true)
-                })
+            if self.previousFullCell.isVisible {
+                if self.preCenter != nil && self.currentCenter != nil{
+                    let xChange = self.currentCenter!.x - self.previousFullCell.center.x
+                    let yChange = self.currentCenter!.y - self.previousFullCell.center.y
+                    
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        self.changCellsCenter(xChange, yChange: yChange)
+                        if self.previousFullCell.isVisible {
+                            self.previousFullCell.transform = CGAffineTransformMakeScale(1, 1)
+                            self.previousFullCell.alpha = 1
+                        }
+                        if self.currentFullCell.isVisible {
+                            self.currentFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+                            self.currentFullCell.alpha = 0.2
+                        }
+                        }, completion: { (_) -> Void in
+                            self.horPanComplete(.Previous, isChange: true)
+                    })
+                }
             }
         }else {
-            if self.nextCenter != nil && self.nextCenter != nil{
-                let xChange = self.currentCenter!.x - self.nextFullCell!.center.x
-                let yChange = self.currentCenter!.y - self.nextFullCell!.center.y
-                
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
-                    self.changCellsCenter(xChange, yChange: yChange)
-                    if self.nextFullCell.isVisible {
-                        self.nextFullCell.transform = CGAffineTransformMakeScale(1, 1)
-                        self.nextFullCell.alpha = 1
-                    }
-                    if self.currentFullCell.isVisible {
-                        self.currentFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
-                        self.currentFullCell.alpha = 0.2
-                    }
-                    }, completion: { (_) -> Void in
-                        self.horPanComplete(.Next, isChange: true)
-                })
-                
+            if self.nextFullCell.isVisible {
+                if self.nextCenter != nil && self.nextCenter != nil{
+                    let xChange = self.currentCenter!.x - self.nextFullCell!.center.x
+                    let yChange = self.currentCenter!.y - self.nextFullCell!.center.y
+                    
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        self.changCellsCenter(xChange, yChange: yChange)
+                        if self.nextFullCell.isVisible {
+                            self.nextFullCell.transform = CGAffineTransformMakeScale(1, 1)
+                            self.nextFullCell.alpha = 1
+                        }
+                        if self.currentFullCell.isVisible {
+                            self.currentFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+                            self.currentFullCell.alpha = 0.2
+                        }
+                        }, completion: { (_) -> Void in
+                            self.horPanComplete(.Next, isChange: true)
+                    })
+                    
+                }
             }
         }
     }
@@ -634,6 +638,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
             self.loadPublishCell()
         }else {
             self.currentFullCell!.playAnimation()
+            self.reloadCells()
         }
     }
     
@@ -939,16 +944,23 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
                             UIView.animateWithDuration(0.3, animations: { () -> Void in
                                 self.currentFullCell.alpha = 0
                                 }, completion: { (_) -> Void in
-                                    self.nextCenter = self.nextFullCell.center
-                                    self.preCenter = self.previousFullCell.center
-                                    self.currentCenter = self.currentFullCell.center
-                                    if selectedIndex < self.publishModelArray.count - 1 {
-                                        self.currentFullCell.hidden = true
-                                        self.horPanAnimation(-1)
-                                    }else {
-                                        self.horPanAnimation(1)
-                                    }
                                     self.publishModelArray.removeAtIndex(selectedIndex)
+                                    if self.publishModelArray.count > 0{
+                                        self.nextCenter = self.nextFullCell.center
+                                        self.preCenter = self.previousFullCell.center
+                                        self.currentCenter = self.currentFullCell.center
+                                        if selectedIndex < self.publishModelArray.count {
+                                            self.currentFullCell.hidden = true
+                                            self.horPanAnimation(-1)
+                                        }else {
+                                            self.horPanAnimation(1)
+                                        }
+                                    }else {
+                                        self.currentFullCell.hidden = true
+                                        self.currentCenter = self.currentFullCell.center
+                                        self.setVerCellCenter()
+                                        self.verPanAnimation(500.00)
+                                    }
                             })
                         }
                     })
