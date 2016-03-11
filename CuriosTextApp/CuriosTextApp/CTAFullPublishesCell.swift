@@ -55,7 +55,8 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
     func setViewColor(color:UIColor){
         if self.cellColorView == nil {
-            self.cellColorView = UIView.init(frame: self.bounds)
+            let cellBoud = CGRect.init(x: -1, y: -1, width: self.bounds.width+2, height: self.bounds.height+2)
+            self.cellColorView = UIView.init(frame: cellBoud)
             self.cropImageRound(self.cellColorView!)
             self.addSubview(self.cellColorView!)
             self.bringSubviewToFront(self.cellColorView!)
