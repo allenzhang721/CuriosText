@@ -70,7 +70,13 @@ class CTASelectorRotatorCell: CTASelectorCell {
     }
     
     func valueChanged(sender: AnyObject) {
+        let radian: CGFloat
+        if view.radian < 0 {
+            radian = CGFloat(2 * M_PI) - fabs(view.radian) % CGFloat(2 * M_PI)
+        } else {
+            radian = view.radian
+        }
         
-        hudLabel.text = "\(Int(ceil(view.radian / CGFloat(M_PI) * 180)))º"
+        hudLabel.text = "\(Int(ceil((radian % CGFloat(2 * M_PI)) / CGFloat(M_PI) * 180)))º"
     }
 }

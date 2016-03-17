@@ -709,8 +709,14 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             let container = selectedContainer else {
             return
         }
+        let aradian: CGFloat
+        if radian < 0 {
+            aradian = CGFloat(2 * M_PI) - fabs(radian) % CGFloat(2 * M_PI)
+        } else {
+            aradian = radian
+        }
         
-        container.radius = radian
+        container.radius = aradian % CGFloat(2 * M_PI)
         canvasViewController.updateAt(selectedIndexPath, updateContents: false)
     }
     

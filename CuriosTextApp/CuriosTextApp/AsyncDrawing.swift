@@ -104,7 +104,7 @@ func drawingText(t: TextDrawable) {
     let context = UIGraphicsGetCurrentContext()
     CGContextSaveGState(context)
     CGContextTranslateCTM(context, t.position.x, t.position.y)
-    CGContextRotateCTM(context, t.rotation * CGFloat(M_PI) / 180)
+    CGContextRotateCTM(context, t.rotation)
     let rect = CGRect(x: -t.size.width / 2.0, y: -t.size.height / 2.0, width: t.size.width, height: t.size.height)
     let s = t.attributeString
     s.drawInRect(rect)
@@ -115,7 +115,7 @@ func drawingImage(t: ImageDrawable) {
     let context = UIGraphicsGetCurrentContext()
     CGContextSaveGState(context)
     CGContextTranslateCTM(context, t.position.x, t.position.y)
-    CGContextRotateCTM(context, t.rotation * CGFloat(M_PI) / 180)
+    CGContextRotateCTM(context, t.rotation)
     let rect = CGRect(x: -t.size.width / 2.0, y: -t.size.height / 2.0, width: t.size.width, height: t.size.height)
     let s = t.image
     s.drawInRect(rect)

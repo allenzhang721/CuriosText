@@ -8,13 +8,15 @@
 
 import UIKit
 
+let round: Double = 40
+
 class CTARotatorView: UIControl {
     
-    var maximumRadian: CGFloat = CGFloat(M_PI * 2)
-    var minimumRadian: CGFloat = -CGFloat(M_PI * 2)
+    var maximumRadian: CGFloat = CGFloat(M_PI * round)
+    var minimumRadian: CGFloat = -CGFloat(M_PI * round)
     var currentValue: CGFloat = 0
     
-    private var validRadian: CGFloat = 1000.0
+    private var validRadian: CGFloat = 0.0
     var radianUnit: CGFloat {
         
         return (maximumRadian - minimumRadian) / validRadian
@@ -52,7 +54,7 @@ class CTARotatorView: UIControl {
         
         setupNodeLayer(bounds)
         
-        validRadian = CGFloat(M_PI) * nodeLayer.bounds.width * 2
+        validRadian = CGFloat(M_PI) * nodeLayer.bounds.width * CGFloat(round)
         
         scrollView.delegate = self
         
@@ -94,7 +96,6 @@ extension CTARotatorView: UIScrollViewDelegate {
             CATransaction.commit()
             
             sendActionsForControlEvents(.ValueChanged)
-            print("nextRadian = \(currentValue)")
         }
     }
 }
