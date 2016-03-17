@@ -52,6 +52,14 @@ class CTABarItemsFactory {
             selectedColor: CTAStyleKit.selectedColor,
             title: LocalStrings.Font.description),
         
+        
+        CTABarItem(
+            normalImage: CTAStyleKit.imageOfColorBarItemNormal,
+            selectedImage: CTAStyleKit.imageOfColorBarItemSelected,
+            normalColor: CTAStyleKit.normalColor,
+            selectedColor: CTAStyleKit.selectedColor,
+            title: LocalStrings.Color.description),
+        
         CTABarItem(
             normalImage: CTAStyleKit.imageOfSizeBarItemNormal,
             selectedImage: CTAStyleKit.imageOfSizeBarItemSelected,
@@ -79,13 +87,6 @@ class CTABarItemsFactory {
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
             title: LocalStrings.Alignment.description),
-        
-        CTABarItem(
-            normalImage: CTAStyleKit.imageOfColorBarItemNormal,
-            selectedImage: CTAStyleKit.imageOfColorBarItemSelected,
-            normalColor: CTAStyleKit.normalColor,
-            selectedColor: CTAStyleKit.selectedColor,
-            title: LocalStrings.Color.description),
         
         CTABarItem(
             normalImage: CTAStyleKit.imageOfAnimationBarItemNormal,
