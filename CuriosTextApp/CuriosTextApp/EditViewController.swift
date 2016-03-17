@@ -161,7 +161,8 @@ class EditViewController: UIViewController {
 extension EditViewController {
     
     @IBAction func cancelAction(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+        let alert = alert_EditorDismiss{[weak self] in self?.dismissViewControllerAnimated(true, completion: nil)}
+        presentViewController(alert, animated: true, completion: nil)
     }
     
     @IBAction func publish(sender: AnyObject) {

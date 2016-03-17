@@ -11,13 +11,13 @@ import Foundation
 enum LocalStrings: CustomStringConvertible {
 
     // Common
-    case Cancel, Done, Delete
+    case Cancel, Done, Delete, Attension
     
     // Image Picker
     case Camera, Photo
     
     // Editor
-    case Publish , EditTextPlaceHolder
+    case Publish , EditTextPlaceHolder, EditorDismissMessage
     
     // Edior Tab
     case Size, Rotation, Font, Spacing, Alignment, Color, Animation, AnimationType, AnimationDuration, AnimationDelay
@@ -35,6 +35,8 @@ enum LocalStrings: CustomStringConvertible {
             return NSLocalizedString("Done", comment: "")
         case .Delete:
             return NSLocalizedString("Delete", comment: "")
+        case .Attension:
+            return NSLocalizedString("Attension", comment: "")
             
             // Image Picker
         case .Camera:
@@ -47,6 +49,9 @@ enum LocalStrings: CustomStringConvertible {
             return NSLocalizedString("Publish", comment: "")
         case .EditTextPlaceHolder:
             return NSLocalizedString("EditTextPlaceHolder", comment: "")
+        case .EditorDismissMessage:
+            return NSLocalizedString("EditorDismissMessage", comment: "")
+            
             
             // Edior Tab
         case .Size:

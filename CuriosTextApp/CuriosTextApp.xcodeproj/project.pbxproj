@@ -154,6 +154,7 @@
 		2CA3AA551C8D7A0E00CE8191 /* Extension+Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA3AA541C8D7A0E00CE8191 /* Extension+Document.swift */; };
 		2CA860C01C8FC157000BCF8A /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA860BF1C8FC157000BCF8A /* LocalizationManager.swift */; };
 		2CA9933E1C75DD4700B5EEDC /* SimpleNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA9933D1C75DD4700B5EEDC /* SimpleNetworking.swift */; };
+		2CA99F471C9A536100850FA5 /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA99F461C9A536100850FA5 /* AlertHelper.swift */; };
 		2CAEAC911C323F2600C9F9AC /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC8C1C323F2600C9F9AC /* Dynamic.swift */; };
 		2CAEAC931C323F2600C9F9AC /* EditorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC8E1C323F2600C9F9AC /* EditorFactory.swift */; };
 		2CAEAC941C323F2600C9F9AC /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC8F1C323F2600C9F9AC /* EditViewController.swift */; };
@@ -433,6 +434,7 @@
 		2CA3AA541C8D7A0E00CE8191 /* Extension+Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+Document.swift"; sourceTree = "<group>"; };
 		2CA860BF1C8FC157000BCF8A /* LocalizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		2CA9933D1C75DD4700B5EEDC /* SimpleNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleNetworking.swift; sourceTree = "<group>"; };
+		2CA99F461C9A536100850FA5 /* AlertHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
 		2CAEAC8C1C323F2600C9F9AC /* Dynamic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 		2CAEAC8E1C323F2600C9F9AC /* EditorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorFactory.swift; sourceTree = "<group>"; };
 		2CAEAC8F1C323F2600C9F9AC /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
@@ -938,6 +940,7 @@
 				2C3CAD071C21825100D8DE4B /* Document_model */,
 				2C3CAD101C21825900D8DE4B /* Page_model */,
 				2C31EB5F1C451AD9002A4D71 /* Extensions */,
+				2CA99F461C9A536100850FA5 /* AlertHelper.swift */,
 			);
 			name = Gobal;
 			sourceTree = "<group>";
@@ -1468,6 +1471,7 @@
 				2CC9307D1C74640300FB02A9 /* CTACameraView.swift in Sources */,
 				66A072A91C156D1C0046C72F /* CTAUserRequestAPI.swift in Sources */,
 				2C47F8A01C7174D20068F215 /* CTATextContainerViewModel.swift in Sources */,
+				2CA99F471C9A536100850FA5 /* AlertHelper.swift in Sources */,
 				2CC811611C79A6D5003CE8BF /* BlackCatOptions.swift in Sources */,
 				2C5C24921C44E82100A70F1B /* CTAPickerView.swift in Sources */,
 				2CF5EB8B1C47B2CF009F0719 /* CTAFontsManager.swift in Sources */,

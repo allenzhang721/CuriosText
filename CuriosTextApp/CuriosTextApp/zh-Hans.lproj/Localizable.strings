@@ -89,6 +89,7 @@
 "Cancel" = "取消";
 "Done" = "完成";
 "Delete" = "删除";
+"Attension" = "注意";
 
 // MARK: - Image Picker
 "Camera" = "相机";
@@ -108,6 +109,8 @@
 "AnimationType" = "类型";
 "AnimationDuration" = "时间";
 "AnimationDelay" = "延时";
+
+"EditorDismissMessage" = "您确认退出编辑吗？您的内容将会丢失";
 
 // MARK: - AnimationName
 "None" = "无";

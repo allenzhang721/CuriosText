@@ -24,11 +24,11 @@ extension ContainerVMProtocol {
         case .Text:
             let textTypes: [CTAContainerFeatureType] = [
                 .Fonts,
+                .Colors,
                 .Size,
                 .Rotator,
                 .Aligments,
                 .TextSpacing,
-                .Colors,
                 .Animation
             ]
             

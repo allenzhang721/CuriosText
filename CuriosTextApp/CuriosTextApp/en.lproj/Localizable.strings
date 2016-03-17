@@ -87,6 +87,7 @@
 "Cancel" = "Cancel";
 "Done" = "Done";
 "Delete" = "Delete";
+"Attension" = "Attension";
 
 // MARK: - Image Picker
 "Camera" = "Camera";
@@ -106,6 +107,8 @@
 "AnimationType" = "Type";
 "AnimationDuration" = "Duration";
 "AnimationDelay" = "Delay";
+
+"EditorDismissMessage" = "Do you want to quit the edit ? The edited content will lost.";
 
 // MARK: - AnimationName
 "None" = "None";
