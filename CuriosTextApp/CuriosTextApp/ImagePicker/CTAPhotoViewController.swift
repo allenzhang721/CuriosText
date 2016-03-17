@@ -119,7 +119,8 @@ extension CTAPhotoViewController {
         allPhotos.sortDescriptors = [dateSortDescritor]
         
         // 2. fetch result and collection
-        let result = PHAsset.fetchAssetsWithOptions(allPhotos)
+         let result = PHAsset.fetchAssetsWithOptions(allPhotos)
+        guard result.count > 0 else {return}
         let collection = result[0] as? PHAssetCollection
         inner.assetFetchResults = result
         inner.assetCollection = collection

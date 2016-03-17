@@ -129,10 +129,10 @@ extension CTAAnimationBinder {
 
 extension CTAAnimationBinder {
     
-    func moveIn(view: UIView, index: Int) {
+    func moveIn(view: UIView, index: Int, pageSize: CGSize = CGSize(width: 414, height: 414)) {
         
         let translationX = POPLayerGetTranslationX(view.layer)
-        POPLayerSetTranslationX(view.layer, -300 - translationX)
+        POPLayerSetTranslationX(view.layer, -pageSize.width - translationX)
         
         let ani = POPBasicAnimation(propertyNamed: kPOPLayerTranslationX)
         ani.beginTime = CACurrentMediaTime() + CFTimeInterval(config.delay)
@@ -146,13 +146,13 @@ extension CTAAnimationBinder {
         
     }
     
-    func moveOut(view: UIView, index: Int) {
+    func moveOut(view: UIView, index: Int, pageSize: CGSize = CGSize(width: 414, height: 414)) {
         
         let ani = POPBasicAnimation(propertyNamed: kPOPLayerTranslationX)
         ani.beginTime = CACurrentMediaTime() + CFTimeInterval(config.delay)
         ani.duration = CFTimeInterval(config.duration)
         ani.fromValue = NSNumber(float: 0)
-        ani.toValue = NSNumber(float: 300)
+        ani.toValue = NSNumber(float: Float(pageSize.width) + Float(view.bounds.width))
         view.layer.pop_addAnimation(ani, forKey: "MOVE_Out")
     }
     
