@@ -1197,7 +1197,6 @@
 				TargetAttributes = {
 					2C3B33C51C1176D000738166 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = P36PRJCB4C;
 					};
 					2C3B33D91C1176D000738166 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -1770,8 +1769,8 @@
 			baseConfigurationReference = FEA1095AC8443011149CF7A8 /* Pods-CuriosTextApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Curios Technology Co., Ltd. (H7HX4A2DL8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing Curios Technology Co., Ltd. (H7HX4A2DL8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -1782,7 +1781,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c5382dfa-5b86-4513-922e-ed753947577f";
+				PROVISIONING_PROFILE = "7e02dc05-e38c-4197-a4b8-2e7656981ca6";
 				SWIFT_OBJC_BRIDGING_HEADER = "CuriosTextApp-Bridging-Header.h";
 			};
 			name = Release;
