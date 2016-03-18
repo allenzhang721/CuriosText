@@ -25,6 +25,7 @@ class CTAPhotoPreviewView: UIView {
     
     private let imageView = UIImageView()
     private let scrollView = UIScrollView()
+    private var tap: UITapGestureRecognizer!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,7 +70,8 @@ extension CTAPhotoPreviewView {
     }
     
     func setupGesture() {
-        let tap = UITapGestureRecognizer(target: self, action: "tap:")
+        tap = UITapGestureRecognizer(target: self, action: "tap:")
+        tap.delegate = self
         tap.numberOfTapsRequired = 2
         addGestureRecognizer(tap)
     }
@@ -158,14 +160,14 @@ extension CTAPhotoPreviewView {
         scrollView.setZoomScale(nextScale, animated: true)
     }
     
-    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
-        let aignoreRect = ignoreRect
-        if CGRectContainsPoint(aignoreRect, point) {
-            return false
-        } else {
-            return true
-        }
-    }
+//    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
+//        let aignoreRect = ignoreRect
+//        if CGRectContainsPoint(aignoreRect, point) {
+//            return false
+//        } else {
+//            return true
+//        }
+//    }
 }
 
 // MARK: - Delegate 
@@ -183,6 +185,22 @@ extension CTAPhotoPreviewView: UIScrollViewDelegate {
     }
     
     func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
+        
+    }
+}
+
+extension CTAPhotoPreviewView: UIGestureRecognizerDelegate {
+    override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer == tap {
+            let location = gestureRecognizer.locationInView(self)
+            if CGRectContainsPoint(ignoreRect, location) {
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return true
+        }
         
     }
 }

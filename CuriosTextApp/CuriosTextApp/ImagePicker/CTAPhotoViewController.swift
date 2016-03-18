@@ -92,6 +92,9 @@ extension CTAPhotoViewController {
         setupDelegateAndDataSource()
         setupFetchPhotos()
         
+        let tap = UITapGestureRecognizer(target: self, action: "tap:")
+        previewView.addGestureRecognizer(tap)
+        
         if let assetFetchResults = inner.assetFetchResults where assetFetchResults.count > 0, let asset = assetFetchResults[0] as? PHAsset {
             
             thumbCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
@@ -130,6 +133,15 @@ extension CTAPhotoViewController {
 
 // MARK: - Action
 extension CTAPhotoViewController {
+    
+    func tap(sener: UITapGestureRecognizer) {
+        let location = sener.locationInView(previewView)
+        let ignoreRect = previewView.ignoreRect
+        if CGRectContainsPoint(ignoreRect, location) {
+            let trigdistance = inner.triggScrollDistance
+            previewScroll(.End(translation: trigdistance))
+        }
+    }
     
     @IBAction func pan(sender: UIPanGestureRecognizer) {
         
