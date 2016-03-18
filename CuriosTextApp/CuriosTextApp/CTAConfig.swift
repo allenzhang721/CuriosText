@@ -22,7 +22,7 @@ struct CTAConfigs {
     
     struct SMS {
         
-       static let appID = "cee2524c26f323f571cf0b53590815bd"
-       static let appKey = "f3c8b751ff80"
+       static let appID = "3be50064be3b1dfa024b327c9be3eae9"
+       static let appKey = "10a95e4bb9b32"
     }
 }
