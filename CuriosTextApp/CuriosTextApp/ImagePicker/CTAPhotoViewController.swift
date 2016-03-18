@@ -421,7 +421,29 @@ extension CTAPhotoViewController: UICollectionViewDelegate {
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        if scrollView.contentOffset.y <= 0 && scrollView.tracking {
+            previewScroll(.Scroll(deltaY: 6))
+        }
+        
         updateCacheSets()
+    }
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        
+        if scrollView.contentOffset.y <= 0 {
+            let trigdistance = inner.triggScrollDistance
+            previewScroll(.End(translation: trigdistance))
+        }
+    }
+    
+    func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
+        
+        if scrollView.contentOffset.y <= 0 {
+            let trigdistance = inner.triggScrollDistance
+            previewScroll(.End(translation: trigdistance))
+        }
+        
     }
     
 //    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
