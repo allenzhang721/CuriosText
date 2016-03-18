@@ -390,6 +390,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 self.currentFullCell.publishModel = currentModel
                 self.currentFullCell.playAnimation()
             }
+            self.setLikeButtonStyle()
             
             self.preFullCell.superview?.bringSubviewToFront(self.preFullCell)
             self.preFullCell.hidden = false

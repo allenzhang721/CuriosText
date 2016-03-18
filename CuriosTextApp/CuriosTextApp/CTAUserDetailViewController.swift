@@ -351,7 +351,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     func backButtonClikc(sender: UITapGestureRecognizer){
         let pt = sender.locationInView(self.backImageView)
         if !self.backImageView.pointInside(pt, withEvent: nil){
-            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
+            UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
                 self.blackColorView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
                 self.shadowCanvas.frame.origin.y = 0-UIScreen.mainScreen().bounds.height
                 self.backImageView.frame.origin.y = 0-UIScreen.mainScreen().bounds.height
@@ -398,7 +398,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     
     func setBackgroundColor(){
         if let view = self.blackColorView{
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
                 view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
             })
         }

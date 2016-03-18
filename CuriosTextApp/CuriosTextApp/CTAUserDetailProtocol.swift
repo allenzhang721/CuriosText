@@ -55,7 +55,7 @@ extension CTAPullUserDetailTransition: UIViewControllerAnimatedTransitioning{
     
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval{
         if isPersent{
-            return 1.0
+            return 0.7
         }else {
             return 0.1
         }
@@ -67,7 +67,7 @@ extension CTAPullUserDetailTransition: UIViewControllerAnimatedTransitioning{
             if let toView = transitionContext.viewForKey(UITransitionContextToViewKey){
                 transitionContext.containerView()!.addSubview(toView)
                 toView.frame = CGRect.init(x: 0, y: 0-UIScreen.mainScreen().bounds.height, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
-                UIView.animateWithDuration(1, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 5.0, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
+                UIView.animateWithDuration(0.7, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 5.0, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
                     toView.frame = UIScreen.mainScreen().bounds
                     }, completion: { (_) -> Void in
                         transitionContext.completeTransition(true)

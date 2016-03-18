@@ -65,6 +65,9 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
     func initView(){
         let bouns = UIScreen.mainScreen().bounds
         
+        let tap = UITapGestureRecognizer(target: self, action: "showTextClick:")
+        self.view.addGestureRecognizer(tap)
+        
         self.hideTextInput = UITextField.init(frame: CGRect.init(x: 0, y: 0, width: 300, height: 40))
         self.hideTextInput.hidden = true
         self.hideTextInput.delegate = self
@@ -180,6 +183,13 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
             }
         }else {
             self.navigationController?.popViewControllerAnimated(true)
+        }
+    }
+    
+    func showTextClick(sender: UITapGestureRecognizer){
+        let pt = sender.locationInView(self.resendButton)
+        if !self.resendButton.pointInside(pt, withEvent: nil){
+            self.hideTextInput.becomeFirstResponder()
         }
     }
     

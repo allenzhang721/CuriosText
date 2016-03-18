@@ -96,7 +96,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
     func loadAnimation(){
         if self.animationEnable{
-            if publishModel != nil {
+            if self.publishModel != nil {
                 if self.previewView == nil {
                     let preview = CTAPreviewCanvasView(frame: bounds)
                     preview.center = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0)
@@ -121,20 +121,22 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                         if let data = data,
                             let page = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                strongSelf.page = page
-                                let url = NSURL(string: CTAFilePath.publishFilePath + strongSelf.publishModel!.publishID)
-                                strongSelf.previewView.imageAccessBaseURL = url
-                                strongSelf.previewView.imageAccess = downloadImage
-                                strongSelf.previewView.reloadData() {
-                                dispatch_async(dispatch_get_main_queue(), {
-                                    strongSelf.isLoadComplete = true
-                                    strongSelf.previewView.hidden = false
-                                    strongSelf.cellImageView.hidden = true
-                                    if strongSelf.loadCompeteHandler != nil {
-                                        strongSelf.loadCompeteHandler!()
-                                        strongSelf.loadCompeteHandler = nil
+                                if let publishModel = strongSelf.publishModel {
+                                    strongSelf.page = page
+                                    let url = NSURL(string: CTAFilePath.publishFilePath + publishModel.publishID)
+                                    strongSelf.previewView.imageAccessBaseURL = url
+                                    strongSelf.previewView.imageAccess = downloadImage
+                                    strongSelf.previewView.reloadData() {
+                                        dispatch_async(dispatch_get_main_queue(), {
+                                            strongSelf.isLoadComplete = true
+                                            strongSelf.previewView.hidden = false
+                                            strongSelf.cellImageView.hidden = true
+                                            if strongSelf.loadCompeteHandler != nil {
+                                                strongSelf.loadCompeteHandler!()
+                                                strongSelf.loadCompeteHandler = nil
+                                            }
+                                        })
                                     }
-                                   })
                                 }
                             })
                         }
