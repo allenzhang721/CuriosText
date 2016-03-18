@@ -150,7 +150,6 @@ extension CTAPhotoViewController {
             ()
         }
         sender.setTranslation(CGPoint.zero, inView: view)
-        
     }
     
     @IBAction func dismiss(sender: AnyObject?) {
@@ -164,13 +163,20 @@ extension CTAPhotoViewController {
             
             let option = PHImageRequestOptions()
             option.synchronous = true
+            let imageDisplayRect = previewView.imgDisplayRect
             
             inner.imageManager.requestImageForAsset(asset, targetSize: CGSize(width: asset.pixelWidth, height: asset.pixelHeight), contentMode: .AspectFill, options: option, resultHandler: {[weak self] (image, info) in
                 
                 if let strongSelf = self {
                     if let image = image {
+                        UIGraphicsBeginImageContextWithOptions(imageDisplayRect.size, true, UIScreen.mainScreen().scale)
+                        
+                        image.drawAtPoint(CGPoint(x: -imageDisplayRect.minX, y: -imageDisplayRect.minY))
+                        let aimage = UIGraphicsGetImageFromCurrentImageContext()
+                        UIGraphicsEndImageContext()
+                        
                         dispatch_async(dispatch_get_main_queue(), {
-                            strongSelf.pickerDelegate?.pickerDidSelectedImage(image)
+                            strongSelf.pickerDelegate?.pickerDidSelectedImage(aimage)
                             strongSelf.dismiss(nil)
                         })
                     }
@@ -417,6 +423,23 @@ extension CTAPhotoViewController: UICollectionViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
         updateCacheSets()
     }
+    
+//    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+//        
+//        
+//        if scrollView.contentOffset.y == 0 && scrollView.contentOffset.y > 0 {
+//            scrollView.scrollEnabled = false
+//            scrollView.contentOffset.y = 0
+//            updateCacheSets()
+//            let trigdistance = inner.triggScrollDistance
+//            previewScroll(.End(translation: trigdistance), compeletedHandler: { 
+//                dispatch_async(dispatch_get_main_queue(), { [weak self] in
+//                    scrollView.scrollEnabled = true
+//                    
+//                })
+//            })
+//        }
+//    }
 }
 
 extension CTAPhotoViewController: UICollectionViewDelegateFlowLayout {
