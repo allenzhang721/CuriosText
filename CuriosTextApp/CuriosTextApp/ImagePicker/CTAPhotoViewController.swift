@@ -424,6 +424,13 @@ extension CTAPhotoViewController: UICollectionViewDelegate {
         
         if scrollView.contentOffset.y <= 0 && scrollView.tracking {
             previewScroll(.Scroll(deltaY: 6))
+        } else {
+            let location = scrollView.panGestureRecognizer.locationInView(previewView)
+            let ignoreRect = previewView.ignoreRect
+            if CGRectContainsPoint(ignoreRect, location) {
+                let trigdistance = inner.triggScrollDistance
+                previewScroll(.End(translation: -trigdistance))
+            }
         }
         
         updateCacheSets()
