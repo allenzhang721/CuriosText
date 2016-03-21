@@ -14,7 +14,7 @@ enum LocalStrings: CustomStringConvertible {
     case Cancel, Done, Delete, Attension
     
     // Image Picker
-    case Camera, Photo
+    case Camera, Photo, AllowPhotoTitle, AllowPhotoMessage
     
     // Editor
     case Publish , EditTextPlaceHolder, EditorDismissMessage
@@ -24,6 +24,15 @@ enum LocalStrings: CustomStringConvertible {
     
     //Animations
     case None, MoveIn, MoveOut
+    
+    //Alert 
+    case OK, Yes, No, Resend, TakePhoto, ChoosePhoto, Back, Wait
+    
+    //Report
+    case Porn, Scam, Sensitive
+    
+    //Share
+    case DeleteFile, Wechat, Moments, CopyLink, SaveLocal, Report
     
     var description: String {
         
@@ -43,6 +52,10 @@ enum LocalStrings: CustomStringConvertible {
             return NSLocalizedString("Camera", comment: "")
         case .Photo:
             return NSLocalizedString("Photo", comment: "")
+        case .AllowPhotoTitle:
+            return NSLocalizedString("AllPhotoLibraryTitle", comment: "")
+        case .AllowPhotoMessage:
+            return NSLocalizedString("AllPhotoLibraryMessage", comment: "")
             
             // Editor
         case .Publish:
@@ -82,7 +95,47 @@ enum LocalStrings: CustomStringConvertible {
             return NSLocalizedString("MoveIn", comment: "")
         case .MoveOut:
             return NSLocalizedString("MoveOut", comment: "")
+            
+            // Alert
+        case .OK:
+            return NSLocalizedString("AlertOkLabel", comment: "")
+        case .Yes:
+            return NSLocalizedString("AlertYesLabel", comment: "")
+        case .No:
+            return NSLocalizedString("AlertNoLabel", comment: "")
+        case .Resend:
+            return NSLocalizedString("AlertResendLabel", comment: "")
+        case .TakePhoto:
+            return NSLocalizedString("AlertTakePhotoLabel", comment: "")
+        case .ChoosePhoto:
+            return NSLocalizedString("AlertChoosePhoteLabel", comment: "")
+        case .Back:
+            return NSLocalizedString("AlertBackLabel", comment: "")
+        case .Wait:
+            return NSLocalizedString("AlertWaitLabel", comment: "")
+            
+            //Report
+        case .Porn:
+            return NSLocalizedString("ReportPornLabel", comment: "")
+        case .Scam:
+            return NSLocalizedString("ReportScamLabel", comment: "")
+        case .Sensitive:
+            return NSLocalizedString("ReportSenLabel", comment: "")
+            
+            //Share
+        case .DeleteFile:
+            return NSLocalizedString("DeleteFileLabel", comment: "")
+        case .Wechat:
+            return NSLocalizedString("WechatShareLabel", comment: "")
+        case .Moments:
+            return NSLocalizedString("MomentsShareLabel", comment: "")
+        case .SaveLocal:
+            return NSLocalizedString("SaveLocalLabel", comment: "")
+        case .Report:
+            return NSLocalizedString("ReportLabel", comment: "")
+        case .CopyLink:
+            return NSLocalizedString("CopyLinkLabel", comment: "")
+
         }
-        
     }
 }

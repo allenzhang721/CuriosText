@@ -255,7 +255,7 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
     
     func backButtonClick(send: UIButton){
         self.resignView()
-        self.showSelectedAlert(NSLocalizedString("AlertTitlePasswordBack", comment: ""), alertMessage: "", okAlertLabel: NSLocalizedString("AlertOkLabel", comment: ""), cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: "")) { (result) -> Void in
+        self.showSelectedAlert(NSLocalizedString("AlertTitlePasswordBack", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.OK.description, cancelAlertLabel: LocalStrings.Cancel.description) { (result) -> Void in
             if result {
                 self.backHandler()
             }

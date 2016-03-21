@@ -8,8 +8,9 @@
 
 import Foundation
 import Kingfisher
+import SVProgressHUD
 
-protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAAlertProtocol, CTAShareViewDelegate,CTAEditViewControllerDelegate{
+protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAAlertProtocol, CTAShareViewDelegate,CTAEditViewControllerDelegate, CTALoadingProtocol{
     var likeButton:UIButton{get}
     var userIconImage:UIImageView{get}
     var userNicknameLabel:UILabel{get}
@@ -311,11 +312,41 @@ extension CTAPublishProtocol{
     
     func saveLocalHandler(){
         self.publishCell.getEndImg { (img) -> () in
-            
+            if img != nil {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    photo_saveImageToLibrary(img!,finishedHandler: { (status) -> () in
+                        
+                        switch status {
+                        case .Success:
+                            SVProgressHUD.setDefaultStyle(.Dark)
+                            SVProgressHUD.showSuccessWithStatus(NSLocalizedString("SavePhotoSuccess", comment: ""))
+                        case .Authorized(let alert):
+                            (self as! UIViewController).presentViewController(alert, animated: true, completion: nil)
+                        case .Failture:
+                            ()
+                        }
+                        
+                    })
+                })
+            }
         }
     }
     
     func reportHandler(){
+        var alertArray:Array<String> = []
         
+        alertArray.append(LocalStrings.Porn.description)
+        alertArray.append(LocalStrings.Scam.description)
+        //alertArray.append(LocalStrings.Sensitive.description)
+        self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
+            if index != -1{
+                let userID = self.userModel == nil ? "" : self.userModel!.userID
+                let reportType = index + 1
+                CTAPublishDomain.getInstance().reportPublish(userID, publishID: self.publishModel!.publishID, reportType: reportType, reportMessage: "", compelecationBlock: { (_) -> Void in
+                })
+                SVProgressHUD.setDefaultStyle(.Dark)
+                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("ReportSuccess", comment: ""))
+            }
+        }
     }
 }

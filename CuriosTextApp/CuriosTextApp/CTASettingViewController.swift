@@ -308,9 +308,10 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     func userIconClick(sender: UIPanGestureRecognizer){
         if self.isLogin{
             var alertArray:Array<String> = []
-            alertArray.append(NSLocalizedString("AlertTakePhotoLabel", comment: ""))
-            alertArray.append(NSLocalizedString("AlertChoosePhoteLabel", comment: ""))
-            self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: "")) { (index) -> Void in
+            
+            alertArray.append(LocalStrings.TakePhoto.description)
+            alertArray.append(LocalStrings.ChoosePhoto.description)
+            self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
                 if index == 0{
                     self.imagePicker.allowsEditing = false
                     self.imagePicker.sourceType = .Camera
@@ -338,7 +339,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
             var alertArray:Array<String> = []
             alertArray.append(NSLocalizedString("UserMaleLabel", comment: ""))
             alertArray.append(NSLocalizedString("UserFemaleLabel", comment: ""))
-            self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: "")) { (index) -> Void in
+            self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
                 if index != -1{
                     let sexIndex = index + 1
                     self.loginUser!.sex = sexIndex
@@ -371,7 +372,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
             var alertArray:Array<String> = []
             alertArray.append(NSLocalizedString("LogoutButtonLabel", comment: ""))
             let alertTile = NSLocalizedString("ConfirmLogoutLabel", comment: "")
-            self.showSheetAlert(alertTile, okAlertArray: alertArray, cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: "")) { (index) -> Void in
+            self.showSheetAlert(alertTile, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
                 if index != -1{
                     CTAUserManager.logout()
                     self.showLoginView()

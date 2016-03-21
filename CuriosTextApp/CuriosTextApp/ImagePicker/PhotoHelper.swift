@@ -7,32 +7,42 @@
 //
 
 import Foundation
+import Photos
+import UIKit
 
-func photo_saveImageToLibrary(image: UIImage, finishedHandler:((Bool) -> ())?) {
+enum PhotoSaveStatus {
+    case Success
+    case Authorized(alert: UIAlertController)
+    case Failture
+}
+
+func photo_saveImageToLibrary(image: UIImage ,finishedHandler:((PhotoSaveStatus) -> ())?) {
     
-    func save(image: UIImage, finishedHandler:((Bool) -> ())?) {
+    func save(image: UIImage, finishedHandler:((PhotoSaveStatus) -> ())?) {
         PHPhotoLibrary.sharedPhotoLibrary().performChanges({
             PHAssetChangeRequest.creationRequestForAssetFromImage(image)
-        }) {finishedHandler?($0.0)}
+            }) {finishedHandler?($0.0 ? .Success : .Failture)}
     }
     
     func openSetting() {
         // alert to open setting
-        let cancelTitle = "Cancel"
+        let cancelTitle = LocalStrings.Cancel.description
         let cancelAction = UIAlertAction(title: cancelTitle, style: .Cancel, handler: nil)
         
-        let doneTitle = "OK"
+        let doneTitle = LocalStrings.OK.description
         let doneAction = UIAlertAction(title: doneTitle, style: .Default) { (action) in
             UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
         }
         
-        let alertTitle = "Please Allow Access to Your Photos"
-        let message = "This allow Curios to share photos from your library and save photos to your camera roll."
+        let alertTitle = LocalStrings.AllowPhotoTitle.description
+        let message = LocalStrings.AllowPhotoMessage.description
         let alert = UIAlertController(title: alertTitle, message: message, preferredStyle: .Alert)
         alert.addAction(cancelAction)
         alert.addAction(doneAction)
         
-        presentViewController(alert, animated: true, completion: nil)
+        finishedHandler?(.Authorized(alert: alert))
+        
+//        viewController.presentViewController(alert, animated: true, completion: nil)
     }
     
     func authorize() {
@@ -42,7 +52,7 @@ func photo_saveImageToLibrary(image: UIImage, finishedHandler:((Bool) -> ())?) {
                 save(image, finishedHandler: finishedHandler)
                 
             default:
-                finishedHandler?(false)
+                finishedHandler?(.Failture)
             }
         }
     }

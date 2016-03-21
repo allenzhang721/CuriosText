@@ -176,7 +176,7 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
     
     func backButtonClick(sender: UIButton){
         if !self.isBackDirect {
-            self.showSelectedAlert(NSLocalizedString("AlertTitleSMSVerifyBack", comment: ""), alertMessage: "", okAlertLabel: NSLocalizedString("AlertBackLabel", comment: ""), cancelAlertLabel: NSLocalizedString("AlertWaitLabel", comment: "")) { (result) -> Void in
+            self.showSelectedAlert(NSLocalizedString("AlertTitleSMSVerifyBack", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.Back.description, cancelAlertLabel: LocalStrings.Wait.description) { (result) -> Void in
                 if result {
                     self.navigationController?.popViewControllerAnimated(true)
                 }
@@ -217,7 +217,7 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
                                 self.pushSetPasswordView(userModel, setPasswordType: .register)
                             }else if info.successType == 2{
                                 let userModel = info.baseModel as! CTAUserModel
-                                self.showSelectedAlert(NSLocalizedString("AlertTitlePhoneExist", comment: ""), alertMessage: "", okAlertLabel: NSLocalizedString("AlertYesLabel", comment: ""), cancelAlertLabel: NSLocalizedString("AlertNoLabel", comment: ""), compelecationBlock: { (result) -> Void in
+                                self.showSelectedAlert(NSLocalizedString("AlertTitlePhoneExist", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.Yes.description, cancelAlertLabel: LocalStrings.No.description, compelecationBlock: { (result) -> Void in
                                     if result {
                                         self.loginComplete(userModel)
                                     }else {
@@ -315,7 +315,7 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
     
     func reSendButtonClick(sender: UIButton){
         self.hideTextInput.resignFirstResponder()
-        self.showSheetAlert(nil, okAlertArray:[NSLocalizedString("AlertResendLabel", comment: "")], cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: ""), compelecationBlock: { (result) -> Void in
+        self.showSheetAlert(nil, okAlertArray:[LocalStrings.Resend.description], cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result) -> Void in
             if result != -1{
                 self.changeToLoadingView()
                 let delay = dispatch_time(DISPATCH_TIME_NOW,
