@@ -192,7 +192,7 @@ extension CTAPublishProtocol where Self: UIViewController{
             
             BlackCatManager.sharedManager.retrieveDataWithURL(NSURL(string: url)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self] (data, error, cacheType, URL) in
                 
-                if let _ = self {
+                if let slf = self {
                     if let data = data,
                         let apage = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
                         apage.removeLastImageContainer()
@@ -213,7 +213,10 @@ extension CTAPublishProtocol where Self: UIViewController{
                                             let editVC = editNaviVC.topViewController as! EditViewController
                                             
                                             editVC.document = openDocument
-                                            editVC.delegate = self
+                                            editVC.delegate = slf
+                                            let userID = slf.userModel == nil ? "" : slf.userModel!.userID
+                                            CTAPublishDomain.getInstance().rebuildPublish(userID, publishID: slf.publishModel!.publishID, compelecationBlock: { (_) -> Void in
+                                            })
                                             rootController.presentViewController(editNaviVC, animated: true, completion: { () -> Void in
                                             })
                                         }
@@ -255,6 +258,11 @@ extension CTAPublishProtocol{
                             )
                     )
                     CTASocialManager.shareMessage(message) { (result) -> Void in
+                        if result{
+                            let userID = self.userModel == nil ? "" : self.userModel!.userID
+                            CTAPublishDomain.getInstance().sharePublish(userID, publishID: self.publishModel!.publishID, sharePlatform: 0, compelecationBlock: { (_) -> Void in
+                            })
+                        }
                     }
                 }
             })
@@ -280,6 +288,11 @@ extension CTAPublishProtocol{
                             )
                     )
                     CTASocialManager.shareMessage(message) { (result) -> Void in
+                        if result{
+                            let userID = self.userModel == nil ? "" : self.userModel!.userID
+                            CTAPublishDomain.getInstance().sharePublish(userID, publishID: self.publishModel!.publishID, sharePlatform: 1, compelecationBlock: { (_) -> Void in
+                            })
+                        }
                     }
                 }
             })
@@ -294,5 +307,15 @@ extension CTAPublishProtocol{
     
     func copyLinkHandler(){
        
+    }
+    
+    func saveLocalHandler(){
+        self.publishCell.getEndImg { (img) -> () in
+            
+        }
+    }
+    
+    func reportHandler(){
+        
     }
 }

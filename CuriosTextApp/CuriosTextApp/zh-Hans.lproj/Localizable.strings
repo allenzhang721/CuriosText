@@ -52,6 +52,9 @@
 "MomentsShareLabel" = "朋友圈";
 "DeleteFileLabel" = "删除";
 "CopyLinkLabel" = "复制链接";
+"SaveLocalLabel" = "保存";
+"ReportLabel" = "举报";
+
 
 "AlertOkLabel" = "确定";
 "AlertYesLabel" = "是";

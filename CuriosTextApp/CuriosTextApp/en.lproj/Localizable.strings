@@ -50,6 +50,8 @@
 "MomentsShareLabel" = "Moments";
 "DeleteFileLabel" = "Delete";
 "CopyLinkLabel" = "Copy URL";
+"SaveLocalLabel" = "Save";
+"ReportLabel" = "Report";
 
 "AlertOkLabel" = "OK";
 "AlertYesLabel" = "Yes";
