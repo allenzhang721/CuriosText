@@ -95,6 +95,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-CuriosTextApp/OMGHTTPURLRQ.framework"
   install_framework "Pods-CuriosTextApp/PromiseKit.framework"
   install_framework "Pods-CuriosTextApp/Qiniu.framework"
+  install_framework "Pods-CuriosTextApp/SVProgressHUD.framework"
   install_framework "Pods-CuriosTextApp/SwiftyJSON.framework"
   install_framework "Pods-CuriosTextApp/pop.framework"
 fi
@@ -110,6 +111,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-CuriosTextApp/OMGHTTPURLRQ.framework"
   install_framework "Pods-CuriosTextApp/PromiseKit.framework"
   install_framework "Pods-CuriosTextApp/Qiniu.framework"
+  install_framework "Pods-CuriosTextApp/SVProgressHUD.framework"
   install_framework "Pods-CuriosTextApp/SwiftyJSON.framework"
   install_framework "Pods-CuriosTextApp/pop.framework"
 fi

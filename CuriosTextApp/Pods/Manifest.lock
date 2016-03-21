@@ -50,6 +50,7 @@ PODS:
   - Qiniu (7.0.16):
     - AFNetworking (~> 2.0)
     - HappyDNS (~> 0.2)
+  - SVProgressHUD (2.0-beta8)
   - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
@@ -62,6 +63,7 @@ DEPENDENCIES:
   - pop (~> 1.0.8)
   - PromiseKit (~> 3.0.2)
   - Qiniu (~> 7.0)
+  - SVProgressHUD (~> 2.0-beta8)
   - SwiftyJSON (~> 2.3.2)
 
 SPEC CHECKSUMS:
@@ -77,6 +79,7 @@ SPEC CHECKSUMS:
   pop: bb773ae2c791ca2629de13b347e7a8b450fa6a57
   PromiseKit: 00ec2a219bf5ad2833f95977698e921932b8dfd3
   Qiniu: 51a8702cddc02b50867e10cef99291b9a8a006b1
+  SVProgressHUD: 6e48a1dda09ce3b58adc41d013baed3a8e8980ff
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
 COCOAPODS: 0.39.0
