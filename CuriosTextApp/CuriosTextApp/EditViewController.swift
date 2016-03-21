@@ -432,7 +432,7 @@ extension EditViewController {
                             
                             let publishIconURL = publishID + "/" + publishName
                             
-                            CTAPublishDomain().createPublishFile(publishID, userID: CTAUserManager.user!.userID, title: "", publishDesc: "Emiaostein", publishIconURL: publishIconURL, previewIconURL: "", publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
+                            CTAPublishDomain().createPublishFile(publishID, userID: CTAUserManager.user!.userID, title: "", publishDesc: "", publishIconURL: publishIconURL, previewIconURL: "", publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
                                 
                                 dispatch_async(dispatch_get_main_queue(), {
                                     strongSelf.delegate?.EditControllerDidPublished(strongSelf)
