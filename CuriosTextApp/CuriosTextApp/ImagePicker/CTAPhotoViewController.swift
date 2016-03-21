@@ -39,6 +39,10 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate {
         let originTopConstraintCostant: CGFloat = 44
         var topConstraintTargetScrollDistance: CGFloat = 250
         let triggScrollDistance: CGFloat = 50
+        
+        // scroll by scrollView
+        var beganScrollPanPosition: CGPoint? = nil
+//        let triggerScrollPanPosition = CGPoint.zero
     }
     
     @IBOutlet weak var thumbCollectionView: UICollectionView!
@@ -177,7 +181,7 @@ extension CTAPhotoViewController {
             option.synchronous = true
             let imageDisplayRect = previewView.imgDisplayRect
             
-            inner.imageManager.requestImageForAsset(asset, targetSize: CGSize(width: asset.pixelWidth, height: asset.pixelHeight), contentMode: .AspectFill, options: option, resultHandler: {[weak self] (image, info) in
+            inner.imageManager.requestImageForAsset(asset, targetSize: previewView.bounds.size, contentMode: .AspectFill, options: option, resultHandler: {[weak self] (image, info) in
                 
                 if let strongSelf = self {
                     if let image = image {
@@ -205,6 +209,7 @@ extension CTAPhotoViewController {
     // MARK: - Preview Scroll
     enum PreviewStatus {
         case Scroll(deltaY: CGFloat)
+        case ScrollByTranslation(translation: CGFloat)
         case End(translation: CGFloat)
     }
     func previewScroll(status: PreviewStatus, compeletedHandler:(() -> ())? = nil) {
@@ -223,6 +228,18 @@ extension CTAPhotoViewController {
                     view.layoutIfNeeded()
                 }
             }
+            
+        case .ScrollByTranslation(let translation):
+            if topConstraint.constant < originConstant {
+                topConstraint.constant = translation
+                view.layoutIfNeeded()
+            } else {
+                if translation < 0 {
+                    topConstraint.constant = translation
+                    view.layoutIfNeeded()
+                }
+            }
+            
         case .End(let translationY):
             if topConstraint.constant < originConstant {
                 topConstraint.constant = (translationY <= originConstant) ? -distance : (translationY >= triggerDistance) ? originConstant : -distance
@@ -437,12 +454,27 @@ extension CTAPhotoViewController: UICollectionViewDelegate {
         if scrollView.contentOffset.y <= 0 && scrollView.tracking {
             previewScroll(.Scroll(deltaY: 6))
         } else {
-            let location = scrollView.panGestureRecognizer.locationInView(previewView)
-            let ignoreRect = previewView.ignoreRect
-            if CGRectContainsPoint(ignoreRect, location) {
-                let trigdistance = inner.triggScrollDistance
-                previewScroll(.End(translation: -trigdistance))
+            if let position = inner.beganScrollPanPosition {
+                let nextLocation = scrollView.panGestureRecognizer.locationInView(view)
+                let translation = position.y - nextLocation.y
+                previewScroll(.Scroll(deltaY: -translation))
+                inner.beganScrollPanPosition = nextLocation
+            } else {
+                let location = scrollView.panGestureRecognizer.locationInView(previewView)
+                let ignoreRect = previewView.ignoreRect
+                if CGRectContainsPoint(ignoreRect, location) {
+                    if inner.beganScrollPanPosition == nil {
+                        let onViewLocation = scrollView.panGestureRecognizer.locationInView(view)
+                        inner.beganScrollPanPosition = onViewLocation
+                    } else {
+                        let nextLocation = scrollView.panGestureRecognizer.locationInView(view)
+                        let translation = inner.beganScrollPanPosition!.y - nextLocation.y
+                        previewScroll(.Scroll(deltaY: -translation))
+                        inner.beganScrollPanPosition = nextLocation
+                    }
+                }
             }
+            
         }
         
         updateCacheSets()
@@ -454,6 +486,14 @@ extension CTAPhotoViewController: UICollectionViewDelegate {
             let trigdistance = inner.triggScrollDistance
             previewScroll(.End(translation: trigdistance))
         }
+        
+        if let p = inner.beganScrollPanPosition {
+            
+            let position = scrollView.panGestureRecognizer.locationInView(view)
+            let offset = position.y - p.y
+            previewScroll(.End(translation: offset))
+            inner.beganScrollPanPosition = nil
+        }
     }
     
     func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
@@ -463,24 +503,14 @@ extension CTAPhotoViewController: UICollectionViewDelegate {
             previewScroll(.End(translation: trigdistance))
         }
         
+        if let p = inner.beganScrollPanPosition {
+            
+            let position = scrollView.panGestureRecognizer.locationInView(view)
+            let offset = position.y - p.y
+            previewScroll(.End(translation: offset))
+            inner.beganScrollPanPosition = nil
+        }
     }
-    
-//    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-//        
-//        
-//        if scrollView.contentOffset.y == 0 && scrollView.contentOffset.y > 0 {
-//            scrollView.scrollEnabled = false
-//            scrollView.contentOffset.y = 0
-//            updateCacheSets()
-//            let trigdistance = inner.triggScrollDistance
-//            previewScroll(.End(translation: trigdistance), compeletedHandler: { 
-//                dispatch_async(dispatch_get_main_queue(), { [weak self] in
-//                    scrollView.scrollEnabled = true
-//                    
-//                })
-//            })
-//        }
-//    }
 }
 
 extension CTAPhotoViewController: UICollectionViewDelegateFlowLayout {

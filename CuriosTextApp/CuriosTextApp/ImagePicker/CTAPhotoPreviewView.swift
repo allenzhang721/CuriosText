@@ -79,7 +79,6 @@ extension CTAPhotoPreviewView {
     func status1Style() {
         
     }
-    
 }
 
 // MARK: - Actions
