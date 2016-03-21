@@ -48,7 +48,7 @@ class CTAPublishViewController: UIViewController {
     var baseURL: NSURL!
     var imageAccess: ((baseURL: NSURL, imageName: String) -> Promise<Result<CTAImageCache>>)!
     
-    var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 80, height: 80))
+    var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
 
     override func viewDidLoad() {
         super.viewDidLoad()
