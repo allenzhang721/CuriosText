@@ -257,7 +257,6 @@ extension CTAPhotoViewController {
         }
     }
     
-    
     // MARK: - Authorzied Status
     private func checkLibraryStatus(completed: ((Bool) -> ())?) {
         let status = PHPhotoLibrary.authorizationStatus()

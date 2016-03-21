@@ -20,6 +20,7 @@
 		2C0404621C3EC31100A5B017 /* CTARotatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0404611C3EC31100A5B017 /* CTARotatorView.swift */; };
 		2C0404661C3EC58100A5B017 /* CTASelectorsFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0404651C3EC58100A5B017 /* CTASelectorsFlowLayout.swift */; };
 		2C0404681C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0404671C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift */; };
+		2C05BB861C9FAA7200667A75 /* PhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C05BB851C9FAA7200667A75 /* PhotoHelper.swift */; };
 		2C09F2471C896EED00F6034F /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C09F2461C896EED00F6034F /* PromiseKit.framework */; };
 		2C0C14E61C60D95A0011A31D /* CTASetUserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0C14E51C60D95A0011A31D /* CTASetUserNameViewController.swift */; };
 		2C0C14E91C60D9640011A31D /* CTASetMobileNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0C14E71C60D9640011A31D /* CTASetMobileNumberViewController.swift */; };
@@ -280,6 +281,7 @@
 		2C0404631C3EC35D00A5B017 /* Tools.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Tools.playground; sourceTree = "<group>"; };
 		2C0404651C3EC58100A5B017 /* CTASelectorsFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorsFlowLayout.swift; sourceTree = "<group>"; };
 		2C0404671C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorRotatorCell.swift; sourceTree = "<group>"; };
+		2C05BB851C9FAA7200667A75 /* PhotoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoHelper.swift; sourceTree = "<group>"; };
 		2C09F2461C896EED00F6034F /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = "Pods/../build/Debug-iphoneos/PromiseKit.framework"; sourceTree = "<group>"; };
 		2C0C14E51C60D95A0011A31D /* CTASetUserNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASetUserNameViewController.swift; sourceTree = "<group>"; };
 		2C0C14E71C60D9640011A31D /* CTASetMobileNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASetMobileNumberViewController.swift; sourceTree = "<group>"; };
@@ -1068,6 +1070,7 @@
 		2CE063CB1C857D2F001F7F4E /* ImagePicker */ = {
 			isa = PBXGroup;
 			children = (
+				2C05BB851C9FAA7200667A75 /* PhotoHelper.swift */,
 				2CB3C8C11C859B8E00CF2BD2 /* ImagePickerResource.swift */,
 				2CE063CD1C857D2F001F7F4E /* CTACameraAspectRatioCollectionViewCell.swift */,
 				2CE063CE1C857D2F001F7F4E /* CTACameraCaptureButtonView.swift */,
@@ -1354,6 +1357,7 @@
 				2CE063E51C857D2F001F7F4E /* CTACollectionViewActiveFlowLayout.swift in Sources */,
 				2C22FAC21C7C299C00667295 /* CTAEditAddView.swift in Sources */,
 				6628C7031C200C11007F873C /* CTAViewUserModel.swift in Sources */,
+				2C05BB861C9FAA7200667A75 /* PhotoHelper.swift in Sources */,
 				2CC811631C79A6D5003CE8BF /* BlackCatResultExtension.swift in Sources */,
 				2C1B88AB1C5F371A000403FD /* CTAAlertProtocol.swift in Sources */,
 				2C31EB631C452597002A4D71 /* SwiftHEXColors.swift in Sources */,
