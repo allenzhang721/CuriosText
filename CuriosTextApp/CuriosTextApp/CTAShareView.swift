@@ -12,7 +12,8 @@ class CTAShareView: UIView{
     
     var delegate:CTAShareViewDelegate?
     
-    var buttonView:UIScrollView!
+    var buttonView:UIView!
+    var scrollView:UIScrollView!
     
     var wechatShareView:UIView!
     var momentsShareView:UIView!
@@ -49,20 +50,24 @@ class CTAShareView: UIView{
         let tap = UITapGestureRecognizer(target: self, action: "backButtonClikc:")
         self.addGestureRecognizer(tap)
         
-        self.buttonView = UIScrollView.init(frame: CGRect.init(x: 0, y: bounds.height, width: bounds.width, height: 170))
+        self.buttonView = UIView.init(frame: CGRect.init(x: 0, y: bounds.height, width: bounds.width, height: 170))
         self.buttonView.backgroundColor = UIColor.init(red: 230/255, green: 230/255, blue: 230/255, alpha: 1.0)
         self.addSubview(self.buttonView)
         
-        let cancelView = UIView.init(frame: CGRect.init(x: 0, y: bounds.height - 50, width: bounds.width, height: 50))
+        self.scrollView = UIScrollView.init(frame: CGRect.init(x: 0, y: 0, width: bounds.width, height: 170))
+        self.scrollView.backgroundColor = UIColor.init(red: 230/255, green: 230/255, blue: 230/255, alpha: 1.0)
+        self.buttonView.addSubview(self.scrollView)
+        
+        let cancelView = UIView.init(frame: CGRect.init(x: 0, y: self.buttonView.frame.height - 50, width: bounds.width, height: 50))
         cancelView.backgroundColor = UIColor.whiteColor()
-        self.addSubview(cancelView)
         let cancelButton:UIButton = UIButton.init()
         cancelButton.frame.size = cancelView.frame.size
-        let cancelLabel = NSLocalizedString("AlertCancelLabel", comment: "")
+        let cancelLabel = LocalStrings.Cancel.description
         cancelButton.setTitle(cancelLabel, forState: .Normal)
         cancelButton.setTitleColor(UIColor.init(red: 0/255, green: 122/255, blue: 255/255, alpha: 1.0), forState: .Normal)
         cancelButton.addTarget(self, action: "cancelButtonClick:", forControlEvents: .TouchUpInside)
         cancelView.addSubview(cancelButton)
+        self.buttonView.addSubview(cancelView)
         
         self.wechatShareView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
         let wechatButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
@@ -72,13 +77,13 @@ class CTAShareView: UIView{
         let wechatLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
         wechatLabel.font = UIFont.systemFontOfSize(8)
         wechatLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        wechatLabel.text = NSLocalizedString("WechatShareLabel", comment: "")
+        wechatLabel.text = LocalStrings.Wechat.description
         wechatLabel.sizeToFit()
         wechatLabel.center = CGPoint.init(x: wechatButton.center.x, y: buttonW+20)
         self.wechatShareView.addSubview(wechatLabel)
         self.wechatShareView.sizeToFit()
         self.wechatShareView.frame.origin.x = 15
-        self.buttonView.addSubview(self.wechatShareView)
+        self.scrollView.addSubview(self.wechatShareView)
         
         self.momentsShareView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
         let momentsButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
@@ -88,13 +93,13 @@ class CTAShareView: UIView{
         let momentsLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
         momentsLabel.font = UIFont.systemFontOfSize(8)
         momentsLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        momentsLabel.text = NSLocalizedString("MomentsShareLabel", comment: "")
+        momentsLabel.text = LocalStrings.Moments.description
         momentsLabel.sizeToFit()
         momentsLabel.center = CGPoint.init(x: momentsButton.center.x, y: buttonW+20)
         self.momentsShareView.addSubview(momentsLabel)
         self.momentsShareView.sizeToFit()
         self.momentsShareView.frame.origin.x = 88
-        self.buttonView.addSubview(self.momentsShareView)
+        self.scrollView.addSubview(self.momentsShareView)
         
         self.deleteView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
         let deleteButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
@@ -104,13 +109,13 @@ class CTAShareView: UIView{
         let deleteLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
         deleteLabel.font = UIFont.systemFontOfSize(8)
         deleteLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        deleteLabel.text = NSLocalizedString("DeleteFileLabel", comment: "")
+        deleteLabel.text = LocalStrings.DeleteFile.description
         deleteLabel.sizeToFit()
         deleteLabel.center = CGPoint.init(x: deleteButton.center.x, y: buttonW+20)
         self.deleteView.addSubview(deleteLabel)
         self.deleteView.sizeToFit()
         self.deleteView.frame.origin.x = 160
-        self.buttonView.addSubview(self.deleteView)
+        self.scrollView.addSubview(self.deleteView)
         
         self.saveLocolView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
         let saveLocalButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
@@ -120,13 +125,13 @@ class CTAShareView: UIView{
         let saveLocalLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
         saveLocalLabel.font = UIFont.systemFontOfSize(8)
         saveLocalLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        saveLocalLabel.text = NSLocalizedString("SaveLocalLabel", comment: "")
+        saveLocalLabel.text = LocalStrings.SaveLocal.description
         saveLocalLabel.sizeToFit()
         saveLocalLabel.center = CGPoint.init(x: deleteButton.center.x, y: buttonW+20)
         self.saveLocolView.addSubview(saveLocalLabel)
         self.saveLocolView.sizeToFit()
         self.saveLocolView.frame.origin.x = 230
-        self.buttonView.addSubview(self.saveLocolView)
+        self.scrollView.addSubview(self.saveLocolView)
         
         self.reportView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
         let reportButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
@@ -136,13 +141,13 @@ class CTAShareView: UIView{
         let reportLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
         reportLabel.font = UIFont.systemFontOfSize(8)
         reportLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        reportLabel.text = NSLocalizedString("ReportLabel", comment: "")
+        reportLabel.text = LocalStrings.Report.description
         reportLabel.sizeToFit()
         reportLabel.center = CGPoint.init(x: deleteButton.center.x, y: buttonW+20)
         self.reportView.addSubview(reportLabel)
         self.reportView.sizeToFit()
         self.reportView.frame.origin.x = 230
-        self.buttonView.addSubview(self.reportView)
+        self.scrollView.addSubview(self.reportView)
         
 //        self.copyLinkView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
 //        let copyLinkButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
@@ -200,7 +205,7 @@ class CTAShareView: UIView{
     
     func resetScrollView(){
         let maxWidth = self.reportView.frame.origin.x + self.reportView.frame.width + space
-        self.buttonView.contentSize = CGSize(width: maxWidth, height: 170)
+        self.scrollView.contentSize = CGSize(width: maxWidth, height: 170)
     }
     
     func cancelHandler(){

@@ -307,7 +307,7 @@ class CTARebuildPublishRequest: CTABaseRequest {
 class CTASharePublishRequest: CTABaseRequest {
     let userID:String;
     let publishID:String;
-    let sharePlatform:Int
+    let sharePlatform:Int;
     
     init(userID:String, publishID:String, sharePlatform:Int = 0) {
         self.userID        = userID;
@@ -326,5 +326,33 @@ class CTASharePublishRequest: CTABaseRequest {
             key(.SharePlatform): sharePlatform
         ];
         return self.getParameterString(dic, errorMessage: "CTASharePublishRequest");
+    }
+}
+
+class CTAReportPublishRequest: CTABaseRequest {
+    let userID:String;
+    let publishID:String;
+    let reportType:Int;
+    let reportMessage:String;
+    
+    init(userID:String, publishID:String, reportType:Int, reportMessage:String) {
+        self.userID        = userID;
+        self.publishID     = publishID;
+        self.reportType    = reportType;
+        self.reportMessage = reportMessage;
+    }
+    
+    override func requestUrl() -> String {
+        return CTARequestUrl.ReportPublish.description;
+    }
+    
+    override func parameter() -> String {
+        let dic:Dictionary<String, AnyObject> = [
+            key(.UserID)       : userID,
+            key(.PublishID)    : publishID,
+            key(.ReportType)   : reportType,
+            key(.ReportMessage): reportMessage
+        ];
+        return self.getParameterString(dic, errorMessage: "CTAReportPublishRequest");
     }
 }

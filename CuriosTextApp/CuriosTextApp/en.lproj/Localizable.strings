@@ -56,7 +56,6 @@
 "AlertOkLabel" = "OK";
 "AlertYesLabel" = "Yes";
 "AlertNoLabel" = "No"; 
-"AlertCancelLabel" = "Cancel";
 "AlertResendLabel" = "Resend";
 "AlertTakePhotoLabel" = "Take Photo";
 "AlertChoosePhoteLabel" = "Choose from Photos";
@@ -84,7 +83,11 @@
 "AlertTitleConnectUs" = "Please connect service.";
 "AlertTitleDataNil" = "Data null";
 
-
+"AllPhotoLibraryTitle" = "Please Allow Access to Your Photos";
+"AllPhotoLibraryMessage" = "This allow Curios to share photos from your library and save photos to your camera roll.";
+"ReportPornLabel" = "Porn";
+"ReportScamLabel" = "Scam";
+"ReportSenLabel" = "Sensitive information";
 // MARK: - Common
 "Cancel" = "Cancel";
 "Done" = "Done";

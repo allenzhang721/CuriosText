@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, CTAUserDetailProtocol, CTALoadingProtocol{
+class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, CTAUserDetailProtocol{
 
     var viewUser:CTAUserModel?
     var loginUser:CTAUserModel?
@@ -932,8 +932,8 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
     }
     
     func deleteHandler(){
-        if let publish = self.currentFullCell.publishModel{
-            self.showSelectedAlert(NSLocalizedString("AlertTitleDeleteFile", comment: ""), alertMessage: "", okAlertLabel: NSLocalizedString("DeleteFileLabel", comment: ""), cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: ""), compelecationBlock: { (result) -> Void in
+        if let publish = self.currentFullCell.publishModel{LocalStrings.Delete.description
+            self.showSelectedAlert(NSLocalizedString("AlertTitleDeleteFile", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.DeleteFile.description, cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result) -> Void in
                 if result{
                     self.showLoadingViewByView(nil)
                     let userID = self.loginUser == nil ? "" : self.viewUser!.userID

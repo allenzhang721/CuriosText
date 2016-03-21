@@ -301,4 +301,22 @@ class CTAPublishDomain: CTABaseDomain {
         }
     }
     
+    func reportPublish(userID:String, publishID:String, reportType:Int, reportMessage:String, compelecationBlock: (CTADomainInfo?) -> Void){
+        CTAReportPublishRequest.init(userID: userID, publishID: publishID, reportType: reportType, reportMessage: reportMessage).startWithCompletionBlockWithSuccess { (response) -> Void in
+            switch response.result{
+            case .Success(let json):
+                let json:JSON = JSON(json)
+                let resultIndex = json[CTARequestResultKey.resultIndex].int!
+                let result = self.checkJsonResult(json)
+                if result {
+                    compelecationBlock(CTADomainInfo.init(result: true, successType: resultIndex))
+                } else{
+                    compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAUserPublishError(rawValue: resultIndex)!))
+                }
+            case .Failure( _):
+                compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            }
+        }
+    }
+    
 }

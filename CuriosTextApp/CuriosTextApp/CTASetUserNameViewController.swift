@@ -188,7 +188,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     }
     
     func backButtonClick(sender: UIButton){
-        self.showSelectedAlert(NSLocalizedString("AlertTitleUserNameBack", comment: ""), alertMessage: "", okAlertLabel: NSLocalizedString("AlertOkLabel", comment: ""), cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: "")) { (result) -> Void in
+        self.showSelectedAlert(NSLocalizedString("AlertTitleUserNameBack", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.OK.description, cancelAlertLabel: LocalStrings.Cancel.description) { (result) -> Void in
             if result {
                 switch self.userNameType{
                 case .register:
@@ -273,9 +273,9 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     
     func userIconClick(sender: UIPanGestureRecognizer){
         var alertArray:Array<String> = []
-        alertArray.append(NSLocalizedString("AlertTakePhotoLabel", comment: ""))
-        alertArray.append(NSLocalizedString("AlertChoosePhoteLabel", comment: ""))
-        self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: "")) { (index) -> Void in
+        alertArray.append(LocalStrings.TakePhoto.description)
+        alertArray.append(LocalStrings.ChoosePhoto.description)
+        self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
             if index == 0{
                 self.imagePicker.allowsEditing = false
                 self.imagePicker.sourceType = .Camera

@@ -50,7 +50,7 @@ enum CTARequestUrl: CustomStringConvertible {
     
   case GetPublishID, CreatePublish, DeletePublish
   case UserPublishList, UserLikePublishList, UserRebuildPublishList, UserFollowPublishList, NewPubulishList, HotPublishList
-  case LikePublish, UnLikePublish, RebuildPublish, SharePublish
+  case LikePublish, UnLikePublish, RebuildPublish, SharePublish, ReportPublish
   case FollowUser, UnFollowUser, BlockUser, UnBlockUser, UserFollowList, UserBeFollowList
   case UserUpToken, PublishUpToken, UploadFilePath
   
@@ -124,6 +124,8 @@ enum CTARequestUrl: CustomStringConvertible {
         return "/publish/rebuildPublish"
     case .SharePublish:
         return "/publish/sharePublish"
+    case .ReportPublish:
+        return "/publish/reportPublish"
     case .FollowUser:
         return "/relation/followUser"
     case .UnFollowUser:
@@ -149,7 +151,7 @@ enum CTARequestUrl: CustomStringConvertible {
 enum CTAParameterKey: CustomStringConvertible {
   case Data
   case UserID, NickName, UserDesc, UserIconURL, Sex, Email, Phone, AreaCode, Password, WeixinID, WeiboID, Country, Province, City, NewPassword
-  case BeUserID, Start, Size, SharePlatform, List
+  case BeUserID, Start, Size, SharePlatform, List, ReportType, ReportMessage
   case PublishID, Title, PublishDesc, PublishIconURL, PreviewIconURL, PublishURL
   case RelationType, RelationUserID, FollowCount, BeFollowCount, PublishCount
   case PublishFilePath, UserFilePath
@@ -199,6 +201,10 @@ enum CTAParameterKey: CustomStringConvertible {
         return "size"
     case .SharePlatform:
         return "sharePlatform"
+    case .ReportType:
+        return "reportType"
+    case .ReportMessage:
+        return "reportMessage"
     case .List:
         return "list"
     case .PublishID:

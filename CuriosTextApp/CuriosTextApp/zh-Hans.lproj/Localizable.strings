@@ -59,7 +59,6 @@
 "AlertOkLabel" = "确定";
 "AlertYesLabel" = "是";
 "AlertNoLabel" = "否";
-"AlertCancelLabel" = "取消";
 "AlertResendLabel" = "重发";
 "AlertTakePhotoLabel" = "拍照";
 "AlertChoosePhoteLabel" = "从相册中选择";
@@ -87,6 +86,11 @@
 "AlertTitleConnectUs" = "请联系客服";
 "AlertTitleDataNil" = "数据为空";
 
+"AllPhotoLibraryTitle" = "设置";
+"AllPhotoLibraryMessage" = "请允许奇思访问你的照片库。";
+"ReportPornLabel" = "色情低俗";
+"ReportScamLabel" = "广告欺诈";
+"ReportSenLabel" = "敏感信息";
 
 // MARK: - Common
 "Cancel" = "取消";

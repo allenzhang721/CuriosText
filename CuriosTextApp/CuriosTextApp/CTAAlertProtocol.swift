@@ -30,7 +30,8 @@ extension CTAAlertProtocol where Self: UIViewController{
     
     func showSingleAlert(alertTile:String, alertMessage:String, compelecationBlock: (() -> Void)?){
         let alert = UIAlertController(title: alertTile, message: alertMessage, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("AlertOkLabel", comment: ""), style: .Default, handler: { (_) -> Void in
+        
+        alert.addAction(UIAlertAction(title: LocalStrings.OK.description, style: .Default, handler: { (_) -> Void in
             if compelecationBlock != nil {
                 compelecationBlock!()
             }

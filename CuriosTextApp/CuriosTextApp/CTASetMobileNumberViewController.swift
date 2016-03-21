@@ -123,7 +123,7 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
             let zone = self.selectedModel!.zoneCode
             message = message + "\n" + "+"+zone+" "+phoneLabel
             self.resignView()
-            self.showSelectedAlert(NSLocalizedString("AlertTitleNumberConfirm", comment: ""), alertMessage: message, okAlertLabel: NSLocalizedString("AlertOkLabel", comment: ""), cancelAlertLabel: NSLocalizedString("AlertCancelLabel", comment: ""), compelecationBlock: { (result) -> Void in
+            self.showSelectedAlert(NSLocalizedString("AlertTitleNumberConfirm", comment: ""), alertMessage: message, okAlertLabel: LocalStrings.OK.description, cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result) -> Void in
                 if result {
                     self.showLoadingViewByView(sender)
                     CTASocialManager.getVerificationCode(phoneNumber, zone: zone, completionHandler: { (result) -> Void in
