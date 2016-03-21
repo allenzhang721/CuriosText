@@ -87,10 +87,13 @@
 "AlertTitleDataNil" = "数据为空";
 
 "AllPhotoLibraryTitle" = "设置";
-"AllPhotoLibraryMessage" = "请允许奇思访问你的照片库。";
+"AllPhotoLibraryMessage" = "请允许奇思访问你的相册。";
 "ReportPornLabel" = "色情低俗";
 "ReportScamLabel" = "广告欺诈";
 "ReportSenLabel" = "敏感信息";
+
+"SavePhotoSuccess" = "已保存到相册";
+"ReportSuccess" = "举报成功";
 
 // MARK: - Common
 "Cancel" = "取消";

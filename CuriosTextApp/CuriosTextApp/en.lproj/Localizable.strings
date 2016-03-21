@@ -88,6 +88,9 @@
 "ReportPornLabel" = "Porn";
 "ReportScamLabel" = "Scam";
 "ReportSenLabel" = "Sensitive information";
+
+"SavePhotoSuccess" = "Save to album";
+"ReportSuccess" = "Thanks for the report!";
 // MARK: - Common
 "Cancel" = "Cancel";
 "Done" = "Done";

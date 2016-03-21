@@ -8,6 +8,7 @@
 
 import Foundation
 import Kingfisher
+import SVProgressHUD
 
 protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAAlertProtocol, CTAShareViewDelegate,CTAEditViewControllerDelegate, CTALoadingProtocol{
     var likeButton:UIButton{get}
@@ -317,7 +318,8 @@ extension CTAPublishProtocol{
                         
                         switch status {
                         case .Success:
-                            ()
+                            SVProgressHUD.setDefaultStyle(.Dark)
+                            SVProgressHUD.showSuccessWithStatus(NSLocalizedString("SavePhotoSuccess", comment: ""))
                         case .Authorized(let alert):
                             (self as! UIViewController).presentViewController(alert, animated: true, completion: nil)
                         case .Failture:
@@ -342,6 +344,8 @@ extension CTAPublishProtocol{
                 let reportType = index + 1
                 CTAPublishDomain.getInstance().reportPublish(userID, publishID: self.publishModel!.publishID, reportType: reportType, reportMessage: "", compelecationBlock: { (_) -> Void in
                 })
+                SVProgressHUD.setDefaultStyle(.Dark)
+                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("ReportSuccess", comment: ""))
             }
         }
     }
