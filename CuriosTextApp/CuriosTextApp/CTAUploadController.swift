@@ -13,7 +13,12 @@ class CTAUploadController {
     
     init(){
         self.uploadArray = [];
-        self.uploadManager = QNUploadManager();
+        do {
+            let file:QNFileRecorder = try QNFileRecorder(folder: NSTemporaryDirectory().stringByAppendingString("Curios"))
+            self.uploadManager = QNUploadManager.init(recorder: file)
+        } catch {
+            self.uploadManager = QNUploadManager()
+        }
     }
     
     static var _instance:CTAUploadController?;
