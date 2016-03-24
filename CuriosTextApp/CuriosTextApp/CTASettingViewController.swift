@@ -313,11 +313,11 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
             alertArray.append(LocalStrings.ChoosePhoto.description)
             self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
                 if index == 0{
-                    self.imagePicker.allowsEditing = false
+                    self.imagePicker.allowsEditing = true
                     self.imagePicker.sourceType = .Camera
                     self.presentViewController(self.imagePicker, animated: true, completion: nil)
                 }else if index == 1{
-                    self.imagePicker.allowsEditing = false
+                    self.imagePicker.allowsEditing = true
                     self.imagePicker.sourceType = .PhotoLibrary
                     self.presentViewController(self.imagePicker, animated: true, completion: nil)
                 }
@@ -391,12 +391,11 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         CTAUserManager.logout()
         CTAUserManager.save(self.loginUser!)
     }
-
 }
 
 extension CTASettingViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]){
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
             self.changeUserIcon(pickedImage)
         }
         dismissViewControllerAnimated(true, completion: nil)
