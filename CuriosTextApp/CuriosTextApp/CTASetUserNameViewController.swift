@@ -277,12 +277,12 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         alertArray.append(LocalStrings.ChoosePhoto.description)
         self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
             if index == 0{
-                self.imagePicker.allowsEditing = false
+                self.imagePicker.allowsEditing = true
                 self.imagePicker.sourceType = .Camera
                 self.isChange = true
                 self.presentViewController(self.imagePicker, animated: true, completion: nil)
             }else if index == 1{
-                self.imagePicker.allowsEditing = false
+                self.imagePicker.allowsEditing = true
                 self.imagePicker.sourceType = .PhotoLibrary
                 self.isChange = true
                 self.presentViewController(self.imagePicker, animated: true, completion: nil)
@@ -345,12 +345,11 @@ extension CTASetUserNameViewController: UITextFieldDelegate{
             return true
         }
     }
-    
 }
 
 extension CTASetUserNameViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]){
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
             self.userIconImage.image = compressIconImage(pickedImage)
             self.selectedImage = pickedImage
             self.setCompleteButtonStyle()
