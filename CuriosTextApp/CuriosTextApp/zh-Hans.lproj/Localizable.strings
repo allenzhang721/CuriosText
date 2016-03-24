@@ -122,6 +122,9 @@
 
 "EditorDismissMessage" = "您确认退出编辑吗？您的内容将会丢失";
 
+// MARK: - Publish
+"PublishFailure" = "发布失败，请稍后再试。";
+
 // MARK: - AnimationName
 "None" = "无";
 "MoveIn" = "移入";
