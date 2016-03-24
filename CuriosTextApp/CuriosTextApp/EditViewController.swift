@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 protocol CTAEditViewControllerDelegate: class {
     
@@ -427,6 +428,14 @@ extension EditViewController {
                     if let strongSelf = self where success {
                         
                         CTADocumentManager.uploadFiles({ (success, publishID, publishURL) -> Void in
+                            
+                            if !success {
+                                dispatch_async(dispatch_get_main_queue(), { 
+                                    SVProgressHUD.showErrorWithStatus(LocalStrings.PublishFailure.description)
+                                })
+                                
+                                return
+                            }
                             
                             debug_print("upload = \(success)\n publishID = \(publishID)", context: previewConttext)
                             

@@ -118,6 +118,9 @@
 
 "EditorDismissMessage" = "Do you want to quit the edit ? The edited content will lost.";
 
+// MARK: - Publish
+"PublishFailure" = "Publish Failed. Please try again.";
+
 // MARK: - AnimationName
 "None" = "None";
 "MoveIn" = "Move In";
