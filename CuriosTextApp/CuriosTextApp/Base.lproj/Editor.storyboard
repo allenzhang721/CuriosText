@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10102" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gJw-VA-uNJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gJw-VA-uNJ">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10080"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -222,127 +222,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="exZ-J7-Zz5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3218" y="508"/>
-        </scene>
-        <!--Camera View Controller-->
-        <scene sceneID="tlt-qy-oSh">
-            <objects>
-                <viewController storyboardIdentifier="CameraViewController" id="NL5-fD-xOP" customClass="CTACameraViewController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="nqc-Eg-SL1"/>
-                        <viewControllerLayoutGuide type="bottom" id="a2a-EW-UR2"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="PbB-uh-Oct">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OWt-wm-MI2">
-                                <rect key="frame" x="116" y="460" width="88" height="88"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="OWt-wm-MI2" secondAttribute="height" multiplier="1:1" id="9du-X8-DLg"/>
-                                    <constraint firstAttribute="height" constant="88" id="FXN-pL-6en"/>
-                                    <constraint firstAttribute="width" constant="88" id="GPQ-1S-COr"/>
-                                </constraints>
-                                <state key="normal" image="cameraButton"/>
-                                <connections>
-                                    <action selector="takePhotoClick:" destination="NL5-fD-xOP" eventType="touchUpInside" id="dLD-qU-Bg9"/>
-                                </connections>
-                            </button>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HVk-0a-kra">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <items>
-                                    <barButtonItem title="取消" id="BQj-5x-pLW">
-                                        <connections>
-                                            <action selector="dismissAction:" destination="NL5-fD-xOP" id="3fA-t2-rp4"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </toolbar>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PMi-2y-sgF" customClass="CTACameraView" customModule="CuriosTextApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="320" height="320"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="PMi-2y-sgF" secondAttribute="height" multiplier="1:1" id="TEM-pW-yJc"/>
-                                    <constraint firstAttribute="width" secondItem="PMi-2y-sgF" secondAttribute="height" multiplier="1:1" id="Z07-9k-P9T"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="Z07-9k-P9T"/>
-                                    </mask>
-                                </variation>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="PMi-2y-sgF" firstAttribute="top" secondItem="HVk-0a-kra" secondAttribute="bottom" id="2L0-rI-fvk"/>
-                            <constraint firstItem="PMi-2y-sgF" firstAttribute="width" secondItem="PbB-uh-Oct" secondAttribute="width" id="7PK-sa-rnk"/>
-                            <constraint firstItem="PMi-2y-sgF" firstAttribute="leading" secondItem="HVk-0a-kra" secondAttribute="leading" id="ASg-lv-Jez"/>
-                            <constraint firstItem="a2a-EW-UR2" firstAttribute="top" secondItem="OWt-wm-MI2" secondAttribute="bottom" constant="20" id="FEN-OX-CGJ"/>
-                            <constraint firstItem="PMi-2y-sgF" firstAttribute="centerX" secondItem="PbB-uh-Oct" secondAttribute="centerX" id="UUy-Dc-a4x"/>
-                            <constraint firstItem="OWt-wm-MI2" firstAttribute="centerX" secondItem="PbB-uh-Oct" secondAttribute="centerX" id="hCr-8u-idO"/>
-                            <constraint firstItem="PMi-2y-sgF" firstAttribute="trailing" secondItem="HVk-0a-kra" secondAttribute="trailing" id="rjO-eD-zmR"/>
-                            <constraint firstItem="OWt-wm-MI2" firstAttribute="top" secondItem="PMi-2y-sgF" secondAttribute="bottom" constant="96" id="vvA-Oh-OZ4"/>
-                        </constraints>
-                    </view>
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <connections>
-                        <outlet property="cameraView" destination="PMi-2y-sgF" id="Z6E-cx-yRD"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="a65-rC-RQT" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3739" y="524"/>
-        </scene>
-        <!--Publish Image View Controller-->
-        <scene sceneID="Uhe-Bu-K1f">
-            <objects>
-                <viewController storyboardIdentifier="PublishImageViewController" id="UYv-Iy-UsE" customClass="CTAPublishImageViewController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="tvy-Oa-MAR"/>
-                        <viewControllerLayoutGuide type="bottom" id="agi-pu-cJ5"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ia0-GF-KD1">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1RB-1n-AAL">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <gestureRecognizers/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstItem="1RB-1n-AAL" firstAttribute="top" secondItem="ia0-GF-KD1" secondAttribute="top" id="ECE-TQ-l66"/>
-                            <constraint firstItem="1RB-1n-AAL" firstAttribute="bottom" secondItem="agi-pu-cJ5" secondAttribute="top" id="N7N-47-cla"/>
-                            <constraint firstItem="1RB-1n-AAL" firstAttribute="leading" secondItem="ia0-GF-KD1" secondAttribute="leading" id="N9S-NU-5yg"/>
-                            <constraint firstItem="1RB-1n-AAL" firstAttribute="bottom" secondItem="agi-pu-cJ5" secondAttribute="top" id="noP-JA-gd4"/>
-                            <constraint firstAttribute="trailing" secondItem="1RB-1n-AAL" secondAttribute="trailing" id="x0Z-Yq-RAu"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="N7N-47-cla"/>
-                            </mask>
-                        </variation>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="7jf-Dz-4cu" appends="YES" id="fyd-3V-0fZ"/>
-                        </connections>
-                    </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <connections>
-                        <outlet property="imageView" destination="1RB-1n-AAL" id="ZAo-by-5qN"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nZD-Bq-nRV" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="7jf-Dz-4cu">
-                    <connections>
-                        <action selector="dismiss:" destination="UYv-Iy-UsE" id="0HK-PY-qdh"/>
-                    </connections>
-                </tapGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="3201.5" y="1215.5"/>
         </scene>
         <!--Publish View Controller-->
         <scene sceneID="LLk-i8-Udm">
@@ -620,7 +499,4 @@
             <point key="canvasLocation" x="1539" y="494"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="cameraButton" width="88" height="88"/>
-    </resources>
 </document>

@@ -169,10 +169,6 @@ extension EditViewController {
     @IBAction func publish(sender: AnyObject) {
         showPublishViewController()
     }
-    
-    @IBAction func publishPreviewClick(sender: AnyObject) {
-        showPublishPreview()
-    }
 }
 
 // MARK: - Logics
@@ -456,35 +452,6 @@ extension EditViewController {
                 
             default:
                 debug_print("Fail", context: defaultContext)
-            }
-        }
-    }
-    
-    
-    func showPublishPreview() {
-        
-        CTADocumentManager.saveDoucment {[weak self] (success) -> Void in
-            
-            if let strongSelf = self where success {
-                
-                draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, local: false) { (r) in
-                    
-                    switch r {
-                    case .Success(let image):
-                        dispatch_async(dispatch_get_main_queue(), {
-                            
-                            let previewVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("PublishImageViewController") as! CTAPublishImageViewController
-                            
-                            previewVC.image = image
-                            
-                            strongSelf.navigationController!.pushViewController(previewVC, animated: true)
-                            
-                        })
-                        
-                    default:
-                        debug_print("Fail", context: defaultContext)
-                    }
-                }
             }
         }
     }
