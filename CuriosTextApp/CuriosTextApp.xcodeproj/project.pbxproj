@@ -157,7 +157,6 @@
 		2CA860C01C8FC157000BCF8A /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA860BF1C8FC157000BCF8A /* LocalizationManager.swift */; };
 		2CA9933E1C75DD4700B5EEDC /* SimpleNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA9933D1C75DD4700B5EEDC /* SimpleNetworking.swift */; };
 		2CA99F471C9A536100850FA5 /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA99F461C9A536100850FA5 /* AlertHelper.swift */; };
-		2CAEAC911C323F2600C9F9AC /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC8C1C323F2600C9F9AC /* Dynamic.swift */; };
 		2CAEAC931C323F2600C9F9AC /* EditorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC8E1C323F2600C9F9AC /* EditorFactory.swift */; };
 		2CAEAC941C323F2600C9F9AC /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC8F1C323F2600C9F9AC /* EditViewController.swift */; };
 		2CAEAC951C323F2600C9F9AC /* ElementProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC901C323F2600C9F9AC /* ElementProtocol.swift */; };
@@ -437,7 +436,6 @@
 		2CA860BF1C8FC157000BCF8A /* LocalizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		2CA9933D1C75DD4700B5EEDC /* SimpleNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleNetworking.swift; sourceTree = "<group>"; };
 		2CA99F461C9A536100850FA5 /* AlertHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
-		2CAEAC8C1C323F2600C9F9AC /* Dynamic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 		2CAEAC8E1C323F2600C9F9AC /* EditorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorFactory.swift; sourceTree = "<group>"; };
 		2CAEAC8F1C323F2600C9F9AC /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		2CAEAC901C323F2600C9F9AC /* ElementProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementProtocol.swift; sourceTree = "<group>"; };
@@ -738,13 +736,10 @@
 		2C3B33C81C1176D000738166 /* CuriosTextApp */ = {
 			isa = PBXGroup;
 			children = (
-				2C2088611C8C1BC200172B27 /* CTACache.swift */,
-				2CC5A7CA1C89B82100A773E9 /* AsyncDrawing.swift */,
-				2CC5A7CC1C89B85100A773E9 /* AsyncDrawing+Container.swift */,
-				2CE063CB1C857D2F001F7F4E /* ImagePicker */,
 				2CDDF5001C5F3B860019FC83 /* CuriosTextApp-Bridging-Header.h */,
 				2C81B59E1C58B10600AE16E0 /* Gobal */,
-				2C81B5A01C58B48800AE16E0 /* Emiaostein */,
+				2CE063CB1C857D2F001F7F4E /* ImagePickerModule */,
+				2CD4DC0B1CA4E26C00790A55 /* EditorModule */,
 				2CAEAC8A1C323EC600C9F9AC /* Deprecated */,
 				661D29F21C2A968E0073FC0E /* Upload */,
 				2C9706D21C1E855000FA2E17 /* Model */,
@@ -895,17 +890,19 @@
 		2C81B59E1C58B10600AE16E0 /* Gobal */ = {
 			isa = PBXGroup;
 			children = (
-				2CC811561C79A6D5003CE8BF /* BlackCat */,
-				2C1B88941C5F357E000403FD /* AES256 */,
-				2CA9933D1C75DD4700B5EEDC /* SimpleNetworking.swift */,
+				2C5EA2551C479CE000DCEE7B /* Print.swift */,
+				2C2088611C8C1BC200172B27 /* CTACache.swift */,
 				2C929DD61C60962B00F90BF4 /* CTAConfig.swift */,
 				2C5ACC111C439E8100B96CCD /* CTAStyleKit.swift */,
-				2C3CAD0A1C21825100D8DE4B /* CTAIDGenerator.swift */,
-				2C929DD51C60809D00F90BF4 /* MyPlayground.playground */,
-				2C5EA2551C479CE000DCEE7B /* Print.swift */,
-				2CAEAC8C1C323F2600C9F9AC /* Dynamic.swift */,
 				2C2B45AF1C5CBED1004A4809 /* LocaleHelper.swift */,
+				2C3CAD0A1C21825100D8DE4B /* CTAIDGenerator.swift */,
+				2CA9933D1C75DD4700B5EEDC /* SimpleNetworking.swift */,
+				2CC5A7CC1C89B85100A773E9 /* AsyncDrawing+Container.swift */,
+				2CC5A7CA1C89B82100A773E9 /* AsyncDrawing.swift */,
 				2C2B45B11C5CC077004A4809 /* SupportCountryZone */,
+				2C929DD51C60809D00F90BF4 /* MyPlayground.playground */,
+				2CC811561C79A6D5003CE8BF /* BlackCat */,
+				2C1B88941C5F357E000403FD /* AES256 */,
 				2C6C67FD1C35082C00CCE81C /* CTAUIKit_view */,
 				2C5C24991C44FA8B00A70F1B /* Mangers_model */,
 				2C3CAD071C21825100D8DE4B /* Document_model */,
@@ -914,14 +911,6 @@
 				2CA99F461C9A536100850FA5 /* AlertHelper.swift */,
 			);
 			name = Gobal;
-			sourceTree = "<group>";
-		};
-		2C81B5A01C58B48800AE16E0 /* Emiaostein */ = {
-			isa = PBXGroup;
-			children = (
-				2CD4DC0B1CA4E26C00790A55 /* Edit */,
-			);
-			name = Emiaostein;
 			sourceTree = "<group>";
 		};
 		2C9706C31C1E6ED200FA2E17 /* Domain */ = {
@@ -996,7 +985,7 @@
 			path = BlackCat;
 			sourceTree = "<group>";
 		};
-		2CD4DC0B1CA4E26C00790A55 /* Edit */ = {
+		2CD4DC0B1CA4E26C00790A55 /* EditorModule */ = {
 			isa = PBXGroup;
 			children = (
 				2CD4DC0E1CA4E3B600790A55 /* MainController */,
@@ -1007,7 +996,7 @@
 				2C610A2D1C902B0300DFE315 /* Editor.storyboard */,
 				2CAEAC8E1C323F2600C9F9AC /* EditorFactory.swift */,
 			);
-			name = Edit;
+			name = EditorModule;
 			sourceTree = "<group>";
 		};
 		2CD4DC0C1CA4E29300790A55 /* PublishController */ = {
@@ -1105,7 +1094,7 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
-		2CE063CB1C857D2F001F7F4E /* ImagePicker */ = {
+		2CE063CB1C857D2F001F7F4E /* ImagePickerModule */ = {
 			isa = PBXGroup;
 			children = (
 				2C05BB851C9FAA7200667A75 /* PhotoHelper.swift */,
@@ -1131,6 +1120,7 @@
 				2C610A421C902C0B00DFE315 /* Photo.storyboard */,
 				2CE063DA1C857D2F001F7F4E /* ImageCrop.storyboard */,
 			);
+			name = ImagePickerModule;
 			path = ImagePicker;
 			sourceTree = "<group>";
 		};
@@ -1366,7 +1356,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CAEAC911C323F2600C9F9AC /* Dynamic.swift in Sources */,
 				2CD08F5D1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift in Sources */,
 				2C47F89E1C7171380068F215 /* CTAPageViewModel.swift in Sources */,
 				2C1B88961C5F35B9000403FD /* CTAEncryptManager.swift in Sources */,
