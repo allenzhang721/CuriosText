@@ -78,9 +78,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "632"
-            endingLineNumber = "632"
-            landmarkName = "canvasViewControllerWillDeleted(_:)"
-            landmarkType = "5">
+            endingLineNumber = "632">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

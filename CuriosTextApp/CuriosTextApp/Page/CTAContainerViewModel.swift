@@ -20,15 +20,15 @@ extension ContainerVMProtocol {
     var featureTypes: [CTAContainerFeatureType] {
         
         switch type {
-            
+         // Text Bar Items
         case .Text:
             let textTypes: [CTAContainerFeatureType] = [
                 .Fonts,
                 .Colors,
                 .Size,
                 .Rotator,
-                .Aligments,
                 .TextSpacing,
+                .Aligments,
                 .Animation
             ]
             
