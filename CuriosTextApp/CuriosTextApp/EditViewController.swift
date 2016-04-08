@@ -169,6 +169,15 @@ extension EditViewController {
     @IBAction func publish(sender: AnyObject) {
         showPublishViewController()
     }
+    
+    @IBAction func preview(sender: AnyObject) {
+        
+        guard let preController = UIStoryboard(name: "AniPreView", bundle: nil).instantiateInitialViewController() as? AniPreviewCanvasViewController else { return }
+        
+        preController.canvas = page.toAniCanvas()
+        
+        presentViewController(preController, animated: true, completion: nil)
+    }
 }
 
 // MARK: - Logics

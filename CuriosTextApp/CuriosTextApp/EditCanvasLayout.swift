@@ -41,7 +41,7 @@ class ContainerLayoutAttributes: UICollectionViewLayoutAttributes {
     }
 }
 
-class CanvasLayout: UICollectionViewFlowLayout {
+class EditCanvasLayout: UICollectionViewFlowLayout {
     
     override class func layoutAttributesClass() -> AnyClass {
         return ContainerLayoutAttributes.self

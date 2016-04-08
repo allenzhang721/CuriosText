@@ -1,15 +1,15 @@
 //
-//  TextElement.swift
-//  CuriosTextApp
+//  ContentTextLayer.swift
+//  PopApp
 //
-//  Created by Emiaostein on 12/23/15.
-//  Copyright © 2015 botai. All rights reserved.
+//  Created by Emiaostein on 4/7/16.
+//  Copyright © 2016 Emiaostein. All rights reserved.
 //
 
 import UIKit
 
-class TextView: UILabel, TextElement {
-
+class ContentTextLayer: UILabel {
+    
     var insets: CGPoint = CGPoint.zero
     
     override func drawTextInRect(rect: CGRect) {
@@ -21,3 +21,7 @@ class TextView: UILabel, TextElement {
         CGContextRestoreGState(context)
     }
 }
+
+//class TextLayer: CATextLayer {
+//    
+//}

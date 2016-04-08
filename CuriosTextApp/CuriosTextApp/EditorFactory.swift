@@ -38,9 +38,9 @@ class EditorFactory {
 //        }
 //    }
     
-    class func canvasBy(page: CTAPage) -> CanvasView {
+    class func canvasBy(page: CTAPage) -> EditCanvasView {
         
-        let canvasView = CanvasView(frame: CGRect(x: 0, y: 0, width: page.width, height: page.height))
+        let canvasView = EditCanvasView(frame: CGRect(x: 0, y: 0, width: page.width, height: page.height))
         let mask = CAShapeLayer()
         mask.path = UIBezierPath(rect: canvasView.bounds).CGPath
         canvasView.layer.mask = mask

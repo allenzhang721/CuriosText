@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/EditViewController.swift"
-            timestampString = "480318019.359269"
+            timestampString = "481797800.267876"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "632"
-            endingLineNumber = "632">
+            startingLineNumber = "641"
+            endingLineNumber = "641">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -88,11 +88,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/EditViewController.swift"
-            timestampString = "479881864.089995"
+            timestampString = "481797800.267876"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "391"
-            endingLineNumber = "391"
+            startingLineNumber = "400"
+            endingLineNumber = "400"
             landmarkName = "showPublishViewController()"
             landmarkType = "5">
          </BreakpointContent>
@@ -136,7 +136,7 @@
                   moduleName = "CuriosTextApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTATabView.swift"
-                  timestampString = "480221208.919155"
+                  timestampString = "481804089.485184"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "222"
@@ -151,7 +151,7 @@
                   moduleName = "CuriosTextApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTATabView.swift"
-                  timestampString = "480221208.919407"
+                  timestampString = "481804089.485425"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "222"
@@ -159,22 +159,6 @@
                   offsetFromSymbolStart = "312">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CuriosTextApp/ImagePicker/CTAPhotoPreviewView.swift"
-            timestampString = "480219972.208986"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
-            landmarkName = "imageDisplayRect()"
-            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
