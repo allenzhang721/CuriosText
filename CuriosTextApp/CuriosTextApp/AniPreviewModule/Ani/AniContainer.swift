@@ -43,6 +43,7 @@ extension AniContainer: UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(containerItemIdentifier, forIndexPath: indexPath)
                 as! ContentCell
             
+            cell.backgroundColor = UIColor.lightGrayColor()
             let source = contents[indexPath.item].content.source
             cell.text = NSAttributedString(string: source.text, attributes: source.attributes)
             

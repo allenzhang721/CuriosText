@@ -49,6 +49,7 @@ extension AniCanvas: UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(canvasItemIdentifier, forIndexPath: indexPath)
                 as! ContainerCell
             
+            cell.backgroundColor = UIColor.yellowColor()
             cell.dataSource = containers[indexPath.item]
             cell.delegate = containers[indexPath.item]
             

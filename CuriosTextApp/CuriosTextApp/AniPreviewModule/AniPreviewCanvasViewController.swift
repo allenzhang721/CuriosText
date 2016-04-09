@@ -23,11 +23,18 @@ class AniPreviewCanvasViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        
+        aniCanvasView.reloadData { [weak self] in
+            guard let sf = self else { return }
+            sf.ready(nil)
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
-        ready(nil)
+        
+//        aniCanvasView.reloadData { [weak self] in
+//            guard let sf = self else { return }
+//            sf.ready(nil)
+//        }
     }
     
     func setup() {
@@ -46,8 +53,6 @@ class AniPreviewCanvasViewController: UIViewController {
         let scale = min(view.bounds.size.width / canvas.size.width, view.bounds.size.height / canvas.size.height)
         aniCanvasView.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY)
         aniCanvasView.transform = CGAffineTransformMakeScale(scale, scale)
-        
-        
     }
 }
 
