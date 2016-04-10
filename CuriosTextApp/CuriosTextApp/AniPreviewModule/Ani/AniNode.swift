@@ -70,7 +70,7 @@ class AniNode {
     
     private func demoContainer(container: Container) -> Container {
         let source = container.contents.first!.source
-        let r = TextSpliter.spliteText(source.text, withAttributes: source.attributes, inConstraintSize: CGSize(width: CGFloat(container.width), height: CGFloat.max), bySpliteType: (.ByLine, .ByCharacter))
+        let r = TextSpliter.spliteText(source.texts, withAttributes: source.attribute, inConstraintSize: CGSize(width: CGFloat(container.width), height: CGFloat.max), bySpliteType: (.ByLine, .ByCharacter))
         let units = r.0
         let size = r.1
         
@@ -78,7 +78,7 @@ class AniNode {
         
         for u in units {
             
-            let s = Source(text: u.text, attributes: u.attriubtes)
+            let s = Source(type: .Text, text: u.text, attributes: u.attriubtes)
             let content = Content(cx: Int(u.usedRect.midX), cy: Int(u.usedRect.midY), width: Int(u.usedRect.width), height: Int(u.usedRect.height), source: s)
             
             contents.append(content)

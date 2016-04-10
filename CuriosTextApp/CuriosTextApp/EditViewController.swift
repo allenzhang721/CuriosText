@@ -175,6 +175,15 @@ extension EditViewController {
         guard let preController = UIStoryboard(name: "AniPreView", bundle: nil).instantiateInitialViewController() as? AniPreviewCanvasViewController else { return }
         
         preController.canvas = page.toAniCanvas()
+        let retriver = {[weak self] (name: String,  handler: (String, UIImage?) -> ()) in
+            if let sf = self {
+                let data = sf.document.resourceBy(name)
+                let image = data == nil ? nil : UIImage(data: data!)
+                handler(name, image)
+            }
+            
+        }
+        preController.imageRetriver = retriver
         
         presentViewController(preController, animated: true, completion: nil)
     }

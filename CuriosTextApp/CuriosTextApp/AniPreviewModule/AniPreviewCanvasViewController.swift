@@ -12,6 +12,7 @@ class AniPreviewCanvasViewController: UIViewController {
     
     var canvas: AniCanvas!
     var aniCanvasView: AniPlayCanvasView!
+    var imageRetriver: ((String, (String, UIImage?) -> ()) -> ())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +41,13 @@ class AniPreviewCanvasViewController: UIViewController {
     func setup() {
         aniCanvasView = AniPlayCanvasView(frame: CGRect(origin: CGPoint(x: 0, y: 44), size: canvas.size))
         aniCanvasView.backgroundColor = UIColor.groupTableViewBackgroundColor()
+        
+        for c in canvas.containers {
+            if let content = c.contents.first where content.type == .Image {
+                c.imageRetriver = imageRetriver
+            }
+        }
+        
         aniCanvasView.dataSource = canvas
         aniCanvasView.aniDataSource = canvas
 //        view.layer.addSublayer(aniCanvasView.layer

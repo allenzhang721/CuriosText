@@ -104,7 +104,7 @@ extension TextContainerVMProtocol {
         let attributes = self.textElement!.textAttributes
         
         // source
-        let source = Source.init(text: text, attributes: attributes)
+        let source = Source.init(type: .Text, text: text, attributes: attributes)
         
         //content
         let cwidth = Int(self.size.width) + 1
@@ -135,19 +135,19 @@ extension ImageContainerVMProtocol {
 //        let attributes = nil
         
         // source
-        let source = Source.init(text: text, attributes: nil)
+        let source = Source.init(type: .Image, text: text, attributes: nil)
         
         //content
-        let cwidth = Int(self.size.width)
-        let cheight = Int(self.size.height)
-        let cpositionX = Int(self.center.x)
-        let cpositionY = Int(self.center.y)
+        let cwidth = Int(self.size.width) + 1
+        let cheight = Int(self.size.height) + 1
+        let cpositionX = Int(self.size.width / 2.0)
+        let cpositionY = Int(self.size.height / 2.0)
         let content = Content.init(cx: cpositionX, cy: cpositionY, width: cwidth, height: cheight, source: source)
         
         // container
         let ID = self.iD
-        let width = Int(self.size.width)
-        let height = Int(self.size.height)
+        let width = Int(self.size.width) + 1
+        let height = Int(self.size.height) + 1
         let positionX = Int(self.center.x)
         let positionY = Int(self.center.y)
         let radian = Int(self.radius / CGFloat(M_PI) * 180.0)

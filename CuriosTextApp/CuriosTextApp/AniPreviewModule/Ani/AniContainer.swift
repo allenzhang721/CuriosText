@@ -12,6 +12,7 @@ class AniContainer: NSObject {
     let container: Container
     let contents: [AniContent]
     let animations: [Int: AniDescriptor]
+    var imageRetriver: ((String, (String, UIImage?) -> ()) -> ())?
     
     init(container: Container, animations: [Int: AniDescriptor] = [:]) {
         var cs = [AniContent]()
@@ -40,13 +41,32 @@ extension AniContainer: UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath)
         -> UICollectionViewCell {
             
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(containerItemIdentifier, forIndexPath: indexPath)
-                as! ContentCell
-            
-            cell.backgroundColor = UIColor.lightGrayColor()
             let source = contents[indexPath.item].content.source
-            cell.text = NSAttributedString(string: source.text, attributes: source.attributes)
-            
+            let cell: UICollectionViewCell
+            switch source.sourceType {
+            case .Text:
+                
+                let acell = collectionView.dequeueReusableCellWithReuseIdentifier(containerItemIdentifier + source.sourceType.rawValue, forIndexPath: indexPath) as! ContentTextCell
+                acell.text = NSAttributedString(string: source.texts, attributes: source.attribute)
+                cell = acell
+                
+            case .Image:
+                let acell = collectionView.dequeueReusableCellWithReuseIdentifier(containerItemIdentifier + source.sourceType.rawValue, forIndexPath: indexPath) as! ContentImageCell
+                if let retriver = imageRetriver {
+                    let imageName = source.ImageName
+                    let r = { (name: String, Image: UIImage?) in
+                        if name == imageName {
+                            dispatch_async(dispatch_get_main_queue(), { 
+                                acell.image = Image
+                            })
+                        }
+                    }
+                    retriver(imageName, r)
+                }
+                
+                cell = acell
+            }
+
             return cell
     }
 }

@@ -11,6 +11,7 @@ import UIKit
 class AniContent: NSObject {
 
     let content: Content
+    var type: SourceType { return content.source.sourceType }
     
     init(content: Content) {
         self.content = content

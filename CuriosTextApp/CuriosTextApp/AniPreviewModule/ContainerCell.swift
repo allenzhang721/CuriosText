@@ -42,7 +42,8 @@ class ContainerCell: UICollectionViewCell {
     
     private func setup() {
         collectionView.backgroundColor = UIColor.clearColor()
-        collectionView.registerClass(ContentCell.self, forCellWithReuseIdentifier: containerItemIdentifier)
+        collectionView.registerClass(ContentTextCell.self, forCellWithReuseIdentifier: containerItemIdentifier + SourceType.Text.rawValue)
+        collectionView.registerClass(ContentImageCell.self, forCellWithReuseIdentifier: containerItemIdentifier + SourceType.Image.rawValue)
         contentView.layer.addSublayer(collectionView.layer)
         collectionView.layer.masksToBounds = false
         //        addSubview(collectionView)  use to debug
