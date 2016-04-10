@@ -24,18 +24,11 @@ class AniPreviewCanvasViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        
         aniCanvasView.reloadData { [weak self] in
             guard let sf = self else { return }
             sf.ready(nil)
         }
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        
-//        aniCanvasView.reloadData { [weak self] in
-//            guard let sf = self else { return }
-//            sf.ready(nil)
-//        }
     }
     
     func setup() {
@@ -55,8 +48,8 @@ class AniPreviewCanvasViewController: UIViewController {
         view.addSubview(aniCanvasView) // debug
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         
         let scale = min(view.bounds.size.width / canvas.size.width, view.bounds.size.height / canvas.size.height)
         aniCanvasView.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY)

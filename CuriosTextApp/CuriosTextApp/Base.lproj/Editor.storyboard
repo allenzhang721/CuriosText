@@ -243,20 +243,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bOF-iL-7LA">
                                 <rect key="frame" x="0.0" y="44" width="320" height="386"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fgd-Eu-hft" customClass="CTAPreviewCanvasView" customModule="CuriosTextApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="33" width="320" height="320"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="fgd-Eu-hft" secondAttribute="height" multiplier="1:1" id="c3W-9A-3tf"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
                                 <color key="backgroundColor" red="0.94842630624771118" green="0.95011311769485474" blue="0.96408551931381226" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="fgd-Eu-hft" firstAttribute="centerX" secondItem="bOF-iL-7LA" secondAttribute="centerX" id="BPR-gL-19L"/>
-                                    <constraint firstItem="fgd-Eu-hft" firstAttribute="centerY" secondItem="bOF-iL-7LA" secondAttribute="centerY" id="knh-2k-WSF"/>
-                                </constraints>
                             </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N2r-a8-P18">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -308,7 +295,6 @@
                             <constraint firstItem="bOF-iL-7LA" firstAttribute="top" secondItem="N2r-a8-P18" secondAttribute="bottom" id="Lxb-Cr-yLL"/>
                             <constraint firstItem="ud8-zM-9P3" firstAttribute="bottom" secondItem="42G-98-Hn9" secondAttribute="top" id="ODp-go-eW7"/>
                             <constraint firstItem="bOF-iL-7LA" firstAttribute="leading" secondItem="WVK-lA-JyR" secondAttribute="leading" id="VlC-4L-Vpy"/>
-                            <constraint firstItem="fgd-Eu-hft" firstAttribute="width" secondItem="WVK-lA-JyR" secondAttribute="width" id="Wdb-dJ-xYQ"/>
                             <constraint firstItem="ud8-zM-9P3" firstAttribute="top" secondItem="bOF-iL-7LA" secondAttribute="bottom" constant="1" id="YBB-BE-spF"/>
                             <constraint firstAttribute="trailing" secondItem="bOF-iL-7LA" secondAttribute="trailing" id="mcO-Tb-9q2"/>
                             <constraint firstItem="ud8-zM-9P3" firstAttribute="leading" secondItem="WVK-lA-JyR" secondAttribute="leading" id="ynk-o1-KVc"/>
@@ -318,13 +304,13 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="previewView" destination="fgd-Eu-hft" id="B1y-ej-1X4"/>
+                        <outlet property="canvasPositionView" destination="bOF-iL-7LA" id="NVo-VX-hWO"/>
                         <outlet property="publishButton" destination="hLk-nB-9zZ" id="vRO-Bs-Lk9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I0B-Mf-59d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3762" y="1182"/>
+            <point key="canvasLocation" x="3619" y="1079"/>
         </scene>
         <!--Tab View Controller-->
         <scene sceneID="Vgo-GO-r2N">
