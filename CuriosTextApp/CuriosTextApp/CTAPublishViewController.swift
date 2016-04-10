@@ -69,9 +69,7 @@ class CTAPublishViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        
-        
-        
+
 //        previewView.publishID = publishID
         aniCanvasView.reloadData { [weak self] in
             guard let sf = self else { return }
