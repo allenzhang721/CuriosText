@@ -39,14 +39,22 @@ class CTAPublishButton: UIButton {
 
 class CTAPublishViewController: UIViewController {
     
+    @IBOutlet weak var canvasPositionView: UIView!
     @IBOutlet weak var publishButton: CTAPublishButton!
-    @IBOutlet weak var previewView: CTAPreviewCanvasView!
+//    @IBOutlet weak var previewView: CTAPreviewCanvasView!
     var publishWillBegan: (() -> ())?
     var publishDismiss:(() -> ())?
-    var page: PageVMProtocol?
-    var publishID: String!
-    var baseURL: NSURL!
-    var imageAccess: ((baseURL: NSURL, imageName: String) -> Promise<Result<CTAImageCache>>)!
+//    var page: PageVMProtocol?
+//    var publishID: String!
+//    var baseURL: NSURL!
+//    var imageAccess: ((baseURL: NSURL, imageName: String) -> Promise<Result<CTAImageCache>>)!
+    
+    
+    
+    
+    var canvas: AniCanvas!
+    var aniCanvasView: AniPlayCanvasView!
+    var imageRetriver: ((String, (String, UIImage?) -> ()) -> ())?
     
     var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
 
@@ -61,10 +69,12 @@ class CTAPublishViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+
 //        previewView.publishID = publishID
-        previewView.reloadData { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.previewView.play()
+        aniCanvasView.reloadData { [weak self] in
+            guard let sf = self else { return }
+            sf.ready(nil)
+            sf.play()
         }
     }
 }
@@ -73,14 +83,33 @@ class CTAPublishViewController: UIViewController {
 extension CTAPublishViewController {
     
     func setupViews() {
-        previewView.imageAccessBaseURL = baseURL
-        previewView.imageAccess = imageAccess
-        previewView.datasource = self
+        aniCanvasView = AniPlayCanvasView(frame: CGRect(origin: CGPoint(x: 0, y: 44), size: canvas.size))
+        aniCanvasView.backgroundColor = UIColor.groupTableViewBackgroundColor()
+        
+        for c in canvas.containers {
+            if let content = c.contents.first where content.type == .Image {
+                c.imageRetriver = imageRetriver
+            }
+        }
+        
+        aniCanvasView.dataSource = canvas
+        aniCanvasView.aniDataSource = canvas
+//        view.layer.addSublayer(aniCanvasView.layer)
+        
+        view.addSubview(aniCanvasView) // debug
     }
     
     func setupStyles() {
-        previewView.backgroundColor = CTAStyleKit.commonBackgroundColor
+        aniCanvasView.backgroundColor = CTAStyleKit.commonBackgroundColor
         view.backgroundColor = CTAStyleKit.ediorBackgroundColor
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        let scale = min(view.bounds.size.width / canvas.size.width, view.bounds.size.height / canvas.size.height)
+        aniCanvasView.center = canvasPositionView.center
+        aniCanvasView.transform = CGAffineTransformMakeScale(scale, scale)
     }
 }
 
@@ -107,13 +136,21 @@ extension CTAPublishViewController {
     private func dismiss() {
         publishDismiss?()
     }
+    
+    private func ready(sender: AnyObject?) {
+        aniCanvasView.ready()
+    }
+    
+    private func play() {
+        aniCanvasView.play()
+    }
 }
 
 // MARK: - Preview DataSource
-extension CTAPublishViewController: CTAPreviewCanvasViewDataSource {
-
-    func canvasViewWithPage(view: CTAPreviewCanvasView) -> PageVMProtocol? {
-        return page
-    }
-    
-}
+//extension CTAPublishViewController: CTAPreviewCanvasViewDataSource {
+//
+//    func canvasViewWithPage(view: CTAPreviewCanvasView) -> PageVMProtocol? {
+//        return page
+//    }
+//    
+//}

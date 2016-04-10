@@ -16,7 +16,6 @@ class CTACanvasTextCell: CTACanvasCell {
         self.textView = TextView()
         super.init(frame: frame)
         
-//        textView.backgroundColor = UIColor.yellowColor()
         textView.text = ""
         textView.layer.drawsAsynchronously = true
         textView.frame = CGRect(x: 0, y: 0, width: bounds.size.width, height: bounds.size.height)

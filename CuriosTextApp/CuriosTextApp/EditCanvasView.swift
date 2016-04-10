@@ -10,16 +10,16 @@ import UIKit
 
 protocol CanvasViewDataSource: class {
     
-    func numberOfcontainerInCanvasView(canvas: CanvasView) -> Int
-    func canvasView(canvas: CanvasView, containerAtIndex index: Int) -> ContainerView
+    func numberOfcontainerInCanvasView(canvas: EditCanvasView) -> Int
+    func canvasView(canvas: EditCanvasView, containerAtIndex index: Int) -> ContainerView
 }
 
 protocol CanvasViewDelegate: class {
     
-    func canvasView(canvas: CanvasView, didSelectedContainerAtIndex index: Int)
+    func canvasView(canvas: EditCanvasView, didSelectedContainerAtIndex index: Int)
 }
 
-class CanvasView: UIView {
+class EditCanvasView: UIView {
     
     weak var dataSource: CanvasViewDataSource?
     weak var delegate: CanvasViewDelegate?
@@ -65,7 +65,7 @@ class CanvasView: UIView {
 }
 
 // MARK: - Gestures
-extension CanvasView {
+extension EditCanvasView {
     
     func tap(sender: UITapGestureRecognizer) {
         
