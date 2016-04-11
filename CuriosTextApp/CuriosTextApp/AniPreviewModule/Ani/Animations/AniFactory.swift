@@ -11,6 +11,29 @@ import UIKit
 
 class AniFactory {
     
+    enum AnimationType: String {
+        case MoveIn = "MOVE_IN"
+        case MoveOut = "MOVE_OUT"
+        
+        func displayAtEnd() -> Bool {
+            switch self {
+            case .MoveIn:
+                return true
+            case .MoveOut:
+                return false
+            }
+        }
+        
+        func displayAtBegan() -> Bool {
+            switch self  {
+            case .MoveIn:
+                return false
+            case .MoveOut:
+                return true
+            }
+        }
+    }
+    
     class func animationWith(name: String, canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, descriptor: Descriptor, addBeganTime: Float) -> AniDescriptor {
         
         switch name {

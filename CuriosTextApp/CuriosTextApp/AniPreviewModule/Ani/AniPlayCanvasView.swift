@@ -25,7 +25,7 @@ class AniPlayCanvasView: CanvasView {
         if layer.speed != 0 { layer.speed = 0 }
         control.stop()
         reset()
-        setupAnimations()
+        setupAniNodes()
         setupControl()
         currentNode = beganNode
         guard let aniNode = currentNode else { return }
@@ -57,7 +57,7 @@ extension AniPlayCanvasView {
         CATransaction.commit()
     }
     
-    private func setupAnimations() {
+    private func setupAniNodes() {
         guard let aniDataSource = aniDataSource, let animations = aniDataSource.animationsForAniPlayCanvasView(self) else {
             beganNode = nil
             currentNode = nil
@@ -69,9 +69,7 @@ extension AniPlayCanvasView {
     }
     
     private func readyWith(node: AniNode) -> Float {
-        
         guard let aniDataSource = aniDataSource else { return 0 }
-        
         let result = node.startWith(bounds.size) {[weak self] (containerID) -> AniNodeFinderResult in
             if let sf = self {
                 switch aniDataSource.containerItemForAniPlayCanvasView(sf, containerID: containerID) {
@@ -90,7 +88,6 @@ extension AniPlayCanvasView {
     }
     
     private func setupControl() {
-        
         control.callBack {[weak self] (state) in
             guard let sf = self else {
                 return
