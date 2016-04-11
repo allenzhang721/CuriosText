@@ -172,16 +172,20 @@ extension EditViewController {
     
     @IBAction func preview(sender: AnyObject) {
         
+        guard let animation = animation else {
+            return
+        }
+        
         guard let preController = UIStoryboard(name: "AniPreView", bundle: nil).instantiateInitialViewController() as? AniPreviewCanvasViewController else { return }
         
-        preController.canvas = page.toAniCanvas()
+        let preCanvas = page.toAniCanvas().aniCanvasByAnimationWith(animation.iD)
+        preController.canvas = preCanvas
         let retriver = {[weak self] (name: String,  handler: (String, UIImage?) -> ()) in
             if let sf = self {
                 let data = sf.document.resourceBy(name)
                 let image = data == nil ? nil : UIImage(data: data!)
                 handler(name, image)
             }
-            
         }
         preController.imageRetriver = retriver
         

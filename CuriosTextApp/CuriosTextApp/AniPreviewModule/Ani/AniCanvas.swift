@@ -35,6 +35,74 @@ class AniCanvas: NSObject {
             return AniCanvasAccessResult.Failture
         }
     }
+    
+    func aniCanvasByAnimationAt(index: Int) -> AniCanvas {
+        
+        let filtedCanvas = canvas.canvasWithAnimationAt(index)
+        let nextAniCanvas = AniCanvas(canvas: filtedCanvas)
+        return nextAniCanvas
+    }
+    
+    func aniCanvasByAnimationWith(AniID: String) -> AniCanvas {
+        guard let index = (canvas.animations.indexOf{ $0.ID == AniID }) else {
+            return self
+        }
+        
+        let filtedCanvas = canvas.canvasWithAnimationAt(index)
+        let nextAniCanvas = AniCanvas(canvas: filtedCanvas)
+        return nextAniCanvas
+    }
+}
+
+extension Canvas {
+    
+    private func canvasWithAnimationAt(index: Int) -> Canvas {
+        guard animations.count > 0 && 0 <= index && index < animations.count else {
+            print("The Animation Index is Invalid.")
+            return self
+        }
+        let n = animations.count
+        let animation = animations[index]
+        let aniTargetID = animation.targetID
+        // find not display containerID
+        var notDisplayContainerID = [String]()
+        
+        // 0..<Index Animations
+            let preAnimations = animations[0..<index].reverse()
+            var firstTargetIDs = [String]()
+            var firstTargetAnis = [Animation]()
+            for ani in preAnimations {
+                if ani.targetID != aniTargetID && !firstTargetIDs.contains(ani.targetID) {
+                    firstTargetIDs.append(ani.targetID)
+                    firstTargetAnis.append(ani)
+                }
+            }
+            
+            let notDisplayAtEndAnis = firstTargetAnis.filter { !AniFactory.AnimationType(rawValue: $0.descriptor.type)!.displayAtEnd() }
+            notDisplayContainerID += notDisplayAtEndAnis.map { $0.targetID }
+        
+        // Index..<n Animations
+            let afterAnimations = animations[index..<n]
+            var aftfirstTargetIDs = [String]()
+            var aftfirstTargetAnis = [Animation]()
+            for ani in afterAnimations {
+                if ani.targetID != aniTargetID && !aftfirstTargetIDs.contains(ani.targetID) {
+                    aftfirstTargetIDs.append(ani.targetID)
+                    aftfirstTargetAnis.append(ani)
+                }
+            }
+            
+            let notDisplayAtBeganAnis = aftfirstTargetAnis.filter { !AniFactory.AnimationType(rawValue: $0.descriptor.type)!.displayAtBegan() }
+            
+            notDisplayContainerID += notDisplayAtBeganAnis.map { $0.targetID }
+        
+        let validContainers = containers.filter{ !notDisplayContainerID.contains($0.identifier) }
+        
+        let canvas = Canvas(width: width, height: height, containers: validContainers, animations: [animation])
+        
+        return canvas
+    }
+    
 }
 
 extension AniCanvas: UICollectionViewDataSource {
