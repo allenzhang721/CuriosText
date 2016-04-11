@@ -14,7 +14,8 @@ class CTAFontsManager {
     static var indexPaths = [CTAIndexPath]()
    static let families: [String] = {
     
-    let valildFamilies = UIFont.familyNames().filter {UIFont.fontNamesForFamilyName($0).count > 0}
+//    let valildFamilies = UIFont.familyNames().filter {UIFont.fontNamesForFamilyName($0).count > 0}
+    let valildFamilies = CTAFontsManager.registerFonts()
 //        let a = valildFamilies
     for (s, f) in valildFamilies.enumerate() {
         CTAFontsManager.indexPaths.append(CTAIndexPath(section: s, item: 0))
@@ -27,7 +28,7 @@ class CTAFontsManager {
     }
     
     class func defaultFontName() -> String {
-        let name = fontNamesWithFamily(defaultFamily())![1]
+        let name = fontNamesWithFamily(defaultFamily())![0]
         return name
     }
     
@@ -79,6 +80,26 @@ class CTAFontsManager {
         }
         
         return index.first?.item
+        
+    }
+    
+    class func registerFonts() -> [String] {
+        
+        let fontsName = "Fonts"
+        let path = NSBundle.mainBundle().bundleURL
+        let url = path.URLByAppendingPathComponent(fontsName)
+        let fontUrls = try! NSFileManager.defaultManager().contentsOfDirectoryAtURL(url, includingPropertiesForKeys: nil, options: NSDirectoryEnumerationOptions.init(rawValue: 0))
+        
+        let urls = fontUrls.filter{ $0.pathExtension == "ttf" }
+        
+        let beforeFamilyName = UIFont.familyNames()
+        if CTFontManagerRegisterFontsForURLs(urls, .Process, nil) {
+            let newFamilyName = UIFont.familyNames().filter{ !beforeFamilyName.contains($0) }
+            
+            return newFamilyName
+        } else {
+            return []
+        }
         
     }
     
