@@ -102,7 +102,9 @@ extension CTASelectorFontCell: CTAPickerViewDataSource {
             }
             
             if let displayFamilyName = CTFontCopyLocalizedName(font, kCTFontFamilyNameKey, nil) {
-                itemCell.view.text = (displayFamilyName as String).componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "(（")).first
+                let characters = NSMutableCharacterSet.whitespaceCharacterSet()
+                characters.addCharactersInString("(（")
+                itemCell.view.text = (displayFamilyName as String).componentsSeparatedByCharactersInSet(characters).first
             } else {
                 itemCell.view.text = family
             }

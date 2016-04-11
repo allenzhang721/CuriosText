@@ -15,7 +15,7 @@ class CTAFontsManager {
    static let families: [String] = {
     
 //    let valildFamilies = UIFont.familyNames().filter {UIFont.fontNamesForFamilyName($0).count > 0}
-    let valildFamilies = CTAFontsManager.registerFonts()
+    let valildFamilies = CTAFontsManager.registerFonts().sort(<)
 //        let a = valildFamilies
     for (s, f) in valildFamilies.enumerate() {
         CTAFontsManager.indexPaths.append(CTAIndexPath(section: s, item: 0))
