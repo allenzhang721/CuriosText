@@ -97,11 +97,17 @@ extension CTASelectorFontCell: CTAPickerViewDataSource {
         if let itemCell = itemCell as? CTAVerticalItemFontsCollectionViewCell {
             let res = CTAFontsManager.familyAndFontNameWith(NSIndexPath(forItem: index, inSection: section))
             
-            guard let family = res.0, font = res.1 else {
+            guard let family = res.0, fontName = res.1, let font = UIFont(name: fontName, size: 17) else {
                 return
             }
+            
+            if let displayFamilyName = CTFontCopyLocalizedName(font, kCTFontFamilyNameKey, nil) {
+                itemCell.view.text = (displayFamilyName as String).componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "(（")).first
+            } else {
                 itemCell.view.text = family
-                itemCell.view.font = UIFont(name: font, size: 17)
+            }
+            
+                itemCell.view.font = font
         }
     }
 }

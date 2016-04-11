@@ -255,6 +255,7 @@
 		2CE6D21A1C60D00A0064A9B0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2CE6D21C1C60D00A0064A9B0 /* InfoPlist.strings */; };
 		2CED15AE1C5F65E10086976E /* CTADocumentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CED15AD1C5F65E10086976E /* CTADocumentProtocol.swift */; };
 		2CED15B01C5F6F990086976E /* CTADocumentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CED15AF1C5F6F990086976E /* CTADocumentManager.swift */; };
+		2CF4B7D11CBBA58F009B12C3 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 2CF4B7D01CBBA58F009B12C3 /* Fonts */; };
 		2CF5EB8B1C47B2CF009F0719 /* CTAFontsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF5EB8A1C47B2CF009F0719 /* CTAFontsManager.swift */; };
 		2CF8ADFC1CB9CA3F00244006 /* ContentImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF8ADFB1CB9CA3F00244006 /* ContentImageCell.swift */; };
 		2CF8ADFE1CB9CB2700244006 /* ContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF8ADFD1CB9CB2700244006 /* ContentCell.swift */; };
@@ -574,6 +575,7 @@
 		2CE6D21D1C60D00D0064A9B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		2CED15AD1C5F65E10086976E /* CTADocumentProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTADocumentProtocol.swift; sourceTree = "<group>"; };
 		2CED15AF1C5F6F990086976E /* CTADocumentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTADocumentManager.swift; sourceTree = "<group>"; };
+		2CF4B7D01CBBA58F009B12C3 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		2CF5EB8A1C47B2CF009F0719 /* CTAFontsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAFontsManager.swift; sourceTree = "<group>"; };
 		2CF8ADFB1CB9CA3F00244006 /* ContentImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentImageCell.swift; sourceTree = "<group>"; };
 		2CF8ADFD1CB9CB2700244006 /* ContentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCell.swift; sourceTree = "<group>"; };
@@ -955,6 +957,7 @@
 		2C81B59E1C58B10600AE16E0 /* Gobal */ = {
 			isa = PBXGroup;
 			children = (
+				2CF4B7D01CBBA58F009B12C3 /* Fonts */,
 				2C5EA2551C479CE000DCEE7B /* Print.swift */,
 				2C2088611C8C1BC200172B27 /* CTACache.swift */,
 				2C929DD61C60962B00F90BF4 /* CTAConfig.swift */,
@@ -1397,6 +1400,7 @@
 				2C3B33D11C1176D000738166 /* Assets.xcassets in Resources */,
 				2C567A691C5CBAF200F11369 /* Countries.plist in Resources */,
 				2C610A2B1C902B0300DFE315 /* Editor.storyboard in Resources */,
+				2CF4B7D11CBBA58F009B12C3 /* Fonts in Resources */,
 				2C2B45B21C5CC077004A4809 /* SupportCountryZone in Resources */,
 				2CE063ED1C857D2F001F7F4E /* ImageCrop.storyboard in Resources */,
 				2C3CAD2C1C21828200D8DE4B /* 2.jpg in Resources */,
@@ -1944,6 +1948,7 @@
 				INFOPLIST_FILE = CuriosTextApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "16dca7ff-b14f-487c-916b-577ec6ebd60a";
@@ -1967,6 +1972,7 @@
 				INFOPLIST_FILE = CuriosTextApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "16dca7ff-b14f-487c-916b-577ec6ebd60a";

@@ -153,7 +153,7 @@ extension CTAAnimationBinder {
         ani.duration = CFTimeInterval(config.duration)
         ani.fromValue = NSNumber(float: 0)
         ani.toValue = NSNumber(float: Float(pageSize.width) + Float(view.bounds.width))
-        view.layer.pop_addAnimation(ani, forKey: "MOVE_Out")
+        view.layer.pop_addAnimation(ani, forKey: "MOVE_OUT")
     }
     
     func flyOut(view: UIView, index: Int) {
