@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
 //        registerFonts()
-        
+        ImageCache.defaultCache.maxMemoryCost = 100 * 1024 * 1024 // Allen: 100 MB
         // Override point for customization after application launch.
         #if DEBUG
             CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.Production.description
