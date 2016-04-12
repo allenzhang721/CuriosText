@@ -18,14 +18,15 @@ final class CTASelectorFontCell: CTASelectorCell {
     }
     
     private func setup() {
-        view = CTAPickerView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)), showCount: 2)
+        view = CTAPickerView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width - 40, height: 88)), showCount: 2)
+        view.collectionView.clipsToBounds = false
         view.backgroundColor = UIColor.whiteColor()
         contentView.addSubview(view)
         view.backgroundColor = CTAStyleKit.intoDreams1
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
+        view.leadingAnchor.constraintEqualToAnchor(leadingAnchor, constant: 20).active = true
         view.topAnchor.constraintEqualToAnchor(topAnchor).active = true
-        view.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
+        view.trailingAnchor.constraintEqualToAnchor(trailingAnchor, constant: -20).active = true
         view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
         
         view.dataSource = self
@@ -102,9 +103,10 @@ extension CTASelectorFontCell: CTAPickerViewDataSource {
             }
             
             if let displayFamilyName = CTFontCopyLocalizedName(font, kCTFontFamilyNameKey, nil) {
-                let characters = NSMutableCharacterSet.whitespaceCharacterSet()
-                characters.addCharactersInString("(（")
-                itemCell.view.text = (displayFamilyName as String).componentsSeparatedByCharactersInSet(characters).first
+                
+                let n = (displayFamilyName as NSString).stringByReplacingOccurrencesOfString("（非商用）", withString: "").stringByReplacingOccurrencesOfString("G0v1", withString: "").stringByReplacingOccurrencesOfString("(Noncommercial)", withString: "")
+                
+                itemCell.view.text = n
             } else {
                 itemCell.view.text = family
             }

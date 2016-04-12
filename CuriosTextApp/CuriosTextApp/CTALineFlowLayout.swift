@@ -35,6 +35,7 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
     
     var showCount: Int = 2
     weak var delegate: LineFlowLayoutDelegate?
+    private var didLayout = false
     private var currentIndexPath: NSIndexPath?
     
     override class func layoutAttributesClass() -> AnyClass {
@@ -47,10 +48,11 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
     }
     
     override func prepareLayout() {
-        guard let collectionView = collectionView else {
+        guard let collectionView = collectionView where !didLayout else {
             return
         }
         
+        didLayout = true
         minimumLineSpacing = 0
         minimumInteritemSpacing = 0
         
@@ -65,7 +67,6 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
             let left = (colSize.width - itemSize.width) / 2.0
             let bottom = top
             let right = left
-            
             collectionView.contentInset =
                 UIEdgeInsets(
                     top: top,
@@ -233,7 +234,10 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
                         adjustOffset = adjust
                     }
                 }
-                return CGPoint(x: proposedContentOffset.x + adjustOffset, y: proposedContentOffset.y)
+                let point = CGPoint(x: proposedContentOffset.x + adjustOffset, y: proposedContentOffset.y)
+                collectionView.setContentOffset(point, animated: true)
+                return point
+                
                 
             case .Vertical:
                 

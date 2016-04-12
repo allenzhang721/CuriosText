@@ -22,7 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         #if DEBUG
             CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.Production.description
-            
         #else
             CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.Production.description
         #endif
