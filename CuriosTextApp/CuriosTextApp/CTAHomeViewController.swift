@@ -740,7 +740,8 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 let currentFull = self.currentFullCell
                 self.currentFullCell = self.nextFullCell
                 self.nextFullCell = self.nextMoreCell
-                self.nextMoreCell = currentFull
+                self.nextMoreCell = self.preFullCell
+                self.preFullCell = currentFull
                 self.currentPublishIndex++
                 if self.currentPublishIndex > self.publishModelArray.count-1{
                     self.currentPublishIndex = self.publishModelArray.count-1
