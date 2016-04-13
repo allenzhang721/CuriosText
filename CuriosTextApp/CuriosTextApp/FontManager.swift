@@ -108,7 +108,6 @@ extension FontManager {
         
         do {
            let result = try record.managedObjectContext.executeFetchRequest(familiesFetch) as! [FontFamily]
-            print(result.map {$0.familyName})
             return result.map {$0.familyName!}
         } catch {
             
@@ -125,7 +124,6 @@ extension FontManager {
         do {
             let result = try record.managedObjectContext.executeFetchRequest(fullNameFetch) as! [Font]
             
-            print(result.map { $0.postscriptName })
             return result.map { $0.postscriptName! }
         } catch {
             return []
@@ -191,8 +189,8 @@ extension FontManager {
         let result = shouldInsertFontBy(fullName)
         let familyResult = shouldInsertFamilyBy(familyName)
         
-        if  case .ShouldAdd = result { addFont(info) } else { print("not add font") }
-        if case .ShouldAdd = familyResult { addFamily(info) } else { print("not add family") }
+        if  case .ShouldAdd = result { addFont(info) } //else { print("not add font") }
+        if case .ShouldAdd = familyResult { addFamily(info) } //else { print("not add family") }
     }
     
     private func addFont(info: FontInfoAttributes) {
@@ -203,7 +201,7 @@ extension FontManager {
         let font = Font(entity: entity, insertIntoManagedObjectContext: context)
         font.congfigWith(info)
         
-        print(" add font")
+       // print(" add font")
     }
     
     private func addFamily(info: FontInfoAttributes) {
@@ -214,7 +212,7 @@ extension FontManager {
         let font = FontFamily(entity: entity, insertIntoManagedObjectContext: context)
         font.configWith(info)
         
-        print(" add family")
+        // print(" add family")
         
         let list = familiesList()
         if let families = list.families {
@@ -246,7 +244,7 @@ extension FontManager {
                 let font = FontFamiliesList(entity: entity, insertIntoManagedObjectContext: context)
                 font.name = name
                 
-                print(" add list")
+                // print(" add list")
                 return font
             }
 

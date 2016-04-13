@@ -6,63 +6,65 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CuriosTextApp/CTAPreviewCanvasView.swift"
-            timestampString = "481883251.034759"
+            filePath = "CuriosTextApp/CTAFullPublishesCell.swift"
+            timestampString = "482233775.398515"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
-            landmarkName = "reloadData(_:compeletedHander:)"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
+            landmarkName = "playAnimation()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CuriosTextApp/CTAPreviewCanvasView.swift"
-            timestampString = "481883251.034759"
+            filePath = "CuriosTextApp/CTAFullPublishesCell.swift"
+            timestampString = "482233837.549516"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "186"
-            endingLineNumber = "186"
-            landmarkName = "reloadData(_:compeletedHander:)"
+            startingLineNumber = "215"
+            endingLineNumber = "215"
+            landmarkName = "readyCompleted()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CuriosTextApp/CTAPreviewCanvasView.swift"
-            timestampString = "481883355.501008"
+            filePath = "CuriosTextApp/CTAFullPublishesCell.swift"
+            timestampString = "482233796.234904"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
-            landmarkName = "reloadData(_:compeletedHander:)"
+            startingLineNumber = "230"
+            endingLineNumber = "230"
+            landmarkName = "playAnimation()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CuriosTextApp/AniPreviewModule/ContentImageCell.swift"
-            timestampString = "482082763.129683"
+            filePath = "CuriosTextApp/CTAFullPublishesCell.swift"
+            timestampString = "482233929.92615"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60">
+            startingLineNumber = "102"
+            endingLineNumber = "102"
+            landmarkName = "loadAnimation()"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

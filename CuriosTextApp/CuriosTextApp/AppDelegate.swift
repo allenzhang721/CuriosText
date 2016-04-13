@@ -47,7 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         for name in fileNames {
             let fontFileUrl = fontsDirUrl.URLByAppendingPathComponent(name)
             CTAFontsManager.registerFontAt(fontFileUrl)
-            print(fontFileUrl)
         }
         
         CTAFontsManager.reloadData()
