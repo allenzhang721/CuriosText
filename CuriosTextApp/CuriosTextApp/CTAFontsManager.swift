@@ -12,19 +12,32 @@ import UIKit
 class CTAFontsManager {
     
     static var indexPaths = [CTAIndexPath]()
-   static let families: [String] = {
+    private static var validFamilies = [String]()
+    static var familiyDisplayNameDic = [String: String]()
     
-//    let valildFamilies = UIFont.familyNames().filter {UIFont.fontNamesForFamilyName($0).count > 0}
-    let valildFamilies = CTAFontsManager.registerFonts().sort(<)
-//        let a = valildFamilies
-    for (s, f) in valildFamilies.enumerate() {
-        CTAFontsManager.indexPaths.append(CTAIndexPath(section: s, item: 0))
+//   static let families: [String] = {
+//    
+////    let valildFamilies = UIFont.familyNames().filter {UIFont.fontNamesForFamilyName($0).count > 0}
+//    let valildFamilies = CTAFontsManager.registerFonts().sort(<)
+////        let a = valildFamilies
+//    for (s, f) in valildFamilies.enumerate() {
+//        CTAFontsManager.indexPaths.append(CTAIndexPath(section: s, item: 0))
+//    }
+//        return valildFamilies
+//    }()
+    
+    static var families: [String] {
+        return validFamilies
     }
-        return valildFamilies
-    }()
+    
+    class func customFamilyDisplayNameBy(familyName: String) -> String? {
+        guard let displayName = CTAFontsManager.familiyDisplayNameDic[familyName] else { return nil }
+        
+        return displayName
+    }
     
     class func defaultFamily() -> String {
-        return CTAFontsManager.families[3]
+        return CTAFontsManager.families[0]
     }
     
     class func defaultFontName() -> String {
@@ -81,6 +94,19 @@ class CTAFontsManager {
         
         return index.first?.item
         
+    }
+    
+    class func registerFontAt(fileUrl: NSURL) {
+        
+        FontManager.registerFontAt(fileUrl)
+    }
+    
+    class func reloadData() {
+        
+        let vf = UIFont.familyNames()
+        let fs = FontManager.registeredFamilies()
+        let valf = fs.filter{ vf.contains($0) }
+        validFamilies = valf
     }
     
     class func registerFonts() -> [String] {

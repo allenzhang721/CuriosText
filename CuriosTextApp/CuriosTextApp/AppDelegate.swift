@@ -18,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
 //        registerFonts()
+        registerLocalFonts()
+        familiesDisplayNames()
         ImageCache.defaultCache.maxMemoryCost = 100 * 1024 * 1024 // Allen: 100 MB
         // Override point for customization after application launch.
         #if DEBUG
@@ -30,6 +32,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CTASocialManager.register(.SMS, appID: CTAConfigs.SMS.appID, appKey: CTAConfigs.SMS.appKey) // http://dashboard.mob.com/#/sms/index
         
         return true
+    }
+    
+    func registerLocalFonts() {
+        
+        let fontsName = "Fonts"
+        let path = NSBundle.mainBundle().bundleURL
+        let fontsDirUrl = path.URLByAppendingPathComponent(fontsName)
+        let jsonName = "fonts.json"
+        let jsonFileURL = fontsDirUrl.URLByAppendingPathComponent(jsonName)
+        let data = NSData(contentsOfURL: jsonFileURL)!
+        let fileNames = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)) as! [String]
+        
+        for name in fileNames {
+            let fontFileUrl = fontsDirUrl.URLByAppendingPathComponent(name)
+            CTAFontsManager.registerFontAt(fontFileUrl)
+            print(fontFileUrl)
+        }
+        
+        CTAFontsManager.reloadData()
+    }
+    
+    func familiesDisplayNames() {
+        
+        let fontsName = "Fonts"
+        let path = NSBundle.mainBundle().bundleURL
+        let fontsDirUrl = path.URLByAppendingPathComponent(fontsName)
+        let jsonName = "familyDisplayNames.json"
+        let jsonFileURL = fontsDirUrl.URLByAppendingPathComponent(jsonName)
+        let data = NSData(contentsOfURL: jsonFileURL)!
+        let fileNames = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)) as! [String: String]
+        
+        CTAFontsManager.familiyDisplayNameDic = fileNames
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
