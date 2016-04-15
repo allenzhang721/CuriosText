@@ -18,9 +18,11 @@ class ContainerTextView: ContainerView {
             fatalError("The contents is not AttributeString")
         }
         
-        textView.bounds.size = size
+//        textView.bounds.size = size
         textView.insets = inset
-        textView.frame.origin = CGPoint(x: 0 - inset.x, y: 0 - inset.y)
+        textView.backgroundColor = UIColor.redColor()
+//        textView.frame.origin = CGPoint(x: 0 - inset.x, y: 0 - inset.y)
+        textView.center = CGPoint(x: bounds.midX, y: bounds.midY)
         textView.attributedText = contents
     }
 }

@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/Page/CTATextContainerViewModel.swift"
-            timestampString = "482405921.173038"
+            timestampString = "482408753.365978"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
             landmarkName = "textSizeWithConstraintSize(_:)"
             landmarkType = "5">
          </BreakpointContent>

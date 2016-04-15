@@ -34,6 +34,7 @@ protocol TextRetrievable: class {
 
 extension TextRetrievable {
     
+    //TODO: Rect Inset
     func rectInset() -> CGPoint {
         return CGPoint(x: 50.0 / 17.0 * fontSize * fontScale, y: 0)
     }

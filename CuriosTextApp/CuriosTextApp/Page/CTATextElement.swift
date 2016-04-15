@@ -387,9 +387,14 @@ final class CTATextElement: NSObject, CTAElement {
         }
     }
     
+    var insets: CGPoint {
+        let inset = CGPoint(x: 20.0 / 17.0 * fontSize * scale, y: 20.0 / 17.0 * fontSize * scale)
+        return inset
+    }
+    
     func resultWithText(text: String, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize) {
         
-        let inset = CGPoint(x: 20.0 / 17.0 * fontSize * scale, y: 0)
+        let inset = insets
         let str = attributeStringWithText(text)
         let textSize = str.boundingRectWithSize(constraintSize, options: .UsesLineFragmentOrigin, context: nil).size
         let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
@@ -400,7 +405,7 @@ final class CTATextElement: NSObject, CTAElement {
     
     func resultWithScale(scale: CGFloat, preScale: CGFloat, containerSize: CGSize, constraintSzie: CGSize) -> (inset: CGPoint, size: CGSize) {
         
-        let inset = CGPoint(x: 20.0 / 17.0 * fontSize * scale, y: 0)
+        let inset = insets
         let str = attributeStringWithFontScale(scale)
         let textSize = str.boundingRectWithSize(constraintSzie, options: .UsesLineFragmentOrigin, context: nil).size
         let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
@@ -412,7 +417,7 @@ final class CTATextElement: NSObject, CTAElement {
     
     func resultWithFontFamily(family: String, fontName name: String, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize) {
         
-        let inset = CGPoint(x: 20.0 / 17.0 * fontSize * scale, y: 0)
+        let inset = insets
         let str = attributeStringWithFontScale(scale)
         let textSize = str.boundingRectWithSize(constraintSize, options: .UsesLineFragmentOrigin, context: nil).size
         let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
@@ -424,7 +429,7 @@ final class CTATextElement: NSObject, CTAElement {
     
     func resultWithLineSpacing(lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize) {
         
-        let inset = CGPoint(x: 20.0 / 17.0 * fontSize * scale, y: 0)
+        let inset = insets
         let str = attributeStringWithLineSpacing(lineSpacing, textSpacing: textSpacing)
         let textSize = str.boundingRectWithSize(constraintSize, options: .UsesLineFragmentOrigin, context: nil).size
         let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
