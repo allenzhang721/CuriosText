@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kv8-4k-bsN">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kv8-4k-bsN">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="kxp-pc-okM"/>
@@ -27,10 +27,11 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wnf-xM-VcX">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wnf-xM-VcX">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <items>
                                     <barButtonItem systemItem="refresh" id="WZd-GV-1xU">
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="ready:" destination="V1I-h9-1ya" id="sfg-m8-ZrS"/>
                                         </connections>
@@ -43,6 +44,7 @@
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="AOi-iR-0oo"/>
                                     <barButtonItem systemItem="pause" id="GhV-hZ-A24">
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="pause:" destination="V1I-h9-1ya" id="Jgv-Nf-euk"/>
                                         </connections>
@@ -51,6 +53,7 @@
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="kv8-4k-bsN" firstAttribute="leading" secondItem="wnf-xM-VcX" secondAttribute="leading" id="1Yl-hE-VQR"/>
                             <constraint firstItem="wnf-xM-VcX" firstAttribute="bottom" secondItem="etC-9e-ZHG" secondAttribute="top" id="8Bh-nV-1KY"/>
@@ -59,10 +62,18 @@
                             <constraint firstAttribute="trailing" secondItem="kv8-4k-bsN" secondAttribute="trailing" id="Cys-6j-taC"/>
                             <constraint firstItem="kv8-4k-bsN" firstAttribute="trailing" secondItem="wnf-xM-VcX" secondAttribute="trailing" id="jcq-a6-b6S"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="B89-WQ-q39" appends="YES" id="y8z-DP-xIa"/>
+                        </connections>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sIh-Mz-3tw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="B89-WQ-q39">
+                    <connections>
+                        <action selector="tap:" destination="V1I-h9-1ya" id="RMp-d0-2NI"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="470" y="357"/>
         </scene>

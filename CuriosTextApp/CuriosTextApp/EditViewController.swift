@@ -23,7 +23,7 @@ class EditViewController: UIViewController {
         var oldScale: CGFloat = 0
     }
     
-    @IBOutlet weak var addView: CTAEditAddView!
+    @IBOutlet weak var addView: CTAGradientButtonView!
     private var tabViewController: CTATabViewController!
     private var canvasViewController: CTACanvasViewController!
     private var selectorViewController: CTASelectorsViewController!
@@ -170,7 +170,7 @@ extension EditViewController {
         showPublishViewController()
     }
     
-    @IBAction func preview(sender: AnyObject) {
+    @IBAction func preview(sender: AnyObject?) {
         
         guard let animation = animation else {
             return
@@ -189,7 +189,12 @@ extension EditViewController {
         }
         preController.imageRetriver = retriver
         
-        presentViewController(preController, animated: true, completion: nil)
+        let v = view.snapshotViewAfterScreenUpdates(true)
+        preController.view.insertSubview(v, atIndex: 0)
+        presentViewController(preController, animated: false) { 
+            
+            
+        }
     }
 }
 
@@ -662,6 +667,10 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
 // MARK: - CTASelectorsViewController
 extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorViewControllerDelegate {
     
+    func animationWillPlay() {
+        preview(nil)
+    }
+    
     // MARK: - DataSource
     func selectorsViewControllerContainer(viewcontroller: CTASelectorsViewController) -> ContainerVMProtocol? {
         return selectedContainer
@@ -696,8 +705,6 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             let container = selectedContainer else {
             return
         }
-        
-        print("Scale did Changed = \(scale)")
         
         let canvasSize = page.size
         container.updateWithScale(

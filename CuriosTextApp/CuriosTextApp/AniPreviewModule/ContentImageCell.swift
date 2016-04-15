@@ -30,6 +30,7 @@ class ContentImageCell: ContentCell {
     }
     
     private func setup() {
+        backgroundColor = UIColor.clearColor()
         contentView.addSubview(imageView)
     }
     

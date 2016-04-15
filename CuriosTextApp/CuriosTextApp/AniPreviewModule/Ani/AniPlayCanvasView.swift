@@ -17,6 +17,7 @@ protocol AniPlayCanvasViewDataSource: class {
 class AniPlayCanvasView: CanvasView {
 
     weak var aniDataSource: AniPlayCanvasViewDataSource?
+    var completedBlock: (() -> ())?
     var beganNode: AniNode?
     var currentNode: AniNode?
     let control = AniControl()
@@ -99,6 +100,7 @@ extension AniPlayCanvasView {
                 sf.reset()
                 sf.currentNode = sf.currentNode?.nextNode
                 guard let aniNode = sf.currentNode else {
+                    self?.completedBlock?()
                     return
                 }
                 sf.readyWith(aniNode)

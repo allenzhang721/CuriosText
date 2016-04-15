@@ -8,8 +8,20 @@
 
 import UIKit
 
-class CTAEditAddView: UIView {
+class CTAGradientButtonView: UIView {
 
+    var image: UIImage? {
+        set {
+            dispatch_async(dispatch_get_main_queue()) { 
+                self.addButton.setImage(newValue, forState: .Normal)
+            }
+        }
+        
+        get {
+           return addButton.imageForState(.Normal)
+        }
+        
+    }
     let addButton = UIButton()
     var didClickHandler: (() -> ())?
     
@@ -33,7 +45,7 @@ class CTAEditAddView: UIView {
         addButton.topAnchor.constraintEqualToAnchor(topAnchor).active = true
         
         addButton.setImage(CTAStyleKit.imageOfAddInEditor, forState: .Normal)
-        addButton.addTarget(self, action: "addClick:", forControlEvents: .TouchUpInside)
+        addButton.addTarget(self, action: #selector(CTAGradientButtonView.addClick(_:)), forControlEvents: .TouchUpInside)
     }
     
     func addClick(sender: AnyObject) {

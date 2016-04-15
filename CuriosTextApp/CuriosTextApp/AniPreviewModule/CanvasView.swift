@@ -40,6 +40,7 @@ class CanvasView: UIView {
     }
     
     private func setup() {
+        backgroundColor = UIColor.clearColor()
         collectionView.backgroundColor = UIColor.clearColor()
         collectionView.registerClass(ContainerCell.self, forCellWithReuseIdentifier: canvasItemIdentifier)
 //        layer.addSublayer(collectionView.layer)

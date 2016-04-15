@@ -30,6 +30,7 @@ protocol CTASelectorScaleable: CTASelectorable {
     func animationWillBeDeleted(completedBlock:(() -> ())?)
     func animationWillBeInserted(a: CTAAnimationName, completedBlock:(() -> ())?)
     func animationWillChanged(a: CTAAnimationName)
+    func animationWillPlay()
 }
 
 typealias CTASelectorViewControllerDelegate = protocol<CTASelectorScaleable>
@@ -312,6 +313,10 @@ extension CTASelectorsViewController {
 }
 
 extension CTASelectorsViewController: CTASelectorAnimationCellDelegate {
+    
+    func animationCellAnimationPlayWillBegan(cell: CTASelectorAnimationCell) {
+        delegate?.animationWillPlay()
+    }
     
     func animationCellWillDeleteAnimation(cell: CTASelectorAnimationCell, completedBlock:(() -> ())?) {
         delegate?.animationWillBeDeleted({ 

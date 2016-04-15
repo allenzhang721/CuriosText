@@ -37,7 +37,7 @@
 		2C1F015A1C3BD7400033CED8 /* CTASelectorSizeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */; };
 		2C1F015C1C3CE3770033CED8 /* CTACanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1F015B1C3CE3770033CED8 /* CTACanvasCell.swift */; };
 		2C2088621C8C1BC200172B27 /* CTACache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2088611C8C1BC200172B27 /* CTACache.swift */; };
-		2C22FAC21C7C299C00667295 /* CTAEditAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C22FAC11C7C299C00667295 /* CTAEditAddView.swift */; };
+		2C22FAC21C7C299C00667295 /* CTAGradientButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C22FAC11C7C299C00667295 /* CTAGradientButtonView.swift */; };
 		2C247FE91C5CA10E0069CFFC /* CTASelectorAnimationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C247FE81C5CA10E0069CFFC /* CTASelectorAnimationCell.swift */; };
 		2C247FEB1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C247FEA1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift */; };
 		2C2B45AA1C5CBCC8004A4809 /* CTALoginProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B45A91C5CBCC8004A4809 /* CTALoginProtocol.swift */; };
@@ -343,7 +343,7 @@
 		2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorSizeCell.swift; sourceTree = "<group>"; };
 		2C1F015B1C3CE3770033CED8 /* CTACanvasCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACanvasCell.swift; sourceTree = "<group>"; };
 		2C2088611C8C1BC200172B27 /* CTACache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACache.swift; sourceTree = "<group>"; };
-		2C22FAC11C7C299C00667295 /* CTAEditAddView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAEditAddView.swift; sourceTree = "<group>"; };
+		2C22FAC11C7C299C00667295 /* CTAGradientButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAGradientButtonView.swift; sourceTree = "<group>"; };
 		2C247FE81C5CA10E0069CFFC /* CTASelectorAnimationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorAnimationCell.swift; sourceTree = "<group>"; };
 		2C247FEA1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTALabelCollectionViewCell.swift; sourceTree = "<group>"; };
 		2C2B45A91C5CBCC8004A4809 /* CTALoginProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTALoginProtocol.swift; sourceTree = "<group>"; };
@@ -1211,7 +1211,7 @@
 			children = (
 				2CD4DC091CA4E25F00790A55 /* CTACycleColorView.swift */,
 				2C04045F1C3EC2C500A5B017 /* CTASliderView.swift */,
-				2C22FAC11C7C299C00667295 /* CTAEditAddView.swift */,
+				2C22FAC11C7C299C00667295 /* CTAGradientButtonView.swift */,
 				2C98D6CE1C86EBFA007AB3F7 /* CTAHUDLabel.swift */,
 				2C7C27DD1C58B83F00975D4A /* CTABarItemView.swift */,
 				2C3097091C3F7FA800D996A4 /* CTAScrollSelectView.swift */,
@@ -1563,7 +1563,7 @@
 				2C5C24981C44FA5600A70F1B /* CTAColorsManger.swift in Sources */,
 				2CD11AB71CB7547500A79305 /* AniPlayCanvasView.swift in Sources */,
 				2CE063E51C857D2F001F7F4E /* CTACollectionViewActiveFlowLayout.swift in Sources */,
-				2C22FAC21C7C299C00667295 /* CTAEditAddView.swift in Sources */,
+				2C22FAC21C7C299C00667295 /* CTAGradientButtonView.swift in Sources */,
 				2CF4D4231CBE38F9001DC7C4 /* FontFamiliesList.swift in Sources */,
 				6628C7031C200C11007F873C /* CTAViewUserModel.swift in Sources */,
 				2C05BB861C9FAA7200667A75 /* PhotoHelper.swift in Sources */,

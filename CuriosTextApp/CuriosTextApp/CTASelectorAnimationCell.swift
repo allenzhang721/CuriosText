@@ -18,10 +18,12 @@ protocol CTASelectorAnimationCellDelegate: class {
     func animationCell(cell: CTASelectorAnimationCell, didChangedToAniamtion ani: CTAAnimationName)
     func animationCell(cell: CTASelectorAnimationCell, durationDidChanged duration: CGFloat)
     func animationCell(cell: CTASelectorAnimationCell, delayDidChanged delay: CGFloat)
+    func animationCellAnimationPlayWillBegan(cell: CTASelectorAnimationCell)
 }
 
 class CTASelectorAnimationCell: CTASelectorCell {
 
+    var playView: CTAGradientButtonView!
     var tabView: CTATabView!
     weak var delegate: CTASelectorAnimationCellDelegate?
     var animation: CTAAnimationBinder? {
@@ -52,6 +54,20 @@ class CTASelectorAnimationCell: CTASelectorCell {
         tabView.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor).active = true
         tabView.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor).active = true
         tabView.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor).active = true
+        
+        // play View
+        playView = CTAGradientButtonView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+        playView.didClickHandler = { [weak self] in
+            self?.delegate?.animationCellAnimationPlayWillBegan(self!)
+        }
+        playView.image = CTAStyleKit.imageOfAnimationplay
+        contentView.addSubview(playView)
+        playView.translatesAutoresizingMaskIntoConstraints = false
+        playView.topAnchor.constraintEqualToAnchor(contentView.topAnchor).active = true
+        playView.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor).active = true
+        playView.widthAnchor.constraintEqualToConstant(44).active = true
+        playView.heightAnchor.constraintEqualToConstant(44).active = true
+        
     }
     
     override func willBeDisplayed() {
