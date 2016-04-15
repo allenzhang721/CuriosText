@@ -68,33 +68,43 @@ extension Canvas {
         var notDisplayContainerID = [String]()
         
         // 0..<Index Animations
-            let preAnimations = animations[0..<index].reverse()
-            var firstTargetIDs = [String]()
-            var firstTargetAnis = [Animation]()
-            for ani in preAnimations {
-                if ani.targetID != aniTargetID && !firstTargetIDs.contains(ani.targetID) {
-                    firstTargetIDs.append(ani.targetID)
-                    firstTargetAnis.append(ani)
-                }
+        let preAnimations = animations[0..<index].reverse()
+        var firstTargetIDs = [String]()
+        var firstTargetAnis = [Animation]()
+        for ani in preAnimations {
+            if ani.targetID != aniTargetID && !firstTargetIDs.contains(ani.targetID) {
+                firstTargetIDs.append(ani.targetID)
+                firstTargetAnis.append(ani)
             }
-            
-            let notDisplayAtEndAnis = firstTargetAnis.filter { !AniFactory.AnimationType(rawValue: $0.descriptor.type)!.displayAtEnd() }
-            notDisplayContainerID += notDisplayAtEndAnis.map { $0.targetID }
+        }
+        
+        let notDisplayAtEndAnis = firstTargetAnis.filter {
+            if let type = CTAAnimationType(rawValue: $0.descriptor.type) {
+                return type.displayAtEnd()
+            } else {
+                return true
+            }
+        }
+        notDisplayContainerID += notDisplayAtEndAnis.map { $0.targetID }
         
         // Index..<n Animations
-            let afterAnimations = animations[index..<n]
-            var aftfirstTargetIDs = [String]()
-            var aftfirstTargetAnis = [Animation]()
-            for ani in afterAnimations {
-                if ani.targetID != aniTargetID && !aftfirstTargetIDs.contains(ani.targetID) {
-                    aftfirstTargetIDs.append(ani.targetID)
-                    aftfirstTargetAnis.append(ani)
-                }
+        let afterAnimations = animations[index..<n]
+        var aftfirstTargetIDs = [String]()
+        var aftfirstTargetAnis = [Animation]()
+        for ani in afterAnimations {
+            if ani.targetID != aniTargetID && !aftfirstTargetIDs.contains(ani.targetID) {
+                aftfirstTargetIDs.append(ani.targetID)
+                aftfirstTargetAnis.append(ani)
             }
-            
-            let notDisplayAtBeganAnis = aftfirstTargetAnis.filter { !AniFactory.AnimationType(rawValue: $0.descriptor.type)!.displayAtBegan() }
-            
-            notDisplayContainerID += notDisplayAtBeganAnis.map { $0.targetID }
+        }
+        
+        let notDisplayAtBeganAnis = aftfirstTargetAnis.filter {if let type = CTAAnimationType(rawValue: $0.descriptor.type) {
+            return type.displayAtBegan()
+        } else {
+            return true
+            }}
+        
+        notDisplayContainerID += notDisplayAtBeganAnis.map { $0.targetID }
         
         let validContainers = containers.filter{ !notDisplayContainerID.contains($0.identifier) }
         
@@ -117,7 +127,7 @@ extension AniCanvas: UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(canvasItemIdentifier, forIndexPath: indexPath)
                 as! ContainerCell
             
-//            cell.backgroundColor = UIColor.yellowColor()
+            //            cell.backgroundColor = UIColor.yellowColor()
             cell.dataSource = containers[indexPath.item]
             cell.delegate = containers[indexPath.item]
             

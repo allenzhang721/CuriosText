@@ -55,22 +55,44 @@ class TextSpliter {
         case (.AllatOnce, .ByObject):
             
             let usedRect = manager.usedRectForTextContainer(container)
-            manager.enumerateLineFragmentsForGlyphRange(NSMakeRange(0, glyphCount), usingBlock: { (alineFragmentRect, usedlineFragmentRect, container, glyphRange, stop) in
-                
-                let r = manager.characterRangeForGlyphRange(glyphRange, actualGlyphRange: nil)
-                //                let start = text.startIndex.advancedBy(r.location)
-                //                let end = text.startIndex.advancedBy(r.location + r.length)
-                let t = (text as NSString).substringWithRange(r)
-                
-                let lf = alineFragmentRect
-                let ulf = usedlineFragmentRect
-                let ur = ulf
-                let cs = CGSize(width: constraintSize.width, height: usedRect.height)
-                let unit = TextUnit(text: t, attriubtes: attributes, usedRect: ur, lineFragmentRect: lf, usedLineFragmentRect: ulf, constraintSize: cs, section: 0, row: 0)
-                
-                inSize = cs
-                units.append(unit)
-            })
+            
+            
+//            let r = manager.characterRangeForGlyphRange(glyphRange, actualGlyphRange: nil)
+            //                let start = text.startIndex.advancedBy(r.location)
+            //                let end = text.startIndex.advancedBy(r.location + r.length)
+            
+            let alineFragmentRect = CGRect(origin: CGPoint.zero, size: size)
+            let usedlineFragmentRect = usedRect
+            
+            let t = text
+            
+            let lf = alineFragmentRect
+            let ulf = usedlineFragmentRect
+            let ur = ulf
+            let cs = CGSize(width: constraintSize.width, height: usedRect.height)
+            let unit = TextUnit(text: t, attriubtes: attributes, usedRect: ur, lineFragmentRect: lf, usedLineFragmentRect: ulf, constraintSize: cs, section: 0, row: 0)
+            
+            inSize = cs
+            units.append(unit)
+            
+            
+            
+//            manager.enumerateLineFragmentsForGlyphRange(NSMakeRange(0, glyphCount), usingBlock: { (alineFragmentRect, usedlineFragmentRect, container, glyphRange, stop) in
+//                
+//                let r = manager.characterRangeForGlyphRange(glyphRange, actualGlyphRange: nil)
+//                //                let start = text.startIndex.advancedBy(r.location)
+//                //                let end = text.startIndex.advancedBy(r.location + r.length)
+//                let t = (text as NSString).substringWithRange(r)
+//                
+//                let lf = alineFragmentRect
+//                let ulf = usedlineFragmentRect
+//                let ur = ulf
+//                let cs = CGSize(width: constraintSize.width, height: usedRect.height)
+//                let unit = TextUnit(text: t, attriubtes: attributes, usedRect: ur, lineFragmentRect: lf, usedLineFragmentRect: ulf, constraintSize: cs, section: 0, row: 0)
+//                
+//                inSize = cs
+//                units.append(unit)
+//            })
             
         case (.AllatOnce, .ByCharacter):
             

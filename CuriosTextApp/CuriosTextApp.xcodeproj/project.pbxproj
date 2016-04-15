@@ -132,6 +132,10 @@
 		2C7A95251C3A520B005B0EAE /* CTASettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A95241C3A520B005B0EAE /* CTASettingViewController.swift */; };
 		2C7A959F1C3A6A4F005B0EAE /* CTAPageControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A959E1C3A6A4F005B0EAE /* CTAPageControllers.swift */; };
 		2C7C27DE1C58B83F00975D4A /* CTABarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7C27DD1C58B83F00975D4A /* CTABarItemView.swift */; };
+		2C7EC5CC1CBF650A0077E79E /* ScaleInAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7EC5CB1CBF650A0077E79E /* ScaleInAnimation.swift */; };
+		2C7EC5CE1CBF65260077E79E /* ScaleOutAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7EC5CD1CBF65260077E79E /* ScaleOutAnimation.swift */; };
+		2C7EC6101CC079F40077E79E /* CTAAnimationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7EC60F1CC079F40077E79E /* CTAAnimationType.swift */; };
+		2C7EC6121CC07F5C0077E79E /* TextSpliter+Ani+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7EC6111CC07F5C0077E79E /* TextSpliter+Ani+Extension.swift */; };
 		2C82FF551C4362FA001D927A /* CTASegementControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82FF541C4362FA001D927A /* CTASegementControl.swift */; };
 		2C82FF571C437F58001D927A /* CTASelectorAligmentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82FF561C437F58001D927A /* CTASelectorAligmentsCell.swift */; };
 		2C85C59A1C9FC2470042CD0F /* SVProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C85C5991C9FC2470042CD0F /* SVProgressHUD.framework */; };
@@ -451,6 +455,10 @@
 		2C7A95241C3A520B005B0EAE /* CTASettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASettingViewController.swift; sourceTree = "<group>"; };
 		2C7A959E1C3A6A4F005B0EAE /* CTAPageControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPageControllers.swift; sourceTree = "<group>"; };
 		2C7C27DD1C58B83F00975D4A /* CTABarItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTABarItemView.swift; sourceTree = "<group>"; };
+		2C7EC5CB1CBF650A0077E79E /* ScaleInAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScaleInAnimation.swift; sourceTree = "<group>"; };
+		2C7EC5CD1CBF65260077E79E /* ScaleOutAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScaleOutAnimation.swift; sourceTree = "<group>"; };
+		2C7EC60F1CC079F40077E79E /* CTAAnimationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAnimationType.swift; sourceTree = "<group>"; };
+		2C7EC6111CC07F5C0077E79E /* TextSpliter+Ani+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TextSpliter+Ani+Extension.swift"; sourceTree = "<group>"; };
 		2C82FF541C4362FA001D927A /* CTASegementControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASegementControl.swift; sourceTree = "<group>"; };
 		2C82FF561C437F58001D927A /* CTASelectorAligmentsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorAligmentsCell.swift; sourceTree = "<group>"; };
 		2C85C5991C9FC2470042CD0F /* SVProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SVProgressHUD.framework; path = "Pods/../build/Debug-iphoneos/SVProgressHUD.framework"; sourceTree = "<group>"; };
@@ -1073,7 +1081,9 @@
 		2CD11A8B1CB7534600A79305 /* AniPreviewModule */ = {
 			isa = PBXGroup;
 			children = (
+				2C7EC60F1CC079F40077E79E /* CTAAnimationType.swift */,
 				2CD11AC71CB7632D00A79305 /* AniPage.swift */,
+				2C7EC6111CC07F5C0077E79E /* TextSpliter+Ani+Extension.swift */,
 				2CD11A8C1CB753BF00A79305 /* Ani */,
 				2CD11A8D1CB7545F00A79305 /* Animation.swift */,
 				2CD11A8E1CB7545F00A79305 /* Canvas.swift */,
@@ -1106,7 +1116,6 @@
 				2CD11AA81CB7547500A79305 /* AniCanvasView.swift */,
 				2CD11AAB1CB7547500A79305 /* AniControl.swift */,
 				2CD11AC41CB75DAC00A79305 /* QCMethod.swift */,
-				2CD11AAC1CB7547500A79305 /* AniDescriptor.swift */,
 				2CD11AAD1CB7547500A79305 /* AniNode.swift */,
 				2CD11AAE1CB7547500A79305 /* AniPlayCanvasView.swift */,
 				2CD11AC21CB75A6500A79305 /* Strings.swift */,
@@ -1122,6 +1131,9 @@
 				2CD11ABA1CB7547C00A79305 /* AniFactory.swift */,
 				2CD11ABB1CB7547C00A79305 /* MoveInAnimation.swift */,
 				2CD11ABC1CB7547C00A79305 /* MoveOutAnimation.swift */,
+				2C7EC5CB1CBF650A0077E79E /* ScaleInAnimation.swift */,
+				2C7EC5CD1CBF65260077E79E /* ScaleOutAnimation.swift */,
+				2CD11AAC1CB7547500A79305 /* AniDescriptor.swift */,
 			);
 			name = Animations;
 			path = CuriosTextApp/AniPreviewModule/Ani/Animations;
@@ -1659,6 +1671,7 @@
 				2C3CAD211C21826800D8DE4B /* CTACanvasLayer.swift in Sources */,
 				2CF4D4251CBE38F9001DC7C4 /* FontFamily.swift in Sources */,
 				2CD11A9E1CB7545F00A79305 /* Container.swift in Sources */,
+				2C7EC5CC1CBF650A0077E79E /* ScaleInAnimation.swift in Sources */,
 				665B97861C23CD950082A51C /* CTAPublishModel.swift in Sources */,
 				2C7336DF1C43CFCD00E1D511 /* CTASelectorSpacingCell.swift in Sources */,
 				66A072AB1C1811810046C72F /* CTAPublishRequestAPI.swift in Sources */,
@@ -1667,6 +1680,7 @@
 				2C5EA2561C479CE000DCEE7B /* Print.swift in Sources */,
 				2CFC65941C56310800E8ADE7 /* CTAPublishDetaiViewController.swift in Sources */,
 				2C2B45AE1C5CBD16004A4809 /* CTAPublishProtocol.swift in Sources */,
+				2C7EC6121CC07F5C0077E79E /* TextSpliter+Ani+Extension.swift in Sources */,
 				2C9706D11C1E805D00FA2E17 /* CTARequestResult.swift in Sources */,
 				66ADD74F1C28011B00FD9BAF /* CTAUpTokenModel.swift in Sources */,
 				2C98D6CF1C86EBFA007AB3F7 /* CTAHUDLabel.swift in Sources */,
@@ -1707,6 +1721,7 @@
 				2CD11AA41CB7545F00A79305 /* Descriptor.swift in Sources */,
 				2C0404621C3EC31100A5B017 /* CTARotatorView.swift in Sources */,
 				2C8DD2111C4A33770035C52D /* CTAUserDetailViewController.swift in Sources */,
+				2C7EC5CE1CBF65260077E79E /* ScaleOutAnimation.swift in Sources */,
 				2C3CAD241C21826800D8DE4B /* CTANoDefaultActionLayer.swift in Sources */,
 				2CC8115F1C79A6D5003CE8BF /* BlackCatDownloader.swift in Sources */,
 				66ADD74D1C27F69900FD9BAF /* CTAUserRelationDomain.swift in Sources */,
@@ -1724,6 +1739,7 @@
 				2C3B34041C11A23700738166 /* CTARequestResponse.swift in Sources */,
 				2CD11ACC1CB7A36900A79305 /* AniPreviewCanvasViewController.swift in Sources */,
 				2CD11AA61CB7545F00A79305 /* Resource.swift in Sources */,
+				2C7EC6101CC079F40077E79E /* CTAAnimationType.swift in Sources */,
 				2C3CAD0D1C21825100D8DE4B /* CTADocumentAccesser.swift in Sources */,
 				2C3097061C3F5F9200D996A4 /* CTASelectorFontCell.swift in Sources */,
 				2C1F015A1C3BD7400033CED8 /* CTASelectorSizeCell.swift in Sources */,

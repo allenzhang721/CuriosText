@@ -67,6 +67,7 @@ extension AniContainer: UICollectionViewDataSource {
                 cell = acell
             }
 
+//            cell.backgroundColor = UIColor.yellowColor()
             return cell
     }
 }

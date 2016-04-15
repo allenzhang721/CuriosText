@@ -42,6 +42,7 @@ extension CTAAnimationBinder {
         let delay = self.delay
         let direction = "FROM_LEFT"
         let bounce = false
+        
         let delivery: String
         switch self.config.generateStrategy.paragraphDelivery {
         case .AllAtOnce:
@@ -73,15 +74,19 @@ extension CTAAnimationBinder {
             textDelivery: textDelivery,
             textDeliveryFrom: textDeliveryFrom)
         
-        let type: String
-        switch animationName {
-        case .MoveIn:
-            type = "MOVE_IN"
-        case .MoveOut:
-            type = "MOVE_OUT"
-        default:
-            type = "NONE"
-        }
+        let type: String = animationName.toType().rawValue
+//        switch animationName {
+//        case .MoveIn:
+//            type = "MOVE_IN"
+//        case .MoveOut:
+//            type = "MOVE_OUT"
+//        case .ScaleIn:
+//            type = "SCALE_IN"
+//        case .ScaleOut:
+//            type = "SCALE_OUT"
+//        default:
+//            type = "NONE"
+//        }
         
         // descriptor
         let descriptor = Descriptor.init(type: type, config: config)

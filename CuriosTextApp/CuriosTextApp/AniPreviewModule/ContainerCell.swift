@@ -87,7 +87,9 @@ extension ContainerCell {
         let cells = collectionView.visibleCells()
         for c in cells {
             c.layer.removeAllAnimations()
+            c.layer.mask?.removeAllAnimations()
             c.contentView.layer.removeAllAnimations()
+            c.contentView.layer.mask?.removeAllAnimations()
         }
     }
 }

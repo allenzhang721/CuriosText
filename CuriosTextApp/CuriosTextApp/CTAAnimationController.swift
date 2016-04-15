@@ -64,7 +64,7 @@ class CTAAnimationController: NSObject {
         if let apreView = preView {
             apreView.clearViews()
             for (i, v) in views!.enumerate() {
-                binder.configAnimationFor(v, index: i)
+//                binder.configAnimationFor(v, index: i)
             }
             
             for v in views! {

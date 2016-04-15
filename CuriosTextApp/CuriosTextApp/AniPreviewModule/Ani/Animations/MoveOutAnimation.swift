@@ -15,7 +15,7 @@ extension AniFactory {
         
         let duration = descriptor.config.duration
         let time = duration * 0.6
-        let interdelay = duration * (1 - 0.6) / Float(contentsCount - 1)
+        let interdelay = duration * (1 - 0.6) / Float(contentsCount)
         let b = Float(contentsCount - 1 - index) * interdelay + beganTime + descriptor.config.delay
         
         let bt = [
@@ -40,7 +40,7 @@ extension AniFactory {
         let vs: [String: [AnyObject]] = [
             "position": [
                 NSValue(CGPoint: position), NSValue(CGPoint: nextPosition)],
-            "opacity": [0.0, 1.0],
+            "opacity": [1.0, 0.0],
             "transform": [
                 NSValue(CATransform3D: CATransform3DMakeScale(1.0, 1.0, 1)),
                 NSValue(CATransform3D: CATransform3DMakeScale(0.1, 0.1, 1)),

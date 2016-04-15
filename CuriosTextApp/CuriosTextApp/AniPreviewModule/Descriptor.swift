@@ -8,6 +8,7 @@
 
 import Foundation
 struct Descriptor {
+
     struct Config {
         
         let bounce: Bool

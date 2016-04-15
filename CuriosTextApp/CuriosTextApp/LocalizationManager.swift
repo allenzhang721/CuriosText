@@ -26,7 +26,7 @@ enum LocalStrings: CustomStringConvertible {
     case Size, Rotation, Font, Spacing, Alignment, Color, Animation, AnimationType, AnimationDuration, AnimationDelay
     
     //Animations
-    case None, MoveIn, MoveOut
+    case None, MoveIn, MoveOut, ScaleIn, ScaleOut
     
     //Alert 
     case OK, Yes, No, Resend, TakePhoto, ChoosePhoto, Back, Wait
@@ -101,7 +101,10 @@ enum LocalStrings: CustomStringConvertible {
             return NSLocalizedString("MoveIn", comment: "")
         case .MoveOut:
             return NSLocalizedString("MoveOut", comment: "")
-            
+        case .ScaleIn:
+            return NSLocalizedString("ScaleIn", comment: "")
+        case .ScaleOut:
+            return NSLocalizedString("ScaleOut", comment: "")
             // Alert
         case .OK:
             return NSLocalizedString("AlertOkLabel", comment: "")
