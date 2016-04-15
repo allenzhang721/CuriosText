@@ -38,8 +38,8 @@ class ViewController: UIViewController{
         addChildViewController(self.navigate)
         view.addSubview(self.navigate.view)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showNavigationView:", name: "showNavigationView", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showLoginView:", name: "showLoginView", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.showNavigationView(_:)), name: "showNavigationView", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.showLoginView(_:)), name: "showLoginView", object: nil)
     }
     
     func showNavigationView(noti: NSNotification){
