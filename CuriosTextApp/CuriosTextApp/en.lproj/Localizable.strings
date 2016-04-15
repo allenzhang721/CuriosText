@@ -122,6 +122,8 @@
 "PublishFailure" = "Publish Failed. Please try again.";
 
 // MARK: - AnimationName
-"None" = "None";
-"MoveIn" = "Move In";
-"MoveOut" = "Move Out";
+"NONE" = "None";
+"MOVE_IN" = "Move In";
+"MOVE_OUT" = "Move Out";
+"SCALE_IN" = "Fade In";
+"SCALE_OUT" = "Fade Out";

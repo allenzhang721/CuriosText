@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import pop
 
-enum CTAAnimationName: Int, CustomStringConvertible {
+enum CTAAnimationName: Int {
     
     case None
     case MoveIn //FlyIn
@@ -45,23 +45,24 @@ enum CTAAnimationName: Int, CustomStringConvertible {
     }
     
     var description: String {
-        switch self {
-        case .None:
-            return LocalStrings.None.description
-        case .MoveIn:
-            return LocalStrings.MoveIn.description
-//        case .FlyIn:
-//            return "Fly In"
-        case .MoveOut:
-            return LocalStrings.MoveOut.description
-//        case .FlyOut:
-//            return "Fly Out"
-        case .ScaleIn:
-            return LocalStrings.ScaleIn.description
-            
-        case .ScaleOut:
-            return LocalStrings.ScaleOut.description
-        }
+        return LocalStrings.AniType(self.toType()).description
+//        switch self {
+//        case .None:
+//            return LocalStrings.None.description
+//        case .MoveIn:
+//            return LocalStrings.MoveIn.description
+////        case .FlyIn:
+////            return "Fly In"
+//        case .MoveOut:
+//            return LocalStrings.MoveOut.description
+////        case .FlyOut:
+////            return "Fly Out"
+//        case .ScaleIn:
+//            return LocalStrings.ScaleIn.description
+//            
+//        case .ScaleOut:
+//            return LocalStrings.ScaleOut.description
+//        }
     }
 }
 

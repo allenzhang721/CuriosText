@@ -32,7 +32,7 @@ extension CTAAnimationName {
 }
 
 enum CTAAnimationType: String {
-    case Unknown
+    case Unknown = "NONE"
     case MoveIn = "MOVE_IN", MoveOut = "MOVE_OUT"
     case ScaleIn = "SCALE_IN", ScaleOut = "SCALE_OUT"
     

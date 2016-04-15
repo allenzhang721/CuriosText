@@ -126,6 +126,8 @@
 "PublishFailure" = "发布失败，请稍后再试。";
 
 // MARK: - AnimationName
-"None" = "无";
-"MoveIn" = "移入";
-"MoveOut" = "移出";
+"NONE" = "无动画";
+"MOVE_IN" = "移入";
+"MOVE_OUT" = "移出";
+"SCALE_IN" = "放大渐显";
+"SCALE_OUT" = "缩小渐隐";
