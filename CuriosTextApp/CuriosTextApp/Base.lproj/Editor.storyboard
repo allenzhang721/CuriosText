@@ -37,16 +37,6 @@
                                     <constraint firstItem="aV6-Ee-4qV" firstAttribute="centerY" secondItem="SLz-0Z-nnm" secondAttribute="centerY" id="ek7-eu-lo7"/>
                                 </constraints>
                             </view>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O59-ti-f4e">
-                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="49" id="md2-kw-S50"/>
-                                </constraints>
-                                <connections>
-                                    <segue destination="XuM-HM-a9W" kind="embed" id="91f-kb-sgW"/>
-                                </connections>
-                            </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UV4-IL-VCX">
                                 <rect key="frame" x="0.0" y="530" width="375" height="88"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -57,23 +47,6 @@
                                     <segue destination="qne-Oy-fsc" kind="embed" id="eNp-UJ-leQ"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cNn-AO-UPu" customClass="CTAEditAddView" customModule="CuriosTextApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="618" width="49" height="49"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="cNn-AO-UPu" secondAttribute="height" multiplier="1:1" id="4HU-WA-pSR"/>
-                                    <constraint firstAttribute="width" constant="49" id="NMA-yk-RJF"/>
-                                    <constraint firstAttribute="height" constant="49" id="QoD-YK-xet"/>
-                                    <constraint firstAttribute="height" constant="49" id="SlP-wk-edl"/>
-                                    <constraint firstAttribute="width" constant="49" id="gw8-Ti-CAD"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="NMA-yk-RJF"/>
-                                        <exclude reference="SlP-wk-edl"/>
-                                    </mask>
-                                </variation>
-                            </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aT5-ah-Tch">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -98,6 +71,33 @@
                                 </items>
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </toolbar>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O59-ti-f4e">
+                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="md2-kw-S50"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="XuM-HM-a9W" kind="embed" id="91f-kb-sgW"/>
+                                </connections>
+                            </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cNn-AO-UPu" customClass="CTAEditAddView" customModule="CuriosTextApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="618" width="49" height="49"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="cNn-AO-UPu" secondAttribute="height" multiplier="1:1" id="4HU-WA-pSR"/>
+                                    <constraint firstAttribute="width" constant="49" id="NMA-yk-RJF"/>
+                                    <constraint firstAttribute="height" constant="49" id="QoD-YK-xet"/>
+                                    <constraint firstAttribute="height" constant="49" id="SlP-wk-edl"/>
+                                    <constraint firstAttribute="width" constant="49" id="gw8-Ti-CAD"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="NMA-yk-RJF"/>
+                                        <exclude reference="SlP-wk-edl"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <gestureRecognizers/>
