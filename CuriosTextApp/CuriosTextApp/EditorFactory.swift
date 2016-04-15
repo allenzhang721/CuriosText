@@ -254,7 +254,7 @@ extension EditorFactory {
             let textSize = textElement.textSizeWithConstraintSize(CGSize(width: pageWidth, height: pageHeigh * 2))
             
             
-            return CTAContainer(
+            let container = CTAContainer(
                 x: pageWidth / 2.0,
                 y: pageHeigh / 2.0,
                 width: Double(textSize.width),
@@ -265,6 +265,10 @@ extension EditorFactory {
                 inset: CGPoint.zero,
                 element: textElement
             )
+        
+        container.contentScale = 1.5
+        
+        return container
     }
     
     class func generateImageContainer(
