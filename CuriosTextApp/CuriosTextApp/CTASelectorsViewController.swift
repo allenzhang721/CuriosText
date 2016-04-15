@@ -53,7 +53,7 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
         case .Fonts: return "indexPathOfFontsChanged:"
         case .Aligments: return "aligmentsChanged:"
         case .TextSpacing: return "textSpacingChanged:"
-        case .Colors: return "indexPathOfColorChanged:"
+        case .Colors: return "colorChanged:"
         case .Animation: return "animationChanged:"
         case .Empty: return ""
         }
@@ -63,8 +63,8 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = CTAStyleKit.commonBackgroundColor
+        collectionview.layer.masksToBounds = false
     }
     
     func changeToSelector(type: CTAContainerFeatureType) {
@@ -241,7 +241,7 @@ extension CTASelectorsViewController: CTASelectorDataSource {
         return indexPath
     }
     
-    func selectorBeganColorIndexPath(cell: CTASelectorCell) -> NSIndexPath? {
+    func selectorBeganColor(cell: CTASelectorCell) -> UIColor? {
         
         guard
             let container = container as? TextContainerVMProtocol,
@@ -249,11 +249,11 @@ extension CTASelectorsViewController: CTASelectorDataSource {
                 return nil
         }
         
-        guard let indexPath = CTAColorsManger.indexPathOfColor(textElement.colorHex) else {
+        guard let color = SWColor(hexString: textElement.colorHex) else {
             return nil
         }
         
-        return indexPath
+        return color
     }
     
     func selectorBeganAnimation(cell: CTASelectorCell) -> CTAAnimationBinder? {
@@ -296,12 +296,13 @@ extension CTASelectorsViewController {
         delegate?.spacingDidChanged(sender.spacing.0, textSpacing: sender.spacing.1)
     }
     
-    func indexPathOfColorChanged(sender: CTAPickerView) {
+    func colorChanged(sender: CTAColorPickerView) {
+        
         guard
-            let selectedIndexPath = sender.selectedIndexPath,
-            let colorItem = CTAColorsManger.colorAtIndexPath(selectedIndexPath) where animation == false else {
+            let selectedColor = sender.selectedColor where animation == false else {
             return
         }
+        let colorItem = CTAColorItem(color: selectedColor)
         delegate?.colorDidChanged(colorItem)
     }
     

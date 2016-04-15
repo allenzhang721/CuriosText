@@ -16,7 +16,7 @@ protocol CTASelectorDataSource: class {
     func selectorBeganAlignment(cell: CTASelectorCell) -> NSTextAlignment
     func selectorBeganSpacing(cell: CTASelectorCell) -> (CGFloat, CGFloat)
     func selectorBeganFontIndexPath(cell: CTASelectorCell) -> NSIndexPath?
-    func selectorBeganColorIndexPath(cell: CTASelectorCell) -> NSIndexPath?
+    func selectorBeganColor(cell: CTASelectorCell) -> UIColor?
     func selectorBeganAnimation(cell: CTASelectorCell) -> CTAAnimationBinder?
 }
 

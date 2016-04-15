@@ -99,7 +99,7 @@
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </toolbar>
                         </subviews>
-                        <color key="backgroundColor" red="0.91364538669586182" green="0.91377681493759155" blue="0.9136165976524353" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="SLz-0Z-nnm" secondAttribute="trailing" id="0kB-kQ-vPv"/>
@@ -376,7 +376,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="VpJ-Pq-Aql">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewLayout key="collectionViewLayout" id="hZM-cm-C7I" customClass="CTASelectorsFlowLayout" customModule="CuriosTextApp" customModuleProvider="target"/>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SelectorSizeCell" id="zp2-Tl-Qnt" customClass="CTASelectorSizeCell" customModule="CuriosTextApp" customModuleProvider="target">
@@ -456,7 +456,7 @@
                                 </connections>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="VpJ-Pq-Aql" firstAttribute="bottom" secondItem="CUR-Wq-apr" secondAttribute="top" id="43c-w7-nqE"/>
                             <constraint firstItem="VpJ-Pq-Aql" firstAttribute="top" secondItem="WUo-P5-HOk" secondAttribute="bottom" id="83W-Ls-qrX"/>

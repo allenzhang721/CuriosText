@@ -13,7 +13,7 @@ protocol CTAColorPickerProtocol{
 }
 
 
-class CTAColorPickerView: UIView {
+class CTAColorPickerView: UIControl {
     
     let colors = [
         UIColor(red: 1, green: 0, blue: 0, alpha: 1),
@@ -176,12 +176,13 @@ class CTAColorPickerView: UIView {
             }else {
                 changeColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
             }
-            if self.delegate != nil {
-                self.delegate!.changeColor(changeColor)
-            }
             self.canReChange = false
             self.selectedColor = changeColor
             self.canReChange = true
+            sendActionsForControlEvents(.ValueChanged)
+            if self.delegate != nil {
+                self.delegate!.changeColor(changeColor)
+            }
         }
     }
     
