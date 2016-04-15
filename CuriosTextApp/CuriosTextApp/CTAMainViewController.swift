@@ -57,10 +57,6 @@ class CTAMainViewController: UIViewController, CTAAddBarProtocol, CTALoginProtoc
         self.initAddBarView(self.view)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CTAMainViewController.changePageView(_:)), name: "changePageView", object: nil)
-        
-        
-        let bounds = UIScreen.mainScreen().bounds
-        let colorPick = CTAColorPickerView(frame: CGRect(x: 0, y: bounds.height - 88, width: bounds.width, height: 88))
     }
     
     override func viewWillAppear(animated: Bool) {

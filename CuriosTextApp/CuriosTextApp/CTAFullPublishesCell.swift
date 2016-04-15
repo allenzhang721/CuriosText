@@ -40,6 +40,8 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
     var isPlaying:Bool = false
     
+    var isPause:Bool = false
+    
     var cellColorView:UIView?
     
     override init(frame: CGRect) {
@@ -224,25 +226,27 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
         if self.isLoadComplete{
             if self.publishModel != nil {
                 if !self.isPlaying{
-                    debug_print("Playing")
+                    if !self.isPause{
+                        self.previewView.ready()
+                    }
                     self.previewView.play()
                     self.isPlaying = true
+                    self.isPause = false
                 }
             }
         }else {
             self.loadCompeteHandler = self.playAnimation
         }
     }
-    
-    
+
     func pauseAnimation(){
         if self.isLoadComplete{
             if self.publishModel != nil {
                 if self.isPlaying {
-                    debug_print("Pause")
                     self.previewView.pause()
                 }
                 self.isPlaying = false
+                self.isPause = true
             }
         }
         
@@ -251,11 +255,9 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     func stopAnimation(){
         if self.isLoadComplete{
             if self.publishModel != nil {
-                if self.isPlaying {
-                    debug_print("Stop")
-                    self.previewView.stop()
-                }
+                self.previewView.ready()
                 self.isPlaying = false
+                self.isPause = false
             }
         }
     }

@@ -13,7 +13,7 @@ protocol CTAColorPickerProtocol{
 }
 
 
-class CTAColorPickerView: UIControl {
+class CTAColorPickerView: UIControl{
     
     let colors = [
         UIColor(red: 1, green: 0, blue: 0, alpha: 1),
@@ -53,6 +53,7 @@ class CTAColorPickerView: UIControl {
     var isChageSlide:Bool = false
     
     var beganLocation:CGPoint = CGPoint(x: 0, y: 0)
+    var panLocation:CGPoint = CGPoint(x: 0, y: 0)
     
     var delegate:CTAColorPickerProtocol?
     
@@ -84,7 +85,7 @@ class CTAColorPickerView: UIControl {
         self.colorCellsView = UIView(frame: CGRect(x: 0, y: self.lineHeight, width: self.bounds.width, height: self.bounds.height-self.lineHeight))
         self.addSubview(self.colorCellsView)
         self.colorCellsView.clipsToBounds = true
-
+        
         self.cellViewWidth  = self.bounds.width / CGFloat(self.cellHorCount)
         self.cellViewHeight = self.cellViewWidth
         let scale:CGFloat = 1.1
@@ -130,7 +131,7 @@ class CTAColorPickerView: UIControl {
         self.colorSlider.valueColor = self.currentPureColor()
         self.colorSlider.addTarget(self, action: #selector(CTAColorPickerView.slideMouseDown(_:)), forControlEvents: .TouchDown)
         self.colorSlider.addTarget(self, action: #selector(CTAColorPickerView.slideMouseUp(_:)), forControlEvents: .TouchUpInside)
-    
+        
         self.setCellsColorPosition()
         self.gradientArray = self.getGrandientColor(self.currentPureColor())
         self.setCellsColor()
@@ -225,15 +226,19 @@ class CTAColorPickerView: UIControl {
             }
         }
     }
-
+    
     func viewPanHandler(sender: UIPanGestureRecognizer) {
         switch sender.state{
         case .Began:
+            if self.adisplayLink != nil{
+                self.adisplayLink?.paused = true
+            }
             self.beganLocation = sender.locationInView(self)
+            self.panLocation = self.beganLocation
             if !self.isChageSlide{
                 let slideFrame = self.colorSlider.frame
                 let slideContainer = CGRect(x: (slideFrame.origin.x - 5), y: (slideFrame.origin.y - 5), width: (slideFrame.size.width + 10), height: (slideFrame.size.height + 10))
-                if slideContainer.contains(self.beganLocation){
+                if slideContainer.contains(self.panLocation){
                     self.changeSlideStatus(true)
                 }else {
                     self.changeSlideStatus(false)
@@ -249,10 +254,69 @@ class CTAColorPickerView: UIControl {
         case .Ended, .Cancelled, .Failed:
             if self.isChageSlide{
                 self.changeSlideStatus(false)
+            }else {
+                self.sliderLocation = sender.locationInView(self)
+                self.panLocation = self.sliderLocation
+                let velocity = sender.velocityInView(self)
+                let magnitude:CGFloat = sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y))
+                let slideMult = magnitude / 200;
+                let slideFactor = 0.15 * slideMult;
+                self.sliderXRate = (self.sliderLocation.x-self.beganLocation.x)*slideFactor
+                self.sliderYRate = (self.sliderLocation.y-self.beganLocation.y)*slideFactor*4
+                
+                let maxW = self.frame.size.width
+                let maxH = self.frame.size.height * 2
+                
+                if self.sliderXRate>maxW{
+                    self.sliderXRate = maxW
+                }
+                if self.sliderXRate<(0-maxW){
+                    self.sliderXRate = (0-maxW)
+                }
+                if self.sliderYRate>maxH{
+                    self.sliderYRate = maxH
+                }
+                if self.sliderYRate<(0-maxH){
+                    self.sliderYRate = (0-maxH)
+                }
+                
+                self.sliderAniIndex = 0
+                if self.adisplayLink == nil {
+                    self.adisplayLink = CADisplayLink(target: self,selector: #selector(CTAColorPickerView.sliderAniFrame))
+                    self.adisplayLink?.addToRunLoop(NSRunLoop.currentRunLoop(),forMode: NSRunLoopCommonModes)
+                }
+                self.adisplayLink?.paused = false
             }
         default:
             ()
         }
+    }
+    
+    var adisplayLink:CADisplayLink?
+    var sliderLocation:CGPoint = CGPoint(x: 0, y: 0)
+    var sliderXRate:CGFloat = 0
+    var sliderYRate:CGFloat = 0
+    var sliderAniIndex:CGFloat = 0
+    
+    func sliderAniFrame(){
+        let maxIndex:CGFloat = 60
+        let xRate = sliderXRate
+        let yRate = sliderYRate
+        let rate = self.easeOutFuc(sliderAniIndex, d: maxIndex, b: 0, c: 1)
+        if sliderAniIndex < maxIndex{
+            let xNex = self.sliderLocation.x + rate*xRate
+            let yNex = self.sliderLocation.y + rate*yRate
+            let newPosition = CGPoint(x: xNex, y: yNex)
+            self.changeColorCellPosition(newPosition)
+            sliderAniIndex = sliderAniIndex + 1
+        }else {
+            self.adisplayLink?.paused = true
+        }
+    }
+    
+    func easeOutFuc(t:CGFloat, d:CGFloat, b:CGFloat, c:CGFloat) ->CGFloat{
+        let t1=t/d-1
+        return c*(t1*t1*t1+1)+b
     }
     
     func slideMouseDown(sender: UIButton){
@@ -276,7 +340,7 @@ class CTAColorPickerView: UIControl {
     func changeSlidePosition(newLocation:CGPoint){
         let maxSlider = self.bounds.width - self.sliderWidth/2
         let minSlider = self.sliderWidth/2
-        let xChange = newLocation.x - self.beganLocation.x
+        let xChange = newLocation.x - self.panLocation.x
         let center = self.colorSlider.center
         let changePosition = center.x + xChange
         if changePosition <= maxSlider && changePosition >= minSlider {
@@ -289,7 +353,7 @@ class CTAColorPickerView: UIControl {
             self.gradientArray = self.getGrandientColor(self.currentPureColor())
             self.setCellsColor()
         }
-        self.beganLocation = newLocation
+        self.panLocation = newLocation
     }
     
     func currentPureColor() -> UIColor{
@@ -305,8 +369,13 @@ class CTAColorPickerView: UIControl {
     }
     
     func changeColorCellPosition(newLocation:CGPoint){
-        let xChange = newLocation.x - self.beganLocation.x
-        let yChange = newLocation.y - self.beganLocation.y
+        let xChange = newLocation.x - self.panLocation.x
+        let yChange = newLocation.y - self.panLocation.y
+        let maxW = self.frame.size.width
+        let maxH = self.frame.size.height/2
+        if abs(xChange) > maxW || abs(yChange) > maxH{
+            return
+        }
         for i in 0..<self.colorViewsArray.count {
             let view = self.colorViewsArray[i]
             let center = view.center
@@ -318,23 +387,21 @@ class CTAColorPickerView: UIControl {
                 self.changeCenterView()
             }
         }
-        self.beganLocation = newLocation
+        self.panLocation = newLocation
     }
     
     func changeCenterView(){
         let centerPoint = CGPoint(x: self.centerRect.origin.x + self.centerRect.size.width, y: self.centerRect.origin.y + self.centerRect.size.height)
-        self.centerLength = self.cellViewWidth * 2
+        self.centerLength = CGFloat.max
         var centerView:CTAColorPickerCell?
         for i in 0..<self.colorViewsArray.count {
             let view = self.colorViewsArray[i]
             let viewCenter = view.center
-            if self.centerRect.contains(viewCenter) {
-                let a = (centerPoint.x - viewCenter.x)*(centerPoint.x - viewCenter.x) + (centerPoint.y - viewCenter.y)*(centerPoint.y - viewCenter.y)
-                let length = sqrt(a)
-                if length < self.centerLength {
-                    centerView = view
-                    self.centerLength = length
-                }
+            let a = (centerPoint.x - viewCenter.x)*(centerPoint.x - viewCenter.x) + (centerPoint.y - viewCenter.y)*(centerPoint.y - viewCenter.y)
+            let length = sqrt(a)
+            if length < self.centerLength {
+                centerView = view
+                self.centerLength = length
             }
         }
         if centerView != nil {
@@ -446,7 +513,7 @@ class CTAColorSliderView:UIButton{
     
     var valueColor:UIColor?{
         didSet{
-           self.changeColor()
+            self.changeColor()
         }
     }
     
