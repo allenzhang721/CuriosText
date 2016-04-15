@@ -264,6 +264,8 @@ public class CTAStyleKit : NSObject {
         static var addInEditorTargets: [AnyObject]?
         static var imageOfAnimationplay: UIImage?
         static var animationplayTargets: [AnyObject]?
+        static var imageOfAnimationpause: UIImage?
+        static var animationpauseTargets: [AnyObject]?
     }
 
     //// Colors
@@ -1860,6 +1862,27 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
+    public class func drawAnimationpause() {
+
+        //// Oval Drawing
+        let ovalPath = UIBezierPath(ovalInRect: CGRectMake(1, 1, 23, 23))
+        CTAStyleKit.selectedColor.setStroke()
+        ovalPath.lineWidth = 1
+        ovalPath.stroke()
+
+
+        //// Rectangle Drawing
+        let rectanglePath = UIBezierPath(rect: CGRectMake(9, 5, 1, 14))
+        CTAStyleKit.selectedColor.setFill()
+        rectanglePath.fill()
+
+
+        //// Rectangle 2 Drawing
+        let rectangle2Path = UIBezierPath(rect: CGRectMake(15, 5, 1, 14))
+        CTAStyleKit.selectedColor.setFill()
+        rectangle2Path.fill()
+    }
+
     //// Generated Images
 
     public class var imageOfAlignmentRightSelected: UIImage {
@@ -2316,6 +2339,20 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfAnimationplay!
     }
 
+    public class var imageOfAnimationpause: UIImage {
+        if Cache.imageOfAnimationpause != nil {
+            return Cache.imageOfAnimationpause!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(25, 25), false, 0)
+            CTAStyleKit.drawAnimationpause()
+
+        Cache.imageOfAnimationpause = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfAnimationpause!
+    }
+
     //// Customization Infrastructure
 
     @IBOutlet var alignmentRightSelectedTargets: [AnyObject]! {
@@ -2624,6 +2661,16 @@ public class CTAStyleKit : NSObject {
             Cache.animationplayTargets = newValue
             for target: AnyObject in newValue {
                 target.performSelector("setImage:", withObject: CTAStyleKit.imageOfAnimationplay)
+            }
+        }
+    }
+
+    @IBOutlet var animationpauseTargets: [AnyObject]! {
+        get { return Cache.animationpauseTargets }
+        set {
+            Cache.animationpauseTargets = newValue
+            for target: AnyObject in newValue {
+                target.performSelector("setImage:", withObject: CTAStyleKit.imageOfAnimationpause)
             }
         }
     }

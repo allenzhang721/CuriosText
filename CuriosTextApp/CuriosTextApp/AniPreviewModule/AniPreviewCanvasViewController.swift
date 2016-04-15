@@ -10,7 +10,9 @@ import UIKit
 
 class AniPreviewCanvasViewController: UIViewController {
     
+    @IBOutlet weak var fakePauseView: CTAGradientButtonView!
     var canvas: AniCanvas!
+    var targetCenter: CGPoint!
     var aniCanvasView: AniPlayCanvasView!
     var imageRetriver: ((String, (String, UIImage?) -> ()) -> ())?
     
@@ -59,13 +61,17 @@ class AniPreviewCanvasViewController: UIViewController {
         aniCanvasView.completedBlock = {[weak self] in
             self?.dismiss(nil)
         }
+        fakePauseView.userInteractionEnabled = false
+        fakePauseView.image = CTAStyleKit.imageOfAnimationpause
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
         let scale = min(view.bounds.size.width / canvas.size.width, view.bounds.size.height / canvas.size.height)
-        aniCanvasView.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY - 46)
+        
+        aniCanvasView.center = targetCenter
+//        aniCanvasView.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY - 46)
         aniCanvasView.transform = CGAffineTransformMakeScale(scale, scale)
     }
 }

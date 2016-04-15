@@ -188,9 +188,13 @@ extension EditViewController {
             }
         }
         preController.imageRetriver = retriver
-        
         let v = view.snapshotViewAfterScreenUpdates(true)
         preController.view.insertSubview(v, atIndex: 0)
+        
+        let center = canvasViewController.view.convertPoint(canvasViewController.view.center, toView: view)
+        preController.targetCenter = center
+        
+        
         presentViewController(preController, animated: false) { 
             
             

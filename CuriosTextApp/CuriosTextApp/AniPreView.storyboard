@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="V1I-h9-1ya">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Ani Preview Canvas View Controller-->
@@ -51,22 +52,45 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OKU-k1-A1k" customClass="CTAGradientButtonView" customModule="CuriosTextApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="431" width="44" height="44"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="HX2-l4-eW4"/>
+                                    <constraint firstAttribute="height" constant="44" id="QjN-Ca-kuz"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="kv8-4k-bsN" firstAttribute="leading" secondItem="wnf-xM-VcX" secondAttribute="leading" id="1Yl-hE-VQR"/>
+                            <constraint firstItem="OKU-k1-A1k" firstAttribute="leading" secondItem="B5d-cm-M0J" secondAttribute="leadingMargin" id="1jK-CX-pNV"/>
+                            <constraint firstItem="OKU-k1-A1k" firstAttribute="leading" secondItem="B5d-cm-M0J" secondAttribute="leading" id="6Zw-c6-pvd"/>
                             <constraint firstItem="wnf-xM-VcX" firstAttribute="bottom" secondItem="etC-9e-ZHG" secondAttribute="top" id="8Bh-nV-1KY"/>
                             <constraint firstItem="kv8-4k-bsN" firstAttribute="top" secondItem="B5d-cm-M0J" secondAttribute="top" id="8D4-PO-wza"/>
                             <constraint firstItem="kv8-4k-bsN" firstAttribute="leading" secondItem="B5d-cm-M0J" secondAttribute="leading" id="8IH-U3-nkJ"/>
                             <constraint firstAttribute="trailing" secondItem="kv8-4k-bsN" secondAttribute="trailing" id="Cys-6j-taC"/>
+                            <constraint firstItem="OKU-k1-A1k" firstAttribute="leading" secondItem="B5d-cm-M0J" secondAttribute="leadingMargin" id="GDa-N3-d3v"/>
                             <constraint firstItem="kv8-4k-bsN" firstAttribute="trailing" secondItem="wnf-xM-VcX" secondAttribute="trailing" id="jcq-a6-b6S"/>
+                            <constraint firstItem="OKU-k1-A1k" firstAttribute="leading" secondItem="B5d-cm-M0J" secondAttribute="leading" constant="16" id="tmN-aJ-4vJ"/>
+                            <constraint firstItem="etC-9e-ZHG" firstAttribute="top" secondItem="OKU-k1-A1k" secondAttribute="bottom" constant="93" id="zvk-lE-a95"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="1jK-CX-pNV"/>
+                                <exclude reference="GDa-N3-d3v"/>
+                                <exclude reference="tmN-aJ-4vJ"/>
+                            </mask>
+                        </variation>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="B89-WQ-q39" appends="YES" id="y8z-DP-xIa"/>
                         </connections>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="fakePauseView" destination="OKU-k1-A1k" id="8To-5C-hCA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sIh-Mz-3tw" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="B89-WQ-q39">
