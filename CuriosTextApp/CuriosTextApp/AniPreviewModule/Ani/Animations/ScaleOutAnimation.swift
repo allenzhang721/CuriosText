@@ -22,12 +22,12 @@ extension AniFactory {
         let bt = [ // beganTime
             "opacity": CFTimeInterval(b),
             "transform": CFTimeInterval(b),
-            "maskGradient.colors": CFTimeInterval(b)]
+            "mask.colors": CFTimeInterval(b)]
         
         let ds = [ //duration
             "opacity": CFTimeInterval(time),
             "transform": CFTimeInterval(time),
-            "maskGradient.colors": CFTimeInterval(time)]
+            "mask.colors": CFTimeInterval(time)]
         
         let vs: [String: [AnyObject]] = [
             "opacity": [ 1.0, 0.0,],
@@ -36,7 +36,7 @@ extension AniFactory {
                 NSValue(CATransform3D: CATransform3DMakeScale(0.5, 0.5, 1)),
                 
             ],
-            "maskGradient.colors": [
+            "mask.colors": [
                 [UIColor.blackColor().CGColor, UIColor.blackColor().CGColor],
                 [UIColor.blackColor().CGColor, UIColor.clearColor().CGColor],
             ]
@@ -46,7 +46,7 @@ extension AniFactory {
             //            "position": [0, 1],
             "opacity": [0, 1],
             "transform": [0, 1],
-            "maskGradient.colors": [0, 1]]
+            "mask.colors": [0, 1]]
         
         return AniDescriptor(type: "SCALE_OUT", beganTimes: bt, durations: ds, values: vs, keyTimes: ks)
     }

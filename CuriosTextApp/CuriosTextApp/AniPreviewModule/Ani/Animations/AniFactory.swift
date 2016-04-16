@@ -72,6 +72,12 @@ class AniFactory {
             
         case .ScaleOut:
             return scaleOut(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
+            
+        case .IrisIn:
+            return iris(true, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
+            
+        case .IrisOut:
+            return iris(false, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
         default:
             return nil
 //            fatalError("Not Support Animation \(name)")

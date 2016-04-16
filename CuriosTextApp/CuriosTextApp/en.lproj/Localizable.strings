@@ -127,3 +127,5 @@
 "MOVE_OUT" = "Move Out";
 "SCALE_IN" = "Fade In";
 "SCALE_OUT" = "Fade Out";
+"IRIS_IN" = "iris in";
+"IRIS_OUT" = "iris out";

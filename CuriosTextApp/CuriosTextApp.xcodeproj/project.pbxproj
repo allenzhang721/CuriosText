@@ -157,6 +157,7 @@
 		2C9706D11C1E805D00FA2E17 /* CTARequestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9706D01C1E805D00FA2E17 /* CTARequestResult.swift */; };
 		2C98D6CF1C86EBFA007AB3F7 /* CTAHUDLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98D6CE1C86EBFA007AB3F7 /* CTAHUDLabel.swift */; };
 		2C9F5E251CC08E75003B192B /* CTAColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F5E241CC08E75003B192B /* CTAColorPickerView.swift */; };
+		2C9F8C9E1CC1E50600F99C83 /* IrisAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F8C9D1CC1E50600F99C83 /* IrisAnimation.swift */; };
 		2CA3AA531C8D472400CE8191 /* CTAPublishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA3AA521C8D472400CE8191 /* CTAPublishViewController.swift */; };
 		2CA3AA551C8D7A0E00CE8191 /* Extension+Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA3AA541C8D7A0E00CE8191 /* Extension+Document.swift */; };
 		2CA860C01C8FC157000BCF8A /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA860BF1C8FC157000BCF8A /* LocalizationManager.swift */; };
@@ -482,6 +483,7 @@
 		2C9706D01C1E805D00FA2E17 /* CTARequestResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTARequestResult.swift; sourceTree = "<group>"; };
 		2C98D6CE1C86EBFA007AB3F7 /* CTAHUDLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAHUDLabel.swift; sourceTree = "<group>"; };
 		2C9F5E241CC08E75003B192B /* CTAColorPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAColorPickerView.swift; sourceTree = "<group>"; };
+		2C9F8C9D1CC1E50600F99C83 /* IrisAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IrisAnimation.swift; sourceTree = "<group>"; };
 		2CA3AA521C8D472400CE8191 /* CTAPublishViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishViewController.swift; sourceTree = "<group>"; };
 		2CA3AA541C8D7A0E00CE8191 /* Extension+Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+Document.swift"; sourceTree = "<group>"; };
 		2CA860BF1C8FC157000BCF8A /* LocalizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
@@ -1135,6 +1137,7 @@
 				2CD11ABC1CB7547C00A79305 /* MoveOutAnimation.swift */,
 				2C7EC5CB1CBF650A0077E79E /* ScaleInAnimation.swift */,
 				2C7EC5CD1CBF65260077E79E /* ScaleOutAnimation.swift */,
+				2C9F8C9D1CC1E50600F99C83 /* IrisAnimation.swift */,
 				2CD11AAC1CB7547500A79305 /* AniDescriptor.swift */,
 			);
 			name = Animations;
@@ -1749,6 +1752,7 @@
 				2C1F015A1C3BD7400033CED8 /* CTASelectorSizeCell.swift in Sources */,
 				2C3CAD191C21825900D8DE4B /* CTAPage.swift in Sources */,
 				2CD11AB51CB7547500A79305 /* AniDescriptor.swift in Sources */,
+				2C9F8C9E1CC1E50600F99C83 /* IrisAnimation.swift in Sources */,
 				2C1F01581C3BD5960033CED8 /* CTASelectorCell.swift in Sources */,
 				2CC5A7CB1C89B82100A773E9 /* AsyncDrawing.swift in Sources */,
 				2C7A959F1C3A6A4F005B0EAE /* CTAPageControllers.swift in Sources */,

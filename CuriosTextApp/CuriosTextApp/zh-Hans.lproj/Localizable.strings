@@ -131,3 +131,5 @@
 "MOVE_OUT" = "移出";
 "SCALE_IN" = "放大渐显";
 "SCALE_OUT" = "缩小渐隐";
+"IRIS_IN" = "中心渐显";
+"IRIS_OUT" = "中心渐隐";
