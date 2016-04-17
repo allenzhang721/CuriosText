@@ -101,6 +101,12 @@ class AniFactory {
             } else {
                 return fade(false, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
             }
+            
+        case .OrbitalIn:
+            return orbital(true, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
+            
+        case .OrbitalOut:
+            return orbital(false, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
 //        default:
 //            return nil
 //            fatalError("Not Support Animation \(name)")

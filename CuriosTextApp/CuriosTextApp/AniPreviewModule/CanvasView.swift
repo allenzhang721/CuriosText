@@ -60,16 +60,10 @@ extension CanvasView {
         
         dispatch_async(dispatch_get_main_queue()) { 
             
-            let before = self.collectionView.visibleCells().count
-            print("before = \(before)")
-            
             CATransaction.begin()
             CATransaction.setDisableActions(true)
             self.collectionView.reloadSections(NSIndexSet(index: 0))
             CATransaction.commit()
-            
-            let after = self.collectionView.visibleCells().count
-            print("after = \(after)")
             completed?()
         }
     }

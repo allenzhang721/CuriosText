@@ -18,7 +18,6 @@ extension AniFactory {
         let interdelay = duration * (1 - 0.6) / Float(contentsCount)
         let b = Float(index) * interdelay + beganTime + descriptor.config.delay
         
-        
         let bt = [
             "position": CFTimeInterval(b),
             "opacity": CFTimeInterval(b),
@@ -56,9 +55,7 @@ extension AniFactory {
         let endTransform = !appear ?
             NSValue(CATransform3D: CATransform3DMakeRotation(CGFloat(M_PI), 0.5, 1, 0)) :
             NSValue(CATransform3D: CATransform3DIdentity)
-        
-        
-        
+
         let vs: [String: [AnyObject]] = [
             "position": [
                 NSValue(CGPoint: position), NSValue(CGPoint: endPosition)],

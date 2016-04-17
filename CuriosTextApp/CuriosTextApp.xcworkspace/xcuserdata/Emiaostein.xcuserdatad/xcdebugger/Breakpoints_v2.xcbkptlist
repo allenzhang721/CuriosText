@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/EditViewController.swift"
-            timestampString = "482407847.601892"
+            timestampString = "482582371.195784"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "707"
-            endingLineNumber = "707"
+            startingLineNumber = "700"
+            endingLineNumber = "700"
             landmarkName = "scaleDidChanged(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -38,31 +38,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CuriosTextApp/AniPreviewModule/Ani/AniDescriptor.swift"
-            timestampString = "482552459.098595"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
-            landmarkName = "configAnimationOn(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/AniPreviewModule/Ani/AniDescriptor.swift"
-            timestampString = "482552459.098595"
+            timestampString = "482583152.217558"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
             landmarkName = "configAnimationOn(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -86,16 +70,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CuriosTextApp/AniPreviewModule/Ani/Animations/AniFactory.swift"
+            timestampString = "482583087.624115"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "animationWith(_:canvasSize:container:content:contentsCount:index:descriptor:addBeganTime:randomIndexs:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CuriosTextApp/AniPreviewModule/Ani/Animations/AniFactory.swift"
+            timestampString = "482583087.624115"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "animationWith(_:canvasSize:container:content:contentsCount:index:descriptor:addBeganTime:randomIndexs:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CuriosTextApp/AniPreviewModule/Ani/Animations/CurlAnimation.swift"
-            timestampString = "482558550.703182"
+            filePath = "CuriosTextApp/AniPreviewModule/Ani/AniDescriptor.swift"
+            timestampString = "482583168.534542"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
-            landmarkName = "curl(_:canvasSize:container:content:contentsCount:index:descriptor:beganTime:)"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
+            landmarkName = "configAnimationOn(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -149,6 +149,7 @@
 		2C8DD2151C4A342C0035C52D /* CTALoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8DD2141C4A342C0035C52D /* CTALoadingProtocol.swift */; };
 		2C9043F81C589E0000E62B19 /* CTAAddBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9043F71C589E0000E62B19 /* CTAAddBarView.swift */; };
 		2C929DD71C60962B00F90BF4 /* CTAConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C929DD61C60962B00F90BF4 /* CTAConfig.swift */; };
+		2C9374F81CC3983A0002C806 /* OrbitalAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9374F71CC3983A0002C806 /* OrbitalAnimation.swift */; };
 		2C9706C11C1E6EC200FA2E17 /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */; };
 		2C9706C21C1E6EC200FA2E17 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9706C01C1E6EC200FA2E17 /* SwiftyJSON.framework */; };
 		2C9706C51C1E6EE900FA2E17 /* CTABaseDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9706C41C1E6EE900FA2E17 /* CTABaseDomain.swift */; };
@@ -477,6 +478,7 @@
 		2C9043F71C589E0000E62B19 /* CTAAddBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAddBarView.swift; sourceTree = "<group>"; };
 		2C929DD51C60809D00F90BF4 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		2C929DD61C60962B00F90BF4 /* CTAConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAConfig.swift; sourceTree = "<group>"; };
+		2C9374F71CC3983A0002C806 /* OrbitalAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrbitalAnimation.swift; sourceTree = "<group>"; };
 		2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Locksmith.framework; path = "Pods/../build/Debug-iphoneos/Locksmith.framework"; sourceTree = "<group>"; };
 		2C9706C01C1E6EC200FA2E17 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "Pods/../build/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
 		2C9706C41C1E6EE900FA2E17 /* CTABaseDomain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTABaseDomain.swift; sourceTree = "<group>"; };
@@ -1144,6 +1146,7 @@
 				2C9F8C9D1CC1E50600F99C83 /* IrisAnimation.swift */,
 				2C85F81E1CC3273500C7186C /* CurlAnimation.swift */,
 				2C85F8201CC3671700C7186C /* FadeAnimation.swift */,
+				2C9374F71CC3983A0002C806 /* OrbitalAnimation.swift */,
 				2CD11AAC1CB7547500A79305 /* AniDescriptor.swift */,
 			);
 			name = Animations;
@@ -1681,6 +1684,7 @@
 				2C88A3751C51F0BA00C6D687 /* CTAAnimationController.swift in Sources */,
 				2CD11AA51CB7545F00A79305 /* Layerable.swift in Sources */,
 				2C3CAD211C21826800D8DE4B /* CTACanvasLayer.swift in Sources */,
+				2C9374F81CC3983A0002C806 /* OrbitalAnimation.swift in Sources */,
 				2CF4D4251CBE38F9001DC7C4 /* FontFamily.swift in Sources */,
 				2CD11A9E1CB7545F00A79305 /* Container.swift in Sources */,
 				2C7EC5CC1CBF650A0077E79E /* ScaleInAnimation.swift in Sources */,

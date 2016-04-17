@@ -266,8 +266,6 @@ extension EditViewController {
         page.append(textContainer)
         let count = page.containers.count
         
-        page.containers.forEach{debug_print($0.type, context: defaultContext)}
-        
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
             if let strongSelf = self {
                 strongSelf.canvasViewController.insertAt(NSIndexPath(forItem: count - 1, inSection: 0))
@@ -379,10 +377,8 @@ extension EditViewController {
                 
                 
             })
-            debug_print("double tap TEXT ")
             
         case .Image:
-            debug_print("double tap Img")
             let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
             
             cameraVC.didSelectedImageHandler = {[weak self] image in
@@ -470,8 +466,6 @@ extension EditViewController {
                                 
                                 return
                             }
-                            
-                            debug_print("upload = \(success)\n publishID = \(publishID)", context: previewConttext)
                             
                             let publishIconURL = publishID + "/" + publishName
                             
@@ -682,7 +676,6 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     
     func selectorsViewControllerAnimation(ViewController: CTASelectorsViewController) -> CTAAnimationBinder? {
         
-        debug_print("animation= \(animation) load", context: animationChangedContext)
         return animation
     }
     
@@ -743,8 +736,6 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             let container = selectedContainer as? TextContainerVMProtocol else {
             return
         }
-        
-        debug_print("font Did Changed", context: fdContext)
         
         let canvasSize = canvasViewController.view.bounds.size
         container.updateWithFontFamily(
@@ -824,7 +815,6 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             
             if let animation = strongSelf.animation, let index = (strongSelf.page.animationBinders.indexOf {$0.iD == animation.iD}) {
                 let id = animation.targetiD
-                debug_print("animation targetID = \(!id.isEmpty ? id.substringFromIndex(id.endIndex.advancedBy(-4)) : "None") will delete index \(index)", context: animationChangedContext)
                 strongSelf.page.removeAnimationAtIndex(index) {
                     completedBlock?()
                 }
@@ -840,9 +830,9 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             if let container = strongSelf.selectedContainer {
                 
                 let a = EditorFactory.generateAnimationFor(container.iD, animationName: a)
-                debug_print("animation will add", context: animationChangedContext)
+            
                 strongSelf.page.appendAnimation(a) {
-                    debug_print("animation add completed", context: animationChangedContext)
+                
                     completedBlock?()
                 }
                 

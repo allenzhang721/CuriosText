@@ -37,15 +37,22 @@ extension CTAAnimationName {
             return CTAAnimationType.FadeIn
         case .FadeOut:
             return CTAAnimationType.FadeOut
+        case .OrbitalIn:
+            return CTAAnimationType.OrbitalIn
+        case .OrbitalOut:
+            return CTAAnimationType.OrbitalOut
         case .None:
             return CTAAnimationType.Unknown
         }
     }
 }
+
  let mask = "mask."
  let position = "position"
  let opacity = "opacity"
  let transform = "transform"
+ let transformRotationZ = "transform.rotation.z"
+ let anchorPoint = "anchorPoint"
  let colors = "colors"
  let fillColor = "fillColor"
  let lineWidth = "lineWidth"
@@ -57,6 +64,7 @@ enum CTAAnimationType: String {
     case IrisIn = "IRIS_IN", IrisOut = "IRIS_OUT"
     case CurlIn = "CURL_IN", CurlOut = "CURL_OUT"
     case FadeIn = "FADE_IN", FadeOut = "FADE_OUT"
+    case OrbitalIn = "ORBITAL_IN", OrbitalOut = "ORBITAL_OUT"
     
     enum AnimationMaskShapeType {
         case Rect
@@ -68,37 +76,28 @@ enum CTAAnimationType: String {
         case Normal(AnimationMaskShapeType)
         case Gradient(AnimationMaskShapeType)
     }
-
-    enum AnimationKey: String {
-        case Position = "position"
-        case Opacity = "opacity"
-        case Transform = "transform"
-        case Colors = "colors"
-        case FillColor = "fillColor"
-        case LineWidth = "lineWidth"
-    }
     
     func displayAtEnd() -> Bool {
         switch self {
-        case .Unknown, .MoveIn, .ScaleIn, .IrisIn, .CurlIn, .FadeIn:
+        case .Unknown, .MoveIn, .ScaleIn, .IrisIn, .CurlIn, .FadeIn, .OrbitalIn:
             return true
-        case .MoveOut, .ScaleOut, .IrisOut, .CurlOut, .FadeOut:
+        case .MoveOut, .ScaleOut, .IrisOut, .CurlOut, .FadeOut, .OrbitalOut:
             return false
         }
     }
     
     func displayAtBegan() -> Bool {
         switch self  {
-        case .MoveIn, .ScaleIn, .IrisIn, .CurlIn, .FadeIn:
+        case .MoveIn, .ScaleIn, .IrisIn, .CurlIn, .FadeIn, .OrbitalIn:
             return false
-        case.Unknown, .MoveOut, .ScaleOut, IrisOut, .CurlOut, .FadeOut:
+        case.Unknown, .MoveOut, .ScaleOut, IrisOut, .CurlOut, .FadeOut, .OrbitalOut:
             return true
         }
     }
     
     func needMask() -> AnimationMaskType {
         switch self {
-        case .Unknown, .MoveIn, .MoveOut, .CurlIn, .CurlOut, .FadeIn, .FadeOut:
+        case .Unknown, .MoveIn, .MoveOut, .CurlIn, .CurlOut, .FadeIn, .FadeOut, .OrbitalIn, .OrbitalOut:
             return .None
         case .ScaleIn, .ScaleOut:
             return .Gradient(.Rect)
@@ -123,6 +122,8 @@ enum CTAAnimationType: String {
             return [position, opacity, transform]
         case .FadeIn, .FadeOut:
             return [transform, opacity]
+        case .OrbitalIn, .OrbitalOut:
+            return [opacity, position, anchorPoint, transformRotationZ]
         }
     }
 }

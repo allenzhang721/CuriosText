@@ -133,3 +133,5 @@
 "CURL_OUT" = "curl out";
 "FADE_IN" = "fade in";
 "FADE_OUT" = "fade out";
+"ORBITAL_IN" = "Spin In";
+"ORBITAL_OUT" = "Spin Out";

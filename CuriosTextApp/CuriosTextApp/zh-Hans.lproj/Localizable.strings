@@ -137,3 +137,5 @@
 "CURL_OUT" = "卷曲移出";
 "FADE_IN" = "渐显浮入";
 "FADE_OUT" = "渐隐浮出";
+"ORBITAL_IN" = "旋转出现";
+"ORBITAL_OUT" = "旋转消失";

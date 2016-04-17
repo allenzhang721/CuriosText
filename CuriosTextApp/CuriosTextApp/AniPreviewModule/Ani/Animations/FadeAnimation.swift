@@ -17,8 +17,7 @@ extension AniFactory {
         let time = duration * 0.4
         let interdelay = duration * (1 - 0.4) / Float(contentsCount)
         let b = Float(index) * interdelay + beganTime + descriptor.config.delay
-        
-        
+    
         let bt = [
             "opacity": CFTimeInterval(b),
             "transform": CFTimeInterval(b)]
@@ -36,8 +35,6 @@ extension AniFactory {
         let endTransform = appear ?
             NSValue(CATransform3D: CATransform3DIdentity) :
             NSValue(CATransform3D: CATransform3DMakeScale(1.5, 1.5, 1))
-        
-        
         
         let vs: [String: [AnyObject]] = [
             "opacity": opacity,
