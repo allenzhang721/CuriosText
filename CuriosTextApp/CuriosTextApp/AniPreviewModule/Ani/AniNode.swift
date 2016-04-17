@@ -55,12 +55,16 @@ class AniNode {
     func generateContaienrBy(canvasSize: CGSize, addBeganTime: Float, type: CTAAnimationType, descriptor: Descriptor, c: Container) -> AniContainer {
 
         let nc = containersBy(c, spliteType: TextSpliter.defaultSpliteBy(type))
-        
+        let count = nc.contents.count
+        let half = Int(count / 2)
+        let randomIndexs = (0..<count).sort { (a, b) -> Bool in
+            return (random() % count - half) < 0
+        }
         var anis = [Int: AniDescriptor]()
         for (i, content) in nc.contents.enumerate() {
             
             // TODO: 2. Need an Animation Type Factory.  -- EMIAOSTEIN, 4/04/16, 16:38
-            if let a = AniFactory.animationWith(descriptor.type, canvasSize: canvasSize, container: c, content: content, contentsCount: nc.contents.count, index: i, descriptor: descriptor, addBeganTime: addBeganTime) {
+            if let a = AniFactory.animationWith(descriptor.type, canvasSize: canvasSize, container: c, content: content, contentsCount: nc.contents.count, index: i, descriptor: descriptor, addBeganTime: addBeganTime,randomIndexs: randomIndexs) {
                 anis[i] = a
             }
         }
@@ -90,3 +94,16 @@ class AniNode {
         return c
     }
 }
+
+//private extension Array {
+//    
+//    func fisherYatesShuffle() -> Array {
+//        var n = count
+//        while n > 0 {
+//            let r = random() % (n - 1)
+//            let last = n - 1
+//            (self[r], self[last]) = (self[last], self[r])
+//            
+//        }
+//    }
+//}

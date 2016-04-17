@@ -33,6 +33,10 @@ extension CTAAnimationName {
             return CTAAnimationType.CurlIn
         case .CurlOut:
             return CTAAnimationType.CurlOut
+        case .FadeIn:
+            return CTAAnimationType.FadeIn
+        case .FadeOut:
+            return CTAAnimationType.FadeOut
         case .None:
             return CTAAnimationType.Unknown
         }
@@ -52,6 +56,7 @@ enum CTAAnimationType: String {
     case ScaleIn = "SCALE_IN", ScaleOut = "SCALE_OUT"
     case IrisIn = "IRIS_IN", IrisOut = "IRIS_OUT"
     case CurlIn = "CURL_IN", CurlOut = "CURL_OUT"
+    case FadeIn = "FADE_IN", FadeOut = "FADE_OUT"
     
     enum AnimationMaskShapeType {
         case Rect
@@ -75,25 +80,25 @@ enum CTAAnimationType: String {
     
     func displayAtEnd() -> Bool {
         switch self {
-        case .Unknown, .MoveIn, .ScaleIn, .IrisIn, .CurlIn:
+        case .Unknown, .MoveIn, .ScaleIn, .IrisIn, .CurlIn, .FadeIn:
             return true
-        case .MoveOut, .ScaleOut, .IrisOut, .CurlOut:
+        case .MoveOut, .ScaleOut, .IrisOut, .CurlOut, .FadeOut:
             return false
         }
     }
     
     func displayAtBegan() -> Bool {
         switch self  {
-        case .MoveIn, .ScaleIn, .IrisIn, .CurlIn:
+        case .MoveIn, .ScaleIn, .IrisIn, .CurlIn, .FadeIn:
             return false
-        case.Unknown, .MoveOut, .ScaleOut, IrisOut, .CurlOut:
+        case.Unknown, .MoveOut, .ScaleOut, IrisOut, .CurlOut, .FadeOut:
             return true
         }
     }
     
     func needMask() -> AnimationMaskType {
         switch self {
-        case .Unknown, .MoveIn, .MoveOut, .CurlIn, .CurlOut:
+        case .Unknown, .MoveIn, .MoveOut, .CurlIn, .CurlOut, .FadeIn, .FadeOut:
             return .None
         case .ScaleIn, .ScaleOut:
             return .Gradient(.Rect)
@@ -116,6 +121,8 @@ enum CTAAnimationType: String {
             return [mask+lineWidth]
         case .CurlIn, .CurlOut:
             return [position, opacity, transform]
+        case .FadeIn, .FadeOut:
+            return [transform, opacity]
         }
     }
 }

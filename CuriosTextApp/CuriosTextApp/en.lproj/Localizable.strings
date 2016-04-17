@@ -129,3 +129,7 @@
 "SCALE_OUT" = "Fade Out";
 "IRIS_IN" = "iris in";
 "IRIS_OUT" = "iris out";
+"CURL_IN" = "curl in";
+"CURL_OUT" = "curl out";
+"FADE_IN" = "fade in";
+"FADE_OUT" = "fade out";

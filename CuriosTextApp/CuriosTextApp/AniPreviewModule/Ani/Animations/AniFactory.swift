@@ -54,7 +54,7 @@ class AniFactory {
 //        }
 //    }
     
-    class func animationWith(name: String, canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, descriptor: Descriptor, addBeganTime: Float) -> AniDescriptor? {
+    class func animationWith(name: String, canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, descriptor: Descriptor, addBeganTime: Float, randomIndexs: [Int]? = nil) -> AniDescriptor? {
         
         guard let type = CTAAnimationType(rawValue: name) else {
             print("Not Support \(name) Animation Type!")
@@ -85,6 +85,22 @@ class AniFactory {
             return curl(true, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
         case .CurlOut:
             return curl(false, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
+            
+        case .FadeIn:
+            if let randomIndexs = randomIndexs where index < randomIndexs.count {
+                let i = randomIndexs[index]
+                return fade(true, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: i, descriptor: descriptor, beganTime: addBeganTime)
+            } else {
+                return fade(true, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
+            }
+            
+        case .FadeOut:
+            if let randomIndexs = randomIndexs where index < randomIndexs.count {
+                let i = randomIndexs[index]
+                return fade(false, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: i, descriptor: descriptor, beganTime: addBeganTime)
+            } else {
+                return fade(false, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
+            }
 //        default:
 //            return nil
 //            fatalError("Not Support Animation \(name)")

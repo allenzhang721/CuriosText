@@ -19,12 +19,13 @@ enum CTAAnimationName: Int {
     case ScaleOut
     case IrisIn, IrisOut
     case CurlIn, CurlOut
+    case FadeIn, FadeOut
     
     func shouldVisalbeBeforeBegan() -> Bool {
         switch self {
-        case .MoveIn, .ScaleIn, IrisIn, .CurlIn:
+        case .MoveIn, .ScaleIn, IrisIn, .CurlIn, .FadeIn:
             return false
-        case .MoveOut, .ScaleOut, IrisOut, .CurlOut:
+        case .MoveOut, .ScaleOut, IrisOut, .CurlOut, .FadeOut:
             return true
         case .None:
             return true
@@ -33,9 +34,9 @@ enum CTAAnimationName: Int {
     
     func shouldVisableAfterEnd() -> Bool {
         switch self {
-        case .MoveIn, .ScaleIn, IrisIn, .CurlIn:
+        case .MoveIn, .ScaleIn, IrisIn, .CurlIn, .FadeIn:
             return true
-        case .MoveOut, .ScaleOut, IrisOut, .CurlOut:
+        case .MoveOut, .ScaleOut, IrisOut, .CurlOut, .FadeOut:
             return false
         case .None:
             return true
@@ -43,7 +44,7 @@ enum CTAAnimationName: Int {
     }
     
     static var names: [CTAAnimationName] {
-        return [.None, .MoveIn, .CurlIn,.ScaleIn, .IrisIn, .MoveOut, .CurlOut,.ScaleOut, .IrisOut]
+        return [.None, .MoveIn, .CurlIn, .FadeIn, .ScaleIn, .IrisIn, .MoveOut, .CurlOut, .FadeOut, .ScaleOut, .IrisOut]
     }
     
     var description: String {

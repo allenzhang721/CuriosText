@@ -133,3 +133,7 @@
 "SCALE_OUT" = "缩小渐隐";
 "IRIS_IN" = "中心渐显";
 "IRIS_OUT" = "中心渐隐";
+"CURL_IN" = "卷曲进入";
+"CURL_OUT" = "卷曲移出";
+"FADE_IN" = "渐显浮入";
+"FADE_OUT" = "渐隐浮出";
