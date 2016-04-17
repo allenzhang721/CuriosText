@@ -62,6 +62,8 @@ class AniFactory {
         }
         
         switch type {
+        case .Unknown:
+             return nil
         case .MoveIn:
             return moveIn(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
         case .MoveOut:
@@ -78,8 +80,13 @@ class AniFactory {
             
         case .IrisOut:
             return iris(false, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
-        default:
-            return nil
+            
+        case .CurlIn:
+            return curl(true, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
+        case .CurlOut:
+            return curl(false, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
+//        default:
+//            return nil
 //            fatalError("Not Support Animation \(name)")
         }
         

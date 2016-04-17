@@ -75,18 +75,6 @@ extension CTAAnimationBinder {
             textDeliveryFrom: textDeliveryFrom)
         
         let type: String = animationName.toType().rawValue
-//        switch animationName {
-//        case .MoveIn:
-//            type = "MOVE_IN"
-//        case .MoveOut:
-//            type = "MOVE_OUT"
-//        case .ScaleIn:
-//            type = "SCALE_IN"
-//        case .ScaleOut:
-//            type = "SCALE_OUT"
-//        default:
-//            type = "NONE"
-//        }
         
         // descriptor
         let descriptor = Descriptor.init(type: type, config: config)

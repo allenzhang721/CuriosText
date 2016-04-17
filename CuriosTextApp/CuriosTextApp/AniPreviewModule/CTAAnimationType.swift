@@ -29,17 +29,29 @@ extension CTAAnimationName {
             return CTAAnimationType.IrisIn
         case .IrisOut:
             return CTAAnimationType.IrisOut
+        case .CurlIn:
+            return CTAAnimationType.CurlIn
+        case .CurlOut:
+            return CTAAnimationType.CurlOut
         case .None:
             return CTAAnimationType.Unknown
         }
     }
 }
+ let mask = "mask."
+ let position = "position"
+ let opacity = "opacity"
+ let transform = "transform"
+ let colors = "colors"
+ let fillColor = "fillColor"
+ let lineWidth = "lineWidth"
 
 enum CTAAnimationType: String {
     case Unknown = "NONE"
     case MoveIn = "MOVE_IN", MoveOut = "MOVE_OUT"
     case ScaleIn = "SCALE_IN", ScaleOut = "SCALE_OUT"
     case IrisIn = "IRIS_IN", IrisOut = "IRIS_OUT"
+    case CurlIn = "CURL_IN", CurlOut = "CURL_OUT"
     
     enum AnimationMaskShapeType {
         case Rect
@@ -51,28 +63,37 @@ enum CTAAnimationType: String {
         case Normal(AnimationMaskShapeType)
         case Gradient(AnimationMaskShapeType)
     }
+
+    enum AnimationKey: String {
+        case Position = "position"
+        case Opacity = "opacity"
+        case Transform = "transform"
+        case Colors = "colors"
+        case FillColor = "fillColor"
+        case LineWidth = "lineWidth"
+    }
     
     func displayAtEnd() -> Bool {
         switch self {
-        case .Unknown, .MoveIn, .ScaleIn, .IrisIn:
+        case .Unknown, .MoveIn, .ScaleIn, .IrisIn, .CurlIn:
             return true
-        case .MoveOut, .ScaleOut, .IrisOut:
+        case .MoveOut, .ScaleOut, .IrisOut, .CurlOut:
             return false
         }
     }
     
     func displayAtBegan() -> Bool {
         switch self  {
-        case .MoveIn, .ScaleIn, .IrisIn:
+        case .MoveIn, .ScaleIn, .IrisIn, .CurlIn:
             return false
-        case.Unknown, .MoveOut, .ScaleOut, IrisOut:
+        case.Unknown, .MoveOut, .ScaleOut, IrisOut, .CurlOut:
             return true
         }
     }
     
     func needMask() -> AnimationMaskType {
         switch self {
-        case .Unknown, .MoveIn, .MoveOut:
+        case .Unknown, .MoveIn, .MoveOut, .CurlIn, .CurlOut:
             return .None
         case .ScaleIn, .ScaleOut:
             return .Gradient(.Rect)
@@ -86,13 +107,15 @@ enum CTAAnimationType: String {
         case .Unknown:
             return []
         case .MoveIn, .MoveOut:
-            return ["position", "opacity", "transform"]
+            return [position, opacity, transform]
         case .ScaleIn, .ScaleOut:
-            return ["opacity", "transform", "mask.colors"]
+            return [opacity, transform, mask+colors]
         case .IrisIn:
-            return ["mask.transform", "mask.fillColor"]
+            return [mask+transform, mask+fillColor]
         case .IrisOut:
-            return ["mask.lineWidth"]
+            return [mask+lineWidth]
+        case .CurlIn, .CurlOut:
+            return [position, opacity, transform]
         }
     }
 }

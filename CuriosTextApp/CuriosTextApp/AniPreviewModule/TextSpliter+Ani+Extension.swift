@@ -26,7 +26,7 @@ extension TextSpliter {
     class func defaultSpliteBy(type: CTAAnimationType) -> (TextSpliter.TextLineSpliteType, TextSpliter.TextSpliteType) {
         
         switch type {
-        case .MoveIn, .MoveOut:
+        case .MoveIn, .MoveOut, .CurlIn, .CurlOut:
             return (TextLineSpliteType.ByLine, TextSpliteType.ByCharacter)
             
         default:

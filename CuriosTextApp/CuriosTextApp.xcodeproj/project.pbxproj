@@ -139,6 +139,7 @@
 		2C82FF551C4362FA001D927A /* CTASegementControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82FF541C4362FA001D927A /* CTASegementControl.swift */; };
 		2C82FF571C437F58001D927A /* CTASelectorAligmentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C82FF561C437F58001D927A /* CTASelectorAligmentsCell.swift */; };
 		2C85C59A1C9FC2470042CD0F /* SVProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C85C5991C9FC2470042CD0F /* SVProgressHUD.framework */; };
+		2C85F81F1CC3273500C7186C /* CurlAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C85F81E1CC3273500C7186C /* CurlAnimation.swift */; };
 		2C88A3731C50EBE700C6D687 /* CTAPreviewCanvasController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88A3721C50EBE700C6D687 /* CTAPreviewCanvasController.swift */; };
 		2C88A3751C51F0BA00C6D687 /* CTAAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88A3741C51F0BA00C6D687 /* CTAAnimationController.swift */; };
 		2C8A84C51C7EEC4B0017F81F /* CTACellDisplayProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8A84C41C7EEC4B0017F81F /* CTACellDisplayProtocol.swift */; };
@@ -464,6 +465,7 @@
 		2C82FF541C4362FA001D927A /* CTASegementControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASegementControl.swift; sourceTree = "<group>"; };
 		2C82FF561C437F58001D927A /* CTASelectorAligmentsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorAligmentsCell.swift; sourceTree = "<group>"; };
 		2C85C5991C9FC2470042CD0F /* SVProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SVProgressHUD.framework; path = "Pods/../build/Debug-iphoneos/SVProgressHUD.framework"; sourceTree = "<group>"; };
+		2C85F81E1CC3273500C7186C /* CurlAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurlAnimation.swift; sourceTree = "<group>"; };
 		2C88A3721C50EBE700C6D687 /* CTAPreviewCanvasController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewCanvasController.swift; sourceTree = "<group>"; };
 		2C88A3741C51F0BA00C6D687 /* CTAAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAnimationController.swift; sourceTree = "<group>"; };
 		2C8A84C41C7EEC4B0017F81F /* CTACellDisplayProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACellDisplayProtocol.swift; sourceTree = "<group>"; };
@@ -1138,6 +1140,7 @@
 				2C7EC5CB1CBF650A0077E79E /* ScaleInAnimation.swift */,
 				2C7EC5CD1CBF65260077E79E /* ScaleOutAnimation.swift */,
 				2C9F8C9D1CC1E50600F99C83 /* IrisAnimation.swift */,
+				2C85F81E1CC3273500C7186C /* CurlAnimation.swift */,
 				2CD11AAC1CB7547500A79305 /* AniDescriptor.swift */,
 			);
 			name = Animations;
@@ -1757,6 +1760,7 @@
 				2CC5A7CB1C89B82100A773E9 /* AsyncDrawing.swift in Sources */,
 				2C7A959F1C3A6A4F005B0EAE /* CTAPageControllers.swift in Sources */,
 				2CB322321C4533E200BD06F5 /* CTAPublishesCell.swift in Sources */,
+				2C85F81F1CC3273500C7186C /* CurlAnimation.swift in Sources */,
 				2C5378381C5C71BB004BCF40 /* CTATabView.swift in Sources */,
 				2C7C27DE1C58B83F00975D4A /* CTABarItemView.swift in Sources */,
 				2CD11ABF1CB7547C00A79305 /* MoveOutAnimation.swift in Sources */,

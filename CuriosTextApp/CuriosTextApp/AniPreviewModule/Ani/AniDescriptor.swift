@@ -47,7 +47,6 @@ struct AniDescriptor {
                 alayer.strokeColor = UIColor.blackColor().CGColor
                 alayer.fillColor = UIColor.clearColor().CGColor
                 maskLayer = alayer
-
             }
         case .Gradient(let shape):
             switch shape {
@@ -115,7 +114,7 @@ struct AniDescriptor {
             
             let animGroup = QCMethod.groupAnimations(maskAnims, fillMode:fillMode)
             animGroup.removedOnCompletion = true
-            mask.addAnimation(animGroup, forKey: "\(type)GradientAnimation")
+            mask.addAnimation(animGroup, forKey: "\(type)maskAnimation")
         }
         
         let layerKeyPaths = keyPaths.filter { !$0.hasPrefix("mask.") }
