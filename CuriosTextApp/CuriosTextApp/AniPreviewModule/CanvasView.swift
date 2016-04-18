@@ -43,13 +43,14 @@ class CanvasView: UIView {
         backgroundColor = UIColor.clearColor()
         collectionView.backgroundColor = UIColor.clearColor()
         collectionView.registerClass(ContainerCell.self, forCellWithReuseIdentifier: canvasItemIdentifier)
-        layer.addSublayer(collectionView.layer)
         userInteractionEnabled = false
+//        layer.addSublayer(collectionView.layer)
 //        addSubview(collectionView)  //use to debug
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        layer.addSublayer(collectionView.layer)
         collectionView.frame = bounds
         collectionView.center = CGPoint(x: bounds.midX, y: bounds.midY)
     }
