@@ -342,9 +342,18 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                         if self.publishModelArray.count > 0{
                             for i in 0..<modelArray!.count{
                                 let newmodel = modelArray![i] as! CTAPublishModel
-                                if !self.checkPublishModelIsHave(newmodel.publishID){
+                                if !self.checkPublishModelIsHave(newmodel.publishID, publishArray: self.publishModelArray){
                                     isChange = true
                                     break
+                                }
+                            }
+                            if !isChange{
+                                for j in 0..<self.publishModelArray.count{
+                                    let oldModel = self.publishModelArray[j]
+                                    if !self.checkPublishModelIsHave(oldModel.publishID, publishArray: modelArray as! Array<CTAPublishModel>){
+                                        isChange = true
+                                        break
+                                    }
                                 }
                             }
                         }else {
@@ -367,7 +376,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     func loadMoreModelArray(modelArray:Array<AnyObject>){
         for i in 0..<modelArray.count{
             let publishModel = modelArray[i] as! CTAPublishModel
-            if !self.checkPublishModelIsHave(publishModel.publishID){
+            if !self.checkPublishModelIsHave(publishModel.publishID, publishArray: self.publishModelArray){
                 self.publishModelArray.append(publishModel)
             }
         }
@@ -395,9 +404,9 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         }
     }
     
-    func checkPublishModelIsHave(publishID:String) -> Bool{
-        for i in 0..<self.publishModelArray.count{
-            let oldPublihModel = self.publishModelArray[i]
+    func checkPublishModelIsHave(publishID:String, publishArray:Array<CTAPublishModel>) -> Bool{
+        for i in 0..<publishArray.count{
+            let oldPublihModel = publishArray[i]
             if oldPublihModel.publishID == publishID{
                 return true
             }
