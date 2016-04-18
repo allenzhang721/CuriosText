@@ -106,13 +106,10 @@ extension CTAPublishProtocol where Self: UIViewController{
         }
         
         UIView.transitionWithView(self.userIconImage, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
-            var defaultImg = self.userIconImage.image
-            if defaultImg == nil {
-                defaultImg = UIImage.init(named: "default-usericon")
-            }
+            var defaultImg = UIImage.init(named: "default-usericon")
             let imagePath = CTAFilePath.userFilePath+userModel.userIconURL
             let imageURL = NSURL(string: imagePath)!
-            self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: defaultImg, optionsInfo: nil) { (image, error, cacheType, imageURL) -> () in
+            self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: defaultImg, optionsInfo: [.Transition(ImageTransition.Fade(1))]){ (image, error, cacheType, imageURL) -> () in
                 if error != nil {
                     self.userIconImage.image = defaultImg
                 }
