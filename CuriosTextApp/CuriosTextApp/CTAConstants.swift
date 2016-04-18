@@ -22,8 +22,8 @@ struct CTARequestResultKey {
 
 struct CTAFilePath {
 
-    static var userFilePath = "http://7wy3u8.com2.z0.glb.qiniucdn.com/"//"https://dn-tu-curiosapp.qbox.me/"
-    static var publishFilePath = "http://7wy3u8.com2.z0.glb.qiniucdn.com/"//"https://dn-tp-curiosapp.qbox.me/"
+    static var userFilePath = "https://dn-tu-curiosapp.qbox.me/"
+    static var publishFilePath = "https://dn-tp-curiosapp.qbox.me/"
 }
 
 enum CTARequestHost: CustomStringConvertible {
@@ -32,11 +32,18 @@ enum CTARequestHost: CustomStringConvertible {
   var description: String {
     switch self {
     case .Test:
-      return "http://182.92.150.178/CuriosTextServices"
+        CTAFilePath.publishFilePath = "http://7wy3u8.com2.z0.glb.qiniucdn.com/"
+        CTAFilePath.userFilePath = "http://7wy3u8.com2.z0.glb.qiniucdn.com/"
+        return "http://182.92.150.178/CuriosTextServices"
+        
     case .Debug:
-      return "http://192.168.1.106:8080/CuriosTextServices"
+        CTAFilePath.publishFilePath = "http://7wy3u8.com2.z0.glb.qiniucdn.com/"
+        CTAFilePath.userFilePath = "http://7wy3u8.com2.z0.glb.qiniucdn.com/"
+        return "http://192.168.1.106:8080/CuriosTextServices"
     case .Production:
-      return "http://cta.curiosapp.com"
+        CTAFilePath.publishFilePath = "https://dn-tu-curiosapp.qbox.me/"
+        CTAFilePath.userFilePath = "https://dn-tp-curiosapp.qbox.me/"
+        return "http://cta.curiosapp.com"
     }
   }
 }
