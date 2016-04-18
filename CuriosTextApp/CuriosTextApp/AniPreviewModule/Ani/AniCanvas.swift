@@ -80,7 +80,7 @@ extension Canvas {
         
         let notDisplayAtEndAnis = firstTargetAnis.filter {
             if let type = CTAAnimationType(rawValue: $0.descriptor.type) {
-                return type.displayAtEnd()
+                return !type.displayAtEnd()
             } else {
                 return true
             }
@@ -99,7 +99,7 @@ extension Canvas {
         }
         
         let notDisplayAtBeganAnis = aftfirstTargetAnis.filter {if let type = CTAAnimationType(rawValue: $0.descriptor.type) {
-            return type.displayAtBegan()
+            return !type.displayAtBegan()
         } else {
             return true
             }}

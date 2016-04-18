@@ -22,6 +22,10 @@ class CTAAnimationConfig:NSObject, NSCoding {
         return CTAAnimationConfig(duration: 1.0, delay: 0.0, repeatCount: 0, reverse: false, withFormer: false, loadStrategy: CTAContentLoadStrategy.defautlStrategy, generateStrategy: CTAContentGenerateStrategy.defaultStrategy)
     }
     
+    class func defaultConfigWithDuration(duration: Float) -> CTAAnimationConfig {
+        return CTAAnimationConfig(duration: duration, delay: 0.0, repeatCount: 0, reverse: false, withFormer: false, loadStrategy: CTAContentLoadStrategy.defautlStrategy, generateStrategy: CTAContentGenerateStrategy.defaultStrategy)
+    }
+    
     init(duration: Float, delay: Float, repeatCount: Int, reverse: Bool, withFormer: Bool, loadStrategy: CTAContentLoadStrategy, generateStrategy: CTAContentGenerateStrategy) {
         self.duration = duration
         self.delay = delay

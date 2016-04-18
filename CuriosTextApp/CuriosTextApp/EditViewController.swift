@@ -835,7 +835,6 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
                 
                     completedBlock?()
                 }
-                
             }
         }
     }

@@ -50,6 +50,26 @@ enum CTAAnimationName: Int {
                 .MoveOut, .OrbitalOut, .CurlOut, .FadeOut, .ScaleOut, .IrisOut]
     }
     
+    var defaultDuration: Float {
+        switch self {
+        case .None:
+            return 0.0
+        case .MoveIn, .MoveOut:
+            return 2.0
+        case .ScaleIn, .ScaleOut:
+            return 2.5
+        case .IrisIn, .IrisOut:
+            return 2.0
+        case .CurlIn, .CurlOut:
+            return 2.0
+        case .FadeIn, .FadeOut:
+            return 1.0
+        case .OrbitalIn, .OrbitalOut:
+            return 2.0
+        
+        }
+    }
+    
     var description: String {
         return LocalStrings.AniType(self.toType()).description
     }
