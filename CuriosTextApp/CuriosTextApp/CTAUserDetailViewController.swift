@@ -69,7 +69,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     func initView(){
         self.blackColorView = UIView.init(frame: self.view.bounds)
         self.view.addSubview(self.blackColorView!)
-        let tap = UITapGestureRecognizer(target: self, action: "backButtonClikc:")
+        let tap = UITapGestureRecognizer(target: self, action: #selector(CTAUserDetailViewController.backButtonClikc(_:)))
         self.blackColorView.addGestureRecognizer(tap)
         
         let rate       = self.getHorRate()
@@ -157,7 +157,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         self.followButton.setTitleColor(UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0), forState: .Normal)
         self.followButtonView.hidden = true
         
-        let followTap = UITapGestureRecognizer(target: self, action: "followButtonClick:")
+        let followTap = UITapGestureRecognizer(target: self, action: #selector(CTAUserDetailViewController.followButtonClick(_:)))
         self.followButtonView.addGestureRecognizer(followTap)
     }
     

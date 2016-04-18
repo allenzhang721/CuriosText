@@ -90,7 +90,7 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
-        backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
+        backButton.addTarget(self, action: #selector(CTASetUserInfoViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
         
         self.nickNameView = UIView.init(frame: CGRect.init(x: 0, y: 44, width: bouns.width, height: bouns.height-44))
@@ -132,7 +132,7 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         self.saveButton.titleLabel?.font = UIFont.systemFontOfSize(20)
         self.saveButton.sizeToFit()
         self.saveButton.frame.origin.x = (bouns.width - self.saveButton.frame.width)/2
-        self.saveButton.addTarget(self, action: "saveButtonClick:", forControlEvents: .TouchUpInside)
+        self.saveButton.addTarget(self, action: #selector(CTASetUserInfoViewController.saveButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(self.saveButton)
     }
     
@@ -169,7 +169,7 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         }
         self.saveButton.frame.origin.y = self.userNickNameTextInput.frame.origin.y + 114
         self.userNickNameTextInput.becomeFirstResponder()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "textFieldEditChange:", name: "UITextFieldTextDidChangeNotification", object: self.userNickNameTextInput)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CTASetUserInfoViewController.textFieldEditChange(_:)), name: "UITextFieldTextDidChangeNotification", object: self.userNickNameTextInput)
     }
     
     func reloadDescView(){

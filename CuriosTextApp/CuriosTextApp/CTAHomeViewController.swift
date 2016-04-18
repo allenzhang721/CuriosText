@@ -57,7 +57,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         super.viewWillAppear(animated)
         if self.isDisMis{
             self.reloadView()
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadViewHandler:", name: "loginComplete", object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CTAHomeViewController.reloadViewHandler(_:)), name: "loginComplete", object: nil)
         }
     }
     
@@ -94,7 +94,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.handView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: bounds.width, height: fullSize.height + moreSpace*2 + 5))
         self.handView.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2)
         self.handView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
-        let pan = UIPanGestureRecognizer(target: self, action: "viewPanHandler:")
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(CTAHomeViewController.viewPanHandler(_:)))
         self.handView.addGestureRecognizer(pan)
         self.view.addSubview(self.handView)
 
@@ -130,7 +130,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         let userButton = UIButton.init(frame: CGRect.init(x: bounds.size.width - 45, y: 2, width: 40, height: 40))
         userButton.setImage(UIImage.init(named: "userview-button"), forState: .Normal)
         userButton.setImage(UIImage.init(named: "userview-selected-button"), forState: .Highlighted)
-        userButton.addTarget(self, action: "userButtonClick:", forControlEvents: .TouchUpInside)
+        userButton.addTarget(self, action: #selector(CTAHomeViewController.userButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(userButton)
         self.initPublishSubView(self.handView.frame, horRate: self.getHorRate())
     }
@@ -243,7 +243,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     
     func changeViewButtonStatus(isEnable:Bool){
         let subViews = self.view.subviews
-        for var i=0; i<subViews.count; i++ {
+        for i in 0..<subViews.count{
             let subView = subViews[i]
             if subView is UIButton{
                 (subView as! UIButton).enabled = isEnable
@@ -319,7 +319,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         var isChange = false
         if modelArray.count > 0{
             if self.publishModelArray.count > 0{
-                for var i=0; i<modelArray.count; i++ {
+                for i in 0..<modelArray.count{
                     let newmodel = modelArray[i] as! CTAPublishModel
                     if !self.checkPublishModelIsHave(newmodel.publishID){
                         isChange = true
@@ -341,7 +341,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     }
     
     func loadMoreModelArray(modelArray:Array<AnyObject>){
-        for var i=0; i < modelArray.count; i++ {
+        for i in 0..<modelArray.count{
             let publishModel = modelArray[i] as! CTAPublishModel
             if !self.checkPublishModelIsHave(publishModel.publishID){
                  self.publishModelArray.append(publishModel)
@@ -350,7 +350,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     }
     
     func checkPublishModelIsHave(publishID:String) -> Bool{
-        for var i=0; i<self.publishModelArray.count; i++ {
+        for i in 0..<self.publishModelArray.count{
             let oldPublihModel = self.publishModelArray[i]
             if oldPublihModel.publishID == publishID{
                 return true
@@ -742,7 +742,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 self.nextFullCell = self.nextMoreCell
                 self.nextMoreCell = self.preFullCell
                 self.preFullCell = currentFull
-                self.currentPublishIndex++
+                self.currentPublishIndex+=1
                 if self.currentPublishIndex > self.publishModelArray.count-1{
                     self.currentPublishIndex = self.publishModelArray.count-1
                 }
@@ -755,7 +755,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 self.preFullCell = self.nextMoreCell
                 self.nextMoreCell = self.nextFullCell
                 self.nextFullCell = currentFull
-                self.currentPublishIndex--
+                self.currentPublishIndex-=1
                 if self.currentPublishIndex < 0{
                     self.currentPublishIndex = 0
                 }
