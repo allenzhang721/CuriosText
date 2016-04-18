@@ -43,7 +43,12 @@ extension AniFactory {
         let tc = CGPoint(x: CGFloat(tl) * cos(r), y: -CGFloat(tl) * sin(r))
         
         let contentPostion = CGPoint(x: CGFloat(content.width / 2), y: CGFloat(content.height / 2))
-        let tranlsPosition = CGPoint(x: contentPostion.x + tc.x, y: contentPostion.y + tc.y - CGFloat(contentsCount - 1 - index) * 10)
+        
+        let mid = container.width / 2
+        let c = mid + mid - content.positionX
+        let tranlsPosition = appear ?
+            CGPoint(x: CGFloat(c) + tc.x  , y: contentPostion.y + tc.y - CGFloat(index) * 10) :
+            CGPoint(x: CGFloat(c) + tc.x, y: contentPostion.y + tc.y - CGFloat(contentsCount - 1 - index) * 10)
         
         let position = appear ? tranlsPosition : contentPostion
         let endPosition = appear ? contentPostion : tranlsPosition

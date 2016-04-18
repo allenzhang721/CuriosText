@@ -49,7 +49,7 @@ final class CTASelectorColorsCell: CTASelectorCell {
         }
         
         let color = dataSource.selectorBeganColor(self)
-//        view.selectedColor = color
+        view.selectedColor = color
         
 //        if let color = dataSource.selectorBeganColor(self) {
 //        
