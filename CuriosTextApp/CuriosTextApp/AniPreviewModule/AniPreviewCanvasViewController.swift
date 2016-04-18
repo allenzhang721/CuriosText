@@ -61,6 +61,7 @@ class AniPreviewCanvasViewController: UIViewController {
         
         aniCanvasView.completedBlock = {[weak self] in
             self?.dismiss(nil)
+//            self?.aniCanvasView.stop()
         }
         
         if playAllInAnimaionView.1 == true {
@@ -85,7 +86,12 @@ class AniPreviewCanvasViewController: UIViewController {
 
 extension AniPreviewCanvasViewController {
     @IBAction func tap(sender: AnyObject) {
-        dismissViewControllerAnimated(false, completion: nil)
+//        dismissViewControllerAnimated(false, completion: nil)
+        aniCanvasView.pause()
+        aniCanvasView.stop()
+        
+        aniCanvasView.ready()
+        aniCanvasView.play()
     }
     
     @IBAction func ready(sender: AnyObject?) {

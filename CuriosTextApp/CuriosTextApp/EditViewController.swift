@@ -186,13 +186,27 @@ extension EditViewController {
 extension EditViewController {
     
     func beganPreviewForAll(playAll: Bool) {
-        guard let animation = animation else {
-            return
+        
+        let animationID: String?
+        
+        if playAll {
+            guard page.animationBinders.count > 0 else {
+                return
+            }
+            animationID = page.animationBinders.first!.iD
+        } else {
+            guard let animation = animation else {
+                return
+            }
+            animationID = animation.iD
         }
+        
+        guard let aAnimationID = animationID else {return}
+        
         
         guard let preController = UIStoryboard(name: "AniPreView", bundle: nil).instantiateInitialViewController() as? AniPreviewCanvasViewController else { return }
         preController.playAllInAnimaionView = (playAll, selectorViewController.currentType == .Animation)
-        let preCanvas = playAll ? page.toAniCanvas() : page.toAniCanvas().aniCanvasByAnimationWith(animation.iD)
+        let preCanvas = playAll ? page.toAniCanvas() : page.toAniCanvas().aniCanvasByAnimationWith(aAnimationID)
         preController.canvas = preCanvas
         let retriver = {[weak self] (name: String,  handler: (String, UIImage?) -> ()) in
             if let sf = self {

@@ -191,6 +191,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                 }
                 //            layer.addSublayer(previewView.layer)
                 sf.addSubview(previewView)
+//                self?.layer.addSublayer(previewView.layer)
                 sf.previewView = previewView
                 sf.cropImageRound(previewView)
                 sf.bringSubviewToFront(sf.cellImageView)

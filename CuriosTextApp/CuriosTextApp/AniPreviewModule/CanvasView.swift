@@ -43,8 +43,9 @@ class CanvasView: UIView {
         backgroundColor = UIColor.clearColor()
         collectionView.backgroundColor = UIColor.clearColor()
         collectionView.registerClass(ContainerCell.self, forCellWithReuseIdentifier: canvasItemIdentifier)
-//        layer.addSublayer(collectionView.layer)
-        addSubview(collectionView)  //use to debug
+        layer.addSublayer(collectionView.layer)
+        userInteractionEnabled = false
+//        addSubview(collectionView)  //use to debug
     }
     
     override func layoutSubviews() {

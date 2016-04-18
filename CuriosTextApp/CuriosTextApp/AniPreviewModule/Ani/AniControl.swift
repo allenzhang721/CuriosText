@@ -32,10 +32,11 @@ class AniControl: NSObject {
         var playing = false
 
         mutating func reset() {
+            playing = false
             progress = 0
             currentFrame = 0
             totalFrames = 0
-            playing = false
+            
         }
     }
     
