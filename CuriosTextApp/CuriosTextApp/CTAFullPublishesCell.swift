@@ -186,6 +186,9 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                 previewView.center = CGPoint(x: sf.bounds.midX, y: sf.bounds.midY)
                 previewView.transform = CGAffineTransformMakeScale(scale, scale)
                 previewView.backgroundColor = UIColor.whiteColor()
+                previewView.completedBlock = {[weak self] in
+                    self?.playComplete()
+                }
                 //            layer.addSublayer(previewView.layer)
                 sf.addSubview(previewView)
                 sf.previewView = previewView
@@ -236,6 +239,17 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
             }
         }else {
             self.loadCompeteHandler = self.playAnimation
+        }
+    }
+    
+    func playComplete(){
+        self.isPlaying = false
+        self.isPause = false
+        let time: NSTimeInterval = NSTimeInterval(2.0)
+        let delay = dispatch_time(DISPATCH_TIME_NOW,
+                                  Int64(time * Double(NSEC_PER_SEC)))
+        dispatch_after(delay, dispatch_get_main_queue()) { [weak self] in
+            self?.playAnimation()
         }
     }
 
