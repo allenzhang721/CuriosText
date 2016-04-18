@@ -11,6 +11,7 @@ import UIKit
 class AniPreviewCanvasViewController: UIViewController {
     
     @IBOutlet weak var fakePauseView: CTAGradientButtonView!
+    var playAllInAnimaionView = (false, true)
     var canvas: AniCanvas!
     var targetCenter: CGPoint!
     var aniCanvasView: AniPlayCanvasView!
@@ -61,8 +62,14 @@ class AniPreviewCanvasViewController: UIViewController {
         aniCanvasView.completedBlock = {[weak self] in
             self?.dismiss(nil)
         }
-        fakePauseView.userInteractionEnabled = false
-        fakePauseView.image = CTAStyleKit.imageOfAnimationpause
+        
+        if playAllInAnimaionView.1 == true {
+            fakePauseView.hidden = false
+            fakePauseView.userInteractionEnabled = false
+            fakePauseView.image = CTAStyleKit.imageOfAnimationpause
+        } else {
+            fakePauseView.hidden = true
+        }
     }
     
     override func viewWillLayoutSubviews() {

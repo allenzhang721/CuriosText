@@ -169,16 +169,30 @@ extension EditViewController {
     @IBAction func publish(sender: AnyObject) {
         showPublishViewController()
     }
+    @IBAction func previewAll(sender: AnyObject) {
+        
+        beganPreviewForAll(true)
+        
+    }
     
     @IBAction func preview(sender: AnyObject?) {
         
+        beganPreviewForAll(false)
+        
+    }
+}
+
+// MARK: - Logics
+extension EditViewController {
+    
+    func beganPreviewForAll(playAll: Bool) {
         guard let animation = animation else {
             return
         }
         
         guard let preController = UIStoryboard(name: "AniPreView", bundle: nil).instantiateInitialViewController() as? AniPreviewCanvasViewController else { return }
-        
-        let preCanvas = page.toAniCanvas().aniCanvasByAnimationWith(animation.iD)
+        preController.playAllInAnimaionView = (playAll, selectorViewController.currentType == .Animation)
+        let preCanvas = playAll ? page.toAniCanvas() : page.toAniCanvas().aniCanvasByAnimationWith(animation.iD)
         preController.canvas = preCanvas
         let retriver = {[weak self] (name: String,  handler: (String, UIImage?) -> ()) in
             if let sf = self {
@@ -194,16 +208,9 @@ extension EditViewController {
         let center = canvasViewController.view.convertPoint(canvasViewController.view.center, toView: view)
         preController.targetCenter = center
         
-        
-        presentViewController(preController, animated: false) { 
-            
-            
+        presentViewController(preController, animated: false) {
         }
     }
-}
-
-// MARK: - Logics
-extension EditViewController {
     
     func selectBottomContainer() {
         if page.containers.count > 0 {
