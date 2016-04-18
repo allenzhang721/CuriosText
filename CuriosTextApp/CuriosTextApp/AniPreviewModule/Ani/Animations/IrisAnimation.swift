@@ -19,7 +19,7 @@ extension AniFactory {
      
         let key1 = "mask.fillColor"
         
-        if appear {
+//        if appear {
         
         let bt = [ // beganTime
             key1: CFTimeInterval(b),
@@ -50,31 +50,31 @@ extension AniFactory {
         
         return AniDescriptor(type: "IRIS_\(appear ? "IN" : "OUT")", beganTimes: bt, durations: ds, values: vs, keyTimes: ks)
             
-        } else {
-            
-            let bt = [ // beganTime
-                "mask.lineWidth": CFTimeInterval(b)]
-            
-            let ds = [ //duration
-                "mask.lineWidth": CFTimeInterval(time)]
-            
-            
-            let length = sqrt(pow(Double(container.width), 2.0) + pow(Double(container.height), 2.0))
-            let vs: [String: [AnyObject]] = [
-                "mask.lineWidth": [
-                    length,
-                    1.0,
-                ],
-                ]
-            
-            let beganKeyTime = 0
-            let endKeyTime = 1
-            let ks: [String: [NSNumber]] = [
-                "mask.lineWidth": [beganKeyTime, endKeyTime]]
-
-            return AniDescriptor(type: "IRIS_\(appear ? "IN" : "OUT")", beganTimes: bt, durations: ds, values: vs, keyTimes: ks)
-            
-        }
+//        } else {
+//            
+//            let bt = [ // beganTime
+//                "mask.lineWidth": CFTimeInterval(b)]
+//            
+//            let ds = [ //duration
+//                "mask.lineWidth": CFTimeInterval(time)]
+//            
+//            
+//            let length = sqrt(pow(Double(container.width), 2.0) + pow(Double(container.height), 2.0))
+//            let vs: [String: [AnyObject]] = [
+//                "mask.lineWidth": [
+//                    length,
+//                    1.0,
+//                ],
+//                ]
+//            
+//            let beganKeyTime = 0
+//            let endKeyTime = 1
+//            let ks: [String: [NSNumber]] = [
+//                "mask.lineWidth": [beganKeyTime, endKeyTime]]
+//
+//            return AniDescriptor(type: "IRIS_\(appear ? "IN" : "OUT")", beganTimes: bt, durations: ds, values: vs, keyTimes: ks)
+//            
+//        }
     }
     
 }

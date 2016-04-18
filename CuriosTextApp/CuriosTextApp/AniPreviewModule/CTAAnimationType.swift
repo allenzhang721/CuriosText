@@ -114,10 +114,10 @@ enum CTAAnimationType: String {
             return [position, opacity, transform]
         case .ScaleIn, .ScaleOut:
             return [opacity, transform, mask+colors]
-        case .IrisIn:
+        case .IrisIn, .IrisOut:
             return [mask+transform, mask+fillColor]
-        case .IrisOut:
-            return [mask+lineWidth]
+//        case .IrisOut:
+//            return [mask+lineWidth]
         case .CurlIn, .CurlOut:
             return [position, opacity, transform]
         case .FadeIn, .FadeOut:

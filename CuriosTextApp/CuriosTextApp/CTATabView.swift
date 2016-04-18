@@ -64,12 +64,14 @@ class CTATabView: UIControl {
         
         let selectorLayout = CTASelectorsFlowLayout()
         configCollectionView = UICollectionView(frame: bounds, collectionViewLayout: selectorLayout)
+        configCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
         configCollectionView.backgroundColor = UIColor.whiteColor()
         configCollectionView.showsHorizontalScrollIndicator = false
         configCollectionView.showsVerticalScrollIndicator = false
         configCollectionView.registerClass(CTAConfigSliderCell.self, forCellWithReuseIdentifier: "ConfigSliderCell")
         configCollectionView.registerClass(CTAConfigAnimationCell.self, forCellWithReuseIdentifier: "ConfigAnimationCell")
         configCollectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "DefaultCell")
+//        configCollectionView.userInteractionEnabled = true
         configCollectionView.dataSource = self
         configCollectionView.delegate = self
         addSubview(configCollectionView)
