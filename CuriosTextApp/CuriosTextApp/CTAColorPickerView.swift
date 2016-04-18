@@ -447,37 +447,42 @@ class CTAColorPickerView: UIControl{
     func setSelectedColor(){
         if self.selectedColor != nil && self.canReChange{
             let selectedPixelColor = changeUIColorToPixelColor(self.selectedColor!)
-            let selectedInt32 = selectedPixelColor.toInt()
+            var selectedPureColor = self.getPureColorByColor(selectedPixelColor)
             let maxValue = self.colorSlider.maximumValue
             let minValue = self.colorSlider.minimumValue
             var sliderValue:Int = 0
             var choseX:Int = 0
             var choseY:Int = 0
-            var colorDValue:UInt = selectedInt32
+            var colorDValue:CGFloat = CGFloat.max
             let count = self.pureColorArray.count
-            var isBreak:Bool = false
             for i in 0..<count{
                 let pureColor = self.pureColorArray[i]
-                let pureUIColor = UIColor(red: pureColor.red, green: pureColor.green, blue: pureColor.blue, alpha: pureColor.alpha)
-                let grandientArray = self.getGrandientColor(pureUIColor)
-                for j in 0..<grandientArray.count{
-                    let lineColorArray = grandientArray[j]
-                    for n in 0..<lineColorArray.count{
-                        let cellColor = lineColorArray[n]
-                        let dValue = cellColor.toInt()
-                        let newDValue = dValue > selectedInt32 ? (dValue-selectedInt32) : (selectedInt32-dValue)
-                        if newDValue < colorDValue{
-                            colorDValue = newDValue
-                            choseX = n
-                            choseY = j
-                            sliderValue = i
-                        }
-                        if newDValue == 0{
-                            isBreak = true
-                            break
-                        }
+                let newDValue = self.rateInTwoColor(pureColor, twoColor: selectedPureColor)
+                if newDValue < colorDValue{
+                    colorDValue = newDValue
+                    sliderValue = i
+                }
+                if newDValue == 0{
+                    break
+                }
+            }
+            selectedPureColor = self.pureColorArray[sliderValue]
+            let pureUIColor = UIColor(red: selectedPureColor.red, green: selectedPureColor.green, blue: selectedPureColor.blue, alpha: selectedPureColor.alpha)
+            let grandientArray = self.getGrandientColor(pureUIColor)
+            colorDValue = CGFloat.max
+            var isBreak = false
+            for j in 0..<grandientArray.count{
+                let lineColorArray = grandientArray[j]
+                for n in 0..<lineColorArray.count{
+                    let cellColor = lineColorArray[n]
+                    let newDValue = self.rateInTwoColor(cellColor, twoColor: selectedPixelColor)
+                    if newDValue < colorDValue{
+                        colorDValue = newDValue
+                        choseX = n
+                        choseY = j
                     }
-                    if isBreak{
+                    if newDValue == 0{
+                        isBreak = true
                         break
                     }
                 }
@@ -485,6 +490,7 @@ class CTAColorPickerView: UIControl{
                     break
                 }
             }
+            
             let slideRate:CGFloat = CGFloat(sliderValue)/CGFloat(count)
             let changeValue = slideRate*(maxValue-minValue) + minValue
             self.colorSlider.value = changeValue
@@ -503,6 +509,66 @@ class CTAColorPickerView: UIControl{
             self.gradientArray = self.getGrandientColor(self.currentPureColor())
             self.setCellsColor()
         }
+    }
+    
+    func rateInTwoColor(oneColor:CTAPixelColor, twoColor:CTAPixelColor)->CGFloat{
+        let red1 = oneColor.red
+        let green1 = oneColor.green
+        let blue1 = oneColor.blue
+        
+        let red2 = twoColor.red
+        let green2 = twoColor.green
+        let blue2 = twoColor.blue
+        
+        return abs(red1 - red2)+abs(green1 - green2)+abs(blue1 - blue2)
+    }
+    
+    func getPureColorByColor(pixelColor:CTAPixelColor)->CTAPixelColor{
+        let red = pixelColor.red
+        let green = pixelColor.green
+        let blue = pixelColor.blue
+        var result:(CGFloat, CGFloat, CGFloat) = (0,0,0)
+        var resultColor:CTAPixelColor?
+        if red > green && red > blue{
+            if blue > green{
+                result = self.getColorNumber(red, mid: blue, min: green)
+                resultColor = CTAPixelColor(red: result.0, green: result.2, blue: result.1, alpha: pixelColor.alpha)
+            }else {
+                result = self.getColorNumber(red, mid: green, min: blue)
+                resultColor = CTAPixelColor(red: result.0, green: result.1, blue: result.2, alpha: pixelColor.alpha)
+            }
+        }else if green > red && green > blue{
+            if red > blue{
+                result = self.getColorNumber(green, mid: red, min: blue)
+                resultColor = CTAPixelColor(red: result.1, green: result.0, blue: result.2, alpha: pixelColor.alpha)
+            }else {
+                result = self.getColorNumber(green, mid: blue, min: red)
+                resultColor = CTAPixelColor(red: result.2, green: result.0, blue: result.1, alpha: pixelColor.alpha)
+            }
+        }else if blue > red && blue > green{
+            if green > red{
+                result = self.getColorNumber(blue, mid: green, min: red)
+                resultColor = CTAPixelColor(red: result.2, green: result.1, blue: result.0, alpha: pixelColor.alpha)
+            }else {
+                result = self.getColorNumber(blue, mid: red, min: green)
+                resultColor = CTAPixelColor(red: result.1, green: result.2, blue: result.0, alpha: pixelColor.alpha)
+            }
+        }else {
+            resultColor = CTAPixelColor(red: 1, green: 0, blue: 0, alpha: pixelColor.alpha)
+        }
+        return resultColor!
+    }
+    
+    func getColorNumber(max:CGFloat, mid:CGFloat, min:CGFloat)->(CGFloat, CGFloat, CGFloat){
+        let rate = 1 / max
+        let changeMax = max*rate
+        var changeMid = mid*rate
+        var changeMin = min*rate
+        if max != min{
+            changeMid = (mid-min)/(max-min)*1
+            changeMin = 0
+        }
+        return (changeMax, changeMid, changeMin)
     }
 }
 
@@ -606,14 +672,6 @@ public struct CTAPixelColor {
     
     func toInt32() -> UInt32 {
         return UInt32(alpha.toColorUInt8()) | UInt32(red.toColorUInt8()) << 8 | UInt32(green.toColorUInt8()) << 16 | UInt32(blue.toColorUInt8()) << 24
-    }
-    
-    func toInt() -> UInt{
-        //let aInt = UInt(alpha * 999)
-        let rInt = UInt(red * 999)
-        let gInt = UInt(green * 999)
-        let bInt = UInt(blue * 999)
-        return rInt*1000000 + gInt * 1000 + bInt
     }
     
     func averageWith(color: CTAPixelColor, w: CGFloat) -> CTAPixelColor {
