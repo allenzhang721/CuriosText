@@ -10,6 +10,7 @@ import UIKit
 
 class AniPreviewCanvasViewController: UIViewController {
     
+    @IBOutlet weak var fakePauseAllView: UIToolbar!
     @IBOutlet weak var fakePauseView: CTAGradientButtonView!
     var playAllInAnimaionView = (false, true)
     var canvas: AniCanvas!
@@ -64,13 +65,28 @@ class AniPreviewCanvasViewController: UIViewController {
 //            self?.aniCanvasView.stop()
         }
         
-        if playAllInAnimaionView.1 == true {
-            fakePauseView.hidden = false
-            fakePauseView.userInteractionEnabled = false
-            fakePauseView.image = CTAStyleKit.imageOfAnimationpause
-        } else {
+        fakePauseView.userInteractionEnabled = false
+        fakePauseView.image = CTAStyleKit.imageOfAnimationpause
+        
+        switch playAllInAnimaionView {
+        case (true, true):
+            fakePauseAllView.hidden = false
             fakePauseView.hidden = true
+            
+        case (true, false):
+            fakePauseAllView.hidden = false
+            fakePauseView.hidden = true
+            
+        case (false, true):
+            fakePauseAllView.hidden = true
+            fakePauseView.hidden = false
+            
+        case (false, false):
+            fakePauseAllView.hidden = true
+            fakePauseView.hidden = true
+            
         }
+
     }
     
     override func viewWillLayoutSubviews() {

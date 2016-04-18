@@ -46,8 +46,8 @@ enum CTAAnimationName: Int {
     
     static var names: [CTAAnimationName] {
         return [.None,
-                .MoveIn, .OrbitalIn, .CurlIn, .FadeIn, .ScaleIn, .IrisIn,
-                .MoveOut, .OrbitalOut, .CurlOut, .FadeOut, .ScaleOut, .IrisOut]
+                .MoveIn, .FadeIn, .ScaleIn, .IrisIn, .OrbitalIn, .CurlIn,
+                .MoveOut, .FadeOut, .ScaleOut, .IrisOut, .OrbitalOut, .CurlOut,]
     }
     
     var defaultDuration: Float {

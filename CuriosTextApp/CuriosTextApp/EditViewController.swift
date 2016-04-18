@@ -53,7 +53,7 @@ class EditViewController: UIViewController {
         addGestures()
         setup()
         
-        view.backgroundColor = CTAStyleKit.ediorBackgroundColor
+//        view.backgroundColor = CTAStyleKit.ediorBackgroundColor
         
         let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
         

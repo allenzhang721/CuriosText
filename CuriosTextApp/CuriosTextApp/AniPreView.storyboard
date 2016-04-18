@@ -60,6 +60,20 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NYo-PQ-q4A">
+                                <rect key="frame" x="138" y="0.0" width="44" height="44"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="UwG-6l-BCW"/>
+                                    <constraint firstAttribute="height" constant="44" id="ZZA-Sk-sV5"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem systemItem="pause" id="gag-qT-Fw9">
+                                        <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </barButtonItem>
+                                </items>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -70,8 +84,10 @@
                             <constraint firstItem="wnf-xM-VcX" firstAttribute="bottom" secondItem="etC-9e-ZHG" secondAttribute="top" id="8Bh-nV-1KY"/>
                             <constraint firstItem="kv8-4k-bsN" firstAttribute="top" secondItem="B5d-cm-M0J" secondAttribute="top" id="8D4-PO-wza"/>
                             <constraint firstItem="kv8-4k-bsN" firstAttribute="leading" secondItem="B5d-cm-M0J" secondAttribute="leading" id="8IH-U3-nkJ"/>
+                            <constraint firstItem="NYo-PQ-q4A" firstAttribute="centerX" secondItem="B5d-cm-M0J" secondAttribute="centerX" id="C0N-6S-Qy3"/>
                             <constraint firstAttribute="trailing" secondItem="kv8-4k-bsN" secondAttribute="trailing" id="Cys-6j-taC"/>
                             <constraint firstItem="OKU-k1-A1k" firstAttribute="leading" secondItem="B5d-cm-M0J" secondAttribute="leadingMargin" id="GDa-N3-d3v"/>
+                            <constraint firstItem="NYo-PQ-q4A" firstAttribute="top" secondItem="B5d-cm-M0J" secondAttribute="top" id="POX-Ay-xTS"/>
                             <constraint firstItem="kv8-4k-bsN" firstAttribute="trailing" secondItem="wnf-xM-VcX" secondAttribute="trailing" id="jcq-a6-b6S"/>
                             <constraint firstItem="OKU-k1-A1k" firstAttribute="leading" secondItem="B5d-cm-M0J" secondAttribute="leading" constant="16" id="tmN-aJ-4vJ"/>
                             <constraint firstItem="etC-9e-ZHG" firstAttribute="top" secondItem="OKU-k1-A1k" secondAttribute="bottom" constant="93" id="zvk-lE-a95"/>
@@ -89,6 +105,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="fakePauseAllView" destination="NYo-PQ-q4A" id="Avu-Zq-axl"/>
                         <outlet property="fakePauseView" destination="OKU-k1-A1k" id="8To-5C-hCA"/>
                     </connections>
                 </viewController>

@@ -102,6 +102,7 @@ extension CTAPublishViewController {
     func setupStyles() {
         aniCanvasView.backgroundColor = CTAStyleKit.commonBackgroundColor
         view.backgroundColor = CTAStyleKit.ediorBackgroundColor
+        publishButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
     }
     
     override func viewWillLayoutSubviews() {
