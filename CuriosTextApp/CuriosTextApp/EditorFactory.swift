@@ -299,7 +299,7 @@ extension EditorFactory {
         targetID: String,
         animationName: CTAAnimationName) -> CTAAnimation {
         
-        let ani = CTAAnimation(targetID: targetID, animationName: animationName, animationConfig: CTAAnimationConfig.defaultConfigWithDuration(animationName.defaultDuration))
+        let ani = CTAAnimation(targetID: targetID, animationName: animationName.rawValue, animationConfig: CTAAnimationConfig.defaultConfigWithDuration(animationName.defaultDuration))
         
         return ani
     }
@@ -309,7 +309,7 @@ extension EditorFactory {
         targetID: String,
         index: Int) -> CTAAnimation {
             
-            let ani = CTAAnimation(targetID: targetID, animationName: (index % 2 == 0) ? .MoveIn : .MoveOut)
+            let ani = CTAAnimation(targetID: targetID, animationName: (index % 2 == 0) ? CTAAnimationName.MoveIn.rawValue : CTAAnimationName.MoveOut.rawValue)
             
             return ani
     }

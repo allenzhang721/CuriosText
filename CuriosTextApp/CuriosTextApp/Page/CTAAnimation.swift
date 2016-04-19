@@ -12,13 +12,22 @@ class CTAAnimation: NSObject, NSCoding, CTAAnimationBinder {
 
     var iD: String = CTAIDGenerator.fileID()
     var targetiD: String = ""
-    var name: CTAAnimationName = .MoveIn
+    var aniName: String
     var config: CTAAnimationConfig = CTAAnimationConfig.defaultConfig
+    var name: CTAAnimationName {
+        get {
+            return CTAAnimationName(rawValue: aniName) ?? .MoveIn
+        }
+        
+        set {
+            aniName = newValue.rawValue
+        }
+    }
     
-    init(targetID: String, animationName name: CTAAnimationName, animationConfig config: CTAAnimationConfig = CTAAnimationConfig.defaultConfig) {
+    init(targetID: String, animationName name: String, animationConfig config: CTAAnimationConfig = CTAAnimationConfig.defaultConfig) {
         
         self.targetiD = targetID
-        self.name = name
+        self.aniName = name
         self.config = config
         super.init()
     }
@@ -33,15 +42,21 @@ class CTAAnimation: NSObject, NSCoding, CTAAnimationBinder {
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(iD, forKey: SerialKeys.iD)
         aCoder.encodeObject(targetiD, forKey: SerialKeys.targetID)
-        aCoder.encodeInteger(name.rawValue, forKey: SerialKeys.name)
+        aCoder.encodeObject(aniName, forKey: SerialKeys.name)
         aCoder.encodeObject(config, forKey: SerialKeys.config)
     }
     
      required init?(coder aDecoder: NSCoder) {
         self.iD = aDecoder.decodeObjectForKey(SerialKeys.iD) as! String
         self.targetiD = aDecoder.decodeObjectForKey(SerialKeys.targetID) as! String
-        let nameRawValue = aDecoder.decodeIntegerForKey(SerialKeys.name)
-        self.name = CTAAnimationName(rawValue: nameRawValue)!
+        if let nameRawValue = aDecoder.decodeObjectForKey(SerialKeys.name) as? String {
+           self.aniName = nameRawValue
+        } else {
+            let nameRawValue = aDecoder.decodeIntegerForKey(SerialKeys.name)
+            
+            self.aniName = CTAAnimationName.nameByInt(nameRawValue)
+        }
+        
         self.config = aDecoder.decodeObjectForKey(SerialKeys.config) as! CTAAnimationConfig
         
     }

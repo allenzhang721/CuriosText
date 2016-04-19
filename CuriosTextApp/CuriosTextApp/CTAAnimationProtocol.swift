@@ -10,17 +10,52 @@ import Foundation
 import UIKit
 import pop
 
-enum CTAAnimationName: Int {
+enum CTAAnimationName: String {
     
-    case None
-    case MoveIn //FlyIn
-    case MoveOut //FlyOut
-    case ScaleIn
-    case ScaleOut
-    case IrisIn, IrisOut
-    case CurlIn, CurlOut
-    case FadeIn, FadeOut
-    case OrbitalIn, OrbitalOut
+    case None = "NONE"
+    case MoveIn = "MOVE_IN" //FlyIn
+    case MoveOut = "MOVE_OUT"//FlyOut
+    case ScaleIn = "SCALE_IN"
+    case ScaleOut = "SCALE_OUT"
+    case IrisIn = "IRIS_IN"
+    case IrisOut = "IRIS_OUT"
+    case CurlIn = "CURL_IN"
+    case CurlOut = "CURL_OUT"
+    case FadeIn = "FADE_IN"
+    case FadeOut = "FADE_OUT"
+    case OrbitalIn = "ORBITAL_IN"
+    case OrbitalOut = "ORBITAL_OUT"
+    
+    static func nameByInt(i: Int) -> String {
+        switch i {
+        case 1:
+            return CTAAnimationName.MoveIn.rawValue
+        case 2:
+            return CTAAnimationName.MoveOut.rawValue
+        case 3:
+            return CTAAnimationName.ScaleIn.rawValue
+        case 4:
+            return CTAAnimationName.ScaleOut.rawValue
+        case 5:
+            return CTAAnimationName.IrisIn.rawValue
+        case 6:
+            return CTAAnimationName.IrisOut.rawValue
+        case 7:
+            return CTAAnimationName.CurlIn.rawValue
+        case 8:
+            return CTAAnimationName.CurlOut.rawValue
+        case 9:
+            return CTAAnimationName.FadeIn.rawValue
+        case 10:
+            return CTAAnimationName.FadeOut.rawValue
+        case 11:
+            return CTAAnimationName.OrbitalIn.rawValue
+        case 12:
+            return CTAAnimationName.OrbitalOut.rawValue
+        default:
+            return i % 2 == 0 ? CTAAnimationName.MoveOut.rawValue : CTAAnimationName.MoveIn.rawValue
+        }
+    }
     
     func shouldVisalbeBeforeBegan() -> Bool {
         switch self {

@@ -23,6 +23,7 @@ class CTAConfigAnimationCell: CTAConfigCell {
     var collectionView: UICollectionView!
     weak var dataSource: CTAConfigANimationCellDataSource?
     weak var delegate: CTAConfigAnimationCellDelegate?
+    private var selectedTaping = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -81,6 +82,7 @@ extension CTAConfigAnimationCell: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         if let att = collectionView.layoutAttributesForItemAtIndexPath(indexPath) {
+            selectedTaping = true
             let center = att.center
             let offset = CGPoint(x: center.x - collectionView.bounds.width / 2.0, y: 0)
             collectionView.setContentOffset(offset, animated: true)
@@ -93,9 +95,10 @@ extension CTAConfigAnimationCell: LineFlowLayoutDelegate {
     
     func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
 
-//        if collectionView.dragging || collectionView.decelerating || collectionView.tracking {
+        if collectionView.dragging || collectionView.decelerating || collectionView.tracking || selectedTaping {
+            selectedTaping = false
             delegate?.configAnimationCell(self, DidSelectedIndexPath: indexPath, oldIndexPath: oldIndexPath)
-//        }
+        }
         
     }
 }
