@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        registerFonts()
         registerLocalFonts()
         familiesDisplayNames()
+        familiesFixRatio()
         ImageCache.defaultCache.maxMemoryCost = 100 * 1024 * 1024 // Allen: 100 MB
         // Override point for customization after application launch.
         #if DEBUG
@@ -63,6 +64,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let fileNames = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)) as! [String: String]
         
         CTAFontsManager.familiyDisplayNameDic = fileNames
+    }
+    
+    func familiesFixRatio() {
+        
+        let fontsName = "Fonts"
+        let path = NSBundle.mainBundle().bundleURL
+        let fontsDirUrl = path.URLByAppendingPathComponent(fontsName)
+        let jsonName = "familyFixRatios.json"
+        let jsonFileURL = fontsDirUrl.URLByAppendingPathComponent(jsonName)
+        let data = NSData(contentsOfURL: jsonFileURL)!
+        let fixRatio = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)) as! [String: [String: CGFloat]]
+        
+        CTAFontsManager.familiyFixRectRatio = fixRatio
+        
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {

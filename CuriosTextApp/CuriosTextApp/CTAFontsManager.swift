@@ -14,6 +14,7 @@ class CTAFontsManager {
     static var indexPaths = [CTAIndexPath]()
     private static var validFamilies = [String]()
     static var familiyDisplayNameDic = [String: String]()
+    static var familiyFixRectRatio = [String: [String: CGFloat]]()  // [familyName: [width: 0.1, height: 0.1]]
     
 //   static let families: [String] = {
 //    
