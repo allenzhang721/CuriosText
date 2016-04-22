@@ -18,10 +18,12 @@ protocol CTASelectorAnimationCellDelegate: class {
     func animationCell(cell: CTASelectorAnimationCell, didChangedToAniamtion ani: CTAAnimationName)
     func animationCell(cell: CTASelectorAnimationCell, durationDidChanged duration: CGFloat)
     func animationCell(cell: CTASelectorAnimationCell, delayDidChanged delay: CGFloat)
+    func animationCellAnimationPlayWillBegan(cell: CTASelectorAnimationCell)
 }
 
 class CTASelectorAnimationCell: CTASelectorCell {
 
+    var playView: CTAGradientButtonView!
     var tabView: CTATabView!
     weak var delegate: CTASelectorAnimationCellDelegate?
     var animation: CTAAnimationBinder? {
@@ -52,6 +54,21 @@ class CTASelectorAnimationCell: CTASelectorCell {
         tabView.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor).active = true
         tabView.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor).active = true
         tabView.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor).active = true
+        
+        // play View
+        playView = CTAGradientButtonView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+        playView.didClickHandler = { [weak self] in
+            self?.delegate?.animationCellAnimationPlayWillBegan(self!)
+        }
+        playView.image = CTAStyleKit.imageOfAnimationplay
+        contentView.addSubview(playView)
+        playView.translatesAutoresizingMaskIntoConstraints = false
+        playView.topAnchor.constraintEqualToAnchor(contentView.topAnchor).active = true
+        playView.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor).active = true
+        playView.widthAnchor.constraintEqualToConstant(44).active = true
+        playView.heightAnchor.constraintEqualToConstant(44).active = true
+        
+        
     }
     
     override func willBeDisplayed() {
@@ -68,17 +85,17 @@ extension CTASelectorAnimationCell: CTATabViewDataSource {
     
     func numberOfTabItemsInTabView(view: CTATabView) -> Int {
         
-        let id = animation?.targetiD
-        debug_print("animation targetID \(id != nil ? id!.substringFromIndex(id!.endIndex.advancedBy(-4)) : "None") will load and have \(animation != nil ? 3 : 1) tab", context: animationChangedContext)
+//        let id = animation?.targetiD
         return animation != nil ? 3 : 1
     }
     
     func beganOfIndexPath(view: CTATabView) -> NSIndexPath {
         
         if let animation = animation, let index = CTAAnimationName.names.indexOf(animation.animationName) {
-            debug_print(animation.animationName.description, context: aniContext)
+            playView.alpha = 1.0
             return NSIndexPath(forItem: index, inSection: 0)
         } else {
+            playView.alpha = 0.0
             return NSIndexPath(forItem: 0, inSection: 0)
         }
     }
@@ -118,6 +135,9 @@ extension CTASelectorAnimationCell: CTATabViewDelegate {
                     self?.delegate?.animationCell(self!, WillAppendAnimation: CTAAnimationName.names[i]) {
                         debug_print("animation after add will reload", context: animationChangedContext)
                         self?.tabView.tabCollectionView.reloadSections(NSIndexSet(index: 0))
+                        UIView.animateWithDuration(0.3, animations: { 
+                            self?.playView.alpha = 1.0
+                        })
                     }
                     
                 })
@@ -129,10 +149,11 @@ extension CTASelectorAnimationCell: CTATabViewDelegate {
                         
                         debug_print("animation after delete will reload", context: animationChangedContext)
                         self?.tabView.tabCollectionView.reloadSections(NSIndexSet(index: 0))
+                        UIView.animateWithDuration(0.3, animations: {
+                            self?.playView.alpha = 0.0
+                        })
                     }
                 })
-                
-//                tabView.reloadData()
                 
             case (let i, let j) where i > 0 && j > 0:
                 dispatch_async(dispatch_get_main_queue(), { [weak self] in

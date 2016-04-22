@@ -23,7 +23,7 @@ class EditViewController: UIViewController {
         var oldScale: CGFloat = 0
     }
     
-    @IBOutlet weak var addView: CTAEditAddView!
+    @IBOutlet weak var addView: CTAGradientButtonView!
     private var tabViewController: CTATabViewController!
     private var canvasViewController: CTACanvasViewController!
     private var selectorViewController: CTASelectorsViewController!
@@ -53,7 +53,7 @@ class EditViewController: UIViewController {
         addGestures()
         setup()
         
-        view.backgroundColor = CTAStyleKit.ediorBackgroundColor
+//        view.backgroundColor = CTAStyleKit.ediorBackgroundColor
         
         let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
         
@@ -169,10 +169,62 @@ extension EditViewController {
     @IBAction func publish(sender: AnyObject) {
         showPublishViewController()
     }
+    @IBAction func previewAll(sender: AnyObject) {
+        
+        beganPreviewForAll(true)
+        
+    }
+    
+    @IBAction func preview(sender: AnyObject?) {
+        
+        beganPreviewForAll(false)
+        
+    }
 }
 
 // MARK: - Logics
 extension EditViewController {
+    
+    func beganPreviewForAll(playAll: Bool) {
+        
+        let animationID: String?
+        
+        if playAll {
+            guard page.animationBinders.count > 0 else {
+                return
+            }
+            animationID = page.animationBinders.first!.iD
+        } else {
+            guard let animation = animation else {
+                return
+            }
+            animationID = animation.iD
+        }
+        
+        guard let aAnimationID = animationID else {return}
+        
+        
+        guard let preController = UIStoryboard(name: "AniPreView", bundle: nil).instantiateInitialViewController() as? AniPreviewCanvasViewController else { return }
+        preController.playAllInAnimaionView = (playAll, selectorViewController.currentType == .Animation)
+        let preCanvas = playAll ? page.toAniCanvas() : page.toAniCanvas().aniCanvasByAnimationWith(aAnimationID)
+        preController.canvas = preCanvas
+        let retriver = {[weak self] (name: String,  handler: (String, UIImage?) -> ()) in
+            if let sf = self {
+                let data = sf.document.resourceBy(name)
+                let image = data == nil ? nil : UIImage(data: data!)
+                handler(name, image)
+            }
+        }
+        preController.imageRetriver = retriver
+        let v = view.snapshotViewAfterScreenUpdates(true)
+        preController.view.insertSubview(v, atIndex: 0)
+        
+        let center = canvasViewController.view.convertPoint(canvasViewController.view.center, toView: view)
+        preController.targetCenter = center
+        
+        presentViewController(preController, animated: false) {
+        }
+    }
     
     func selectBottomContainer() {
         if page.containers.count > 0 {
@@ -234,8 +286,6 @@ extension EditViewController {
         
         page.append(textContainer)
         let count = page.containers.count
-        
-        page.containers.forEach{debug_print($0.type, context: defaultContext)}
         
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
             if let strongSelf = self {
@@ -348,10 +398,8 @@ extension EditViewController {
                 
                 
             })
-            debug_print("double tap TEXT ")
             
         case .Image:
-            debug_print("double tap Img")
             let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
             
             cameraVC.didSelectedImageHandler = {[weak self] image in
@@ -383,10 +431,17 @@ extension EditViewController {
         
         
         let cleanPage = page.cleanEmptyContainers()
-        publishViewController.page = cleanPage
-//        publishViewController.publishID = document.documentName
-        publishViewController.baseURL = document.imagePath
-        publishViewController.imageAccess = document.accessImage
+        
+        publishViewController.canvas = cleanPage.toAniCanvas()
+        let retriver = {[weak self] (name: String,  handler: (String, UIImage?) -> ()) in
+            if let sf = self {
+                let data = sf.document.resourceBy(name)
+                let image = data == nil ? nil : UIImage(data: data!)
+                handler(name, image)
+            }
+            
+        }
+        publishViewController.imageRetriver = retriver
         publishViewController.publishDismiss = { [weak self] in
             
             guard let strongSelf = self else {
@@ -432,8 +487,6 @@ extension EditViewController {
                                 
                                 return
                             }
-                            
-                            debug_print("upload = \(success)\n publishID = \(publishID)", context: previewConttext)
                             
                             let publishIconURL = publishID + "/" + publishName
                             
@@ -633,6 +686,10 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
 // MARK: - CTASelectorsViewController
 extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorViewControllerDelegate {
     
+    func animationWillPlay() {
+        preview(nil)
+    }
+    
     // MARK: - DataSource
     func selectorsViewControllerContainer(viewcontroller: CTASelectorsViewController) -> ContainerVMProtocol? {
         return selectedContainer
@@ -640,7 +697,6 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     
     func selectorsViewControllerAnimation(ViewController: CTASelectorsViewController) -> CTAAnimationBinder? {
         
-        debug_print("animation= \(animation) load", context: animationChangedContext)
         return animation
     }
     
@@ -667,8 +723,6 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             let container = selectedContainer else {
             return
         }
-        
-        print("Scale did Changed = \(scale)")
         
         let canvasSize = page.size
         container.updateWithScale(
@@ -703,8 +757,6 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             let container = selectedContainer as? TextContainerVMProtocol else {
             return
         }
-        
-        debug_print("font Did Changed", context: fdContext)
         
         let canvasSize = canvasViewController.view.bounds.size
         container.updateWithFontFamily(
@@ -784,7 +836,6 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             
             if let animation = strongSelf.animation, let index = (strongSelf.page.animationBinders.indexOf {$0.iD == animation.iD}) {
                 let id = animation.targetiD
-                debug_print("animation targetID = \(!id.isEmpty ? id.substringFromIndex(id.endIndex.advancedBy(-4)) : "None") will delete index \(index)", context: animationChangedContext)
                 strongSelf.page.removeAnimationAtIndex(index) {
                     completedBlock?()
                 }
@@ -800,12 +851,11 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             if let container = strongSelf.selectedContainer {
                 
                 let a = EditorFactory.generateAnimationFor(container.iD, animationName: a)
-                debug_print("animation will add", context: animationChangedContext)
+            
                 strongSelf.page.appendAnimation(a) {
-                    debug_print("animation add completed", context: animationChangedContext)
+                
                     completedBlock?()
                 }
-                
             }
         }
     }

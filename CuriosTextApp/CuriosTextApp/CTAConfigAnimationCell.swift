@@ -23,6 +23,7 @@ class CTAConfigAnimationCell: CTAConfigCell {
     var collectionView: UICollectionView!
     weak var dataSource: CTAConfigANimationCellDataSource?
     weak var delegate: CTAConfigAnimationCellDelegate?
+    private var selectedTaping = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,7 +43,7 @@ class CTAConfigAnimationCell: CTAConfigCell {
         lineLayout.scrollDirection = .Horizontal
         collectionView = UICollectionView(frame: bounds, collectionViewLayout: lineLayout)
         collectionView.dataSource = self
-//        collectionView.delegate = self
+        collectionView.delegate = self
         collectionView.registerClass(CTAAnimationNameCell.self, forCellWithReuseIdentifier: "AnimatoinCell")
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
@@ -78,19 +79,24 @@ extension CTAConfigAnimationCell: UICollectionViewDataSource {
 
 extension CTAConfigAnimationCell: UICollectionViewDelegate {
     
-//    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-//        
-//        if let acenter = collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(indexPath)?.center {
-//            collectionView.setContentOffset(CGPoint(x: acenter.x - collectionView.bounds.width / 2.0, y: 0), animated: true)
-//        }
-//    }
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        if let att = collectionView.layoutAttributesForItemAtIndexPath(indexPath) {
+            selectedTaping = true
+            let center = att.center
+            let offset = CGPoint(x: center.x - collectionView.bounds.width / 2.0, y: 0)
+            collectionView.setContentOffset(offset, animated: true)
+//            delegate?.tabViewController(self, didChangedToIndexPath: indexPath, oldIndexPath: nil)
+        }
+    }
 }
 
 extension CTAConfigAnimationCell: LineFlowLayoutDelegate {
     
     func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
 
-        if collectionView.dragging || collectionView.decelerating || collectionView.tracking {
+        if collectionView.dragging || collectionView.decelerating || collectionView.tracking || selectedTaping {
+            selectedTaping = false
             delegate?.configAnimationCell(self, DidSelectedIndexPath: indexPath, oldIndexPath: oldIndexPath)
         }
         

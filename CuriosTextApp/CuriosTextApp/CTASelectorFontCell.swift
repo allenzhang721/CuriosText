@@ -18,14 +18,15 @@ final class CTASelectorFontCell: CTASelectorCell {
     }
     
     private func setup() {
-        view = CTAPickerView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)), showCount: 2)
+        view = CTAPickerView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width - 40, height: 88)), showCount: 2)
+        view.collectionView.clipsToBounds = false
         view.backgroundColor = UIColor.whiteColor()
         contentView.addSubview(view)
         view.backgroundColor = CTAStyleKit.intoDreams1
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
+        view.leadingAnchor.constraintEqualToAnchor(leadingAnchor, constant: 20).active = true
         view.topAnchor.constraintEqualToAnchor(topAnchor).active = true
-        view.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
+        view.trailingAnchor.constraintEqualToAnchor(trailingAnchor, constant: -20).active = true
         view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
         
         view.dataSource = self
@@ -97,11 +98,24 @@ extension CTASelectorFontCell: CTAPickerViewDataSource {
         if let itemCell = itemCell as? CTAVerticalItemFontsCollectionViewCell {
             let res = CTAFontsManager.familyAndFontNameWith(NSIndexPath(forItem: index, inSection: section))
             
-            guard let family = res.0, font = res.1 else {
+            guard let family = res.0, fontName = res.1, let font = UIFont(name: fontName, size: 17) else {
                 return
             }
+            
+            if let displayFamilyName = CTAFontsManager.customFamilyDisplayNameBy(family) {
+            
+//            if let displayFamilyName = CTFontCopyLocalizedName(font, kCTFontFamilyNameKey, nil) {
+            
+//                let n = (displayFamilyName as NSString).stringByReplacingOccurrencesOfString("（非商用）", withString: "").stringByReplacingOccurrencesOfString("G0v1", withString: "").stringByReplacingOccurrencesOfString("(Noncommercial)", withString: "")
+                
+//                let n = CTAFontsManager.customFamilyDisplayNameBy(family) ?? family
+                
+                itemCell.view.text = displayFamilyName
+            } else {
                 itemCell.view.text = family
-                itemCell.view.font = UIFont(name: font, size: 17)
+            }
+            
+                itemCell.view.font = font
         }
     }
 }

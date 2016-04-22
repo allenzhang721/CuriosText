@@ -84,7 +84,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
-        backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
+        backButton.addTarget(self, action: #selector(CTASettingViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
         
         self.scrollView = UIScrollView.init(frame: CGRect.init(x: 0, y: 44, width: bouns.width, height: bouns.height-44))
@@ -95,7 +95,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.cropImageCircle(self.userIconImage)
         self.scrollView.addSubview(self.userIconImage)
         self.userIconImage.userInteractionEnabled = true
-        let iconTap = UITapGestureRecognizer(target: self, action: "userIconClick:")
+        let iconTap = UITapGestureRecognizer(target: self, action: #selector(CTASettingViewController.userIconClick(_:)))
         self.userIconImage.addGestureRecognizer(iconTap)
         
         let imgFrame = self.userIconImage.frame
@@ -123,7 +123,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         textLine.image = UIImage(named: "textinput-line")
         self.scrollView.addSubview(textLine)
         self.userNickNameLabel.userInteractionEnabled = true
-        let nickNameTap = UITapGestureRecognizer(target: self, action: "userNickNameClick:")
+        let nickNameTap = UITapGestureRecognizer(target: self, action: #selector(CTASettingViewController.userNickNameClick(_:)))
         self.userNickNameLabel.addGestureRecognizer(nickNameTap)
         
         self.userSexLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y+50, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
@@ -144,7 +144,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         textLine.image = UIImage(named: "textinput-line")
         self.scrollView.addSubview(textLine)
         self.userSexLabel.userInteractionEnabled = true
-        let userSexTap = UITapGestureRecognizer(target: self, action: "userSexClick:")
+        let userSexTap = UITapGestureRecognizer(target: self, action: #selector(CTASettingViewController.userSexClick(_:)))
         self.userSexLabel.addGestureRecognizer(userSexTap)
         
         self.userRegionLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+50, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
@@ -165,7 +165,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
 //        textLine.image = UIImage(named: "textinput-line")
 //        self.scrollView.addSubview(textLine)
         self.userRegionLabel.userInteractionEnabled = true
-        let userRegionTap = UITapGestureRecognizer(target: self, action: "userRegionClick:")
+        let userRegionTap = UITapGestureRecognizer(target: self, action: #selector(CTASettingViewController.userRegionClick(_:)))
         self.userRegionLabel.addGestureRecognizer(userRegionTap)
         self.userRegionLabel.hidden = true
         
@@ -188,7 +188,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.descLineImg.image = UIImage(named: "textinput-line")
         self.scrollView.addSubview(self.descLineImg)
         self.userDescLabel.userInteractionEnabled = true
-        let userDescTap = UITapGestureRecognizer(target: self, action: "userDescClick:")
+        let userDescTap = UITapGestureRecognizer(target: self, action: #selector(CTASettingViewController.userDescClick(_:)))
         self.userDescLabel.addGestureRecognizer(userDescTap)
         
         self.logoutButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: self.descLineImg.frame.origin.y+21, width: 40, height: 28))
@@ -198,7 +198,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.logoutButton.titleLabel?.font = UIFont.systemFontOfSize(20)
         self.logoutButton.sizeToFit()
         self.logoutButton.frame.origin.x = (bouns.width - self.logoutButton.frame.width)/2
-        self.logoutButton.addTarget(self, action: "logoutButtonClick:", forControlEvents: .TouchUpInside)
+        self.logoutButton.addTarget(self, action: #selector(CTASettingViewController.logoutButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.scrollView.addSubview(self.logoutButton)
     }
     

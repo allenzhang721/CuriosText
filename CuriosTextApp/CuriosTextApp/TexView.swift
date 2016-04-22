@@ -20,5 +20,4 @@ class TextView: UILabel, TextElement {
         attributedText?.drawInRect(CGRect(origin: rect.origin, size: CGSize(width: rect.size.width - insets.x * 2, height: rect.size.height - insets.y * 2)))
         CGContextRestoreGState(context)
     }
-
 }

@@ -89,7 +89,7 @@ extension CTACanvasViewController {
     func setupViews() {
         view.backgroundColor = CTAStyleKit.ediorBackgroundColor
         
-        let canvasLayout = CanvasLayout()
+        let canvasLayout = EditCanvasLayout()
         let defaultSide: CGFloat = 414.0
         collectionView = UICollectionView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: defaultSide, height: defaultSide)), collectionViewLayout: canvasLayout)
         scale = min(view.bounds.width / defaultSide, view.bounds.height / defaultSide)

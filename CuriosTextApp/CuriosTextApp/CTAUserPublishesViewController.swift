@@ -78,7 +78,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
             self.isLoginUser = false
         }
         if self.isLoginUser && !self.isAddOber{
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadViewHandler:", name: "publishEditFile", object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CTAUserPublishesViewController.reloadViewHandler(_:)), name: "publishEditFile", object: nil)
             self.isAddOber = true
         }
     }
@@ -176,7 +176,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     
         let freshIcon1:UIImage = UIImage.init(named: "fresh-icon-1")!
         
-        self.headerFresh = MJRefreshGifHeader.init(refreshingTarget: self, refreshingAction: "loadFirstData")
+        self.headerFresh = MJRefreshGifHeader.init(refreshingTarget: self, refreshingAction: #selector(CTAUserPublishesViewController.loadFirstData))
         self.headerFresh.setImages([freshIcon1], forState: .Idle)
         self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Pulling)
         self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Refreshing)
@@ -185,7 +185,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.headerFresh.stateLabel?.hidden = true
         self.collectionView.mj_header = self.headerFresh
         
-        self.footerFresh = MJRefreshAutoGifFooter.init(refreshingTarget: self, refreshingAction: "loadLastData")
+        self.footerFresh = MJRefreshAutoGifFooter.init(refreshingTarget: self, refreshingAction: #selector(CTAUserPublishesViewController.loadLastData))
         self.footerFresh.refreshingTitleHidden = true
         self.footerFresh.setTitle("", forState: .Idle)
         self.footerFresh.setTitle("", forState: .NoMoreData)
@@ -237,11 +237,11 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.view.addSubview(self.viewToolBar)
         self.viewToolBar.backgroundColor = UIColor.init(red: 1, green: 1, blue: 1, alpha: 0.0)
         
-        let tap = UITapGestureRecognizer(target: self, action: "userHeaderClick:")
+        let tap = UITapGestureRecognizer(target: self, action: #selector(CTAUserPublishesViewController.userHeaderClick(_:)))
         self.userHeaderView.addGestureRecognizer(tap)
-        self.settingButton.addTarget(self, action: "settingButtonClick:", forControlEvents: .TouchUpInside)
-        self.homeViewButton.addTarget(self, action: "homeViewButtonClick:", forControlEvents: .TouchUpInside)
-        self.backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
+        self.settingButton.addTarget(self, action: #selector(CTAUserPublishesViewController.settingButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.homeViewButton.addTarget(self, action: #selector(CTAUserPublishesViewController.homeViewButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.backButton.addTarget(self, action: #selector(CTAUserPublishesViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
         
     }
     
@@ -340,11 +340,20 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                     var isChange:Bool = false
                     if modelArray!.count > 0{
                         if self.publishModelArray.count > 0{
-                            for var i=0; i<modelArray!.count; i++ {
+                            for i in 0..<modelArray!.count{
                                 let newmodel = modelArray![i] as! CTAPublishModel
-                                if !self.checkPublishModelIsHave(newmodel.publishID){
+                                if !self.checkPublishModelIsHave(newmodel.publishID, publishArray: self.publishModelArray){
                                     isChange = true
                                     break
+                                }
+                            }
+                            if !isChange{
+                                for j in 0..<self.publishModelArray.count{
+                                    let oldModel = self.publishModelArray[j]
+                                    if !self.checkPublishModelIsHave(oldModel.publishID, publishArray: modelArray as! Array<CTAPublishModel>){
+                                        isChange = true
+                                        break
+                                    }
                                 }
                             }
                         }else {
@@ -365,9 +374,9 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     }
     
     func loadMoreModelArray(modelArray:Array<AnyObject>){
-        for var i=0; i < modelArray.count; i++ {
+        for i in 0..<modelArray.count{
             let publishModel = modelArray[i] as! CTAPublishModel
-            if !self.checkPublishModelIsHave(publishModel.publishID){
+            if !self.checkPublishModelIsHave(publishModel.publishID, publishArray: self.publishModelArray){
                 self.publishModelArray.append(publishModel)
             }
         }
@@ -395,9 +404,9 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         }
     }
     
-    func checkPublishModelIsHave(publishID:String) -> Bool{
-        for var i=0; i<self.publishModelArray.count; i++ {
-            let oldPublihModel = self.publishModelArray[i]
+    func checkPublishModelIsHave(publishID:String, publishArray:Array<CTAPublishModel>) -> Bool{
+        for i in 0..<publishArray.count{
+            let oldPublihModel = publishArray[i]
             if oldPublihModel.publishID == publishID{
                 return true
             }
@@ -406,7 +415,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     }
     
     func removePublishModelByID(publishID:String) -> Bool{
-        for var i=0; i<self.publishModelArray.count; i++ {
+        for i in 0..<self.publishModelArray.count{
             let oldPublihModel = self.publishModelArray[i]
             if oldPublihModel.publishID == publishID {
                 self.publishModelArray.removeAtIndex(i)
@@ -531,7 +540,7 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
     func setPublishData(selectedPublishID:String, publishModelArray:Array<CTAPublishModel>, selectedCellCenter:CGPoint){
         var isChange:Bool = false
         if publishModelArray.count == self.publishModelArray.count {
-            for var i=0; i<publishModelArray.count; i++ {
+            for i in 0..<publishModelArray.count{
                 let oldModel = self.publishModelArray[i]
                 let newModel = publishModelArray[i]
                 if oldModel.publishID != newModel.publishID {
@@ -555,7 +564,7 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
         self.collectionView.frame.origin.y = self.viewToolBar.frame.height
         self.collectionView.frame.size.height = self.view.frame.height - self.viewToolBar.frame.height
         var currentIndex:Int = 0
-        for var i=0; i < self.publishModelArray.count; i++ {
+        for i in 0..<self.publishModelArray.count{
             let model = self.publishModelArray[i]
             if model.publishID == self.selectedPublishID {
                 currentIndex = i
@@ -652,7 +661,7 @@ extension CTAUserPublishesViewController: UIViewControllerAnimatedTransitioning{
     func getAnimationView() -> UIView{
         let visibleCells = self.collectionView.visibleCells();
         let animationView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
-        for var i=0; i < visibleCells.count; i++ {
+        for i in 0..<visibleCells.count{
             let cell = visibleCells[i] as! CTAPublishesCell
             let cellImage = cell.cellImageView.snapshotViewAfterScreenUpdates(false)
             let cellUIView = CTAPublishTransitionCell.init(frame: cell.frame)
@@ -679,7 +688,7 @@ extension CTAUserPublishesViewController: UIViewControllerAnimatedTransitioning{
                 let rateH = fullSize.height / self.selectedRect!.height
                 let topRate = self.getFullVerSpace()/(self.getCellSpace()+self.selectedRect!.height)
                 let subViews = animationView.subviews
-                for var i = 0 ; i < subViews.count; i++ {
+                for i in 0..<subViews.count{
                     let cellView = subViews[i] as! CTAPublishTransitionCell
                     if cellView.publishID == self.selectedPublishID{
                         cellView.center = CGPoint.init(x: fullx, y: fully)
@@ -701,7 +710,7 @@ extension CTAUserPublishesViewController: UIViewControllerAnimatedTransitioning{
     
     func clearAnimationView(animationView:UIView) {
         let subViews = animationView.subviews
-        for var i = 0 ; i < subViews.count; i++ {
+        for i in 0..<subViews.count{
             var cellView:UIView? = subViews[i]
             cellView!.removeFromSuperview()
             cellView = nil;

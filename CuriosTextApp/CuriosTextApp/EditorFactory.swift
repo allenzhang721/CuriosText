@@ -38,9 +38,9 @@ class EditorFactory {
 //        }
 //    }
     
-    class func canvasBy(page: CTAPage) -> CanvasView {
+    class func canvasBy(page: CTAPage) -> EditCanvasView {
         
-        let canvasView = CanvasView(frame: CGRect(x: 0, y: 0, width: page.width, height: page.height))
+        let canvasView = EditCanvasView(frame: CGRect(x: 0, y: 0, width: page.width, height: page.height))
         let mask = CAShapeLayer()
         mask.path = UIBezierPath(rect: canvasView.bounds).CGPath
         canvasView.layer.mask = mask
@@ -254,7 +254,7 @@ extension EditorFactory {
             let textSize = textElement.textSizeWithConstraintSize(CGSize(width: pageWidth, height: pageHeigh * 2))
             
             
-            return CTAContainer(
+            let container = CTAContainer(
                 x: pageWidth / 2.0,
                 y: pageHeigh / 2.0,
                 width: Double(textSize.width),
@@ -265,6 +265,10 @@ extension EditorFactory {
                 inset: CGPoint.zero,
                 element: textElement
             )
+        
+        container.contentScale = 1.5
+        
+        return container
     }
     
     class func generateImageContainer(
@@ -295,7 +299,7 @@ extension EditorFactory {
         targetID: String,
         animationName: CTAAnimationName) -> CTAAnimation {
         
-        let ani = CTAAnimation(targetID: targetID, animationName: animationName)
+        let ani = CTAAnimation(targetID: targetID, animationName: animationName.rawValue, animationConfig: CTAAnimationConfig.defaultConfigWithDuration(animationName.defaultDuration))
         
         return ani
     }
@@ -305,7 +309,7 @@ extension EditorFactory {
         targetID: String,
         index: Int) -> CTAAnimation {
             
-            let ani = CTAAnimation(targetID: targetID, animationName: (index % 2 == 0) ? .MoveIn : .MoveOut)
+            let ani = CTAAnimation(targetID: targetID, animationName: (index % 2 == 0) ? CTAAnimationName.MoveIn.rawValue : CTAAnimationName.MoveOut.rawValue)
             
             return ani
     }

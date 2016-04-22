@@ -56,7 +56,7 @@ class CTAMainViewController: UIViewController, CTAAddBarProtocol, CTALoginProtoc
         
         self.initAddBarView(self.view)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "changePageView:", name: "changePageView", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CTAMainViewController.changePageView(_:)), name: "changePageView", object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {

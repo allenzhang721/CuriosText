@@ -10,17 +10,58 @@ import Foundation
 import UIKit
 import pop
 
-enum CTAAnimationName: Int, CustomStringConvertible {
+enum CTAAnimationName: String {
     
-    case None
-    case MoveIn //FlyIn
-    case MoveOut //FlyOut
+    case None = "NONE"
+    case MoveIn = "MOVE_IN" //FlyIn
+    case MoveOut = "MOVE_OUT"//FlyOut
+    case ScaleIn = "SCALE_IN"
+    case ScaleOut = "SCALE_OUT"
+    case IrisIn = "IRIS_IN"
+    case IrisOut = "IRIS_OUT"
+    case CurlIn = "CURL_IN"
+    case CurlOut = "CURL_OUT"
+    case FadeIn = "FADE_IN"
+    case FadeOut = "FADE_OUT"
+    case OrbitalIn = "ORBITAL_IN"
+    case OrbitalOut = "ORBITAL_OUT"
+    
+    static func nameByInt(i: Int) -> String {
+        switch i {
+        case 1:
+            return CTAAnimationName.MoveIn.rawValue
+        case 2:
+            return CTAAnimationName.MoveOut.rawValue
+        case 3:
+            return CTAAnimationName.ScaleIn.rawValue
+        case 4:
+            return CTAAnimationName.ScaleOut.rawValue
+        case 5:
+            return CTAAnimationName.IrisIn.rawValue
+        case 6:
+            return CTAAnimationName.IrisOut.rawValue
+        case 7:
+            return CTAAnimationName.CurlIn.rawValue
+        case 8:
+            return CTAAnimationName.CurlOut.rawValue
+        case 9:
+            return CTAAnimationName.FadeIn.rawValue
+        case 10:
+            return CTAAnimationName.FadeOut.rawValue
+        case 11:
+            return CTAAnimationName.OrbitalIn.rawValue
+        case 12:
+            return CTAAnimationName.OrbitalOut.rawValue
+        default:
+            return i % 2 == 0 ? CTAAnimationName.MoveOut.rawValue : CTAAnimationName.MoveIn.rawValue
+        }
+    }
     
     func shouldVisalbeBeforeBegan() -> Bool {
         switch self {
-        case .MoveIn:
+        case .MoveIn, .ScaleIn, IrisIn, .CurlIn, .FadeIn, .OrbitalIn:
             return false
-        case .MoveOut:
+        case .MoveOut, .ScaleOut, IrisOut, .CurlOut, .FadeOut, .OrbitalOut:
             return true
         case .None:
             return true
@@ -29,9 +70,9 @@ enum CTAAnimationName: Int, CustomStringConvertible {
     
     func shouldVisableAfterEnd() -> Bool {
         switch self {
-        case .MoveIn:
+        case .MoveIn, .ScaleIn, IrisIn, .CurlIn, .FadeIn, .OrbitalIn:
             return true
-        case .MoveOut:
+        case .MoveOut, .ScaleOut, IrisOut, .CurlOut, .FadeOut, .OrbitalOut:
             return false
         case .None:
             return true
@@ -39,22 +80,33 @@ enum CTAAnimationName: Int, CustomStringConvertible {
     }
     
     static var names: [CTAAnimationName] {
-        return [.None, .MoveIn, .MoveOut]
+        return [.None,
+                .MoveIn, .FadeIn, .ScaleIn, .IrisIn, .OrbitalIn, .CurlIn,
+                .MoveOut, .FadeOut, .ScaleOut, .IrisOut, .OrbitalOut, .CurlOut,]
+    }
+    
+    var defaultDuration: Float {
+        switch self {
+        case .None:
+            return 0.0
+        case .MoveIn, .MoveOut:
+            return 2.0
+        case .ScaleIn, .ScaleOut:
+            return 2.5
+        case .IrisIn, .IrisOut:
+            return 2.0
+        case .CurlIn, .CurlOut:
+            return 2.0
+        case .FadeIn, .FadeOut:
+            return 1.0
+        case .OrbitalIn, .OrbitalOut:
+            return 2.0
+        
+        }
     }
     
     var description: String {
-        switch self {
-        case .None:
-            return LocalStrings.None.description
-        case .MoveIn:
-            return LocalStrings.MoveIn.description
-//        case .FlyIn:
-//            return "Fly In"
-        case .MoveOut:
-            return LocalStrings.MoveOut.description
-//        case .FlyOut:
-//            return "Fly Out"
-        }
+        return LocalStrings.AniType(self.toType()).description
     }
 }
 
@@ -98,66 +150,6 @@ extension CTAAnimationBinder {
         set {
             config.delay = newValue
         }
-    }
-}
-
-//protocol CTAAnimationRetriveable: CTAAnimationBinder {
-//    
-//    var animationName: CTAAnimationName { get }
-//    var duration: Float { get }
-//    var delay: Float { get }
-//}
-
-extension CTAAnimationBinder {
-    
-    func configAnimationFor(view: UIView, index: Int) {
-        
-        switch name {
-        case .MoveIn:
-            moveIn(view, index: index)
-//        case .FlyIn:
-//            flyIn(view, index: index)
-        case .MoveOut:
-            moveOut(view, index: index)
-//        case .FlyOut:
-//            flyOut(view, index: index)
-        case .None:
-            ()
-        }
-    }
-}
-
-extension CTAAnimationBinder {
-    
-    func moveIn(view: UIView, index: Int, pageSize: CGSize = CGSize(width: 414, height: 414)) {
-        
-        let translationX = POPLayerGetTranslationX(view.layer)
-        POPLayerSetTranslationX(view.layer, -pageSize.width - translationX)
-        
-        let ani = POPBasicAnimation(propertyNamed: kPOPLayerTranslationX)
-        ani.beginTime = CACurrentMediaTime() + CFTimeInterval(config.delay)
-        ani.duration = CFTimeInterval(config.duration)
-//        ani.fromValue = NSNumber(float: -300)
-        ani.toValue = NSNumber(float: 0)
-        view.layer.pop_addAnimation(ani, forKey: "MOVE_IN")
-    }
-    
-    func flyIn(view: UIView, index: Int) {
-        
-    }
-    
-    func moveOut(view: UIView, index: Int, pageSize: CGSize = CGSize(width: 414, height: 414)) {
-        
-        let ani = POPBasicAnimation(propertyNamed: kPOPLayerTranslationX)
-        ani.beginTime = CACurrentMediaTime() + CFTimeInterval(config.delay)
-        ani.duration = CFTimeInterval(config.duration)
-        ani.fromValue = NSNumber(float: 0)
-        ani.toValue = NSNumber(float: Float(pageSize.width) + Float(view.bounds.width))
-        view.layer.pop_addAnimation(ani, forKey: "MOVE_Out")
-    }
-    
-    func flyOut(view: UIView, index: Int) {
-        
     }
 }
 

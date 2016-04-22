@@ -10,7 +10,9 @@ import UIKit
 
 final class CTASelectorColorsCell: CTASelectorCell {
 
-    private var view: CTAPickerView!
+//    private var view: CTAPickerView!
+    
+    private var view: CTAColorPickerView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,23 +21,25 @@ final class CTASelectorColorsCell: CTASelectorCell {
     
     private func setup() {
         
-        view = CTAPickerView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)), showCount: 4)
-        view.backgroundColor = UIColor.whiteColor()
+        clipsToBounds = false
+//        backgroundColor = UIColor.clearColor()
+        view = CTAColorPickerView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)))
+//        view.backgroundColor = UIColor.clearColor()
         contentView.addSubview(view)
-        view.backgroundColor = CTAStyleKit.intoDreams1
+//        view.backgroundColor = CTAStyleKit.intoDreams1
         view.translatesAutoresizingMaskIntoConstraints = false
         view.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
         view.topAnchor.constraintEqualToAnchor(topAnchor).active = true
         view.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
         view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
         
-        view.dataSource = self
-        view.delegate = self
+//        view.dataSource = self
+//        view.delegate = self
     }
     
     override func beganLoad() {
         
-        view.reloadData()
+//        view.reloadData()
     }
 
     override func retriveBeganValue() {
@@ -44,12 +48,18 @@ final class CTASelectorColorsCell: CTASelectorCell {
             return
         }
         
-        if let indexPath = dataSource.selectorBeganColorIndexPath(self) {
-            
-            debug_print("color cell will began at \(indexPath)", context: colorContext)
-            CTAColorsManger.updateSection(indexPath.section, withItem: indexPath.item)
-            self.view.updateTo(indexPath)
-        }
+        let color = dataSource.selectorBeganColor(self)
+        view.selectedColor = color
+        
+//        if let color = dataSource.selectorBeganColor(self) {
+//        
+//            view.selectedColor = color
+////            debug_print("color cell will began at \(indexPath)", context: colorContext)
+////            CTAColorsManger.updateSection(indexPath.section, withItem: indexPath.item)
+////            self.view.updateTo(indexPath)
+//        } else {
+////            view.
+//        }
     }
     
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {

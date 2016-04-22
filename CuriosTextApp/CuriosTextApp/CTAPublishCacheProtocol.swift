@@ -28,7 +28,7 @@ extension CTAPublishCacheProtocol {
         }
         let dataURL = requestUrl+"?data="+newParment
         var dataArray:Array<[String: AnyObject]> = []
-        for var i=0; i<modelArray.count; i++ {
+        for i in 0..<modelArray.count{
             let model = modelArray[i]
             let modelDic = model.getData()
             dataArray.append(modelDic)
@@ -59,7 +59,7 @@ extension CTAPublishCacheProtocol {
                 let dataJson = json["dataArray"].array
                 if dataJson != nil {
                     modelArray = []
-                    for var i:Int = 0; i<dataJson!.count; i++ {
+                    for i in 0..<dataJson!.count{
                         let modelJson = dataJson![i]
                         modelArray!.append(CTAPublishModel.generateFrom(modelJson))
                     }

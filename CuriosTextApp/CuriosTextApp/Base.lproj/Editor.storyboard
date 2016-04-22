@@ -31,22 +31,12 @@
                                         </connections>
                                     </containerView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="aV6-Ee-4qV" firstAttribute="centerX" secondItem="SLz-0Z-nnm" secondAttribute="centerX" id="VQT-7c-idi"/>
                                     <constraint firstItem="aV6-Ee-4qV" firstAttribute="centerY" secondItem="SLz-0Z-nnm" secondAttribute="centerY" id="ek7-eu-lo7"/>
                                 </constraints>
                             </view>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O59-ti-f4e">
-                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="49" id="md2-kw-S50"/>
-                                </constraints>
-                                <connections>
-                                    <segue destination="XuM-HM-a9W" kind="embed" id="91f-kb-sgW"/>
-                                </connections>
-                            </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UV4-IL-VCX">
                                 <rect key="frame" x="0.0" y="530" width="375" height="88"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -57,7 +47,17 @@
                                     <segue destination="qne-Oy-fsc" kind="embed" id="eNp-UJ-leQ"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cNn-AO-UPu" customClass="CTAEditAddView" customModule="CuriosTextApp" customModuleProvider="target">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O59-ti-f4e">
+                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="md2-kw-S50"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="XuM-HM-a9W" kind="embed" id="91f-kb-sgW"/>
+                                </connections>
+                            </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cNn-AO-UPu" customClass="CTAGradientButtonView" customModule="CuriosTextApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="618" width="49" height="49"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -79,12 +79,21 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
                                     <barButtonItem title="取消" id="bJT-yt-IZM">
+                                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="cancelAction:" destination="qRf-5N-mQJ" id="BsN-Ox-ynQ"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="vMw-Cu-dGI"/>
+                                    <barButtonItem systemItem="play" id="q1f-hJ-3xR">
+                                        <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="previewAll:" destination="qRf-5N-mQJ" id="GDe-i3-fC0"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="rXw-uA-p5p"/>
                                     <barButtonItem title="发布" id="AZ3-Xf-rl7">
+                                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="publish:" destination="qRf-5N-mQJ" id="1St-gW-9rg"/>
                                         </connections>
@@ -93,7 +102,7 @@
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </toolbar>
                         </subviews>
-                        <color key="backgroundColor" red="0.91364538669586182" green="0.91377681493759155" blue="0.9136165976524353" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="SLz-0Z-nnm" secondAttribute="trailing" id="0kB-kQ-vPv"/>
@@ -111,6 +120,7 @@
                             <constraint firstAttribute="trailing" secondItem="UV4-IL-VCX" secondAttribute="trailing" id="MRS-1u-ipg"/>
                             <constraint firstItem="aT5-ah-Tch" firstAttribute="leading" secondItem="w2g-1j-cAV" secondAttribute="leading" id="VW0-Lu-swc"/>
                             <constraint firstItem="UV4-IL-VCX" firstAttribute="top" secondItem="SLz-0Z-nnm" secondAttribute="bottom" constant="-1" id="XGF-ZE-RBw"/>
+                            <constraint firstItem="aT5-ah-Tch" firstAttribute="centerX" secondItem="w2g-1j-cAV" secondAttribute="centerX" id="bi5-6Y-SVF"/>
                             <constraint firstItem="SLz-0Z-nnm" firstAttribute="top" secondItem="aT5-ah-Tch" secondAttribute="bottom" id="cKr-2n-02z"/>
                             <constraint firstItem="cNn-AO-UPu" firstAttribute="top" secondItem="O59-ti-f4e" secondAttribute="top" id="e8z-Tl-xLC"/>
                             <constraint firstItem="AXi-ce-yHq" firstAttribute="top" secondItem="O59-ti-f4e" secondAttribute="bottom" id="fNW-Ki-ECW"/>
@@ -120,9 +130,12 @@
                             <constraint firstItem="UV4-IL-VCX" firstAttribute="width" secondItem="w2g-1j-cAV" secondAttribute="width" id="ov3-94-6SC"/>
                             <constraint firstAttribute="trailing" secondItem="O59-ti-f4e" secondAttribute="trailing" id="qvr-ir-UxA"/>
                             <constraint firstItem="UV4-IL-VCX" firstAttribute="leading" secondItem="w2g-1j-cAV" secondAttribute="leading" id="rdv-ai-8iK"/>
+                            <constraint firstItem="aT5-ah-Tch" firstAttribute="width" secondItem="w2g-1j-cAV" secondAttribute="width" id="ymx-1E-0ZZ"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="VW0-Lu-swc"/>
+                                <exclude reference="oj6-Dc-kmd"/>
                                 <exclude reference="35J-Mj-PnT"/>
                                 <exclude reference="CGj-T2-6W2"/>
                                 <exclude reference="ov3-94-6SC"/>
@@ -144,7 +157,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vNG-Ne-lhB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2351.5" y="494.5"/>
+            <point key="canvasLocation" x="2402.5" y="494.5"/>
         </scene>
         <!--Canvas View Controller-->
         <scene sceneID="21T-lx-I6T">
@@ -180,12 +193,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <items>
                                     <barButtonItem title="取消" id="ZAN-Kq-yAU">
+                                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="cancelAction:" destination="LHx-HX-gyp" id="N4J-SG-fxJ"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="reK-dv-DQW"/>
                                     <barButtonItem title="完成" id="cqm-ae-MBw">
+                                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="doneAction:" destination="LHx-HX-gyp" id="Peb-mJ-78d"/>
                                         </connections>
@@ -237,26 +252,14 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bOF-iL-7LA">
                                 <rect key="frame" x="0.0" y="44" width="320" height="386"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fgd-Eu-hft" customClass="CTAPreviewCanvasView" customModule="CuriosTextApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="33" width="320" height="320"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="fgd-Eu-hft" secondAttribute="height" multiplier="1:1" id="c3W-9A-3tf"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
                                 <color key="backgroundColor" red="0.94842630624771118" green="0.95011311769485474" blue="0.96408551931381226" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="fgd-Eu-hft" firstAttribute="centerX" secondItem="bOF-iL-7LA" secondAttribute="centerX" id="BPR-gL-19L"/>
-                                    <constraint firstItem="fgd-Eu-hft" firstAttribute="centerY" secondItem="bOF-iL-7LA" secondAttribute="centerY" id="knh-2k-WSF"/>
-                                </constraints>
                             </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N2r-a8-P18">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
                                     <barButtonItem title="取消" id="KQs-0R-srN">
+                                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="dismiss:" destination="ka6-cO-1SF" id="NYN-OW-Cc3"/>
                                         </connections>
@@ -302,7 +305,6 @@
                             <constraint firstItem="bOF-iL-7LA" firstAttribute="top" secondItem="N2r-a8-P18" secondAttribute="bottom" id="Lxb-Cr-yLL"/>
                             <constraint firstItem="ud8-zM-9P3" firstAttribute="bottom" secondItem="42G-98-Hn9" secondAttribute="top" id="ODp-go-eW7"/>
                             <constraint firstItem="bOF-iL-7LA" firstAttribute="leading" secondItem="WVK-lA-JyR" secondAttribute="leading" id="VlC-4L-Vpy"/>
-                            <constraint firstItem="fgd-Eu-hft" firstAttribute="width" secondItem="WVK-lA-JyR" secondAttribute="width" id="Wdb-dJ-xYQ"/>
                             <constraint firstItem="ud8-zM-9P3" firstAttribute="top" secondItem="bOF-iL-7LA" secondAttribute="bottom" constant="1" id="YBB-BE-spF"/>
                             <constraint firstAttribute="trailing" secondItem="bOF-iL-7LA" secondAttribute="trailing" id="mcO-Tb-9q2"/>
                             <constraint firstItem="ud8-zM-9P3" firstAttribute="leading" secondItem="WVK-lA-JyR" secondAttribute="leading" id="ynk-o1-KVc"/>
@@ -312,13 +314,13 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="previewView" destination="fgd-Eu-hft" id="B1y-ej-1X4"/>
+                        <outlet property="canvasPositionView" destination="bOF-iL-7LA" id="NVo-VX-hWO"/>
                         <outlet property="publishButton" destination="hLk-nB-9zZ" id="vRO-Bs-Lk9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I0B-Mf-59d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3762" y="1182"/>
+            <point key="canvasLocation" x="3619" y="1079"/>
         </scene>
         <!--Tab View Controller-->
         <scene sceneID="Vgo-GO-r2N">
@@ -384,7 +386,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="VpJ-Pq-Aql">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewLayout key="collectionViewLayout" id="hZM-cm-C7I" customClass="CTASelectorsFlowLayout" customModule="CuriosTextApp" customModuleProvider="target"/>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SelectorSizeCell" id="zp2-Tl-Qnt" customClass="CTASelectorSizeCell" customModule="CuriosTextApp" customModuleProvider="target">
@@ -464,7 +466,7 @@
                                 </connections>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="VpJ-Pq-Aql" firstAttribute="bottom" secondItem="CUR-Wq-apr" secondAttribute="top" id="43c-w7-nqE"/>
                             <constraint firstItem="VpJ-Pq-Aql" firstAttribute="top" secondItem="WUo-P5-HOk" secondAttribute="bottom" id="83W-Ls-qrX"/>

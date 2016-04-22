@@ -178,11 +178,17 @@ class CTAPreviewCanvasView: UIView {
         didCachedCompletedHandler = {[weak self] success in
             if let strongSelf = self where success {
                 dispatch_async(dispatch_get_main_queue(), {
+                    
+                    print(strongSelf.collectionView.visibleCells().count)
                     strongSelf.load()
+                    
+                    print(strongSelf.collectionView.visibleCells().count)
                     CATransaction.begin()
                     CATransaction.setDisableActions(true)
                     strongSelf.collectionView.reloadSections(NSIndexSet(index: 0))
                     CATransaction.commit()
+                    
+                    print(strongSelf.collectionView.visibleCells().count)
                     
                     if needReloadAnimation {
                         strongSelf.splitedControllers = nil

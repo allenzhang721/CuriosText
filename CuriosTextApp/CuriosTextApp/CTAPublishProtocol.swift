@@ -84,11 +84,8 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.userNicknameLabel.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2, y: self.userIconImage.center.y + 32 + 10*horRate)
         if (self.userNicknameLabel.frame.origin.y + self.userNicknameLabel.frame.size.height) > publishRect.origin.y{
             self.userNicknameLabel.frame.origin.y = publishRect.origin.y - self.userNicknameLabel.frame.size.height
-            self.userNicknameLabel.font = UIFont.systemFontOfSize(16)
-        }else {
-            self.userNicknameLabel.font = UIFont.systemFontOfSize(16)
         }
-        
+        self.userNicknameLabel.font = UIFont.systemFontOfSize(16)
         self.userNicknameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.userNicknameLabel)
     }
@@ -103,15 +100,24 @@ extension CTAPublishProtocol where Self: UIViewController{
         }
         self.userNicknameLabel.frame.size.width = labelWidth
         self.userNicknameLabel.frame.origin.x = (UIScreen.mainScreen().bounds.width - labelWidth)/2
-        let imagePath = CTAFilePath.userFilePath+userModel.userIconURL
-        let imageURL = NSURL(string: imagePath)!
-        self.userIconImage.kf_showIndicatorWhenLoading = true
-        self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: UIImage.init(named: "default-usericon"), optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in
-            if error != nil {
-                self.userIconImage.image = UIImage.init(named: "default-usericon")
-            }
-            self.userIconImage.kf_showIndicatorWhenLoading = false
+        UIView.transitionWithView(self.userNicknameLabel, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
+            self.userNicknameLabel.text = userModel.nickName
+            }) { (_) in
         }
+        
+        UIView.transitionWithView(self.userIconImage, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
+            var defaultImg = UIImage.init(named: "default-usericon")
+            let imagePath = CTAFilePath.userFilePath+userModel.userIconURL
+            let imageURL = NSURL(string: imagePath)!
+            self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: defaultImg, optionsInfo: [.Transition(ImageTransition.Fade(1))]){ (image, error, cacheType, imageURL) -> () in
+                if error != nil {
+                    self.userIconImage.image = defaultImg
+                }
+            }
+            }) { (_) in
+        }
+        
+        
     }
     
     func changeDetailUser(){

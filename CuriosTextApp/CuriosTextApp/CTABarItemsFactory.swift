@@ -43,6 +43,7 @@ class CTABarItemsFactory {
             title: LocalStrings.Rotation.description)
     ]
     
+    // Sort Search in CTAContainerViewModel
     static let textSelectorItems = [
     
         CTABarItem(
