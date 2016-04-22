@@ -26,7 +26,7 @@ let previewConttext = PrintContext(shouldPrint: false, context: "Preview")
 let animationChangedContext = PrintContext(shouldPrint: true, context: "animation Changed")
 
 // other swift flags : -D DEBUG
-public func debug_print<T>(value: T,file: String = __FILE__, line: Int = __LINE__ ,function: String = __FUNCTION__, context: PrintContext = defaultContext) {
+public func debug_print<T>(value: T,file: String = #file, line: Int = #line ,function: String = #function, context: PrintContext = defaultContext) {
     
     #if DEBUG
     if context.shouldPrint {

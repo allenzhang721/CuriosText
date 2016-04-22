@@ -70,8 +70,8 @@ class ContentTextCell: ContentCell {
         super.layoutSubviews()
 
         let append: CGFloat = 0.0
-        textLayer.insets = CGPoint(x: bounds.width * append * 0.5 * 0.5, y: 0)
-        textLayer.bounds.size = CGSize(width: bounds.width * (1.0 + append), height: bounds.height)
+        textLayer.insets = CGPoint(x: bounds.width * append * 0.5 * 0.5, y: bounds.height * 0.1 * 0.5)
+        textLayer.bounds.size = CGSize(width: bounds.width * (1.0 + append), height: bounds.height * 1.1)
         textLayer.center = CGPoint(x: contentView.bounds.midX, y: contentView.bounds.midY)
     }
 }
