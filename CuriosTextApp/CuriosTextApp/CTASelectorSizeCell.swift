@@ -61,7 +61,7 @@ class CTASelectorSizeCell: CTASelectorCell {
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
         
         sizeView.addTarget(target, action: action, forControlEvents: controlEvents)
-        sizeView.addTarget(self, action: "valueChanged:", forControlEvents: controlEvents)
+        sizeView.addTarget(self, action: #selector(CTASelectorSizeCell.valueChanged(_:)), forControlEvents: controlEvents)
     }
     
     override func removeAllTarget() {

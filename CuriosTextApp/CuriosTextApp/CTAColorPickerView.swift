@@ -12,6 +12,8 @@ protocol CTAColorPickerProtocol{
     func changeColor(color:UIColor)
 }
 
+let sliderWidth:CGFloat = 44.00
+let thumbWidth:CGFloat = 21.00
 
 class CTAColorPickerView: UIControl{
     
@@ -43,8 +45,6 @@ class CTAColorPickerView: UIControl{
     
     let horSpace = 5
     let verSpace = 4
-    
-    let sliderWidth:CGFloat = 21.00
     
     var centerRect:CGRect = CGRect(x: 0, y: 0, width: 100, height: 100)
     var choseCell:CTAColorPickerCell?
@@ -123,7 +123,7 @@ class CTAColorPickerView: UIControl{
             }
         }
         
-        self.colorSlider =  CTAColorSliderView(frame: CGRect(x: 0, y: (self.lineHeight - self.sliderWidth)/2, width: self.sliderWidth, height: self.sliderWidth))
+        self.colorSlider =  CTAColorSliderView(frame: CGRect(x: 0, y: (self.lineHeight - sliderWidth)/2, width: sliderWidth, height: sliderWidth))
         self.addSubview(self.colorSlider)
         self.colorSlider.minimumValue = 0.0
         self.colorSlider.maximumValue = self.bounds.width
@@ -189,7 +189,7 @@ class CTAColorPickerView: UIControl{
     
     func changToDefault(){
         let center = self.colorSlider.center
-        self.colorSlider.center = CGPoint(x: self.sliderWidth/2, y: center.y)
+        self.colorSlider.center = CGPoint(x: thumbWidth/2, y: center.y)
         self.colorSlider.value = 0
         self.colorSlider.valueColor = self.currentPureColor()
         if self.choseCell != nil {
@@ -237,7 +237,7 @@ class CTAColorPickerView: UIControl{
             self.panLocation = self.beganLocation
             if !self.isChageSlide{
                 let slideFrame = self.colorSlider.frame
-                let slideContainer = CGRect(x: (slideFrame.origin.x - 5), y: (slideFrame.origin.y - 5), width: (slideFrame.size.width + 10), height: (slideFrame.size.height + 10))
+                let slideContainer = CGRect(x: slideFrame.origin.x, y: slideFrame.origin.y , width: slideFrame.size.width, height: slideFrame.size.height )
                 if slideContainer.contains(self.panLocation){
                     self.changeSlideStatus(true)
                 }else {
@@ -338,8 +338,8 @@ class CTAColorPickerView: UIControl{
     }
     
     func changeSlidePosition(newLocation:CGPoint){
-        let maxSlider = self.bounds.width - self.sliderWidth/2
-        let minSlider = self.sliderWidth/2
+        let maxSlider = self.bounds.width - thumbWidth/2
+        let minSlider = thumbWidth/2
         let xChange = newLocation.x - self.panLocation.x
         let center = self.colorSlider.center
         let changePosition = center.x + xChange
@@ -495,8 +495,8 @@ class CTAColorPickerView: UIControl{
             let changeValue = slideRate*(maxValue-minValue) + minValue
             self.colorSlider.value = changeValue
             self.colorSlider.valueColor = self.currentPureColor()
-            let maxSlider = self.bounds.width - self.sliderWidth/2
-            let minSlider = self.sliderWidth/2
+            let maxSlider = self.bounds.width - thumbWidth/2
+            let minSlider = thumbWidth/2
             let positionX=(changeValue-minValue)/(maxValue-minValue)*(maxSlider-minSlider)+minSlider
             let center = self.colorSlider.center
             self.colorSlider.center = CGPoint(x: positionX, y: center.y)
@@ -577,6 +577,8 @@ class CTAColorSliderView:UIButton{
     var maximumValue:CGFloat = 10.0
     var minimumValue:CGFloat = 0.0
     
+    var slideView:UIView!
+    
     var valueColor:UIColor?{
         didSet{
             self.changeColor()
@@ -593,16 +595,19 @@ class CTAColorSliderView:UIButton{
     }
     
     func initView(){
-        self.contentMode = .ScaleAspectFill
-        self.layer.cornerRadius = self.frame.width/2
-        self.layer.masksToBounds = true
+        self.slideView = UIView(frame: CGRect(x: (self.bounds.width - thumbWidth)/2, y: (self.bounds.height - thumbWidth)/2, width: thumbWidth, height: thumbWidth))
+        self.addSubview(self.slideView)
+        self.slideView.contentMode = .ScaleAspectFill
+        self.slideView.layer.cornerRadius = thumbWidth/2
+        self.slideView.layer.masksToBounds = true
+        self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.0)
     }
     
     func changeColor(){
         if self.valueColor == nil {
-            self.backgroundColor = UIColor.whiteColor()
+            self.slideView.backgroundColor = UIColor.whiteColor()
         }else {
-            self.backgroundColor = self.valueColor
+            self.slideView.backgroundColor = self.valueColor
         }
     }
 }

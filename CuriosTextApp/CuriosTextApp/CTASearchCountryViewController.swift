@@ -87,7 +87,7 @@ class CTASearchCountryViewController: UIViewController{
         let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
-        backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
+        backButton.addTarget(self, action: #selector(CTASearchCountryViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
         
         self.searchBar = UISearchBar.init(frame: CGRect.init(x: 0, y: 44, width: bouns.width, height: 50))
@@ -132,7 +132,7 @@ extension CTASearchCountryViewController:UITableViewDataSource, UITableViewDeleg
     func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String,
         atIndex index: Int) -> Int {
         let keys = Array(self.searchArray.keys).sort(<)
-        for var i:Int = 0; i<keys.count; i++ {
+        for i in 0..<keys.count {
             let key = keys[i]
             if key == title{
                 return i
@@ -148,7 +148,7 @@ extension CTASearchCountryViewController:UITableViewDataSource, UITableViewDeleg
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         var dataArray:Array<CountryZone>?
         let keys = Array(self.searchArray.keys).sort(<)
-        for var i:Int = 0; i<keys.count; i++ {
+        for i in 0..<keys.count {
             if i == section{
                 dataArray = self.searchArray[keys[i]]
                 break
@@ -164,7 +164,7 @@ extension CTASearchCountryViewController:UITableViewDataSource, UITableViewDeleg
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
         var dataKey:String = ""
         let keys = Array(self.searchArray.keys).sort(<)
-        for var i:Int = 0; i<keys.count; i++ {
+        for i in 0..<keys.count {
             if i == section{
                 dataKey = keys[i]
                 break
@@ -184,7 +184,7 @@ extension CTASearchCountryViewController:UITableViewDataSource, UITableViewDeleg
         let raw     = indexPath.row
         var dataArray:Array<CountryZone>?
         let keys = Array(self.searchArray.keys).sort(<)
-        for var i:Int = 0; i<keys.count; i++ {
+        for i in 0..<keys.count {
             if i == section{
                 dataArray = self.searchArray[keys[i]]
                 break
@@ -204,7 +204,7 @@ extension CTASearchCountryViewController:UITableViewDataSource, UITableViewDeleg
         let raw     = indexPath.row
         var dataArray:Array<CountryZone>?
         let keys = Array(self.searchArray.keys).sort(<)
-        for var i:Int = 0; i<keys.count; i++ {
+        for i in 0..<keys.count {
             if i == section{
                 dataArray = self.searchArray[keys[i]]
                 break

@@ -80,8 +80,8 @@ extension CTALoadingProtocol where Self: UIViewController{
             }else {
                 let subViews = self.view.subviews
                 if subViews.count > 1{
-                    for var i = subViews.count; i > subViews.count - 2 ; i-- {
-                        let canvas = subViews[i-1]
+                    for i in subViews.count - 2..<subViews.count{
+                        let canvas = subViews[i]
                         canvas.removeFromSuperview()
                         if canvas is UIActivityIndicatorView{
                             (canvas as! UIActivityIndicatorView).stopAnimating()

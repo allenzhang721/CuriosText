@@ -70,13 +70,13 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     
     func initView(){
         let bouns = UIScreen.mainScreen().bounds
-        let tap = UITapGestureRecognizer(target: self, action: "bgViewClick:")
+        let tap = UITapGestureRecognizer(target: self, action: #selector(CTASetUserNameViewController.bgViewClick(_:)))
         self.view.addGestureRecognizer(tap)
         
         let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
-        backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
+        backButton.addTarget(self, action: #selector(CTASetUserNameViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
         
         let userInfoLabel = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 60*self.getVerRate(), width: 100, height: 40))
@@ -92,7 +92,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         self.cropImageCircle(self.userIconImage)
         self.view.addSubview(self.userIconImage)
         self.userIconImage.userInteractionEnabled = true
-        let iconTap = UITapGestureRecognizer(target: self, action: "userIconClick:")
+        let iconTap = UITapGestureRecognizer(target: self, action: #selector(CTASetUserNameViewController.userIconClick(_:)))
         self.userIconImage.addGestureRecognizer(iconTap)
     
         let imgFrame = self.userIconImage.frame
@@ -123,7 +123,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         self.completeButton.titleLabel?.font = UIFont.systemFontOfSize(20)
         self.completeButton.sizeToFit()
         self.completeButton.frame.origin.x = (bouns.width - self.completeButton.frame.width)/2
-        self.completeButton.addTarget(self, action: "completeButtonClick:", forControlEvents: .TouchUpInside)
+        self.completeButton.addTarget(self, action: #selector(CTASetUserNameViewController.completeButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(self.completeButton)
     }
     
@@ -148,7 +148,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
             self.userNickNameTextInput.text = ""
         }
         self.setCompleteButtonStyle()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "textFieldEditChange:", name: "UITextFieldTextDidChangeNotification", object: self.userNickNameTextInput)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CTASetUserNameViewController.textFieldEditChange(_:)), name: "UITextFieldTextDidChangeNotification", object: self.userNickNameTextInput)
     }
     
     func resetView(){
