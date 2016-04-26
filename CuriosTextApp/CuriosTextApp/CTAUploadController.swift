@@ -45,7 +45,7 @@ class CTAUploadController {
     
     func uploadFileArray(uploadModelArray:Array<CTAUploadModel>){
         if uploadModelArray.count > 0{
-            for var i=0; i < uploadModelArray.count; i++ {
+            for i in 0..<uploadModelArray.count {
                 let uploadModel = uploadModelArray[i]
                 if !checkUploadModel(uploadModel) {
                     self.uploadArray.append(uploadModel)
@@ -58,7 +58,7 @@ class CTAUploadController {
     
     func getUnUploadModel(uploadID:String = "") -> CTAUploadModel?{
         var uploadModel:CTAUploadModel?
-        for var i = 0; i < self.uploadArray.count; i++ {
+        for i in 0..<self.uploadArray.count {
             let oldModel:CTAUploadModel = self.uploadArray[i]
             if !oldModel.isUploading{
                 if uploadID != "" {
@@ -157,7 +157,7 @@ class CTAUploadController {
     
     func uploadModelComplete(uploadModel:CTAUploadModel) {
         var index:Int = -1
-        for var i=0; i < self.uploadArray.count; i++ {
+        for i in 0..<self.uploadArray.count {
             let oldModel:CTAUploadModel = self.uploadArray[i];
             if oldModel.key == uploadModel.key {
                 index = i;
@@ -174,7 +174,7 @@ class CTAUploadController {
     }
     
     func checkUploadModel(uploadModel:CTAUploadModel) -> Bool{
-        for var i=0; i < self.uploadArray.count; i++ {
+        for i in 0..<self.uploadArray.count {
             let oldModel:CTAUploadModel = self.uploadArray[i];
             if oldModel.key == uploadModel.key {
                 return true
@@ -185,7 +185,7 @@ class CTAUploadController {
     
     func getUploadModelByKey(fileKey:String) -> CTAUploadModel? {
         var uploadModel:CTAUploadModel?;
-        for var i=0; i < self.uploadArray.count; i++ {
+        for i in 0..<self.uploadArray.count {
             let oldModel:CTAUploadModel = self.uploadArray[i]
             if oldModel.key == fileKey {
                 uploadModel = oldModel
@@ -197,10 +197,10 @@ class CTAUploadController {
     
     func getUploadingCount() -> Int {
         var count:Int = 0
-        for var i=0; i < self.uploadArray.count; i++ {
+        for i in 0..<self.uploadArray.count {
             let oldModel:CTAUploadModel = self.uploadArray[i]
             if oldModel.isUploading {
-                count++
+                count+=1
             }
         }
         return count;

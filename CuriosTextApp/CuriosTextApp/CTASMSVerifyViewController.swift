@@ -65,7 +65,7 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
     func initView(){
         let bouns = UIScreen.mainScreen().bounds
         
-        let tap = UITapGestureRecognizer(target: self, action: "showTextClick:")
+        let tap = UITapGestureRecognizer(target: self, action: #selector(CTASMSVerifyViewController.showTextClick(_:)))
         self.view.addGestureRecognizer(tap)
         
         self.hideTextInput = UITextField.init(frame: CGRect.init(x: 0, y: 0, width: 300, height: 40))
@@ -77,7 +77,7 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
         let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
-        backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
+        backButton.addTarget(self, action: #selector(CTASMSVerifyViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
         
         let enterVerifyCodeTitle = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 60*self.getVerRate(), width: 100, height: 40))
@@ -146,7 +146,7 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
         self.resendButton.titleLabel?.font = UIFont.systemFontOfSize(14)
         self.resendButton.sizeToFit()
         self.resendButton.frame.origin.x = (bouns.width - self.resendButton.frame.width)/2
-        self.resendButton.addTarget(self, action: "reSendButtonClick:", forControlEvents: .TouchUpInside)
+        self.resendButton.addTarget(self, action: #selector(CTASMSVerifyViewController.reSendButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(self.resendButton)
         
     }
@@ -157,7 +157,7 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
         if phoneString.length > 6 {
             let startNumber = Int((phoneString.length - veriyNumber)/2)
             var phoneText:String = "+"+self.areaZone + " " + phoneString.substringWithRange(NSMakeRange(0, startNumber)) + " "
-            for var i=0 ;i < veriyNumber; i++ {
+            for _ in 0..<veriyNumber {
                 phoneText = phoneText + "*"
             }
             let endNumber = phoneString.length - veriyNumber - startNumber

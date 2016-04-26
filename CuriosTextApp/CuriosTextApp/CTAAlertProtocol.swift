@@ -41,7 +41,7 @@ extension CTAAlertProtocol where Self: UIViewController{
     
     func showSheetAlert(alertTile:String?, okAlertArray:Array<String>, cancelAlertLabel:String, compelecationBlock: (index:Int) -> Void){
         let alert = UIAlertController(title: alertTile, message: nil, preferredStyle: .ActionSheet)
-        for var i:Int=0; i < okAlertArray.count; i++ {
+        for i in 0..<okAlertArray.count {
             let alertIndex = i
             alert.addAction(UIAlertAction(title: okAlertArray[i], style: .Default, handler: { (_) -> Void in
                 compelecationBlock(index: alertIndex)

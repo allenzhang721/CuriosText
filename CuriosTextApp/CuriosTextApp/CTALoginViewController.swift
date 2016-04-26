@@ -81,13 +81,13 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
     
     func initView(){
         let bouns = UIScreen.mainScreen().bounds
-        let tap = UITapGestureRecognizer(target: self, action: "bgViewClick:")
+        let tap = UITapGestureRecognizer(target: self, action: #selector(CTALoginViewController.bgViewClick(_:)))
         self.view.addGestureRecognizer(tap)
         
         let closeButton = UIButton.init(frame: CGRect.init(x: 5, y: 2, width: 40, height: 40))
         closeButton.setImage(UIImage(named: "close-button"), forState: .Normal)
         closeButton.setImage(UIImage(named: "close-selected-button"), forState: .Highlighted)
-        closeButton.addTarget(self, action: "closeButtonClick:", forControlEvents: .TouchUpInside)
+        closeButton.addTarget(self, action: #selector(CTALoginViewController.closeButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(closeButton)
         
         let iconImage = UIImageView.init(frame: CGRect.init(x: (bouns.width - 60)/2, y: 60*self.getVerRate(), width: 60, height: 62))
@@ -113,7 +113,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         self.passwordVisibleButton = UIButton.init(frame: CGRect.init(x: bouns.width - 27*self.getHorRate() - 20, y: self.passwordTextinput.frame.origin.y+19, width: 20, height: 13))
         self.passwordVisibleButton.setImage(UIImage(named: "passwordhide-icon"), forState: .Normal)
         self.view.addSubview(self.passwordVisibleButton)
-        self.passwordVisibleButton.addTarget(self, action: "passwordVisibleClick:", forControlEvents: .TouchUpInside)
+        self.passwordVisibleButton.addTarget(self, action: #selector(CTALoginViewController.passwordVisibleClick(_:)), forControlEvents: .TouchUpInside)
         let textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.passwordTextinput.frame.origin.y+49, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "textinput-line")
         self.view.addSubview(textLine)
@@ -125,7 +125,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         self.loginButton.titleLabel?.font = UIFont.systemFontOfSize(20)
         self.loginButton.sizeToFit()
         self.loginButton.frame.origin.x = (bouns.width - self.loginButton.frame.width)/2
-        self.loginButton.addTarget(self, action: "loginButtonClick:", forControlEvents: .TouchUpInside)
+        self.loginButton.addTarget(self, action: #selector(CTALoginViewController.loginButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(self.loginButton)
         
         self.otherAccountView = UIView.init(frame: CGRect.init(x: 0, y: bouns.height - 175*self.getVerRate(), width: bouns.width, height: 175*self.getVerRate()))
@@ -146,7 +146,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         
         self.wechatButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 44)/2, y: 45, width: 44, height: 44))
         self.wechatButton.setImage(UIImage(named: "wechat-icon"), forState: .Normal)
-        self.wechatButton.addTarget(self, action: "wechatButtonClick:", forControlEvents: .TouchUpInside)
+        self.wechatButton.addTarget(self, action: #selector(CTALoginViewController.wechatButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.otherAccountView.addSubview(self.wechatButton)
         
         let forgetButton = UIButton.init(frame: CGRect.init(x: 27, y: bouns.height - 52*self.getVerRate(), width: 20, height: 84))
@@ -154,7 +154,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         forgetButton.setTitleColor(UIColor.init(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0), forState: .Normal)
         forgetButton.titleLabel?.font = UIFont.systemFontOfSize(14)
         forgetButton.sizeToFit()
-        forgetButton.addTarget(self, action: "forgetButtonClick:", forControlEvents: .TouchUpInside)
+        forgetButton.addTarget(self, action: #selector(CTALoginViewController.forgetButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(forgetButton)
         
         let registerButton = UIButton.init(frame: CGRect.init(x: 27*self.getHorRate(), y: bouns.height - 52*self.getVerRate(), width: 20, height: 84))
@@ -163,7 +163,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         registerButton.titleLabel?.font = UIFont.systemFontOfSize(14)
         registerButton.sizeToFit()
         registerButton.frame.origin.x = bouns.width - 27*self.getHorRate() - registerButton.frame.width
-        registerButton.addTarget(self, action: "registerButtonClick:", forControlEvents: .TouchUpInside)
+        registerButton.addTarget(self, action: #selector(CTALoginViewController.registerButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(registerButton)
     }
     

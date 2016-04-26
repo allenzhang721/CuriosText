@@ -212,7 +212,8 @@ class CTAPublishDomain: CTABaseDomain {
         let listArray = json[key(.List)].array;
         var publishArray: Array<CTAPublishModel> = [];
         if listArray != nil{
-            for var i = 0 ; i < listArray!.count; i++ {
+            let count = listArray!.count
+            for i in 0..<count {
                 let listJson = listArray![i];
                 let publishModel = CTAPublishModel.generateFrom(listJson);
                 publishArray.append(publishModel);

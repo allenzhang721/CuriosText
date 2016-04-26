@@ -96,7 +96,7 @@ extension CTAPhotoViewController {
         setupDelegateAndDataSource()
         setupFetchPhotos()
         
-        let tap = UITapGestureRecognizer(target: self, action: "tap:")
+        let tap = UITapGestureRecognizer(target: self, action: #selector(CTAPhotoViewController.tap(_:)))
         previewView.addGestureRecognizer(tap)
         
         if let assetFetchResults = inner.assetFetchResults where assetFetchResults.count > 0, let asset = assetFetchResults[0] as? PHAsset {
