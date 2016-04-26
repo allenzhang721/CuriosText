@@ -578,6 +578,7 @@ class CTAColorSliderView:UIButton{
     var minimumValue:CGFloat = 0.0
     
     var slideView:UIView!
+    var slideViewButton:UIButton!
     
     var valueColor:UIColor?{
         didSet{
@@ -600,7 +601,21 @@ class CTAColorSliderView:UIButton{
         self.slideView.contentMode = .ScaleAspectFill
         self.slideView.layer.cornerRadius = thumbWidth/2
         self.slideView.layer.masksToBounds = true
+        self.slideViewButton = UIButton(frame: self.bounds)
+        self.addSubview(self.slideViewButton)
+        self.slideViewButton.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
         self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.0)
+        
+        self.slideViewButton.addTarget(self, action: #selector(CTAColorSliderView.buttonMouseDown(_:)), forControlEvents: .TouchDown)
+        self.slideViewButton.addTarget(self, action: #selector(CTAColorSliderView.buttonMouseUp(_:)), forControlEvents: .TouchUpInside)
+    }
+    
+    func buttonMouseDown(sender: UIButton){
+        self.sendActionsForControlEvents(.TouchDown)
+    }
+    
+    func buttonMouseUp(sender: UIButton){
+        self.sendActionsForControlEvents(.TouchUpInside)
     }
     
     func changeColor(){
@@ -610,6 +625,8 @@ class CTAColorSliderView:UIButton{
             self.slideView.backgroundColor = self.valueColor
         }
     }
+    
+    
 }
 
 class CTAColorPickerCell: UIView {
