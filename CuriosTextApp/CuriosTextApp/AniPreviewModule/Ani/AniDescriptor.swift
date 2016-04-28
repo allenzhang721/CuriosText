@@ -52,8 +52,11 @@ struct AniDescriptor {
             switch shape {
             case .Rect:
                 let gradientLayer = CAGradientLayer()
-                gradientLayer.frame = layer.bounds
-                gradientLayer.colors = [UIColor.blackColor().CGColor, UIColor.blackColor().CGColor]
+                let h = layer.bounds.height
+                let height = layer.bounds.height * 1.4
+                gradientLayer.frame = UIEdgeInsetsInsetRect(CGRect(origin: CGPoint.zero, size: CGSize(width: layer.bounds.width, height: height)), UIEdgeInsets(top: -layer.bounds.height * 0.2, left: 0, bottom: -layer.bounds.height * 0.2, right: 0))
+                gradientLayer.colors = [UIColor.blackColor().CGColor, UIColor.blackColor().CGColor, UIColor.clearColor().CGColor, UIColor.clearColor().CGColor]
+                gradientLayer.locations = [0, 0.2 / 1.4, 1.2 / 1.4, 1]
                 maskLayer = gradientLayer
             case .Oval:
                 ()

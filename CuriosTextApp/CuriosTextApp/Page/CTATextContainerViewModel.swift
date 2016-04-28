@@ -41,7 +41,18 @@ extension TextRetrievable {
     
     func textSizeWithConstraintSize(size: CGSize) -> CGSize {
         
-        return attributeString.boundingRectWithSize(size, options: .UsesLineFragmentOrigin, context: nil).size
+        
+        let constraintSize = size
+        let storage = NSTextStorage(attributedString: attributeString)
+        let container = NSTextContainer(size: constraintSize)
+        let manager = NSLayoutManager()
+        manager.addTextContainer(container)
+        storage.addLayoutManager(manager)
+        container.lineFragmentPadding = 0
+        let textSize = manager.usedRectForTextContainer(container).size
+        
+        return textSize
+//        return attributeString.boundingRectWithSize(size, options: .UsesLineFragmentOrigin, context: nil).size
     }
     
     func textFrameWithTextSize(textsize size: CGSize) -> CGRect {
@@ -54,7 +65,17 @@ extension TextRetrievable {
     func textResultWithScale(scale: CGFloat, constraintSzie: CGSize) -> (CGPoint, CGSize, CGRect, NSAttributedString) {
         let inset = CGPoint(x: 50.0 / 17.0 * fontSize * scale, y: 0)
         let str = attributeStringWithFontScale(scale)
-        let textSize = str.boundingRectWithSize(constraintSzie, options: .UsesLineFragmentOrigin, context: nil).size
+        
+        let constraintSize = constraintSzie
+        let storage = NSTextStorage(attributedString: str)
+        let container = NSTextContainer(size: constraintSize)
+        let manager = NSLayoutManager()
+        manager.addTextContainer(container)
+        storage.addLayoutManager(manager)
+        container.lineFragmentPadding = 0
+        let textSize = manager.usedRectForTextContainer(container).size
+        
+//        let textSize = str.boundingRectWithSize(constraintSzie, options: .UsesLineFragmentOrigin, context: nil).size
         let origin = CGPoint(x: 0 - inset.x, y: 0 - inset.y)
         let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y + 2 + shadowOffset.y + shadowBlurRadius)
         let rect = CGRect(origin: origin, size: size)

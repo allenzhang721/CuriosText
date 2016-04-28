@@ -79,9 +79,20 @@ func text(textPicker: ((NSAttributedString) -> ()) -> (), position: CGPoint, rot
     return Promise { fullfill, reject in
         textPicker { attributeText in
             let s = attributeText
-            let size = s.boundingRectWithSize(CGSize(width: CGFloat.max, height: CGFloat.max), options: .UsesLineFragmentOrigin, context: nil).size
+            let size = CGSize(width: CGFloat.max, height: CGFloat.max)
             
-            let drawUnit = TextDrawing(position: position, size: size, rotation: rotation, attributeString: s)
+            let constraintSize = size
+            let storage = NSTextStorage(attributedString: s)
+            let container = NSTextContainer(size: constraintSize)
+            let manager = NSLayoutManager()
+            manager.addTextContainer(container)
+            storage.addLayoutManager(manager)
+            container.lineFragmentPadding = 0
+            let textSize = manager.usedRectForTextContainer(container).size
+            
+//            let size = s.boundingRectWithSize(CGSize(width: CGFloat.max, height: CGFloat.max), options: .UsesLineFragmentOrigin, context: nil).size
+            
+            let drawUnit = TextDrawing(position: position, size: textSize, rotation: rotation, attributeString: s)
             fullfill(drawUnit)
         }
     }

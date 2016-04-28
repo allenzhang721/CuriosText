@@ -396,7 +396,17 @@ final class CTATextElement: NSObject, CTAElement {
         
         let inset = insets
         let str = attributeStringWithText(text)
-        let textSize = str.boundingRectWithSize(constraintSize, options: .UsesLineFragmentOrigin, context: nil).size
+        
+        let constraintSize = constraintSize
+        let storage = NSTextStorage(attributedString: str)
+        let container = NSTextContainer(size: constraintSize)
+        let manager = NSLayoutManager()
+        manager.addTextContainer(container)
+        storage.addLayoutManager(manager)
+        container.lineFragmentPadding = 0
+        let textSize = manager.usedRectForTextContainer(container).size
+        
+//        let textSize = str.boundingRectWithSize(constraintSize, options: .UsesLineFragmentOrigin, context: nil).size
         let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
         
         return (inset, size)
@@ -407,7 +417,17 @@ final class CTATextElement: NSObject, CTAElement {
         
         let inset = insets
         let str = attributeStringWithFontScale(scale)
-        let textSize = str.boundingRectWithSize(constraintSzie, options: .UsesLineFragmentOrigin, context: nil).size
+        
+        let constraintSize = constraintSzie
+        let storage = NSTextStorage(attributedString: str)
+        let container = NSTextContainer(size: constraintSize)
+        let manager = NSLayoutManager()
+        manager.addTextContainer(container)
+        storage.addLayoutManager(manager)
+        container.lineFragmentPadding = 0
+        let textSize = manager.usedRectForTextContainer(container).size
+        
+//        let textSize = str.boundingRectWithSize(constraintSzie, options: .UsesLineFragmentOrigin, context: nil).size
         let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
         
 //        print("need TextSize = \(textSize)")
@@ -419,7 +439,16 @@ final class CTATextElement: NSObject, CTAElement {
         
         let inset = insets
         let str = attributeStringWithFontScale(scale)
-        let textSize = str.boundingRectWithSize(constraintSize, options: .UsesLineFragmentOrigin, context: nil).size
+        
+        let constraintSize = constraintSize
+        let storage = NSTextStorage(attributedString: str)
+        let container = NSTextContainer(size: constraintSize)
+        let manager = NSLayoutManager()
+        manager.addTextContainer(container)
+        storage.addLayoutManager(manager)
+        container.lineFragmentPadding = 0
+        let textSize = manager.usedRectForTextContainer(container).size
+        
         let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
         
         //        print("need TextSize = \(textSize)")
@@ -431,7 +460,17 @@ final class CTATextElement: NSObject, CTAElement {
         
         let inset = insets
         let str = attributeStringWithLineSpacing(lineSpacing, textSpacing: textSpacing)
-        let textSize = str.boundingRectWithSize(constraintSize, options: .UsesLineFragmentOrigin, context: nil).size
+        
+        let constraintSize = constraintSize
+        let storage = NSTextStorage(attributedString: str)
+        let container = NSTextContainer(size: constraintSize)
+        let manager = NSLayoutManager()
+        manager.addTextContainer(container)
+        storage.addLayoutManager(manager)
+        container.lineFragmentPadding = 0
+        let textSize = manager.usedRectForTextContainer(container).size
+        
+//        let textSize = str.boundingRectWithSize(constraintSize, options: .UsesLineFragmentOrigin, context: nil).size
         let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
         
         //        print("need TextSize = \(textSize)")

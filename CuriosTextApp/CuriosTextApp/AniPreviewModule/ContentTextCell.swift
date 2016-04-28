@@ -64,6 +64,7 @@ class ContentTextCell: ContentCell {
     
     private func setup() {
         contentView.addSubview(textLayer)
+//        textLayer.backgroundColor = UIColor.yellowColor()
     }
     
     override func layoutSubviews() {
