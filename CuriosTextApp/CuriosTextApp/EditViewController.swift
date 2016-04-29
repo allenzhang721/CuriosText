@@ -578,9 +578,13 @@ extension EditViewController: CTATabViewControllerDataSource, CTATabViewControll
     
     func tabViewController(ViewController: CTATabViewController, didChangedToIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
         
+//        print("will tab change")
+        
         guard let container = selectedContainer where container.featureTypes.count > 0 else {
             return
         }
+        
+//        print("tab change from = \(oldIndexPath?.item), to = \(indexPath.item)")
         
         selectorViewController.changeToSelector(container.featureTypes[indexPath.item])
     }
@@ -630,6 +634,7 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
     
     // MARK: - Delegate
     func canvasViewController(viewCOntroller: CTACanvasViewController, didSelectedIndexPath indexPath: NSIndexPath) {
+        var hadSelected = selectedContainer != nil ? true : false
         let preType = selectorViewController.currentType
         let preCon = selectedContainer?.type
         selectedIndexPath = indexPath
@@ -640,7 +645,9 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
             
             if let attri = self.tabViewController.collectionView.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: nextIndex, inSection: 0)) {
                 let cener = attri.center
+                tabViewController.changingContainer = hadSelected ? true : false
                 self.tabViewController.collectionView.setContentOffset(CGPoint(x: cener.x - self.tabViewController.collectionView.bounds.width / 2.0, y: 0), animated: false)
+//                tabViewController.changingContainer = false
             }
         }
         
@@ -652,9 +659,6 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
         guard let aselectedIndexPath = selectedIndexPath else {
             return
         }
-        
-        
-        
        
         let next = aselectedIndexPath.item > 0 ? aselectedIndexPath.item - 1 : 0
         

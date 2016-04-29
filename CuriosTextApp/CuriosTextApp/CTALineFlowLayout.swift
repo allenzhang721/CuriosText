@@ -116,8 +116,13 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
                     let distance = fabs((attribute.center.x - CGRectGetMidX(visualRect)))
                     if distance < activeDistance {
                         if currentIndexPath != attribute.indexPath {
-                            if currentIndexPath != nil {
-                                delegate?.didChangeTo(collectionView, itemAtIndexPath: attribute.indexPath, oldIndexPath: currentIndexPath)
+                            
+                            // TODO: May be this ? -- EMIAOSTEIN, 29/04/16, 13:33
+                            
+
+                            if let currentIndexPath = currentIndexPath {
+                                let cu = NSIndexPath(forItem: currentIndexPath.item, inSection: currentIndexPath.section)
+                                delegate?.didChangeTo(collectionView, itemAtIndexPath: attribute.indexPath, oldIndexPath: cu)
                             }
                             currentIndexPath = attribute.indexPath
                         }

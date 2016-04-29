@@ -25,6 +25,9 @@ class CTATabViewController: UIViewController {
     weak var delegate: CTATabViewControllerDelegate?
     weak var dataSource: CTATabViewControllerDataSource?
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    var changingContainer = false
+    
     var layout: CTALineFlowLayout {
         return collectionView.collectionViewLayout as! CTALineFlowLayout
     }
@@ -72,10 +75,11 @@ extension CTATabViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         if let att = collectionView.layoutAttributesForItemAtIndexPath(indexPath) {
+//            tapping = true
             let center = att.center
             let offset = CGPoint(x: center.x - collectionView.bounds.width / 2.0, y: 0)
             collectionView.setContentOffset(offset, animated: true)
-            delegate?.tabViewController(self, didChangedToIndexPath: indexPath, oldIndexPath: nil)
+//            delegate?.tabViewController(self, didChangedToIndexPath: indexPath, oldIndexPath: nil)
         }
         
 //        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredHorizontally, animated: true)
@@ -90,10 +94,17 @@ extension CTATabViewController: LineFlowLayoutDelegate {
         itemAtIndexPath indexPath: NSIndexPath,
         oldIndexPath: NSIndexPath?) {
         
-        if collectionView.dragging || collectionView.tracking {
         
+//        print("will change")
+//        if (collectionView.dragging || collectionView.tracking || collectionView.decelerating) || tapping == true {
+//            print("didchange")
+        
+        
+        if !changingContainer {
             delegate?.tabViewController(self, didChangedToIndexPath: indexPath, oldIndexPath: oldIndexPath)
+        } else {
+            changingContainer = false
         }
+        
     }
-    
 }
