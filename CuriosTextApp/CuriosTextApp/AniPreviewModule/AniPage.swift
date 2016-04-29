@@ -100,19 +100,19 @@ extension TextContainerVMProtocol {
         let source = Source.init(type: .Text, text: text, attributes: attributes)
         
         //content
-        let cwidth = Int(self.size.width) + 1
-        let cheight = Int(self.size.height) + 1
-        let cpositionX = Int(self.size.width / 2.0)
-        let cpositionY = Int(self.size.height / 2.0)
+        let cwidth = self.size.width
+        let cheight = self.size.height
+        let cpositionX = self.size.width / 2.0
+        let cpositionY = self.size.height / 2.0
         let content = Content.init(cx: cpositionX, cy: cpositionY, width: cwidth, height: cheight, source: source)
         
         // container
         let ID = self.iD
-        let width = Int(self.size.width) + 1
-        let height = Int(self.size.height) + 1
-        let positionX = Int(self.center.x)
-        let positionY = Int(self.center.y)
-        let radian = Int(self.radius / CGFloat(M_PI) * 180.0)
+        let width = self.size.width
+        let height = self.size.height
+        let positionX = self.center.x
+        let positionY = self.center.y
+        let radian = self.radius / CGFloat(M_PI) * 180.0
         
         let container = Container.init(cx: positionX, cy: positionY, width: width, height: height, rotation: radian, identifier: ID, contents: [content])
         
@@ -131,19 +131,19 @@ extension ImageContainerVMProtocol {
         let source = Source.init(type: .Image, text: text, attributes: nil)
         
         //content
-        let cwidth = Int(self.size.width) + 1
-        let cheight = Int(self.size.height) + 1
-        let cpositionX = Int(self.size.width / 2.0)
-        let cpositionY = Int(self.size.height / 2.0)
+        let cwidth = self.size.width
+        let cheight = self.size.height
+        let cpositionX = self.size.width / 2.0
+        let cpositionY = self.size.height / 2.0
         let content = Content.init(cx: cpositionX, cy: cpositionY, width: cwidth, height: cheight, source: source)
         
         // container
         let ID = self.iD
-        let width = Int(self.size.width) + 1
-        let height = Int(self.size.height) + 1
-        let positionX = Int(self.center.x)
-        let positionY = Int(self.center.y)
-        let radian = Int(self.radius / CGFloat(M_PI) * 180.0)
+        let width = self.size.width
+        let height = self.size.height
+        let positionX = self.center.x
+        let positionY = self.center.y
+        let radian = self.radius / CGFloat(M_PI) * 180.0
         
         let container = Container.init(cx: positionX, cy: positionY, width: width, height: height, rotation: radian, identifier: ID, contents: [content])
         

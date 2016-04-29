@@ -8,18 +8,18 @@
 
 import Foundation
 struct Content {
-    let height: Int
-    let positionX: Int
-    let positionY: Int
+    let height: CGFloat
+    let positionX: CGFloat
+    let positionY: CGFloat
     let source: Source
-    let width: Int
+    let width: CGFloat
     init?(_ info: [String: AnyObject]) {
-        guard let height = info["height"] as? Int else { return nil }
-        guard let positionX = info["positionX"] as? Int else { return nil }
-        guard let positionY = info["positionY"] as? Int else { return nil }
+        guard let height = info["height"] as? CGFloat else { return nil }
+        guard let positionX = info["positionX"] as? CGFloat else { return nil }
+        guard let positionY = info["positionY"] as? CGFloat else { return nil }
         guard let sourceJSONDictionary = info["source"] as? [String: AnyObject] else { return nil }
         guard let source = Source(sourceJSONDictionary) else { return nil }
-        guard let width = info["width"] as? Int else { return nil }
+        guard let width = info["width"] as? CGFloat else { return nil }
         self.height = height
         self.positionX = positionX
         self.positionY = positionY
@@ -27,7 +27,7 @@ struct Content {
         self.width = width
     }
     
-    init(cx: Int, cy: Int, width: Int, height: Int, source: Source) {
+    init(cx: CGFloat, cy: CGFloat, width: CGFloat, height: CGFloat, source: Source) {
         self.height = height
         self.positionX = cx
         self.positionY = cy
