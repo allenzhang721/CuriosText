@@ -81,6 +81,7 @@
 "AlertTitlePhoneNotExist" = "Mobile Number not registered. Please try other.";
 "AlertTitlePhoneNil" = "Mobile Number null";
 "AlertTitleConnectUs" = "Please connect service.";
+"AlertTitleWechatNil" = "Login with Wechat failed.";
 "AlertTitleDataNil" = "Data null";
 
 "AllPhotoLibraryTitle" = "Please Allow Access to Your Photos";

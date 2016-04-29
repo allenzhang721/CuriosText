@@ -84,6 +84,7 @@
 "AlertTitlePhoneNotExist" = "此手机号码还没有注册,请尝试其他号码";
 "AlertTitlePhoneNil" = "手机号码为空";
 "AlertTitleConnectUs" = "请联系客服";
+"AlertTitleWechatNil" = "微信登录失败";
 "AlertTitleDataNil" = "数据为空";
 
 "AllPhotoLibraryTitle" = "设置";
