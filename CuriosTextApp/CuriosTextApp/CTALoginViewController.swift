@@ -317,7 +317,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
                             }else {
                                 let error = info.errorType as! CTAWeixinRegisterError
                                 if error == .WeixinIDIsEmpty {
-                                    self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                    self.showSingleAlert(NSLocalizedString("AlertTitleWechatNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                     })
                                 }else if error == .DataIsEmpty{
                                     self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
