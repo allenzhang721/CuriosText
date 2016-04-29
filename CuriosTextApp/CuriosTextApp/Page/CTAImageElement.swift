@@ -60,6 +60,8 @@ extension CTAImgElement: CTAElement {
         let originWidth = containerSize.width / preScale
         let originHeight = containerSize.height / preScale
         
+        print("preScale = \(preScale), scale = \(scale),oriWidth = \(originWidth), oriHeight = \(originHeight)")
+        
         let nextSize = CGSize(width: originWidth * scale, height: originHeight * scale)
         let inset = CGPoint.zero
         
