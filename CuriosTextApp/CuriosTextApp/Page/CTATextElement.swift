@@ -426,11 +426,8 @@ final class CTATextElement: NSObject, CTAElement {
         storage.addLayoutManager(manager)
         container.lineFragmentPadding = 0
         let textSize = manager.usedRectForTextContainer(container).size
-        
-//        let textSize = str.boundingRectWithSize(constraintSzie, options: .UsesLineFragmentOrigin, context: nil).size
+
         let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
-        
-//        print("need TextSize = \(textSize)")
         
         return (inset, size)
     }
@@ -451,8 +448,6 @@ final class CTATextElement: NSObject, CTAElement {
         
         let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
         
-        //        print("need TextSize = \(textSize)")
-        
         return (inset, size)
     }
     
@@ -472,8 +467,6 @@ final class CTATextElement: NSObject, CTAElement {
         
 //        let textSize = str.boundingRectWithSize(constraintSize, options: .UsesLineFragmentOrigin, context: nil).size
         let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
-        
-        //        print("need TextSize = \(textSize)")
         
         return (inset, size)
         

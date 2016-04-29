@@ -347,12 +347,13 @@ extension EditViewController {
             tempValues.oldScale = container.scale
             
         case .Changed:
-            let nextScale = scale * tempValues.beganScale
+//            let nextScale = scale * tempValues.beganScale
+            let nextScale = max(scale * tempValues.beganScale, 0.2)
             
             if fabs(nextScale * 100.0 - tempValues.oldScale * 100.0) > 0.1 {
                 let ascale = floor(nextScale * 100) / 100.0
                 let canvasSize = page.size
-                container.updateWithScale(ascale, constraintSzie: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
+                container.updateWithScale(ascale, constraintSzie: CGSize(width: canvasSize.width, height: canvasSize.height * 5))
                 
                 canvasViewController.updateAt(indexPath, updateContents: true)
                 selectorViewController.updateIfNeed()
@@ -727,7 +728,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         let canvasSize = page.size
         container.updateWithScale(
             scale,
-            constraintSzie: CGSize(width: canvasSize.width, height: canvasSize.height * 2)
+            constraintSzie: CGSize(width: canvasSize.width, height: canvasSize.height * 5)
         )
         canvasViewController.updateAt(selectedIndexPath, updateContents: true)
     }
@@ -758,11 +759,11 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             return
         }
         
-        let canvasSize = canvasViewController.view.bounds.size
+        let canvasSize = page.size
         container.updateWithFontFamily(
             fontFamily,
             FontName: fontName,
-            constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2)
+            constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 5)
         )
         canvasViewController.updateAt(selectedIndexPath, updateContents: true)
     }
@@ -787,7 +788,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             return
         }
         
-        let canvasSize = canvasViewController.view.bounds.size
+        let canvasSize = page.size
         container.updateWithTextSpacing(
             lineSpacing,
             textSpacing: textSpacing,

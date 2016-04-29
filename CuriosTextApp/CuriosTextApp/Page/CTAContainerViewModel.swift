@@ -160,9 +160,9 @@ extension CTAContainer: ContainerVMProtocol {
         let contentSize = CGSize(width: ceil(newResult.size.width), height: ceil(newResult.size.height))
         let inset = CGPoint(x: floor(newResult.inset.x), y: newResult.inset.y)
         // new content size
-        let nextSize = CGSize(width: contentSize.width - 2 * inset.x, height: contentSize.height - 2 * inset.y)
+        let nextContentSize = CGSize(width: contentSize.width - 2 * inset.x, height: contentSize.height - 2 * inset.y)
         
-        size = nextSize
+        size = nextContentSize
         contentInset = inset
     }
 }
