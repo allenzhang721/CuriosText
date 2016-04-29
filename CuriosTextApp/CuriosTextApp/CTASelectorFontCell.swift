@@ -20,7 +20,7 @@ final class CTASelectorFontCell: CTASelectorCell {
     private func setup() {
         view = CTAPickerView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width - 40, height: 88)), showCount: 2)
         view.collectionView.clipsToBounds = false
-        view.backgroundColor = UIColor.whiteColor()
+//        view.collectionView.backgroundColor = UIColor.yellowColor()
         contentView.addSubview(view)
         view.backgroundColor = CTAStyleKit.intoDreams1
         view.translatesAutoresizingMaskIntoConstraints = false

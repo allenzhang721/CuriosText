@@ -118,8 +118,6 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
                         if currentIndexPath != attribute.indexPath {
                             
                             // TODO: May be this ? -- EMIAOSTEIN, 29/04/16, 13:33
-                            
-
                             if let currentIndexPath = currentIndexPath {
                                 let cu = NSIndexPath(forItem: currentIndexPath.item, inSection: currentIndexPath.section)
                                 delegate?.didChangeTo(collectionView, itemAtIndexPath: attribute.indexPath, oldIndexPath: cu)
@@ -239,8 +237,10 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
                         adjustOffset = adjust
                     }
                 }
-                let point = CGPoint(x: proposedContentOffset.x + adjustOffset, y: proposedContentOffset.y)
-                collectionView.setContentOffset(point, animated: true)
+                
+                let point = CGPoint(x: proposedContentOffset.x + adjustOffset + 0.5, y: proposedContentOffset.y)
+                print("Auto scroll to \(point), currentOffset = \(collectionView.contentOffset), size = \(collectionView.bounds)")
+//                collectionView.setContentOffset(point, animated: false)
                 return point
                 
                 
