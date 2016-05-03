@@ -69,13 +69,13 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
     
     func initView(){
         let bouns = UIScreen.mainScreen().bounds
-        let tap = UITapGestureRecognizer(target: self, action: "bgViewClick:")
+        let tap = UITapGestureRecognizer(target: self, action: #selector(CTASetPasswordViewController.bgViewClick(_:)))
         self.view.addGestureRecognizer(tap)
     
         let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
-        backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
+        backButton.addTarget(self, action: #selector(CTASetPasswordViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
         
         let setPasswordTitle = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 60*self.getVerRate(), width: 100, height: 40))
@@ -96,7 +96,7 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         self.passwordVisibleButton = UIButton.init(frame: CGRect.init(x: bouns.width - 27*self.getHorRate() - 20, y: self.passwordTextinput.frame.origin.y + 19, width: 20, height: 13))
         self.passwordVisibleButton.setImage(UIImage(named: "passwordhide-icon"), forState: .Normal)
         self.view.addSubview(self.passwordVisibleButton)
-        self.passwordVisibleButton.addTarget(self, action: "passwordVisibleClick:", forControlEvents: .TouchUpInside)
+        self.passwordVisibleButton.addTarget(self, action: #selector(CTASetPasswordViewController.passwordVisibleClick(_:)), forControlEvents: .TouchUpInside)
         let passwordLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.passwordTextinput.frame.origin.y + 12, width: 50, height: 25))
         passwordLabel.font = UIFont.systemFontOfSize(18)
         passwordLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
@@ -132,7 +132,7 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         self.submitButton.titleLabel?.font = UIFont.systemFontOfSize(20)
         self.submitButton.sizeToFit()
         self.submitButton.frame.origin.x = (bouns.width - self.submitButton.frame.width)/2
-        self.submitButton.addTarget(self, action: "submitButtonClikc:", forControlEvents: .TouchUpInside)
+        self.submitButton.addTarget(self, action: #selector(CTASetPasswordViewController.submitButtonClikc(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(self.submitButton)
         
     }

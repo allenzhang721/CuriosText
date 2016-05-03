@@ -21,6 +21,16 @@ class CTASelectorSizeCell: CTASelectorCell {
             hudLabel.text = newValue
         }
     }
+    var value: CGFloat {
+        get {
+            return sizeView.value
+        }
+        
+        set {
+            sizeView.value = newValue
+            text = "\(Int(sizeView.value * 100))%"
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,8 +39,8 @@ class CTASelectorSizeCell: CTASelectorCell {
     
     func setup() {
         sizeView = CTASliderView(frame: bounds, attribute: CTASliderAttributes(showMinorLine: true, seniorRatio: 0.5))
-        sizeView.minumValue = 0.5
-        sizeView.maxiumValue = 5.0
+        sizeView.minumValue = 0.2
+        sizeView.maxiumValue = 2.0
         addSubview(sizeView)
         hudLabel.textAlignment = .Center
         hudLabel.textColor = CTAStyleKit.selectedColor
@@ -61,7 +71,7 @@ class CTASelectorSizeCell: CTASelectorCell {
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
         
         sizeView.addTarget(target, action: action, forControlEvents: controlEvents)
-        sizeView.addTarget(self, action: "valueChanged:", forControlEvents: controlEvents)
+        sizeView.addTarget(self, action: #selector(CTASelectorSizeCell.valueChanged(_:)), forControlEvents: controlEvents)
     }
     
     override func removeAllTarget() {

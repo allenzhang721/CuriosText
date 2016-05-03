@@ -92,7 +92,7 @@ class CTAUpTokenDomain: CTABaseDomain {
         let listArray = json[key(.List)].array;
         var upTokenArray: Array<CTAUpTokenModel> = [];
         if listArray != nil{
-            for var i = 0 ; i < listArray!.count; i++ {
+            for i in 0..<listArray!.count {
                 let listJson = listArray![i];
                 let tokenModel = CTAUpTokenModel.generateFrom(listJson);
                 upTokenArray.append(tokenModel);

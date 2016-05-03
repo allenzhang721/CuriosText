@@ -36,8 +36,8 @@ extension AniFactory {
                 NSValue(CATransform3D: CATransform3DMakeScale(1.0, 1.0, 1)),
             ],
             "mask.colors": [
-                [UIColor.blackColor().CGColor, UIColor.clearColor().CGColor],
-                [UIColor.blackColor().CGColor, UIColor.blackColor().CGColor]
+                [UIColor.blackColor().CGColor, UIColor.blackColor().CGColor, UIColor.clearColor().CGColor, UIColor.clearColor().CGColor],
+                [UIColor.blackColor().CGColor, UIColor.blackColor().CGColor, UIColor.blackColor().CGColor, UIColor.blackColor().CGColor]
             ]
         ]
         

@@ -146,7 +146,7 @@ class CTAUserRelationDomain: CTABaseDomain {
         let listArray = json[key(.List)].array;
         var userArray: Array<CTAViewUserModel> = [];
         if listArray != nil{
-            for var i = 0 ; i < listArray!.count; i++ {
+            for i in 0..<listArray!.count {
                 let listJson = listArray![i];
                 let userModel = CTAViewUserModel.generateFrom(listJson)
                 userArray.append(userModel);

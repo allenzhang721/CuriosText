@@ -290,11 +290,9 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 self.setCellPublishModel()
             }else {
                 self.setCellsPosition()
-                self.currentFullCell!.playAnimation()
             }
         }else {
             self.setCellsPosition()
-            self.currentFullCell!.playAnimation()
         }
     }
 
@@ -487,7 +485,6 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         case .Began:
             self.beganLocation = sender.locationInView(view)
             self.panDirection = .None
-            self.currentFullCell.pauseAnimation()
         case .Changed:
             let newLocation = sender.locationInView(view)
             self.viewHorPanHandler(newLocation)
@@ -772,7 +769,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             self.setCellPublishModel()
         }else {
             self.setCellsPosition()
-            self.currentFullCell!.playAnimation()
+            //self.currentFullCell!.playAnimation()
         }
     }
     

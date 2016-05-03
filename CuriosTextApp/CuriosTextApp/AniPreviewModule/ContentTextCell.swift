@@ -64,14 +64,24 @@ class ContentTextCell: ContentCell {
     
     private func setup() {
         contentView.addSubview(textLayer)
+//        textLayer.backgroundColor = UIColor.yellowColor()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        let widthRatio: CGFloat
+        let heightRatio: CGFloat
+        if let familyName = (text?.attribute(NSFontAttributeName, atIndex: 0, effectiveRange: nil) as? UIFont)?.familyName, let fontFix = CTAFontsManager.familiyFixRectRatio[familyName] {
+           widthRatio = fontFix["width"] ?? 0
+            heightRatio = fontFix["height"] ?? 0
+        } else {
+            widthRatio = 0.0
+            heightRatio = 0.0
+        }
 
-        let append: CGFloat = 0.0
-        textLayer.insets = CGPoint(x: bounds.width * append * 0.5 * 0.5, y: bounds.height * 0.1 * 0.5)
-        textLayer.bounds.size = CGSize(width: bounds.width * (1.0 + append), height: bounds.height * 1.1)
+        textLayer.insets = CGPoint(x: bounds.width * widthRatio * 0.5, y: bounds.height * heightRatio * 0.5)
+        textLayer.bounds.size = CGSize(width: bounds.width * (1.0 + widthRatio), height: bounds.height * (1.0 + heightRatio))
         textLayer.center = CGPoint(x: contentView.bounds.midX, y: contentView.bounds.midY)
     }
 }

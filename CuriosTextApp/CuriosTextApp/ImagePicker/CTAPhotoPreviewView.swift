@@ -70,7 +70,7 @@ extension CTAPhotoPreviewView {
     }
     
     func setupGesture() {
-        tap = UITapGestureRecognizer(target: self, action: "tap:")
+        tap = UITapGestureRecognizer(target: self, action: #selector(CTAPhotoPreviewView.tap(_:)))
         tap.delegate = self
         tap.numberOfTapsRequired = 2
         addGestureRecognizer(tap)

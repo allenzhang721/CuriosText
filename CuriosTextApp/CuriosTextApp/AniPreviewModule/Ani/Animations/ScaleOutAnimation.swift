@@ -37,8 +37,8 @@ extension AniFactory {
                 
             ],
             "mask.colors": [
-                [UIColor.blackColor().CGColor, UIColor.blackColor().CGColor],
-                [UIColor.blackColor().CGColor, UIColor.clearColor().CGColor],
+                [UIColor.blackColor().CGColor, UIColor.blackColor().CGColor, UIColor.blackColor().CGColor, UIColor.blackColor().CGColor],
+                [UIColor.blackColor().CGColor, UIColor.blackColor().CGColor, UIColor.clearColor().CGColor, UIColor.clearColor().CGColor],
             ]
         ]
         

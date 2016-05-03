@@ -9,21 +9,21 @@
 import Foundation
 struct Container {
     let contents: [Content]
-    let height: Int
+    let height: CGFloat
     let identifier: String
-    let positionX: Int
-    let positionY: Int
-    var rotation: Int
-    let width: Int
+    let positionX: CGFloat
+    let positionY: CGFloat
+    var rotation: CGFloat
+    let width: CGFloat
     init?(_ info: [String: AnyObject]) {
         guard let contentsJSONArray = info["contents"] as? [[String: AnyObject]] else { return nil }
         let contents = contentsJSONArray.map({ Content($0) }).flatMap({ $0 })
-        guard let height = info["height"] as? Int else { return nil }
+        guard let height = info["height"] as? CGFloat else { return nil }
         guard let identifier = info["identifier"] as? String else { return nil }
-        guard let positionX = info["positionX"] as? Int else { return nil }
-        guard let positionY = info["positionY"] as? Int else { return nil }
-        guard let rotation = info["rotation"] as? Int else { return nil }
-        guard let width = info["width"] as? Int else { return nil }
+        guard let positionX = info["positionX"] as? CGFloat else { return nil }
+        guard let positionY = info["positionY"] as? CGFloat else { return nil }
+        guard let rotation = info["rotation"] as? CGFloat else { return nil }
+        guard let width = info["width"] as? CGFloat else { return nil }
         self.contents = contents
         self.height = height
         self.identifier = identifier
@@ -33,7 +33,7 @@ struct Container {
         self.width = width
     }
     
-    init(cx: Int, cy: Int, width: Int, height: Int, rotation: Int, identifier: String, contents: [Content]) {
+    init(cx: CGFloat, cy: CGFloat, width: CGFloat, height: CGFloat, rotation: CGFloat, identifier: String, contents: [Content]) {
         
         self.contents = contents
         self.height = height

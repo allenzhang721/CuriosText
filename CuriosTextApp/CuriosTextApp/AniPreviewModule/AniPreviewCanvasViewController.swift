@@ -21,6 +21,8 @@ class AniPreviewCanvasViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        
+        fakePauseView.needGradient = false
     }
     
     override func prefersStatusBarHidden() -> Bool {

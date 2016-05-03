@@ -72,7 +72,7 @@ class CTAUploadAction: CTAUploadProtocol {
     func completeAction(uploadActionModel:CTAUploadActionModel, uploadInfo:CTAUploadInfo) {
         uploadActionModel.complete(uploadInfo)
         var index:Int = -1
-        for var i=0; i < self.uploadQueue.count; i++ {
+        for i in 0..<self.uploadQueue.count {
             let oldModel:CTAUploadActionModel = self.uploadQueue[i];
             if oldModel.uploadID == uploadActionModel.uploadID {
                 index = i;
@@ -89,7 +89,7 @@ class CTAUploadAction: CTAUploadProtocol {
         let count:Int = uploadArray.count
         let rate:Float = 1/Float(count);
         var progress:Float = 0.0;
-        for var i=0; i < count; i++ {
+        for i in 0..<count {
             let model:CTAUploadModel = uploadArray[i]
             progress = progress + model.uploadProgress * rate
         }
@@ -97,10 +97,10 @@ class CTAUploadAction: CTAUploadProtocol {
     }
     
     func getUploadActionModel(uploadModel: CTAUploadModel) -> CTAUploadActionModel?{
-        for var i=0; i < self.uploadQueue.count; i++ {
+        for i in 0..<self.uploadQueue.count {
             let uploadActionModel:CTAUploadActionModel = self.uploadQueue[i]
             let uploadArray = uploadActionModel.uploadArray
-            for var j=0; j < uploadArray.count; j++ {
+            for j in 0..<uploadArray.count {
                 let model:CTAUploadModel = uploadArray[j]
                 if(model.key == uploadModel.key){
                     return uploadActionModel
@@ -112,7 +112,7 @@ class CTAUploadAction: CTAUploadProtocol {
     
     func checkPublishUploadComplete(uploadActionModel:CTAUploadActionModel) -> Bool {
         let uploadArray = uploadActionModel.uploadArray
-        for var i=0; i < uploadArray.count; i++ {
+        for i in 0..<uploadArray.count {
             let model:CTAUploadModel = uploadArray[i]
             if(!model.uploadComplete){
                 return false
@@ -130,7 +130,7 @@ class CTAUploadAction: CTAUploadProtocol {
      - parameter completeHandle:
      */
     func uploadFileArray(uploadID:String, uploadArray:Array<CTAUploadModel>, progress progressHandle:(CTAUploadProgressInfo!) -> Void, complete completeHandle:(CTAUploadInfo!) -> Void){
-        for var i = 0; i < uploadArray.count; i++ {
+        for i in 0..<uploadArray.count {
             let uploadMode:CTAUploadModel = uploadArray[i]
             uploadMode.uploadID = uploadID
         }

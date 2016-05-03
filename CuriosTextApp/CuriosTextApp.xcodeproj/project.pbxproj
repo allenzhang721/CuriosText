@@ -1120,6 +1120,7 @@
 			isa = PBXGroup;
 			children = (
 				2CD11AB91CB7547C00A79305 /* Animations */,
+				2CD11AAC1CB7547500A79305 /* AniDescriptor.swift */,
 				2CD11AA71CB7547500A79305 /* AniCanvas.swift */,
 				2CD11AA91CB7547500A79305 /* AniContainer.swift */,
 				2CD11AAA1CB7547500A79305 /* AniContent.swift */,
@@ -1147,7 +1148,6 @@
 				2C85F81E1CC3273500C7186C /* CurlAnimation.swift */,
 				2C85F8201CC3671700C7186C /* FadeAnimation.swift */,
 				2C9374F71CC3983A0002C806 /* OrbitalAnimation.swift */,
-				2CD11AAC1CB7547500A79305 /* AniDescriptor.swift */,
 			);
 			name = Animations;
 			path = CuriosTextApp/AniPreviewModule/Ani/Animations;

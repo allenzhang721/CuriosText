@@ -13,7 +13,7 @@ class AniControl: NSObject {
     
     enum AniControlState {
         case Start
-        case Playing(Float, Float)
+        case Playing(Float, Float) // progress, duration
         case Paused
         case Continued
         case Stoped

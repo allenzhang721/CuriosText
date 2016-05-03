@@ -408,7 +408,6 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
         case .Began:
             self.beganLocation = sender.locationInView(view)
             self.panDirection = .None
-            self.currentFullCell!.pauseAnimation()
         case .Changed:
             let newLocation = sender.locationInView(view)
             if self.panDirection == .None {

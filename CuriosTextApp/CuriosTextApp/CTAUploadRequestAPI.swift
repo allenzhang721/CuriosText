@@ -28,7 +28,7 @@ class CTAUserUpTokenRequest: CTABaseRequest {
     
     override func parameter() -> String {
         var keyArray:Array<AnyObject> = [];
-        for var i=0; i < list.count; i++ {
+        for i in 0..<list.count {
             let upTokeModel:CTAUpTokenModel = list[i]
             keyArray.append(upTokeModel.data)
         }
@@ -53,7 +53,7 @@ class CTAPublishUpTokenRequest: CTABaseRequest {
     
     override func parameter() -> String {
         var keyArray:Array<AnyObject> = [];
-        for var i=0; i < list.count; i++ {
+        for i in 0..<list.count {
             let upTokeModel:CTAUpTokenModel = list[i]
             keyArray.append(upTokeModel.data)
         }

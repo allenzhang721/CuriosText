@@ -46,7 +46,7 @@ public struct CTASliderAttributes {
 public class CTASliderView: UIControl, ValueTuneable {
     
     private var leftValue: CGFloat = 0.5
-    private var rightValue: CGFloat = 5.5
+    private var rightValue: CGFloat = 2.5
     private var currentValue: CGFloat = 0.0
     
     private var calibrationUnit: CGFloat = 1.0

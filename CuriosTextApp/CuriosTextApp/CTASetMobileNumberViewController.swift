@@ -58,13 +58,13 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
     
     func initView(){
         let bouns = UIScreen.mainScreen().bounds
-        let tap = UITapGestureRecognizer(target: self, action: "bgViewClick:")
+        let tap = UITapGestureRecognizer(target: self, action: #selector(CTASetMobileNumberViewController.bgViewClick(_:)))
         self.view.addGestureRecognizer(tap)
         
         let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
-        backButton.addTarget(self, action: "backButtonClick:", forControlEvents: .TouchUpInside)
+        backButton.addTarget(self, action: #selector(CTASetMobileNumberViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
 
         let enterMobileLabel = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 60*self.getVerRate(), width: 100, height: 40))
@@ -83,7 +83,7 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
         self.registerButton.setTitleColor(UIColor.init(red: 239/255, green: 51/255, blue: 74/255, alpha: 1.0), forState: .Normal)
         self.registerButton.setTitleColor(UIColor.init(red: 216/255, green: 216/255, blue: 216/255, alpha: 1.0), forState: .Disabled)
         self.registerButton.titleLabel?.font = UIFont.systemFontOfSize(20)
-        self.registerButton.addTarget(self, action: "registerButtonClick:", forControlEvents: .TouchUpInside)
+        self.registerButton.addTarget(self, action: #selector(CTASetMobileNumberViewController.registerButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(self.registerButton)
     }
     

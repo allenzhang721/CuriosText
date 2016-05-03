@@ -14,6 +14,7 @@ class CTAFontsManager {
     static var indexPaths = [CTAIndexPath]()
     private static var validFamilies = [String]()
     static var familiyDisplayNameDic = [String: String]()
+    static var familiyFixRectRatio = [String: [String: CGFloat]]()  // [familyName: [width: 0.1, height: 0.1]]
     
 //   static let families: [String] = {
 //    
@@ -99,6 +100,22 @@ class CTAFontsManager {
     class func registerFontAt(fileUrl: NSURL) {
         
         FontManager.registerFontAt(fileUrl)
+    }
+    /*
+     
+     let familyName: String
+     let fullName: String
+     let postscriptName: String
+     let copyRight: String
+     let style: String
+     let size: String
+     let version: String
+     */
+    class func registerFontWith(familyName: String, fullName: String, postscriptName: String, copyRight: String, style: String, size: String, version: String) {
+        
+        let info = FontInfo(familyName: familyName, fullName: fullName, postscriptName: postscriptName, copyRight: copyRight, style: style, size: size, version: version)
+        
+        FontManager.registerFontWith(info)
     }
     
     class func reloadData() {

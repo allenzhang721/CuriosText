@@ -81,6 +81,11 @@ class FontManager {
         share.registerFontAt(url)
     }
     
+    class func registerFontWith(info: FontInfoAttributes) {
+        share.beganAdd(info)
+        share.save()
+    }
+    
     class func registeredFamilies() -> [String] {
        return share.families()
         

@@ -84,12 +84,12 @@ class AniNode {
         for u in units {
             
             let s = Source(type: .Text, text: u.text, attributes: u.attriubtes)
-            let content = Content(cx: Int(u.usedRect.midX) + 1, cy: Int(u.usedRect.midY) + 1, width: Int(u.usedRect.width) + 1, height: Int(u.usedRect.height) + 1, source: s)
+            let content = Content(cx: u.usedRect.midX, cy: u.usedRect.midY, width: u.usedRect.width, height: u.usedRect.height, source: s)
             
             contents.append(content)
         }
 
-        let c = Container(cx: container.positionX, cy: container.positionY, width: Int(size.width), height: Int(size.height), rotation: container.rotation, identifier: container.identifier, contents: contents)
+        let c = Container(cx: container.positionX, cy: container.positionY, width: size.width, height: size.height, rotation: container.rotation, identifier: container.identifier, contents: contents)
         
         return c
     }

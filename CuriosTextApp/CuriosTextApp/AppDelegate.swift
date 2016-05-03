@@ -18,8 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
 //        registerFonts()
+        prints()
         registerLocalFonts()
+        registerSystemFonts()
         familiesDisplayNames()
+        familiesFixRatio()
         ImageCache.defaultCache.maxMemoryCost = 100 * 1024 * 1024 // Allen: 100 MB
         // Override point for customization after application launch.
         #if DEBUG
@@ -32,6 +35,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CTASocialManager.register(.SMS, appID: CTAConfigs.SMS.appID, appKey: CTAConfigs.SMS.appKey) // http://dashboard.mob.com/#/sms/index
         
         return true
+    }
+    
+    func prints() {
+        
+        let name = UIFont.familyNames()
+        
+        for i in name {
+            
+            print("\(i)\n")
+            
+        }
     }
     
     func registerLocalFonts() {
@@ -52,6 +66,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CTAFontsManager.reloadData()
     }
     
+    func registerSystemFonts() {
+        
+        /*
+         Times New Roman
+         
+         American Typewriter
+         
+         Snell Roundhand
+         
+         Chalkduster
+         */
+        
+        let familiesName = ["Times New Roman", "American Typewriter", "Snell Roundhand", "Chalkduster"]
+        for fa in familiesName {
+            let fonts = UIFont.fontNamesForFamilyName(fa)
+            print(fonts)
+            for f in fonts {
+                if let font = UIFont(name: f, size: 17) {
+                    let desc = font.fontDescriptor()
+                    let fullName = f
+                    let postName = desc.postscriptName
+                    let style = CTFontCopyName(font, kCTFontStyleNameKey)?.toString() ?? ""
+                    let copyRight = CTFontCopyName(font, kCTFontCopyrightNameKey)?.toString() ?? ""
+                    let version = CTFontCopyName(font, kCTFontVersionNameKey)?.toString() ?? ""
+                    
+                    CTAFontsManager.registerFontWith(fa, fullName: fullName, postscriptName: postName, copyRight: copyRight, style: style, size: "", version: version)
+                    
+                }
+                
+            }
+        }
+        
+        CTAFontsManager.reloadData()
+    }
+    
+    
+    
     func familiesDisplayNames() {
         
         let fontsName = "Fonts"
@@ -63,6 +114,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let fileNames = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)) as! [String: String]
         
         CTAFontsManager.familiyDisplayNameDic = fileNames
+    }
+    
+    func familiesFixRatio() {
+        
+        let fontsName = "Fonts"
+        let path = NSBundle.mainBundle().bundleURL
+        let fontsDirUrl = path.URLByAppendingPathComponent(fontsName)
+        let jsonName = "familyFixRatios.json"
+        let jsonFileURL = fontsDirUrl.URLByAppendingPathComponent(jsonName)
+        let data = NSData(contentsOfURL: jsonFileURL)!
+        let fixRatio = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)) as! [String: [String: CGFloat]]
+        
+        CTAFontsManager.familiyFixRectRatio = fixRatio
+        
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
@@ -95,6 +160,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+}
+
+private extension CFString {
+    
+    func toString() -> String {
+        return self as String
     }
 }
 

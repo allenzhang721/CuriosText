@@ -13,6 +13,17 @@ class CTASelectorRotatorCell: CTASelectorCell {
     let view: CTARotatorView
     let hudLabel = CTAHUDLabel()
     
+    var radian: CGFloat {
+        get {
+            return view.radian
+        }
+        
+        set {
+            view.radian = newValue
+            hudLabel.text = "\(Int(ceil((radian % CGFloat(2 * M_PI)) / CGFloat(M_PI) * 180)))º"
+        }
+    }
+    
     override init(frame: CGRect) {
         self.view = CTARotatorView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)))
         super.init(frame: frame)
