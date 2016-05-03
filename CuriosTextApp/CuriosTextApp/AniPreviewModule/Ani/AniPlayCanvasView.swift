@@ -48,6 +48,14 @@ class AniPlayCanvasView: CanvasView {
     }
 }
 
+// Using progress to control animation,
+extension AniPlayCanvasView {
+    
+    
+    
+    
+}
+
 extension AniPlayCanvasView {
     
     private func reset() {

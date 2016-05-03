@@ -22,6 +22,7 @@ class CTAGradientButtonView: UIView {
         }
         
     }
+    var needGradient = true
     let addButton = UIButton()
     var didClickHandler: (() -> ())?
     
@@ -55,7 +56,8 @@ class CTAGradientButtonView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        if needGradient {
         backgroundColor = UIColor.init(patternImage: CTAStyleKit.imageOfGradientInEditor(frame: bounds))
+        }
     }
-
 }
