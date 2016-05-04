@@ -20,6 +20,7 @@ class CTAShareView: UIView{
     var deleteView:UIView!
     var saveLocolView:UIView!
     var reportView:UIView!
+    var uploadResourceView:UIView!
     //var copyLinkView:UIView!
     
     var space:CGFloat = 15.00
@@ -143,12 +144,33 @@ class CTAShareView: UIView{
         reportLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         reportLabel.text = LocalStrings.Report.description
         reportLabel.sizeToFit()
-        reportLabel.center = CGPoint.init(x: deleteButton.center.x, y: buttonW+20)
+        reportLabel.center = CGPoint.init(x: reportButton.center.x, y: buttonW+20)
         self.reportView.addSubview(reportLabel)
         self.reportView.sizeToFit()
         self.reportView.frame.origin.x = 230
         self.scrollView.addSubview(self.reportView)
         
+        self.uploadResourceView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
+        let uploadButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
+        uploadButton.setImage(UIImage.init(named: "report-file-button"), forState: .Normal)
+        uploadButton.addTarget(self, action: #selector(CTAShareView.uploadResourceButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.uploadResourceView.addSubview(uploadButton)
+        let uploadLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
+        uploadLabel.font = UIFont.systemFontOfSize(8)
+        uploadLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        uploadLabel.text = LocalStrings.Report.description
+        uploadLabel.sizeToFit()
+        uploadLabel.center = CGPoint.init(x: uploadButton.center.x, y: buttonW+20)
+        self.uploadResourceView.addSubview(uploadLabel)
+        self.uploadResourceView.sizeToFit()
+        self.uploadResourceView.frame.origin.x = 230
+        self.scrollView.addSubview(self.uploadResourceView)
+        
+        #if DEBUG
+            self.uploadResourceView.hidden = false
+        #else
+            self.uploadResourceView.hidden = true
+        #endif
 //        self.copyLinkView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
 //        let copyLinkButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
 //        copyLinkButton.setImage(UIImage.init(named: "copy-link-button"), forState: .Normal)
@@ -190,6 +212,7 @@ class CTAShareView: UIView{
         self.deleteView.frame.origin.x = space+(space+buttonW)*2
         self.saveLocolView.frame.origin.x = space+(space+buttonW)*3
         self.reportView.frame.origin.x = space+(space+buttonW)*4
+        self.uploadResourceView.frame.origin.x = space+(space+buttonW)*5
     }
     
     func unSelfShareView(){
@@ -201,6 +224,7 @@ class CTAShareView: UIView{
         self.deleteView.frame.origin.x = space+(space+buttonW)*2
         self.saveLocolView.frame.origin.x = space+(space+buttonW)*2
         self.reportView.frame.origin.x = space+(space+buttonW)*3
+        self.uploadResourceView.frame.origin.x = space+(space+buttonW)*4
     }
     
     func resetScrollView(){
@@ -266,6 +290,13 @@ class CTAShareView: UIView{
         self.cancelHandler()
     }
     
+    func uploadResourceButtonClick(sender: UIButton){
+        if self.delegate != nil {
+            self.delegate!.uploadResourceHandler()
+        }
+        self.cancelHandler()
+    }
+    
     func copyLinkButtonClick(sender: UIButton){
         if self.delegate != nil {
             self.delegate!.copyLinkHandler()
@@ -281,4 +312,5 @@ protocol CTAShareViewDelegate{
     func copyLinkHandler()
     func saveLocalHandler()
     func reportHandler()
+    func uploadResourceHandler()
 }

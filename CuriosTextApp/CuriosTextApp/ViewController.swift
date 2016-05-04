@@ -26,8 +26,10 @@ class ViewController: UIViewController{
                 let dic = info.modelDic
                 let publishFilePath = dic![key(.PublishFilePath)]
                 let userFilePath = dic![key(.UserFilePath)]
-                CTAFilePath.publishFilePath = publishFilePath!
-                CTAFilePath.userFilePath = userFilePath!
+                let resourceFilePath = dic![key(.ResourceFilePath)]
+                CTAFilePath.publishFilePath  = publishFilePath!
+                CTAFilePath.userFilePath     = userFilePath!
+                CTAFilePath.resourceFilePath = resourceFilePath!
             }
         }
         CTAUserManager.load()

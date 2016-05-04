@@ -63,3 +63,28 @@ class CTAPublishUpTokenRequest: CTABaseRequest {
         return self.getParameterString(dic, errorMessage: "CTAPublishUpTokenRequest");
     }
 }
+
+class CTAResourceUpTokenRequest: CTABaseRequest{
+    
+    let list:Array<CTAUpTokenModel>;
+    
+    init(list:Array<CTAUpTokenModel>) {
+        self.list = list;
+    }
+    
+    override func requestUrl() -> String {
+        return CTARequestUrl.ResourceUpToken.description;
+    }
+    
+    override func parameter() -> String {
+        var keyArray:Array<AnyObject> = [];
+        for i in 0..<list.count {
+            let upTokeModel:CTAUpTokenModel = list[i]
+            keyArray.append(upTokeModel.data)
+        }
+        let dic:Dictionary<String, AnyObject> = [
+            key(.List): keyArray
+        ];
+        return self.getParameterString(dic, errorMessage: "CTAResourceUpTokenRequest");
+    }
+}
