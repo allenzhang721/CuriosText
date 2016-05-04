@@ -265,11 +265,6 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="ReC-4i-eNM"/>
-                                    <barButtonItem title="GIF" id="8px-bw-Slf">
-                                        <connections>
-                                            <action selector="makeGIFClick:" destination="ka6-cO-1SF" id="CEP-62-QvY"/>
-                                        </connections>
-                                    </barButtonItem>
                                 </items>
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </toolbar>
