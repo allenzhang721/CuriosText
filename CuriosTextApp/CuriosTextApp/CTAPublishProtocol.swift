@@ -248,6 +248,39 @@ extension CTAPublishProtocol{
 
 extension CTAPublishProtocol{
     
+    func weChatShareGIF(viewController: UIViewController, page: CTAPage, publishID: String) {
+        
+        let gifCreatorVC = GIFCreateViewController()
+        gifCreatorVC.canvas = page.toAniCanvas()
+        gifCreatorVC.publishID = publishID
+        gifCreatorVC.fakeView = viewController.view.snapshotViewAfterScreenUpdates(true)
+        gifCreatorVC.completed = { (url, image) in
+            dispatch_async(dispatch_get_main_queue(), {
+                let message =  WXMediaMessage()
+                message.setThumbImage(image)
+                
+                let ext =  WXEmoticonObject()
+                let filePath = url.path
+                ext.emoticonData = NSData(contentsOfFile:filePath!)
+                message.mediaObject = ext
+                
+                let req =  SendMessageToWXReq()
+                req.bText = false
+                req.message = message
+                req.scene = 0
+                WXApi.sendReq(req)
+                dispatch_async(dispatch_get_main_queue(), {
+                    viewController.dismissViewControllerAnimated(false, completion: {
+                    })
+                })
+            })
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            viewController.presentViewController(gifCreatorVC, animated: false, completion: nil)
+        }
+    }
+    
     func weChatShareHandler(){
         if CTASocialManager.isAppInstaller(.WeChat){
             self.publishCell.getEndImg({ (img) -> () in

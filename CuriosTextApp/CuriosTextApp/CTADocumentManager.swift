@@ -11,6 +11,9 @@ import Foundation
 class CTADocumentManager {
     
     static var openedDocument: CTADocument?
+    static var openedDocumentPublishID: String? {
+        return CTADocumentManager.openedDocument?.fileURL.lastPathComponent
+    }
     
     class func generateDocumentURL(fileRootURL: NSURL) -> NSURL {
         

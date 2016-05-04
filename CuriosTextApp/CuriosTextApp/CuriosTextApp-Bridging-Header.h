@@ -9,7 +9,12 @@
 #ifndef CuriosTextApp_Bridging_Header_h
 #define CuriosTextApp_Bridging_Header_h
 
+@import UIKit;
 #import <SMS_SDK/SMSSDK.h>
 #import "AESCrypt.h"
+#import "WXApi.h"
+#import "WXApiObject.h"
+#import "ANGifEncoder.h"
+#import "ANGifBitmap.h"
 
 #endif /* CuriosTextApp_Bridging_Header_h */

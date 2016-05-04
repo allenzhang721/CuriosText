@@ -434,6 +434,7 @@ extension EditViewController {
         let cleanPage = page.cleanEmptyContainers()
         
         publishViewController.canvas = cleanPage.toAniCanvas()
+        publishViewController.publishID = CTADocumentManager.openedDocumentPublishID!
         let retriver = {[weak self] (name: String,  handler: (String, UIImage?) -> ()) in
             if let sf = self {
                 let data = sf.document.resourceBy(name)

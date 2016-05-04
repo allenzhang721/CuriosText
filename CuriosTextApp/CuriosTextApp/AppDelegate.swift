@@ -10,7 +10,7 @@ import UIKit
 import Kingfisher
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     
     var window: UIWindow?
     
@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.Production.description
         #endif
         
+        WXApi.registerApp(CTAConfigs.weChat.appID)
         CTASocialManager.register(.WeChat, appID: CTAConfigs.weChat.appID, appKey: CTAConfigs.weChat.appKey)
         CTASocialManager.register(.SMS, appID: CTAConfigs.SMS.appID, appKey: CTAConfigs.SMS.appKey) // http://dashboard.mob.com/#/sms/index
         
@@ -132,12 +133,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         
-        debug_print(url)
-        if CTASocialManager.handleOpenURL(url) {
-            return true
+       return WXApi.handleOpenURL(url, delegate: self)
+//        debug_print(url)
+//        if CTASocialManager.handleOpenURL(url) {
+//            return true
+//        }
+//        
+//        return false
+    }
+    
+    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+        return WXApi.handleOpenURL(url, delegate: self)
+    }
+    
+    func onReq(req: BaseReq!) {
+        //onReq是微信终端向第三方程序发起请求，要求第三方程序响应。第三方程序响应完后必须调用sendRsp返回。在调用sendRsp返回时，会切回到微信终端程序界面。
+        print(req.type)
+    }
+    
+    func onResp(resp: BaseResp!) {
+        //如果第三方程序向微信发送了sendReq的请求，那么onResp会被回调。sendReq请求调用后，会切到微信终端程序界面。
+        if resp.isKindOfClass(SendAuthResp) {
+            let response = resp as! SendAuthResp
+            print("ErrCode : \(response.errCode)")
+            print("EodeStr : \(response.errStr)")
+            print("Code : \(response.code)")
+            print("State : \(response.state)")
+            print("Lang : \(response.lang)")
+            print("Country : \(response.country)")
         }
-        
-        return false
     }
     
     func applicationWillResignActive(application: UIApplication) {
