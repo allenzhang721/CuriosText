@@ -26,8 +26,6 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
     var cellImageView:UIImageView!
     
-//    var previewView: CTAPreviewCanvasView!
-    
     var previewView: AniPlayCanvasView!
     
     var animationEnable:Bool = false
@@ -103,24 +101,9 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     func loadAnimation(){
         if self.animationEnable{
             if self.publishModel != nil {
-                if self.previewView == nil {
-//                    let preview = CTAPreviewCanvasView(frame: bounds)
-//                    preview.center = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0)
-//                    preview.datasource = self
-//                    self.addSubview(preview)
-//                    self.previewView = preview
-//                    self.previewView.hidden = true
-//                    self.previewView.backgroundColor = UIColor.whiteColor()
-//                    self.cropImageRound(self.previewView)
-//                    self.bringSubviewToFront(self.cellImageView)
-//                    if self.cellColorView != nil {
-//                        self.bringSubviewToFront(self.cellColorView!)
-//                    }
-                }
                 self.isLoadComplete = false
                 let purl = CTAFilePath.publishFilePath
                 let url = purl + publishModel!.publishURL
-//                self.previewView.hidden = true
                 self.cellImageView.hidden = false
                 BlackCatManager.sharedManager.retrieveDataWithURL(NSURL(string: url)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self](data, error, cacheType, URL) -> () in
                     if let strongSelf = self {
@@ -132,9 +115,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                                     let acanvas = page.toAniCanvas()
                                     strongSelf.canvas = acanvas
                                     // get Image
-                                    
                                     let url = NSURL(string: CTAFilePath.publishFilePath + publishModel.publishID)!
-                                    
                                     for c in acanvas.containers {
                                         if let content = c.contents.first where content.type == .Image {
                                             let imageName = content.content.source.ImageName
@@ -151,21 +132,6 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                                             break
                                         }
                                     }
-                                    
-//                                    strongSelf.previewView.imageAccessBaseURL = url
-//                                    strongSelf.previewView.imageAccess = downloadImage
-//                                    strongSelf.previewView.reloadData() {
-//                                        dispatch_async(dispatch_get_main_queue(), {[weak self] in
-//                                            guard let strongSelf = self else { return }
-//                                            strongSelf.isLoadComplete = true
-//                                            strongSelf.previewView.hidden = false
-//                                            strongSelf.cellImageView.hidden = true
-//                                            if strongSelf.loadCompeteHandler != nil {
-//                                                strongSelf.loadCompeteHandler!()
-//                                                strongSelf.loadCompeteHandler = nil
-//                                            }
-//                                            })
-//                                    }
                                 }
                             })
                         }
@@ -189,9 +155,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                 previewView.completedBlock = {[weak self] in
                     self?.playComplete()
                 }
-                //            layer.addSublayer(previewView.layer)
                 sf.addSubview(previewView)
-//                self?.layer.addSublayer(previewView.layer)
                 sf.previewView = previewView
                 sf.cropImageRound(previewView)
                 sf.bringSubviewToFront(sf.cellImageView)
@@ -201,7 +165,6 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
             }
             
             let previewView = sf.previewView
-            
             previewView.dataSource = canvas
             previewView.aniDataSource = canvas
             previewView.reloadData { [weak self] in
