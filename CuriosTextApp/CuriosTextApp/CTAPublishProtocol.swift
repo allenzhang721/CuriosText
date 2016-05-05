@@ -366,9 +366,12 @@ extension CTAPublishProtocol{
                                 
                             }
                             
-                            dispatch_async(dispatch_get_main_queue()) { [weak self] in
-                                (sf as! UIViewController).presentViewController(gifCreatorVC, animated: false, completion: nil)
-                            }
+//                            dispatch_async(dispatch_get_main_queue()) { [weak self] in
+                                (sf as! UIViewController).presentViewController(gifCreatorVC, animated: false, completion: {
+                                    debug_print(" did complated")
+                                    gifCreatorVC.began()
+                                })
+//                            }
                         })
                         })
                     

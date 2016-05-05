@@ -59,13 +59,12 @@ class CanvasView: UIView {
 extension CanvasView {
     
     func reloadData(completed:(() -> ())?) {
-        
-        dispatch_async(dispatch_get_main_queue()) { 
-            
+        dispatch_async(dispatch_get_main_queue()) {
             CATransaction.begin()
             CATransaction.setDisableActions(true)
             self.collectionView.reloadSections(NSIndexSet(index: 0))
             CATransaction.commit()
+        
             completed?()
         }
     }

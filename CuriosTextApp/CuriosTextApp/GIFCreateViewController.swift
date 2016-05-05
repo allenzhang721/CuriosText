@@ -21,6 +21,8 @@ class GIFCreateViewController: UIViewController {
     var counts = 0
     var completed: ((NSURL, UIImage) -> ())?
     
+    var slider: UISlider!
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
@@ -32,20 +34,27 @@ class GIFCreateViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        dispatch_async(dispatch_get_main_queue(), {
-            self.aniCanvasView.reloadData { [weak self] in
-                guard let sf = self else { return }
-                dispatch_async(dispatch_get_main_queue(), {
-                    sf.aniCanvasView.ready()
-                    
-                    dispatch_async(dispatch_get_main_queue()) { [weak self] in
-                        guard let sf = self else { return }
-                        sf.makeGIFBegan()
-                        //                        sf.makeGIF()
-                    }
-                })
+//            self.aniCanvasView.reloadData { [weak self] in
+//                guard let sf = self else { return }
+//                    aniCanvasView.ready()
+        
+//            }
+    }
+    
+    func began() {
+        
+        debug_print("Will Reload")
+        self.aniCanvasView.reloadData { [weak self] in
+            debug_print("Did Reload")
+            guard let sf = self else { return }
+            sf.aniCanvasView.ready()
+            let time: NSTimeInterval = 0.1
+            let delay = dispatch_time(DISPATCH_TIME_NOW,
+                Int64(time * Double(NSEC_PER_SEC)))
+            dispatch_after(delay, dispatch_get_main_queue()) {
+                sf.makeGIFBegan()
             }
-        })
+        }
     }
     
     private func next() {
@@ -54,7 +63,8 @@ class GIFCreateViewController: UIViewController {
         makeGIF(index)
     }
     
-    private func makeGIFBegan() {
+    func makeGIFBegan() {
+        debug_print("Did MakeGIF")
         let result = aniCanvasView.progressBegan()
         
         switch result {
@@ -88,12 +98,12 @@ class GIFCreateViewController: UIViewController {
     private func makeGIF(indexs: Range<Int>) {
         let count = counts
         
-        
         var thumbImage: UIImage!
         for i in indexs {
+            autoreleasepool {
             let progress = CGFloat(i) / CGFloat(count)
             aniCanvasView.progress =  progress < 1.0 ? progress : 1.0
-            autoreleasepool {
+            
                 UIGraphicsBeginImageContext(CGSize(width: 320, height: 320))
                 aniCanvasView.drawViewHierarchyInRect(CGRect(origin: CGPoint.zero, size: CGSize(width: 320, height: 320)), afterScreenUpdates: true)
                 let image = UIGraphicsGetImageFromCurrentImageContext()
@@ -132,6 +142,27 @@ extension GIFCreateViewController {
         view.addSubview(aniCanvasView) // debug
         if let fakeView = fakeView {
             view.addSubview(fakeView)
+        }
+        
+//        slider = UISlider(frame: CGRect(x: 20, y: 568 - 60, width: 280, height: 30))
+//        slider.addTarget(self, action: #selector(GIFCreateViewController.sliderChanged(_:)), forControlEvents: .ValueChanged)
+//        
+//        view.addSubview(slider)
+        
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(GIFCreateViewController.tap(_:)))
+//        view.addGestureRecognizer(tap)
+        
+    }
+    
+    func tap(sender: UITapGestureRecognizer) {
+        makeGIFBegan()
+    }
+    
+    func sliderChanged(sender: UISlider) {
+        aniCanvasView.progress = CGFloat(sender.value)
+        
+        if sender.value >= 1.0 {
+            dismissViewControllerAnimated(true, completion: nil)
         }
     }
     

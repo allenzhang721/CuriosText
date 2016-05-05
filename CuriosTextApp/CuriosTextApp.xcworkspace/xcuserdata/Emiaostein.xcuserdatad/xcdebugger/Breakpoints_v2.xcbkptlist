@@ -6,15 +6,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/GIFCreateViewController.swift"
-            timestampString = "484133744.298084"
+            timestampString = "484143888.020326"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "118"
-            endingLineNumber = "118"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "makeGIF(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -22,16 +22,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/GIFCreateViewController.swift"
-            timestampString = "484134010.357857"
+            timestampString = "484143888.020326"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
-            landmarkName = "makeGIF(_:)"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "tap(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
