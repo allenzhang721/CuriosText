@@ -250,7 +250,7 @@ extension CTAPublishProtocol{
     
     func weChatShareHandler(){
         
-//        if CTASocialManager.isAppInstaller(.WeChat){
+        if CTASocialManager.isAppInstaller(.WeChat){
 //            self.publishCell.getEndImg({ (img) -> () in
 //                if let image = img{
 //                    let thumb = compressImage(image, maxWidth: image.size.width/2)
@@ -303,6 +303,8 @@ extension CTAPublishProtocol{
         
             guard let page = publishCell.getPage() else { return }
         
+            let fakeView = UIScreen.mainScreen().snapshotViewAfterScreenUpdates(false)
+            
             let canvas = page.toAniCanvas()
             
             // get Image
@@ -333,7 +335,14 @@ extension CTAPublishProtocol{
                             gifCreatorVC.canvas = canvas
                             gifCreatorVC.publishID = sf.publishModel!.publishID
                             
-//                            gifCreatorVC.fakeView = (sf as! UIViewController).view.snapshotViewAfterScreenUpdates(true)
+                            gifCreatorVC.progressBlock = {(progress, next) in
+                                
+                                debug_print(progress)
+                                
+                                next()
+                            }
+                            
+                            gifCreatorVC.fakeView = fakeView
                             gifCreatorVC.completed = {[weak self] (url, image) in
                                 dispatch_async(dispatch_get_main_queue(), {
                                     let message =  WXMediaMessage()
@@ -368,7 +377,7 @@ extension CTAPublishProtocol{
             }
             
             
-//        }
+        }
     }
     
     func momentsShareHandler(){

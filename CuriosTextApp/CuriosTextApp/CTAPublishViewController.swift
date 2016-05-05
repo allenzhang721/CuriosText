@@ -181,7 +181,6 @@ extension CTAPublishViewController {
                     })
                 })
             })
-            
         }
         
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
