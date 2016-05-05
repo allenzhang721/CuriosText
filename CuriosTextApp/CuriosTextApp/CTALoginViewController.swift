@@ -197,7 +197,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
     
     func closeButtonClick(sender: UIButton){
         self.resignView()
-        self.navigationController?.dismissViewControllerAnimated(false, completion: nil)
+        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func passwordVisibleClick(sender: UIButton){

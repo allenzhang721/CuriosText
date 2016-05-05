@@ -76,7 +76,7 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.cropImageCircle(self.userIconImage)
         self.view.addSubview(self.userIconImage)
         self.userIconImage.userInteractionEnabled = true
-        let iconTap = UITapGestureRecognizer(target: self, action: "userIconClick:")
+        let iconTap = UITapGestureRecognizer(target: self, action: Selector("userIconClick:"))
         self.userIconImage.addGestureRecognizer(iconTap)
         self.userIconImage.image = UIImage(named: "default-usericon")
         
@@ -106,7 +106,7 @@ extension CTAPublishProtocol where Self: UIViewController{
         }
         
         UIView.transitionWithView(self.userIconImage, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
-            var defaultImg = UIImage.init(named: "default-usericon")
+            let defaultImg = UIImage.init(named: "default-usericon")
             let imagePath = CTAFilePath.userFilePath+userModel.userIconURL
             let imageURL = NSURL(string: imagePath)!
             self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: defaultImg, optionsInfo: [.Transition(ImageTransition.Fade(1))]){ (image, error, cacheType, imageURL) -> () in
@@ -248,67 +248,127 @@ extension CTAPublishProtocol{
 
 extension CTAPublishProtocol{
     
-    func weChatShareGIF(viewController: UIViewController, page: CTAPage, publishID: String) {
-        
-        let gifCreatorVC = GIFCreateViewController()
-        gifCreatorVC.canvas = page.toAniCanvas()
-        gifCreatorVC.publishID = publishID
-        gifCreatorVC.fakeView = viewController.view.snapshotViewAfterScreenUpdates(true)
-        gifCreatorVC.completed = { (url, image) in
-            dispatch_async(dispatch_get_main_queue(), {
-                let message =  WXMediaMessage()
-                message.setThumbImage(image)
-                
-                let ext =  WXEmoticonObject()
-                let filePath = url.path
-                ext.emoticonData = NSData(contentsOfFile:filePath!)
-                message.mediaObject = ext
-                
-                let req =  SendMessageToWXReq()
-                req.bText = false
-                req.message = message
-                req.scene = 0
-                WXApi.sendReq(req)
-                dispatch_async(dispatch_get_main_queue(), {
-                    viewController.dismissViewControllerAnimated(false, completion: {
-                    })
-                })
-            })
-        }
-        
-        dispatch_async(dispatch_get_main_queue()) {
-            viewController.presentViewController(gifCreatorVC, animated: false, completion: nil)
-        }
-    }
-    
     func weChatShareHandler(){
-        if CTASocialManager.isAppInstaller(.WeChat){
-            self.publishCell.getEndImg({ (img) -> () in
-                if let image = img{
-                    let thumb = compressImage(image, maxWidth: image.size.width/2)
-                    let message = CTASocialManager.Message
-                        .WeChat(
-                            .Session(
-                                info: (
-                                    title: "",
-                                    description: "",
-                                    thumbnail: thumb,
-                                    media: .Image(img!)
-                                )
-                            )
-                    )
-                    CTASocialManager.shareMessage(message) { (result) -> Void in
-                        if result{
-                            let userID = self.userModel == nil ? "" : self.userModel!.userID
-                            CTAPublishDomain.getInstance().sharePublish(userID, publishID: self.publishModel!.publishID, sharePlatform: 0, compelecationBlock: { (_) -> Void in
-                            })
+        
+//        if CTASocialManager.isAppInstaller(.WeChat){
+//            self.publishCell.getEndImg({ (img) -> () in
+//                if let image = img{
+//                    let thumb = compressImage(image, maxWidth: image.size.width/2)
+//                    let message = CTASocialManager.Message
+//                        .WeChat(
+//                            .Session(
+//                                info: (
+//                                    title: "",
+//                                    description: "",
+//                                    thumbnail: thumb,
+//                                    media: .Image(img!)
+//                                )
+//                            )
+//                    )
+//                    CTASocialManager.shareMessage(message) { (result) -> Void in
+//                        if result{
+//                            let userID = self.userModel == nil ? "" : self.userModel!.userID
+//                            CTAPublishDomain.getInstance().sharePublish(userID, publishID: self.publishModel!.publishID, sharePlatform: 0, compelecationBlock: { (_) -> Void in
+//                            })
+//                        }
+//                    }
+//                }
+//            })
+//            let page = self.publishCell.getPage()
+//            if page != nil {
+//                CTAGIFController.getInstance().createGIF(self as! UIViewController, page: page!, publishID: self.publishModel!.publishID) { (url, image) in
+//                    let message =  WXMediaMessage()
+//                    message.setThumbImage(image)
+//                    
+//                    let ext =  WXEmoticonObject()
+//                    let filePath = url.path
+//                    ext.emoticonData = NSData(contentsOfFile:filePath!)
+//                    message.mediaObject = ext
+//                    
+//                    let req =  SendMessageToWXReq()
+//                    req.bText = false
+//                    req.message = message
+//                    req.scene = 0
+//                    WXApi.sendReq(req)
+//                    
+//                    let userID = self.userModel == nil ? "" : self.userModel!.userID
+//                    CTAPublishDomain.getInstance().sharePublish(userID, publishID: self.publishModel!.publishID, sharePlatform: 0, compelecationBlock: { (_) -> Void in
+//                    })
+//                }
+//            }
+//        }else {
+//            self.showSingleAlert(NSLocalizedString("AlertTitleNoInstallWechat", comment: ""), alertMessage: "", compelecationBlock: nil)
+//        }
+        
+        
+            guard let page = publishCell.getPage() else { return }
+        
+            let canvas = page.toAniCanvas()
+            
+            // get Image
+            
+            let url = NSURL(string: CTAFilePath.publishFilePath + publishModel!.publishID)!
+            
+            for c in canvas.containers {
+                if let content = c.contents.first where content.type == .Image {
+                    let imageName = content.content.source.ImageName
+                    let imageURL = url.URLByAppendingPathComponent(imageName)
+                    debug_print("imageURL = \(imageURL)")
+                    KingfisherManager.sharedManager.retrieveImageWithURL(imageURL, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self] (image, error, cacheType, imageURL) in
+                        guard let sf = self else { return }
+                        let retriver = { (name: String,  handler: (String, UIImage?) -> ()) in
+                            
+                            debug_print("name = \(name), image = \(name)")
+                            
+                            handler(name, image)
                         }
-                    }
+                        
+                        c.imageRetriver = retriver
+//                        sf.readyPreView(canvas, publishModel: publishModel, completed: sf.readyCompleted)
+                        
+                        dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                            guard let sf = self else {return}
+                            
+                            let gifCreatorVC = GIFCreateViewController()
+                            gifCreatorVC.canvas = canvas
+                            gifCreatorVC.publishID = sf.publishModel!.publishID
+                            
+//                            gifCreatorVC.fakeView = (sf as! UIViewController).view.snapshotViewAfterScreenUpdates(true)
+                            gifCreatorVC.completed = {[weak self] (url, image) in
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    let message =  WXMediaMessage()
+                                    message.setThumbImage(image)
+                                    
+                                    let ext =  WXEmoticonObject()
+                                    let filePath = url.path
+                                    ext.emoticonData = NSData(contentsOfFile:filePath!)
+                                    message.mediaObject = ext
+                                    
+                                    let req =  SendMessageToWXReq()
+                                    req.bText = false
+                                    req.message = message
+                                    req.scene = 0
+                                    WXApi.sendReq(req)
+                                    dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                                        (sf as! UIViewController).dismissViewControllerAnimated(false, completion: {
+                                        })
+                                        })
+                                })
+                                
+                            }
+                            
+                            dispatch_async(dispatch_get_main_queue()) { [weak self] in
+                                (sf as! UIViewController).presentViewController(gifCreatorVC, animated: false, completion: nil)
+                            }
+                        })
+                        })
+                    
+                    break
                 }
-            })
-        }else {
-            self.showSingleAlert(NSLocalizedString("AlertTitleNoInstallWechat", comment: ""), alertMessage: "", compelecationBlock: nil)
-        }
+            }
+            
+            
+//        }
     }
     
     func momentsShareHandler(){
@@ -387,5 +447,35 @@ extension CTAPublishProtocol{
                 SVProgressHUD.showSuccessWithStatus(NSLocalizedString("ReportSuccess", comment: ""))
             }
         }
+    }
+    
+    func uploadResourceHandler(){
+        
+        let publishID = self.publishModel!.publishID
+        let imageName = CTAIDGenerator.fileID()
+        let publishResouceKey = publishID+"/"+imageName+".gif"
+        let uptoken = CTAUpTokenModel.init(upTokenKey: publishResouceKey)
+        CTAUpTokenDomain.getInstance().resourceUpToken([uptoken]) { (listInfo) in
+            if listInfo.result {
+                let newToken = listInfo.modelArray![0] as! CTAUpTokenModel
+                let resourceData = NSMutableData(length: 10*1024)
+                let uploadModel = CTAUploadModel.init(key: publishResouceKey, token: newToken.upToken, fileData: resourceData!)
+                CTAUploadAction.getInstance().uploadFile(publishID, uploadModel: uploadModel, progress: { (_) -> Void in
+                    }, complete: { (info) -> Void in
+                        if info.result{
+                            let filePath = CTAFilePath.resourceFilePath + publishResouceKey
+                            self.showSingleAlert(filePath, alertMessage: "", compelecationBlock: { () -> Void in
+                            })
+                        }else {
+                            self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                            })
+                        }
+                })
+            }else {
+                self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                })
+            }
+        }
+        
     }
 }

@@ -17,7 +17,7 @@ class GIFCreator {
     // DISPATCH_QUEUE_CONCURRENT
     static private var instance: GIFCreator?
     
-    private let queue = dispatch_queue_create("com.emiaostein.GIFCreator.Queue", DISPATCH_QUEUE_SERIAL)
+    private let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)
     private let cacheDir = "com.botai.gifCache"
     private var images = [UIImage]()
     private var delays = [CGFloat]()
@@ -27,7 +27,7 @@ class GIFCreator {
     private var ignoreCache = false
     private var completedBlock:((url: NSURL) -> ())?
     
-    class func beganWith(ID: String, images: [UIImage] = [], delays: [CGFloat] = [], ignoreCache: Bool = false) {
+    class func beganWith(ID: String, images: [UIImage] = [], delays: [CGFloat] = [], ignoreCache: Bool = true) {
         GIFCreator.instance = GIFCreator()
         guard let instance = GIFCreator.instance else {return}
         
@@ -72,7 +72,7 @@ class GIFCreator {
         let gifProperties = [(kCGImagePropertyGIFLoopCount as String): 0]
         CGImageDestinationSetProperties(destination, gifProperties)
         
-        dispatch_async(instance.queue) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
             for i in 0..<count {
                 autoreleasepool {
                     let image = instance.images[i]

@@ -12,7 +12,7 @@ class AniContainer: NSObject {
     let container: Container
     let contents: [AniContent]
     let animations: [Int: AniDescriptor]
-    var imageRetriver: ((String, (String, UIImage?) -> ()) -> ())?
+    var imageRetriver: ((String, (String, UIImage?) -> ()) -> ())?  //(imgName, (imgName, Img))
     
     init(container: Container, animations: [Int: AniDescriptor] = [:]) {
         var cs = [AniContent]()

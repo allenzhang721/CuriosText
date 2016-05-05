@@ -303,7 +303,18 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                 completionHandler(img: defaultImg)
             }
         }
-        
+    }
+    
+    func getPage() -> CTAPage?{
+        if self.isLoadComplete{
+            if self.publishModel != nil {
+                return self.page
+            }else {
+                return nil
+            }
+        }else {
+            return nil
+        }
     }
 }
 
