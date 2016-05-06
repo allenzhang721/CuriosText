@@ -12,20 +12,18 @@ import MobileCoreServices
 import UIKit
 
 class GIFCreator {
-    //    var propgressBlock: ((CGFloat) -> ())?
-    // DISPATCH_QUEUE_SERIAL
-    // DISPATCH_QUEUE_CONCURRENT
     static private var instance: GIFCreator?
     
     private let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)
     private let cacheDir = "com.botai.gifCache"
+    private var thumbImage: UIImage?
     private var images = [UIImage]()
     private var delays = [CGFloat]()
     private var fileURL: NSURL!
     private var destination: CGImageDestination?
     private var cached = false
     private var ignoreCache = false
-    private var completedBlock:((url: NSURL) -> ())?
+    private var completedBlock:((gifURL: NSURL) -> ())?
     
     class func beganWith(ID: String, images: [UIImage] = [], delays: [CGFloat] = [], ignoreCache: Bool = true) {
         GIFCreator.instance = GIFCreator()
@@ -46,6 +44,11 @@ class GIFCreator {
         
         instance.images = images
         instance.delays = delays
+    }
+    
+    class func setThumbImage(image: UIImage) {
+        guard let instance = GIFCreator.instance else {return}
+        instance.thumbImage = image
     }
     
     class func addImage(image: UIImage, delay: CGFloat) {
