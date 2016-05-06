@@ -232,7 +232,7 @@ class CTAShareView: UIView{
         self.scrollView.contentSize = CGSize(width: maxWidth, height: 170)
     }
     
-    func cancelHandler(){
+    func cancelHandler(complete: (() -> ())?){
         let bounds = UIScreen.mainScreen().bounds
         self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.4)
         UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -240,68 +240,78 @@ class CTAShareView: UIView{
             self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
         }) { (_) -> Void in
             self.removeFromSuperview()
+            complete?()
             self.delegate = nil
         }
     }
     
     func cancelButtonClick(sender: UIButton){
-        self.cancelHandler()
+        self.cancelHandler({
+        })
     }
     
     func backButtonClikc(sender: UITapGestureRecognizer){
         let pt = sender.locationInView(self.buttonView)
         if !self.buttonView.pointInside(pt, withEvent: nil){
-            self.cancelHandler()
+            self.cancelHandler({
+            })
         }
     }
     
     func weChatButtonClick(sender: UIButton){
-        if self.delegate != nil {
-            self.delegate!.weChatShareHandler()
-        }
-        self.cancelHandler()
+        self.cancelHandler({
+            if self.delegate != nil {
+                self.delegate!.weChatShareHandler()
+            }
+        })
     }
     
     func momentsButtonClick(sender: UIButton){
-        if self.delegate != nil {
-            self.delegate!.momentsShareHandler()
-        }
-        self.cancelHandler()
+        self.cancelHandler({
+            if self.delegate != nil {
+                self.delegate!.momentsShareHandler()
+            }
+        })
     }
     
     func deleteButtonClick(sender: UIButton){
-        if self.delegate != nil {
-            self.delegate!.deleteHandler()
-        }
-        self.cancelHandler()
+        self.cancelHandler({
+            if self.delegate != nil {
+                self.delegate!.deleteHandler()
+            }
+        })
     }
     
     func saveLocalButtonClick(sender: UIButton){
-        if self.delegate != nil {
-            self.delegate!.saveLocalHandler()
-        }
-        self.cancelHandler()
+        self.cancelHandler({
+            if self.delegate != nil {
+                self.delegate!.saveLocalHandler()
+            }
+        })
     }
     
     func reportButtonClick(sender: UIButton){
-        if self.delegate != nil {
-            self.delegate!.reportHandler()
-        }
-        self.cancelHandler()
+        self.cancelHandler({
+            if self.delegate != nil {
+                self.delegate!.reportHandler()
+            }
+        })
     }
     
     func uploadResourceButtonClick(sender: UIButton){
-        if self.delegate != nil {
-            self.delegate!.uploadResourceHandler()
-        }
-        self.cancelHandler()
+        self.cancelHandler({
+            if self.delegate != nil {
+                self.delegate!.uploadResourceHandler()
+            }
+        })
     }
     
     func copyLinkButtonClick(sender: UIButton){
-        if self.delegate != nil {
-            self.delegate!.copyLinkHandler()
-        }
-        self.cancelHandler()
+        self.cancelHandler({
+            if self.delegate != nil {
+                self.delegate!.copyLinkHandler()
+            }
+        })
     }
 }
 

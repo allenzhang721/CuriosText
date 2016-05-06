@@ -54,7 +54,7 @@ class ViewController: UIViewController{
         login.isChangeContry = true
         let navigationController = UINavigationController(rootViewController: login)
         navigationController.navigationBarHidden = true
-        self.presentViewController(navigationController, animated: false, completion: {
+        self.presentViewController(navigationController, animated: true, completion: {
             self.navigate.popToRootViewControllerAnimated(false)
             self.mainView.goToFirstView()
         })

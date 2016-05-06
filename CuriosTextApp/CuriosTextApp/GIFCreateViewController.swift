@@ -58,7 +58,7 @@ class GIFCreateViewController: UIViewController {
     }
     
     private func next() {
-        print("next")
+        print("next \(currentIndex) all \(indexs.count)")
         let index = indexs[currentIndex]
         makeGIF(index)
     }
@@ -82,8 +82,10 @@ class GIFCreateViewController: UIViewController {
             
             if c > 0 {
                 indexs.append(i..<i + c)
+                i += c
             }
-            
+            indexs.append(i..<i + 2)
+            counts += 2
             debug_print(indexs)
             
             GIFCreator.beganWith(publishID, images: [], delays: [], ignoreCache: true)
@@ -109,7 +111,7 @@ class GIFCreateViewController: UIViewController {
                 let image = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
                 
-                let img = UIImage(data: UIImageJPEGRepresentation(image, 0.1)!)!
+                let img = image//UIImage(data: UIImageJPEGRepresentation(image, 1)!)!
                 if i == count - 1 { thumbImage = img }
                 GIFCreator.addImage(img, delay: 1.0 / CGFloat(24))
             }
