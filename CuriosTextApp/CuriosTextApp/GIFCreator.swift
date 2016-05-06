@@ -12,38 +12,48 @@ import MobileCoreServices
 import UIKit
 
 class GIFCreator {
+    
+    enum CacheStatus {
+        case Cached(GIFURL: NSURL, thumbURL: NSURL)
+        case NoCached
+    }
+    
     static private var instance: GIFCreator?
     
     private let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)
-    private let cacheDir = "com.botai.gifCache"
+    
     private var thumbImage: UIImage?
     private var images = [UIImage]()
     private var delays = [CGFloat]()
     private var fileURL: NSURL!
-    private var destination: CGImageDestination?
-    private var cached = false
-    private var ignoreCache = false
-    private var completedBlock:((gifURL: NSURL) -> ())?
+    private var thumbURL: NSURL!
     
-    class func beganWith(ID: String, images: [UIImage] = [], delays: [CGFloat] = [], ignoreCache: Bool = true) {
+    private var cached = false
+    private var thumbCached = false
+    private var useCache = true
+    private var completedBlock:((gifURL: NSURL, thumbURL: NSURL) -> ())?
+    
+    class func beganWith(ID: String, images: [UIImage] = [], delays: [CGFloat] = [], useCache: Bool = true) -> CacheStatus {
         GIFCreator.instance = GIFCreator()
-        guard let instance = GIFCreator.instance else {return}
+        guard let instance = GIFCreator.instance
+            where images.count == delays.count
+            else { fatalError("The images count is not equal to the delays' count!")}
         
         let cacheDir = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true).first!
         let gifURL = NSURL(fileURLWithPath: cacheDir + "/" + ID + ".gif", isDirectory: false)
+        let thumbURL = NSURL(fileURLWithPath: cacheDir + "/" + ID + ".png", isDirectory: false)
         let cached = NSFileManager.defaultManager().fileExistsAtPath(gifURL.path!)
+        let thumbCached = NSFileManager.defaultManager().fileExistsAtPath(thumbURL.path!)
         
         instance.fileURL = gifURL
-        instance.cached = cached
-        instance.ignoreCache = ignoreCache
-    
-        guard images.count == delays.count else {
-            print("The images count is not equal to the delays' count!")
-            return
-        }
-        
+        instance.thumbURL = thumbURL
+        instance.cached = cached && thumbCached
+        instance.useCache = useCache
+
         instance.images = images
         instance.delays = delays
+        
+        return cached && thumbCached ? CacheStatus.Cached(GIFURL: gifURL, thumbURL: thumbURL) : CacheStatus.NoCached
     }
     
     class func setThumbImage(image: UIImage) {
@@ -63,10 +73,10 @@ class GIFCreator {
         instance.delays += delays
     }
     
-    class func commitWith(completed: ((url: NSURL) -> ())?) {
+    class func commitWith(completed: ((url: NSURL, thumbURL: NSURL) -> ())?) {
         guard let instance = GIFCreator.instance else {return}
-        if instance.cached && !instance.ignoreCache {
-            completed?(url: instance.fileURL)
+        if instance.cached && instance.useCache {
+            completed?(url: instance.fileURL, thumbURL: instance.thumbURL)
             return
         }
         let count = instance.images.count
@@ -76,6 +86,19 @@ class GIFCreator {
         CGImageDestinationSetProperties(destination, gifProperties)
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+            
+            if instance.thumbImage == nil {
+                instance.thumbImage = instance.images.last
+            }
+            
+            if let thumbImage = instance.thumbImage {
+                if NSFileManager.defaultManager().fileExistsAtPath(instance.thumbURL.path!) {
+                try! NSFileManager.defaultManager().removeItemAtURL(instance.thumbURL)
+                }
+                let data = UIImagePNGRepresentation(thumbImage)
+                data?.writeToURL(instance.thumbURL, atomically: false)
+            }
+            
             for i in 0..<count {
                 autoreleasepool {
                     let image = instance.images[i]
@@ -88,7 +111,7 @@ class GIFCreator {
             if CGImageDestinationFinalize(destination) {
                 print("gif at \(instance.fileURL.path)")
                 dispatch_async(dispatch_get_main_queue(), { 
-                    completed?(url: instance.fileURL)
+                    completed?(url: instance.fileURL, thumbURL: instance.thumbURL)
                     instance.images = []
                     instance.delays = []
                 })

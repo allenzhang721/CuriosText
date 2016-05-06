@@ -161,10 +161,10 @@ extension CTAPublishViewController {
         gifCreatorVC.canvas = canvas
         gifCreatorVC.publishID = publishID
         gifCreatorVC.fakeView = view.snapshotViewAfterScreenUpdates(true)
-        gifCreatorVC.completed = {[weak self] (url, image) in
+        gifCreatorVC.completed = {[weak self] (url, thumburl) in
             dispatch_async(dispatch_get_main_queue(), { 
                 let message =  WXMediaMessage()
-                message.setThumbImage(image)
+                message.setThumbImage(UIImage(contentsOfFile: thumburl.path!))
                 
                 let ext =  WXEmoticonObject()
                 let filePath = url.path

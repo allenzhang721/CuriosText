@@ -57,9 +57,9 @@ extension CTAGIFProtocol {
                         }
                         
                         gifCreatorVC.fakeView = fakeView
-                        gifCreatorVC.completed = { (url, image) in
+                        gifCreatorVC.completed = { (url, imageurl) in
                             dispatch_async(dispatch_get_main_queue(), {
-                                completedHandler?(fileURL: url, thumbImg: image)
+                                completedHandler?(fileURL: url, thumbImg: UIImage(contentsOfFile: imageurl.path!)!)
                                 dispatch_async(dispatch_get_main_queue(), {
                                     viewController.dismissViewControllerAnimated(false, completion: {
                                     })

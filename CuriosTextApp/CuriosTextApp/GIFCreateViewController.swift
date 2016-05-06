@@ -20,7 +20,7 @@ class GIFCreateViewController: UIViewController {
     var indexs = [Range<Int>]()
     var currentIndex = 0
     var counts = 0
-    var completed: ((NSURL, UIImage) -> ())?
+    var completed: ((gifURL: NSURL, thumbURL: NSURL) -> ())?
     
     var slider: UISlider!
     
@@ -68,43 +68,47 @@ class GIFCreateViewController: UIViewController {
     }
     
     func makeGIFBegan() {
-        debug_print("Did MakeGIF")
-        let result = aniCanvasView.progressBegan()
         
-        switch result {
-        case .Next(let duration):
-            let FPS = 24
-            counts = Int(CGFloat(FPS) * duration)
-            var c = counts
-            var i = 0
-            while c > 24  {
-                let ind = i..<(i + 24)
-                i += 24
-                c -= 24
-                indexs.append(ind)
-            }
-            
-            if c > 0 {
-                indexs.append(i..<i + c)
-                i += c
-            }
-            indexs.append(i..<i + 2)
-            counts += 2
-            debug_print(indexs)
-            
-            GIFCreator.beganWith(publishID, images: [], delays: [], ignoreCache: false)
-            
-            next()
-            
+        let cacheStatus = GIFCreator.beganWith(publishID, images: [], delays: [], useCache: true)
+        
+        switch cacheStatus {
+        case .Cached(GIFURL: _, thumbURL: _): commit()
         default:
-            ()
-        }
+            debug_print("Did MakeGIF")
+            let result = aniCanvasView.progressBegan()
+            
+            switch result {
+            case .Next(let duration):
+                let FPS = 24
+                counts = Int(CGFloat(FPS) * duration)
+                var c = counts
+                var i = 0
+                while c > 24  {
+                    let ind = i..<(i + 24)
+                    i += 24
+                    c -= 24
+                    indexs.append(ind)
+                }
+                
+                if c > 0 {
+                    indexs.append(i..<i + c)
+                    i += c
+                }
+                indexs.append(i..<i + 2)
+                counts += 2
+                debug_print(indexs)
+                next()
+                
+            default:
+                ()
+            }
+        } 
     }
     
     private func makeGIF(indexs: Range<Int>) {
         let count = counts
         
-        var thumbImage: UIImage!
+//        var thumbImage: UIImage!
         for i in indexs {
             autoreleasepool {
             let progress = CGFloat(i) / CGFloat(count)
@@ -116,7 +120,7 @@ class GIFCreateViewController: UIViewController {
                 UIGraphicsEndImageContext()
                 
                 let img = image//UIImage(data: UIImageJPEGRepresentation(image, 1)!)!
-                if i == count - 1 { thumbImage = img }
+//                if i == count - 1 { thumbImage = img }
                 GIFCreator.addImage(img, delay: 1.0 / CGFloat(24))
             }
         }
@@ -143,27 +147,30 @@ class GIFCreateViewController: UIViewController {
             }
 //            }
         } else {
-            GIFCreator.commitWith({[weak self] (url) in
-                SVProgressHUD.showProgress(1, status: "\(Int(1.0 * 100.0))%")
-                
-                debug_print("gif url = \(url)")
-                let time: NSTimeInterval = 0.3
-                let delay = dispatch_time(DISPATCH_TIME_NOW,
-                    Int64(time * Double(NSEC_PER_SEC)))
-                dispatch_after(delay, dispatch_get_main_queue()) {
-                    
-                    SVProgressHUD.showSuccessWithStatus(LocalStrings.Done.description)
-                }
-                
-                let time2: NSTimeInterval = 0.6
-                let delay2 = dispatch_time(DISPATCH_TIME_NOW,
-                    Int64(time2 * Double(NSEC_PER_SEC)))
-                dispatch_after(delay2, dispatch_get_main_queue()) {
-                    self?.completed?(url, thumbImage)
-                }
-                
-            })
+            commit()
         }
+    }
+    
+    private func commit() {
+        GIFCreator.commitWith({[weak self] (url, thumburl) in
+            SVProgressHUD.showProgress(1, status: "\(Int(1.0 * 100.0))%")
+            
+            debug_print("gif url = \(url)")
+            let time: NSTimeInterval = 0.3
+            let delay = dispatch_time(DISPATCH_TIME_NOW,
+                Int64(time * Double(NSEC_PER_SEC)))
+            dispatch_after(delay, dispatch_get_main_queue()) {
+                
+                SVProgressHUD.showSuccessWithStatus(LocalStrings.Done.description)
+            }
+            
+            let time2: NSTimeInterval = 0.6
+            let delay2 = dispatch_time(DISPATCH_TIME_NOW,
+                Int64(time2 * Double(NSEC_PER_SEC)))
+            dispatch_after(delay2, dispatch_get_main_queue()) {
+                self?.completed?(gifURL: url, thumbURL: thumburl)
+            }
+            })
     }
 }
 
