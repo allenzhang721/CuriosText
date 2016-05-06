@@ -23,6 +23,7 @@ class CTASocialManager: CTASocialProtocol {
     }
 }
 
+// SMS
 extension CTASocialManager {
     
     static func getVerificationCode(phoneNumber: String, zone: String!, completionHandler: SMSCompletionHandler) {
@@ -48,6 +49,8 @@ protocol CTASocialRegisterable {
     static func handleOpenURL(url: NSURL) -> Bool
 }
 
+
+// Register
 extension CTASocialRegisterable {
     
     static func register(platform: CTASocialManager.CTASocialSharePlatformType, appID: String, appKey: String) {
@@ -72,9 +75,7 @@ protocol CTASocialShareable {
 }
 
 extension CTASocialManager: CTASocialShareable {
-    
-    
-    
+
     enum Media {
         case URL(NSURL)
         case Image(UIImage)
@@ -174,6 +175,12 @@ extension CTASocialOAuthable {
     static func OAuth(platform: CTASocialManager.CTASocialSharePlatformType, completionHandler: CTASocialManager.OAuthCompletionHandler) {
         switch platform {
         case .WeChat:
+            
+//            let req = SendAuthReq()
+//            req.scope = "snsapi_userinfo"
+//            req.state = "Weixinauth"
+//            WXApi.sendReq(req)
+            
             MonkeyKing.OAuth(.WeChat, completionHandler: { (dictionary, response, error) -> Void in
                 if error == nil {
                     CTASocialManager.fetchUserInfo(dictionary, completeBlock: { (userInfoDictionary, response, error) in
