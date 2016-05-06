@@ -228,7 +228,7 @@ class CTAShareView: UIView{
     }
     
     func resetScrollView(){
-        let maxWidth = self.reportView.frame.origin.x + self.reportView.frame.width + space
+        let maxWidth = self.uploadResourceView.frame.origin.x + self.uploadResourceView.frame.width + space
         self.scrollView.contentSize = CGSize(width: maxWidth, height: 170)
     }
     
