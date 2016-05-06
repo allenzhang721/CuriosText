@@ -34,6 +34,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
     
     var otherAccountView:UIView!
     var wechatButton:UIButton!
+    var weiboButton:UIButton!
     
     var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
     
@@ -144,10 +145,15 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         otherAccountLabel.frame.origin.x = (bouns.width - otherAccountLabel.frame.width)/2
         self.otherAccountView.addSubview(otherAccountLabel)
         
-        self.wechatButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 44)/2, y: 45, width: 44, height: 44))
+        self.wechatButton = UIButton.init(frame: CGRect.init(x: bouns.width/2+30, y: 45, width: 44, height: 44))
         self.wechatButton.setImage(UIImage(named: "wechat-icon"), forState: .Normal)
         self.wechatButton.addTarget(self, action: #selector(CTALoginViewController.wechatButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.otherAccountView.addSubview(self.wechatButton)
+        
+        self.weiboButton = UIButton.init(frame: CGRect.init(x: bouns.width/2-74, y: 45, width: 44, height: 44))
+        self.weiboButton.setImage(UIImage(named: "weibo-icon"), forState: .Normal)
+        self.weiboButton.addTarget(self, action: #selector(CTALoginViewController.weiboButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.otherAccountView.addSubview(self.weiboButton)
         
         let forgetButton = UIButton.init(frame: CGRect.init(x: 27, y: bouns.height - 52*self.getVerRate(), width: 20, height: 84))
         forgetButton.setTitle(NSLocalizedString("ForgetPasswordLabel", comment: ""), forState: .Normal)
@@ -187,7 +193,22 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
             self.wechatButton.hidden = false
         }else {
             self.wechatButton.hidden = true
-            self.otherAccountView.hidden = true
+        }
+        if CTASocialManager.isAppInstaller(.Weibo){
+            self.weiboButton.hidden = false
+            if self.wechatButton.hidden {
+                self.weiboButton.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2, y: 67)
+            }else {
+                self.weiboButton.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2-42, y: 67)
+                self.wechatButton.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2+42, y: 67)
+            }
+        }else {
+            self.weiboButton.hidden = true
+            if self.wechatButton.hidden {
+                self.otherAccountView.hidden = true
+            }else {
+                self.wechatButton.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2, y: 67)
+            }
         }
     }
     
@@ -283,6 +304,27 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         setMobileView.isChangeContry = true
         setMobileView.setMobileNumberType = .register
         self.navigationController?.pushViewController(setMobileView, animated: true)
+    }
+    
+    func weiboButtonClick(sender: UIButton){
+        CTASocialManager.OAuth(.Weibo){ (resultDic, urlResponse, error) -> Void in
+            if error == nil {
+                if resultDic != nil {
+                    print("resultDic \(resultDic)")
+                }
+            }else {
+                if error!.code == -1{
+                    
+                }
+                else if error!.code == -2{
+                    self.showSingleAlert(NSLocalizedString("AlertTitleWeiboUninstall", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                    })
+                }else {
+                    self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                    })
+                }
+            }
+        }
     }
     
     func wechatButtonClick(sender: UIButton){

@@ -48,12 +48,14 @@
 "UserRegion" = "地区";
 "UserDesc" = "简介";
 "SaveButtonLabel" = "保存";
-"WechatShareLabel" = "微信";
+"WechatShareLabel" = "微信好友";
 "MomentsShareLabel" = "朋友圈";
+"WeiboShareLabel" = "新浪微博";
 "DeleteFileLabel" = "删除";
 "CopyLinkLabel" = "复制链接";
 "SaveLocalLabel" = "保存";
 "ReportLabel" = "举报";
+"UploadFileLabel" = "上传";
 
 
 "AlertOkLabel" = "确定";
@@ -66,6 +68,7 @@
 "AlertWaitLabel" = "等待";
 "AlertTitleDeleteFile" = "确定删除吗?";
 "AlertTitleNoInstallWechat" = "你未安装微信";
+"AlertTitleNoInstallWeibo" = "你未安装微博";
 "AlertTitleSMSVerifyBack" = "验证码短信可能略有延迟,确定返回并重新开始?";
 "AlertTitlePasswordBack" = "就快结束了,确定返回并重新开始?";
 "AlertTitleUserNameBack" = "这是最后一步,确定返回并重新开始?";
@@ -77,6 +80,7 @@
 
 "AlertTitleLoginFaile" = "账号或密码错误,请重新输入";
 "AlertTitleWeChatUninstall" = "未找到微信，暂时无法微信登录";
+"AlertTitleWeiboUninstall" = "未找到微博，暂时无法微博登录";
 "AlertTitleInternetError" = "网络异常,请稍后再试";
 "AlertTitleRegisterError" = "注册失败,请稍后再试";
 "AlertTitleChangeError" = "修改失败,请稍后再试";
@@ -85,6 +89,7 @@
 "AlertTitlePhoneNil" = "手机号码为空";
 "AlertTitleConnectUs" = "请联系客服";
 "AlertTitleWechatNil" = "微信登录失败";
+"AlertTitleWeiboNil" = "微博登录失败";
 "AlertTitleDataNil" = "数据为空";
 
 "AllPhotoLibraryTitle" = "设置";

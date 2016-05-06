@@ -326,6 +326,10 @@ extension CTAPublishProtocol{
         }
     }
     
+    func weiBoShareHandler() {
+        
+    }
+    
     func deleteHandler(){
         
     }

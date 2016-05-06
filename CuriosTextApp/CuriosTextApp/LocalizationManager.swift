@@ -35,7 +35,7 @@ enum LocalStrings: CustomStringConvertible {
     case Porn, Scam, Sensitive
     
     //Share
-    case DeleteFile, Wechat, Moments, CopyLink, SaveLocal, Report
+    case DeleteFile, Wechat, Moments, Weibo, CopyLink, SaveLocal, Report, UploadFile
     
     var description: String {
         
@@ -140,13 +140,16 @@ enum LocalStrings: CustomStringConvertible {
             return NSLocalizedString("WechatShareLabel", comment: "")
         case .Moments:
             return NSLocalizedString("MomentsShareLabel", comment: "")
+        case .Weibo:
+            return NSLocalizedString("WeiboShareLabel", comment: "")
         case .SaveLocal:
             return NSLocalizedString("SaveLocalLabel", comment: "")
         case .Report:
             return NSLocalizedString("ReportLabel", comment: "")
         case .CopyLink:
             return NSLocalizedString("CopyLinkLabel", comment: "")
-
+        case .UploadFile:
+            return NSLocalizedString("UploadFileLabel", comment: "")
         }
     }
 }

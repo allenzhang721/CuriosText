@@ -48,10 +48,13 @@
 "SaveButtonLabel" = "Save";
 "WechatShareLabel" = "Friends";
 "MomentsShareLabel" = "Moments";
+"WeiboShareLabel" = "Weibo";
 "DeleteFileLabel" = "Delete";
 "CopyLinkLabel" = "Copy URL";
 "SaveLocalLabel" = "Save";
 "ReportLabel" = "Report";
+"UploadFileLabel" = "Upload";
+
 
 "AlertOkLabel" = "OK";
 "AlertYesLabel" = "Yes";
@@ -62,7 +65,8 @@
 "AlertBackLabel" = "Back";
 "AlertWaitLabel" = "Wait";
 "AlertTitleDeleteFile" = "Confirm deletion?";
-"AlertTitleNoInstallWechat" = "Wechat has not been installed";
+"AlertTitleNoInstallWechat" = "weChat has not been installed";
+"AlertTitleNoInstallWeibo" = "Weibo has not been installed";
 "AlertTitleSMSVerifyBack" = "Verification code SMS may be slightly delayed. Are you sure go back and start again?";
 "AlertTitlePasswordBack" = "Complete soon. Are you sure go back and start again?";
 "AlertTitleUserNameBack" = "This is the last step. Are you sure go back and start again?";
@@ -74,6 +78,7 @@
 
 "AlertTitleLoginFaile" = "Account or password error. Enter again.";
 "AlertTitleWeChatUninstall" = "Not find weChat, Can't login with weChat";
+"AlertTitleWeiboUninstall" = "Not find Weibo, Can't login with Weibo";
 "AlertTitleInternetError" = "Internet error. Please try it again later.";
 "AlertTitleRegisterError" = "Sign up failed. Please try it again later.";
 "AlertTitleChangeError" = "Change failed. Please try it again later.";
@@ -82,6 +87,7 @@
 "AlertTitlePhoneNil" = "Mobile Number null";
 "AlertTitleConnectUs" = "Please connect service.";
 "AlertTitleWechatNil" = "Login with Wechat failed.";
+"AlertTitleWeiboNil" = "Login with Weibo failed.";
 "AlertTitleDataNil" = "Data null";
 
 "AllPhotoLibraryTitle" = "Please Allow Access to Your Photos";
