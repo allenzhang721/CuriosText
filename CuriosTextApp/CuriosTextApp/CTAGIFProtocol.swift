@@ -59,14 +59,17 @@ extension CTAGIFProtocol {
                         gifCreatorVC.fakeView = fakeView
                         gifCreatorVC.completed = { (url, imageurl) in
                             dispatch_async(dispatch_get_main_queue(), {
-                                completedHandler?(fileURL: url, thumbImg: UIImage(contentsOfFile: imageurl.path!)!)
-                                dispatch_async(dispatch_get_main_queue(), {
-                                    viewController.dismissViewControllerAnimated(false, completion: {
-                                    })
+                                gifCreatorVC.dismissViewControllerAnimated(true, completion: {
+                                    completedHandler?(fileURL: url, thumbImg: UIImage(contentsOfFile: imageurl.path!)!)
                                 })
+//                                dispatch_async(dispatch_get_main_queue(), {
+//                                    
+//                                })
                             })
                         }
-                        viewController.presentViewController(gifCreatorVC, animated: false, completion: {
+                        gifCreatorVC.transitioningDelegate = CTAFadeTransition.getInstance()
+                        gifCreatorVC.modalPresentationStyle = .Custom
+                        viewController.presentViewController(gifCreatorVC, animated: true, completion: {
                             debug_print(" did complated")
                             gifCreatorVC.began()
                         })
@@ -77,5 +80,70 @@ extension CTAGIFProtocol {
             }
         }
         
+    }
+}
+
+class CTAFadeTransition: NSObject, UIViewControllerTransitioningDelegate{
+    
+    var isPersent:Bool = false
+    
+    static var _instance:CTAFadeTransition?;
+    
+    static func getInstance() -> CTAFadeTransition{
+        if _instance == nil{
+            _instance = CTAFadeTransition();
+        }
+        return _instance!
+    }
+    
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning?
+    {
+        isPersent = true
+        return self
+    }
+    
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        isPersent = false
+        return self
+    }
+    
+}
+
+extension CTAFadeTransition: UIViewControllerAnimatedTransitioning{
+    
+    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval{
+        if isPersent{
+            return 0.1
+        }else {
+            return 0.1
+        }
+        
+    }
+    
+    func animateTransition(transitionContext: UIViewControllerContextTransitioning){
+        if isPersent{
+            if let toView = transitionContext.viewForKey(UITransitionContextToViewKey){
+                transitionContext.containerView()!.addSubview(toView)
+                toView.frame = CGRect.init(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
+                toView.alpha = 1
+                UIView.animateWithDuration(0.1, animations: { 
+                    toView.alpha = 1
+                    }, completion: { (_) in
+                        transitionContext.completeTransition(true)
+                })
+            }
+        }
+        if !isPersent{
+            if let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey){
+                fromView.alpha = 1
+                UIView.animateWithDuration(0.1, animations: {
+                    fromView.frame = CGRect.init(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
+                    fromView.alpha = 1
+                    }, completion: { (_) in
+                        fromView.removeFromSuperview()
+                        transitionContext.completeTransition(true)
+                })
+            }
+        }
     }
 }

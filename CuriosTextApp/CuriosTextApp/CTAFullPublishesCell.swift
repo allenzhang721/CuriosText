@@ -76,6 +76,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     }
     
     func reloadCell(){
+        self.cellImageView.hidden = false
         if publishModel != nil {
             self.imgLoaded = false
             let defaultImg = self.getDefaultIcon(self.bounds)
@@ -89,13 +90,19 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                 }
             }
         }else{
-            self.setDefaultImg()
+            self.resetCell()
         }
     }
     
-    func setDefaultImg(){
+    func resetCell(){
         let whiteImg = self.getWhiteBg(self.bounds)
         self.cellImageView.image = whiteImg
+        if self.isLoadComplete{
+            self.previewView.dataSource = nil
+            self.previewView.aniDataSource = nil
+            self.previewView.reloadData({
+            })
+        }
     }
     
     func loadAnimation(){
@@ -209,7 +216,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     func playComplete(){
         self.isPlaying = false
         self.isPause = false
-        let time: NSTimeInterval = NSTimeInterval(2.0)
+        let time: NSTimeInterval = NSTimeInterval(1.0)
         let delay = dispatch_time(DISPATCH_TIME_NOW,
                                   Int64(time * Double(NSEC_PER_SEC)))
         dispatch_after(delay, dispatch_get_main_queue()) { [weak self] in

@@ -374,8 +374,9 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
             let alertTile = NSLocalizedString("ConfirmLogoutLabel", comment: "")
             self.showSheetAlert(alertTile, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
                 if index != -1{
-                    CTAUserManager.logout()
-                    self.showLoginView()
+                    if CTAUserManager.logout() {
+                        self.showLoginView()
+                    }
                 }
             }
         }
