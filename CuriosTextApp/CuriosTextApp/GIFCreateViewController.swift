@@ -40,18 +40,19 @@ class GIFCreateViewController: UIViewController {
 //                    aniCanvasView.ready()
         
 //            }
-        
-        SVProgressHUD.showProgress(0.2)
     }
     
     func began() {
         
         debug_print("Will Reload")
+        
         self.aniCanvasView.reloadData { [weak self] in
             debug_print("Did Reload")
             guard let sf = self else { return }
             sf.aniCanvasView.ready()
-            let time: NSTimeInterval = 0.1
+            
+            SVProgressHUD.showProgress(0, status: "\(Int(0 * 100.0))%")
+            let time: NSTimeInterval = 0.3
             let delay = dispatch_time(DISPATCH_TIME_NOW,
                 Int64(time * Double(NSEC_PER_SEC)))
             dispatch_after(delay, dispatch_get_main_queue()) {
@@ -91,7 +92,7 @@ class GIFCreateViewController: UIViewController {
             counts += 2
             debug_print(indexs)
             
-            GIFCreator.beganWith(publishID, images: [], delays: [], ignoreCache: true)
+            GIFCreator.beganWith(publishID, images: [], delays: [], ignoreCache: false)
             
             next()
             
@@ -122,15 +123,45 @@ class GIFCreateViewController: UIViewController {
         
         currentIndex += 1
         if currentIndex < self.indexs.count {
-            if let progressBlock = progressBlock {
-                progressBlock(progress: aniCanvasView.progress, next: next)
-            } else {
-                next()
+//            if let progressBlock = progressBlock {
+//                progressBlock(progress: aniCanvasView.progress, next: next)
+//            } else {
+                let aprogress = aniCanvasView.progress
+                UIView.animateWithDuration(1.0, animations: {
+                    
+                    }, completion: { (finished) in
+                        if finished {
+                            
+                        }
+                })
+            SVProgressHUD.showProgress(Float(aprogress), status: "\(Int(aprogress * 100.0))%")
+            let time: NSTimeInterval = 0.5
+            let delay = dispatch_time(DISPATCH_TIME_NOW,
+                                      Int64(time * Double(NSEC_PER_SEC)))
+            dispatch_after(delay, dispatch_get_main_queue()) {
+                self.next()
             }
+//            }
         } else {
             GIFCreator.commitWith({[weak self] (url) in
+                SVProgressHUD.showProgress(1, status: "\(Int(1.0 * 100.0))%")
+                
                 debug_print("gif url = \(url)")
-                self?.completed?(url, thumbImage)
+                let time: NSTimeInterval = 0.3
+                let delay = dispatch_time(DISPATCH_TIME_NOW,
+                    Int64(time * Double(NSEC_PER_SEC)))
+                dispatch_after(delay, dispatch_get_main_queue()) {
+                    
+                    SVProgressHUD.showSuccessWithStatus(LocalStrings.Done.description)
+                }
+                
+                let time2: NSTimeInterval = 0.6
+                let delay2 = dispatch_time(DISPATCH_TIME_NOW,
+                    Int64(time2 * Double(NSEC_PER_SEC)))
+                dispatch_after(delay2, dispatch_get_main_queue()) {
+                    self?.completed?(url, thumbImage)
+                }
+                
             })
         }
     }
