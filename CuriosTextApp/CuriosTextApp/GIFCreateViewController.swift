@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class GIFCreateViewController: UIViewController {
     
@@ -39,6 +40,8 @@ class GIFCreateViewController: UIViewController {
 //                    aniCanvasView.ready()
         
 //            }
+        
+        SVProgressHUD.showProgress(0.2)
     }
     
     func began() {
