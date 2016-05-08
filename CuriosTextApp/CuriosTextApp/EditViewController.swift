@@ -57,6 +57,10 @@ class EditViewController: UIViewController {
         
         let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
         
+        let cleanPage = page.cleanEmptyContainers()
+        let image = drawPageWithNoImage(cleanPage, containImage: false)
+        cameraVC.templateImage = image
+        
         cameraVC.didSelectedImageHandler = {[weak self] image in
             if let strongSelf = self, let image = image {
 //                dispatch_async(dispatch_get_main_queue(), { 
@@ -402,6 +406,10 @@ extension EditViewController {
             
         case .Image:
             let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
+            
+            let cleanPage = page.cleanEmptyContainers()
+            let image = drawPageWithNoImage(cleanPage)
+            cameraVC.templateImage = image
             
             cameraVC.didSelectedImageHandler = {[weak self] image in
                 if let strongSelf = self {

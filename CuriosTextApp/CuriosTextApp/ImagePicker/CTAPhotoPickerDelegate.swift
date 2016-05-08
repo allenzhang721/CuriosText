@@ -18,3 +18,7 @@ protocol CTAPhotoPickerProtocol: class {
     
     func pickerDidSelectedImage(image: UIImage)
 }
+
+protocol CTAPhotoPickerTemplateable: class {
+    var templateImage: UIImage? {get set}
+}

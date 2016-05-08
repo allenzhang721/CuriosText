@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="u8L-Ej-xMD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F28b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="u8L-Ej-xMD">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -24,6 +24,9 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                                         <color key="backgroundColor" red="0.20392156859999999" green="0.20392156859999999" blue="0.20392156859999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uRk-z1-7tB">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                    </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fLu-aW-f78" customClass="CTACropOverlayView" customModule="CuriosTextApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -32,8 +35,12 @@
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="fLu-aW-f78" firstAttribute="trailing" secondItem="Gjj-Vk-IWJ" secondAttribute="trailing" id="2Zs-jF-dNo"/>
+                                    <constraint firstItem="uRk-z1-7tB" firstAttribute="bottom" secondItem="fLu-aW-f78" secondAttribute="bottom" id="C1H-3X-9ae"/>
                                     <constraint firstItem="fLu-aW-f78" firstAttribute="leading" secondItem="Gjj-Vk-IWJ" secondAttribute="leading" id="Cgx-YZ-zBx"/>
                                     <constraint firstItem="fLu-aW-f78" firstAttribute="bottom" secondItem="Gjj-Vk-IWJ" secondAttribute="bottom" id="Ekc-Ry-etV"/>
+                                    <constraint firstItem="uRk-z1-7tB" firstAttribute="leading" secondItem="fLu-aW-f78" secondAttribute="leading" id="HGn-6P-8s5"/>
+                                    <constraint firstItem="uRk-z1-7tB" firstAttribute="trailing" secondItem="Gjj-Vk-IWJ" secondAttribute="trailing" id="NIw-1H-hek"/>
+                                    <constraint firstItem="uRk-z1-7tB" firstAttribute="top" secondItem="Gjj-Vk-IWJ" secondAttribute="top" id="Qjk-GG-VLd"/>
                                     <constraint firstItem="fLu-aW-f78" firstAttribute="top" secondItem="Gjj-Vk-IWJ" secondAttribute="top" id="U0M-pI-iaO"/>
                                     <constraint firstAttribute="trailing" secondItem="Gjj-Vk-IWJ" secondAttribute="trailing" id="V4z-8j-im8"/>
                                     <constraint firstItem="Gjj-Vk-IWJ" firstAttribute="top" secondItem="JN5-7R-VTh" secondAttribute="top" id="XMi-5L-RYc"/>
@@ -117,6 +124,7 @@
                         <outlet property="cameraView" destination="Gjj-Vk-IWJ" id="JMr-dp-egu"/>
                         <outlet property="cropView" destination="fLu-aW-f78" id="lfC-fZ-jYq"/>
                         <outlet property="ratioCollectionView" destination="bhK-JC-FC8" id="Y65-cB-kDD"/>
+                        <outlet property="templateImageView" destination="uRk-z1-7tB" id="VdS-zC-2VQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RoI-A3-bQO" userLabel="First Responder" sceneMemberID="firstResponder"/>

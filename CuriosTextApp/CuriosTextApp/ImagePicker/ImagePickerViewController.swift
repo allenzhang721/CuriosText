@@ -12,6 +12,8 @@ class ImagePickerViewController: UIViewController {
     
 //    weak var pickerDelegate: CTAPhotoPickerProtocol?
     
+    var templateImage: UIImage?
+    
     var didSelectedImageHandler: ((UIImage?) -> ())?
 
     override func viewDidLoad() {
@@ -24,6 +26,10 @@ class ImagePickerViewController: UIViewController {
                 for vc in vcs {
                     if let vc = vc as? CTAPhotoPickerDelegate {
                         vc.pickerDelegate = self
+                    }
+                    
+                    if let vc = vc as? CTAPhotoPickerTemplateable {
+                        vc.templateImage = templateImage
                     }
                 }
             }

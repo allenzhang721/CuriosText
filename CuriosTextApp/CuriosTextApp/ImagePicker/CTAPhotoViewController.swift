@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate {
+class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhotoPickerTemplateable {
     
     struct CTAPhotoThumbnailLayoutAttributes {
         let itemSize: CGSize
@@ -49,6 +49,8 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate {
     @IBOutlet weak var previewView: CTAPhotoPreviewView!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     
+    var templateImage: UIImage?
+    
     weak var pickerDelegate: CTAPhotoPickerProtocol?
     private var inner = Inner()
 
@@ -78,9 +80,16 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate {
         return true
     }
     
+    override func viewWillAppear(animated: Bool) {
+        
+        previewView.templateImageView.image = templateImage
+    }
+    
     override func viewDidAppear(animated: Bool) {
         caculateLayoutAttributes()
         updateCacheSets()
+        
+//        previewView.templateImage = templateImage
     }
     
     deinit {
@@ -92,6 +101,8 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate {
 extension CTAPhotoViewController {
     
     private func setup() {
+        
+//        previewView.templateImage = templateImage
         
         setupDelegateAndDataSource()
         setupFetchPhotos()
@@ -280,7 +291,9 @@ extension CTAPhotoViewController {
     
     // MARK: - Assets
     private func resetCacheSets() {
-        inner.imageManager.stopCachingImagesForAllAssets()
+        if inner.accessPhotoEnable {
+            inner.imageManager.stopCachingImagesForAllAssets()
+        }
         inner.previousPreheatRect = CGRect.zero
     }
     

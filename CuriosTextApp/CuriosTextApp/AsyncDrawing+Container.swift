@@ -50,10 +50,81 @@ func retriveImageBy(imgeID: String, baseURL: NSURL, imageAccess:((String) -> UII
     
 }
 
-func draw(page: CTAPage, atBegan: Bool, baseURL: NSURL, imageAccess:((String) -> UIImage?)? = nil ,local: Bool, completedHandler:(Result<UIImage>) -> ()) {
+func drawPageWithNoImage(page: CTAPage, containImage: Bool = true) -> UIImage? {
+    let count = page.containers.count
+    guard (containImage && count > 1) || (!containImage && count >= 1) else {return nil}
+    if containImage {
+    let noImageContainers = page.containers.dropFirst()
+    let noImageDrawables = noImageContainers.map{$0 as ContainerVMProtocol}.map { (container) -> Drawable in
+           let textContainer = container as! TextContainerVMProtocol
+                
+                let position = container.center
+                let rotation = container.radius
+                let size = container.size
+                
+                let attributeText = textContainer.textElement!.attributeString
+                
+                return TextDrawing(position: position, size: size, rotation: rotation, attributeString: attributeText)
+    }
+    
+    UIGraphicsBeginImageContextWithOptions(page.size, false, UIScreen.mainScreen().scale)
+    
+    // back ground
+//    let path = UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: size))
+//    UIColor.whiteColor().setFill()
+//    path.fill()
+    
+    for d in noImageDrawables {
+        if let d = d as? TextDrawable {
+            drawingText(d)
+        } else if let d = d as? ImageDrawable {
+            drawingImage(d)
+        }
+    }
+    
+    let image = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return image
+        
+    } else {
+        let noImageContainers = page.containers
+        let noImageDrawables = noImageContainers.map{$0 as ContainerVMProtocol}.map { (container) -> Drawable in
+            let textContainer = container as! TextContainerVMProtocol
+            
+            let position = container.center
+            let rotation = container.radius
+            let size = container.size
+            
+            let attributeText = textContainer.textElement!.attributeString
+            
+            return TextDrawing(position: position, size: size, rotation: rotation, attributeString: attributeText)
+        }
+        
+        UIGraphicsBeginImageContextWithOptions(page.size, false, UIScreen.mainScreen().scale)
+        
+        // back ground
+        //    let path = UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: size))
+        //    UIColor.whiteColor().setFill()
+        //    path.fill()
+        
+        for d in noImageDrawables {
+            if let d = d as? TextDrawable {
+                drawingText(d)
+            } else if let d = d as? ImageDrawable {
+                drawingImage(d)
+            }
+        }
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+}
+
+func draw(page: CTAPage, atBegan: Bool, filterWithVisible: Bool = true, baseURL: NSURL, imageAccess:((String) -> UIImage?)? = nil ,local: Bool, completedHandler:(Result<UIImage>) -> ()) {
     
     let animations = atBegan ? page.animatoins : page.animatoins.reverse()
-    let needContainers = page.containers
+    let needContainers = filterWithVisible ? page.containers
         .filter { container -> Bool in
             
             if let animation = (animations.filter{$0.targetiD == container.iD}).first {
@@ -61,10 +132,8 @@ func draw(page: CTAPage, atBegan: Bool, baseURL: NSURL, imageAccess:((String) ->
             } else {
                 return true
             }
-        }.map{$0 as ContainerVMProtocol}
-    
-    
-    
+    }.map{$0 as ContainerVMProtocol} : page.containers.map{$0 as ContainerVMProtocol}
+ 
    let promises = needContainers.map { container -> Promise<Drawable> in
         
         let position = container.center

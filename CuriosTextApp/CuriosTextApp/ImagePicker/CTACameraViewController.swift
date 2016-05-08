@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate {
+class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhotoPickerTemplateable {
     
     private struct Inner {
         private let session = AVCaptureSession()
@@ -26,6 +26,9 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate {
     
     weak var pickerDelegate: CTAPhotoPickerProtocol?
     
+    var templateImage: UIImage?
+    
+    @IBOutlet weak var templateImageView: UIImageView!
     @IBOutlet weak var cameraView: CTACameraPreviewView!
     @IBOutlet weak var cropView: CTACropOverlayView!
     @IBOutlet weak var ratioCollectionView: UICollectionView!
@@ -45,6 +48,10 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+    }
+    
+    private func setupTemplate() {
+        templateImageView.image = templateImage
     }
     
     private func setup() {
@@ -135,6 +142,10 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate {
                 return
             }
             
+            dispatch_async(dispatch_get_main_queue(), {
+                strongSelf.templateImageView.image = strongSelf.templateImage
+            })
+            
             switch strongSelf.inner.cameraResult {
                 
             case .Authorized:
@@ -144,7 +155,7 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate {
                 
             default:
                 dispatch_async(dispatch_get_main_queue(), { 
-                    strongSelf.cameraView.backgroundColor = .redColor()
+                    strongSelf.cameraView.backgroundColor = UIColor.groupTableViewBackgroundColor()
                 })
             }
         }
