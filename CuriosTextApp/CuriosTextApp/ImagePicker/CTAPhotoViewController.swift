@@ -431,8 +431,11 @@ extension CTAPhotoViewController: UICollectionViewDataSource {
         
         if cell.selectedBackgroundView == nil {
             let v = UIView(frame: cell.bounds)
-            v.backgroundColor = UIColor.yellowColor()
+            v.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.8)
             cell.selectedBackgroundView = v
+            v.layer.borderWidth = 1.5
+            v.layer.borderColor = UIColor.yellowColor().CGColor
+            cell.bringSubviewToFront(cell.selectedBackgroundView!)
         }
         
         return cell
