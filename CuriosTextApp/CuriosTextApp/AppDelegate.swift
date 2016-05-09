@@ -36,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         #endif
         
         WXApi.registerApp(CTAConfigs.weChat.appID)
+        WeiboSDK.registerApp(CTAConfigs.weibo.appID)
         CTASocialManager.register(.WeChat, appID: CTAConfigs.weChat.appID, appKey: CTAConfigs.weChat.appKey)
         CTASocialManager.register(.Weibo, appID: CTAConfigs.weibo.appID, appKey: CTAConfigs.weibo.appKey)
         CTASocialManager.register(.SMS, appID: CTAConfigs.SMS.appID, appKey: CTAConfigs.SMS.appKey) // http://dashboard.mob.com/#/sms/index

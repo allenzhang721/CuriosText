@@ -330,27 +330,50 @@ extension CTAPublishProtocol{
     }
     
     func weiBoShareHandler() {
+//        let accessToken = "2.00QCIVlBCQBJcBd5c647a60bDuIS2C"
+//        let userID = self.publishModel!.userModel.weiboID
+        debug_print(CTAUserManager.user?.weiboID)
+        
         if CTASocialManager.isAppInstaller(.Weibo){
-            if let page = publishCell.getPage(){
-                let publishID = self.publishModel!.publishID
-                self.exportGIF(publishID, page: page, viewController: self as! UIViewController, completedHandler: { (fileURL, thumbImg) in
-                    let message =  WXMediaMessage()
-                    message.setThumbImage(thumbImg)
+            if let weiboID = CTAUserManager.user?.weiboID where !weiboID.isEmpty, let token = CTASocialManager.needOAuthOrGetTokenByUserID(weiboID) {
+                debug_print("has token = \(token), userID = \(weiboID)")
+                self.shareWeiboWithToken(token)
+                
+            } else {
+                
+                CTASocialManager.reOAuthWeiboGetAccessToken({ [weak self] (token, weiboID) in
+                    guard let sf = self else { return }
+                    if let token = token {
+                       debug_print("re oauth token = \(token)")
+                        sf.shareWeiboWithToken(token)
+                    }
                     
-                    let ext =  WXEmoticonObject()
-                    let filePath = fileURL.path
-                    ext.emoticonData = NSData(contentsOfFile:filePath!)
-                    message.mediaObject = ext
+                    if let weiboID = weiboID {
+                        CTAUserManager.user?.weiboID = weiboID
+                    }
                     
-                    let req =  SendMessageToWXReq()
-                    req.bText = false
-                    req.message = message
-                    req.scene = 0
-                    WXApi.sendReq(req)
+                    
                 })
             }
-            
-            
+        }
+    }
+    
+    private func shareWeiboWithToken(token: String) {
+        if CTASocialManager.isAppInstaller(.Weibo){
+            if let page = self.publishCell.getPage(){
+                let publishID = self.publishModel!.publishID
+                self.exportGIF(publishID, page: page, viewController: self as! UIViewController, completedHandler: { (fileURL, thumbImg) in
+                    
+                    let imageObject = WBImageObject()
+                    imageObject.imageData = NSData(contentsOfURL: fileURL)
+                    
+                    let accessToken = token
+                    let _ = WBHttpRequest(forShareAStatus: "send from Curios", contatinsAPicture: imageObject, orPictureUrl: nil, withAccessToken: accessToken, andOtherProperties: nil, queue: nil, withCompletionHandler: { (request, object, error) in
+                        
+                        debug_print(object)
+                    })
+                })
+            }
         }else {
             self.showSingleAlert(NSLocalizedString("AlertTitleNoInstallWeibo", comment: ""), alertMessage: "", compelecationBlock: nil)
         }

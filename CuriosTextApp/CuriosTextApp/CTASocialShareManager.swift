@@ -16,6 +16,7 @@ class CTASocialManager: CTASocialProtocol {
     typealias SMSCompletionHandler = (result: Bool) -> Void
     typealias SharedCompletionHandler = (result: Bool) -> Void
     typealias OAuthCompletionHandler = (NSDictionary?, NSURLResponse?, NSError?) -> Void
+    typealias LoginCompletionHandler = (NSDictionary?, NSURLResponse?, NSError?) -> Void
     typealias Info = (title: String?, description: String?, thumbnail: UIImage?, media: CTASocialManager.Media?)
     
     enum CTASocialSharePlatformType {
@@ -151,11 +152,6 @@ extension CTASocialManager: CTASocialShareable {
     }
 }
 
-protocol CTASocialOAuthable: class {
-    
-    static func OAuth(platform: CTASocialManager.CTASocialSharePlatformType, completionHandler: CTASocialManager.OAuthCompletionHandler)
-}
-
 extension CTASocialManager{
     
     static func isAppInstaller(platform: CTASocialManager.CTASocialSharePlatformType) -> Bool {
@@ -169,6 +165,11 @@ extension CTASocialManager{
             return true
         }
     }
+}
+
+protocol CTASocialOAuthable: class {
+    
+    static func OAuth(platform: CTASocialManager.CTASocialSharePlatformType, completionHandler: CTASocialManager.OAuthCompletionHandler)
 }
 
 extension CTASocialOAuthable {
@@ -189,23 +190,28 @@ extension CTASocialOAuthable {
             })
             
         case .Weibo:
-            
             MonkeyKing.OAuth(.Weibo, completionHandler: { (OAuthInfo, response, error) in
                 if error == nil {
                     debug_print(OAuthInfo)
                     
                     // App or Web: token & userID
-                    guard let token = (OAuthInfo?["access_token"] ?? OAuthInfo?["accessToken"]) as? String, userID = (OAuthInfo?["uid"] ?? OAuthInfo?["userID"]) as? String else {
+                    guard let token = (OAuthInfo?["access_token"] ?? OAuthInfo?["accessToken"]) as? String, userID = (OAuthInfo?["uid"] ?? OAuthInfo?["userID"]) as? String, let expireDate = OAuthInfo?["expirationDate"] else {
                         return
                     }
+    
+                    NSUserDefaults.standardUserDefaults().setValue(userID, forKey: userID + "userID")
+                    NSUserDefaults.standardUserDefaults().setValue(token, forKey: userID + "token")
+                    NSUserDefaults.standardUserDefaults().setValue(expireDate, forKey: userID + "expireDate")
                     
-                    let userInfoAPI = "https://api.weibo.com/2/users/show.json"
-                    let parameters = ["uid": userID, "access_token": token]
+                    completionHandler(OAuthInfo, response, error)
                     
-                    // fetch UserInfo by userInfoAPI
-                    SimpleNetworking.sharedInstance.request(userInfoAPI, method: .GET, parameters: parameters, completionHandler: { (userInfoDictionary, _, _) -> Void in
-                        print("userInfoDictionary \(userInfoDictionary)")
-                    })
+//                    let userInfoAPI = "https://api.weibo.com/2/users/show.json"
+//                    let parameters = ["uid": userID, "access_token": token]
+//                    
+//                    // fetch UserInfo by userInfoAPI
+//                    SimpleNetworking.sharedInstance.request(userInfoAPI, method: .GET, parameters: parameters, completionHandler: { (userInfoDictionary, _, _) -> Void in
+//                        print("userInfoDictionary \(userInfoDictionary)")
+//                    })
                     
                     
                 } else {
@@ -214,6 +220,36 @@ extension CTASocialOAuthable {
             })
         default:
             ()
+        }
+    }
+    
+    static func needOAuthOrGetTokenByUserID(userID: String) -> String? {
+
+        if let expireDate = NSUserDefaults.standardUserDefaults().valueForKey(userID + "expireDate") where NSDate().compare(expireDate as! NSDate) == .OrderedAscending, let token = NSUserDefaults.standardUserDefaults().valueForKey(userID + "token") as? String {
+            
+            return token
+            
+        } else {
+            
+            return nil
+        }
+        
+        
+        
+    }
+    
+    static func reOAuthWeiboGetAccessToken (completed: ((token: String?, weiboID: String?) -> ())?) {
+        
+        OAuth(.Weibo) { (OAuthInfo, _, _) in
+            guard let token = (OAuthInfo?["access_token"] ?? OAuthInfo?["accessToken"]) as? String, userID = (OAuthInfo?["uid"] ?? OAuthInfo?["userID"]) as? String, let expireDate = OAuthInfo?["expirationDate"] else {
+                completed?(token: nil, weiboID: nil)
+                return
+            }
+            
+            NSUserDefaults.standardUserDefaults().setValue(userID, forKey: userID + "userID")
+            NSUserDefaults.standardUserDefaults().setValue(token, forKey: userID + "token")
+            NSUserDefaults.standardUserDefaults().setValue(expireDate, forKey: userID + "expireDate")
+            completed?(token: token, weiboID: userID)
         }
     }
 }
@@ -260,4 +296,52 @@ extension CTASocialOAuthable {
         // http://mp.weixin.qq.com/wiki/home/index.html
     }
     
+    private static func fetchWeiboUserInfo(OAuthInfo: [String: AnyObject]?, completionHandler: CTASocialManager.LoginCompletionHandler) {
+        
+        // App or Web: token & userID
+        guard let token = (OAuthInfo?["access_token"] ?? OAuthInfo?["accessToken"]) as? String, userID = (OAuthInfo?["uid"] ?? OAuthInfo?["userID"]) as? String else {
+            let error = NSError(domain: "social", code: -3, userInfo: nil)
+            completionHandler(nil, nil, error)
+            return
+        }
+        
+        let userInfoAPI = "https://api.weibo.com/2/users/show.json"
+        let parameters = ["uid": userID, "access_token": token]
+        
+        // fetch UserInfo by userInfoAPI
+        SimpleNetworking.sharedInstance.request(userInfoAPI, method: .GET, parameters: parameters, completionHandler: { (userInfoDictionary, r, e) -> Void in
+//            print("userInfoDictionary \(userInfoDictionary)")
+            completionHandler(userInfoDictionary, r, e)
+        })
+    }
 }
+
+protocol CTASocialLoginable {
+    
+    func login(platform: CTASocialManager.CTASocialSharePlatformType, completionHandler: CTASocialManager.LoginCompletionHandler)
+}
+
+extension CTASocialLoginable {
+    
+    func login(platform: CTASocialManager.CTASocialSharePlatformType, OAuthInfo: [String: AnyObject],completionHandler: CTASocialManager.LoginCompletionHandler) {
+        
+        switch platform {
+        case .WeChat:
+            CTASocialManager.fetchUserInfo(OAuthInfo, completeBlock: completionHandler)
+            
+        case .Weibo:
+            CTASocialManager.fetchWeiboUserInfo(OAuthInfo, completionHandler: completionHandler)
+            
+        default:
+            let error = NSError(domain: "social", code: -3, userInfo: nil)
+            completionHandler(nil, nil, error)
+        }
+    }
+}
+
+
+
+
+
+
+
