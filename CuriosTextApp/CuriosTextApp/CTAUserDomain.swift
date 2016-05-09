@@ -109,9 +109,9 @@ class CTAUserDomain: CTABaseDomain {
         }
     }
     
-    func weiboRegister(weiboID: String, nickName: String, userIconURL:String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func weiboRegister(weiboID: String, nickName: String, userDesc:String, sex:Int,compelecationBlock: (CTADomainInfo!) -> Void) {
         
-        CTAWeiboRegisterRequest.init(weiboID: weiboID, nickName: nickName, userIconURL: userIconURL).startWithCompletionBlockWithSuccess{ (response) -> Void in
+        CTAWeiboRegisterRequest.init(weiboID: weiboID, nickName: nickName, userDesc: userDesc, sex: sex).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
             case .Success(let json):

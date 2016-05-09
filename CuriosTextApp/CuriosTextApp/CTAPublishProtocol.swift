@@ -330,13 +330,10 @@ extension CTAPublishProtocol{
     }
     
     func weiBoShareHandler() {
-//        let accessToken = "2.00QCIVlBCQBJcBd5c647a60bDuIS2C"
-//        let userID = self.publishModel!.userModel.weiboID
-        debug_print(CTAUserManager.user?.weiboID)
         
         if CTASocialManager.isAppInstaller(.Weibo){
             if let weiboID = CTAUserManager.user?.weiboID where !weiboID.isEmpty, let token = CTASocialManager.needOAuthOrGetTokenByUserID(weiboID) {
-                debug_print("has token = \(token), userID = \(weiboID)")
+//                debug_print("has token = \(token), userID = \(weiboID)")
                 self.shareWeiboWithToken(token)
                 
             } else {
@@ -344,7 +341,7 @@ extension CTAPublishProtocol{
                 CTASocialManager.reOAuthWeiboGetAccessToken({ [weak self] (token, weiboID) in
                     guard let sf = self else { return }
                     if let token = token {
-                       debug_print("re oauth token = \(token)")
+//                       debug_print("re oauth token = \(token)")
                         sf.shareWeiboWithToken(token)
                     }
                     
@@ -370,7 +367,7 @@ extension CTAPublishProtocol{
                     let accessToken = token
                     let _ = WBHttpRequest(forShareAStatus: "send from Curios", contatinsAPicture: imageObject, orPictureUrl: nil, withAccessToken: accessToken, andOtherProperties: nil, queue: nil, withCompletionHandler: { (request, object, error) in
                         
-                        debug_print(object)
+//                        debug_print(object)
                     })
                 })
             }

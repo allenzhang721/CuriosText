@@ -170,7 +170,8 @@ enum CTAParameterKey: CustomStringConvertible {
   case UpToken, UpTokenKey
   case ShareCount, RebuildCount, LikeCount, LikeStatus
   case Openid, Headimgurl, WechatName
-  
+  case WeiBoUserID, Avatarhd, Gender, WeiboName, WeiboDesc
+    
   var description: String {
     switch self {
     case .Data:
@@ -265,6 +266,18 @@ enum CTAParameterKey: CustomStringConvertible {
         return "headimgurl"
     case .WechatName:
         return "nickname"
+    case .WeiBoUserID:
+        return "id"
+    case .Avatarhd:
+        return "avatar_hd"
+    case .Gender:
+        return "gender"
+    case .WeiboName:
+        return "screen_name"
+    case .WeiboDesc:
+        return "description"
     }
+    
+    //WeiBoUserID, Avatarhd, Gender, WeiboName, WeiboDesc
   }
 }

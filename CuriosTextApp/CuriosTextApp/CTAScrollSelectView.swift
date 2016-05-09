@@ -83,6 +83,5 @@ extension CTAScrollSelectView: LineFlowLayoutDelegate {
             oldCell.backgroundColor = CTAStyleKit.black8
         }
         sendActionsForControlEvents(.ValueChanged)
-        print("\(indexPath)")
     }
 }

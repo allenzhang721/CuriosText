@@ -587,13 +587,9 @@ extension EditViewController: CTATabViewControllerDataSource, CTATabViewControll
     
     func tabViewController(ViewController: CTATabViewController, didChangedToIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
         
-//        print("will tab change")
-        
         guard let container = selectedContainer where container.featureTypes.count > 0 else {
             return
         }
-        
-//        print("tab change from = \(oldIndexPath?.item), to = \(indexPath.item)")
         
         selectorViewController.changeToSelector(container.featureTypes[indexPath.item])
     }

@@ -135,8 +135,6 @@ public class CTASliderView: UIControl, ValueTuneable {
     
     private func layout() {
         
-        print("layout")
-        
         containerLayer.frame = bounds
         indicatorLayer.frame = containerLayer.bounds
         scrollView.frame = bounds
