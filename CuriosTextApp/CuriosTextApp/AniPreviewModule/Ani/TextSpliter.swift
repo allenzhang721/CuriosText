@@ -212,7 +212,6 @@ class TextSpliter {
                     let ulf = usedlineFragmentRect
                     let ur = manager.boundingRectForGlyphRange(r, inTextContainer: container)
                     
-//                    print("line = \(lf), usedLine = \(ulf), usedrect = \(ur)")
                     let cs = CGSize(width: constraintSize.width, height: usedRect.height)
                     let unit = TextUnit(text: t, attriubtes: attributes, usedRect: ur, lineFragmentRect: lf, usedLineFragmentRect: ulf, constraintSize: cs, section: section, row: row)
                     

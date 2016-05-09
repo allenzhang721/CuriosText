@@ -239,7 +239,6 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
                 }
                 
                 let point = CGPoint(x: proposedContentOffset.x + adjustOffset + 0.5, y: proposedContentOffset.y)
-                print("Auto scroll to \(point), currentOffset = \(collectionView.contentOffset), size = \(collectionView.bounds)")
 //                collectionView.setContentOffset(point, animated: false)
                 return point
                 

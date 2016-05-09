@@ -78,11 +78,10 @@ extension EditCanvasView {
                 break
             }
         }
-        print(index)
+        
         if index >= 0 {
             selectedContainerIndexs = [index]
             delegate?.canvasView(self, didSelectedContainerAtIndex: index)
-            print("did selected container")
         }
         
     }

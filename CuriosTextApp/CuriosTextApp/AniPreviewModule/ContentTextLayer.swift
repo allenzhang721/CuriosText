@@ -28,9 +28,6 @@ class ContentTextLayer: UILabel {
             storage.addLayoutManager(manager)
             container.lineFragmentPadding = 0
             manager.drawGlyphsForGlyphRange(manager.glyphRangeForTextContainer(container), atPoint: arect.origin)
-//            print("Custom Drawing")
-            
-            //            super.drawTextInRect(rect)
             
         } else {
             
