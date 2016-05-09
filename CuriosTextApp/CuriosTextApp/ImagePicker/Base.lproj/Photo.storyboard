@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="cMe-yS-ZkE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F28b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="cMe-yS-ZkE">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -22,6 +22,41 @@
                                 <color key="backgroundColor" red="0.20392156859999999" green="0.20392156859999999" blue="0.20392156859999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="5If-cP-INt" secondAttribute="height" multiplier="1:1" id="u9N-09-9pL"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PCZ-1i-nGd">
+                                <rect key="frame" x="0.0" y="44" width="375" height="375"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This allows Curios to share photos from your library and save photos to your camera roll." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qKw-Ob-JcH">
+                                        <rect key="frame" x="20" y="157" width="335" height="61"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please Allow Access to Your Photos" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ii-76-L77">
+                                        <rect key="frame" x="40" y="84" width="295" height="53"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Hf-5Y-cKN">
+                                        <rect key="frame" x="112" y="238" width="151" height="30"/>
+                                        <state key="normal" title="Enable Library Access"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="0Hf-5Y-cKN" firstAttribute="top" secondItem="qKw-Ob-JcH" secondAttribute="bottom" constant="20" id="34m-JA-KAh"/>
+                                    <constraint firstAttribute="trailing" secondItem="qKw-Ob-JcH" secondAttribute="trailing" constant="20" id="4y0-hb-jo1"/>
+                                    <constraint firstAttribute="width" secondItem="PCZ-1i-nGd" secondAttribute="height" multiplier="1:1" id="5Gd-uh-iPb"/>
+                                    <constraint firstItem="0Hf-5Y-cKN" firstAttribute="centerX" secondItem="PCZ-1i-nGd" secondAttribute="centerX" id="64m-ZN-Jmk"/>
+                                    <constraint firstItem="qKw-Ob-JcH" firstAttribute="leading" secondItem="PCZ-1i-nGd" secondAttribute="leading" constant="20" id="II1-Bc-Uyf"/>
+                                    <constraint firstItem="qKw-Ob-JcH" firstAttribute="centerY" secondItem="PCZ-1i-nGd" secondAttribute="centerY" id="JII-kS-55Z"/>
+                                    <constraint firstItem="qKw-Ob-JcH" firstAttribute="centerX" secondItem="PCZ-1i-nGd" secondAttribute="centerX" id="TtS-4Q-J3z"/>
+                                    <constraint firstItem="5Ii-76-L77" firstAttribute="leading" secondItem="PCZ-1i-nGd" secondAttribute="leading" constant="40" id="ca7-kU-3tl"/>
+                                    <constraint firstItem="qKw-Ob-JcH" firstAttribute="top" secondItem="5Ii-76-L77" secondAttribute="bottom" constant="20" id="gne-dA-A9T"/>
+                                    <constraint firstItem="5Ii-76-L77" firstAttribute="centerX" secondItem="PCZ-1i-nGd" secondAttribute="centerX" id="pGR-Yo-MOl"/>
+                                    <constraint firstAttribute="trailing" secondItem="5Ii-76-L77" secondAttribute="trailing" constant="40" id="ymc-bP-Pbf"/>
                                 </constraints>
                             </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NBJ-oU-lGk">
@@ -88,8 +123,11 @@
                             <constraint firstItem="5If-cP-INt" firstAttribute="centerX" secondItem="b0U-Fz-KW6" secondAttribute="centerX" id="FtE-Dh-elV"/>
                             <constraint firstItem="5If-cP-INt" firstAttribute="top" secondItem="NBJ-oU-lGk" secondAttribute="bottom" id="IfF-yj-6h0"/>
                             <constraint firstItem="5If-cP-INt" firstAttribute="top" secondItem="wFo-TF-POz" secondAttribute="bottom" constant="44" id="Tpr-PZ-KEr"/>
+                            <constraint firstItem="PCZ-1i-nGd" firstAttribute="centerX" secondItem="b0U-Fz-KW6" secondAttribute="centerX" id="d0K-45-t8t"/>
+                            <constraint firstItem="PCZ-1i-nGd" firstAttribute="top" secondItem="wFo-TF-POz" secondAttribute="bottom" constant="44" id="mAt-BF-pwV"/>
                             <constraint firstItem="dye-4U-kio" firstAttribute="top" secondItem="5If-cP-INt" secondAttribute="bottom" id="mk3-Dd-rc2"/>
                             <constraint firstItem="dye-4U-kio" firstAttribute="leading" secondItem="b0U-Fz-KW6" secondAttribute="leading" id="qky-YZ-4UX"/>
+                            <constraint firstItem="PCZ-1i-nGd" firstAttribute="width" secondItem="b0U-Fz-KW6" secondAttribute="width" id="rlI-5l-pfj"/>
                             <constraint firstAttribute="trailing" secondItem="dye-4U-kio" secondAttribute="trailing" id="uSW-TE-Tgw"/>
                         </constraints>
                         <connections>

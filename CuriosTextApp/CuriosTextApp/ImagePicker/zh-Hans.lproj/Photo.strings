@@ -1,9 +1,18 @@
 
+/* Class = "UIButton"; normalTitle = "Enable Library Access"; ObjectID = "0Hf-5Y-cKN"; */
+"0Hf-5Y-cKN.normalTitle" = "请允许我们访问你的照片";
+
+/* Class = "UILabel"; text = "Please Allow Access to Your Photos"; ObjectID = "5Ii-76-L77"; */
+"5Ii-76-L77.text" = "开启图库访问权限";
+
 /* Class = "UIBarButtonItem"; title = "取消"; ObjectID = "7ve-Kd-YWw"; */
 "7ve-Kd-YWw.title" = "取消";
 
 /* Class = "UIViewController"; title = "Photo"; ObjectID = "cMe-yS-ZkE"; */
-"cMe-yS-ZkE.title" = "相册";
+"cMe-yS-ZkE.title" = "照片";
 
 /* Class = "UIBarButtonItem"; title = "确定"; ObjectID = "qJs-Tb-L3B"; */
 "qJs-Tb-L3B.title" = "确定";
+
+/* Class = "UILabel"; text = "This allows Curios to share photos from your library and save photos to your camera roll."; ObjectID = "qKw-Ob-JcH"; */
+"qKw-Ob-JcH.text" = "这可以让奇思分享你的相簿中的照片，并将照片保存到相机胶卷中。";
