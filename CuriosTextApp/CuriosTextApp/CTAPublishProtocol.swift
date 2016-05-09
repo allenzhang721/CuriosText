@@ -8,6 +8,7 @@
 
 import Foundation
 import Kingfisher
+
 import SVProgressHUD
 
 protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAAlertProtocol, CTAShareViewDelegate,CTAEditViewControllerDelegate, CTALoadingProtocol, CTAGIFProtocol{
@@ -330,7 +331,24 @@ extension CTAPublishProtocol{
     
     func weiBoShareHandler() {
         if CTASocialManager.isAppInstaller(.Weibo){
-            
+            if let page = publishCell.getPage(){
+                let publishID = self.publishModel!.publishID
+                self.exportGIF(publishID, page: page, viewController: self as! UIViewController, completedHandler: { (fileURL, thumbImg) in
+                    let message =  WXMediaMessage()
+                    message.setThumbImage(thumbImg)
+                    
+                    let ext =  WXEmoticonObject()
+                    let filePath = fileURL.path
+                    ext.emoticonData = NSData(contentsOfFile:filePath!)
+                    message.mediaObject = ext
+                    
+                    let req =  SendMessageToWXReq()
+                    req.bText = false
+                    req.message = message
+                    req.scene = 0
+                    WXApi.sendReq(req)
+                })
+            }
             
             
         }else {

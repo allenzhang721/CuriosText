@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "823"
             endingLineNumber = "823"
-            landmarkName = "OAuth(_:scope:completionHandler:shareCompleteHandler:)"
+            landmarkName = "shareMessage(_:completionHandler:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -33,6 +33,38 @@
             endingLineNumber = "413"
             landmarkName = "showModifyViewControllerWith(_:atIndexPath:)"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CuriosTextApp.EditViewController.showModifyViewControllerWith (CuriosTextApp.ContainerVMProtocol, atIndexPath : __ObjC.NSIndexPath) -&gt; ()"
+                  moduleName = "CuriosTextApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/EditViewController.swift"
+                  timestampString = "484451194.242123"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "414"
+                  endingLineNumber = "414"
+                  offsetFromSymbolStart = "2160">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CuriosTextApp.EditViewController.(showModifyViewControllerWith (CuriosTextApp.ContainerVMProtocol, atIndexPath : __ObjC.NSIndexPath) -&gt; ()).(closure #3)"
+                  moduleName = "CuriosTextApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/EditViewController.swift"
+                  timestampString = "484451194.242377"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "414"
+                  endingLineNumber = "414"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

@@ -59,7 +59,7 @@ extension CTASocialRegisterable {
         case .WeChat:
             MonkeyKing.registerAccount(.WeChat(appID: appID, appKey: appKey))
         case .Weibo:
-            MonkeyKing.registerAccount(.Weibo(appID: appID, appKey: appKey, redirectURL: ""))
+            MonkeyKing.registerAccount(.Weibo(appID: appID, appKey: appKey, redirectURL: "http://api.weibo.com/oauth2/default.html"))
         case .SMS:
             SMSSDK.registerApp(appKey, withSecret: appID)
         }
@@ -161,9 +161,13 @@ extension CTASocialManager{
     static func isAppInstaller(platform: CTASocialManager.CTASocialSharePlatformType) -> Bool {
         switch platform {
         case .WeChat:
-            return MonkeyKing.CheckCheckInstalled(.WeChat)
+//            return MonkeyKing.Account.Weibo(appID: "", appKey: "", redirectURL: "").isAppInstalled
+//            return MonkeyKing.CheckCheckInstalled(.WeChat)
+            return MonkeyKing.Account.WeChat(appID: "", appKey: "").isAppInstalled
         case .Weibo:
-            return MonkeyKing.CheckCheckInstalled(.Weibo)
+            let weiboAcount = MonkeyKing.Account.Weibo(appID: "", appKey: "", redirectURL: "")
+            return weiboAcount.isAppInstalled || weiboAcount.canWebOAuth
+//            return MonkeyKing.CheckCheckInstalled(.Weibo)
         default:
             return true
         }
@@ -181,7 +185,7 @@ extension CTASocialOAuthable {
 //            req.state = "Weixinauth"
 //            WXApi.sendReq(req)
             
-            MonkeyKing.OAuth(.WeChat, completionHandler: { (dictionary, response, error) -> Void in
+            MonkeyKing.OAuth(.WeChat, completionHandler: {(dictionary, response, error) -> Void in
                 if error == nil {
                     CTASocialManager.fetchUserInfo(dictionary, completeBlock: { (userInfoDictionary, response, error) in
                         
@@ -190,10 +194,21 @@ extension CTASocialOAuthable {
                 }else {
                     completionHandler(nil, nil, error)
                 }
-                }, shareCompleteHandler: { (result) -> Void in
-                    let error = NSError(domain: "user cancel", code: -1, userInfo: nil)
-                    completionHandler(nil, nil, error)
             })
+            
+//            MonkeyKing.OAuth(.WeChat, completionHandler: { (dictionary, response, error) -> Void in
+//                if error == nil {
+//                    CTASocialManager.fetchUserInfo(dictionary, completeBlock: { (userInfoDictionary, response, error) in
+//                        
+//                        completionHandler(userInfoDictionary, response, error)
+//                    })
+//                }else {
+//                    completionHandler(nil, nil, error)
+//                }
+//                }, shareCompleteHandler: { (result) -> Void in
+//                    let error = NSError(domain: "user cancel", code: -1, userInfo: nil)
+//                    completionHandler(nil, nil, error)
+//            })
             
         case .Weibo:
             MonkeyKing.OAuth(.Weibo, completionHandler: completionHandler)

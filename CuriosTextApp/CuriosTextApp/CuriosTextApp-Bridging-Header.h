@@ -16,5 +16,6 @@
 #import "WXApiObject.h"
 #import "ANGifEncoder.h"
 #import "ANGifBitmap.h"
+#import "WeiboSDK.h"
 
 #endif /* CuriosTextApp_Bridging_Header_h */

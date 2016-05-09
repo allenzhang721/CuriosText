@@ -47,11 +47,22 @@
 				<string>wx5b6644a480bce9f7</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.weibo</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wb1479783390</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>10</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>weibosdk</string>
 		<string>weixin</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>

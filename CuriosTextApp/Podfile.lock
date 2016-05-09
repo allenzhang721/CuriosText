@@ -26,7 +26,7 @@ PODS:
   - Kingfisher (1.8.5)
   - Locksmith (2.0.2)
   - MJRefresh (3.0.8)
-  - MonkeyKing (0.9)
+  - MonkeyKing (0.9.2)
   - OMGHTTPURLRQ (3.1.1):
     - OMGHTTPURLRQ/RQ (= 3.1.1)
   - OMGHTTPURLRQ/FormURLEncode (3.1.1)
@@ -60,7 +60,7 @@ DEPENDENCIES:
   - Kingfisher (~> 1.8.5)
   - Locksmith
   - MJRefresh (~> 3.0.7)
-  - MonkeyKing (~> 0.9)
+  - MonkeyKing (~> 0.9.2)
   - pop (~> 1.0.8)
   - PromiseKit (~> 3.0.2)
   - Qiniu (~> 7.0)
@@ -85,7 +85,7 @@ SPEC CHECKSUMS:
   Kingfisher: 780fed0fa82692a3bd59d53329ae2b85cdd354a5
   Locksmith: 7f2b68448449a7712348f9a4ed60604c1cc8dfa6
   MJRefresh: fafde8f18f4afd66b434331a9beb67a6c0264056
-  MonkeyKing: a66bc26f506dbc4ab07281bb654ca4712c3c1c57
+  MonkeyKing: 2cf420f9202a51714734374c97d96cf496e7ae2b
   OMGHTTPURLRQ: 633f98ee745aeda02345935a52eec1784cddb589
   pop: bb773ae2c791ca2629de13b347e7a8b450fa6a57
   PromiseKit: 00ec2a219bf5ad2833f95977698e921932b8dfd3
