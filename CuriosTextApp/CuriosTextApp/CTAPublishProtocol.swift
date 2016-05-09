@@ -293,6 +293,8 @@ extension CTAPublishProtocol{
                     }
                 })
             }
+        }else {
+            self.showSingleAlert(NSLocalizedString("AlertTitleNoInstallWechat", comment: ""), alertMessage: "", compelecationBlock: nil)
         }
     }
     
@@ -327,7 +329,13 @@ extension CTAPublishProtocol{
     }
     
     func weiBoShareHandler() {
-        
+        if CTASocialManager.isAppInstaller(.Weibo){
+            
+            
+            
+        }else {
+            self.showSingleAlert(NSLocalizedString("AlertTitleNoInstallWeibo", comment: ""), alertMessage: "", compelecationBlock: nil)
+        }
     }
     
     func deleteHandler(){
