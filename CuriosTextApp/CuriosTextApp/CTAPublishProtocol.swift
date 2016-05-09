@@ -365,10 +365,17 @@ extension CTAPublishProtocol{
                     imageObject.imageData = NSData(contentsOfURL: fileURL)
                     
                     let accessToken = token
-                    let _ = WBHttpRequest(forShareAStatus: "send from Curios", contatinsAPicture: imageObject, orPictureUrl: nil, withAccessToken: accessToken, andOtherProperties: nil, queue: nil, withCompletionHandler: { (request, object, error) in
+                    let request = WBHttpRequest(forShareAStatus: "send from Curios", contatinsAPicture: imageObject, orPictureUrl: nil, withAccessToken: accessToken, andOtherProperties: nil, queue: nil, withCompletionHandler: { (request, object, error) in
                         
 //                        debug_print(object)
                     })
+                    
+//                    let message = WBMessageObject.message() as! WBMessageObject
+//                    message.imageObject = imageObject
+////                    message.text = ""
+//                    
+//                    let request = WBSendMessageToWeiboRequest.requestWithMessage(message) as! WBSendMessageToWeiboRequest
+//                    WeiboSDK.sendRequest(request)
                 })
             }
         }else {
