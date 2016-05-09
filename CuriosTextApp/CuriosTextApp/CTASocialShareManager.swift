@@ -161,13 +161,10 @@ extension CTASocialManager{
     static func isAppInstaller(platform: CTASocialManager.CTASocialSharePlatformType) -> Bool {
         switch platform {
         case .WeChat:
-//            return MonkeyKing.Account.Weibo(appID: "", appKey: "", redirectURL: "").isAppInstalled
-//            return MonkeyKing.CheckCheckInstalled(.WeChat)
             return MonkeyKing.Account.WeChat(appID: "", appKey: "").isAppInstalled
         case .Weibo:
             let weiboAcount = MonkeyKing.Account.Weibo(appID: "", appKey: "", redirectURL: "")
             return weiboAcount.isAppInstalled || weiboAcount.canWebOAuth
-//            return MonkeyKing.CheckCheckInstalled(.Weibo)
         default:
             return true
         }
@@ -180,11 +177,6 @@ extension CTASocialOAuthable {
         switch platform {
         case .WeChat:
             
-//            let req = SendAuthReq()
-//            req.scope = "snsapi_userinfo"
-//            req.state = "Weixinauth"
-//            WXApi.sendReq(req)
-            
             MonkeyKing.OAuth(.WeChat, completionHandler: {(dictionary, response, error) -> Void in
                 if error == nil {
                     CTASocialManager.fetchUserInfo(dictionary, completeBlock: { (userInfoDictionary, response, error) in
@@ -196,22 +188,30 @@ extension CTASocialOAuthable {
                 }
             })
             
-//            MonkeyKing.OAuth(.WeChat, completionHandler: { (dictionary, response, error) -> Void in
-//                if error == nil {
-//                    CTASocialManager.fetchUserInfo(dictionary, completeBlock: { (userInfoDictionary, response, error) in
-//                        
-//                        completionHandler(userInfoDictionary, response, error)
-//                    })
-//                }else {
-//                    completionHandler(nil, nil, error)
-//                }
-//                }, shareCompleteHandler: { (result) -> Void in
-//                    let error = NSError(domain: "user cancel", code: -1, userInfo: nil)
-//                    completionHandler(nil, nil, error)
-//            })
-            
         case .Weibo:
-            MonkeyKing.OAuth(.Weibo, completionHandler: completionHandler)
+            
+            MonkeyKing.OAuth(.Weibo, completionHandler: { (OAuthInfo, response, error) in
+                if error == nil {
+                    debug_print(OAuthInfo)
+                    
+                    // App or Web: token & userID
+                    guard let token = (OAuthInfo?["access_token"] ?? OAuthInfo?["accessToken"]) as? String, userID = (OAuthInfo?["uid"] ?? OAuthInfo?["userID"]) as? String else {
+                        return
+                    }
+                    
+                    let userInfoAPI = "https://api.weibo.com/2/users/show.json"
+                    let parameters = ["uid": userID, "access_token": token]
+                    
+                    // fetch UserInfo by userInfoAPI
+                    SimpleNetworking.sharedInstance.request(userInfoAPI, method: .GET, parameters: parameters, completionHandler: { (userInfoDictionary, _, _) -> Void in
+                        print("userInfoDictionary \(userInfoDictionary)")
+                    })
+                    
+                    
+                } else {
+                    completionHandler(nil, nil, error)
+                }
+            })
         default:
             ()
         }
