@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         SVProgressHUD.setForegroundColor(CTAStyleKit.selectedColor)
         SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
 //        registerFonts()
-        prints()
+//        prints()
         registerLocalFonts()
         registerSystemFonts()
         familiesDisplayNames()

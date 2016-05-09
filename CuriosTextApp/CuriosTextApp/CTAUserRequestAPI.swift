@@ -111,16 +111,18 @@ class CTAWeixinRegisterRequest: CTABaseRequest {
 class CTAWeiboRegisterRequest: CTABaseRequest {
     let weiboID:String;
     let nickName:String;
-    let userIconURL:String;
+    let userDesc:String;
+    let sex:Int;
     
-    init(weiboID:String, nickName:String, userIconURL:String){
+    init(weiboID:String, nickName:String, userDesc:String, sex:Int){
         self.weiboID     = weiboID;
         self.nickName    = nickName;
-        self.userIconURL = userIconURL;
+        self.userDesc    = userDesc;
+        self.sex         = sex;
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.WeixinRegister.description;
+        return CTARequestUrl.WeiboRegister.description;
     }
     
     override func parameter() -> String {
@@ -128,7 +130,8 @@ class CTAWeiboRegisterRequest: CTABaseRequest {
         let dic:Dictionary<String, AnyObject> = [
             key(.WeiboID)    : weiboID,
             key(.NickName)   : nickName,
-            key(.UserIconURL): userIconURL
+            key(.UserDesc)   : userDesc,
+            key(.Sex)        : sex
         ];
         
         return self.getParameterString(dic, errorMessage: "CTAWeiboRegister");
