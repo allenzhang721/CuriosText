@@ -28,6 +28,7 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
     
     var templateImage: UIImage?
     
+    @IBOutlet weak var accessView: UIView!
     @IBOutlet weak var templateImageView: UIImageView!
     @IBOutlet weak var cameraView: CTACameraPreviewView!
     @IBOutlet weak var cropView: CTACropOverlayView!
@@ -47,6 +48,7 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        accessView.hidden = true
         setup()
     }
     
@@ -79,6 +81,7 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
         switch AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo) {
         case .Authorized:
             inner.cameraResult = .Authorized
+            accessView.hidden = true
             
         case .NotDetermined:
             dispatch_suspend(inner.sessionQueue)
@@ -86,8 +89,10 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
                 
                 if authorized {
                     self?.inner.cameraResult = .Authorized
+                    self?.accessView.hidden = true
                 } else {
                     self?.inner.cameraResult = .NotAuthorized
+                    self?.accessView.hidden = false
                 }
                 if let strongSelf = self {
                     dispatch_resume(strongSelf.inner.sessionQueue)
@@ -97,6 +102,7 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
             
         default:
             inner.cameraResult = .NotAuthorized
+            accessView.hidden = false
         }
         
         // config session
@@ -164,6 +170,10 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
 
 // MARK: - Actions
 extension CTACameraViewController {
+    
+    @IBAction func accessClick(sender: AnyObject) {
+        UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+    }
     
     @IBAction func captureClick(sender: AnyObject) {
         

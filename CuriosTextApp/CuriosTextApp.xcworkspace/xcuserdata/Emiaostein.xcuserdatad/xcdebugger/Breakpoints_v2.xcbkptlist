@@ -42,7 +42,7 @@
                   moduleName = "CuriosTextApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/EditViewController.swift"
-                  timestampString = "484474083.899997"
+                  timestampString = "484475319.269855"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "414"
@@ -57,7 +57,7 @@
                   moduleName = "CuriosTextApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/EditViewController.swift"
-                  timestampString = "484474083.900365"
+                  timestampString = "484475319.270132"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "414"
@@ -113,22 +113,6 @@
                   offsetFromSymbolStart = "22">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CuriosTextApp/ImagePicker/CTAPhotoViewController.swift"
-            timestampString = "484414453.458491"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
-            landmarkName = "setup()"
-            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

@@ -45,6 +45,7 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhoto
 //        let triggerScrollPanPosition = CGPoint.zero
     }
     
+    @IBOutlet weak var accessView: UIView!
     @IBOutlet weak var thumbCollectionView: UICollectionView!
     @IBOutlet weak var previewView: CTAPhotoPreviewView!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
@@ -65,12 +66,16 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhoto
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        accessView.hidden = true
+        
         checkLibraryStatus {[weak self] (success) in
             dispatch_async(dispatch_get_main_queue(), {
                 guard let Strongself = self else { return }
                 Strongself.inner.accessPhotoEnable = success
                 if success {
                     Strongself.setup()
+                } else {
+                    Strongself.accessView.hidden = false
                 }
             })
         }
@@ -148,6 +153,10 @@ extension CTAPhotoViewController {
 
 // MARK: - Action
 extension CTAPhotoViewController {
+    
+    @IBAction func accessClick(sender: AnyObject) {
+        UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+    }
     
     func tap(sener: UITapGestureRecognizer) {
         let location = sener.locationInView(previewView)

@@ -42,6 +42,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Hf-5Y-cKN">
                                         <rect key="frame" x="112" y="238" width="151" height="30"/>
                                         <state key="normal" title="Enable Library Access"/>
+                                        <connections>
+                                            <action selector="accessClick:" destination="cMe-yS-ZkE" eventType="touchUpInside" id="qTW-eL-wME"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -137,6 +140,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="accessView" destination="PCZ-1i-nGd" id="pf7-2b-fNv"/>
                         <outlet property="previewView" destination="5If-cP-INt" id="lfP-Hb-cr2"/>
                         <outlet property="thumbCollectionView" destination="dye-4U-kio" id="dJW-Ps-bR9"/>
                         <outlet property="topConstraint" destination="Tpr-PZ-KEr" id="KPJ-ge-1zb"/>

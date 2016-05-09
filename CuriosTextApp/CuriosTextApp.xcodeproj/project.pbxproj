@@ -365,6 +365,8 @@
 		2C1A121D1CE014FD0071BD35 /* WeiboUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboUser.h; sourceTree = "<group>"; };
 		2C1A12601CE07C250071BD35 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Photo.strings; sourceTree = "<group>"; };
 		2C1A12621CE07C430071BD35 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Photo.strings"; sourceTree = "<group>"; };
+		2C1A12641CE081570071BD35 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Camera.strings; sourceTree = "<group>"; };
+		2C1A12661CE081660071BD35 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Camera.strings"; sourceTree = "<group>"; };
 		2C1B2AAB1C3520160053BE5E /* CTASelectorsReuseableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorsReuseableView.swift; sourceTree = "<group>"; };
 		2C1B88951C5F35B9000403FD /* CTAEncryptManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAEncryptManager.swift; sourceTree = "<group>"; };
 		2C1B88A31C5F366F000403FD /* CTAPhoneProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPhoneProtocol.swift; sourceTree = "<group>"; };
@@ -467,8 +469,6 @@
 		2C610A361C902BCE00DFE315 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ImagePicker.strings; sourceTree = "<group>"; };
 		2C610A381C902BCF00DFE315 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/ImagePicker.strings"; sourceTree = "<group>"; };
 		2C610A3A1C902BF100DFE315 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Camera.storyboard; sourceTree = "<group>"; };
-		2C610A3D1C902BF400DFE315 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Camera.strings; sourceTree = "<group>"; };
-		2C610A3F1C902BF600DFE315 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Camera.strings"; sourceTree = "<group>"; };
 		2C610A411C902C0B00DFE315 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Photo.storyboard; sourceTree = "<group>"; };
 		2C65B6671C4F514D007B4DEA /* Preview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Preview.storyboard; sourceTree = "<group>"; };
 		2C65B6691C4F517A007B4DEA /* CTAPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewViewController.swift; sourceTree = "<group>"; };
@@ -2010,8 +2010,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				2C610A3A1C902BF100DFE315 /* Base */,
-				2C610A3D1C902BF400DFE315 /* en */,
-				2C610A3F1C902BF600DFE315 /* zh-Hans */,
+				2C1A12641CE081570071BD35 /* en */,
+				2C1A12661CE081660071BD35 /* zh-Hans */,
 			);
 			name = Camera.storyboard;
 			sourceTree = "<group>";

@@ -31,19 +31,59 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wkb-S0-3vO">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="EQn-8Z-EmN">
+                                                <rect key="frame" x="30" y="119" width="315" height="138"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take Photos With Curios" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LBu-7h-M3J">
+                                                        <rect key="frame" x="0.0" y="0.0" width="315" height="27"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow access to your camera to start taking photos with the Curios app." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wX1-CX-cHo">
+                                                        <rect key="frame" x="0.0" y="47" width="315" height="41"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q4h-mJ-qbR">
+                                                        <rect key="frame" x="0.0" y="108" width="315" height="30"/>
+                                                        <state key="normal" title="Enable Camera Access"/>
+                                                        <connections>
+                                                            <action selector="accessClick:" destination="u8L-Ej-xMD" eventType="touchUpInside" id="VN7-ZP-cNd"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="EQn-8Z-EmN" firstAttribute="centerY" secondItem="Wkb-S0-3vO" secondAttribute="centerY" id="NWH-be-wh7"/>
+                                            <constraint firstAttribute="width" secondItem="Wkb-S0-3vO" secondAttribute="height" multiplier="1:1" id="Yk2-jV-jb4"/>
+                                            <constraint firstAttribute="trailing" secondItem="EQn-8Z-EmN" secondAttribute="trailing" constant="30" id="ePV-hS-8Cl"/>
+                                            <constraint firstItem="EQn-8Z-EmN" firstAttribute="centerX" secondItem="Wkb-S0-3vO" secondAttribute="centerX" id="juw-kB-e3M"/>
+                                            <constraint firstItem="EQn-8Z-EmN" firstAttribute="leading" secondItem="Wkb-S0-3vO" secondAttribute="leading" constant="30" id="lJF-X4-zE7"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="fLu-aW-f78" firstAttribute="trailing" secondItem="Gjj-Vk-IWJ" secondAttribute="trailing" id="2Zs-jF-dNo"/>
                                     <constraint firstItem="uRk-z1-7tB" firstAttribute="bottom" secondItem="fLu-aW-f78" secondAttribute="bottom" id="C1H-3X-9ae"/>
                                     <constraint firstItem="fLu-aW-f78" firstAttribute="leading" secondItem="Gjj-Vk-IWJ" secondAttribute="leading" id="Cgx-YZ-zBx"/>
+                                    <constraint firstItem="Wkb-S0-3vO" firstAttribute="top" secondItem="JN5-7R-VTh" secondAttribute="top" id="Dbh-8F-jHZ"/>
                                     <constraint firstItem="fLu-aW-f78" firstAttribute="bottom" secondItem="Gjj-Vk-IWJ" secondAttribute="bottom" id="Ekc-Ry-etV"/>
                                     <constraint firstItem="uRk-z1-7tB" firstAttribute="leading" secondItem="fLu-aW-f78" secondAttribute="leading" id="HGn-6P-8s5"/>
+                                    <constraint firstAttribute="trailing" secondItem="Wkb-S0-3vO" secondAttribute="trailing" id="MhT-ad-zhA"/>
                                     <constraint firstItem="uRk-z1-7tB" firstAttribute="trailing" secondItem="Gjj-Vk-IWJ" secondAttribute="trailing" id="NIw-1H-hek"/>
                                     <constraint firstItem="uRk-z1-7tB" firstAttribute="top" secondItem="Gjj-Vk-IWJ" secondAttribute="top" id="Qjk-GG-VLd"/>
                                     <constraint firstItem="fLu-aW-f78" firstAttribute="top" secondItem="Gjj-Vk-IWJ" secondAttribute="top" id="U0M-pI-iaO"/>
                                     <constraint firstAttribute="trailing" secondItem="Gjj-Vk-IWJ" secondAttribute="trailing" id="V4z-8j-im8"/>
                                     <constraint firstItem="Gjj-Vk-IWJ" firstAttribute="top" secondItem="JN5-7R-VTh" secondAttribute="top" id="XMi-5L-RYc"/>
+                                    <constraint firstItem="Wkb-S0-3vO" firstAttribute="leading" secondItem="JN5-7R-VTh" secondAttribute="leading" id="YiY-fb-FDo"/>
                                     <constraint firstAttribute="width" secondItem="JN5-7R-VTh" secondAttribute="height" multiplier="1:1" id="jtB-KX-VIS"/>
                                     <constraint firstAttribute="bottom" secondItem="Gjj-Vk-IWJ" secondAttribute="bottom" id="nBR-9G-guk"/>
                                     <constraint firstItem="Gjj-Vk-IWJ" firstAttribute="leading" secondItem="JN5-7R-VTh" secondAttribute="leading" id="nFb-fg-4Qp"/>
@@ -51,7 +91,7 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="epT-35-su2" customClass="CTACameraCaptureButton" customModule="CuriosTextApp" customModuleProvider="target">
                                 <rect key="frame" x="143" y="465" width="88" height="88"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="88" id="0uV-Wy-Lv2"/>
                                     <constraint firstAttribute="width" constant="88" id="Kgp-SM-Rl1"/>
@@ -93,7 +133,7 @@
                                 </items>
                             </toolbar>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="JN5-7R-VTh" firstAttribute="top" secondItem="u9D-bv-hg4" secondAttribute="bottom" constant="44" id="2LY-G8-5tJ"/>
                             <constraint firstItem="sUj-BH-diQ" firstAttribute="top" secondItem="u9D-bv-hg4" secondAttribute="bottom" id="2Tb-u5-Yv0"/>
@@ -121,6 +161,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="accessView" destination="Wkb-S0-3vO" id="BZr-FT-FUm"/>
                         <outlet property="cameraView" destination="Gjj-Vk-IWJ" id="JMr-dp-egu"/>
                         <outlet property="cropView" destination="fLu-aW-f78" id="lfC-fZ-jYq"/>
                         <outlet property="ratioCollectionView" destination="bhK-JC-FC8" id="Y65-cB-kDD"/>
