@@ -332,13 +332,13 @@ extension CTAPublishProtocol{
     func weiBoShareHandler() {
         
         if CTASocialManager.isAppInstaller(.Weibo){
-            if let weiboID = CTAUserManager.user?.weiboID where !weiboID.isEmpty, let token = CTASocialManager.needOAuthOrGetTokenByUserID(weiboID) {
+            if let userID = CTAUserManager.user?.userID where !userID.isEmpty, let token = CTASocialManager.needOAuthOrGetTokenByUserID(userID) {
 //                debug_print("has token = \(token), userID = \(weiboID)")
                 self.shareWeiboWithToken(token)
                 
             } else {
-                
-                CTASocialManager.reOAuthWeiboGetAccessToken({ [weak self] (token, weiboID) in
+                if let userID = CTAUserManager.user?.userID where !userID.isEmpty {
+                CTASocialManager.reOAuthWeiboGetAccessToken(userID, completed: { [weak self] (token, weiboID) in
                     guard let sf = self else { return }
                     if let token = token {
 //                       debug_print("re oauth token = \(token)")
@@ -348,9 +348,8 @@ extension CTAPublishProtocol{
                     if let weiboID = weiboID {
                         CTAUserManager.user?.weiboID = weiboID
                     }
-                    
-                    
                 })
+                }
             }
         }
     }
@@ -359,16 +358,47 @@ extension CTAPublishProtocol{
         if CTASocialManager.isAppInstaller(.Weibo){
             if let page = self.publishCell.getPage(){
                 let publishID = self.publishModel!.publishID
-                self.exportGIF(publishID, page: page, viewController: self as! UIViewController, completedHandler: { (fileURL, thumbImg) in
+                self.exportGIF(publishID, page: page, viewController: self as! UIViewController, completedHandler: { [weak self] (fileURL, thumbImg) in
                     
-                    let imageObject = WBImageObject()
-                    imageObject.imageData = NSData(contentsOfURL: fileURL)
+                    guard let sf = self, let vc = sf as? UIViewController else {return}
                     
-                    let accessToken = token
-                    let request = WBHttpRequest(forShareAStatus: "send from Curios", contatinsAPicture: imageObject, orPictureUrl: nil, withAccessToken: accessToken, andOtherProperties: nil, queue: nil, withCompletionHandler: { (request, object, error) in
+                    let weiboShare = ShareViewController.viewControllerWith(fileURL, completedHandler: nil, dismissHandler: nil)
+                    
+                    weiboShare.completedHandler = { (imageData, text) in
                         
-//                        debug_print(object)
-                    })
+                        let imageObject = WBImageObject()
+                        imageObject.imageData = imageData
+                        
+                        let accessToken = token
+                        SVProgressHUD.setDefaultMaskType(.Clear)
+                        SVProgressHUD.showWithStatus("发送中...")
+                        WBHttpRequest(forShareAStatus: text, contatinsAPicture: imageObject, orPictureUrl: nil, withAccessToken: accessToken, andOtherProperties: nil, queue: nil, withCompletionHandler: { [weak weiboShare] (request, object, error) in
+                            
+                            guard let w = weiboShare else { return }
+                            
+                            if error == nil {
+                                SVProgressHUD.showSuccessWithStatus("分享成功!")
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    vc.dismissViewControllerAnimated(true, completion: nil)
+                                })
+                            } else {
+                                SVProgressHUD.showErrorWithStatus("分享失败!")
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    w.sending = false
+                                })
+                            }
+                        })
+                    }
+                    
+                    weiboShare.dismissHandler = {
+                        SVProgressHUD.dismiss()
+                        dispatch_async(dispatch_get_main_queue(), {
+                            vc.dismissViewControllerAnimated(true, completion: nil)
+                        })
+                    }
+                    
+                    vc.presentViewController(weiboShare, animated: true, completion: nil)
+                    
                     
 //                    let message = WBMessageObject.message() as! WBMessageObject
 //                    message.imageObject = imageObject

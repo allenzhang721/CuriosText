@@ -16,6 +16,7 @@ pod 'KeyboardMan', '~> 0.5.2'
 pod 'PromiseKit', '~> 3.0.2'
 pod 'SVProgressHUD', '~> 2.0-beta8'
 pod "WeiboSDK", :git => "https://github.com/sinaweibosdk/weibo_ios_sdk.git"
+pod 'FLAnimatedImage', '~> 1.0.12'
 end
 
 target 'CuriosTextAppTests' do

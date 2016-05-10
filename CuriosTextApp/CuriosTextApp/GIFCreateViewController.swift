@@ -164,7 +164,15 @@ class GIFCreateViewController: UIViewController {
                 SVProgressHUD.showSuccessWithStatus(LocalStrings.Done.description)
             }
             
-            let time2: NSTimeInterval = 0.6
+            let time3: NSTimeInterval = 0.5
+            let delay3 = dispatch_time(DISPATCH_TIME_NOW,
+                Int64(time3 * Double(NSEC_PER_SEC)))
+            dispatch_after(delay3, dispatch_get_main_queue()) {
+                
+                SVProgressHUD.dismiss()
+            }
+            
+            let time2: NSTimeInterval = 0.7
             let delay2 = dispatch_time(DISPATCH_TIME_NOW,
                 Int64(time2 * Double(NSEC_PER_SEC)))
             dispatch_after(delay2, dispatch_get_main_queue()) {

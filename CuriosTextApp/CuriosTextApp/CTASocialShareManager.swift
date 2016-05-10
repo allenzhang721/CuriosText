@@ -238,10 +238,10 @@ extension CTASocialOAuthable {
         
     }
     
-    static func reOAuthWeiboGetAccessToken (completed: ((token: String?, weiboID: String?) -> ())?) {
+    static func reOAuthWeiboGetAccessToken (userID: String, completed: ((token: String?, weiboID: String?) -> ())?) {
         
         OAuth(.Weibo) { (OAuthInfo, _, _) in
-            guard let token = (OAuthInfo?["access_token"] ?? OAuthInfo?["accessToken"]) as? String, userID = (OAuthInfo?["uid"] ?? OAuthInfo?["userID"]) as? String, let expireDate = OAuthInfo?["expirationDate"] else {
+            guard let token = (OAuthInfo?["access_token"] ?? OAuthInfo?["accessToken"]) as? String, weiboID = (OAuthInfo?["uid"] ?? OAuthInfo?["userID"]) as? String, let expireDate = OAuthInfo?["expirationDate"] else {
                 completed?(token: nil, weiboID: nil)
                 return
             }

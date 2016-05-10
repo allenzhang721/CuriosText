@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>FLAnimatedImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>HappyDNS.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -82,7 +87,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>1297DFBDAAF6019F5F83320841324B0A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>190ACD3A51BC90B85EADB13E9CDD207B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1CE44AAB73236A2644DC3A96FD733C6A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -102,7 +117,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3A6614C9C9E5DB2E98DA965049BF3412</key>
+		<key>3EF481FF0258CA4E4C5A576173F6D226</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -117,16 +132,6 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4C6725ADB86C1058F35476B9EE6C66CB</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>591FF00E47DB06AFB08E70F9BF488F36</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>6847254D016329D4A531D34ED2B6DF81</key>
 		<dict>
 			<key>primary</key>
@@ -137,22 +142,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B70C65B5B6B6DAFB7D51ACC25C555D5C</key>
+		<key>A646D37579071E9A13B8EDD82FA56D24</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E1DDA69C51AACEC249A953E047D90A23</key>
+		<key>BB2944BC83FA91422772B423A9676D7E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E29B3D6AF506C33B28598CFB65BEDC98</key>
+		<key>E68614EE12486733E44062BB1DF5DAD3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>F91226101ECE8FCFD221A3EC54481F82</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FE113CEF81C16AA59EC049ACE130BCB2</key>
 		<dict>
 			<key>primary</key>
 			<true/>

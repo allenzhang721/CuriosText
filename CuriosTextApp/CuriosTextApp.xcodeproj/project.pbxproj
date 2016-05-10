@@ -253,6 +253,10 @@
 		2CD4DC0A1CA4E25F00790A55 /* CTACycleColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD4DC091CA4E25F00790A55 /* CTACycleColorView.swift */; };
 		2CD71E311C72D5C6007B635C /* KeyboardMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD71E301C72D5C6007B635C /* KeyboardMan.framework */; };
 		2CD8F4091C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8F4081C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift */; };
+		2CDDE6481CE16E0200B6E6A9 /* FLAnimatedImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CDDE6471CE16E0200B6E6A9 /* FLAnimatedImage.framework */; };
+		2CDDE64B1CE16E3800B6E6A9 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CDDE64A1CE16E3800B6E6A9 /* Share.storyboard */; };
+		2CDDE64D1CE1732900B6E6A9 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDE64C1CE1732900B6E6A9 /* ShareViewController.swift */; };
+		2CDDE64F1CE18BED00B6E6A9 /* animation.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2CDDE64E1CE18BED00B6E6A9 /* animation.gif */; };
 		2CDDF5091C5F3BE00019FC83 /* AESCrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDF5021C5F3BE00019FC83 /* AESCrypt.m */; };
 		2CDDF50A1C5F3BE00019FC83 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDF5041C5F3BE00019FC83 /* NSData+Base64.m */; };
 		2CDDF50B1C5F3BE00019FC83 /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDF5061C5F3BE00019FC83 /* NSData+CommonCrypto.m */; };
@@ -615,6 +619,10 @@
 		2CD4DC091CA4E25F00790A55 /* CTACycleColorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACycleColorView.swift; sourceTree = "<group>"; };
 		2CD71E301C72D5C6007B635C /* KeyboardMan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KeyboardMan.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/CuriosTextApp-ghmaohhqthcdzjazajbpgawqdsoq/Build/Products/Debug-iphonesimulator/KeyboardMan.framework"; sourceTree = "<group>"; };
 		2CD8F4081C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAVerticalItemFontsCollectionViewCell.swift; sourceTree = "<group>"; };
+		2CDDE6471CE16E0200B6E6A9 /* FLAnimatedImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLAnimatedImage.framework; path = "Pods/../build/Debug-iphoneos/FLAnimatedImage.framework"; sourceTree = "<group>"; };
+		2CDDE64A1CE16E3800B6E6A9 /* Share.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Share.storyboard; sourceTree = "<group>"; };
+		2CDDE64C1CE1732900B6E6A9 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		2CDDE64E1CE18BED00B6E6A9 /* animation.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = animation.gif; sourceTree = "<group>"; };
 		2CDDF5001C5F3B860019FC83 /* CuriosTextApp-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CuriosTextApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		2CDDF5011C5F3BE00019FC83 /* AESCrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AESCrypt.h; path = AESEncypt/AESCrypt.h; sourceTree = SOURCE_ROOT; };
 		2CDDF5021C5F3BE00019FC83 /* AESCrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AESCrypt.m; path = AESEncypt/AESCrypt.m; sourceTree = SOURCE_ROOT; };
@@ -688,6 +696,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CDDE6481CE16E0200B6E6A9 /* FLAnimatedImage.framework in Frameworks */,
 				2CB66AA21CD872CE006B9282 /* libsqlite3.0.tbd in Frameworks */,
 				2CB66AA01CD872B3006B9282 /* SystemConfiguration.framework in Frameworks */,
 				2C85C59A1C9FC2470042CD0F /* SVProgressHUD.framework in Frameworks */,
@@ -908,6 +917,7 @@
 		2C3B33C81C1176D000738166 /* CuriosTextApp */ = {
 			isa = PBXGroup;
 			children = (
+				2CDDE6491CE16E1400B6E6A9 /* ShareModule */,
 				2CDDF5001C5F3B860019FC83 /* CuriosTextApp-Bridging-Header.h */,
 				2CB66A951CD8566B006B9282 /* GIFCreator.swift */,
 				2C81B59E1C58B10600AE16E0 /* Gobal */,
@@ -1373,6 +1383,16 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		2CDDE6491CE16E1400B6E6A9 /* ShareModule */ = {
+			isa = PBXGroup;
+			children = (
+				2CDDE64E1CE18BED00B6E6A9 /* animation.gif */,
+				2CDDE64C1CE1732900B6E6A9 /* ShareViewController.swift */,
+				2CDDE64A1CE16E3800B6E6A9 /* Share.storyboard */,
+			);
+			name = ShareModule;
+			sourceTree = "<group>";
+		};
 		2CE063CB1C857D2F001F7F4E /* ImagePickerModule */ = {
 			isa = PBXGroup;
 			children = (
@@ -1421,6 +1441,7 @@
 		3971561C9A2A856DEC31B599 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2CDDE6471CE16E0200B6E6A9 /* FLAnimatedImage.framework */,
 				2CB66AA11CD872CE006B9282 /* libsqlite3.0.tbd */,
 				2CB66A9F1CD872B3006B9282 /* SystemConfiguration.framework */,
 				2C85C5991C9FC2470042CD0F /* SVProgressHUD.framework */,
@@ -1568,6 +1589,7 @@
 				2C610A401C902C0B00DFE315 /* Photo.storyboard in Resources */,
 				2C610A391C902BF100DFE315 /* Camera.storyboard in Resources */,
 				2C32BD561C4CB89100788A97 /* Localizable.strings in Resources */,
+				2CDDE64B1CE16E3800B6E6A9 /* Share.storyboard in Resources */,
 				2C3B33D11C1176D000738166 /* Assets.xcassets in Resources */,
 				2C567A691C5CBAF200F11369 /* Countries.plist in Resources */,
 				2C1A121F1CE014FD0071BD35 /* WeiboSDK.bundle in Resources */,
@@ -1583,6 +1605,7 @@
 				2C610A321C902BCA00DFE315 /* ImagePicker.storyboard in Resources */,
 				2CD11AD01CB7A7A400A79305 /* AniPreView.storyboard in Resources */,
 				2C3B33CF1C1176D000738166 /* Main.storyboard in Resources */,
+				2CDDE64F1CE18BED00B6E6A9 /* animation.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1694,6 +1717,7 @@
 				2CF4D4231CBE38F9001DC7C4 /* FontFamiliesList.swift in Sources */,
 				6628C7031C200C11007F873C /* CTAViewUserModel.swift in Sources */,
 				2C05BB861C9FAA7200667A75 /* PhotoHelper.swift in Sources */,
+				2CDDE64D1CE1732900B6E6A9 /* ShareViewController.swift in Sources */,
 				2CC811631C79A6D5003CE8BF /* BlackCatResultExtension.swift in Sources */,
 				2C1B88AB1C5F371A000403FD /* CTAAlertProtocol.swift in Sources */,
 				2C31EB631C452597002A4D71 /* SwiftHEXColors.swift in Sources */,
