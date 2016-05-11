@@ -11,7 +11,7 @@ import pop
 
 class CTAHeartAnimationView: UIView {
     
-    let heartLayer = CAShapeLayer()
+    private let heartLayer = CAShapeLayer()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -103,7 +103,7 @@ class CTAHeartAnimationView: UIView {
 
     
     
-    func heartPath(frame frame: CGRect = CGRectMake(0, 0, 85, 78)) -> CGPath {
+    private func heartPath(frame frame: CGRect = CGRectMake(0, 0, 85, 78)) -> CGPath {
         //// Color Declarations
         let color = UIColor(red: 1.000, green: 0.000, blue: 0.000, alpha: 1.000)
         
