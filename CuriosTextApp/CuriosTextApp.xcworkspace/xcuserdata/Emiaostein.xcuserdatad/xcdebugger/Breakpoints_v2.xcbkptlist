@@ -33,38 +33,6 @@
             endingLineNumber = "413"
             landmarkName = "showModifyViewControllerWith(_:atIndexPath:)"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CuriosTextApp.EditViewController.showModifyViewControllerWith (CuriosTextApp.ContainerVMProtocol, atIndexPath : __ObjC.NSIndexPath) -&gt; ()"
-                  moduleName = "CuriosTextApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/EditViewController.swift"
-                  timestampString = "484555868.664136"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "414"
-                  endingLineNumber = "414"
-                  offsetFromSymbolStart = "2160">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CuriosTextApp.EditViewController.(showModifyViewControllerWith (CuriosTextApp.ContainerVMProtocol, atIndexPath : __ObjC.NSIndexPath) -&gt; ()).(closure #3)"
-                  moduleName = "CuriosTextApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/EditViewController.swift"
-                  timestampString = "484555868.66455"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "414"
-                  endingLineNumber = "414"
-                  offsetFromSymbolStart = "40">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -337,6 +305,38 @@
             endingLineNumber = "359"
             landmarkName = "shareWeiboWithToken(_:)"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(extension in CuriosTextApp):CuriosTextApp.CTAPublishProtocol.(shareWeiboWithToken in _1F575ED1331785A041811337E077770F) (Swift.String) -&gt; ()"
+                  moduleName = "CuriosTextApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTAPublishProtocol.swift"
+                  timestampString = "484651395.43706"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "359"
+                  endingLineNumber = "359"
+                  offsetFromSymbolStart = "109">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(extension in CuriosTextApp):CuriosTextApp.CTAPublishProtocol.(shareWeiboWithToken in _1F575ED1331785A041811337E077770F) (Swift.String) -&gt; ()"
+                  moduleName = "CuriosTextApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTAPublishProtocol.swift"
+                  timestampString = "484651395.437262"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "359"
+                  endingLineNumber = "359"
+                  offsetFromSymbolStart = "224">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -358,16 +358,16 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(extension in CuriosTextApp):CuriosTextApp.CTAPublishProtocol.(shareWeiboWithToken in _1F575ED1331785A041811337E077770F) (Swift.String) -&gt; ()"
+                  symbolName = "(extension in CuriosTextApp):CuriosTextApp.CTAPublishProtocol.((shareWeiboWithToken in _1F575ED1331785A041811337E077770F) (Swift.String) -&gt; ()).(closure #1)"
                   moduleName = "CuriosTextApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTAPublishProtocol.swift"
-                  timestampString = "484557462.821467"
+                  timestampString = "484651395.438411"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "362"
-                  endingLineNumber = "362"
-                  offsetFromSymbolStart = "487">
+                  startingLineNumber = "363"
+                  endingLineNumber = "363"
+                  offsetFromSymbolStart = "57">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -377,12 +377,12 @@
                   moduleName = "CuriosTextApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTAPublishProtocol.swift"
-                  timestampString = "484557462.821818"
+                  timestampString = "484651395.438587"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "364"
-                  endingLineNumber = "364"
-                  offsetFromSymbolStart = "40">
+                  startingLineNumber = "363"
+                  endingLineNumber = "363"
+                  offsetFromSymbolStart = "150">
                </Location>
             </Locations>
          </BreakpointContent>

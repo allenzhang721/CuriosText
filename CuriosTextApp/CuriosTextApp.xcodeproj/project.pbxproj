@@ -20,6 +20,8 @@
 		2C0404621C3EC31100A5B017 /* CTARotatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0404611C3EC31100A5B017 /* CTARotatorView.swift */; };
 		2C0404661C3EC58100A5B017 /* CTASelectorsFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0404651C3EC58100A5B017 /* CTASelectorsFlowLayout.swift */; };
 		2C0404681C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0404671C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift */; };
+		2C042B741CE3226000C13FED /* CTAHeartAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C042B731CE3226000C13FED /* CTAHeartAnimationView.swift */; };
+		2C042B761CE3248E00C13FED /* Heart.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C042B751CE3248E00C13FED /* Heart.storyboard */; };
 		2C05BB861C9FAA7200667A75 /* PhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C05BB851C9FAA7200667A75 /* PhotoHelper.swift */; };
 		2C09F2471C896EED00F6034F /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C09F2461C896EED00F6034F /* PromiseKit.framework */; };
 		2C0C14E61C60D95A0011A31D /* CTASetUserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0C14E51C60D95A0011A31D /* CTASetUserNameViewController.swift */; };
@@ -347,6 +349,8 @@
 		2C0404631C3EC35D00A5B017 /* Tools.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Tools.playground; sourceTree = "<group>"; };
 		2C0404651C3EC58100A5B017 /* CTASelectorsFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorsFlowLayout.swift; sourceTree = "<group>"; };
 		2C0404671C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorRotatorCell.swift; sourceTree = "<group>"; };
+		2C042B731CE3226000C13FED /* CTAHeartAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAHeartAnimationView.swift; sourceTree = "<group>"; };
+		2C042B751CE3248E00C13FED /* Heart.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Heart.storyboard; sourceTree = "<group>"; };
 		2C05BB851C9FAA7200667A75 /* PhotoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoHelper.swift; sourceTree = "<group>"; };
 		2C09F2461C896EED00F6034F /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = "Pods/../build/Debug-iphoneos/PromiseKit.framework"; sourceTree = "<group>"; };
 		2C0C14E51C60D95A0011A31D /* CTASetUserNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASetUserNameViewController.swift; sourceTree = "<group>"; };
@@ -917,6 +921,8 @@
 		2C3B33C81C1176D000738166 /* CuriosTextApp */ = {
 			isa = PBXGroup;
 			children = (
+				2C042B731CE3226000C13FED /* CTAHeartAnimationView.swift */,
+				2C042B751CE3248E00C13FED /* Heart.storyboard */,
 				2CDDE6491CE16E1400B6E6A9 /* ShareModule */,
 				2CDDF5001C5F3B860019FC83 /* CuriosTextApp-Bridging-Header.h */,
 				2CB66A951CD8566B006B9282 /* GIFCreator.swift */,
@@ -1600,6 +1606,7 @@
 				2C3CAD2C1C21828200D8DE4B /* 2.jpg in Resources */,
 				2C65B6681C4F514D007B4DEA /* Preview.storyboard in Resources */,
 				2C3AE3F11C59F5E3004D62B4 /* CTASocial.storyboard in Resources */,
+				2C042B761CE3248E00C13FED /* Heart.storyboard in Resources */,
 				2CC74C921C5A275C00B536C2 /* SMS_SDKLocalizable.strings in Resources */,
 				2CB66A9E1CD86F6C006B9282 /* read_me.txt in Resources */,
 				2C610A321C902BCA00DFE315 /* ImagePicker.storyboard in Resources */,
@@ -1798,6 +1805,7 @@
 				2CE063E91C857D2F001F7F4E /* CTAPhotoPickerDelegate.swift in Sources */,
 				2C3B34061C11B4F900738166 /* CTAConstants.swift in Sources */,
 				2CFC658E1C56305500E8ADE7 /* CTAFullPublishesCell.swift in Sources */,
+				2C042B741CE3226000C13FED /* CTAHeartAnimationView.swift in Sources */,
 				2CB3C8C21C859B8E00CF2BD2 /* ImagePickerResource.swift in Sources */,
 				2CC8115E1C79A6D5003CE8BF /* BlackCatCache.swift in Sources */,
 				2CD11AA31CB7545F00A79305 /* ContentTextLayer.swift in Sources */,
