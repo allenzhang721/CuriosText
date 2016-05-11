@@ -91,8 +91,8 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         let bounds = UIScreen.mainScreen().bounds
         let fullSize = self.getCellSize()
         self.moreSpace = 6*self.getHorRate()
-        self.handView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: bounds.width, height: fullSize.height + moreSpace*2 + 5))
-        self.handView.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2)
+        self.handView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: bounds.width, height: fullSize.height + moreSpace*2 + 6))
+        self.handView.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2+moreSpace + 3)
         self.handView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
         let pan = UIPanGestureRecognizer(target: self, action: #selector(CTAHomeViewController.viewPanHandler(_:)))
         self.handView.addGestureRecognizer(pan)
@@ -171,7 +171,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     }
     
     func getCellSize() -> CGSize{
-        let fullWidth  = 350 * self.getHorRate()
+        let fullWidth  = 371 * self.getHorRate()
         let fullHeight:CGFloat = fullWidth
         let fullSize = CGSize.init(width: fullWidth, height: fullHeight)
         return fullSize

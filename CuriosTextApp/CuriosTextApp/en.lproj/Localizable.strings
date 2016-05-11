@@ -10,6 +10,8 @@
 "BeFollowLabel" = "followers";
 "FollowButtonLabel" = "Follow";
 "UnFollowButtonLabel" = "Unfollow";
+"PostsButtonLabel" = "Posts";
+"LikesButtonLabel" = "Likes";
 "Thousand" = "K";
 "Million" = "M";
 "Billion" = "B";

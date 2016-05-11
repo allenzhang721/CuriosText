@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, CTAUserDetailProtocol{
+class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
 
     var viewUser:CTAUserModel?
     var loginUser:CTAUserModel?
@@ -38,18 +38,13 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
     var verCellSpaceDic:Dictionary<String, CGPoint> = [String: CGPoint]()
     
     var delegate:CTAPublishDetailDelegate?
-    var userDetail:CTAUserDetailViewController?
+    
+    var publishType:CTAPublishType = .Posts
+    var headerView:UIView?
+    var headerHeight:CGFloat = 0.0
+    let cellHorCount = 3
     
     var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
-//    
-//    static var _instance:CTAPublishDetailViewController?;
-//    
-//    static func getInstance() -> CTAPublishDetailViewController{
-//        if _instance == nil{
-//            _instance = CTAPublishDetailViewController();
-//        }
-//        return _instance!
-//    }
     
     override func prefersStatusBarHidden() -> Bool {
         return true
@@ -84,7 +79,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
         let count = self.getCellCount()
         for _ in 0..<count-2{
             let fullCell:CTAFullPublishesCell = CTAFullPublishesCell.init(frame: CGRect.init(x: 0, y: 0, width: fullSize.width, height: fullSize.height))
-            fullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+            fullCell.transform = CGAffineTransformMakeScale(cellScale, cellScale)
             fullCell.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: 0-fullSize.height)
             fullCell.addShadow()
             self.view.addSubview(fullCell)
@@ -102,17 +97,16 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
         self.nextFullCell!.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - horSpace, y: UIScreen.mainScreen().bounds.height/2)
         self.nextFullCell.animationEnable = true
         self.nextFullCell.addShadow()
-        self.nextFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+        self.nextFullCell.transform = CGAffineTransformMakeScale(cellScale, cellScale)
         
         self.previousFullCell = CTAFullPublishesCell.init(frame: CGRect.init(x: 0, y: 0, width: fullSize.width, height: fullSize.height))
         self.view.addSubview(self.previousFullCell!)
         self.previousFullCell!.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 + horSpace, y: UIScreen.mainScreen().bounds.height/2)
         self.previousFullCell.animationEnable = true
         self.previousFullCell.addShadow()
-        self.previousFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+        self.previousFullCell.transform = CGAffineTransformMakeScale(cellScale, cellScale)
         
         self.initPublishSubView(self.currentFullCell.frame, horRate: self.getHorRate())
-        self.initAddBarView(nil)
         let pan = UIPanGestureRecognizer(target: self, action: #selector(CTAPublishDetailViewController.viewPanHandler(_:)))
         self.view.addGestureRecognizer(pan)
         
@@ -121,31 +115,35 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
     }
     
     func reloadView(){
-        if self.viewUser != nil {
-            self.changeUserView(self.viewUser!)
-        }
         self.loadPublishCell()
     }
     
-    func setPublishData(selectedPublishID:String, publishModelArray:Array<CTAPublishModel>){
+    func setPublishData(selectedPublishID:String, publishModelArray:Array<CTAPublishModel>, publishType:CTAPublishType, topView:UIView?){
         self.publishModelArray.removeAll()
         self.selectedPublishID = selectedPublishID
         self.publishModelArray = self.publishModelArray + publishModelArray
+        self.publishType = publishType
+        self.headerView = topView
+        if topView != nil {
+            self.headerHeight = topView!.frame.height
+        }else {
+            self.headerHeight = 0.0
+        }
+        
     }
     
     func loadPublishCell(){
         let selectedIndex = self.getPublishIndex(self.selectedPublishID)
         if !self.isLoadedAll{
-            if selectedIndex > self.publishModelArray.count - 4 {
+            if selectedIndex > self.publishModelArray.count - 6 {
                 self.isLoadingFirstData = false
                 self.loadUserPublishes(self.publishModelArray.count)
-            } else if selectedIndex < 4 {
+            } else if selectedIndex < 6 {
                 self.isLoadingFirstData = true
                 self.loadUserPublishes(0)
             }
         }
         self.reloadCells()
-        self.currentFullCell!.playAnimation()
     }
     
     func reloadCells(){
@@ -158,7 +156,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                 let previousCell = self.fullCellArray[i]
                 previousCell.publishModel = publishArray[i]
                 previousCell.isVisible = true
-                self.setPublishCellRect(previousCell)
+                self.setPublishCellPosition(previousCell)
             }
             if i == currentIndex - 1 {
                 let preModel = publishArray[i]
@@ -166,7 +164,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                     self.previousFullCell!.publishModel = preModel
                 }
                 self.previousFullCell!.isVisible = true
-                self.setPublishCellRect(previousFullCell)
+                self.setPublishCellPosition(previousFullCell)
             }
             if i == currentIndex{
                 let currentModel = publishArray[i]
@@ -181,7 +179,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                     self.nextFullCell!.publishModel = proModel
                 }
                 self.nextFullCell!.isVisible = true
-                self.setPublishCellRect(nextFullCell)
+                self.setPublishCellPosition(nextFullCell)
             }
             if i > currentIndex + 1{
                 var nextCell:CTAFullPublishesCell?
@@ -193,24 +191,28 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                 if nextCell != nil {
                     nextCell!.publishModel = publishArray[i]
                     nextCell!.isVisible = true
-                    self.setPublishCellRect(nextCell!)
+                    self.setPublishCellPosition(nextCell!)
                 }
             }
         }
         if !self.previousFullCell!.isVisible{
-            self.setPublishCellRect(self.previousFullCell)
+            self.setPublishCellPosition(self.previousFullCell)
         }
         if !self.nextFullCell!.isVisible{
-            self.setPublishCellRect(self.nextFullCell)
+            self.setPublishCellPosition(self.nextFullCell)
         }
         for i in 0..<self.fullCellArray.count{
             if !self.fullCellArray[i].isVisible {
-                self.setPublishCellRect(self.fullCellArray[i])
+                self.setPublishCellPosition(self.fullCellArray[i])
             }
         }
         self.currentFullCell!.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2)
         self.currentFullCell!.alpha = 1.0
+        if let publishModel = self.currentFullCell!.publishModel {
+            self.changeUserView(publishModel.userModel)
+        }
         self.setLikeButtonStyle()
+        self.currentFullCell!.playAnimation()
     }
     
     func getNextEnableCell() -> CTAFullPublishesCell? {
@@ -235,7 +237,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
         }
     }
     
-    func setPublishCellRect(cell:CTAFullPublishesCell){
+    func setPublishCellPosition(cell:CTAFullPublishesCell){
         if cell.publishModel == nil || !cell.isVisible {
             cell.center = CGPoint.init(x: 0 - UIScreen.mainScreen().bounds.width, y: 0 - UIScreen.mainScreen().bounds.height/2 )
             cell.hidden = true
@@ -243,52 +245,29 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
             cell.hidden = false
             cell.alpha = 0.2
             let selectedIndex = self.getPublishIndex(self.selectedPublishID)
+            let currentHorCount = selectedIndex%self.cellHorCount
+            let currentVerCount = selectedIndex/self.cellHorCount
             let cellIndex = self.getPublishIndex(cell.publishModel!.publishID)
-            let isLeft = (selectedIndex % 2 == 0 ? true : false )
-            let rate = cellIndex - selectedIndex
-            let isDouble = (rate % 2 == 0 ? true : false)
-            let rateIndex = Int(rate / 2)
-            if isDouble {
-                cell.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2 + CGFloat(rateIndex) * self.getFullVerSpace())
-            }else {
-                let horSpace = isLeft ? self.getFullHorSpace() : 0-self.getFullHorSpace()
-                var verSpace:CGFloat = 0.0
-                if isLeft{
-                    if rate > 0{
-                        verSpace = CGFloat(rateIndex ) * self.getFullVerSpace()
-                    }else {
-                        verSpace = CGFloat(rateIndex - 1) * self.getFullVerSpace()
-                    }
-                }else {
-                    if rate > 0{
-                        verSpace = CGFloat(rateIndex + 1) * self.getFullVerSpace()
-                    }else {
-                        verSpace = CGFloat(rateIndex) * self.getFullVerSpace()
-                    }
-                }
-                cell.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 + horSpace, y: UIScreen.mainScreen().bounds.height/2 + verSpace)
-            }
+            let cellHorCount = cellIndex%self.cellHorCount
+            let cellVerCount = cellIndex/self.cellHorCount
+            let horSpace = CGFloat(cellHorCount - currentHorCount) * self.getFullHorSpace()
+            let verSpace:CGFloat = CGFloat(cellVerCount - currentVerCount) * self.getFullVerSpace()
+            cell.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 + horSpace, y: UIScreen.mainScreen().bounds.height/2 + verSpace)
         }
     }
     
     func getCurrentPublishIndex(selectedIndex:Int) -> Int{
         let count = self.getCellCount()-1
-        let isLeft = (selectedIndex % 2 == 0 ? true : false )
+        let selectedPo = selectedIndex % self.cellHorCount
+        let verCount = self.getCellCount()/self.cellHorCount
+        let midVerCount = verCount % 2 == 0 ? (verCount/2)-1 : (verCount/2)
+        var midCount = midVerCount*self.cellHorCount+selectedPo
+
         let publishCount = self.publishModelArray.count - 1
-        let isLastLeft = publishCount % 2 == 0 ? true : false
-        var midCount = count/2
         if publishCount - selectedIndex > midCount {
-            if isLeft {
-                midCount = midCount % 2 == 0 ?  midCount : midCount-1
-            }else {
-                midCount = midCount % 2 == 0 ?  midCount + 1 : midCount
-            }
+            
         }else {
-            if isLastLeft {
-                midCount = count - (publishCount - selectedIndex) - 1
-            }else {
-                midCount = count - (publishCount - selectedIndex)
-            }
+            midCount = count - (publishCount - selectedIndex)
         }
         let newIndex = selectedIndex > midCount ? midCount : selectedIndex
         return newIndex
@@ -300,7 +279,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
         let currentIndex = self.getCurrentPublishIndex(selectedIndex)
         let rate = selectedIndex - currentIndex
         for i in 0..<count{
-            if (rate + i < self.publishModelArray.count){
+            if (rate + i) < self.publishModelArray.count{
                 selectedArray.append(self.publishModelArray[rate + i])
             }
         }
@@ -323,13 +302,19 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
         self.isLoading = true
         self.isLoadedAll = false
         let userID = self.loginUser == nil ? "" : self.loginUser!.userID
-        CTAPublishDomain.getInstance().userPublishList(userID, beUserID: self.viewUser!.userID, start: start, size: size) { (info) -> Void in
-            self.isLoading = false
-            self.loadPublishesComplete(info, size: size)
+        if self.publishType == .Posts{
+            CTAPublishDomain.getInstance().userPublishList(userID, beUserID: self.viewUser!.userID, start: start, size: size) { (info) -> Void in
+                self.loadPublishesComplete(info, size: size)
+            }
+        }else if self.publishType == .Likes{
+            CTAPublishDomain.getInstance().userLikePublishList(userID, beUserID: self.viewUser!.userID, start: start, size: size) { (info) -> Void in
+                self.loadPublishesComplete(info, size: size)
+            }
         }
     }
     
     func loadPublishesComplete(info: CTADomainListInfo, size:Int){
+        self.isLoading = false
         if info.result{
             let modelArray = info.modelArray;
             if modelArray != nil {
@@ -420,6 +405,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                 }else {
                     self.currentCenter = self.currentFullCell.center
                     self.setVerCellCenter()
+                    self.setVerHeaderView()
                     self.viewVerPanHandler(newLocation)
                     self.panDirection = .Ver
                 }
@@ -467,12 +453,12 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                 if self.preCenter != nil && self.currentCenter != nil{
                     let xChange = (self.currentCenter!.x - self.preCenter!.x) * percent
                     let yChange = (self.currentCenter!.y - self.preCenter!.y) * percent
-                    let wChange = (1 - 0.9) * xRate / maxX
-                    let hChange = (1 - 0.9) * xRate / maxX
+                    let wChange = (1 - cellScale) * xRate / maxX
+                    let hChange = (1 - cellScale) * xRate / maxX
                     let alpha   = (1.0-0.2) * percent
                     self.changCellsCenter(xChange, yChange: yChange)
                     if self.previousFullCell.isVisible {
-                        self.previousFullCell.transform = CGAffineTransformMakeScale(0.9 + wChange, 0.9 + hChange)
+                        self.previousFullCell.transform = CGAffineTransformMakeScale(cellScale + wChange, cellScale + hChange)
                         self.previousFullCell.alpha = self.previousFullCell.alpha + alpha
                     }
                     if self.currentFullCell.isVisible {
@@ -486,12 +472,12 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                 if self.nextCenter != nil && self.nextCenter != nil{
                     let xChange = (self.nextCenter!.x - self.currentCenter!.x) * percent
                     let yChange = (self.nextCenter!.y - self.currentCenter!.y ) * percent
-                    let wChange = (0.9 - 1) * xRate / maxX
-                    let hChange = (0.9 - 1) * xRate / maxX
+                    let wChange = (cellScale - 1) * xRate / maxX
+                    let hChange = (cellScale - 1) * xRate / maxX
                     let alpha   = (0.2 - 1.0) * percent
                     self.changCellsCenter(xChange, yChange: yChange)
                     if self.nextFullCell.isVisible {
-                        self.nextFullCell.transform = CGAffineTransformMakeScale(0.9 + wChange, 0.9 + hChange)
+                        self.nextFullCell.transform = CGAffineTransformMakeScale(cellScale + wChange, cellScale + hChange)
                         self.nextFullCell.alpha = self.nextFullCell.alpha + alpha
                     }
                     if self.currentFullCell.isVisible {
@@ -528,7 +514,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                             self.previousFullCell.alpha = 1
                         }
                         if self.currentFullCell.isVisible {
-                            self.currentFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+                            self.currentFullCell.transform = CGAffineTransformMakeScale(cellScale, cellScale)
                             self.currentFullCell.alpha = 0.2
                         }
                         }, completion: { (_) -> Void in
@@ -549,7 +535,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                             self.nextFullCell.alpha = 1
                         }
                         if self.currentFullCell.isVisible {
-                            self.currentFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+                            self.currentFullCell.transform = CGAffineTransformMakeScale(cellScale, cellScale)
                             self.currentFullCell.alpha = 0.2
                         }
                         }, completion: { (_) -> Void in
@@ -570,7 +556,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                 UIView.animateWithDuration(0.3, animations: { () -> Void in
                     self.changCellsCenter(xChange, yChange: yChange)
                     if self.previousFullCell.isVisible {
-                        self.previousFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+                        self.previousFullCell.transform = CGAffineTransformMakeScale(cellScale, cellScale)
                         self.previousFullCell.alpha = 0.2
                     }
                     if self.currentFullCell.isVisible {
@@ -589,7 +575,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                 UIView.animateWithDuration(0.3, animations: { () -> Void in
                     self.changCellsCenter(xChange, yChange: yChange)
                     if self.nextFullCell.isVisible {
-                        self.nextFullCell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+                        self.nextFullCell.transform = CGAffineTransformMakeScale(cellScale, cellScale)
                         self.nextFullCell.alpha = 0.2
                     }
                     if self.currentFullCell.isVisible {
@@ -645,8 +631,31 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
             }
             self.loadPublishCell()
         }else {
-            self.currentFullCell!.playAnimation()
             self.reloadCells()
+        }
+    }
+    
+    func setVerHeaderView(){
+        if self.headerView != nil {
+            if !self.headerView!.isDescendantOfView(self.view){
+                self.view.addSubview(self.headerView!)
+                self.view.sendSubviewToBack(self.headerView!)
+                self.headerView!.alpha = 0
+                let space = self.getTopSpace()
+                self.headerView!.frame.origin.x = 0
+                self.headerView!.frame.origin.y = space - self.headerView!.frame.height
+            }
+        }
+    }
+    
+    func removeVerHeaderView(isClean:Bool){
+        if self.headerView != nil {
+            if self.headerView!.isDescendantOfView(self.view){
+                self.headerView!.removeFromSuperview()
+                if isClean {
+                    self.headerView = nil
+                }
+            }
         }
     }
     
@@ -680,9 +689,13 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
             let verSpace = self.getVerSpace()
             let fullHorSpace = self.getFullHorSpace()
             let fullVerSpace = self.getFullVerSpace()
+            
+            
             let xMax = center!.x - self.currentCenter!.x
             let xMin = horSpace / fullHorSpace * xMax
             let xChange = xMax + (xMin - xMax) * percent
+            
+            
             let yMax = center!.y - self.currentCenter!.y
             let yMin = verSpace / fullVerSpace * yMax
             let yChange = yMax + (yMin - yMax) * percent
@@ -725,8 +738,12 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
         let subViews = self.view.subviews
         for i in 0..<subViews.count{
             let view = subViews[i]
-            if !(view is CTAFullPublishesCell) && !(view is CTAAddBarView) {
-                view.alpha = alpha
+            if !(view is CTAFullPublishesCell){
+                if self.headerView != nil && view == self.headerView{
+                    view.alpha = 1 - alpha
+                }else {
+                    view.alpha = alpha
+                }
             }
         }
     }
@@ -746,6 +763,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
         let cellRect = self.getCellRect()
         let fullRect = self.getFullCellRect(nil, rate: 1)
         if self.currentCenter != nil {
+            self.setVerHeaderView()
             UIView.animateWithDuration(duration, animations: { () -> Void in
                 let xChange = (currentVerCenterPoint.x - self.currentCenter!.x)
                 let yChange = (currentVerCenterPoint.y - self.currentCenter!.y)
@@ -798,9 +816,11 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
                 self.changeCellSize(0.0)
                 self.currentFullCell.transform = CGAffineTransformMakeScale(1, 1)
                 self.currentFullCell.alpha = 1
+                self.removeVerHeaderView(true)
             }
         }else {
             self.currentFullCell!.playAnimation()
+            self.removeVerHeaderView(false)
         }
     }
     
@@ -822,21 +842,21 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
     func changeCellSize(percent:CGFloat){
         let cellRect = self.getCellRect()
         let fullRect = self.getFullCellRect(nil, rate: 1)
-        let wChange = (0.9 - cellRect.width / fullRect.width) * percent
-        let hChange = (0.9 - cellRect.width / fullRect.width) * percent
+        let wChange = (cellScale - cellRect.width / fullRect.width) * percent
+        let hChange = (cellScale - cellRect.width / fullRect.width) * percent
         if self.previousFullCell.isVisible {
-            self.previousFullCell.transform = CGAffineTransformMakeScale(0.9 - wChange, 0.9 - hChange)
+            self.previousFullCell.transform = CGAffineTransformMakeScale(cellScale - wChange, cellScale - hChange)
             self.previousFullCell.alpha = 0.2 + 0.8*percent
         }
         
         if self.nextFullCell.isVisible {
-            self.nextFullCell.transform = CGAffineTransformMakeScale(0.9 - wChange, 0.9 - hChange)
+            self.nextFullCell.transform = CGAffineTransformMakeScale(cellScale - wChange, cellScale - hChange)
             self.nextFullCell.alpha = 0.2 + 0.8*percent
         }
         for i in 0..<self.fullCellArray.count{
             let cell = self.fullCellArray[i]
             if cell.isVisible{
-                cell.transform = CGAffineTransformMakeScale(0.9 - wChange, 0.9 - hChange)
+                cell.transform = CGAffineTransformMakeScale(cellScale - wChange, cellScale - hChange)
                 cell.alpha = 0.2 + 0.8*percent
             }
         }
@@ -847,16 +867,54 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol, 
         let currentIndex = self.getCurrentPublishIndex(selectedIndex)
         let space = self.getCellSpace()
         let cellRect = self.getCellRect()
-        let centX = currentIndex % 2 == 0 ? (space + cellRect.width / 2) : (UIScreen.mainScreen().bounds.width - (space + cellRect.width / 2))
-    
+        let horCount = selectedIndex % self.cellHorCount
+        let centX = space/2+cellRect.width/2+(cellRect.width+space)*CGFloat(horCount)
+        
+        let headerTop = self.getTopSpace()
+        let screenH = UIScreen.mainScreen().bounds.height
+        let verCount = Int(currentIndex / self.cellHorCount)
         var centY:CGFloat = 0.0
-        let yIndex = Int(currentIndex / 2)
-        centY = CGFloat(yIndex) * (space + cellRect.height) + cellRect.height/2 + 44
-        let maxY = UIScreen.mainScreen().bounds.height - 44 - cellRect.height/2
+        centY = CGFloat(verCount) * (space + cellRect.height) + cellRect.height/2 + headerTop
+        let maxY = screenH - cellRect.height/2 - 40
         if centY > maxY{
             centY = maxY
         }
         return CGPoint(x: centX, y: centY)
+    }
+    
+    func getTopSpace()-> CGFloat{
+        let selectedIndex  = self.getPublishIndex(self.selectedPublishID)
+        let currentIndex = self.getCurrentPublishIndex(selectedIndex)
+        let space = self.getCellSpace()
+        let cellRect = self.getCellRect()
+        
+        var verCount:Int = 0
+        let count = self.getCellCount()-1
+        let publishCount = self.publishModelArray.count - 1
+        let firstCount = selectedIndex-currentIndex
+        var lastCellCount = firstCount+count
+        if lastCellCount > publishCount{
+            lastCellCount = publishCount
+        }
+        verCount = Int(lastCellCount / self.cellHorCount)
+        let lastHeight = CGFloat(verCount+1) * (space + cellRect.height) + self.headerHeight
+        var headerTop = self.headerHeight
+        let screenH = UIScreen.mainScreen().bounds.height - 40
+        if lastHeight > screenH{
+            let hSpace = screenH - lastHeight + headerTop
+            let topSpace = hSpace>0 ? hSpace : 0
+            verCount = Int(firstCount / self.cellHorCount)
+            if verCount == 0 {
+                let rateCount = Int(currentIndex / self.cellHorCount)
+                headerTop = self.headerHeight - CGFloat(rateCount)*(space + cellRect.height)
+                if headerTop < topSpace && hSpace > 0{
+                    headerTop = hSpace
+                }
+            }else{
+                headerTop = topSpace
+            }
+        }
+        return headerTop
     }
     
     func viewBackHandler(sender: UIPanGestureRecognizer) {
@@ -916,7 +974,8 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
     
     func moreButtonClick(sender: UIButton){
         if self.currentFullCell.publishModel != nil{
-            if self.viewUser?.userID != self.loginUser!.userID{
+            let user = self.currentFullCell.publishModel!.userModel
+            if user.userID != self.loginUser!.userID{
                self.moreSelectionHandler(false)
             }else {
                self.moreSelectionHandler(true)
@@ -931,11 +990,12 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
     }
     
     func userIconClick(sender: UIPanGestureRecognizer) {
-        if self.userDetail == nil {
-            self.userDetail = CTAUserDetailViewController()
+        if let publish = self.currentFullCell.publishModel{
+            let viewUserModel = publish.userModel
+            let userPublish = CTAUserPublishesViewController()
+            userPublish.viewUser = viewUserModel
+            self.navigationController?.pushViewController(userPublish, animated: true)
         }
-        let userID = self.loginUser == nil ? "" : self.loginUser!.userID
-        self.showUserDetailView(self.viewUser, loginUserID: userID)
     }
     
     func deleteHandler(){
@@ -978,11 +1038,5 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
     
     func EditControllerDidPublished(viewController: EditViewController){
         NSNotificationCenter.defaultCenter().postNotificationName("publishEditFile", object: nil)
-    }
-}
-
-extension CTAPublishDetailViewController: CTAAddBarProtocol{
-    func addBarViewClick(sender: UIPanGestureRecognizer) {
-        self.showEditView()
     }
 }

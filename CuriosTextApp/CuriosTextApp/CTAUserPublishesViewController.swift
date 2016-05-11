@@ -10,7 +10,11 @@ import UIKit
 import Kingfisher
 import MJRefresh
 
-class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTAPublishDetailDelegate, CTAUserDetailProtocol, CTAPublishCacheProtocol{
+enum CTAPublishType: String {
+    case Posts, Likes
+}
+
+class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTAPublishDetailDelegate, CTAPublishCacheProtocol{
     
     var viewUser:CTAUserModel?
     var loginUser:CTAUserModel?
@@ -26,12 +30,20 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     var publishModelArray:Array<CTAPublishModel> = []
     var selectedPublishID:String = ""
     
+    var topView:UIView!
     var collectionView:UICollectionView!
-    var viewToolBar:UIView!
-    var userHeaderView:UIView!
+    var collectionLayout:UICollectionViewFlowLayout!
+    
+    var collectionControllerView:UIView!
+    var userPostButton:UIButton!
+    var userLikeButton:UIButton!
+    
+    var userInfoView:UIView!
     var userIconImage:UIImageView!
     var userNicknameLabel:UILabel!
+    var userDescLabel:UILabel!
     
+    var headerToolView:UIView!
     var backButton:UIButton!
     var homeViewButton:UIButton!
     var settingButton:UIButton!
@@ -48,8 +60,9 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     var isPersent:Bool = false
     
     var publishDetail:CTAPublishDetailViewController?
-    var userDetail:CTAUserDetailViewController?
     var setting:CTASettingViewController?
+    
+    var publishType:CTAPublishType = .Posts
     
     override func prefersStatusBarHidden() -> Bool {
         return true
@@ -68,6 +81,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        self.initTopView()
         self.initCollectionView();
         self.initViewNavigateBar();
         self.navigationController!.interactivePopGestureRecognizer?.delegate = self
@@ -92,22 +106,14 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                     self.viewUser = self.loginUser
                 }
                 if self.viewUserID != self.viewUser!.userID{
+                    self.resetView()
                     self.publishModelArray.removeAll()
-                    if self.isLoginUser {
-                        let userID = self.loginUser!.userID
-                        let beUserID = self.viewUser!.userID
-                        let request = CTAUserPublishListRequest.init(userID: userID, beUserID: beUserID, start: 0)
-                        let data = self.getPublishArray(request)
-                        if data != nil {
-                            self.publishModelArray = data!
-                        }
-                    }
+                    self.loadArrayFromLocal()
                     self.collectionView.reloadData()
                     self.previousScrollViewYOffset = 0.0
                 }
-                self.setViewNavigateBar()
             }else {
-                self.setNavigateButton()
+                self.resetView()
             }
         }
     }
@@ -115,10 +121,14 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         if self.isDisMis {
-            if loginUser != nil && self.viewUser != nil {
+            if self.loginUser != nil && self.viewUser != nil {
                 if self.viewUserID != self.viewUser!.userID{
                     self.viewUserID = self.viewUser!.userID
-                    self.headerFresh.beginRefreshing()
+                    if !self.isLoginUser {
+                        self.headerFresh.beginRefreshing()
+                    }else {
+                        self.loadFirstData()
+                    }
                 }
             }
         }
@@ -141,7 +151,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         }
     }
     
-    func saveArrayToLocaol(){
+    func saveArrayToLocal(){
         if self.isLoginUser {
             let userID = self.loginUser!.userID
             let beUserID = self.viewUser!.userID
@@ -152,25 +162,54 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                 let slice = self.publishModelArray[0...40]
                 savePublishModel = Array(slice)
             }
-            let request = CTAUserPublishListRequest.init(userID: userID, beUserID: beUserID, start: 0)
-            self.savePublishArray(request, modelArray: savePublishModel)
+            var request:CTABaseRequest?
+            if self.publishType == .Posts{
+                request = CTAUserPublishListRequest.init(userID: userID, beUserID: beUserID, start: 0)
+            }else if self.publishType == .Likes{
+                request = CTAUserLikePublishListRequest.init(userID: userID, beUserID: beUserID, start: 0)
+            }
+            if request != nil {
+                self.savePublishArray(request!, modelArray: savePublishModel)
+            }
+        }
+    }
+    
+    func loadArrayFromLocal(){
+        if self.isLoginUser {
+            let userID = self.loginUser!.userID
+            let beUserID = self.viewUser!.userID
+            var request:CTABaseRequest?
+            if self.publishType == .Posts{
+                request = CTAUserPublishListRequest.init(userID: userID, beUserID: beUserID, start: 0)
+            }else if self.publishType == .Likes{
+                request = CTAUserLikePublishListRequest.init(userID: userID, beUserID: beUserID, start: 0)
+            }
+            if request != nil{
+                let data = self.getPublishArray(request!)
+                if data != nil {
+                    self.publishModelArray = data!
+                }
+            }
         }
     }
     
     func initCollectionView(){
+        let bounds = UIScreen.mainScreen().bounds
         let space:CGFloat = self.getCellSpace()
-        let rect:CGRect = CGRect.init(x: 0, y: 44, width: self.view.frame.width, height: self.view.frame.height - 44)
-        let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
+        let rect:CGRect = CGRect.init(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        self.collectionLayout = UICollectionViewFlowLayout.init()
         
-        layout.itemSize = self.getCellRect()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: space, bottom: 0, right: space)
-        layout.minimumLineSpacing = space
-        layout.minimumInteritemSpacing = space
-        
-        self.collectionView = UICollectionView.init(frame: rect, collectionViewLayout: layout)
+        self.collectionLayout.itemSize = self.getCellRect()
+        self.collectionLayout.sectionInset = UIEdgeInsets(top: 0, left: space/2, bottom: 0, right: space/2)
+        self.collectionLayout.minimumLineSpacing = space
+        self.collectionLayout.minimumInteritemSpacing = space
+        self.collectionLayout.headerReferenceSize = CGSize(width: bounds.width, height: 100)
+        self.collectionView = UICollectionView.init(frame: rect, collectionViewLayout: self.collectionLayout)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.registerClass(CTAPublishesCell.self, forCellWithReuseIdentifier: "ctaPublishesCell")
+        self.collectionView.registerClass(CTAPublishHeaderView.self, forSupplementaryViewOfKind:UICollectionElementKindSectionHeader, withReuseIdentifier: "ctaPublishHeader")
+    
         self.view.addSubview(self.collectionView!);
         self.collectionView.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
     
@@ -192,7 +231,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.footerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Refreshing)
         self.collectionView.mj_footer = footerFresh;
         
-        self.noContentView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 200, height: 300))
+        self.noContentView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 202, height: 200))
         self.noContentView.center = self.collectionView.center
         self.noContentView.image = UIImage.init(named: "no-content")
         self.view.addSubview(self.noContentView)
@@ -207,15 +246,54 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         }
     }
     
-    func initViewNavigateBar(){
+    func initTopView(){
         let bounds = UIScreen.mainScreen().bounds
-        self.userHeaderView = UIView.init(frame: CGRectMake(62,0,self.view.frame.size.width-124, 44))
-        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bounds.size.width-26)/2, y: 9, width: 26, height: 26));
+        let maxWidth = bounds.width - 100
+        
+        self.topView = UIView(frame: CGRectMake(0, 0, bounds.width, 30))
+        
+        self.userInfoView = UIView(frame: CGRectMake(0, 0, bounds.width, 100))
+        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bounds.size.width-60)/2, y: 0, width: 60, height: 60));
         self.cropImageCircle(self.userIconImage)
         self.userIconImage.image = UIImage(named: "default-usericon")
-        self.userNicknameLabel = UILabel.init(frame: CGRect.init(x: (bounds.size.width-100)/2, y: 14, width: 100, height: 16))
-        self.userNicknameLabel.font = UIFont.systemFontOfSize(12)
+        self.userNicknameLabel = UILabel.init(frame: CGRect.init(x: (bounds.size.width-maxWidth)/2, y: 80, width: maxWidth, height: 30))
+        self.userNicknameLabel.font = UIFont.systemFontOfSize(20)
         self.userNicknameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        self.userNicknameLabel.textAlignment = .Center
+        self.userInfoView.addSubview(self.userIconImage)
+        self.userInfoView.addSubview(self.userNicknameLabel)
+        self.userDescLabel = UILabel.init(frame: CGRect.init(x: (bounds.size.width-maxWidth)/2, y: 115, width: maxWidth, height: 140))
+        self.userDescLabel.numberOfLines = 10
+        self.userDescLabel.font = UIFont.systemFontOfSize(14)
+        self.userDescLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        self.userDescLabel.text = " "
+        self.userDescLabel.textAlignment = .Center
+        self.userInfoView.addSubview(self.userDescLabel)
+        self.topView.addSubview(self.userInfoView)
+
+        self.userPostButton = UIButton(frame: CGRectMake(0, 35, (bounds.width-20)/2, 30))
+        self.userPostButton.center = CGPoint(x: bounds.width/4, y: 20)
+        self.userPostButton.setTitle(NSLocalizedString("PostsButtonLabel", comment: ""), forState: .Normal)
+        self.userPostButton.setTitleColor(UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0), forState: .Normal)
+        self.userLikeButton = UIButton(frame: CGRectMake(0, 35, (bounds.width-20)/2, 30))
+        self.userLikeButton.center = CGPoint(x: bounds.width*3/4, y: 20)
+        self.userLikeButton.setTitle(NSLocalizedString("LikesButtonLabel", comment: ""), forState: .Normal)
+        self.userLikeButton.setTitleColor(UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0), forState: .Normal)
+        let lineImageView = UIImageView(frame: CGRect.init(x: 0, y: 0, width: 2, height: 18))
+        lineImageView.image = UIImage.init(named: "follow-line")
+        lineImageView.center = CGPoint(x: bounds.width/2, y: 20)
+        self.collectionControllerView = UIView(frame: CGRectMake(0, 0, bounds.width, 40))
+        self.collectionControllerView.addSubview(self.userPostButton)
+        self.collectionControllerView.addSubview(self.userLikeButton)
+        self.collectionControllerView.addSubview(lineImageView)
+        self.topView.addSubview(self.collectionControllerView)
+        
+        self.userPostButton.addTarget(self, action: #selector(CTAUserPublishesViewController.postsButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.userLikeButton.addTarget(self, action: #selector(CTAUserPublishesViewController.likesButtonClick(_:)), forControlEvents: .TouchUpInside)
+    }
+    
+    func initViewNavigateBar(){
+        let bounds = UIScreen.mainScreen().bounds
         self.settingButton = UIButton.init(frame: CGRect.init(x: bounds.size.width - 45, y: 2, width: 40, height: 40))
         self.settingButton.setImage(UIImage.init(named: "setting-button"), forState: .Normal)
         self.settingButton.setImage(UIImage.init(named: "setting-selected-button"), forState: .Highlighted)
@@ -226,23 +304,14 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.backButton.setImage(UIImage.init(named: "back-button"), forState: .Normal)
         self.backButton.setImage(UIImage.init(named: "back-selected-button"), forState: .Highlighted)
         
-        self.viewToolBar = UIView()
-        self.viewToolBar.frame = CGRectMake(0, 0, self.view.frame.size.width, 44)
-        self.userHeaderView.addSubview(self.userIconImage)
-        self.userHeaderView.addSubview(self.userNicknameLabel)
-        self.viewToolBar.addSubview(self.userHeaderView)
-        self.viewToolBar.addSubview(self.settingButton)
-        self.viewToolBar.addSubview(self.homeViewButton)
-        self.viewToolBar.addSubview(self.backButton)
-        self.view.addSubview(self.viewToolBar)
-        self.viewToolBar.backgroundColor = UIColor.init(red: 1, green: 1, blue: 1, alpha: 0.0)
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(CTAUserPublishesViewController.userHeaderClick(_:)))
-        self.userHeaderView.addGestureRecognizer(tap)
+        self.headerToolView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: 44))
+        self.headerToolView.addSubview(self.settingButton)
+        self.headerToolView.addSubview(self.homeViewButton)
+        self.headerToolView.addSubview(self.backButton)
+        self.view.addSubview(self.headerToolView)
         self.settingButton.addTarget(self, action: #selector(CTAUserPublishesViewController.settingButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.homeViewButton.addTarget(self, action: #selector(CTAUserPublishesViewController.homeViewButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.backButton.addTarget(self, action: #selector(CTAUserPublishesViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
-        
     }
     
     func setNavigateButton(){
@@ -259,19 +328,14 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.userIconImage.frame.origin.x = (UIScreen.mainScreen().bounds.width - self.userIconImage.frame.width)/2
     }
     
-    func setViewNavigateBar(){
+    func resetView(){
         self.setNavigateButton()
+        let bounds = UIScreen.mainScreen().bounds
+        let maxWidth = bounds.width - 100
         self.userNicknameLabel.text = self.viewUser?.nickName
-        self.userNicknameLabel.sizeToFit()
-        let maxWidth = self.userHeaderView.frame.width - 30
-        var labelWidth = self.userNicknameLabel.frame.width
-        if self.userNicknameLabel.frame.width > maxWidth {
-            labelWidth = maxWidth
-        }
-        let imgX = (self.userHeaderView.frame.width - labelWidth - 30)/2
-        self.userNicknameLabel.frame.origin.x = imgX+30
-        self.userNicknameLabel.frame.size.width = labelWidth
-        self.userIconImage.frame.origin.x = imgX
+        self.userDescLabel.text = self.viewUser?.userDesc
+        self.userDescLabel.sizeToFit()
+        self.userDescLabel.frame.size.width = maxWidth
         let imagePath = CTAFilePath.userFilePath+self.viewUser!.userIconURL
         let imageURL = NSURL(string: imagePath)!
         self.userIconImage.kf_showIndicatorWhenLoading = true
@@ -281,13 +345,59 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
             }
             self.userIconImage.kf_showIndicatorWhenLoading = false
         }
+        self.publishType = .Posts
+        self.changeButtonStatus()
+        self.setViewsPosition()
     }
     
-    func userHeaderClick(sender: UITapGestureRecognizer){
-        if self.userDetail == nil {
-            self.userDetail = CTAUserDetailViewController()
+    func setViewsPosition(){
+        self.userInfoView.frame.origin.y = 35
+        self.userInfoView.frame.size.height = self.userDescLabel.frame.origin.y + self.userDescLabel.frame.height
+        self.collectionControllerView.frame.origin.y = self.userInfoView.frame.origin.y+self.userInfoView.frame.height
+        self.topView.frame.size.height = self.collectionControllerView.frame.origin.y + self.collectionControllerView.frame.height
+        self.topView.frame.origin.y = 0
+        let frame = self.topView.frame
+        self.collectionLayout.headerReferenceSize = CGSize(width: frame.width, height: frame.height)
+        self.collectionView.collectionViewLayout = self.collectionLayout
+    }
+    
+    func changeButtonStatus(){
+        switch self.publishType {
+        case .Posts:
+            self.userPostButton.setTitleColor(UIColor.init(red: 240/255, green: 50/255, blue: 75/255, alpha: 1.0), forState: .Normal)
+            self.userLikeButton.setTitleColor(UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0), forState: .Normal)
+        case .Likes:
+            self.userPostButton.setTitleColor(UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0), forState: .Normal)
+            self.userLikeButton.setTitleColor(UIColor.init(red: 240/255, green: 50/255, blue: 75/255, alpha: 1.0), forState: .Normal)
         }
-        self.showUserDetailView(self.viewUser, loginUserID: (self.loginUser != nil ? self.loginUser!.userID : ""))
+    }
+    
+    func postsButtonClick(sender: UIButton){
+        if self.publishType != .Posts{
+            self.publishType = .Posts
+            self.changeButtonStatus()
+            self.publishModelArray.removeAll()
+            self.loadArrayFromLocal()
+            self.collectionView.reloadData()
+            self.previousScrollViewYOffset = 0.0
+            self.noContentView.hidden = true
+            self.isLoading = false
+            self.loadFirstData()
+        }
+    }
+    
+    func likesButtonClick(sender: UIButton){
+        if self.publishType != .Likes{
+            self.publishType = .Likes
+            self.changeButtonStatus()
+            self.publishModelArray.removeAll()
+            self.loadArrayFromLocal()
+            self.collectionView.reloadData()
+            self.previousScrollViewYOffset = 0.0
+            self.noContentView.hidden = true
+            self.isLoading = false
+            self.loadFirstData()
+        }
     }
     
     func settingButtonClick(sender: UIButton){
@@ -316,20 +426,29 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     }
     
     
-    func loadUserPublishes(start:Int, size:Int = 20){
+    func loadUserPublishes(start:Int, size:Int = 30){
         if self.isLoading || self.loginUser == nil{
             self.freshComplete();
             return
         }
         self.isLoading = true
         self.isLoadedAll = false
-        CTAPublishDomain.getInstance().userPublishList(self.loginUser!.userID, beUserID: self.viewUser!.userID, start: start, size: size) { (info) -> Void in
-            self.loadPublishesComplete(info, size: size)
+        if self.publishType == .Posts{
+            CTAPublishDomain.getInstance().userPublishList(self.loginUser!.userID, beUserID: self.viewUser!.userID, start: start, size: size) { (info) -> Void in
+                self.loadPublishesComplete(info, size: size, publishType: .Posts)
+            }
+        }else if self.publishType == .Likes{
+            CTAPublishDomain.getInstance().userLikePublishList(self.loginUser!.userID, beUserID: self.viewUser!.userID, start: start, size: size, compelecationBlock: { (info) in
+                self.loadPublishesComplete(info, size: size, publishType: .Likes)
+            })
         }
     }
     
-    func loadPublishesComplete(info: CTADomainListInfo, size:Int){
+    func loadPublishesComplete(info: CTADomainListInfo, size:Int, publishType:CTAPublishType){
         self.isLoading = false
+        if self.publishType != publishType{
+            return
+        }
         if info.result{
             let modelArray = info.modelArray;
             if modelArray != nil {
@@ -363,7 +482,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                     if isChange{
                         self.publishModelArray.removeAll()
                         self.loadMoreModelArray(modelArray!)
-                        self.saveArrayToLocaol()
+                        self.saveArrayToLocal()
                     }
                 }else {
                     self.loadMoreModelArray(modelArray!)
@@ -397,7 +516,11 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     }
     
     func showNoContentView(){
-        if self.isLoginUser && self.publishModelArray.count == 0{
+        if self.isLoginUser && self.publishModelArray.count == 0 && self.publishType == .Posts{
+            let frame = self.topView.frame
+            let contentFrame = self.noContentView.frame
+            let bounds = UIScreen.mainScreen().bounds
+            self.noContentView.center = CGPoint(x: bounds.width/2, y: frame.height+contentFrame.height/2+20)
             self.noContentView.hidden = false
         }else {
             self.noContentView.hidden = true
@@ -444,6 +567,12 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
         return self.publishModelArray.count;
     }
     
+    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        let headerView = self.collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "ctaPublishHeader", forIndexPath: indexPath)
+        headerView.addSubview(self.topView)
+        return headerView
+    }
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
         let publishesCell:CTAPublishesCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("ctaPublishesCell", forIndexPath: indexPath) as! CTAPublishesCell
         let index = indexPath.row
@@ -461,80 +590,42 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
             self.selectedPublishID = self.publishModelArray[index].publishID
         }
         if self.selectedPublishID != "" {
-            if self.publishDetail == nil {
-                self.publishDetail = CTAPublishDetailViewController()
-            }
-            self.publishDetail!.setPublishData(self.selectedPublishID, publishModelArray: self.publishModelArray)
-            self.publishDetail!.loginUser = self.loginUser
-            self.publishDetail!.viewUser = self.viewUser
-            self.publishDetail!.delegate = self
-            self.publishDetail!.transitioningDelegate = self
-            self.publishDetail!.modalPresentationStyle = .Custom
-            self.presentViewController(self.publishDetail!, animated: true, completion: nil)
+            self.selectCellAnimation()
         }
     }
     
-    //scroll view hide tool bar
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        if !self.isCanChangeToolBar {
-            return
-        }
-        var toolBarViewframe = self.viewToolBar.frame
-        var collectViewFrame = self.collectionView.frame
-        let size  = toolBarViewframe.height
-        let framePercentageHidden = ( (0-toolBarViewframe.origin.y) / size)
-        let scrollOffset = self.collectionView.contentOffset.y
-        let scrollDiff   = scrollOffset - self.previousScrollViewYOffset
-        let scrollHeight = collectViewFrame.size.height
-        let scrollContentSizeHeight = self.collectionView.contentSize.height + self.collectionView.contentInset.bottom
-        if scrollOffset <= -self.collectionView.contentInset.top {
-            toolBarViewframe.origin.y = 0
-        }else if (scrollOffset + scrollHeight) >= scrollContentSizeHeight {
-            toolBarViewframe.origin.y = -size
-        } else {
-            toolBarViewframe.origin.y = min(0, max(-size, toolBarViewframe.origin.y - scrollDiff));
-        }
-        collectViewFrame.origin.y = size + toolBarViewframe.origin.y
-        collectViewFrame.size.height = self.view.frame.height - collectViewFrame.origin.y
-        self.viewToolBar.frame = toolBarViewframe
-        self.collectionView.frame = collectViewFrame
-        self.updateBarButtonsAlpha(1-framePercentageHidden)
-        self.previousScrollViewYOffset = scrollOffset
-    }
-    
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        self.stoppedScrolling()
-    }
-    
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
-            self.stoppedScrolling()
-        }
-    }
-    
-    func stoppedScrolling(){
-        let frame = self.viewToolBar.frame
-        if frame.origin.y < 0 {
-            self.animationNavBarTo((0-frame.size.height))
-        }
-    }
-    
-    func updateBarButtonsAlpha(alpha:CGFloat){
-        self.viewToolBar.alpha = alpha
-    }
-    
-    func animationNavBarTo(y:CGFloat){
-        UIView.animateWithDuration(0.2) { () -> Void in
-            var toolBarViewframe = self.viewToolBar.frame
-            var collectViewFrame = self.collectionView.frame
-            let alpha:CGFloat = (toolBarViewframe.origin.y >= y ? 0.0 : 1.0)
-            toolBarViewframe.origin.y = y
-            collectViewFrame.origin.y = toolBarViewframe.height + toolBarViewframe.origin.y
-            collectViewFrame.size.height = self.view.frame.height - collectViewFrame.origin.y
-            self.viewToolBar.frame = toolBarViewframe
-            self.collectionView.frame = collectViewFrame
-            self.updateBarButtonsAlpha(alpha)
-        }
+    func selectCellAnimation(){
+        let animationView:UIView = self.getCellAnimationView()
+        let headerView:UIView = self.getCollectionHeaderView()
+        self.view.addSubview(animationView)
+        self.view.addSubview(headerView)
+        self.collectionView.hidden = true
+        headerView.alpha = 1
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.doCellTransitionAnimation(animationView, isPersent: true)
+            headerView.alpha = 0
+            }, completion: { (_) -> Void in
+                if self.publishDetail == nil {
+                    self.publishDetail = CTAPublishDetailViewController()
+                }
+                
+                self.publishDetail!.setPublishData(self.selectedPublishID, publishModelArray: self.publishModelArray, publishType: self.publishType, topView: self.getHeaderView())
+                self.publishDetail!.loginUser = self.loginUser
+                self.publishDetail!.viewUser = self.viewUser
+                self.publishDetail!.delegate = self
+                
+                let navigationController = UINavigationController(rootViewController: self.publishDetail!)
+                navigationController.navigationBarHidden = true
+                navigationController.transitioningDelegate = self
+                navigationController.modalPresentationStyle = .Custom
+                self.presentViewController(navigationController, animated: true, completion: { 
+                    animationView.hidden = true
+                    self.clearAnimationView(animationView)
+                    headerView.hidden = true
+                    headerView.removeFromSuperview()
+                    self.collectionView.hidden = false
+                })
+        })
     }
     
     func setPublishData(selectedPublishID:String, publishModelArray:Array<CTAPublishModel>, selectedCellCenter:CGPoint){
@@ -555,14 +646,11 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
             self.publishModelArray.removeAll()
             self.publishModelArray = publishModelArray
             self.collectionView.reloadData()
-            self.saveArrayToLocaol()
+            self.saveArrayToLocal()
             self.showNoContentView()
         }
         
         self.selectedPublishID = selectedPublishID
-        self.viewToolBar.frame.origin.y = 0
-        self.collectionView.frame.origin.y = self.viewToolBar.frame.height
-        self.collectionView.frame.size.height = self.view.frame.height - self.viewToolBar.frame.height
         var currentIndex:Int = 0
         for i in 0..<self.publishModelArray.count{
             let model = self.publishModelArray[i]
@@ -572,8 +660,8 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
         }
         let space = self.getCellSpace()
         let cellRect = self.getCellRect()
-        let yIndex = Int(currentIndex / 2)
-        let centY = CGFloat(yIndex) * (space + cellRect.height) + cellRect.height/2 + 44
+        let yIndex = Int(currentIndex / 3)
+        let centY = CGFloat(yIndex) * (space + cellRect.height) + cellRect.height/2 + self.topView.frame.height
         var scrollOffY = centY - selectedCellCenter.y
         let scrollHeight = self.collectionView.frame.size.height
         let scrollContentSizeHeight = self.collectionView.contentSize.height + self.collectionView.contentInset.bottom
@@ -606,44 +694,28 @@ extension CTAUserPublishesViewController: UIViewControllerTransitioningDelegate{
 
 extension CTAUserPublishesViewController: UIViewControllerAnimatedTransitioning{
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval{
-        return 0.6
+        if isPersent{
+            return 0.3
+        }else {
+            return 0.3
+        }
     }
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning){
         if isPersent{
             if let toView = transitionContext.viewForKey(UITransitionContextToViewKey){
                 let view = transitionContext.containerView()!
-                var animationView:UIView? = self.getAnimationView()
-                view.addSubview(animationView!)
-                
-                var barView:CTAAddBarView? = CTAAddBarView(frame: CGRect.zero)
-                view.addSubview(barView!)
-                setAddBarView(barView!, view: view)
-                
                 view.addSubview(toView)
                 toView.alpha = 0
-                self.collectionView.hidden = true
-                toView.frame = UIScreen.mainScreen().bounds
                 UIView.animateWithDuration(0.3, animations: { () -> Void in
-                    self.doTransitionAnimation(animationView!)
-                    self.viewToolBar.alpha = 0
+                    toView.alpha = 1
                     }, completion: { (_) -> Void in
+                        toView.alpha = 1
                         transitionContext.completeTransition(true)
-                        UIView.animateWithDuration(0.3, animations: { () -> Void in
-                            toView.alpha = 1
-                            }, completion: { (_) -> Void in
-                                animationView?.hidden = true
-                                self.clearAnimationView(animationView!)
-                                animationView = nil
-                                barView = nil
-                                toView.alpha = 1
-                                self.collectionView.hidden = false
-                                self.viewToolBar.alpha = 1
-                                transitionContext.completeTransition(true)
-                        })
                 })
             }
         }
+        
         if !isPersent{
             if let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey){
                 fromView.alpha = 1
@@ -658,12 +730,40 @@ extension CTAUserPublishesViewController: UIViewControllerAnimatedTransitioning{
         }
     }
     
-    func getAnimationView() -> UIView{
+    func getHeaderView() -> UIView{
+//        let toolView = self.headerToolView.snapshotViewAfterScreenUpdates(true)
+        let topView = self.topView.snapshotViewAfterScreenUpdates(true)
+        topView.frame.origin.y = 0
+        topView.frame.origin.x = 0
+        let animationView = UIView.init(frame: topView.frame)
+        animationView.backgroundColor = UIColor.clearColor()
+//        animationView.addSubview(toolView)
+        animationView.addSubview(topView)
+        return animationView
+    }
+    
+    func getCollectionHeaderView() -> UIView{
+        let animationView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
+        animationView.backgroundColor = UIColor.clearColor()
+        
+        let headerView = self.headerToolView.snapshotViewAfterScreenUpdates(true)
+        animationView.addSubview(headerView)
+        let headers = self.collectionView.visibleSupplementaryViewsOfKind(UICollectionElementKindSectionHeader)
+        for i in 0..<headers.count{
+            let header = headers[i]
+            let cellUIView = header.snapshotViewAfterScreenUpdates(true)
+            cellUIView.frame.origin.y = header.frame.origin.y + self.collectionView.frame.origin.y - self.collectionView.contentOffset.y
+            animationView.addSubview(cellUIView)
+        }
+        return animationView
+    }
+    
+    func getCellAnimationView() -> UIView{
         let visibleCells = self.collectionView.visibleCells();
         let animationView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
         for i in 0..<visibleCells.count{
             let cell = visibleCells[i] as! CTAPublishesCell
-            let cellImage = cell.cellImageView.snapshotViewAfterScreenUpdates(false)
+            let cellImage = cell.cellImageView.snapshotViewAfterScreenUpdates(true)
             let cellUIView = CTAPublishTransitionCell.init(frame: cell.frame)
             cellUIView.addCellView(cellImage, cellPublishID: cell.publishModel.publishID)
             self.addImageShadow(cellUIView)
@@ -678,7 +778,7 @@ extension CTAUserPublishesViewController: UIViewControllerAnimatedTransitioning{
         return animationView;
     }
     
-    func doTransitionAnimation(animationView:UIView) {
+    func doCellTransitionAnimation(animationView:UIView, isPersent:Bool) {
         if isPersent{
             if self.selectedRect != nil && self.selectedPublishID != ""{
                 let fullSize = self.getFullCellRect(self.selectedRect!.size, rate: 1.0)
@@ -699,7 +799,7 @@ extension CTAUserPublishesViewController: UIViewControllerAnimatedTransitioning{
                         let centerY = fully + (cellView.frame.origin.y - selectedRect!.origin.y) * topRate
                         cellView.center = CGPoint(x: centerX, y: centerY)
                         cellView.alpha = 0.2
-                        cellView.transform = CGAffineTransformMakeScale(rateW*0.9, rateH*0.9)
+                        cellView.transform = CGAffineTransformMakeScale(rateW*cellScale, rateH*cellScale)
                     }
                     
                 }
@@ -743,5 +843,9 @@ class CTAPublishTransitionCell: UIView{
         self.addSubview(cellView)
         self.publishID = cellPublishID
     }
+}
+
+class CTAPublishHeaderView: UICollectionReusableView{
+    
 }
 
