@@ -67,12 +67,12 @@ extension CTAPublishCellProtocol{
     func getCellRect() -> CGSize{
         let screenWidth = UIScreen.mainScreen().bounds.width
         let space = getCellSpace()
-        let itemWidth = (screenWidth - space*3)/3
+        let itemWidth = Int((screenWidth - space*4)/3)
         return CGSize.init(width: itemWidth, height: itemWidth)
     }
     
     func getFullCellRect(cellRect:CGSize?, rate:CGFloat) -> CGSize{
-        let fullWidth  = 371 * self.getHorRate()
+        let fullWidth  = 367 * self.getHorRate()
         var fullHeight:CGFloat
         if cellRect == nil{
             fullHeight = fullWidth
@@ -85,7 +85,7 @@ extension CTAPublishCellProtocol{
     func getFullVerSpace() -> CGFloat{
         let midY = UIScreen.mainScreen().bounds.height / 2
         let fullSize = self.getFullCellRect(nil , rate: 1)
-        let space = (midY - (90 - fullSize.height / 2))
+        let space = (midY - (85*self.getHorRate() - fullSize.height / 2))
         return space
     }
     

@@ -286,7 +286,7 @@ class CTASearchTabelCell: UITableViewCell{
         if self.countryNameLabel == nil {
             self.countryNameLabel = UILabel.init(frame: CGRect.init(x: 10, y: (self.contentView.frame.height - 25 )/2, width: self.contentView.frame.width, height: 25))
             self.contentView.addSubview(self.countryNameLabel)
-            self.countryNameLabel.font = UIFont.systemFontOfSize(18)
+            self.countryNameLabel.font = UIFont.systemFontOfSize(16)
             self.countryNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         }
         self.countryNameLabel.text = self.countryZone!.displayName
@@ -294,7 +294,7 @@ class CTASearchTabelCell: UITableViewCell{
         if self.countryCodeLabel == nil {
             self.countryCodeLabel = UILabel.init(frame: CGRect.init(x: 10, y: (self.contentView.frame.height - 25 )/2, width: self.contentView.frame.width, height: 25))
             self.contentView.addSubview(self.countryCodeLabel)
-            self.countryCodeLabel.font = UIFont.systemFontOfSize(18)
+            self.countryCodeLabel.font = UIFont.systemFontOfSize(16)
             self.countryCodeLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         }
         self.countryCodeLabel.text = "+"+self.countryZone!.zoneCode

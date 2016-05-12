@@ -98,7 +98,7 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         self.view.addSubview(self.passwordVisibleButton)
         self.passwordVisibleButton.addTarget(self, action: #selector(CTASetPasswordViewController.passwordVisibleClick(_:)), forControlEvents: .TouchUpInside)
         let passwordLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.passwordTextinput.frame.origin.y + 12, width: 50, height: 25))
-        passwordLabel.font = UIFont.systemFontOfSize(18)
+        passwordLabel.font = UIFont.systemFontOfSize(16)
         passwordLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         passwordLabel.text = NSLocalizedString("PasswordLabel", comment: "")
         passwordLabel.sizeToFit()
@@ -115,7 +115,7 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         self.confirmTextinput.returnKeyType = .Done
         self.view.addSubview(self.confirmTextinput)
         let confirmLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.confirmTextinput.frame.origin.y + 12, width: 50, height: 25))
-        confirmLabel.font = UIFont.systemFontOfSize(18)
+        confirmLabel.font = UIFont.systemFontOfSize(16)
         confirmLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         confirmLabel.text = NSLocalizedString("ConfirmPasswordLabel", comment: "")
         confirmLabel.sizeToFit()

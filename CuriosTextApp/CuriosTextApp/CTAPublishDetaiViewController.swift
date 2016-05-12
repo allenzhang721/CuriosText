@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
 
@@ -330,6 +331,12 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
                                 if !self.checkPublishModelIsHave(newmodel.publishID, publishArray: self.publishModelArray){
                                     isChange = true
                                     break
+                                }else {
+                                    let index = self.getPublishIndex(newmodel.publishID, publishArray: self.publishModelArray)
+                                    if index != -1{
+                                        self.publishModelArray.insert(newmodel, atIndex: index)
+                                        self.publishModelArray.removeAtIndex(index+1)
+                                    }
                                 }
                             }
                             if !isChange{
@@ -363,6 +370,16 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
                 self.publishModelArray.append(publishModel)
             }
         }
+    }
+    
+    func getPublishIndex(publishID:String, publishArray:Array<CTAPublishModel>) -> Int{
+        for i in 0..<publishArray.count{
+            let oldPublihModel = publishArray[i]
+            if oldPublihModel.publishID == publishID{
+                return i
+            }
+        }
+        return -1
     }
     
     func checkPublishModelIsHave(publishID:String, publishArray:Array<CTAPublishModel>) -> Bool{
@@ -868,7 +885,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         let space = self.getCellSpace()
         let cellRect = self.getCellRect()
         let horCount = selectedIndex % self.cellHorCount
-        let centX = space/2+cellRect.width/2+(cellRect.width+space)*CGFloat(horCount)
+        let centX = space+cellRect.width/2+(cellRect.width+space)*CGFloat(horCount)
         
         let headerTop = self.getTopSpace()
         let screenH = UIScreen.mainScreen().bounds.height
@@ -1002,10 +1019,11 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
         if let publish = self.currentFullCell.publishModel{LocalStrings.Delete.description
             self.showSelectedAlert(NSLocalizedString("AlertTitleDeleteFile", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.DeleteFile.description, cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result) -> Void in
                 if result{
-                    self.showLoadingViewByView(nil)
+                    SVProgressHUD.setDefaultMaskType(.Clear)
+                    SVProgressHUD.showWithStatus(NSLocalizedString("DeletProgressLabel", comment: ""))
                     let userID = self.loginUser == nil ? "" : self.viewUser!.userID
                     CTAPublishDomain.getInstance().deletePublishFile(publish.publishID, userID: userID, compelecationBlock: { (info) -> Void in
-                        self.hideLoadingViewByView(nil)
+                        SVProgressHUD.dismiss()
                         if info.result{
                             let selectedIndex = self.getPublishIndex(self.selectedPublishID)
                             UIView.animateWithDuration(0.3, animations: { () -> Void in

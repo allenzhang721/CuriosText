@@ -102,6 +102,11 @@
 
 "SavePhotoSuccess" = "已保存到相册";
 "ReportSuccess" = "举报成功";
+"DeletProgressLabel" = "删除中...";
+"UploadProgressLabel" = "上传中...";
+"SendProgressLabel" = "发送中...";
+"ShareSuccessLabel" = "分享成功";
+"ShareErrorLabel" = "分享失败";
 
 // MARK: - Common
 "Cancel" = "取消";

@@ -100,6 +100,12 @@
 
 "SavePhotoSuccess" = "Save to album";
 "ReportSuccess" = "Thanks for the report!";
+"DeletProgressLabel" = "Deleting...";
+"UploadProgressLabel" = "Uploading...";
+"SendProgressLabel" = "Sending...";
+"ShareSuccessLabel" = "Share Success";
+"ShareErrorLabel" = "Share Failed";
+
 // MARK: - Common
 "Cancel" = "Cancel";
 "Done" = "Done";

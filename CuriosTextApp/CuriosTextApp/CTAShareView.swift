@@ -258,6 +258,7 @@ class CTAShareView: UIView{
         #endif
         
         self.scrollView.contentSize = CGSize(width: maxWidth, height: 170)
+        self.scrollView.contentOffset.x = 0
     }
     
     func cancelHandler(complete: (() -> ())?){

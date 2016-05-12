@@ -48,8 +48,6 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     var homeViewButton:UIButton!
     var settingButton:UIButton!
     
-    var noContentView:UIImageView!
-    
     var previousScrollViewYOffset:CGFloat = 0.0
     var isLoading:Bool = false
     
@@ -101,12 +99,13 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         super.viewWillAppear(animated)
         if self.isDisMis {
             self.loadLocalUserModel()
-            if loginUser != nil {
+            if self.loginUser != nil {
                 if self.isLoginUser {
                     self.viewUser = self.loginUser
                 }
+                self.resetView()
                 if self.viewUserID != self.viewUser!.userID{
-                    self.resetView()
+                    self.resetButton()
                     self.publishModelArray.removeAll()
                     self.loadArrayFromLocal()
                     self.collectionView.reloadData()
@@ -114,6 +113,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                 }
             }else {
                 self.resetView()
+                self.resetButton()
             }
         }
     }
@@ -156,10 +156,10 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
             let userID = self.loginUser!.userID
             let beUserID = self.viewUser!.userID
             var savePublishModel:Array<CTAPublishModel> = []
-            if self.publishModelArray.count < 40 {
+            if self.publishModelArray.count < 100 {
                 savePublishModel = self.publishModelArray
             }else {
-                let slice = self.publishModelArray[0...40]
+                let slice = self.publishModelArray[0...100]
                 savePublishModel = Array(slice)
             }
             var request:CTABaseRequest?
@@ -200,7 +200,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.collectionLayout = UICollectionViewFlowLayout.init()
         
         self.collectionLayout.itemSize = self.getCellRect()
-        self.collectionLayout.sectionInset = UIEdgeInsets(top: 0, left: space/2, bottom: 0, right: space/2)
+        self.collectionLayout.sectionInset = UIEdgeInsets(top: 0, left: space, bottom: 0, right: space)
         self.collectionLayout.minimumLineSpacing = space
         self.collectionLayout.minimumInteritemSpacing = space
         self.collectionLayout.headerReferenceSize = CGSize(width: bounds.width, height: 100)
@@ -230,12 +230,6 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.footerFresh.setTitle("", forState: .NoMoreData)
         self.footerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Refreshing)
         self.collectionView.mj_footer = footerFresh;
-        
-        self.noContentView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 202, height: 200))
-        self.noContentView.center = self.collectionView.center
-        self.noContentView.image = UIImage.init(named: "no-content")
-        self.view.addSubview(self.noContentView)
-        self.noContentView.hidden = true
     }
     
     func loadLocalUserModel(){
@@ -253,36 +247,40 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.topView = UIView(frame: CGRectMake(0, 0, bounds.width, 30))
         
         self.userInfoView = UIView(frame: CGRectMake(0, 0, bounds.width, 100))
-        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bounds.size.width-60)/2, y: 0, width: 60, height: 60));
+        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bounds.size.width-60)/2, y: 0, width: 50*self.getHorRate(), height: 50*self.getHorRate()));
         self.cropImageCircle(self.userIconImage)
         self.userIconImage.image = UIImage(named: "default-usericon")
-        self.userNicknameLabel = UILabel.init(frame: CGRect.init(x: (bounds.size.width-maxWidth)/2, y: 80, width: maxWidth, height: 30))
-        self.userNicknameLabel.font = UIFont.systemFontOfSize(20)
+        
+        self.userNicknameLabel = UILabel.init(frame: CGRect.init(x: (bounds.size.width-maxWidth)/2, y: 70*self.getHorRate(), width: maxWidth, height: 30))
+        self.userNicknameLabel.font = UIFont.systemFontOfSize(16)
         self.userNicknameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.userNicknameLabel.textAlignment = .Center
         self.userInfoView.addSubview(self.userIconImage)
         self.userInfoView.addSubview(self.userNicknameLabel)
-        self.userDescLabel = UILabel.init(frame: CGRect.init(x: (bounds.size.width-maxWidth)/2, y: 115, width: maxWidth, height: 140))
+        
+        self.userDescLabel = UILabel.init(frame: CGRect.init(x: (bounds.size.width-maxWidth)/2, y: (self.userNicknameLabel.frame.origin.y+40), width: maxWidth, height: 140))
         self.userDescLabel.numberOfLines = 10
-        self.userDescLabel.font = UIFont.systemFontOfSize(14)
-        self.userDescLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        self.userDescLabel.font = UIFont.systemFontOfSize(12)
+        self.userDescLabel.textColor = UIColor.init(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0)
         self.userDescLabel.text = " "
         self.userDescLabel.textAlignment = .Center
         self.userInfoView.addSubview(self.userDescLabel)
         self.topView.addSubview(self.userInfoView)
 
-        self.userPostButton = UIButton(frame: CGRectMake(0, 35, (bounds.width-20)/2, 30))
-        self.userPostButton.center = CGPoint(x: bounds.width/4, y: 20)
+        self.userPostButton = UIButton(frame: CGRectMake(0, 0, (bounds.width-20)/2, 50))
+        self.userPostButton.center = CGPoint(x: bounds.width/4, y: 25)
+        self.userPostButton.titleLabel?.font = UIFont.systemFontOfSize(16)
         self.userPostButton.setTitle(NSLocalizedString("PostsButtonLabel", comment: ""), forState: .Normal)
         self.userPostButton.setTitleColor(UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0), forState: .Normal)
-        self.userLikeButton = UIButton(frame: CGRectMake(0, 35, (bounds.width-20)/2, 30))
-        self.userLikeButton.center = CGPoint(x: bounds.width*3/4, y: 20)
+        self.userLikeButton = UIButton(frame: CGRectMake(0, 0, (bounds.width-20)/2, 50))
+        self.userLikeButton.center = CGPoint(x: bounds.width*3/4, y: 25)
+        self.userLikeButton.titleLabel?.font = UIFont.systemFontOfSize(16)
         self.userLikeButton.setTitle(NSLocalizedString("LikesButtonLabel", comment: ""), forState: .Normal)
         self.userLikeButton.setTitleColor(UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0), forState: .Normal)
         let lineImageView = UIImageView(frame: CGRect.init(x: 0, y: 0, width: 2, height: 18))
         lineImageView.image = UIImage.init(named: "follow-line")
-        lineImageView.center = CGPoint(x: bounds.width/2, y: 20)
-        self.collectionControllerView = UIView(frame: CGRectMake(0, 0, bounds.width, 40))
+        lineImageView.center = CGPoint(x: bounds.width/2, y: 25)
+        self.collectionControllerView = UIView(frame: CGRectMake(0, 0, bounds.width, 50))
         self.collectionControllerView.addSubview(self.userPostButton)
         self.collectionControllerView.addSubview(self.userLikeButton)
         self.collectionControllerView.addSubview(lineImageView)
@@ -345,15 +343,18 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
             }
             self.userIconImage.kf_showIndicatorWhenLoading = false
         }
+        self.setViewsPosition()
+    }
+    
+    func resetButton(){
         self.publishType = .Posts
         self.changeButtonStatus()
-        self.setViewsPosition()
     }
     
     func setViewsPosition(){
         self.userInfoView.frame.origin.y = 35
         self.userInfoView.frame.size.height = self.userDescLabel.frame.origin.y + self.userDescLabel.frame.height
-        self.collectionControllerView.frame.origin.y = self.userInfoView.frame.origin.y+self.userInfoView.frame.height
+        self.collectionControllerView.frame.origin.y = self.userInfoView.frame.origin.y+self.userInfoView.frame.height+10
         self.topView.frame.size.height = self.collectionControllerView.frame.origin.y + self.collectionControllerView.frame.height
         self.topView.frame.origin.y = 0
         let frame = self.topView.frame
@@ -380,7 +381,6 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
             self.loadArrayFromLocal()
             self.collectionView.reloadData()
             self.previousScrollViewYOffset = 0.0
-            self.noContentView.hidden = true
             self.isLoading = false
             self.loadFirstData()
         }
@@ -394,7 +394,6 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
             self.loadArrayFromLocal()
             self.collectionView.reloadData()
             self.previousScrollViewYOffset = 0.0
-            self.noContentView.hidden = true
             self.isLoading = false
             self.loadFirstData()
         }
@@ -464,6 +463,12 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                                 if !self.checkPublishModelIsHave(newmodel.publishID, publishArray: self.publishModelArray){
                                     isChange = true
                                     break
+                                }else {
+                                    let index = self.getPublishIndex(newmodel.publishID, publishArray: self.publishModelArray)
+                                    if index != -1{
+                                        self.publishModelArray.insert(newmodel, atIndex: index)
+                                        self.publishModelArray.removeAtIndex(index+1)
+                                    }
                                 }
                             }
                             if !isChange{
@@ -505,7 +510,6 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     func freshComplete(){
         if self.isLoadingFirstData {
             self.headerFresh.endRefreshing()
-            self.showNoContentView()
         }else {
             if self.isLoadedAll {
                 self.footerFresh.endRefreshingWithNoMoreData()
@@ -515,16 +519,14 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         }
     }
     
-    func showNoContentView(){
-        if self.isLoginUser && self.publishModelArray.count == 0 && self.publishType == .Posts{
-            let frame = self.topView.frame
-            let contentFrame = self.noContentView.frame
-            let bounds = UIScreen.mainScreen().bounds
-            self.noContentView.center = CGPoint(x: bounds.width/2, y: frame.height+contentFrame.height/2+20)
-            self.noContentView.hidden = false
-        }else {
-            self.noContentView.hidden = true
+    func getPublishIndex(publishID:String, publishArray:Array<CTAPublishModel>) -> Int{
+        for i in 0..<publishArray.count{
+            let oldPublihModel = publishArray[i]
+            if oldPublihModel.publishID == publishID{
+                return i
+            }
         }
+        return -1
     }
     
     func checkPublishModelIsHave(publishID:String, publishArray:Array<CTAPublishModel>) -> Bool{
@@ -647,7 +649,6 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
             self.publishModelArray = publishModelArray
             self.collectionView.reloadData()
             self.saveArrayToLocal()
-            self.showNoContentView()
         }
         
         self.selectedPublishID = selectedPublishID

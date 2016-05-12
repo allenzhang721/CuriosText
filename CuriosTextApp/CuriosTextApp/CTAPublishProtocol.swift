@@ -8,7 +8,6 @@
 
 import Foundation
 import Kingfisher
-
 import SVProgressHUD
 
 protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAAlertProtocol, CTAShareViewDelegate,CTAEditViewControllerDelegate, CTALoadingProtocol, CTAGIFProtocol{
@@ -40,13 +39,13 @@ extension CTAPublishProtocol where Self: UIViewController{
 
     func initPublishSubView(publishRect:CGRect, horRate:CGFloat){
         let bounds = UIScreen.mainScreen().bounds
-        var butY   =  bounds.height - 80 //publishRect.origin.y + publishRect.height + 20 + 10*horRate
+        var butY   =  bounds.height - 75 //publishRect.origin.y + publishRect.height + 20 + 10*horRate
         let originy = publishRect.origin.y + publishRect.height + 20 + 10*horRate //bounds.height - 60
         if butY < originy{
             butY = originy
         }
         self.likeButton.frame = CGRect.init(x: 0, y: 0, width: 40, height: 40)
-        self.likeButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 100*horRate,y: butY)
+        self.likeButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2,y: butY)
         self.likeButton.setImage(UIImage.init(named: "like-button"), forState: .Normal)
         self.likeButton.setImage(UIImage.init(named: "like-highlighted-button"), forState: .Highlighted)
         self.likeButton.setImage(UIImage.init(named: "like-disable-button"), forState: .Disabled)
@@ -65,15 +64,12 @@ extension CTAPublishProtocol where Self: UIViewController{
         rebuildButton.setImage(UIImage.init(named: "rebuild-button"), forState: .Normal)
         rebuildButton.setImage(UIImage.init(named: "rebuild-selected-button"), forState: .Highlighted)
         rebuildButton.setImage(UIImage.init(named: "rebuild-disable-button"), forState: .Disabled)
-        rebuildButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: butY)
+        rebuildButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 100*horRate, y: butY)
         self.view.addSubview(rebuildButton)
         rebuildButton.addTarget(self, action: "rebuildButtonClick:", forControlEvents: .TouchUpInside)
         
-        self.userIconImage.frame = CGRect.init(x: UIScreen.mainScreen().bounds.width/2, y: 9, width: 40, height: 40)
-        self.userIconImage.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: publishRect.origin.y - 20 - 65*horRate)
-        if self.userIconImage.frame.origin.y < 5 {
-            self.userIconImage.frame.origin.y = 5
-        }
+        self.userIconImage.frame = CGRect.init(x: UIScreen.mainScreen().bounds.width/2, y: 9, width: 30*horRate, height: 30*horRate)
+        self.userIconImage.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: 35+self.userIconImage.frame.height/2)
         self.cropImageCircle(self.userIconImage)
         self.view.addSubview(self.userIconImage)
         self.userIconImage.userInteractionEnabled = true
@@ -81,8 +77,7 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.userIconImage.addGestureRecognizer(iconTap)
         self.userIconImage.image = UIImage(named: "default-usericon")
         
-        self.userNicknameLabel.frame = CGRect.init(x: 0, y: 0, width: 100, height: 25)
-        self.userNicknameLabel.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2, y: self.userIconImage.center.y + 32 + 10*horRate)
+        self.userNicknameLabel.frame = CGRect.init(x: 0, y: self.userIconImage.frame.origin.y + 45*horRate, width: 100, height: 25)
         if (self.userNicknameLabel.frame.origin.y + self.userNicknameLabel.frame.size.height) > publishRect.origin.y{
             self.userNicknameLabel.frame.origin.y = publishRect.origin.y - self.userNicknameLabel.frame.size.height
         }
@@ -117,8 +112,6 @@ extension CTAPublishProtocol where Self: UIViewController{
             }
             }) { (_) in
         }
-        
-        
     }
     
     func changeDetailUser(){
@@ -371,24 +364,24 @@ extension CTAPublishProtocol{
                         
                         let accessToken = token
                         SVProgressHUD.setDefaultMaskType(.Clear)
-                        SVProgressHUD.showWithStatus("发送中...")
+                        SVProgressHUD.showWithStatus(NSLocalizedString("SendProgressLabel", comment: ""))
                         WBHttpRequest(forShareAStatus: text, contatinsAPicture: imageObject, orPictureUrl: nil, withAccessToken: accessToken, andOtherProperties: nil, queue: nil, withCompletionHandler: { [weak weiboShare] (request, object, error) in
-                            
                             guard let w = weiboShare else { return }
-                            
                             if error == nil {
-                                SVProgressHUD.showSuccessWithStatus("分享成功!")
+                                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("ShareSuccessLabel", comment: ""))
                                 dispatch_async(dispatch_get_main_queue(), {
                                     vc.dismissViewControllerAnimated(true, completion: nil)
                                 })
                             } else {
-                                SVProgressHUD.showErrorWithStatus("分享失败!")
+                                SVProgressHUD.showErrorWithStatus(NSLocalizedString("ShareErrorLabel", comment: ""))
                                 dispatch_async(dispatch_get_main_queue(), {
                                     w.sending = false
                                 })
                             }
                         })
                     }
+                    
+                    
                     
                     weiboShare.dismissHandler = {
                         SVProgressHUD.dismiss()
@@ -429,7 +422,6 @@ extension CTAPublishProtocol{
                         
                         switch status {
                         case .Success:
-                            SVProgressHUD.setDefaultStyle(.Dark)
                             SVProgressHUD.showSuccessWithStatus(NSLocalizedString("SavePhotoSuccess", comment: ""))
                         case .Authorized(let alert):
                             (self as! UIViewController).presentViewController(alert, animated: true, completion: nil)
@@ -455,7 +447,6 @@ extension CTAPublishProtocol{
                 let reportType = index + 1
                 CTAPublishDomain.getInstance().reportPublish(userID, publishID: self.publishModel!.publishID, reportType: reportType, reportMessage: "", compelecationBlock: { (_) -> Void in
                 })
-                SVProgressHUD.setDefaultStyle(.Dark)
                 SVProgressHUD.showSuccessWithStatus(NSLocalizedString("ReportSuccess", comment: ""))
             }
         }

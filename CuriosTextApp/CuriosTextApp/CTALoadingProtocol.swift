@@ -11,10 +11,10 @@ import UIKit
 protocol CTALoadingProtocol{
     var loadingImageView:UIImageView?{get}
     func showLoadingView()
-    func showLoadingViewByView(centerView:UIView?)
+    func showLoadingViewByView(centerView:UIView)
     func showLoadingViewByRect(rect:CGRect)
     func hideLoadingView()
-    func hideLoadingViewByView(centerView:UIView?)
+    func hideLoadingViewByView(centerView:UIView)
     func getLoadingImages() -> [UIImage]
 }
 
@@ -33,25 +33,11 @@ extension CTALoadingProtocol where Self: UIViewController{
         }
     }
     
-    func showLoadingViewByView(centerView:UIView?){
+    func showLoadingViewByView(centerView:UIView){
         if self.loadingImageView != nil {
-            if centerView != nil {
-                centerView!.hidden = true
-                self.loadingImageView!.center = self.view.convertPoint(centerView!.center, fromView: centerView!.superview)
-                self.showLoadingView()
-            }else {
-                let canvas = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 120, height: 90))
-                canvas.backgroundColor = UIColor.init(red: 155/255, green: 155/255, blue: 155/255, alpha: 1)
-                canvas.clipsToBounds = true
-                canvas.layer.cornerRadius = 8.0
-                canvas.center = self.view.center
-                self.view.addSubview(canvas)
-                let indicator = UIActivityIndicatorView.init(activityIndicatorStyle: .WhiteLarge)
-                self.view.addSubview(indicator)
-                indicator.center = self.view.center
-                indicator.startAnimating()
-            }
-            
+            centerView.hidden = true
+            self.loadingImageView!.center = self.view.convertPoint(centerView.center, fromView: centerView.superview)
+            self.showLoadingView()
         }
     }
     
@@ -72,23 +58,10 @@ extension CTALoadingProtocol where Self: UIViewController{
         }
     }
 
-    func hideLoadingViewByView(centerView:UIView?){
+    func hideLoadingViewByView(centerView:UIView){
         if self.loadingImageView != nil {
-            if centerView != nil {
-                centerView!.hidden = false
-                self.hideLoadingView()
-            }else {
-                let subViews = self.view.subviews
-                if subViews.count > 1{
-                    for i in subViews.count - 2..<subViews.count{
-                        let canvas = subViews[i]
-                        canvas.removeFromSuperview()
-                        if canvas is UIActivityIndicatorView{
-                            (canvas as! UIActivityIndicatorView).stopAnimating()
-                        }
-                    }
-                }
-            }
+            centerView.hidden = false
+            self.hideLoadingView()
         }
     }
     

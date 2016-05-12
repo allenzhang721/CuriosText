@@ -98,7 +98,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         self.userNickNameLabel = UILabel.init(frame: CGRect.init(x: 20, y: self.userIconImageView.frame.origin.y + 65, width: backWidth - 40, height: 28))
         self.userNickNameLabel.textAlignment = .Center
         self.backImageView.addSubview(self.userNickNameLabel)
-        self.userNickNameLabel.font = UIFont.systemFontOfSize(18)
+        self.userNickNameLabel.font = UIFont.systemFontOfSize(16)
         self.userNickNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.userNickNameLabel.text = " "
         
@@ -117,7 +117,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     
         self.followCountLabel = UILabel.init()
         self.backImageView.addSubview(self.followCountLabel)
-        self.followCountLabel.font = UIFont.systemFontOfSize(18)
+        self.followCountLabel.font = UIFont.systemFontOfSize(16)
         self.followCountLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.followCountLabel.text = "0"
         
@@ -132,7 +132,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
     
         self.beFollowCountLabel = UILabel.init()
         self.backImageView.addSubview(self.beFollowCountLabel)
-        self.beFollowCountLabel.font = UIFont.systemFontOfSize(18)
+        self.beFollowCountLabel.font = UIFont.systemFontOfSize(16)
         self.beFollowCountLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.beFollowCountLabel.text = "0"
         

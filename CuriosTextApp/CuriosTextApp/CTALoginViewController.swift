@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import SVProgressHUD
 
 class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProtocol, CTALoginProtocol, CTAAlertProtocol{
     
@@ -99,6 +100,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         self.phoneTextinput.delegate = self
     
         self.passwordTextinput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+50, width: 190*self.getHorRate(), height: 50))
+        self.passwordTextinput.font = UIFont.systemFontOfSize(16)
         self.passwordTextinput.placeholder = NSLocalizedString("PasswordPlaceholder", comment: "")
         self.passwordTextinput.secureTextEntry = true
         self.passwordTextinput.clearsOnBeginEditing = true
@@ -106,7 +108,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         self.passwordTextinput.returnKeyType = .Go
         self.view.addSubview(self.passwordTextinput)
         let passwordLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.passwordTextinput.frame.origin.y+12, width: 50, height: 25))
-        passwordLabel.font = UIFont.systemFontOfSize(18)
+        passwordLabel.font = UIFont.systemFontOfSize(16)
         passwordLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         passwordLabel.text = NSLocalizedString("PasswordLabel", comment: "")
         passwordLabel.sizeToFit()
@@ -238,11 +240,20 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
     }
     
     func changeToLoadingView(view:UIView?){
-        self.showLoadingViewByView(view)
+        if view == nil {
+            SVProgressHUD.show()
+        }else {
+            self.showLoadingViewByView(view!)
+        }
     }
     
     func changeToUnloadingView(view:UIView?){
-        self.hideLoadingViewByView(view)
+        if view == nil {
+            SVProgressHUD.dismiss()
+        }else {
+            self.hideLoadingViewByView(view!)
+        }
+        
     }
     
     func loginButtonClick(sender: UIButton){
