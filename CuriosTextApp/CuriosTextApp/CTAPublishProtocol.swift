@@ -23,7 +23,7 @@ protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAAlertProtocol, CTASha
     func changeUserView(userModel:CTAUserModel)
     func changeDetailUser()
     
-    func likeHandler()
+    func likeHandler(justLike:Bool)
     func setLikeButtonStyle()
     func moreSelectionHandler(isSelf:Bool)
     func rebuildHandler()
@@ -116,7 +116,7 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.userIconImage.image = UIImage.init(named: "default-usericon")
     }
     
-    func likeHandler(){
+    func likeHandler(justLike:Bool){
         let userID = self.userModel == nil ? "" : self.userModel!.userID
         if self.publishModel != nil {
             if self.publishModel!.likeStatus == 0{
@@ -135,7 +135,7 @@ extension CTAPublishProtocol where Self: UIViewController{
                         })
                     }
                 })
-            }else {
+            }else if !justLike{
                 CTAPublishDomain.getInstance().unLikePublish(userID, publishID: self.publishModel!.publishID, compelecationBlock: { (info) -> Void in
                     if info.result {
                         self.publishModel!.likeStatus = 0

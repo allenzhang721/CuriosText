@@ -100,8 +100,11 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.handView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
         let pan = UIPanGestureRecognizer(target: self, action: #selector(CTAHomeViewController.viewPanHandler(_:)))
         self.handView.addGestureRecognizer(pan)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(CTAHomeViewController.viewTapHandler(_:)))
+        tap.numberOfTapsRequired=2
+        tap.numberOfTouchesRequired=1
+        self.handView.addGestureRecognizer(tap)
         self.view.addSubview(self.handView)
-
         
         self.nextMoreCell = CTAFullPublishesCell.init(frame: CGRect.init(x: (bounds.width - fullSize.width*2)/2, y: 0, width: fullSize.width, height: fullSize.height))
         self.handView.addSubview(self.nextMoreCell!)
@@ -488,6 +491,12 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.savePublishArray(request, modelArray: savePublishModel)
     }
     
+    func viewTapHandler(sender: UITapGestureRecognizer) {
+        if self.loginUser != nil && self.currentFullCell.publishModel != nil{
+            self.likeHandler(true)
+        }
+    }
+    
     func viewPanHandler(sender: UIPanGestureRecognizer) {
         switch sender.state{
         case .Began:
@@ -815,7 +824,7 @@ extension CTAHomeViewController: CTAPublishProtocol{
         if self.loginUser == nil {
             self.showLoginView()
         }else if self.currentFullCell.publishModel != nil{
-            self.likeHandler()
+            self.likeHandler(false)
         }
     }
     

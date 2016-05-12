@@ -121,6 +121,11 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(CTAPublishDetailViewController.viewBackHandler(_:)))
         self.view.addGestureRecognizer(tap)
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(CTAPublishDetailViewController.doubleTapHandler(_:)))
+        tap2.numberOfTapsRequired=2
+        tap2.numberOfTouchesRequired=1
+        self.view.addGestureRecognizer(tap2)
+        
     }
     
     func reloadView(){
@@ -946,9 +951,9 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         var isHave:Bool = false
         let subViews = self.view.subviews
         for i in 0..<subViews.count{
-            let view = subViews[i]
+            let subView = subViews[i]
             let pt = sender.locationInView(view)
-            if view.pointInside(pt, withEvent: nil){
+            if subView.pointInside(pt, withEvent: nil){
                 isHave = true
             }
         }
@@ -956,6 +961,15 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
             self.currentCenter = self.currentFullCell.center
             self.setVerCellCenter()
             self.verPanAnimation(500.00)
+        }
+    }
+    
+    func doubleTapHandler(sender: UIPanGestureRecognizer) {
+        let pt = sender.locationInView(self.currentFullCell)
+        if self.currentFullCell.pointInside(pt, withEvent: nil){
+            if self.currentFullCell.publishModel != nil{
+                self.likeHandler(true)
+            }
         }
     }
 }
@@ -993,7 +1007,7 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
     
     func likeButtonClick(sender: UIButton){
         if self.currentFullCell.publishModel != nil{
-            self.likeHandler()
+            self.likeHandler(false)
         }
     }
     
