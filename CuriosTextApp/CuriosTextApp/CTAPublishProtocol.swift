@@ -59,14 +59,14 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.rebuildButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 100*horRate, y: butY)
         self.view.addSubview(self.rebuildButton)
         
-        self.userIconImage.frame = CGRect.init(x: UIScreen.mainScreen().bounds.width/2, y: 9, width: 30*horRate, height: 30*horRate)
+        self.userIconImage.frame = CGRect.init(x: UIScreen.mainScreen().bounds.width/2, y: 9, width: 40*horRate, height: 40*horRate)
         self.userIconImage.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: 35+self.userIconImage.frame.height/2)
         self.cropImageCircle(self.userIconImage)
         self.view.addSubview(self.userIconImage)
         self.userIconImage.userInteractionEnabled = true
         self.userIconImage.image = UIImage(named: "default-usericon")
         
-        self.userNicknameLabel.frame = CGRect.init(x: 0, y: self.userIconImage.frame.origin.y + 45*horRate, width: 100, height: 25)
+        self.userNicknameLabel.frame = CGRect.init(x: 0, y: self.userIconImage.frame.origin.y + 50*horRate, width: 100, height: 25)
         if (self.userNicknameLabel.frame.origin.y + self.userNicknameLabel.frame.size.height) > publishRect.origin.y{
             self.userNicknameLabel.frame.origin.y = publishRect.origin.y - self.userNicknameLabel.frame.size.height
         }

@@ -125,10 +125,10 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         
         let shadeFrame = self.nextMoreCell.frame
         self.shadeView = UIView.init(frame: CGRect.init(x: shadeFrame.origin.x, y: shadeFrame.origin.y+shadeFrame.height-15, width: shadeFrame.width - 26, height: 20))
+        self.shadeView.frame.size.width = fullSize.width  - self.horSpace*6
         self.handView.addSubview(self.shadeView)
         addCellShadow(self.shadeView)
         self.shadeView.superview?.sendSubviewToBack(self.shadeView)
-        
         self.setCellsPosition()
         
         let userButton = UIButton.init(frame: CGRect.init(x: bounds.size.width - 45, y: 2, width: 40, height: 40))
@@ -174,7 +174,6 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.preFullCell.transform = CGAffineTransformMakeScale(rateW, rateH)
         self.preFullCell.removeViewColor()
         self.preFullCell.alpha = 1
-        
         
         self.shadeView.center = CGPoint.init(x: bounds.width/2, y: self.nextFullCell.frame.origin.y+self.nextFullCell.frame.height-5)
     }

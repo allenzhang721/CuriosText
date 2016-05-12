@@ -247,7 +247,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.topView = UIView(frame: CGRectMake(0, 0, bounds.width, 30))
         
         self.userInfoView = UIView(frame: CGRectMake(0, 0, bounds.width, 100))
-        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bounds.size.width-60)/2, y: 0, width: 50*self.getHorRate(), height: 50*self.getHorRate()));
+        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bounds.size.width-60)/2, y: 0, width: 60*self.getHorRate(), height: 60*self.getHorRate()));
         self.cropImageCircle(self.userIconImage)
         self.userIconImage.image = UIImage(named: "default-usericon")
         

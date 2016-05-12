@@ -16,7 +16,7 @@ func getIconData(image:UIImage) -> NSData{
 
 func compressJPGImage(image:UIImage) -> NSData{
     let newImage = compressImage(image)
-    let newData = UIImageJPEGRepresentation(newImage, 0.2)
+    let newData = UIImageJPEGRepresentation(newImage, 1)
     return newData!
 }
 
