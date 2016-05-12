@@ -324,16 +324,17 @@ extension CTAPublishProtocol{
         
         if CTASocialManager.isAppInstaller(.Weibo){
             if let userID = CTAUserManager.user?.userID where !userID.isEmpty, let token = CTASocialManager.needOAuthOrGetTokenByUserID(userID) {
-//                debug_print("has token = \(token), userID = \(weiboID)")
-                self.shareWeiboWithToken(token)
-                
+                    self.shareWeiboWithToken(token)
             } else {
                 if let userID = CTAUserManager.user?.userID where !userID.isEmpty {
                 CTASocialManager.reOAuthWeiboGetAccessToken(userID, completed: { [weak self] (token, weiboID) in
                     guard let sf = self else { return }
                     if let token = token {
-//                       debug_print("re oauth token = \(token)")
-                        sf.shareWeiboWithToken(token)
+                        let time: NSTimeInterval = 1.0
+                        let delay = dispatch_time(DISPATCH_TIME_NOW,Int64(time * Double(NSEC_PER_SEC)))
+                        dispatch_after(delay, dispatch_get_main_queue()) {
+                            sf.shareWeiboWithToken(token)
+                        }
                     }
                     
                     if let weiboID = weiboID {
