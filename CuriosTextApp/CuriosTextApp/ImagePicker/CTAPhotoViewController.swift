@@ -138,7 +138,7 @@ extension CTAPhotoViewController {
     private func setupFetchPhotos() { // fetch Photo Assets
         // 1. fetch options
         let allPhotos = PHFetchOptions()
-        let dateSortDescritor = NSSortDescriptor(key: "creationDate", ascending: false)
+        let dateSortDescritor = NSSortDescriptor(key: "modificationDate", ascending: false)
         allPhotos.sortDescriptors = [dateSortDescritor]
         
         // 2. fetch result and collection

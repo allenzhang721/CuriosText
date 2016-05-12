@@ -40,13 +40,13 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take Photos With Curios" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LBu-7h-M3J">
                                                         <rect key="frame" x="0.0" y="0.0" width="315" height="27"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
-                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow access to your camera to start taking photos with the Curios app." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wX1-CX-cHo">
                                                         <rect key="frame" x="0.0" y="47" width="315" height="41"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q4h-mJ-qbR">
@@ -89,42 +89,10 @@
                                     <constraint firstItem="Gjj-Vk-IWJ" firstAttribute="leading" secondItem="JN5-7R-VTh" secondAttribute="leading" id="nFb-fg-4Qp"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="epT-35-su2" customClass="CTACameraCaptureButton" customModule="CuriosTextApp" customModuleProvider="target">
-                                <rect key="frame" x="143" y="465" width="88" height="88"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="88" id="0uV-Wy-Lv2"/>
-                                    <constraint firstAttribute="width" constant="88" id="Kgp-SM-Rl1"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="captureClick:" destination="u8L-Ej-xMD" eventType="touchUpInside" id="HD2-cm-iIJ"/>
-                                </connections>
-                            </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bhK-JC-FC8">
-                                <rect key="frame" x="0.0" y="420" width="375" height="44"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <collectionViewLayout key="collectionViewLayout" id="t6U-CY-4t9" customClass="CTACollectionViewActiveFlowLayout" customModule="CuriosTextApp" customModuleProvider="target"/>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AspectRatioCell" id="FuJ-Jh-EHf" customClass="CTACameraAspectRatioCollectionViewCell" customModule="CuriosTextApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="48"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="48"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <size key="customSize" width="50" height="48"/>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="u8L-Ej-xMD" id="H3f-Kp-u8z"/>
-                                    <outlet property="delegate" destination="u8L-Ej-xMD" id="UQl-eb-dbQ"/>
-                                </connections>
-                            </collectionView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sUj-BH-diQ">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <items>
-                                    <barButtonItem title="取消" id="Ur5-PZ-KKn">
+                                    <barButtonItem image="close-button" width="5" id="Ur5-PZ-KKn">
                                         <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="dismiss:" destination="u8L-Ej-xMD" id="lJv-Oa-83f"/>
@@ -132,30 +100,87 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OPf-hw-6uo">
+                                <rect key="frame" x="0.0" y="420" width="375" height="247"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yVp-NE-q9T">
+                                        <rect key="frame" x="271" y="129" width="22" height="30"/>
+                                        <state key="normal" image="icon_cameraFlip"/>
+                                        <connections>
+                                            <action selector="changedCamera:" destination="u8L-Ej-xMD" eventType="touchUpInside" id="hIG-EM-aNO"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="epT-35-su2" customClass="CTACameraCaptureButton" customModule="CuriosTextApp" customModuleProvider="target">
+                                        <rect key="frame" x="143" y="100" width="88" height="88"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="88" id="0uV-Wy-Lv2"/>
+                                            <constraint firstAttribute="width" constant="88" id="Kgp-SM-Rl1"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="captureClick:" destination="u8L-Ej-xMD" eventType="touchUpInside" id="HD2-cm-iIJ"/>
+                                        </connections>
+                                    </view>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bhK-JC-FC8">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="ojf-Rs-1pv"/>
+                                        </constraints>
+                                        <collectionViewLayout key="collectionViewLayout" id="t6U-CY-4t9" customClass="CTACollectionViewActiveFlowLayout" customModule="CuriosTextApp" customModuleProvider="target"/>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AspectRatioCell" id="FuJ-Jh-EHf" customClass="CTACameraAspectRatioCollectionViewCell" customModule="CuriosTextApp" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="48"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="48"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <size key="customSize" width="50" height="48"/>
+                                            </collectionViewCell>
+                                        </cells>
+                                        <connections>
+                                            <outlet property="dataSource" destination="u8L-Ej-xMD" id="H3f-Kp-u8z"/>
+                                            <outlet property="delegate" destination="u8L-Ej-xMD" id="UQl-eb-dbQ"/>
+                                        </connections>
+                                    </collectionView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R4J-LN-37Q">
+                                        <rect key="frame" x="77" y="129" width="26" height="30"/>
+                                        <state key="normal" image="icon_flashOff"/>
+                                        <connections>
+                                            <action selector="changeFlash:" destination="u8L-Ej-xMD" eventType="touchUpInside" id="vax-lI-nFm"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="R4J-LN-37Q" firstAttribute="top" secondItem="yVp-NE-q9T" secondAttribute="top" id="0yR-4u-eQx"/>
+                                    <constraint firstItem="yVp-NE-q9T" firstAttribute="centerY" secondItem="epT-35-su2" secondAttribute="centerY" id="581-pc-eOS"/>
+                                    <constraint firstItem="epT-35-su2" firstAttribute="centerY" secondItem="OPf-hw-6uo" secondAttribute="centerY" constant="20" id="7Ro-Wo-Mjb"/>
+                                    <constraint firstItem="bhK-JC-FC8" firstAttribute="centerX" secondItem="epT-35-su2" secondAttribute="centerX" id="A9G-z8-d72"/>
+                                    <constraint firstItem="yVp-NE-q9T" firstAttribute="leading" secondItem="epT-35-su2" secondAttribute="trailing" constant="40" id="MvV-5e-BWY"/>
+                                    <constraint firstItem="epT-35-su2" firstAttribute="centerX" secondItem="OPf-hw-6uo" secondAttribute="centerX" id="O7Q-dS-6sa"/>
+                                    <constraint firstItem="bhK-JC-FC8" firstAttribute="top" secondItem="OPf-hw-6uo" secondAttribute="top" id="X29-8C-3wL"/>
+                                    <constraint firstAttribute="trailing" secondItem="bhK-JC-FC8" secondAttribute="trailing" id="XLT-XJ-lEd"/>
+                                    <constraint firstItem="bhK-JC-FC8" firstAttribute="leading" secondItem="OPf-hw-6uo" secondAttribute="leading" id="caa-Fq-za8"/>
+                                    <constraint firstItem="epT-35-su2" firstAttribute="leading" secondItem="R4J-LN-37Q" secondAttribute="trailing" constant="40" id="i1B-tI-iPA"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="JN5-7R-VTh" firstAttribute="top" secondItem="u9D-bv-hg4" secondAttribute="bottom" constant="44" id="2LY-G8-5tJ"/>
                             <constraint firstItem="sUj-BH-diQ" firstAttribute="top" secondItem="u9D-bv-hg4" secondAttribute="bottom" id="2Tb-u5-Yv0"/>
-                            <constraint firstItem="bhK-JC-FC8" firstAttribute="top" secondItem="JN5-7R-VTh" secondAttribute="bottom" constant="1" id="FiX-TW-ZXO"/>
-                            <constraint firstItem="epT-35-su2" firstAttribute="top" secondItem="bhK-JC-FC8" secondAttribute="bottom" constant="1" id="Fyq-jJ-Zd6"/>
+                            <constraint firstItem="Rrc-Wb-XPJ" firstAttribute="top" secondItem="OPf-hw-6uo" secondAttribute="bottom" id="Cst-ZO-xWy"/>
                             <constraint firstItem="sUj-BH-diQ" firstAttribute="trailing" secondItem="JN5-7R-VTh" secondAttribute="trailing" id="MEL-Ia-lW7"/>
-                            <constraint firstItem="epT-35-su2" firstAttribute="top" secondItem="Gjj-Vk-IWJ" secondAttribute="bottom" constant="46" id="Phe-Xd-Frg"/>
+                            <constraint firstItem="OPf-hw-6uo" firstAttribute="leading" secondItem="91a-Mm-bxj" secondAttribute="leading" id="QIh-c9-Bvw"/>
                             <constraint firstItem="JN5-7R-VTh" firstAttribute="centerX" secondItem="91a-Mm-bxj" secondAttribute="centerX" id="TPQ-JF-LSQ"/>
-                            <constraint firstItem="bhK-JC-FC8" firstAttribute="trailing" secondItem="JN5-7R-VTh" secondAttribute="trailing" id="cUt-2h-VSr"/>
                             <constraint firstItem="JN5-7R-VTh" firstAttribute="width" secondItem="91a-Mm-bxj" secondAttribute="width" id="fCs-NP-MCW"/>
-                            <constraint firstItem="epT-35-su2" firstAttribute="top" secondItem="JN5-7R-VTh" secondAttribute="bottom" constant="85" id="feP-Q9-lC1"/>
-                            <constraint firstItem="epT-35-su2" firstAttribute="centerX" secondItem="JN5-7R-VTh" secondAttribute="centerX" id="nvw-PO-JGA"/>
-                            <constraint firstItem="Rrc-Wb-XPJ" firstAttribute="top" secondItem="epT-35-su2" secondAttribute="bottom" constant="75" id="ops-Ho-Jta"/>
+                            <constraint firstItem="OPf-hw-6uo" firstAttribute="top" secondItem="Wkb-S0-3vO" secondAttribute="bottom" constant="1" id="gjr-NB-iaz"/>
                             <constraint firstItem="sUj-BH-diQ" firstAttribute="leading" secondItem="JN5-7R-VTh" secondAttribute="leading" id="p2N-Qz-2qa"/>
-                            <constraint firstItem="bhK-JC-FC8" firstAttribute="leading" secondItem="JN5-7R-VTh" secondAttribute="leading" id="tMR-kk-qU7"/>
+                            <constraint firstAttribute="trailing" secondItem="OPf-hw-6uo" secondAttribute="trailing" id="yL1-By-vQB"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="feP-Q9-lC1"/>
-                                <exclude reference="ops-Ho-Jta"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="OEl-PQ-RF1"/>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -164,6 +189,7 @@
                         <outlet property="accessView" destination="Wkb-S0-3vO" id="BZr-FT-FUm"/>
                         <outlet property="cameraView" destination="Gjj-Vk-IWJ" id="JMr-dp-egu"/>
                         <outlet property="cropView" destination="fLu-aW-f78" id="lfC-fZ-jYq"/>
+                        <outlet property="flashButton" destination="R4J-LN-37Q" id="Vkr-bM-WGJ"/>
                         <outlet property="ratioCollectionView" destination="bhK-JC-FC8" id="Y65-cB-kDD"/>
                         <outlet property="templateImageView" destination="uRk-z1-7tB" id="VdS-zC-2VQ"/>
                     </connections>
@@ -173,4 +199,9 @@
             <point key="canvasLocation" x="729.5" y="415.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="close-button" width="40" height="40"/>
+        <image name="icon_cameraFlip" width="22" height="30"/>
+        <image name="icon_flashOff" width="26" height="30"/>
+    </resources>
 </document>

@@ -33,6 +33,38 @@
             endingLineNumber = "413"
             landmarkName = "showModifyViewControllerWith(_:atIndexPath:)"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CuriosTextApp.EditViewController.showModifyViewControllerWith (CuriosTextApp.ContainerVMProtocol, atIndexPath : __ObjC.NSIndexPath) -&gt; ()"
+                  moduleName = "CuriosTextApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/EditViewController.swift"
+                  timestampString = "484736992.271273"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "414"
+                  endingLineNumber = "414"
+                  offsetFromSymbolStart = "2160">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CuriosTextApp.EditViewController.(showModifyViewControllerWith (CuriosTextApp.ContainerVMProtocol, atIndexPath : __ObjC.NSIndexPath) -&gt; ()).(closure #3)"
+                  moduleName = "CuriosTextApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/EditViewController.swift"
+                  timestampString = "484736992.2716"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "414"
+                  endingLineNumber = "414"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -305,38 +337,6 @@
             endingLineNumber = "359"
             landmarkName = "shareWeiboWithToken(_:)"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(extension in CuriosTextApp):CuriosTextApp.CTAPublishProtocol.(shareWeiboWithToken in _1F575ED1331785A041811337E077770F) (Swift.String) -&gt; ()"
-                  moduleName = "CuriosTextApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTAPublishProtocol.swift"
-                  timestampString = "484651395.43706"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "359"
-                  endingLineNumber = "359"
-                  offsetFromSymbolStart = "109">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(extension in CuriosTextApp):CuriosTextApp.CTAPublishProtocol.(shareWeiboWithToken in _1F575ED1331785A041811337E077770F) (Swift.String) -&gt; ()"
-                  moduleName = "CuriosTextApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTAPublishProtocol.swift"
-                  timestampString = "484651395.437262"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "359"
-                  endingLineNumber = "359"
-                  offsetFromSymbolStart = "224">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -353,38 +353,70 @@
             endingLineNumber = "362"
             landmarkName = "shareWeiboWithToken(_:)"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CuriosTextApp/ImagePicker/CTACameraViewController.swift"
+            timestampString = "484741993.122455"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
+            landmarkName = "changeCamera(_:)"
+            landmarkType = "5">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(extension in CuriosTextApp):CuriosTextApp.CTAPublishProtocol.((shareWeiboWithToken in _1F575ED1331785A041811337E077770F) (Swift.String) -&gt; ()).(closure #1)"
+                  symbolName = "CuriosTextApp.CTACameraViewController.(changeCamera in _E0D088A24A99FA065AF75AD110F40A35) (Swift.Bool) -&gt; ()"
                   moduleName = "CuriosTextApp"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTAPublishProtocol.swift"
-                  timestampString = "484651395.438411"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/ImagePicker/CTACameraViewController.swift"
+                  timestampString = "484736992.288567"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "363"
-                  endingLineNumber = "363"
-                  offsetFromSymbolStart = "57">
+                  startingLineNumber = "142"
+                  endingLineNumber = "142"
+                  offsetFromSymbolStart = "1572">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(extension in CuriosTextApp):CuriosTextApp.CTAPublishProtocol.((shareWeiboWithToken in _1F575ED1331785A041811337E077770F) (Swift.String) -&gt; ()).(closure #1)"
+                  symbolName = "CuriosTextApp.CTACameraViewController.((changeCamera in _E0D088A24A99FA065AF75AD110F40A35) (Swift.Bool) -&gt; ()).(closure #2)"
                   moduleName = "CuriosTextApp"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTAPublishProtocol.swift"
-                  timestampString = "484651395.438587"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/ImagePicker/CTACameraViewController.swift"
+                  timestampString = "484736992.288688"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "363"
-                  endingLineNumber = "363"
-                  offsetFromSymbolStart = "150">
+                  startingLineNumber = "142"
+                  endingLineNumber = "142"
+                  offsetFromSymbolStart = "24">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CuriosTextApp/ImagePicker/CTACameraViewController.swift"
+            timestampString = "484741993.122455"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "248"
+            endingLineNumber = "248"
+            landmarkName = "changeCamera(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
