@@ -23,20 +23,20 @@ class CTAHeartAnimationView: UIView {
         setup()
     }
     
-    override func didMoveToSuperview() {
-        
-        playLikeAnimation()
-    }
+//    override func didMoveToSuperview() {
+//        
+//        playLikeAnimation()
+//    }
     
     private func setup() {
         layer.addSublayer(heartLayer)
         heartLayer.fillColor = UIColor.redColor().CGColor
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        
-        playLikeAnimation()
-    }
+//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+//        
+//        playLikeAnimation()
+//    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -49,7 +49,7 @@ class CTAHeartAnimationView: UIView {
         heartLayer.frame = CGRect(origin: layerOrigin, size: layerSize)
     }
     
-    func playLikeAnimation() {
+    func playLikeAnimation(completed:(() -> ())?) {
         
         heartLayer.pop_removeAllAnimations()
  
@@ -74,18 +74,25 @@ class CTAHeartAnimationView: UIView {
         scallY.completionBlock = {[weak self] (ani, finished) in
             
             if let sf = self where finished {
-                sf.dismissAnimation()
+                sf.dismissAnimation(completed)
             }
         }
     }
     
-    func dismissAnimation() {
+    func dismissAnimation(completed: (() -> ())?) {
         
         heartLayer.pop_removeAllAnimations()
         let opacity = POPBasicAnimation(propertyNamed: kPOPLayerOpacity)
         opacity.fromValue = 1
         opacity.toValue = 0
         heartLayer.pop_addAnimation(opacity, forKey: "Opacity")
+        
+        opacity.completionBlock = {[weak self] (ani, finished) in
+            if finished {
+                completed?()
+                self?.removeFromSuperview()
+            }
+        }
     }
 
     override func prepareForInterfaceBuilder() {

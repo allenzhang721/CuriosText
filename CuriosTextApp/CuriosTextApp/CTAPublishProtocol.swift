@@ -124,6 +124,15 @@ extension CTAPublishProtocol where Self: UIViewController{
                     if info.result {
                         self.publishModel!.likeStatus = 1
                         self.setLikeButtonStyle()
+                        
+                        // play heart animation
+                        dispatch_async(dispatch_get_main_queue(), { 
+                            let heartView = CTAHeartAnimationView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 100, height: 100)))
+                            heartView.center = self.view.center
+                            self.view.addSubview(heartView)
+                            
+                            heartView.playLikeAnimation(nil)
+                        })
                     }
                 })
             }else {
