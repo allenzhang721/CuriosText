@@ -365,9 +365,9 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
                                 self.publishModelArray.removeAll()
                                 self.loadMoreModelArray(modelArray!)
                             }
-                        }else {
-                            self.loadMoreModelArray(modelArray!)
                         }
+                    }else {
+                        self.publishModelArray.removeAll()
                     }
                 }else {
                     self.loadMoreModelArray(modelArray!)
@@ -952,7 +952,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         let subViews = self.view.subviews
         for i in 0..<subViews.count{
             let subView = subViews[i]
-            let pt = sender.locationInView(view)
+            let pt = sender.locationInView(subView)
             if subView.pointInside(pt, withEvent: nil){
                 isHave = true
             }

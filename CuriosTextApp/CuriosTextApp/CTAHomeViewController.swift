@@ -333,6 +333,12 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                     if !self.checkPublishModelIsHave(newmodel.publishID, publishArray: self.publishModelArray){
                         isChange = true
                         break
+                    }else {
+                        let index = self.getPublishIndex(newmodel.publishID, publishArray: self.publishModelArray)
+                        if index != -1{
+                            self.publishModelArray.insert(newmodel, atIndex: index)
+                            self.publishModelArray.removeAtIndex(index+1)
+                        }
                     }
                 }
                 if !isChange{
@@ -347,6 +353,8 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             }else {
                 isChange = true
             }
+        }else {
+            isChange = true
         }
         if isChange{
             self.publishModelArray.removeAll()
@@ -363,8 +371,24 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             let publishModel = modelArray[i] as! CTAPublishModel
             if !self.checkPublishModelIsHave(publishModel.publishID, publishArray: self.publishModelArray){
                  self.publishModelArray.append(publishModel)
+            }else {
+                let index = self.getPublishIndex(publishModel.publishID, publishArray: self.publishModelArray)
+                if index != -1 {
+                    self.publishModelArray.removeAtIndex(index)
+                    self.publishModelArray.append(publishModel)
+                }
             }
         }
+    }
+    
+    func getPublishIndex(publishID:String, publishArray:Array<CTAPublishModel>) -> Int{
+        for i in 0..<publishArray.count{
+            let oldPublihModel = publishArray[i]
+            if oldPublihModel.publishID == publishID{
+                return i
+            }
+        }
+        return -1
     }
     
     func checkPublishModelIsHave(publishID:String, publishArray:Array<CTAPublishModel>) -> Bool{

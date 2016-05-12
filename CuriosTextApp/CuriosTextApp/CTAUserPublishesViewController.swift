@@ -483,6 +483,8 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                         }else {
                             isChange = true
                         }
+                    }else {
+                        isChange = true
                     }
                     if isChange{
                         self.publishModelArray.removeAll()

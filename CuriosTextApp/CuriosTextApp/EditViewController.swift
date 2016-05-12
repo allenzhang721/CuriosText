@@ -467,7 +467,7 @@ extension EditViewController {
             guard let strongSelf = self else {
                 return
             }
-            SVProgressHUD.showWithStatus(nil)
+            SVProgressHUD.showProgress(0, status: "\(Int(0 * 100.0))%")
             strongSelf.beganGeneratePublishIconAndPublishWith(cleanPage)
         }
         
@@ -488,29 +488,31 @@ extension EditViewController {
                 CTADocumentManager.saveDoucment {[weak self] (success) -> Void in
                     
                     if let strongSelf = self where success {
-                        
-                        CTADocumentManager.uploadFiles({ (success, publishID, publishURL) -> Void in
                             
-                            if !success {
-                                dispatch_async(dispatch_get_main_queue(), { 
-                                    SVProgressHUD.showErrorWithStatus(LocalStrings.PublishFailure.description)
-                                })
+                        CTADocumentManager.uploadFiles({ (publishID, progress) in
+                                SVProgressHUD.showProgress(progress, status: "\(Int(progress * 100.0))%")
+                            }, completedBlock: { (success, publishID, publishURL) in
+                                if !success {
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        SVProgressHUD.showErrorWithStatus(LocalStrings.PublishFailure.description)
+                                    })
+                                    
+                                    return
+                                }
                                 
-                                return
-                            }
-                            
-                            let publishIconURL = publishID + "/" + publishName
-                            
-                            CTAPublishDomain().createPublishFile(publishID, userID: CTAUserManager.user!.userID, title: "", publishDesc: "", publishIconURL: publishIconURL, previewIconURL: "", publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
+                                let publishIconURL = publishID + "/" + publishName
                                 
-                                dispatch_async(dispatch_get_main_queue(), {
-                                    SVProgressHUD.dismiss()
-                                    strongSelf.delegate?.EditControllerDidPublished(strongSelf)
-                                    strongSelf.dismissViewControllerAnimated(true, completion: {
-                                        
+                                CTAPublishDomain().createPublishFile(publishID, userID: CTAUserManager.user!.userID, title: "", publishDesc: "", publishIconURL: publishIconURL, previewIconURL: "", publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
+                                    
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        SVProgressHUD.dismiss()
+                                        strongSelf.delegate?.EditControllerDidPublished(strongSelf)
+                                        strongSelf.dismissViewControllerAnimated(true, completion: {
+                                            
+                                        })
                                     })
                                 })
-                            })
+
                         })
                     }
                 }
