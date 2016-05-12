@@ -16,6 +16,8 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     var userIconImage:UIImageView = UIImageView()
     var userNicknameLabel:UILabel = UILabel()
     var likeButton:UIButton = UIButton()
+    var moreButton:UIButton = UIButton()
+    var rebuildButton:UIButton = UIButton()
     
     var horSpace:CGFloat = 0.0;
     var verSpace:CGFloat = 0.0
@@ -135,6 +137,11 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         userButton.addTarget(self, action: #selector(CTAHomeViewController.userButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(userButton)
         self.initPublishSubView(self.handView.frame, horRate: self.getHorRate())
+        self.likeButton.addTarget(self, action: #selector(CTAHomeViewController.likeButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.moreButton.addTarget(self, action: #selector(CTAHomeViewController.moreButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.rebuildButton.addTarget(self, action: #selector(CTAHomeViewController.rebuildButtonClick(_:)), forControlEvents: .TouchUpInside)
+        let iconTap = UITapGestureRecognizer(target: self, action: #selector(CTAHomeViewController.userIconClick(_:)))
+        self.userIconImage.addGestureRecognizer(iconTap)
     }
     
     func setCellsPosition(){

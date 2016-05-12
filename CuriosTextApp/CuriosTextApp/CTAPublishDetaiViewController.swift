@@ -25,6 +25,8 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
     var userIconImage:UIImageView = UIImageView()
     var userNicknameLabel:UILabel = UILabel()
     var likeButton:UIButton = UIButton()
+    var moreButton:UIButton = UIButton()
+    var rebuildButton:UIButton = UIButton()
     
     var isLoading:Bool = false
     var isLoadingFirstData = false
@@ -108,6 +110,12 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         self.previousFullCell.transform = CGAffineTransformMakeScale(cellScale, cellScale)
         
         self.initPublishSubView(self.currentFullCell.frame, horRate: self.getHorRate())
+        self.likeButton.addTarget(self, action: #selector(CTAPublishDetailViewController.likeButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.moreButton.addTarget(self, action: #selector(CTAPublishDetailViewController.moreButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.rebuildButton.addTarget(self, action: #selector(CTAPublishDetailViewController.rebuildButtonClick(_:)), forControlEvents: .TouchUpInside)
+        let iconTap = UITapGestureRecognizer(target: self, action: #selector(CTAPublishDetailViewController.userIconClick(_:)))
+        self.userIconImage.addGestureRecognizer(iconTap)
+        
         let pan = UIPanGestureRecognizer(target: self, action: #selector(CTAPublishDetailViewController.viewPanHandler(_:)))
         self.view.addGestureRecognizer(pan)
         

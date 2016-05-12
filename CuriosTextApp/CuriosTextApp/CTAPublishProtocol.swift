@@ -12,6 +12,8 @@ import SVProgressHUD
 
 protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAAlertProtocol, CTAShareViewDelegate,CTAEditViewControllerDelegate, CTALoadingProtocol, CTAGIFProtocol{
     var likeButton:UIButton{get}
+    var moreButton:UIButton{get}
+    var rebuildButton:UIButton{get}
     var userIconImage:UIImageView{get}
     var userNicknameLabel:UILabel{get}
     var publishModel:CTAPublishModel?{get}
@@ -22,17 +24,9 @@ protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAAlertProtocol, CTASha
     func changeDetailUser()
     
     func likeHandler()
-    
     func setLikeButtonStyle()
-    func likeButtonClick(sender: UIButton)
-    
     func moreSelectionHandler(isSelf:Bool)
-    func moreButtonClick(sender: UIButton)
-    
     func rebuildHandler()
-    func rebuildButtonClick(sender: UIButton)
-    
-    func userIconClick(sender: UIPanGestureRecognizer)
 }
 
 extension CTAPublishProtocol where Self: UIViewController{
@@ -50,31 +44,26 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.likeButton.setImage(UIImage.init(named: "like-highlighted-button"), forState: .Highlighted)
         self.likeButton.setImage(UIImage.init(named: "like-disable-button"), forState: .Disabled)
         self.view.addSubview(self.likeButton)
-        self.likeButton.addTarget(self, action: "likeButtonClick:", forControlEvents: .TouchUpInside)
+
+        self.moreButton.frame = CGRect.init(x: 0, y: 0, width: 40, height: 40)
+        self.moreButton.setImage(UIImage.init(named: "moreSelection-button"), forState: .Normal)
+        self.moreButton.setImage(UIImage.init(named: "moreSelection-selected-button"), forState: .Highlighted)
+        self.moreButton.setImage(UIImage.init(named: "moreSelection-disable-button"), forState: .Disabled)
+        self.moreButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 + 100*horRate, y: butY)
+        self.view.addSubview(self.moreButton)
         
-        let moreButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
-        moreButton.setImage(UIImage.init(named: "moreSelection-button"), forState: .Normal)
-        moreButton.setImage(UIImage.init(named: "moreSelection-selected-button"), forState: .Highlighted)
-        moreButton.setImage(UIImage.init(named: "moreSelection-disable-button"), forState: .Disabled)
-        moreButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 + 100*horRate, y: butY)
-        self.view.addSubview(moreButton)
-        moreButton.addTarget(self, action: "moreButtonClick:", forControlEvents: .TouchUpInside)
-        
-        let rebuildButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
-        rebuildButton.setImage(UIImage.init(named: "rebuild-button"), forState: .Normal)
-        rebuildButton.setImage(UIImage.init(named: "rebuild-selected-button"), forState: .Highlighted)
-        rebuildButton.setImage(UIImage.init(named: "rebuild-disable-button"), forState: .Disabled)
-        rebuildButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 100*horRate, y: butY)
-        self.view.addSubview(rebuildButton)
-        rebuildButton.addTarget(self, action: "rebuildButtonClick:", forControlEvents: .TouchUpInside)
+        self.rebuildButton.frame = CGRect.init(x: 0, y: 0, width: 40, height: 40)
+        self.rebuildButton.setImage(UIImage.init(named: "rebuild-button"), forState: .Normal)
+        self.rebuildButton.setImage(UIImage.init(named: "rebuild-selected-button"), forState: .Highlighted)
+        self.rebuildButton.setImage(UIImage.init(named: "rebuild-disable-button"), forState: .Disabled)
+        self.rebuildButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 100*horRate, y: butY)
+        self.view.addSubview(self.rebuildButton)
         
         self.userIconImage.frame = CGRect.init(x: UIScreen.mainScreen().bounds.width/2, y: 9, width: 30*horRate, height: 30*horRate)
         self.userIconImage.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: 35+self.userIconImage.frame.height/2)
         self.cropImageCircle(self.userIconImage)
         self.view.addSubview(self.userIconImage)
         self.userIconImage.userInteractionEnabled = true
-        let iconTap = UITapGestureRecognizer(target: self, action: Selector("userIconClick:"))
-        self.userIconImage.addGestureRecognizer(iconTap)
         self.userIconImage.image = UIImage(named: "default-usericon")
         
         self.userNicknameLabel.frame = CGRect.init(x: 0, y: self.userIconImage.frame.origin.y + 45*horRate, width: 100, height: 25)
