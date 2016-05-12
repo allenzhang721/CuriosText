@@ -461,12 +461,13 @@ extension EditViewController {
             strongSelf.navigationController?.popViewControllerAnimated(true)
         }
         
+        
         publishViewController.publishWillBegan = { [weak self] in
             
             guard let strongSelf = self else {
                 return
             }
-            
+            SVProgressHUD.showWithStatus(nil)
             strongSelf.beganGeneratePublishIconAndPublishWith(cleanPage)
         }
         
@@ -503,6 +504,7 @@ extension EditViewController {
                             CTAPublishDomain().createPublishFile(publishID, userID: CTAUserManager.user!.userID, title: "", publishDesc: "", publishIconURL: publishIconURL, previewIconURL: "", publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
                                 
                                 dispatch_async(dispatch_get_main_queue(), {
+                                    SVProgressHUD.dismiss()
                                     strongSelf.delegate?.EditControllerDidPublished(strongSelf)
                                     strongSelf.dismissViewControllerAnimated(true, completion: {
                                         

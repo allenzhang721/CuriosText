@@ -121,7 +121,7 @@ extension CTAPublishViewController {
 extension CTAPublishViewController: CTALoadingProtocol {
     
     @IBAction func publishClick(sender: AnyObject) {
-        showLoadingViewByView(publishButton)
+//        showLoadingViewByView(publishButton)
         publish()
     }
     
