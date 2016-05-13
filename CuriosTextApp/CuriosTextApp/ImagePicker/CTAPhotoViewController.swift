@@ -43,8 +43,17 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhoto
         // scroll by scrollView
         var beganScrollPanPosition: CGPoint? = nil
 //        let triggerScrollPanPosition = CGPoint.zero
+        
+        var showAlbums = false
     }
     
+    @IBOutlet weak var cancelItem: UIBarButtonItem!
+    @IBOutlet weak var nextItem: UIBarButtonItem!
+    @IBOutlet weak var titleItem: UIBarButtonItem!
+    @IBOutlet weak var toolBar: UIToolbar!
+    
+    @IBOutlet weak var arrowImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UIButton!
     @IBOutlet weak var accessView: UIView!
     @IBOutlet weak var thumbCollectionView: UICollectionView!
     @IBOutlet weak var previewView: CTAPhotoPreviewView!
@@ -157,6 +166,30 @@ extension CTAPhotoViewController {
             }
         }
     }
+    
+    private func arrowFlipTo(up: Bool) {
+        if up {
+            UIView.animateWithDuration(0.2, animations: {
+                self.arrowImageView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
+            })
+            
+        } else {
+            UIView.animateWithDuration(0.2, animations: { 
+                self.arrowImageView.transform = CGAffineTransformIdentity
+            })
+            
+        }
+    }
+    
+    private func showBarItems(show: Bool) {
+        if show {
+            cancelItem.image = UIImage(named: "close-button")
+            nextItem.image = UIImage(named: "next-button")
+        } else {
+            cancelItem.image = nil
+            nextItem.image = nil
+        }
+    }
 }
 
 
@@ -176,21 +209,44 @@ extension CTAPhotoViewController {
         
         guard let vc = photolistViewController else { return }
         
-        vc.didSelectedHandler = {[weak self] assetsResult in
-            self?.changePhotoAlbum(assetsResult!)
-            dispatch_async(dispatch_get_main_queue(), { 
-                UIView.animateWithDuration(0.2) {
-                    vc.view.transform = CGAffineTransformMakeTranslation(0, self!.view.bounds.height - 44)
-                }
-                
-            })
+        
+        
+        if !inner.showAlbums {
+            inner.showAlbums = true
+            
+            vc.didSelectedHandler = {[weak self] (assetsResult, title) in
+                self?.inner.showAlbums = false
+                self?.arrowFlipTo(false)
+                self?.showBarItems(true)
+                self?.changePhotoAlbum(assetsResult!)
+                dispatch_async(dispatch_get_main_queue(), {
+                    self?.titleLabel.setTitle(title, forState: UIControlState.Normal)
+                    UIView.animateWithDuration(0.2) {
+                        vc.view.transform = CGAffineTransformMakeTranslation(0, self!.view.bounds.height - 44)
+                    }
+                    
+                })
+            }
+            arrowFlipTo(true)
+            showBarItems(false)
+            vc.view.transform = CGAffineTransformMakeTranslation(0, view.bounds.height - 44)
+            
+            UIView.animateWithDuration(0.3) {
+                vc.view.transform = CGAffineTransformIdentity
+            }
+        } else {
+            inner.showAlbums = false
+            arrowFlipTo(false)
+            showBarItems(true)
+            vc.didSelectedHandler = nil
+            UIView.animateWithDuration(0.2) {
+                vc.view.transform = CGAffineTransformMakeTranslation(0, self.view.bounds.height - 44)
+            }
         }
         
-        vc.view.transform = CGAffineTransformMakeTranslation(0, view.bounds.height - 44)
         
-        UIView.animateWithDuration(0.3) { 
-            vc.view.transform = CGAffineTransformIdentity
-        }
+        
+        
         
     }
     

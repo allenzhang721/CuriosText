@@ -17,7 +17,9 @@ class CTAPhotoAlbumListViewController: UIViewController {
     private var albumAssets = [PHFetchResult]()
     private let imageFetcher = PHCachingImageManager()
     
-    var didSelectedHandler: ((PHFetchResult?) -> ())?
+    let allPhotoTitle = NSLocalizedString("AllPhotos", comment: "")
+    
+    var didSelectedHandler: ((PHFetchResult?, String) -> ())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +86,7 @@ extension CTAPhotoAlbumListViewController: UITableViewDataSource {
         }
         
         if let titleLabel = cell.contentView.viewWithTag(2000) as? UILabel {
-                let t = indexPath.row == 0 ? "All Photos" : (albums?[indexPath.row - 1] as? PHAssetCollection)?.localizedTitle
+                let t = indexPath.row == 0 ? allPhotoTitle : (albums?[indexPath.row - 1] as? PHAssetCollection)?.localizedTitle
             titleLabel.text = t
             
         }
@@ -104,7 +106,8 @@ extension CTAPhotoAlbumListViewController: UITableViewDelegate {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         let assets = albumAssets[indexPath.item]
-        didSelectedHandler?(assets)
+        let t = indexPath.row == 0 ? allPhotoTitle : (albums?[indexPath.row - 1] as? PHAssetCollection)?.localizedTitle
+        didSelectedHandler?(assets, t!)
     }
 }
 

@@ -128,6 +128,7 @@
 // MARK: - Image Picker
 "Camera" = "相机";
 "Photo" = "相册";
+"AllPhotos" = "全部照片";
 
 // MARK: - Editor
 "EditTextPlaceHolder" = "双击编辑";

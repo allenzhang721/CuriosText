@@ -126,6 +126,7 @@
 // MARK: - Image Picker
 "Camera" = "Camera";
 "Photo" = "Photo";
+"AllPhotos" = "All Photos";
 
 // MARK: - Editor
 "EditTextPlaceHolder" = "Double Click to Edit";
