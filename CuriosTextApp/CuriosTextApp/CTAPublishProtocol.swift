@@ -16,11 +16,12 @@ protocol CTAPublishProtocol:CTAImageControllerProtocol, CTAAlertProtocol, CTASha
     var rebuildButton:UIButton{get}
     var userIconImage:UIImageView{get}
     var userNicknameLabel:UILabel{get}
+    var publishDateLabel:UILabel{get}
     var publishModel:CTAPublishModel?{get}
     var userModel:CTAUserModel?{get}
     var publishCell:CTAFullPublishesCell{get}
     func initPublishSubView(publishRect:CGRect, horRate:CGFloat)
-    func changeUserView(userModel:CTAUserModel)
+    func changePublishView(publishModel:CTAPublishModel)
     func changeDetailUser()
     
     func likeHandler(justLike:Bool)
@@ -39,7 +40,7 @@ extension CTAPublishProtocol where Self: UIViewController{
             butY = originy
         }
         self.likeButton.frame = CGRect.init(x: 0, y: 0, width: 40, height: 40)
-        self.likeButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2,y: butY)
+        self.likeButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 100*horRate,y: butY)
         self.likeButton.setImage(UIImage.init(named: "like-button"), forState: .Normal)
         self.likeButton.setImage(UIImage.init(named: "like-highlighted-button"), forState: .Highlighted)
         self.likeButton.setImage(UIImage.init(named: "like-disable-button"), forState: .Disabled)
@@ -56,7 +57,7 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.rebuildButton.setImage(UIImage.init(named: "rebuild-button"), forState: .Normal)
         self.rebuildButton.setImage(UIImage.init(named: "rebuild-selected-button"), forState: .Highlighted)
         self.rebuildButton.setImage(UIImage.init(named: "rebuild-disable-button"), forState: .Disabled)
-        self.rebuildButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 100*horRate, y: butY)
+        self.rebuildButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: butY)
         self.view.addSubview(self.rebuildButton)
         
         self.userIconImage.frame = CGRect.init(x: UIScreen.mainScreen().bounds.width/2, y: 9, width: 40*horRate, height: 40*horRate)
@@ -73,9 +74,19 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.userNicknameLabel.font = UIFont.systemFontOfSize(16)
         self.userNicknameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.userNicknameLabel)
+        
+        self.publishDateLabel.frame = CGRect(x: 0, y: 0, width: 100, height: 25)
+        self.publishDateLabel.font = UIFont.systemFontOfSize(12)
+        self.publishDateLabel.textColor = UIColor.init(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0)
+        self.publishDateLabel.text = "Yesterday"
+        self.publishDateLabel.sizeToFit()
+        self.publishDateLabel.frame.origin.y = publishRect.origin.y + publishRect.size.height + 10
+        self.publishDateLabel.frame.origin.x = publishRect.origin.x + publishRect.size.width - self.publishDateLabel.frame.size.width-10
+        self.view.addSubview(self.publishDateLabel)
     }
     
-    func changeUserView(userModel:CTAUserModel){
+    func changePublishView(publishModel:CTAPublishModel){
+        let userModel = publishModel.userModel
         self.userNicknameLabel.text = userModel.nickName
         self.userNicknameLabel.sizeToFit()
         let maxWidth = UIScreen.mainScreen().bounds.width - 100
@@ -90,6 +101,15 @@ extension CTAPublishProtocol where Self: UIViewController{
             }) { (_) in
         }
         
+        let publishDate = self.getPublishDate(publishModel.publishDate)
+        self.publishDateLabel.text = publishDate
+        self.publishDateLabel.sizeToFit()
+        self.publishDateLabel.frame.origin.x = UIScreen.mainScreen().bounds.width - self.publishDateLabel.frame.size.width-10
+        UIView.transitionWithView(self.userNicknameLabel, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
+            self.publishDateLabel.text = publishDate
+        }) { (_) in
+        }
+        
         UIView.transitionWithView(self.userIconImage, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
             let defaultImg = UIImage.init(named: "default-usericon")
             let imagePath = CTAFilePath.userFilePath+userModel.userIconURL
@@ -101,6 +121,41 @@ extension CTAPublishProtocol where Self: UIViewController{
             }
             }) { (_) in
         }
+    }
+    
+    func getPublishDate(publishDate:NSDate) ->String{
+        var time = publishDate.timeIntervalSinceNow
+        if time < 0{
+            time = 0-time
+        }
+        var dateString:String = ""
+        if time < 60{
+            dateString = NSLocalizedString("PublishDateJustNow", comment: "")
+        }else if time < 3600{
+            let mins = Int(time / 60)
+            dateString = String(mins)+NSLocalizedString("PublishDateMins", comment: "")
+        }else if time < 3600*2{
+            dateString = NSLocalizedString("PublishDateOneHour", comment: "")
+        }else if time < 86400{
+            let hours = Int(time / 3600)
+            dateString = String(hours)+NSLocalizedString("PublishDateHours", comment: "")
+        }else if time < 86400 * 2{
+            dateString = NSLocalizedString("PublishDateYesterDay", comment: "")
+        }else if time < 86400*30{
+            let days = Int(time / 86400)
+            dateString = String(days)+NSLocalizedString("PublishDateDays", comment: "")
+        }else if time < 86400*30*2{
+            dateString = NSLocalizedString("PublishDateOneMonth", comment: "")
+        }else if time < 86400*365{
+            let months = Int(time / (86400*30))
+            dateString = String(months)+NSLocalizedString("PublishDateMonths", comment: "")
+        }else if time < 86400*365*2{
+            dateString = NSLocalizedString("PublishDateOneYear", comment: "")
+        }else{
+            let years = Int(time / (86400*365))
+            dateString = String(years)+NSLocalizedString("PublishDateYears", comment: "")
+        }
+        return dateString
     }
     
     func changeDetailUser(){
@@ -259,6 +314,9 @@ extension CTAPublishProtocol{
                     req.message = message
                     req.scene = 0
                     WXApi.sendReq(req)
+                    let userID = self.userModel == nil ? "" : self.userModel!.userID
+                    CTAPublishDomain.getInstance().sharePublish(userID, publishID: self.publishModel!.publishID, sharePlatform: 0, compelecationBlock: { (_) -> Void in
+                    })
                 })
             }else {
                 self.publishCell.getEndImg({ (img) -> () in
@@ -371,6 +429,11 @@ extension CTAPublishProtocol{
                                 dispatch_async(dispatch_get_main_queue(), {
                                     vc.dismissViewControllerAnimated(true, completion: nil)
                                 })
+                                if let sl = self{
+                                    let userID = sl.userModel == nil ? "" : sl.userModel!.userID
+                                    CTAPublishDomain.getInstance().sharePublish(userID, publishID: sl.publishModel!.publishID, sharePlatform: 2, compelecationBlock: { (_) -> Void in
+                                    })
+                                }
                             } else {
                                 SVProgressHUD.showErrorWithStatus(NSLocalizedString("ShareErrorLabel", comment: ""))
                                 dispatch_async(dispatch_get_main_queue(), {

@@ -76,7 +76,10 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     }
     
     func reloadCell(){
-        self.cellImageView.hidden = false
+        self.bringSubviewToFront(self.cellImageView)
+        if self.cellColorView != nil {
+            self.bringSubviewToFront(self.cellColorView!)
+        }
         if publishModel != nil {
             self.imgLoaded = false
             let defaultImg = self.getDefaultIcon(self.bounds)
@@ -111,7 +114,10 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                 self.isLoadComplete = false
                 let purl = CTAFilePath.publishFilePath
                 let url = purl + publishModel!.publishURL
-                self.cellImageView.hidden = false
+                self.bringSubviewToFront(self.cellImageView)
+                if self.cellColorView != nil {
+                    self.bringSubviewToFront(self.cellColorView!)
+                }
                 BlackCatManager.sharedManager.retrieveDataWithURL(NSURL(string: url)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self](data, error, cacheType, URL) -> () in
                     if let strongSelf = self {
                         if let data = data,
@@ -154,7 +160,6 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
             guard let sf = self else {return}
             if sf.previewView == nil {
                 let previewView = AniPlayCanvasView(frame: CGRect(origin: CGPoint.zero, size: canvas.size))
-                previewView.hidden = true
                 let scale = min(sf.bounds.size.width / canvas.size.width, sf.bounds.size.height / canvas.size.height)
                 previewView.center = CGPoint(x: sf.bounds.midX, y: sf.bounds.midY)
                 previewView.transform = CGAffineTransformMakeScale(scale, scale)
@@ -163,6 +168,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                     self?.playComplete()
                 }
                 sf.addSubview(previewView)
+                sf.sendSubviewToBack(previewView)
                 sf.previewView = previewView
                 sf.cropImageRound(previewView)
                 sf.bringSubviewToFront(sf.cellImageView)
@@ -187,8 +193,10 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
         dispatch_async(dispatch_get_main_queue(), {[weak self] in
             guard let strongSelf = self else { return }
             strongSelf.isLoadComplete = true
-            strongSelf.previewView.hidden = false
-            strongSelf.cellImageView.hidden = true
+            strongSelf.bringSubviewToFront(strongSelf.previewView)
+            if strongSelf.cellColorView != nil {
+                strongSelf.bringSubviewToFront(strongSelf.cellColorView!)
+            }
             if strongSelf.loadCompeteHandler != nil {
                 strongSelf.loadCompeteHandler!()
                 strongSelf.loadCompeteHandler = nil

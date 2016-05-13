@@ -108,6 +108,17 @@
 "ShareSuccessLabel" = "分享成功";
 "ShareErrorLabel" = "分享失败";
 
+"PublishDateJustNow" = "刚刚";
+"PublishDateMins" = "分钟前";
+"PublishDateOneHour" = "1小时前";
+"PublishDateHours" = "小时前";
+"PublishDateYesterDay" = "昨天";
+"PublishDateDays" = "天前";
+"PublishDateOneMonth" = "1月前";
+"PublishDateMonths" = "月前";
+"PublishDateOneYear" = "1年前";
+"PublishDateYears" = "年前";
+
 // MARK: - Common
 "Cancel" = "取消";
 "Done" = "完成";

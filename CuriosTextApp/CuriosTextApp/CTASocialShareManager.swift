@@ -241,16 +241,23 @@ extension CTASocialOAuthable {
     static func reOAuthWeiboGetAccessToken (userID: String, completed: ((token: String?, weiboID: String?) -> ())?) {
         
         OAuth(.Weibo) { (OAuthInfo, _, _) in
-            guard let token = (OAuthInfo?["access_token"] ?? OAuthInfo?["accessToken"]) as? String, weiboID = (OAuthInfo?["uid"] ?? OAuthInfo?["userID"]) as? String, let expireDate = OAuthInfo?["expirationDate"] else {
+            guard let token = (OAuthInfo?["access_token"] ?? OAuthInfo?["accessToken"]) as? String, _ = (OAuthInfo?["uid"] ?? OAuthInfo?["userID"]) as? String, let _ = OAuthInfo?["expirationDate"] else {
                 completed?(token: nil, weiboID: nil)
                 return
             }
             
-            NSUserDefaults.standardUserDefaults().setValue(userID, forKey: userID + "userID")
-            NSUserDefaults.standardUserDefaults().setValue(token, forKey: userID + "token")
-            NSUserDefaults.standardUserDefaults().setValue(expireDate, forKey: userID + "expireDate")
+            saveToken(userID, OAuthInfo: OAuthInfo)
             completed?(token: token, weiboID: userID)
         }
+    }
+    
+    static func saveToken(userID:String, OAuthInfo: NSDictionary?){
+        guard let token = (OAuthInfo?["access_token"] ?? OAuthInfo?["accessToken"]) as? String, _ = (OAuthInfo?["uid"] ?? OAuthInfo?["userID"]) as? String, let expireDate = OAuthInfo?["expirationDate"] else {
+            return
+        }
+        NSUserDefaults.standardUserDefaults().setValue(userID, forKey: userID + "userID")
+        NSUserDefaults.standardUserDefaults().setValue(token, forKey: userID + "token")
+        NSUserDefaults.standardUserDefaults().setValue(expireDate, forKey: userID + "expireDate")
     }
 }
 
@@ -296,7 +303,7 @@ extension CTASocialOAuthable {
         // http://mp.weixin.qq.com/wiki/home/index.html
     }
     
-    private static func fetchWeiboUserInfo(OAuthInfo: [String: AnyObject]?, completionHandler: CTASocialManager.LoginCompletionHandler) {
+    private static func fetchWeiboUserInfo(OAuthInfo: NSDictionary?, completionHandler: CTASocialManager.LoginCompletionHandler) {
         
         // App or Web: token & userID
         guard let token = (OAuthInfo?["access_token"] ?? OAuthInfo?["accessToken"]) as? String, userID = (OAuthInfo?["uid"] ?? OAuthInfo?["userID"]) as? String else {
@@ -318,12 +325,12 @@ extension CTASocialOAuthable {
 
 protocol CTASocialLoginable {
     
-    func login(platform: CTASocialManager.CTASocialSharePlatformType, completionHandler: CTASocialManager.LoginCompletionHandler)
+    func login(platform: CTASocialManager.CTASocialSharePlatformType, OAuthInfo: NSDictionary?, completionHandler: CTASocialManager.LoginCompletionHandler)
 }
 
 extension CTASocialLoginable {
     
-    func login(platform: CTASocialManager.CTASocialSharePlatformType, OAuthInfo: [String: AnyObject],completionHandler: CTASocialManager.LoginCompletionHandler) {
+    func login(platform: CTASocialManager.CTASocialSharePlatformType, OAuthInfo: NSDictionary?,completionHandler: CTASocialManager.LoginCompletionHandler) {
         
         switch platform {
         case .WeChat:

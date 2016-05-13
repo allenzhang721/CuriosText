@@ -164,7 +164,7 @@ enum CTAParameterKey: CustomStringConvertible {
   case Data
   case UserID, NickName, UserDesc, UserIconURL, Sex, Email, Phone, AreaCode, Password, WeixinID, WeiboID, Country, Province, City, NewPassword
   case BeUserID, Start, Size, SharePlatform, List, ReportType, ReportMessage
-  case PublishID, Title, PublishDesc, PublishIconURL, PreviewIconURL, PublishURL
+  case PublishID, Title, PublishDesc, PublishIconURL, PreviewIconURL, PublishURL, PublishDate
   case RelationType, RelationUserID, FollowCount, BeFollowCount, PublishCount
   case PublishFilePath, UserFilePath, ResourceFilePath
   case UpToken, UpTokenKey
@@ -232,6 +232,8 @@ enum CTAParameterKey: CustomStringConvertible {
         return "previewIconURL"
     case .PublishURL:
         return "publishURL"
+    case .PublishDate:
+        return "publishDate"
     case .RelationType:
         return "relationType"
     case .RelationUserID:

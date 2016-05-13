@@ -27,6 +27,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
     var likeButton:UIButton = UIButton()
     var moreButton:UIButton = UIButton()
     var rebuildButton:UIButton = UIButton()
+    var publishDateLabel:UILabel = UILabel()
     
     var isLoading:Bool = false
     var isLoadingFirstData = false
@@ -223,7 +224,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         self.currentFullCell!.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2)
         self.currentFullCell!.alpha = 1.0
         if let publishModel = self.currentFullCell!.publishModel {
-            self.changeUserView(publishModel.userModel)
+            self.changePublishView(publishModel)
         }
         self.setLikeButtonStyle()
         self.currentFullCell!.playAnimation()

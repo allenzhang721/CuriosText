@@ -17,6 +17,7 @@ final class CTAPublishModel: CTABaseModel{
     let publishIconURL:String;
     let previewIconURL:String;
     let publishURL:String;
+    let publishDate:NSDate;
     let userModel:CTAUserModel;
     let relationType:Int;
     let shareCount:Int;
@@ -24,13 +25,25 @@ final class CTAPublishModel: CTABaseModel{
     let likeCount:Int;
     var likeStatus:Int = 0;
     
-    init(publishID:String, title:String, publishDesc:String, publishIconURL:String, previewIconURL:String, publishURL:String, userID:String, nickName:String, userDesc:String, userIconURL:String, sex:Int, relationType:Int, shareCount:Int, rebuildCount:Int, likeCount:Int, likeStatus:Int) {
+    init(publishID:String, title:String, publishDesc:String, publishIconURL:String, previewIconURL:String, publishURL:String, publishDate:String, userID:String, nickName:String, userDesc:String, userIconURL:String, sex:Int, relationType:Int, shareCount:Int, rebuildCount:Int, likeCount:Int, likeStatus:Int) {
         self.publishID      = publishID;
         self.title          = title;
         self.publishDesc    = publishDesc;
         self.publishIconURL = publishIconURL;
         self.previewIconURL = previewIconURL;
         self.publishURL     = publishURL;
+        if publishDate == ""{
+            self.publishDate = NSDate()
+        }else {
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+            if let date = formatter.dateFromString(publishDate){
+                self.publishDate = date
+            }else {
+                self.publishDate = NSDate()
+            }
+        }
+        
         self.userModel      = CTAUserModel.init(userID: userID, nickName: nickName, userDesc: userDesc, userIconURL: userIconURL, sex: sex)
         self.relationType   = relationType;
         self.shareCount     = shareCount;
@@ -47,6 +60,7 @@ final class CTAPublishModel: CTABaseModel{
         let publishIconURL:String = json[key(.PublishIconURL)].string ?? "";
         let previewIconURL:String = json[key(.PreviewIconURL)].string ?? "";
         let publishURL:String     = json[key(.PublishURL)].string ?? "";
+        let publishDate:String    = json[key(.PublishDate)].string ?? "";
         let userID:String         = json[key(.UserID)].string ?? "";
         let nickName:String       = json[key(.NickName)].string ?? "";
         let userDesc:String       = json[key(.UserDesc)].string ?? "";
@@ -58,7 +72,7 @@ final class CTAPublishModel: CTABaseModel{
         let likeCount:Int         = json[key(.LikeCount)].int ?? 0;
         let likeStatus:Int        = json[key(.LikeStatus)].int ?? 0;
         
-        return CTAPublishModel.init(publishID: publishID, title: title, publishDesc: publishDesc, publishIconURL: publishIconURL, previewIconURL: previewIconURL, publishURL: publishURL, userID: userID, nickName: nickName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, relationType: relationType, shareCount: shareCount, rebuildCount: rebuildCount, likeCount: likeCount, likeStatus: likeStatus)
+        return CTAPublishModel.init(publishID: publishID, title: title, publishDesc: publishDesc, publishIconURL: publishIconURL, previewIconURL: previewIconURL, publishURL: publishURL, publishDate: publishDate, userID: userID, nickName: nickName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, relationType: relationType, shareCount: shareCount, rebuildCount: rebuildCount, likeCount: likeCount, likeStatus: likeStatus)
     }
     
     func save() throws {

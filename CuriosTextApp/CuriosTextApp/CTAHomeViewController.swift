@@ -18,6 +18,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     var likeButton:UIButton = UIButton()
     var moreButton:UIButton = UIButton()
     var rebuildButton:UIButton = UIButton()
+    var publishDateLabel:UILabel = UILabel()
     
     var horSpace:CGFloat = 0.0;
     var verSpace:CGFloat = 0.0
@@ -145,6 +146,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.rebuildButton.addTarget(self, action: #selector(CTAHomeViewController.rebuildButtonClick(_:)), forControlEvents: .TouchUpInside)
         let iconTap = UITapGestureRecognizer(target: self, action: #selector(CTAHomeViewController.userIconClick(_:)))
         self.userIconImage.addGestureRecognizer(iconTap)
+        self.publishDateLabel.hidden = true
     }
     
     func setCellsPosition(){
@@ -423,7 +425,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.setCellsPosition()
         if self.currentPublishIndex < self.publishModelArray.count && self.currentPublishIndex > -1{
             let currentModel = self.publishModelArray[self.currentPublishIndex]
-            self.changeUserView(currentModel.userModel)
+            self.changePublishView(currentModel)
             self.currentFullCell.superview?.bringSubviewToFront(self.currentFullCell)
             self.currentFullCell.hidden = false
             if self.currentFullCell.publishModel != nil && self.currentFullCell.publishModel!.publishID == currentModel.publishID{

@@ -10,7 +10,7 @@ import UIKit
 import SwiftyJSON
 import SVProgressHUD
 
-class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProtocol, CTALoginProtocol, CTAAlertProtocol{
+class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProtocol, CTALoginProtocol, CTAAlertProtocol, CTASocialLoginable{
     
     static var _instance:CTALoginViewController?;
     
@@ -318,52 +318,57 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
     }
     
     func weiboButtonClick(sender: UIButton){
-        CTASocialManager.OAuth(.Weibo){ (resultDic, urlResponse, error) -> Void in
+        CTASocialManager.OAuth(.Weibo){ (OAuthInfo, urlResponse, error) -> Void in
             if error == nil {
-                if resultDic != nil {
-                    let weiboIDInt:Int = resultDic![key(.WeiBoUserID)] as! Int
-                    let weiboID = String(weiboIDInt)
-                    let userIconURL:String = resultDic![key(.Avatarhd)] as! String
-                    let nickName:String = resultDic![key(.WeiboName)] as! String
-                    let desc:String = resultDic![key(.WeiboDesc)] as! String
-                    let gender:String = resultDic![key(.Gender)] as! String
-                    var userSex:Int = 0
-                    if gender == "m"{
-                        userSex = 1
-                    }else if gender == "f"{
-                        userSex = 2
-                    }
-                    self.changeToLoadingView(self.otherAccountView)
-                    CTAUserDomain.getInstance().weiboRegister(weiboID, nickName: nickName, userDesc: desc, sex: userSex, compelecationBlock: { (info) in
-                        self.changeToUnloadingView(self.otherAccountView)
-                        if info.result{
-                            let userModel = info.baseModel as! CTAUserModel
-                            if info.successType == 0{
-                                let setNameView = CTASetUserNameViewController.getInstance()
-                                setNameView.userNameType = .registerWeibo
-                                setNameView.userModel = userModel
-                                setNameView.userIconPath = userIconURL
-                                self.navigationController?.pushViewController(setNameView, animated: true)
-                            }else if info.successType == 2{
-                                self.loginComplete(userModel)
+                if OAuthInfo != nil {
+                    self.login(.Weibo, OAuthInfo: OAuthInfo, completionHandler: { (resultDic, urlResponse, error) in
+                        if error == nil && resultDic != nil {
+                            let weiboIDInt:Int = resultDic![key(.WeiBoUserID)] as! Int
+                            let weiboID = String(weiboIDInt)
+                            let userIconURL:String = resultDic![key(.Avatarhd)] as! String
+                            let nickName:String = resultDic![key(.WeiboName)] as! String
+                            let desc:String = resultDic![key(.WeiboDesc)] as! String
+                            let gender:String = resultDic![key(.Gender)] as! String
+                            var userSex:Int = 0
+                            if gender == "m"{
+                                userSex = 1
+                            }else if gender == "f"{
+                                userSex = 2
                             }
-                        }else {
-                            if info.errorType is CTAInternetError {
-                                self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                })
-                            }else {
-                                let error = info.errorType as! CTAWeixinRegisterError
-                                if error == .WeixinIDIsEmpty {
-                                    self.showSingleAlert(NSLocalizedString("AlertTitleWeiboNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                    })
-                                }else if error == .DataIsEmpty{
-                                    self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                    })
+                            self.changeToLoadingView(self.otherAccountView)
+                            CTAUserDomain.getInstance().weiboRegister(weiboID, nickName: nickName, userDesc: desc, sex: userSex, compelecationBlock: { (info) in
+                                self.changeToUnloadingView(self.otherAccountView)
+                                if info.result{
+                                    let userModel = info.baseModel as! CTAUserModel
+                                    if info.successType == 0{
+                                        let setNameView = CTASetUserNameViewController.getInstance()
+                                        setNameView.userNameType = .registerWeibo
+                                        setNameView.userModel = userModel
+                                        setNameView.userIconPath = userIconURL
+                                        self.navigationController?.pushViewController(setNameView, animated: true)
+                                    }else if info.successType == 2{
+                                        self.loginComplete(userModel)
+                                    }
+                                    CTASocialManager.saveToken(userModel.userID, OAuthInfo: OAuthInfo)
                                 }else {
-                                    self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                    })
+                                    if info.errorType is CTAInternetError {
+                                        self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        })
+                                    }else {
+                                        let error = info.errorType as! CTAWeixinRegisterError
+                                        if error == .WeixinIDIsEmpty {
+                                            self.showSingleAlert(NSLocalizedString("AlertTitleWeiboNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                            })
+                                        }else if error == .DataIsEmpty{
+                                            self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                            })
+                                        }else {
+                                            self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                            })
+                                        }
+                                    }
                                 }
-                            }
+                            })
                         }
                     })
                 }
