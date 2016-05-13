@@ -903,7 +903,7 @@
 				2C3B33E81C1176D000738166 /* CuriosTextAppUITests */,
 				2C3B33C71C1176D000738166 /* Products */,
 				03F562127B9340BB0C7224EC /* Pods */,
-				2CB66A971CD86F6C006B9282 /* WechatSDK1.6.2 */,
+				2CB66A971CD86F6C006B9282 /* WechatSDK1.7 */,
 				2C1A12101CE014FD0071BD35 /* libWeiboSDK */,
 				2CC74C8C1C5A275C00B536C2 /* SMS_SDK */,
 				3971561C9A2A856DEC31B599 /* Frameworks */,
@@ -1164,7 +1164,7 @@
 			name = UserPublishes;
 			sourceTree = "<group>";
 		};
-		2CB66A971CD86F6C006B9282 /* WechatSDK1.6.2 */ = {
+		2CB66A971CD86F6C006B9282 /* WechatSDK1.7 */ = {
 			isa = PBXGroup;
 			children = (
 				2CB66A981CD86F6C006B9282 /* libWeChatSDK.a */,
@@ -1173,6 +1173,7 @@
 				2CB66A9B1CD86F6C006B9282 /* WXApi.h */,
 				2CB66A9C1CD86F6C006B9282 /* WXApiObject.h */,
 			);
+			name = WechatSDK1.7;
 			path = WechatSDK1.6.2;
 			sourceTree = "<group>";
 		};
@@ -1554,7 +1555,7 @@
 				TargetAttributes = {
 					2C3B33C51C1176D000738166 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = P36PRJCB4C;
+						DevelopmentTeam = H7HX4A2DL8;
 					};
 					2C3B33D91C1176D000738166 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -2197,7 +2198,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "16dca7ff-b14f-487c-916b-577ec6ebd60a";
+				PROVISIONING_PROFILE = "c5382dfa-5b86-4513-922e-ed753947577f";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/CuriosTextApp/CuriosTextApp-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -2208,7 +2209,7 @@
 			baseConfigurationReference = FEA1095AC8443011149CF7A8 /* Pods-CuriosTextApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Curios Technology Co., Ltd. (H7HX4A2DL8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing Curios Technology Co., Ltd. (H7HX4A2DL8)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2226,7 +2227,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "16dca7ff-b14f-487c-916b-577ec6ebd60a";
+				PROVISIONING_PROFILE = "c5382dfa-5b86-4513-922e-ed753947577f";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/CuriosTextApp/CuriosTextApp-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
