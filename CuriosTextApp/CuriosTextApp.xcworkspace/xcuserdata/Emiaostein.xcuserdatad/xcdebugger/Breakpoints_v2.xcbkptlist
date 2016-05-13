@@ -33,6 +33,38 @@
             endingLineNumber = "413"
             landmarkName = "showModifyViewControllerWith(_:atIndexPath:)"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CuriosTextApp.EditViewController.showModifyViewControllerWith (CuriosTextApp.ContainerVMProtocol, atIndexPath : __ObjC.NSIndexPath) -&gt; ()"
+                  moduleName = "CuriosTextApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/EditViewController.swift"
+                  timestampString = "484818168.383775"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "414"
+                  endingLineNumber = "414"
+                  offsetFromSymbolStart = "2160">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CuriosTextApp.EditViewController.(showModifyViewControllerWith (CuriosTextApp.ContainerVMProtocol, atIndexPath : __ObjC.NSIndexPath) -&gt; ()).(closure #3)"
+                  moduleName = "CuriosTextApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/EditViewController.swift"
+                  timestampString = "484818168.384267"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "414"
+                  endingLineNumber = "414"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -298,12 +330,12 @@
                   moduleName = "CuriosTextApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTAPublishProtocol.swift"
-                  timestampString = "484802974.654568"
+                  timestampString = "484818168.403763"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "337"
                   endingLineNumber = "337"
-                  offsetFromSymbolStart = "977">
+                  offsetFromSymbolStart = "836">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -313,12 +345,12 @@
                   moduleName = "CuriosTextApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTAPublishProtocol.swift"
-                  timestampString = "484802974.654726"
+                  timestampString = "484818168.404087"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "337"
                   endingLineNumber = "337"
-                  offsetFromSymbolStart = "89">
+                  offsetFromSymbolStart = "92">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -346,12 +378,12 @@
                   moduleName = "CuriosTextApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTAPublishProtocol.swift"
-                  timestampString = "484802974.655574"
+                  timestampString = "484818168.405322"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "359"
                   endingLineNumber = "359"
-                  offsetFromSymbolStart = "644">
+                  offsetFromSymbolStart = "492">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -361,12 +393,12 @@
                   moduleName = "CuriosTextApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/CTAPublishProtocol.swift"
-                  timestampString = "484802974.65571"
+                  timestampString = "484818168.405481"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "361"
                   endingLineNumber = "361"
-                  offsetFromSymbolStart = "68">
+                  offsetFromSymbolStart = "56">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -385,54 +417,6 @@
             endingLineNumber = "362"
             landmarkName = "shareWeiboWithToken(_:)"
             landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CuriosTextApp/ImagePicker/CTACameraViewController.swift"
-            timestampString = "484741993.122455"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "201"
-            endingLineNumber = "201"
-            landmarkName = "changeCamera(_:)"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CuriosTextApp.CTACameraViewController.(changeCamera in _E0D088A24A99FA065AF75AD110F40A35) (Swift.Bool) -&gt; ()"
-                  moduleName = "CuriosTextApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/ImagePicker/CTACameraViewController.swift"
-                  timestampString = "484802974.657174"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "203"
-                  endingLineNumber = "203"
-                  offsetFromSymbolStart = "1903">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CuriosTextApp.CTACameraViewController.((changeCamera in _E0D088A24A99FA065AF75AD110F40A35) (Swift.Bool) -&gt; ()).(closure #2)"
-                  moduleName = "CuriosTextApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/ImagePicker/CTACameraViewController.swift"
-                  timestampString = "484802974.657316"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "203"
-                  endingLineNumber = "203"
-                  offsetFromSymbolStart = "31">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

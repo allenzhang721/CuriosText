@@ -29,6 +29,8 @@
 		2C0C14EA1C60D9640011A31D /* CTASetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0C14E81C60D9640011A31D /* CTASetPasswordViewController.swift */; };
 		2C10F7981C77540F00CCE34A /* CTAMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C10F7971C77540F00CCE34A /* CTAMainViewController.swift */; };
 		2C1312361C59966C00346804 /* CTAUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1312351C59966C00346804 /* CTAUserManager.swift */; };
+		2C160D5E1CE58C36005B67F8 /* CTAPhotoAlbumListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C160D5D1CE58C36005B67F8 /* CTAPhotoAlbumListViewController.swift */; };
+		2C160D601CE58C54005B67F8 /* PhotoAlbumList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C160D5F1CE58C54005B67F8 /* PhotoAlbumList.storyboard */; };
 		2C1A121E1CE014FD0071BD35 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C1A12111CE014FD0071BD35 /* libWeiboSDK.a */; };
 		2C1A121F1CE014FD0071BD35 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2C1A121B1CE014FD0071BD35 /* WeiboSDK.bundle */; };
 		2C1B2AAC1C3520160053BE5E /* CTASelectorsReuseableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B2AAB1C3520160053BE5E /* CTASelectorsReuseableView.swift */; };
@@ -358,6 +360,8 @@
 		2C0C14E81C60D9640011A31D /* CTASetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASetPasswordViewController.swift; sourceTree = "<group>"; };
 		2C10F7971C77540F00CCE34A /* CTAMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAMainViewController.swift; sourceTree = "<group>"; };
 		2C1312351C59966C00346804 /* CTAUserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUserManager.swift; sourceTree = "<group>"; };
+		2C160D5D1CE58C36005B67F8 /* CTAPhotoAlbumListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPhotoAlbumListViewController.swift; sourceTree = "<group>"; };
+		2C160D5F1CE58C54005B67F8 /* PhotoAlbumList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PhotoAlbumList.storyboard; sourceTree = "<group>"; };
 		2C1A12111CE014FD0071BD35 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
 		2C1A12121CE014FD0071BD35 /* WBHttpRequest+WeiboGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboGame.h"; sourceTree = "<group>"; };
 		2C1A12131CE014FD0071BD35 /* WBHttpRequest+WeiboShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboShare.h"; sourceTree = "<group>"; };
@@ -1420,12 +1424,14 @@
 				2CE063D71C857D2F001F7F4E /* CTAPhotoPreviewView.swift */,
 				2CE063D81C857D2F001F7F4E /* CTAPhotoThumbnailCollectionViewCell.swift */,
 				2CE063D91C857D2F001F7F4E /* CTAPhotoViewController.swift */,
+				2C160D5D1CE58C36005B67F8 /* CTAPhotoAlbumListViewController.swift */,
 				2CE063DB1C857D2F001F7F4E /* ImagePickerViewController.swift */,
 				2CE063DC1C857D2F001F7F4E /* ImageViewController.swift */,
 				2CE063DE1C857D2F001F7F4E /* PhotoAccessManager.swift */,
 				2C610A341C902BCA00DFE315 /* ImagePicker.storyboard */,
 				2C610A3B1C902BF100DFE315 /* Camera.storyboard */,
 				2C610A421C902C0B00DFE315 /* Photo.storyboard */,
+				2C160D5F1CE58C54005B67F8 /* PhotoAlbumList.storyboard */,
 				2CE063DA1C857D2F001F7F4E /* ImageCrop.storyboard */,
 			);
 			name = ImagePickerModule;
@@ -1608,6 +1614,7 @@
 				2CE063ED1C857D2F001F7F4E /* ImageCrop.storyboard in Resources */,
 				2C3CAD2C1C21828200D8DE4B /* 2.jpg in Resources */,
 				2C65B6681C4F514D007B4DEA /* Preview.storyboard in Resources */,
+				2C160D601CE58C54005B67F8 /* PhotoAlbumList.storyboard in Resources */,
 				2C3AE3F11C59F5E3004D62B4 /* CTASocial.storyboard in Resources */,
 				2C042B761CE3248E00C13FED /* Heart.storyboard in Resources */,
 				2CC74C921C5A275C00B536C2 /* SMS_SDKLocalizable.strings in Resources */,
@@ -1695,6 +1702,7 @@
 				2CFC65901C5630C700E8ADE7 /* CTAUserDetailProtocol.swift in Sources */,
 				2CAEAC9E1C323F4300C9F9AC /* ContainerTextView.swift in Sources */,
 				2CC811601C79A6D5003CE8BF /* BlackCatManager.swift in Sources */,
+				2C160D5E1CE58C36005B67F8 /* CTAPhotoAlbumListViewController.swift in Sources */,
 				2C1B2AAC1C3520160053BE5E /* CTASelectorsReuseableView.swift in Sources */,
 				2C5C248C1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift in Sources */,
 				2CC5744B1C89D3F70083DFFF /* CTAPublishCacheProtocol.swift in Sources */,
@@ -2198,7 +2206,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c5382dfa-5b86-4513-922e-ed753947577f";
+				PROVISIONING_PROFILE = "16dca7ff-b14f-487c-916b-577ec6ebd60a";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/CuriosTextApp/CuriosTextApp-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -2210,7 +2218,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing Curios Technology Co., Ltd. (H7HX4A2DL8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: YONGQUAN Zhang (2MBKC2MCEG)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -2227,7 +2235,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c5382dfa-5b86-4513-922e-ed753947577f";
+				PROVISIONING_PROFILE = "16dca7ff-b14f-487c-916b-577ec6ebd60a";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/CuriosTextApp/CuriosTextApp-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

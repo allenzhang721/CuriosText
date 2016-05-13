@@ -50,6 +50,8 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhoto
     @IBOutlet weak var previewView: CTAPhotoPreviewView!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     
+    var photolistViewController: CTAPhotoAlbumListViewController?
+    
     var templateImage: UIImage?
     
     weak var pickerDelegate: CTAPhotoPickerProtocol?
@@ -100,6 +102,12 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhoto
     deinit {
         resetCacheSets()
     }
+    
+    func changePhotoAlbum(fetchResult: PHFetchResult) {
+        inner.assetFetchResults = fetchResult
+        thumbCollectionView.reloadData()
+        fetchPreviewPhoto()
+    }
 }
 
 // MARK: - Setup
@@ -107,14 +115,35 @@ extension CTAPhotoViewController {
     
     private func setup() {
         
-//        previewView.templateImage = templateImage
-        
-        setupDelegateAndDataSource()
-        setupFetchPhotos()
-        
         let tap = UITapGestureRecognizer(target: self, action: #selector(CTAPhotoViewController.tap(_:)))
         previewView.addGestureRecognizer(tap)
         
+        setupDelegateAndDataSource()
+        fetchAllPhotos()
+        fetchPreviewPhoto()
+    }
+    
+    private func setupDelegateAndDataSource() {
+        thumbCollectionView.delegate = self
+        thumbCollectionView.dataSource = self
+        thumbCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
+    }
+    
+    private func fetchAllPhotos() { // fetch Photo Assets
+        // 1. fetch options
+        let allPhotos = PHFetchOptions()
+        let dateSortDescritor = NSSortDescriptor(key: "modificationDate", ascending: false)
+        allPhotos.sortDescriptors = [dateSortDescritor]
+        
+        // 2. fetch result and collection
+         let result = PHAsset.fetchAssetsWithOptions(allPhotos)
+        guard result.count > 0 else {return}
+        let collection = result[0] as? PHAssetCollection
+        inner.assetFetchResults = result
+        inner.assetCollection = collection
+    }
+    
+    private func fetchPreviewPhoto() {
         if let assetFetchResults = inner.assetFetchResults where assetFetchResults.count > 0, let asset = assetFetchResults[0] as? PHAsset {
             
             thumbCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
@@ -128,31 +157,42 @@ extension CTAPhotoViewController {
             }
         }
     }
-    
-    private func setupDelegateAndDataSource() {
-        thumbCollectionView.delegate = self
-        thumbCollectionView.dataSource = self
-        thumbCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
-    }
-    
-    private func setupFetchPhotos() { // fetch Photo Assets
-        // 1. fetch options
-        let allPhotos = PHFetchOptions()
-        let dateSortDescritor = NSSortDescriptor(key: "modificationDate", ascending: false)
-        allPhotos.sortDescriptors = [dateSortDescritor]
-        
-        // 2. fetch result and collection
-         let result = PHAsset.fetchAssetsWithOptions(allPhotos)
-        guard result.count > 0 else {return}
-        let collection = result[0] as? PHAssetCollection
-        inner.assetFetchResults = result
-        inner.assetCollection = collection
-    }
 }
 
 
 // MARK: - Action
 extension CTAPhotoViewController {
+    @IBAction func changeAlbumClick(sender: AnyObject) {
+        
+        if photolistViewController == nil {
+            let vc = UIStoryboard(name: "PhotoAlbumList", bundle: nil).instantiateInitialViewController() as! CTAPhotoAlbumListViewController
+            vc.view.frame = CGRect(x: 0, y: 44, width: view.bounds.width, height: view.bounds.height - 44)
+            
+            addChildViewController(vc)
+            view.addSubview(vc.view)
+            
+            photolistViewController = vc
+        }
+        
+        guard let vc = photolistViewController else { return }
+        
+        vc.didSelectedHandler = {[weak self] assetsResult in
+            self?.changePhotoAlbum(assetsResult!)
+            dispatch_async(dispatch_get_main_queue(), { 
+                UIView.animateWithDuration(0.2) {
+                    vc.view.transform = CGAffineTransformMakeTranslation(0, self!.view.bounds.height - 44)
+                }
+                
+            })
+        }
+        
+        vc.view.transform = CGAffineTransformMakeTranslation(0, view.bounds.height - 44)
+        
+        UIView.animateWithDuration(0.3) { 
+            vc.view.transform = CGAffineTransformIdentity
+        }
+        
+    }
     
     @IBAction func accessClick(sender: AnyObject) {
         UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)

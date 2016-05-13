@@ -72,6 +72,12 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="8IV-1l-2tv"/>
+                                    <barButtonItem title="Photos" id="HsV-7R-TG9">
+                                        <connections>
+                                            <action selector="changeAlbumClick:" destination="cMe-yS-ZkE" id="pVM-qW-C30"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="O8l-d8-MVi"/>
                                     <barButtonItem image="next-button" width="5" id="qJs-Tb-L3B">
                                         <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>

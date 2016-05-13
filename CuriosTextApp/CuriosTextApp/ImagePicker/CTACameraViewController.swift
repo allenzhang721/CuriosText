@@ -141,21 +141,21 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
             
             switch type {
             case .Off:
-                device.torchMode = .Off
+//                device.torchMode = .Off
                 device.flashMode = .Off
                 dispatch_async(dispatch_get_main_queue(), { 
                     self.flashButton.setImage(UIImage(named: "icon_flashOff"), forState: .Normal)
                 })
                 
             case .On:
-                device.torchMode = .On
+//                device.torchMode = .On
                 device.flashMode = .On
                 dispatch_async(dispatch_get_main_queue(), { 
                     self.flashButton.setImage(UIImage(named: "icon_flashOn"), forState: .Normal)
                 })
                 
             case .Auto:
-                device.torchMode = .Auto
+//                device.torchMode = .Auto
                 device.flashMode = .Auto
                 dispatch_async(dispatch_get_main_queue(), { 
                     self.flashButton.setImage(UIImage(named: "icon_flashAuto"), forState: .Normal)  
