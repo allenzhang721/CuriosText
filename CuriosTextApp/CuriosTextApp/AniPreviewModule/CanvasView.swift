@@ -80,6 +80,9 @@ extension CanvasView {
     func removeAllAnimations() {
         let cells = collectionView.visibleCells() as! [ContainerCell]
         for c in cells {
+            c.layer.removeAllAnimations()
+            c.layer.mask?.removeAllAnimations()
+            c.layer.mask = nil
             c.removeAllAnimations()
         }
     }
