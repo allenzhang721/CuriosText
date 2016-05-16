@@ -201,8 +201,8 @@ extension CTAPhotoViewController {
             let vc = UIStoryboard(name: "PhotoAlbumList", bundle: nil).instantiateInitialViewController() as! CTAPhotoAlbumListViewController
             vc.view.frame = CGRect(x: 0, y: 44, width: view.bounds.width, height: view.bounds.height - 44)
             
-            addChildViewController(vc)
-            view.addSubview(vc.view)
+            tabBarController!.addChildViewController(vc)
+            tabBarController?.view.addSubview(vc.view)
             
             photolistViewController = vc
         }
@@ -527,10 +527,10 @@ extension CTAPhotoViewController: UICollectionViewDataSource {
         
         if cell.selectedBackgroundView == nil {
             let v = UIView(frame: cell.bounds)
-            v.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.8)
+            v.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
             cell.selectedBackgroundView = v
-            v.layer.borderWidth = 1.5
-            v.layer.borderColor = UIColor.yellowColor().CGColor
+//            v.layer.borderWidth = 1.5
+//            v.layer.borderColor = UIColor.yellowColor().CGColor
             cell.bringSubviewToFront(cell.selectedBackgroundView!)
         }
         
