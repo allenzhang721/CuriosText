@@ -413,7 +413,7 @@ extension EditViewController {
             
             cameraVC.didSelectedImageHandler = {[weak self] image in
                 if let strongSelf = self {
-                    dispatch_async(dispatch_get_main_queue(), {
+//                    dispatch_async(dispatch_get_main_queue(), {
                         let canvasSize = strongSelf.canvasViewController.view.bounds.size
                         (container as! ImageContainerVMProtocol).updateWithImageSize(image!.size, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
                         
@@ -422,8 +422,9 @@ extension EditViewController {
                         
                         strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
                         
-                        strongSelf.dismissViewControllerAnimated(false, completion: nil)
-                    })
+                        
+//                    })
+                    strongSelf.dismissViewControllerAnimated(false, completion: nil)
                 }
             }
             
