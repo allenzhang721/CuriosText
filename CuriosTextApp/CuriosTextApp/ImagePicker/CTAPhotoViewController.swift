@@ -183,10 +183,10 @@ extension CTAPhotoViewController {
     
     private func showBarItems(show: Bool) {
         if show {
-            cancelItem.image = UIImage(named: "close-button")
+//            cancelItem.image = UIImage(named: "close-button")
             nextItem.image = UIImage(named: "next-button")
         } else {
-            cancelItem.image = nil
+//            cancelItem.image = nil
             nextItem.image = nil
         }
     }
@@ -195,7 +195,7 @@ extension CTAPhotoViewController {
 
 // MARK: - Action
 extension CTAPhotoViewController {
-    @IBAction func changeAlbumClick(sender: AnyObject) {
+    @IBAction func changeAlbumClick(sender: AnyObject?) {
         
         if photolistViewController == nil {
             let vc = UIStoryboard(name: "PhotoAlbumList", bundle: nil).instantiateInitialViewController() as! CTAPhotoAlbumListViewController
@@ -286,7 +286,12 @@ extension CTAPhotoViewController {
     
     @IBAction func dismiss(sender: AnyObject?) {
         
-        dismissViewControllerAnimated(true, completion: nil)
+        if inner.showAlbums {
+            changeAlbumClick(nil)
+        } else {
+            dismissViewControllerAnimated(true, completion: nil)
+        }
+        
     }
     
     @IBAction func confirm(sender: AnyObject) {

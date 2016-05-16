@@ -59,7 +59,7 @@
                                                 <constraint firstItem="UZL-ED-sZa" firstAttribute="top" secondItem="4hf-zW-cMP" secondAttribute="bottom" constant="8" id="xtH-gY-8si"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

@@ -421,6 +421,8 @@ extension EditViewController {
                         
                         
                         strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
+                        
+                        strongSelf.dismissViewControllerAnimated(false, completion: nil)
                     })
                 }
             }
