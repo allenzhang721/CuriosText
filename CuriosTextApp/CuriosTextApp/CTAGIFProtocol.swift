@@ -11,12 +11,12 @@ import Kingfisher
 
 protocol CTAGIFProtocol {
     
-    func exportGIF(publishID: String, page: CTAPage, viewController: UIViewController, completedHandler:((fileURL: NSURL, thumbImg: UIImage) -> ())?)
+    func exportGIF(publishID: String, page: CTAPage, gifType:CTAGIFCreateType, viewController: UIViewController, completedHandler:((fileURL: NSURL, thumbImg: UIImage) -> ())?)
 }
 
 extension CTAGIFProtocol {
     
-    func exportGIF(publishID: String, page: CTAPage, viewController: UIViewController, completedHandler:((fileURL: NSURL, thumbImg: UIImage) -> ())?) {
+    func exportGIF(publishID: String, page: CTAPage, gifType:CTAGIFCreateType, viewController: UIViewController, completedHandler:((fileURL: NSURL, thumbImg: UIImage) -> ())?) {
         
         let fakeView = UIScreen.mainScreen().snapshotViewAfterScreenUpdates(true)
         
@@ -48,7 +48,7 @@ extension CTAGIFProtocol {
                         let gifCreatorVC = GIFCreateViewController()
                         gifCreatorVC.canvas = canvas
                         gifCreatorVC.publishID = publishID
-                        
+                        gifCreatorVC.gifType = gifType
                         gifCreatorVC.progressBlock = {(progress, next) in
                             
                             debug_print(progress)

@@ -9,8 +9,13 @@
 import UIKit
 import SVProgressHUD
 
+enum CTAGIFCreateType: String {
+    case Small, Normal, Big
+}
+
 class GIFCreateViewController: UIViewController {
     
+    var gifType:CTAGIFCreateType = .Normal
     var fakeView: UIView?
     var publishID: String!
     var canvas: AniCanvas!
@@ -113,9 +118,17 @@ class GIFCreateViewController: UIViewController {
             autoreleasepool {
             let progress = CGFloat(i) / CGFloat(count)
             aniCanvasView.progress =  progress < 1.0 ? progress : 1.0
-            
-                UIGraphicsBeginImageContext(CGSize(width: 320, height: 320))
-                aniCanvasView.drawViewHierarchyInRect(CGRect(origin: CGPoint.zero, size: CGSize(width: 320, height: 320)), afterScreenUpdates: true)
+                var gifSize:CGSize = CGSize(width: 320, height: 320)
+                switch self.gifType{
+                case .Small:
+                    gifSize = CGSize(width: 160, height: 160)
+                case .Normal:
+                    gifSize = CGSize(width: 320, height: 320)
+                case .Big:
+                    gifSize = CGSize(width: 640, height: 640)
+                }
+                UIGraphicsBeginImageContext(gifSize)
+                aniCanvasView.drawViewHierarchyInRect(CGRect(origin: CGPoint.zero, size: gifSize), afterScreenUpdates: true)
                 let image = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
                 

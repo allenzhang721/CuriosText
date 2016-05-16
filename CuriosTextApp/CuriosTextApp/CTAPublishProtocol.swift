@@ -300,7 +300,7 @@ extension CTAPublishProtocol{
         if CTASocialManager.isAppInstaller(.WeChat){
             if let page = publishCell.getPage(){
                 let publishID = self.publishModel!.publishID
-                self.exportGIF(publishID, page: page, viewController: self as! UIViewController, completedHandler: { (fileURL, thumbImg) in
+                self.exportGIF(publishID, page: page, gifType: .Normal, viewController: self as! UIViewController, completedHandler: { (fileURL, thumbImg) in
                     let message =  WXMediaMessage()
                     message.setThumbImage(thumbImg)
                     
@@ -408,7 +408,7 @@ extension CTAPublishProtocol{
         if CTASocialManager.isAppInstaller(.Weibo){
             if let page = self.publishCell.getPage(){
                 let publishID = self.publishModel!.publishID
-                self.exportGIF(publishID, page: page, viewController: self as! UIViewController, completedHandler: { [weak self] (fileURL, thumbImg) in
+                self.exportGIF(publishID, page: page, gifType: .Normal, viewController: self as! UIViewController, completedHandler: { [weak self] (fileURL, thumbImg) in
                     
                     guard let sf = self, let vc = sf as? UIViewController else {return}
                     
@@ -517,7 +517,7 @@ extension CTAPublishProtocol{
     func uploadResourceHandler(){
         let publishID = self.publishModel!.publishID
         if let page = publishCell.getPage(){
-            self.exportGIF(publishID, page: page, viewController: self as! UIViewController, completedHandler: { (fileURL, thumbImg) in
+            self.exportGIF(publishID, page: page, gifType: .Big, viewController: self as! UIViewController, completedHandler: { (fileURL, thumbImg) in
                 let imageName = CTAIDGenerator.fileID()
                 let publishResouceKey = publishID+"/"+imageName+".gif"
                 let uptoken = CTAUpTokenModel.init(upTokenKey: publishResouceKey)
