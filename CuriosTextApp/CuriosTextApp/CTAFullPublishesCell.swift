@@ -135,13 +135,17 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                                             let imageURL = url.URLByAppendingPathComponent(imageName)
                                             KingfisherManager.sharedManager.retrieveImageWithURL(imageURL, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self] (image, error, cacheType, imageURL) in
                                                 guard let sf = self else { return }
-                                                let retriver = { (name: String,  handler: (String, UIImage?) -> ()) in
+                                                if error != nil {
+                                                    sf.readyFailed()
+                                                }else {
+                                                    let retriver = { (name: String,  handler: (String, UIImage?) -> ()) in
                                                         handler(name, image)
+                                                    }
+                                                    c.imageRetriver = retriver
+                                                    sf.readyPreView(acanvas, publishModel: publishModel, completed: sf.readyCompleted)
                                                 }
-                                                c.imageRetriver = retriver
-                                                sf.readyPreView(acanvas, publishModel: publishModel, completed: sf.readyCompleted)
+                                                
                                             })
-                                            
                                             break
                                         }
                                     }
@@ -200,6 +204,17 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
             if strongSelf.loadCompeteHandler != nil {
                 strongSelf.loadCompeteHandler!()
                 strongSelf.loadCompeteHandler = nil
+            }
+        })
+    }
+    
+    func readyFailed() -> (){
+        dispatch_async(dispatch_get_main_queue(), {[weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.isLoadComplete = false
+            strongSelf.bringSubviewToFront(strongSelf.cellImageView)
+            if strongSelf.cellColorView != nil {
+                strongSelf.bringSubviewToFront(strongSelf.cellColorView!)
             }
         })
     }
