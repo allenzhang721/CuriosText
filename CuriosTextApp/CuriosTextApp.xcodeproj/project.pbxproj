@@ -1068,7 +1068,7 @@
 			name = GIFModule;
 			sourceTree = "<group>";
 		};
-		2C5C24991C44FA8B00A70F1B /* Mangers_model */ = {
+		2C5C24991C44FA8B00A70F1B /* Mangers */ = {
 			isa = PBXGroup;
 			children = (
 				2CA860BF1C8FC157000BCF8A /* LocalizationManager.swift */,
@@ -1079,7 +1079,7 @@
 				2C1B88951C5F35B9000403FD /* CTAEncryptManager.swift */,
 				2CED15AF1C5F6F990086976E /* CTADocumentManager.swift */,
 			);
-			name = Mangers_model;
+			name = Mangers;
 			sourceTree = "<group>";
 		};
 		2C6C67FD1C35082C00CCE81C /* CTAUIKit_view */ = {
@@ -1112,7 +1112,7 @@
 				2CC811561C79A6D5003CE8BF /* BlackCat */,
 				2C1B88941C5F357E000403FD /* AES256 */,
 				2C6C67FD1C35082C00CCE81C /* CTAUIKit_view */,
-				2C5C24991C44FA8B00A70F1B /* Mangers_model */,
+				2C5C24991C44FA8B00A70F1B /* Mangers */,
 				2C3CAD071C21825100D8DE4B /* Document_model */,
 				2C3CAD101C21825900D8DE4B /* Page_model */,
 				2C31EB5F1C451AD9002A4D71 /* Extensions */,

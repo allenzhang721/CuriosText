@@ -38,8 +38,8 @@ class CTAConfigSliderCell: CTAConfigCell {
     func setup() {
         
         slider = CTASliderView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)), attribute: CTASliderAttributes(showMinorLine: false, seniorRatio: 0.7))
-        slider.addTarget(self, action: "sliderValueChanged:", forControlEvents: .ValueChanged)
-        slider.maxiumValue = 5
+        slider.addTarget(self, action: #selector(CTAConfigSliderCell.sliderValueChanged(_:)), forControlEvents: .ValueChanged)
+        slider.maxiumValue = 3
         slider.minumValue = 0
         
         contentView.addSubview(slider)
