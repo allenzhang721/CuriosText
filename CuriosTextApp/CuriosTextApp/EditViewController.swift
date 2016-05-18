@@ -310,7 +310,28 @@ extension EditViewController {
         case .Changed:
             let beganPosition = tempValues.beganPosition
             let nextPosition = CGPoint(x: beganPosition.x + translation.x, y: beganPosition.y + translation.y)
-            container.center = nextPosition
+            
+            let centerPosition = CGPoint(x: page.size.width / 2.0, y: page.size.height / 2.0)
+            
+            let centerDistance = sqrt(pow(centerPosition.x - nextPosition.x, 2) + pow(centerPosition.y - nextPosition.y, 2))
+            
+            
+            let xDistance = fabs(centerPosition.x - nextPosition.x)
+            
+            let yDistance = fabs(centerPosition.y - nextPosition.y)
+            
+            let targetPosition: CGPoint
+            if centerDistance < 5 {
+                targetPosition = centerPosition
+            } else if xDistance < 10 {
+                targetPosition = CGPoint(x: centerPosition.x, y: nextPosition.y)
+            } else if yDistance < 10 {
+                targetPosition = CGPoint(x: nextPosition.x, y: centerPosition.y)
+            } else {
+                targetPosition = nextPosition
+            }
+            
+            container.center = targetPosition
             canvasViewController.updateAt(indexPath)
             
         case .Ended:
@@ -328,8 +349,51 @@ extension EditViewController {
             tempValues.beganRadian = CGFloat(container.radius)
             
         case .Changed:
-            let nextRotation = tempValues.beganRadian + rotRadian
-            container.radius = nextRotation
+            
+            let nextRotation: CGFloat
+            if tempValues.beganRadian + rotRadian < 0 {
+                nextRotation = 2.0 * CGFloat(M_PI) + tempValues.beganRadian + rotRadian
+            } else {
+                nextRotation = tempValues.beganRadian + rotRadian
+            }
+            
+            let tolerant = 5.0 / 180.0 * CGFloat(M_PI)
+            let tolerant180 = CGFloat(2 * M_PI)
+            let target0 = fabs(nextRotation - 0)
+            let target45 = fabs(nextRotation - 45.0 / 180.0 * CGFloat(M_PI))
+            let target90 = fabs(nextRotation - 90.0 / 180.0 * CGFloat(M_PI))
+            let target135 = fabs(nextRotation - 135.0 / 180.0 * CGFloat(M_PI))
+            let target180 = fabs(nextRotation - 180.0 / 180.0 * CGFloat(M_PI))
+            let target225 = fabs(nextRotation - 225.0 / 180.0 * CGFloat(M_PI))
+            let target270 = fabs(nextRotation - 270.0 / 180.0 * CGFloat(M_PI))
+            let target315 = fabs(nextRotation - 315.0 / 180.0 * CGFloat(M_PI))
+            let target360 = fabs(nextRotation - 360.0 / 180.0 * CGFloat(M_PI))
+            
+            let targetRotation: CGFloat
+            
+            if target0 < tolerant {
+                targetRotation = 0
+            } else if target45 < tolerant {
+                targetRotation = 45.0 / 180.0 * CGFloat(M_PI)
+            } else if target90 < tolerant {
+                targetRotation = 90.0 / 180.0 * CGFloat(M_PI)
+            } else if target135 < tolerant {
+                targetRotation = 135.0 / 180.0 * CGFloat(M_PI)
+            } else if target180 < tolerant {
+                targetRotation = 180.0 / 180.0 * CGFloat(M_PI)
+            } else if target225 < tolerant {
+                targetRotation = (225.0) / 180.0 * CGFloat(M_PI)
+            } else if target270 < tolerant {
+                targetRotation = (270.0) / 180.0 * CGFloat(M_PI)
+            } else if target315 < tolerant {
+                targetRotation = (315.0) / 180.0 * CGFloat(M_PI)
+            } else if target360 < tolerant {
+                targetRotation = (0) / 180.0 * CGFloat(M_PI)
+            } else {
+                targetRotation = nextRotation
+            }
+            
+            container.radius = targetRotation
             canvasViewController.updateAt(indexPath)
             selectorViewController.updateIfNeed()
             
@@ -355,9 +419,18 @@ extension EditViewController {
             let nextScale = max(scale * tempValues.beganScale, 0.2)
             
             if fabs(nextScale * 100.0 - tempValues.oldScale * 100.0) > 0.1 {
-                let ascale = floor(nextScale * 100) / 100.0
+                let ascale: CGFloat = floor(nextScale * 100) / 100.0
+                let targetScale1 = fabs(ascale - 1)
+                
+                let targetScale: CGFloat
+                if targetScale1 < 0.05 {
+                    targetScale = 1.0
+                } else {
+                    targetScale = ascale
+                }
+                
                 let canvasSize = page.size
-                container.updateWithScale(ascale, constraintSzie: CGSize(width: canvasSize.width, height: canvasSize.height * 5))
+                container.updateWithScale(targetScale, constraintSzie: CGSize(width: canvasSize.width, height: canvasSize.height * 5))
                 
                 canvasViewController.updateAt(indexPath, updateContents: true)
                 selectorViewController.updateIfNeed()
@@ -757,13 +830,17 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             return
         }
         let aradian: CGFloat
-        if radian < 0 {
+        
+        
+        if radian <= 0 {
             aradian = CGFloat(2 * M_PI) - fabs(radian) % CGFloat(2 * M_PI)
-        } else {
+        } else if radian >= CGFloat(2 * M_PI) {
+            aradian = radian - CGFloat(2 * M_PI)
+        }else {
             aradian = radian
         }
-        
-        container.radius = aradian % CGFloat(2 * M_PI)
+        debug_print("aradian = " + "\(aradian)")
+        container.radius = aradian
         canvasViewController.updateAt(selectedIndexPath, updateContents: false)
     }
     
