@@ -378,12 +378,16 @@
                   moduleName = "CuriosTextApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/ImagePicker/CTACameraViewController.swift"
+<<<<<<< 08033cd7411eb043222f98d12cfbf0e04db13e14
                   timestampString = "485231620.491433"
+=======
+                  timestampString = "485250716.72225"
+>>>>>>> Update - Animation play stop button.
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "284"
                   endingLineNumber = "284"
-                  offsetFromSymbolStart = "48">
+                  offsetFromSymbolStart = "40">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -393,12 +397,16 @@
                   moduleName = "CuriosTextApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/ImagePicker/CTACameraViewController.swift"
+<<<<<<< 08033cd7411eb043222f98d12cfbf0e04db13e14
                   timestampString = "485231620.491576"
+=======
+                  timestampString = "485250716.72246"
+>>>>>>> Update - Animation play stop button.
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "284"
                   endingLineNumber = "284"
-                  offsetFromSymbolStart = "88">
+                  offsetFromSymbolStart = "77">
                </Location>
             </Locations>
          </BreakpointContent>

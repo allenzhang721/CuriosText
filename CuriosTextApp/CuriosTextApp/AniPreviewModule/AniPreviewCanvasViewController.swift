@@ -22,6 +22,7 @@ class AniPreviewCanvasViewController: UIViewController {
         super.viewDidLoad()
         setup()
         
+        fakePauseAllView.userInteractionEnabled = false
         fakePauseView.needGradient = false
     }
     

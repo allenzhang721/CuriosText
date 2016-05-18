@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F28b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="V1I-h9-1ya">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="V1I-h9-1ya">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -53,15 +53,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="kxp-pc-okM"/>
-                                    <barButtonItem systemItem="done" id="LqU-Br-OWl">
-                                        <connections>
-                                            <action selector="dismiss:" destination="V1I-h9-1ya" id="hjL-vz-WQG"/>
-                                        </connections>
-                                    </barButtonItem>
                                 </items>
                             </toolbar>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NYo-PQ-q4A">
-                                <rect key="frame" x="138" y="0.0" width="44" height="44"/>
+                                <rect key="frame" x="136" y="0.0" width="44" height="44"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="UwG-6l-BCW"/>
@@ -84,7 +79,7 @@
                             <constraint firstItem="wnf-xM-VcX" firstAttribute="bottom" secondItem="etC-9e-ZHG" secondAttribute="top" id="8Bh-nV-1KY"/>
                             <constraint firstItem="kv8-4k-bsN" firstAttribute="top" secondItem="B5d-cm-M0J" secondAttribute="top" id="8D4-PO-wza"/>
                             <constraint firstItem="kv8-4k-bsN" firstAttribute="leading" secondItem="B5d-cm-M0J" secondAttribute="leading" id="8IH-U3-nkJ"/>
-                            <constraint firstItem="NYo-PQ-q4A" firstAttribute="centerX" secondItem="B5d-cm-M0J" secondAttribute="centerX" id="C0N-6S-Qy3"/>
+                            <constraint firstItem="NYo-PQ-q4A" firstAttribute="centerX" secondItem="B5d-cm-M0J" secondAttribute="centerX" constant="-2" id="C0N-6S-Qy3"/>
                             <constraint firstAttribute="trailing" secondItem="kv8-4k-bsN" secondAttribute="trailing" id="Cys-6j-taC"/>
                             <constraint firstItem="OKU-k1-A1k" firstAttribute="leading" secondItem="B5d-cm-M0J" secondAttribute="leadingMargin" id="GDa-N3-d3v"/>
                             <constraint firstItem="NYo-PQ-q4A" firstAttribute="top" secondItem="B5d-cm-M0J" secondAttribute="top" id="POX-Ay-xTS"/>
