@@ -10,7 +10,7 @@ import Foundation
 import Kingfisher
 
 enum CTASetUserNameType{
-    case register, registerWechat
+    case register, registerWechat, registerWeibo
 }
 
 class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CTATextInputProtocol, CTALoadingProtocol, CTAImageControllerProtocol, CTALoginProtocol{
@@ -194,11 +194,10 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
                 case .register:
                     let mobile = CTASetMobileNumberViewController.getInstance()
                     self.navigationController?.popToViewController(mobile, animated: true)
-                case .registerWechat:
+                case .registerWechat, .registerWeibo:
                     let login = CTALoginViewController.getInstance()
                     self.navigationController?.popToViewController(login, animated: true)
                 }
-                
             }
         }
     }

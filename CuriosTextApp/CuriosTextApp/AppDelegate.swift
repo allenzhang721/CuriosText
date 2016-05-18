@@ -8,17 +8,21 @@
 
 import UIKit
 import Kingfisher
+import SVProgressHUD
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     
     var window: UIWindow?
     
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        SVProgressHUD.setDefaultStyle(.Custom)
+        SVProgressHUD.setForegroundColor(CTAStyleKit.selectedColor)
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
 //        registerFonts()
-        prints()
+//        prints()
         registerLocalFonts()
         registerSystemFonts()
         familiesDisplayNames()
@@ -31,21 +35,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.Production.description
         #endif
         
+        WXApi.registerApp(CTAConfigs.weChat.appID)
+        WeiboSDK.registerApp(CTAConfigs.weibo.appID)
         CTASocialManager.register(.WeChat, appID: CTAConfigs.weChat.appID, appKey: CTAConfigs.weChat.appKey)
+        CTASocialManager.register(.Weibo, appID: CTAConfigs.weibo.appID, appKey: CTAConfigs.weibo.appKey)
         CTASocialManager.register(.SMS, appID: CTAConfigs.SMS.appID, appKey: CTAConfigs.SMS.appKey) // http://dashboard.mob.com/#/sms/index
         
         return true
-    }
-    
-    func prints() {
-        
-        let name = UIFont.familyNames()
-        
-        for i in name {
-            
-            print("\(i)\n")
-            
-        }
     }
     
     func registerLocalFonts() {
@@ -81,7 +77,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let familiesName = ["Times New Roman", "American Typewriter", "Snell Roundhand", "Chalkduster"]
         for fa in familiesName {
             let fonts = UIFont.fontNamesForFamilyName(fa)
-            print(fonts)
             for f in fonts {
                 if let font = UIFont(name: f, size: 17) {
                     let desc = font.fontDescriptor()
@@ -132,12 +127,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         
+//       return WXApi.handleOpenURL(url, delegate: self)
         debug_print(url)
         if CTASocialManager.handleOpenURL(url) {
             return true
         }
         
         return false
+    }
+    
+    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+        return WXApi.handleOpenURL(url, delegate: self)
     }
     
     func applicationWillResignActive(application: UIApplication) {

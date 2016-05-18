@@ -90,9 +90,9 @@ enum CTAAnimationName: String {
         case .None:
             return 0.0
         case .MoveIn, .MoveOut:
-            return 2.0
+            return 1.0
         case .ScaleIn, .ScaleOut:
-            return 2.5
+            return 2.0
         case .IrisIn, .IrisOut:
             return 2.0
         case .CurlIn, .CurlOut:

@@ -8,8 +8,9 @@
 
 import UIKit
 import SwiftyJSON
+import SVProgressHUD
 
-class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProtocol, CTALoginProtocol, CTAAlertProtocol{
+class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProtocol, CTALoginProtocol, CTAAlertProtocol, CTASocialLoginable{
     
     static var _instance:CTALoginViewController?;
     
@@ -34,6 +35,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
     
     var otherAccountView:UIView!
     var wechatButton:UIButton!
+    var weiboButton:UIButton!
     
     var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
     
@@ -98,6 +100,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         self.phoneTextinput.delegate = self
     
         self.passwordTextinput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+50, width: 190*self.getHorRate(), height: 50))
+        self.passwordTextinput.font = UIFont.systemFontOfSize(16)
         self.passwordTextinput.placeholder = NSLocalizedString("PasswordPlaceholder", comment: "")
         self.passwordTextinput.secureTextEntry = true
         self.passwordTextinput.clearsOnBeginEditing = true
@@ -105,7 +108,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         self.passwordTextinput.returnKeyType = .Go
         self.view.addSubview(self.passwordTextinput)
         let passwordLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.passwordTextinput.frame.origin.y+12, width: 50, height: 25))
-        passwordLabel.font = UIFont.systemFontOfSize(18)
+        passwordLabel.font = UIFont.systemFontOfSize(16)
         passwordLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         passwordLabel.text = NSLocalizedString("PasswordLabel", comment: "")
         passwordLabel.sizeToFit()
@@ -144,10 +147,15 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         otherAccountLabel.frame.origin.x = (bouns.width - otherAccountLabel.frame.width)/2
         self.otherAccountView.addSubview(otherAccountLabel)
         
-        self.wechatButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 44)/2, y: 45, width: 44, height: 44))
+        self.wechatButton = UIButton.init(frame: CGRect.init(x: bouns.width/2+30, y: 45, width: 44, height: 44))
         self.wechatButton.setImage(UIImage(named: "wechat-icon"), forState: .Normal)
         self.wechatButton.addTarget(self, action: #selector(CTALoginViewController.wechatButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.otherAccountView.addSubview(self.wechatButton)
+        
+        self.weiboButton = UIButton.init(frame: CGRect.init(x: bouns.width/2-74, y: 45, width: 44, height: 44))
+        self.weiboButton.setImage(UIImage(named: "weibo-icon"), forState: .Normal)
+        self.weiboButton.addTarget(self, action: #selector(CTALoginViewController.weiboButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.otherAccountView.addSubview(self.weiboButton)
         
         let forgetButton = UIButton.init(frame: CGRect.init(x: 27, y: bouns.height - 52*self.getVerRate(), width: 20, height: 84))
         forgetButton.setTitle(NSLocalizedString("ForgetPasswordLabel", comment: ""), forState: .Normal)
@@ -187,7 +195,22 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
             self.wechatButton.hidden = false
         }else {
             self.wechatButton.hidden = true
-            self.otherAccountView.hidden = true
+        }
+        if CTASocialManager.isAppInstaller(.Weibo){
+            self.weiboButton.hidden = false
+            if self.wechatButton.hidden {
+                self.weiboButton.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2, y: 67)
+            }else {
+                self.weiboButton.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2-42, y: 67)
+                self.wechatButton.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2+42, y: 67)
+            }
+        }else {
+            self.weiboButton.hidden = true
+            if self.wechatButton.hidden {
+                self.otherAccountView.hidden = true
+            }else {
+                self.wechatButton.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2, y: 67)
+            }
         }
     }
     
@@ -197,7 +220,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
     
     func closeButtonClick(sender: UIButton){
         self.resignView()
-        self.navigationController?.dismissViewControllerAnimated(false, completion: nil)
+        self.loginComplete(nil)
     }
     
     func passwordVisibleClick(sender: UIButton){
@@ -217,11 +240,20 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
     }
     
     func changeToLoadingView(view:UIView?){
-        self.showLoadingViewByView(view)
+        if view == nil {
+            SVProgressHUD.show()
+        }else {
+            self.showLoadingViewByView(view!)
+        }
     }
     
     func changeToUnloadingView(view:UIView?){
-        self.hideLoadingViewByView(view)
+        if view == nil {
+            SVProgressHUD.dismiss()
+        }else {
+            self.hideLoadingViewByView(view!)
+        }
+        
     }
     
     func loginButtonClick(sender: UIButton){
@@ -283,6 +315,76 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         setMobileView.isChangeContry = true
         setMobileView.setMobileNumberType = .register
         self.navigationController?.pushViewController(setMobileView, animated: true)
+    }
+    
+    func weiboButtonClick(sender: UIButton){
+        CTASocialManager.OAuth(.Weibo){ (OAuthInfo, urlResponse, error) -> Void in
+            if error == nil {
+                if OAuthInfo != nil {
+                    self.login(.Weibo, OAuthInfo: OAuthInfo, completionHandler: { (resultDic, urlResponse, error) in
+                        if error == nil && resultDic != nil {
+                            let weiboIDInt:Int = resultDic![key(.WeiBoUserID)] as! Int
+                            let weiboID = String(weiboIDInt)
+                            let userIconURL:String = resultDic![key(.Avatarhd)] as! String
+                            let nickName:String = resultDic![key(.WeiboName)] as! String
+                            let desc:String = resultDic![key(.WeiboDesc)] as! String
+                            let gender:String = resultDic![key(.Gender)] as! String
+                            var userSex:Int = 0
+                            if gender == "m"{
+                                userSex = 1
+                            }else if gender == "f"{
+                                userSex = 2
+                            }
+                            self.changeToLoadingView(self.otherAccountView)
+                            CTAUserDomain.getInstance().weiboRegister(weiboID, nickName: nickName, userDesc: desc, sex: userSex, compelecationBlock: { (info) in
+                                self.changeToUnloadingView(self.otherAccountView)
+                                if info.result{
+                                    let userModel = info.baseModel as! CTAUserModel
+                                    if info.successType == 0{
+                                        let setNameView = CTASetUserNameViewController.getInstance()
+                                        setNameView.userNameType = .registerWeibo
+                                        setNameView.userModel = userModel
+                                        setNameView.userIconPath = userIconURL
+                                        self.navigationController?.pushViewController(setNameView, animated: true)
+                                    }else if info.successType == 2{
+                                        self.loginComplete(userModel)
+                                    }
+                                    CTASocialManager.saveToken(userModel.userID, OAuthInfo: OAuthInfo)
+                                }else {
+                                    if info.errorType is CTAInternetError {
+                                        self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        })
+                                    }else {
+                                        let error = info.errorType as! CTAWeixinRegisterError
+                                        if error == .WeixinIDIsEmpty {
+                                            self.showSingleAlert(NSLocalizedString("AlertTitleWeiboNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                            })
+                                        }else if error == .DataIsEmpty{
+                                            self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                            })
+                                        }else {
+                                            self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                            })
+                                        }
+                                    }
+                                }
+                            })
+                        }
+                    })
+                }
+            }else {
+                if error!.code == -1{
+                    
+                }
+                else if error!.code == -2{
+                    self.showSingleAlert(NSLocalizedString("AlertTitleWeiboUninstall", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                    })
+                }else {
+                    self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                    })
+                }
+            }
+        }
     }
     
     func wechatButtonClick(sender: UIButton){

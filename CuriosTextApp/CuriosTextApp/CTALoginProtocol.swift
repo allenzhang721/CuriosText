@@ -10,7 +10,7 @@ import Foundation
 
 protocol CTALoginProtocol{
     func showLoginView()
-    func loginComplete(userModel:CTAUserModel)
+    func loginComplete(userModel:CTAUserModel?)
 }
 
 extension CTALoginProtocol where Self: UIViewController{
@@ -19,9 +19,11 @@ extension CTALoginProtocol where Self: UIViewController{
         NSNotificationCenter.defaultCenter().postNotificationName("showLoginView", object: nil)
     }
     
-    func loginComplete(userModel:CTAUserModel){
-        CTAUserManager.save(userModel)
-        NSNotificationCenter.defaultCenter().postNotificationName("loginComplete", object: nil)
+    func loginComplete(userModel:CTAUserModel?){
+        if let user = userModel{
+            CTAUserManager.save(user)
+            NSNotificationCenter.defaultCenter().postNotificationName("loginComplete", object: nil)
+        }
         self.navigationController?.dismissViewControllerAnimated(true, completion: { () -> Void in
         })
     }

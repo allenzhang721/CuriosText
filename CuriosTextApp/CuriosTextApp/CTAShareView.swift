@@ -17,9 +17,11 @@ class CTAShareView: UIView{
     
     var wechatShareView:UIView!
     var momentsShareView:UIView!
+    var weiboShareView:UIView!
     var deleteView:UIView!
     var saveLocolView:UIView!
     var reportView:UIView!
+    var uploadResourceView:UIView!
     //var copyLinkView:UIView!
     
     var space:CGFloat = 15.00
@@ -101,6 +103,26 @@ class CTAShareView: UIView{
         self.momentsShareView.frame.origin.x = 88
         self.scrollView.addSubview(self.momentsShareView)
         
+
+        
+        self.weiboShareView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
+        let weiboButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
+        weiboButton.setImage(UIImage.init(named: "weibo-share-button"), forState: .Normal)
+        weiboButton.addTarget(self, action: #selector(CTAShareView.weiboButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.weiboShareView.addSubview(weiboButton)
+        let weiboLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
+        weiboLabel.font = UIFont.systemFontOfSize(8)
+        weiboLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        weiboLabel.text = LocalStrings.Weibo.description
+        weiboLabel.sizeToFit()
+        weiboLabel.center = CGPoint.init(x: weiboButton.center.x, y: buttonW+20)
+        self.weiboShareView.addSubview(weiboLabel)
+        self.weiboShareView.sizeToFit()
+        self.weiboShareView.frame.origin.x = 88
+        self.scrollView.addSubview(self.weiboShareView)
+ 
+        
+        
         self.deleteView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
         let deleteButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
         deleteButton.setImage(UIImage.init(named: "delete-file-button"), forState: .Normal)
@@ -143,12 +165,33 @@ class CTAShareView: UIView{
         reportLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         reportLabel.text = LocalStrings.Report.description
         reportLabel.sizeToFit()
-        reportLabel.center = CGPoint.init(x: deleteButton.center.x, y: buttonW+20)
+        reportLabel.center = CGPoint.init(x: reportButton.center.x, y: buttonW+20)
         self.reportView.addSubview(reportLabel)
         self.reportView.sizeToFit()
         self.reportView.frame.origin.x = 230
         self.scrollView.addSubview(self.reportView)
         
+        self.uploadResourceView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
+        let uploadButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
+        uploadButton.setImage(UIImage.init(named: "copy-link-button"), forState: .Normal)
+        uploadButton.addTarget(self, action: #selector(CTAShareView.uploadResourceButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.uploadResourceView.addSubview(uploadButton)
+        let uploadLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
+        uploadLabel.font = UIFont.systemFontOfSize(8)
+        uploadLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        uploadLabel.text = LocalStrings.UploadFile.description
+        uploadLabel.sizeToFit()
+        uploadLabel.center = CGPoint.init(x: uploadButton.center.x, y: buttonW+20)
+        self.uploadResourceView.addSubview(uploadLabel)
+        self.uploadResourceView.sizeToFit()
+        self.uploadResourceView.frame.origin.x = 230
+        self.scrollView.addSubview(self.uploadResourceView)
+        
+        #if DEBUG
+            self.uploadResourceView.hidden = false
+        #else
+            self.uploadResourceView.hidden = true
+        #endif
 //        self.copyLinkView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
 //        let copyLinkButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
 //        copyLinkButton.setImage(UIImage.init(named: "copy-link-button"), forState: .Normal)
@@ -187,9 +230,11 @@ class CTAShareView: UIView{
         self.space = 15.00 * rate
         self.wechatShareView.frame.origin.x = space
         self.momentsShareView.frame.origin.x = space+(space+buttonW)*1
-        self.deleteView.frame.origin.x = space+(space+buttonW)*2
-        self.saveLocolView.frame.origin.x = space+(space+buttonW)*3
-        self.reportView.frame.origin.x = space+(space+buttonW)*4
+        self.weiboShareView.frame.origin.x = space+(space+buttonW)*2
+        self.deleteView.frame.origin.x = space+(space+buttonW)*3
+        self.saveLocolView.frame.origin.x = space+(space+buttonW)*4
+        self.reportView.frame.origin.x = space+(space+buttonW)*5
+        self.uploadResourceView.frame.origin.x = space+(space+buttonW)*6
     }
     
     func unSelfShareView(){
@@ -198,17 +243,25 @@ class CTAShareView: UIView{
         self.space = 20.00 * rate
         self.wechatShareView.frame.origin.x = space
         self.momentsShareView.frame.origin.x = space+(space+buttonW)*1
-        self.deleteView.frame.origin.x = space+(space+buttonW)*2
-        self.saveLocolView.frame.origin.x = space+(space+buttonW)*2
-        self.reportView.frame.origin.x = space+(space+buttonW)*3
+        self.weiboShareView.frame.origin.x = space+(space+buttonW)*2
+        self.deleteView.frame.origin.x = space+(space+buttonW)*3
+        self.saveLocolView.frame.origin.x = space+(space+buttonW)*3
+        self.reportView.frame.origin.x = space+(space+buttonW)*4
+        self.uploadResourceView.frame.origin.x = space+(space+buttonW)*5
     }
     
     func resetScrollView(){
-        let maxWidth = self.reportView.frame.origin.x + self.reportView.frame.width + space
+        #if DEBUG
+            let maxWidth = self.uploadResourceView.frame.origin.x + self.uploadResourceView.frame.width + space
+        #else
+            let maxWidth = self.reportView.frame.origin.x + self.reportView.frame.width + space
+        #endif
+        
         self.scrollView.contentSize = CGSize(width: maxWidth, height: 170)
+        self.scrollView.contentOffset.x = 0
     }
     
-    func cancelHandler(){
+    func cancelHandler(complete: (() -> ())?){
         let bounds = UIScreen.mainScreen().bounds
         self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.4)
         UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -216,69 +269,96 @@ class CTAShareView: UIView{
             self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
         }) { (_) -> Void in
             self.removeFromSuperview()
+            complete?()
             self.delegate = nil
         }
     }
     
     func cancelButtonClick(sender: UIButton){
-        self.cancelHandler()
+        self.cancelHandler({
+        })
     }
     
     func backButtonClikc(sender: UITapGestureRecognizer){
         let pt = sender.locationInView(self.buttonView)
         if !self.buttonView.pointInside(pt, withEvent: nil){
-            self.cancelHandler()
+            self.cancelHandler({
+            })
         }
     }
     
     func weChatButtonClick(sender: UIButton){
-        if self.delegate != nil {
-            self.delegate!.weChatShareHandler()
-        }
-        self.cancelHandler()
+        self.cancelHandler({
+            if self.delegate != nil {
+                self.delegate!.weChatShareHandler()
+            }
+        })
     }
     
     func momentsButtonClick(sender: UIButton){
-        if self.delegate != nil {
-            self.delegate!.momentsShareHandler()
-        }
-        self.cancelHandler()
+        self.cancelHandler({
+            if self.delegate != nil {
+                self.delegate!.momentsShareHandler()
+            }
+        })
+    }
+    
+    func weiboButtonClick(sender: UIButton){
+        self.cancelHandler({
+            if self.delegate != nil {
+                self.delegate!.weiBoShareHandler()
+            }
+        })
     }
     
     func deleteButtonClick(sender: UIButton){
-        if self.delegate != nil {
-            self.delegate!.deleteHandler()
-        }
-        self.cancelHandler()
+        self.cancelHandler({
+            if self.delegate != nil {
+                self.delegate!.deleteHandler()
+            }
+        })
     }
     
     func saveLocalButtonClick(sender: UIButton){
-        if self.delegate != nil {
-            self.delegate!.saveLocalHandler()
-        }
-        self.cancelHandler()
+        self.cancelHandler({
+            if self.delegate != nil {
+                self.delegate!.saveLocalHandler()
+            }
+        })
     }
     
     func reportButtonClick(sender: UIButton){
-        if self.delegate != nil {
-            self.delegate!.reportHandler()
-        }
-        self.cancelHandler()
+        self.cancelHandler({
+            if self.delegate != nil {
+                self.delegate!.reportHandler()
+            }
+        })
+    }
+    
+    func uploadResourceButtonClick(sender: UIButton){
+        self.cancelHandler({
+            if self.delegate != nil {
+                self.delegate!.uploadResourceHandler()
+            }
+        })
     }
     
     func copyLinkButtonClick(sender: UIButton){
-        if self.delegate != nil {
-            self.delegate!.copyLinkHandler()
-        }
-        self.cancelHandler()
+        self.cancelHandler({
+            if self.delegate != nil {
+                self.delegate!.copyLinkHandler()
+            }
+        })
     }
 }
 
 protocol CTAShareViewDelegate{
     func weChatShareHandler()
     func momentsShareHandler()
+    func weiBoShareHandler()
     func deleteHandler()
     func copyLinkHandler()
     func saveLocalHandler()
     func reportHandler()
+    func uploadResourceHandler()
 }

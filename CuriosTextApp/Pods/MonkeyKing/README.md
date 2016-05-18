@@ -7,9 +7,11 @@
 
 MonkeyKing helps you post messages to Chinese Social Networks, without their buggy SDKs.
 
-MonkeyKing use the same analysis process of [openshare](https://github.com/100apps/openshare), support share **Text**, **URL**, **Image**, **Audio**, and **Video** to **WeChat**, **QQ**, **Alipay** or **Weibo**. MonkeyKing also can post message to Weibo by webpage. (Note: Auido and Video are only specifically for WeChat or QQ.)
+MonkeyKing use the same analysis process of [openshare](https://github.com/100apps/openshare), support share **Text**, **URL**, **Image**, **Audio**, **Video**, and **File** to **WeChat**, **QQ**, **Alipay** or **Weibo**. MonkeyKing also can post message to Weibo by webpage. (Note: Auido and Video are only specifically for WeChat or QQ, File is only for QQ Dataline)
 
 One more thing: MonkeyKing supports **OAuth**.
+
+And, now MonkeyKing supports **Mobile payment** via WeChat and Alipay!
 
 ## Requirements
 
@@ -90,6 +92,22 @@ If user do not installed Weibo App on their devices, MonkeyKing will use web OAu
 ![weiboOAuth](https://raw.githubusercontent.com/nixzhu/MonkeyKing/master/images/wbOAuth.png)
 
 
+### Pay
+
+Example: Alipay
+
+```swift
+MonkeyKing.payOrder(MonkeyKing.Order.Alipay(URLString: "https://example.com/pay.php?payType=alipay")) { result in
+    print("result: \(result)")
+}
+```
+> You need to configure `pay.php` in remote server. You can find a example about `pay.php` at Demo project.
+
+<br />
+
+![weiboOAuth](https://raw.githubusercontent.com/nixzhu/MonkeyKing/master/images/alipay.gif)
+
+
 ### More
 
 If you like use `UIActivityViewController` to share, MonkeyKing has `AnyActivity` can help you.
@@ -119,7 +137,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'MonkeyKing', '~> 0.9'
+pod 'MonkeyKing', '~> 0.9.2'
 ```
 
 Then, run the following command:
@@ -144,7 +162,7 @@ $ brew install carthage
 To integrate MonkeyKing into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "nixzhu/MonkeyKing" >= 0.9
+github "nixzhu/MonkeyKing" >= 0.9.2
 ```
 
 Then, run the following command to build the MonkeyKing framework:
@@ -173,8 +191,10 @@ For more information about how to use Carthage, please see its [project page](ht
 
 ## Contact
 
-NIX [@nixzhu](https://twitter.com/nixzhu) or
-Limon [@LimonTop](http://weibo.com/u/1783821582)
+NIX [@nixzhu](https://twitter.com/nixzhu),
+Limon [@LimonTop](http://weibo.com/u/1783821582),
+Lanford [@Lanford3_3](http://weibo.com/accoropitor) or
+Alex [@Xspyhack](http://weibo.com/xspyhack)
 
 ## Credits
 
@@ -182,5 +202,6 @@ WeChat logos from [WeChat-Logo](https://github.com/RayPS/WeChat-Logo) by Ray.
 
 ## License
 
-MonkeyKing is available under the [MIT License][mitLink] license. See the LICENSE file for more info.
+MonkeyKing is available under the [MIT License][mitLink]. See the LICENSE file for more info.
+
 [mitLink]:http://opensource.org/licenses/MIT

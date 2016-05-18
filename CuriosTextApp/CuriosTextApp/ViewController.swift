@@ -26,8 +26,10 @@ class ViewController: UIViewController{
                 let dic = info.modelDic
                 let publishFilePath = dic![key(.PublishFilePath)]
                 let userFilePath = dic![key(.UserFilePath)]
-                CTAFilePath.publishFilePath = publishFilePath!
-                CTAFilePath.userFilePath = userFilePath!
+                let resourceFilePath = dic![key(.ResourceFilePath)]
+                CTAFilePath.publishFilePath  = publishFilePath!
+                CTAFilePath.userFilePath     = userFilePath!
+                CTAFilePath.resourceFilePath = resourceFilePath!
             }
         }
         CTAUserManager.load()
@@ -52,7 +54,7 @@ class ViewController: UIViewController{
         login.isChangeContry = true
         let navigationController = UINavigationController(rootViewController: login)
         navigationController.navigationBarHidden = true
-        self.presentViewController(navigationController, animated: false, completion: {
+        self.presentViewController(navigationController, animated: true, completion: {
             self.navigate.popToRootViewControllerAnimated(false)
             self.mainView.goToFirstView()
         })

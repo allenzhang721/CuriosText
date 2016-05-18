@@ -24,6 +24,7 @@ struct CTAFilePath {
 
     static var userFilePath = "https://dn-tu-curiosapp.qbox.me/"
     static var publishFilePath = "https://dn-tp-curiosapp.qbox.me/"
+    static var resourceFilePath = "https://o6kzay0ng.qnssl.com/"
 }
 
 enum CTARequestHost: CustomStringConvertible {
@@ -34,14 +35,17 @@ enum CTARequestHost: CustomStringConvertible {
     case .Test:
         CTAFilePath.userFilePath = "http://7wy3u8.com2.z0.glb.qiniucdn.com/"
         CTAFilePath.publishFilePath = "http://7wy3u8.com2.z0.glb.qiniucdn.com/"
+        CTAFilePath.resourceFilePath = "https://o6kzay0ng.qnssl.com/"
         return "http://182.92.150.178/CuriosTextServices"
     case .Debug:
         CTAFilePath.userFilePath = "http://7wy3u8.com2.z0.glb.qiniucdn.com/"
         CTAFilePath.publishFilePath = "http://7wy3u8.com2.z0.glb.qiniucdn.com/"
-        return "http://192.168.1.106:8080/CuriosTextServices"
+        CTAFilePath.resourceFilePath = "https://o6kzay0ng.qnssl.com/"
+        return "http://192.168.1.101:8080/CuriosTextServices"
     case .Production:
         CTAFilePath.userFilePath = "https://dn-tu-curiosapp.qbox.me/"
         CTAFilePath.publishFilePath = "https://dn-tp-curiosapp.qbox.me/"
+        CTAFilePath.resourceFilePath = "https://o6kzay0ng.qnssl.com/"
         return "http://cta.curiosapp.com"
     }
   }
@@ -58,7 +62,7 @@ enum CTARequestUrl: CustomStringConvertible {
   case UserPublishList, UserLikePublishList, UserRebuildPublishList, UserFollowPublishList, NewPubulishList, HotPublishList
   case LikePublish, UnLikePublish, RebuildPublish, SharePublish, ReportPublish
   case FollowUser, UnFollowUser, BlockUser, UnBlockUser, UserFollowList, UserBeFollowList
-  case UserUpToken, PublishUpToken, UploadFilePath
+  case UserUpToken, PublishUpToken, UploadFilePath, ResourceUpToken
   
   var description: String {
     switch self {
@@ -150,6 +154,8 @@ enum CTARequestUrl: CustomStringConvertible {
         return "/upload/publishUpToken"
     case .UploadFilePath:
         return "/upload/uploadFilePath"
+    case .ResourceUpToken:
+        return "/upload/resourceUpToken"
     }
   }
 }
@@ -158,13 +164,14 @@ enum CTAParameterKey: CustomStringConvertible {
   case Data
   case UserID, NickName, UserDesc, UserIconURL, Sex, Email, Phone, AreaCode, Password, WeixinID, WeiboID, Country, Province, City, NewPassword
   case BeUserID, Start, Size, SharePlatform, List, ReportType, ReportMessage
-  case PublishID, Title, PublishDesc, PublishIconURL, PreviewIconURL, PublishURL
+  case PublishID, Title, PublishDesc, PublishIconURL, PreviewIconURL, PublishURL, PublishDate
   case RelationType, RelationUserID, FollowCount, BeFollowCount, PublishCount
-  case PublishFilePath, UserFilePath
+  case PublishFilePath, UserFilePath, ResourceFilePath
   case UpToken, UpTokenKey
   case ShareCount, RebuildCount, LikeCount, LikeStatus
   case Openid, Headimgurl, WechatName
-  
+  case WeiBoUserID, Avatarhd, Gender, WeiboName, WeiboDesc
+    
   var description: String {
     switch self {
     case .Data:
@@ -225,6 +232,8 @@ enum CTAParameterKey: CustomStringConvertible {
         return "previewIconURL"
     case .PublishURL:
         return "publishURL"
+    case .PublishDate:
+        return "publishDate"
     case .RelationType:
         return "relationType"
     case .RelationUserID:
@@ -239,6 +248,8 @@ enum CTAParameterKey: CustomStringConvertible {
         return "publishFilePath"
     case .UserFilePath:
         return "userFilePath"
+    case .ResourceFilePath:
+        return "resourceFilePath"
     case .UpToken:
         return "upToken"
     case .UpTokenKey:
@@ -257,6 +268,18 @@ enum CTAParameterKey: CustomStringConvertible {
         return "headimgurl"
     case .WechatName:
         return "nickname"
+    case .WeiBoUserID:
+        return "id"
+    case .Avatarhd:
+        return "avatar_hd"
+    case .Gender:
+        return "gender"
+    case .WeiboName:
+        return "screen_name"
+    case .WeiboDesc:
+        return "description"
     }
+    
+    //WeiBoUserID, Avatarhd, Gender, WeiboName, WeiboDesc
   }
 }

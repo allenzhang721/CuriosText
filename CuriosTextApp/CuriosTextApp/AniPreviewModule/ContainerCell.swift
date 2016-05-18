@@ -88,8 +88,10 @@ extension ContainerCell {
         for c in cells {
             c.layer.removeAllAnimations()
             c.layer.mask?.removeAllAnimations()
+            c.layer.mask = nil
             c.contentView.layer.removeAllAnimations()
             c.contentView.layer.mask?.removeAllAnimations()
+            c.contentView.layer.mask = nil
         }
     }
 }

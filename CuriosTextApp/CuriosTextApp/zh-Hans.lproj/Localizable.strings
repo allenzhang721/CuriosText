@@ -13,6 +13,8 @@
 "BeFollowLabel" = "粉丝";
 "FollowButtonLabel" = "关注";
 "UnFollowButtonLabel" = "取消关注";
+"PostsButtonLabel" = "我的";
+"LikesButtonLabel" = "赞过";
 "TenThousand" = "万";
 "HundredMillion" = "亿";
 "LoginLabel" = "欢迎使用奇思";
@@ -48,12 +50,14 @@
 "UserRegion" = "地区";
 "UserDesc" = "简介";
 "SaveButtonLabel" = "保存";
-"WechatShareLabel" = "微信";
+"WechatShareLabel" = "微信好友";
 "MomentsShareLabel" = "朋友圈";
+"WeiboShareLabel" = "新浪微博";
 "DeleteFileLabel" = "删除";
 "CopyLinkLabel" = "复制链接";
 "SaveLocalLabel" = "保存";
 "ReportLabel" = "举报";
+"UploadFileLabel" = "上传";
 
 
 "AlertOkLabel" = "确定";
@@ -66,6 +70,7 @@
 "AlertWaitLabel" = "等待";
 "AlertTitleDeleteFile" = "确定删除吗?";
 "AlertTitleNoInstallWechat" = "你未安装微信";
+"AlertTitleNoInstallWeibo" = "你未安装微博";
 "AlertTitleSMSVerifyBack" = "验证码短信可能略有延迟,确定返回并重新开始?";
 "AlertTitlePasswordBack" = "就快结束了,确定返回并重新开始?";
 "AlertTitleUserNameBack" = "这是最后一步,确定返回并重新开始?";
@@ -77,6 +82,7 @@
 
 "AlertTitleLoginFaile" = "账号或密码错误,请重新输入";
 "AlertTitleWeChatUninstall" = "未找到微信，暂时无法微信登录";
+"AlertTitleWeiboUninstall" = "未找到微博，暂时无法微博登录";
 "AlertTitleInternetError" = "网络异常,请稍后再试";
 "AlertTitleRegisterError" = "注册失败,请稍后再试";
 "AlertTitleChangeError" = "修改失败,请稍后再试";
@@ -85,6 +91,7 @@
 "AlertTitlePhoneNil" = "手机号码为空";
 "AlertTitleConnectUs" = "请联系客服";
 "AlertTitleWechatNil" = "微信登录失败";
+"AlertTitleWeiboNil" = "微博登录失败";
 "AlertTitleDataNil" = "数据为空";
 
 "AllPhotoLibraryTitle" = "设置";
@@ -95,6 +102,22 @@
 
 "SavePhotoSuccess" = "已保存到相册";
 "ReportSuccess" = "举报成功";
+"DeletProgressLabel" = "删除中...";
+"UploadProgressLabel" = "上传中...";
+"SendProgressLabel" = "发送中...";
+"ShareSuccessLabel" = "分享成功";
+"ShareErrorLabel" = "分享失败";
+
+"PublishDateJustNow" = "刚刚";
+"PublishDateMins" = "分钟前";
+"PublishDateOneHour" = "1小时前";
+"PublishDateHours" = "小时前";
+"PublishDateYesterDay" = "昨天";
+"PublishDateDays" = "天前";
+"PublishDateOneMonth" = "1月前";
+"PublishDateMonths" = "月前";
+"PublishDateOneYear" = "1年前";
+"PublishDateYears" = "年前";
 
 // MARK: - Common
 "Cancel" = "取消";
@@ -105,6 +128,7 @@
 // MARK: - Image Picker
 "Camera" = "相机";
 "Photo" = "相册";
+"AllPhotos" = "全部照片";
 
 // MARK: - Editor
 "EditTextPlaceHolder" = "双击编辑";

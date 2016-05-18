@@ -23,7 +23,6 @@ class CTAPublishesCell: UICollectionViewCell, CTAImageControllerProtocol{
         super.init(frame: frame)
         self.cellImageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
         self.cropImageRound(self.cellImageView)
-        self.addImageShadow(self.contentView)
         self.contentView.addSubview(self.cellImageView)
     }
 

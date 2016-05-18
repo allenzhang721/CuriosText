@@ -25,6 +25,10 @@ final class CTADevicesHelper {
         return deviceWithType(.Video, preferringPosition: .Back)
     }
     
+    static var frontDevice: AVCaptureDevice? {
+        return deviceWithType(.Video, preferringPosition: .Front)
+    }
+    
     class func deviceWithType(type: CTADeviceType, preferringPosition position: AVCaptureDevicePosition) -> AVCaptureDevice? {
         
         let devices = AVCaptureDevice.devicesWithMediaType(type.description) as! [AVCaptureDevice]

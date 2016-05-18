@@ -16,7 +16,7 @@ func getIconData(image:UIImage) -> NSData{
 
 func compressJPGImage(image:UIImage) -> NSData{
     let newImage = compressImage(image)
-    let newData = UIImageJPEGRepresentation(newImage, 0.2)
+    let newData = UIImageJPEGRepresentation(newImage, 0.5)
     return newData!
 }
 
@@ -105,12 +105,12 @@ extension CTAImageControllerProtocol{
     }
     
     func cropImageRound(imageView:UIView){
-        imageView.contentMode = .ScaleAspectFill
+        //imageView.contentMode = .ScaleAspectFill
         //imageView.layer.cornerRadius = 4.0
         //imageView.clipsToBounds = true
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = UIBezierPath(roundedRect: imageView.bounds, cornerRadius: 4).CGPath
-        imageView.layer.mask = shapeLayer
+//        let shapeLayer = CAShapeLayer()
+//        shapeLayer.path = UIBezierPath(roundedRect: imageView.bounds, cornerRadius: 4).CGPath
+//        imageView.layer.mask = shapeLayer
     }
     
     func addImageShadow(imageView:UIView){

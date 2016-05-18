@@ -59,13 +59,13 @@ class CanvasView: UIView {
 extension CanvasView {
     
     func reloadData(completed:(() -> ())?) {
-        
-        dispatch_async(dispatch_get_main_queue()) { 
-            
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            guard let sf = self else {return}
             CATransaction.begin()
             CATransaction.setDisableActions(true)
-            self.collectionView.reloadSections(NSIndexSet(index: 0))
+            sf.collectionView.reloadSections(NSIndexSet(index: 0))
             CATransaction.commit()
+        
             completed?()
         }
     }
@@ -80,6 +80,9 @@ extension CanvasView {
     func removeAllAnimations() {
         let cells = collectionView.visibleCells() as! [ContainerCell]
         for c in cells {
+            c.layer.removeAllAnimations()
+            c.layer.mask?.removeAllAnimations()
+            c.layer.mask = nil
             c.removeAllAnimations()
         }
     }

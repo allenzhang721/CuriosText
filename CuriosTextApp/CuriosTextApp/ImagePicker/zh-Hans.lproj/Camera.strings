@@ -1,6 +1,15 @@
 
+/* Class = "UILabel"; text = "Take Photos With Curios"; ObjectID = "LBu-7h-M3J"; */
+"LBu-7h-M3J.text" = "使用奇思拍照";
+
+/* Class = "UIButton"; normalTitle = "Enable Camera Access"; ObjectID = "Q4h-mJ-qbR"; */
+"Q4h-mJ-qbR.normalTitle" = "允许使用摄像头";
+
 /* Class = "UIBarButtonItem"; title = "取消"; ObjectID = "Ur5-PZ-KKn"; */
 "Ur5-PZ-KKn.title" = "取消";
 
 /* Class = "UIViewController"; title = "Camera"; ObjectID = "u8L-Ej-xMD"; */
 "u8L-Ej-xMD.title" = "相机";
+
+/* Class = "UILabel"; text = "Allow access to your camera to start taking photos with the Curios app."; ObjectID = "wX1-CX-cHo"; */
+"wX1-CX-cHo.text" = "允许奇思应用使用你的相机拍照。";

@@ -10,6 +10,8 @@ import UIKit
 
 class CTAPhotoPreviewView: UIView {
     
+    var templateImage: UIImage?
+    
     var image: UIImage? {
         get { return imageView.image }
         set { loadImage(newValue) }
@@ -22,7 +24,7 @@ class CTAPhotoPreviewView: UIView {
     var ignoreRect: CGRect {
         return CGRect(x: 0, y: bounds.maxY - 44.0, width: bounds.width, height: 44.0)
     }
-    
+    let templateImageView = UIImageView()
     private let imageView = UIImageView()
     private let scrollView = UIScrollView()
     private var tap: UITapGestureRecognizer!
@@ -57,6 +59,14 @@ extension CTAPhotoPreviewView {
         scrollView.delegate = self
         
         scrollView.addSubview(imageView)
+        
+        addSubview(templateImageView)
+        templateImageView.translatesAutoresizingMaskIntoConstraints = false
+        templateImageView.leadingAnchor.constraintEqualToAnchor(leadingAnchor, constant: 0).active = true
+        templateImageView.bottomAnchor.constraintEqualToAnchor(bottomAnchor, constant: 0).active = true
+        templateImageView.trailingAnchor.constraintEqualToAnchor(trailingAnchor, constant: 0).active = true
+        templateImageView.topAnchor.constraintEqualToAnchor(topAnchor, constant: 0).active = true
+        templateImageView.image = templateImage
     }
     
     func setupStyle() {

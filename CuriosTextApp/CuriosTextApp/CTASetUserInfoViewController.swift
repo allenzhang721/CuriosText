@@ -97,6 +97,7 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         self.view.addSubview(self.nickNameView)
         self.userNickNameTextInput = UITextField.init(frame: CGRect.init(x:27*self.getHorRate(), y: 12, width: 280*self.getHorRate(), height: 50))
         self.userNickNameTextInput.center = CGPoint.init(x: bouns.width/2, y: 37)
+        self.userNickNameTextInput.font = UIFont.systemFontOfSize(16)
         self.userNickNameTextInput.placeholder = NSLocalizedString("UserNamePlaceholder", comment: "")
         self.userNickNameTextInput.delegate = self
         self.userNickNameTextInput.clearButtonMode = .Always
@@ -113,7 +114,7 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         self.view.addSubview(self.descView)
         self.userDescTextView = UITextView.init(frame: CGRect.init(x: 27*self.getHorRate(), y: 12, width: 280*self.getHorRate(), height: 50))
         self.userDescTextView.center = CGPoint.init(x: bouns.width/2, y: 37)
-        self.userDescTextView.font = UIFont.systemFontOfSize(18)
+        self.userDescTextView.font = UIFont.systemFontOfSize(16)
         self.userDescTextView.scrollEnabled = false
         self.userDescTextView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
         self.userDescTextView.delegate = self
@@ -248,7 +249,7 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         if self.setUser != nil {
             let newText = self.userDescTextView.text
             let newStr = NSString(string: newText!)
-            if newStr.length > 0 && newStr.length < 101{
+            if newStr.length > 0 && newStr.length < 141{
                 self.showLoadingViewByView(self.saveButton)
                 CTAUserDomain.getInstance().updateUserDesc(self.setUser!.userID, userDesc: newText!, compelecationBlock: { (info) -> Void in
                     self.hideLoadingViewByView(self.saveButton)
@@ -350,8 +351,8 @@ extension CTASetUserInfoViewController: UITextViewDelegate{
         let textStr = NSString(string: viewText!)
         let textHeight = textView.contentSize.height
         var needReset:Bool = false
-        if textHeight < 150{
-            if textStr.length < 101 {
+        if textHeight < 200{
+            if textStr.length < 141 {
                 needReset = false
             }else {
                 needReset = true

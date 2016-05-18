@@ -1,4 +1,10 @@
 
+/* Class = "UIButton"; normalTitle = "Enable Library Access"; ObjectID = "0Hf-5Y-cKN"; */
+"0Hf-5Y-cKN.normalTitle" = "Enable Library Access";
+
+/* Class = "UILabel"; text = "Please Allow Access to Your Photos"; ObjectID = "5Ii-76-L77"; */
+"5Ii-76-L77.text" = "Please Allow Access to Your Photos";
+
 /* Class = "UIBarButtonItem"; title = "取消"; ObjectID = "7ve-Kd-YWw"; */
 "7ve-Kd-YWw.title" = "Cancel";
 
@@ -7,3 +13,6 @@
 
 /* Class = "UIBarButtonItem"; title = "确定"; ObjectID = "qJs-Tb-L3B"; */
 "qJs-Tb-L3B.title" = "Done";
+
+/* Class = "UILabel"; text = "This allows Curios to share photos from your library and save photos to your camera roll."; ObjectID = "qKw-Ob-JcH"; */
+"qKw-Ob-JcH.text" = "This allows Curios to share photos from your library and save photos to your camera roll.";

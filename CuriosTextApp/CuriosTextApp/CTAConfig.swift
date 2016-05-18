@@ -11,8 +11,8 @@ import Foundation
 struct CTAConfigs {
     
     struct weibo {
-        static let appID = ""
-        static let appKey = ""
+        static let appID = "1479783390"
+        static let appKey = "d0e3f55717550bb32938d5b6c19c86ff"
     }
     
     struct weChat {

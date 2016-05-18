@@ -86,6 +86,7 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-CuriosTextApp/AFNetworking.framework"
   install_framework "Pods-CuriosTextApp/Alamofire.framework"
+  install_framework "Pods-CuriosTextApp/FLAnimatedImage.framework"
   install_framework "Pods-CuriosTextApp/HappyDNS.framework"
   install_framework "Pods-CuriosTextApp/KeyboardMan.framework"
   install_framework "Pods-CuriosTextApp/Kingfisher.framework"
@@ -102,6 +103,7 @@ fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-CuriosTextApp/AFNetworking.framework"
   install_framework "Pods-CuriosTextApp/Alamofire.framework"
+  install_framework "Pods-CuriosTextApp/FLAnimatedImage.framework"
   install_framework "Pods-CuriosTextApp/HappyDNS.framework"
   install_framework "Pods-CuriosTextApp/KeyboardMan.framework"
   install_framework "Pods-CuriosTextApp/Kingfisher.framework"

@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import SVProgressHUD
 
 class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTALoadingProtocol, CTALoginProtocol{
     
@@ -90,7 +91,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.scrollView = UIScrollView.init(frame: CGRect.init(x: 0, y: 44, width: bouns.width, height: bouns.height-44))
         self.view.addSubview(self.scrollView)
         
-        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bouns.width - 60)/2, y: 30, width: 60, height: 60))
+        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bouns.width - 60)/2, y: 20, width: 60*self.getHorRate(), height: 60*self.getHorRate()))
         self.userIconImage.image = UIImage(named: "default-usericon")
         self.cropImageCircle(self.userIconImage)
         self.scrollView.addSubview(self.userIconImage)
@@ -111,7 +112,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.userNickNameLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userNickNameLabel)
         let userNickNameTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y, width: 50, height: 25))
-        userNickNameTitle.font = UIFont.systemFontOfSize(18)
+        userNickNameTitle.font = UIFont.systemFontOfSize(16)
         userNickNameTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         userNickNameTitle.text = NSLocalizedString("UserNickNameLabel", comment: "")
         userNickNameTitle.sizeToFit()
@@ -132,7 +133,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.userSexLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userSexLabel)
         let userSexTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userSexLabel.frame.origin.y, width: 50, height: 25))
-        userSexTitle.font = UIFont.systemFontOfSize(18)
+        userSexTitle.font = UIFont.systemFontOfSize(16)
         userSexTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         userSexTitle.text = NSLocalizedString("UserSexLabel", comment: "")
         userSexTitle.sizeToFit()
@@ -153,7 +154,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.userRegionLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userRegionLabel)
 //        let userRegionTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userRegionLabel.frame.origin.y, width: 50, height: 25))
-//        userRegionTitle.font = UIFont.systemFontOfSize(18)
+//        userRegionTitle.font = UIFont.systemFontOfSize(16)
 //        userRegionTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
 //        userRegionTitle.text = NSLocalizedString("UserRegion", comment: "")
 //        userRegionTitle.sizeToFit()
@@ -176,7 +177,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.userDescLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userDescLabel)
         let userDesxTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userDescLabel.frame.origin.y, width: 50, height: 25))
-        userDesxTitle.font = UIFont.systemFontOfSize(18)
+        userDesxTitle.font = UIFont.systemFontOfSize(16)
         userDesxTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         userDesxTitle.text = NSLocalizedString("UserDesc", comment: "")
         userDesxTitle.sizeToFit()
@@ -374,8 +375,9 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
             let alertTile = NSLocalizedString("ConfirmLogoutLabel", comment: "")
             self.showSheetAlert(alertTile, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
                 if index != -1{
-                    CTAUserManager.logout()
-                    self.showLoginView()
+                    if CTAUserManager.logout() {
+                        self.showLoginView()
+                    }
                 }
             }
         }
@@ -408,13 +410,14 @@ extension CTASettingViewController: UIImagePickerControllerDelegate, UINavigatio
 
 extension CTASettingViewController: CTAUploadIconProtocol{
     func uploadBegin(){
-        self.showLoadingViewByView(nil)
+        SVProgressHUD.setDefaultMaskType(.Clear)
+        SVProgressHUD.showWithStatus(NSLocalizedString("UploadProgressLabel", comment: ""))
     }
     
     func uploadComplete(result:Bool, iconPath:String, icon:UIImage?){
         if result{
             CTAUserDomain.getInstance().updateUserIconURL(self.loginUser!.userID, userIconURL: iconPath, compelecationBlock: { (info) -> Void in
-                self.hideLoadingViewByView(nil)
+                SVProgressHUD.dismiss()
                 if info.result{
                     self.loginUser!.userIconURL = iconPath
                     self.changeLoginUser()
@@ -425,7 +428,7 @@ extension CTASettingViewController: CTAUploadIconProtocol{
                 }
             })
         }else {
-            self.hideLoadingViewByView(nil)
+            SVProgressHUD.dismiss()
         }
     }
 }

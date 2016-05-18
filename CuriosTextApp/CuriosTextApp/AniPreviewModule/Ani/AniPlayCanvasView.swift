@@ -48,12 +48,44 @@ class AniPlayCanvasView: CanvasView {
     }
 }
 
-// Using progress to control animation,
+// Using progress to control animation, can be use to generate gif.
 extension AniPlayCanvasView {
     
+    enum PlayNextResult {
+        case Next(duration: CGFloat)
+        case Failture
+    }
     
+    var progress: CGFloat {
+        set {
+            guard let currentNode = currentNode else { return }
+            layer.timeOffset = CFTimeInterval(currentNode.duration) * CFTimeInterval(newValue)
+        }
+        
+        get {
+            guard let currentNode = currentNode else { return 0 }
+            return CGFloat(layer.timeOffset / CFTimeInterval(currentNode.duration))
+        }
+    }
     
+    func progressBegan() -> PlayNextResult {
+        if let currentNode = currentNode {
+            return .Next(duration: CGFloat(currentNode.duration))
+        } else {
+            return .Failture
+        }
+    }
     
+    func progressPlayNext() -> PlayNextResult {
+        reset()
+        currentNode = currentNode?.nextNode
+        if let aniNode = currentNode {
+            readyWith(aniNode)
+            return .Next(duration: CGFloat(aniNode.duration))
+        } else {
+            return .Failture
+        }
+    } 
 }
 
 extension AniPlayCanvasView {

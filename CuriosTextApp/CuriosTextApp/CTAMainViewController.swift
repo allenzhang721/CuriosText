@@ -43,10 +43,8 @@ class CTAMainViewController: UIViewController, CTAAddBarProtocol, CTALoginProtoc
     
     func initView(){
         
-        let pageNavigate = UINavigationController(rootViewController: pageViewController)
-        pageNavigate.navigationBarHidden = true
-        self.addChildViewController(pageNavigate)
-        self.view.addSubview(pageNavigate.view)
+        self.addChildViewController(pageViewController)
+        self.view.addSubview(pageViewController.view)
         
         pageViewController.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
         pageViewController.dataSource = pageControllers

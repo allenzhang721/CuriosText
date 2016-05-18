@@ -50,8 +50,8 @@ class CTAPublishViewController: UIViewController {
 //    var imageAccess: ((baseURL: NSURL, imageName: String) -> Promise<Result<CTAImageCache>>)!
     
     
-    
-    
+    private var first = true
+    var publishID: String!
     var canvas: AniCanvas!
     var aniCanvasView: AniPlayCanvasView!
     var imageRetriver: ((String, (String, UIImage?) -> ()) -> ())?
@@ -71,10 +71,13 @@ class CTAPublishViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
 
 //        previewView.publishID = publishID
+        if first {
+        first = false
         aniCanvasView.reloadData { [weak self] in
             guard let sf = self else { return }
             sf.ready(nil)
             sf.play()
+        }
         }
     }
 }
@@ -118,12 +121,18 @@ extension CTAPublishViewController {
 extension CTAPublishViewController: CTALoadingProtocol {
     
     @IBAction func publishClick(sender: AnyObject) {
-        showLoadingViewByView(publishButton)
+//        showLoadingViewByView(publishButton)
         publish()
     }
     
     @IBAction func dismiss(sender: AnyObject) {
         dismiss()
+    }
+    
+    @IBAction func makeGIFClick(sender: AnyObject) {
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+           self?.makeGIF()
+        }
     }
 }
 
@@ -144,6 +153,86 @@ extension CTAPublishViewController {
     
     private func play() {
         aniCanvasView.play()
+    }
+    
+    private func makeGIF() {
+        
+        let gifCreatorVC = GIFCreateViewController()
+        gifCreatorVC.canvas = canvas
+        gifCreatorVC.publishID = publishID
+        gifCreatorVC.fakeView = view.snapshotViewAfterScreenUpdates(true)
+        gifCreatorVC.completed = {[weak self] (url, thumburl) in
+            dispatch_async(dispatch_get_main_queue(), { 
+                let message =  WXMediaMessage()
+                message.setThumbImage(UIImage(contentsOfFile: thumburl.path!))
+                
+                let ext =  WXEmoticonObject()
+                let filePath = url.path
+                ext.emoticonData = NSData(contentsOfFile:filePath!)
+                message.mediaObject = ext
+                
+                let req =  SendMessageToWXReq()
+                req.bText = false
+                req.message = message
+                req.scene = 0
+                WXApi.sendReq(req)
+                dispatch_async(dispatch_get_main_queue(), { 
+                    self?.dismissViewControllerAnimated(false, completion: {
+                    })
+                })
+            })
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            self?.presentViewController(gifCreatorVC, animated: false, completion: nil)
+        }
+        
+//        aniCanvasView.ready()
+        
+//        let result = aniCanvasView.progressBegan()
+//        
+//        switch result {
+//        case .Next(let duration):
+//            let FPS = 24
+//            let count = Int(CGFloat(FPS) * duration) + 1
+//            
+//            GIFCreator.beganWith(publishID)
+//            
+//            var thumbImage: UIImage!
+//            for i in 0..<count {
+//                let progress = CGFloat(i) / CGFloat(count)
+//                aniCanvasView.progress =  progress < 1.0 ? progress : 1.0
+//                autoreleasepool {
+//                    UIGraphicsBeginImageContext(CGSize(width: 320, height: 320))
+//                    aniCanvasView.drawViewHierarchyInRect(CGRect(origin: CGPoint.zero, size: CGSize(width: 320, height: 320)), afterScreenUpdates: true)
+//                    let image = UIGraphicsGetImageFromCurrentImageContext()
+//                    UIGraphicsEndImageContext()
+//                    
+//                    let img = UIImage(data: UIImageJPEGRepresentation(image, 0.1)!)!
+//                    if i == count - 1 { thumbImage = img }
+//                    GIFCreator.addImage(img, delay: 1.0 / CGFloat(FPS))
+//                }
+//            }
+//            
+//            GIFCreator.commitWith({ (url) in
+//                let message =  WXMediaMessage()
+//                message.setThumbImage(thumbImage)
+//                
+//                let ext =  WXEmoticonObject()
+//                let filePath = url.path
+//                ext.emoticonData = NSData(contentsOfFile:filePath!)
+//                message.mediaObject = ext
+//                
+//                let req =  SendMessageToWXReq()
+//                req.bText = false
+//                req.message = message
+//                req.scene = 0
+//                WXApi.sendReq(req)
+//            })
+//
+//        default:
+//            ()
+//        }
     }
 }
 

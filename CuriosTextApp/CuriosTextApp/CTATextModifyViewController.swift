@@ -113,8 +113,6 @@ class CTATextModifyViewController: UIViewController {
         
         keyboardMan.animateWhenKeyboardAppear = { [weak self] appearPostIndex, keyboardHeight, keyboardHeightIncrement in
             
-            print("appear \(appearPostIndex), \(keyboardHeight), \(keyboardHeightIncrement)\n")
-            
             if let strongSelf = self {
                 if let bott = strongSelf.bottomConstraint where bott.active == true {
                     bott.active = false

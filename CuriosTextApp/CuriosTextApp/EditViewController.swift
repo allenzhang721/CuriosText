@@ -57,6 +57,10 @@ class EditViewController: UIViewController {
         
         let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
         
+        let cleanPage = page.cleanEmptyContainers()
+        let image = drawPageWithNoImage(cleanPage, containImage: false)
+        cameraVC.templateImage = image
+        
         cameraVC.didSelectedImageHandler = {[weak self] image in
             if let strongSelf = self, let image = image {
 //                dispatch_async(dispatch_get_main_queue(), { 
@@ -403,9 +407,13 @@ extension EditViewController {
         case .Image:
             let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
             
+            let cleanPage = page.cleanEmptyContainers()
+            let image = drawPageWithNoImage(cleanPage)
+            cameraVC.templateImage = image
+            
             cameraVC.didSelectedImageHandler = {[weak self] image in
                 if let strongSelf = self {
-                    dispatch_async(dispatch_get_main_queue(), {
+//                    dispatch_async(dispatch_get_main_queue(), {
                         let canvasSize = strongSelf.canvasViewController.view.bounds.size
                         (container as! ImageContainerVMProtocol).updateWithImageSize(image!.size, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
                         
@@ -413,7 +421,10 @@ extension EditViewController {
                         
                         
                         strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
-                    })
+                        
+                        
+//                    })
+                    strongSelf.dismissViewControllerAnimated(false, completion: nil)
                 }
             }
             
@@ -434,6 +445,7 @@ extension EditViewController {
         let cleanPage = page.cleanEmptyContainers()
         
         publishViewController.canvas = cleanPage.toAniCanvas()
+        publishViewController.publishID = CTADocumentManager.openedDocumentPublishID!
         let retriver = {[weak self] (name: String,  handler: (String, UIImage?) -> ()) in
             if let sf = self {
                 let data = sf.document.resourceBy(name)
@@ -452,12 +464,13 @@ extension EditViewController {
             strongSelf.navigationController?.popViewControllerAnimated(true)
         }
         
+        
         publishViewController.publishWillBegan = { [weak self] in
             
             guard let strongSelf = self else {
                 return
             }
-            
+            SVProgressHUD.showProgress(0, status: "\(Int(0 * 100.0))%")
             strongSelf.beganGeneratePublishIconAndPublishWith(cleanPage)
         }
         
@@ -478,28 +491,31 @@ extension EditViewController {
                 CTADocumentManager.saveDoucment {[weak self] (success) -> Void in
                     
                     if let strongSelf = self where success {
-                        
-                        CTADocumentManager.uploadFiles({ (success, publishID, publishURL) -> Void in
                             
-                            if !success {
-                                dispatch_async(dispatch_get_main_queue(), { 
-                                    SVProgressHUD.showErrorWithStatus(LocalStrings.PublishFailure.description)
-                                })
+                        CTADocumentManager.uploadFiles({ (publishID, progress) in
+                                SVProgressHUD.showProgress(progress, status: "\(Int(progress * 100.0))%")
+                            }, completedBlock: { (success, publishID, publishURL) in
+                                if !success {
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        SVProgressHUD.showErrorWithStatus(LocalStrings.PublishFailure.description)
+                                    })
+                                    
+                                    return
+                                }
                                 
-                                return
-                            }
-                            
-                            let publishIconURL = publishID + "/" + publishName
-                            
-                            CTAPublishDomain().createPublishFile(publishID, userID: CTAUserManager.user!.userID, title: "", publishDesc: "", publishIconURL: publishIconURL, previewIconURL: "", publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
+                                let publishIconURL = publishID + "/" + publishName
                                 
-                                dispatch_async(dispatch_get_main_queue(), {
-                                    strongSelf.delegate?.EditControllerDidPublished(strongSelf)
-                                    strongSelf.dismissViewControllerAnimated(true, completion: {
-                                        
+                                CTAPublishDomain().createPublishFile(publishID, userID: CTAUserManager.user!.userID, title: "", publishDesc: "", publishIconURL: publishIconURL, previewIconURL: "", publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
+                                    
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        SVProgressHUD.dismiss()
+                                        strongSelf.delegate?.EditControllerDidPublished(strongSelf)
+                                        strongSelf.dismissViewControllerAnimated(true, completion: {
+                                            
+                                        })
                                     })
                                 })
-                            })
+
                         })
                     }
                 }
@@ -578,13 +594,9 @@ extension EditViewController: CTATabViewControllerDataSource, CTATabViewControll
     
     func tabViewController(ViewController: CTATabViewController, didChangedToIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
         
-//        print("will tab change")
-        
         guard let container = selectedContainer where container.featureTypes.count > 0 else {
             return
         }
-        
-//        print("tab change from = \(oldIndexPath?.item), to = \(indexPath.item)")
         
         selectorViewController.changeToSelector(container.featureTypes[indexPath.item])
     }

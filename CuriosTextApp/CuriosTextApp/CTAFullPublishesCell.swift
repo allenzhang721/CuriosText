@@ -26,8 +26,6 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
     var cellImageView:UIImageView!
     
-//    var previewView: CTAPreviewCanvasView!
-    
     var previewView: AniPlayCanvasView!
     
     var animationEnable:Bool = false
@@ -78,6 +76,10 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     }
     
     func reloadCell(){
+        self.bringSubviewToFront(self.cellImageView)
+        if self.cellColorView != nil {
+            self.bringSubviewToFront(self.cellColorView!)
+        }
         if publishModel != nil {
             self.imgLoaded = false
             let defaultImg = self.getDefaultIcon(self.bounds)
@@ -91,37 +93,31 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                 }
             }
         }else{
-            self.setDefaultImg()
+            self.resetCell()
         }
     }
     
-    func setDefaultImg(){
+    func resetCell(){
         let whiteImg = self.getWhiteBg(self.bounds)
         self.cellImageView.image = whiteImg
+        if self.isLoadComplete{
+            self.previewView.dataSource = nil
+            self.previewView.aniDataSource = nil
+            self.previewView.reloadData({
+            })
+        }
     }
     
     func loadAnimation(){
         if self.animationEnable{
             if self.publishModel != nil {
-                if self.previewView == nil {
-//                    let preview = CTAPreviewCanvasView(frame: bounds)
-//                    preview.center = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0)
-//                    preview.datasource = self
-//                    self.addSubview(preview)
-//                    self.previewView = preview
-//                    self.previewView.hidden = true
-//                    self.previewView.backgroundColor = UIColor.whiteColor()
-//                    self.cropImageRound(self.previewView)
-//                    self.bringSubviewToFront(self.cellImageView)
-//                    if self.cellColorView != nil {
-//                        self.bringSubviewToFront(self.cellColorView!)
-//                    }
-                }
                 self.isLoadComplete = false
                 let purl = CTAFilePath.publishFilePath
                 let url = purl + publishModel!.publishURL
-//                self.previewView.hidden = true
-                self.cellImageView.hidden = false
+                self.bringSubviewToFront(self.cellImageView)
+                if self.cellColorView != nil {
+                    self.bringSubviewToFront(self.cellColorView!)
+                }
                 BlackCatManager.sharedManager.retrieveDataWithURL(NSURL(string: url)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self](data, error, cacheType, URL) -> () in
                     if let strongSelf = self {
                         if let data = data,
@@ -132,40 +128,27 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                                     let acanvas = page.toAniCanvas()
                                     strongSelf.canvas = acanvas
                                     // get Image
-                                    
                                     let url = NSURL(string: CTAFilePath.publishFilePath + publishModel.publishID)!
-                                    
                                     for c in acanvas.containers {
                                         if let content = c.contents.first where content.type == .Image {
                                             let imageName = content.content.source.ImageName
                                             let imageURL = url.URLByAppendingPathComponent(imageName)
                                             KingfisherManager.sharedManager.retrieveImageWithURL(imageURL, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self] (image, error, cacheType, imageURL) in
                                                 guard let sf = self else { return }
-                                                let retriver = { (name: String,  handler: (String, UIImage?) -> ()) in
+                                                if error != nil {
+                                                    sf.readyFailed()
+                                                }else {
+                                                    let retriver = { (name: String,  handler: (String, UIImage?) -> ()) in
                                                         handler(name, image)
+                                                    }
+                                                    c.imageRetriver = retriver
+                                                    sf.readyPreView(acanvas, publishModel: publishModel, completed: sf.readyCompleted)
                                                 }
-                                                c.imageRetriver = retriver
-                                                sf.readyPreView(acanvas, publishModel: publishModel, completed: sf.readyCompleted)
+                                                
                                             })
-                                            
                                             break
                                         }
                                     }
-                                    
-//                                    strongSelf.previewView.imageAccessBaseURL = url
-//                                    strongSelf.previewView.imageAccess = downloadImage
-//                                    strongSelf.previewView.reloadData() {
-//                                        dispatch_async(dispatch_get_main_queue(), {[weak self] in
-//                                            guard let strongSelf = self else { return }
-//                                            strongSelf.isLoadComplete = true
-//                                            strongSelf.previewView.hidden = false
-//                                            strongSelf.cellImageView.hidden = true
-//                                            if strongSelf.loadCompeteHandler != nil {
-//                                                strongSelf.loadCompeteHandler!()
-//                                                strongSelf.loadCompeteHandler = nil
-//                                            }
-//                                            })
-//                                    }
                                 }
                             })
                         }
@@ -181,7 +164,6 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
             guard let sf = self else {return}
             if sf.previewView == nil {
                 let previewView = AniPlayCanvasView(frame: CGRect(origin: CGPoint.zero, size: canvas.size))
-                previewView.hidden = true
                 let scale = min(sf.bounds.size.width / canvas.size.width, sf.bounds.size.height / canvas.size.height)
                 previewView.center = CGPoint(x: sf.bounds.midX, y: sf.bounds.midY)
                 previewView.transform = CGAffineTransformMakeScale(scale, scale)
@@ -189,9 +171,8 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                 previewView.completedBlock = {[weak self] in
                     self?.playComplete()
                 }
-                //            layer.addSublayer(previewView.layer)
                 sf.addSubview(previewView)
-//                self?.layer.addSublayer(previewView.layer)
+                sf.sendSubviewToBack(previewView)
                 sf.previewView = previewView
                 sf.cropImageRound(previewView)
                 sf.bringSubviewToFront(sf.cellImageView)
@@ -201,7 +182,6 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
             }
             
             let previewView = sf.previewView
-            
             previewView.dataSource = canvas
             previewView.aniDataSource = canvas
             previewView.reloadData { [weak self] in
@@ -217,11 +197,24 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
         dispatch_async(dispatch_get_main_queue(), {[weak self] in
             guard let strongSelf = self else { return }
             strongSelf.isLoadComplete = true
-            strongSelf.previewView.hidden = false
-            strongSelf.cellImageView.hidden = true
+            strongSelf.bringSubviewToFront(strongSelf.previewView)
+            if strongSelf.cellColorView != nil {
+                strongSelf.bringSubviewToFront(strongSelf.cellColorView!)
+            }
             if strongSelf.loadCompeteHandler != nil {
                 strongSelf.loadCompeteHandler!()
                 strongSelf.loadCompeteHandler = nil
+            }
+        })
+    }
+    
+    func readyFailed() -> (){
+        dispatch_async(dispatch_get_main_queue(), {[weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.isLoadComplete = false
+            strongSelf.bringSubviewToFront(strongSelf.cellImageView)
+            if strongSelf.cellColorView != nil {
+                strongSelf.bringSubviewToFront(strongSelf.cellColorView!)
             }
         })
     }
@@ -246,7 +239,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     func playComplete(){
         self.isPlaying = false
         self.isPause = false
-        let time: NSTimeInterval = NSTimeInterval(2.0)
+        let time: NSTimeInterval = NSTimeInterval(1.0)
         let delay = dispatch_time(DISPATCH_TIME_NOW,
                                   Int64(time * Double(NSEC_PER_SEC)))
         dispatch_after(delay, dispatch_get_main_queue()) { [weak self] in
@@ -303,7 +296,18 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                 completionHandler(img: defaultImg)
             }
         }
-        
+    }
+    
+    func getPage() -> CTAPage?{
+        if self.isLoadComplete{
+            if self.publishModel != nil {
+                return self.page
+            }else {
+                return nil
+            }
+        }else {
+            return nil
+        }
     }
 }
 

@@ -20,6 +20,8 @@
 		2C0404621C3EC31100A5B017 /* CTARotatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0404611C3EC31100A5B017 /* CTARotatorView.swift */; };
 		2C0404661C3EC58100A5B017 /* CTASelectorsFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0404651C3EC58100A5B017 /* CTASelectorsFlowLayout.swift */; };
 		2C0404681C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0404671C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift */; };
+		2C042B741CE3226000C13FED /* CTAHeartAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C042B731CE3226000C13FED /* CTAHeartAnimationView.swift */; };
+		2C042B761CE3248E00C13FED /* Heart.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C042B751CE3248E00C13FED /* Heart.storyboard */; };
 		2C05BB861C9FAA7200667A75 /* PhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C05BB851C9FAA7200667A75 /* PhotoHelper.swift */; };
 		2C09F2471C896EED00F6034F /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C09F2461C896EED00F6034F /* PromiseKit.framework */; };
 		2C0C14E61C60D95A0011A31D /* CTASetUserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0C14E51C60D95A0011A31D /* CTASetUserNameViewController.swift */; };
@@ -27,6 +29,10 @@
 		2C0C14EA1C60D9640011A31D /* CTASetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0C14E81C60D9640011A31D /* CTASetPasswordViewController.swift */; };
 		2C10F7981C77540F00CCE34A /* CTAMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C10F7971C77540F00CCE34A /* CTAMainViewController.swift */; };
 		2C1312361C59966C00346804 /* CTAUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1312351C59966C00346804 /* CTAUserManager.swift */; };
+		2C160D5E1CE58C36005B67F8 /* CTAPhotoAlbumListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C160D5D1CE58C36005B67F8 /* CTAPhotoAlbumListViewController.swift */; };
+		2C160D601CE58C54005B67F8 /* PhotoAlbumList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C160D5F1CE58C54005B67F8 /* PhotoAlbumList.storyboard */; };
+		2C1A121E1CE014FD0071BD35 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C1A12111CE014FD0071BD35 /* libWeiboSDK.a */; };
+		2C1A121F1CE014FD0071BD35 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2C1A121B1CE014FD0071BD35 /* WeiboSDK.bundle */; };
 		2C1B2AAC1C3520160053BE5E /* CTASelectorsReuseableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B2AAB1C3520160053BE5E /* CTASelectorsReuseableView.swift */; };
 		2C1B88961C5F35B9000403FD /* CTAEncryptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B88951C5F35B9000403FD /* CTAEncryptManager.swift */; };
 		2C1B88A41C5F366F000403FD /* CTAPhoneProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B88A31C5F366F000403FD /* CTAPhoneProtocol.swift */; };
@@ -99,6 +105,7 @@
 		2C47F89E1C7171380068F215 /* CTAPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47F89D1C7171380068F215 /* CTAPageViewModel.swift */; };
 		2C47F8A01C7174D20068F215 /* CTATextContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47F89F1C7174D20068F215 /* CTATextContainerViewModel.swift */; };
 		2C47F8A21C7175A50068F215 /* CTAImgContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47F8A11C7175A50068F215 /* CTAImgContainerViewModel.swift */; };
+		2C4B08F81CD9F63C00A58B0E /* GIFCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4B08F71CD9F63C00A58B0E /* GIFCreateViewController.swift */; };
 		2C5378381C5C71BB004BCF40 /* CTATabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5378371C5C71BB004BCF40 /* CTATabView.swift */; };
 		2C567A691C5CBAF200F11369 /* Countries.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C567A6B1C5CBAF200F11369 /* Countries.plist */; };
 		2C5ACC121C439E8100B96CCD /* CTAStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5ACC111C439E8100B96CCD /* CTAStyleKit.swift */; };
@@ -120,6 +127,7 @@
 		2C65B66C1C4F55F8007B4DEA /* CTAAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C65B66B1C4F55F8007B4DEA /* CTAAnimation.swift */; };
 		2C65B66E1C4F690C007B4DEA /* CTAPreviewVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C65B66D1C4F690C007B4DEA /* CTAPreviewVIew.swift */; };
 		2C65B6721C4F6F4C007B4DEA /* ValueExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C65B6711C4F6F4C007B4DEA /* ValueExtension.swift */; };
+		2C66896C1CDC2B7A00B6DFD2 /* CTAGIFProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C66896B1CDC2B7A00B6DFD2 /* CTAGIFProtocol.swift */; };
 		2C6C67FF1C350A4800CCE81C /* CTALineFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6C67FE1C350A4800CCE81C /* CTALineFlowLayout.swift */; };
 		2C6C68011C350A8500CCE81C /* CTASelectorCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6C68001C350A8500CCE81C /* CTASelectorCollectionView.swift */; };
 		2C6C68031C350B4400CCE81C /* CTAScollBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6C68021C350B4400CCE81C /* CTAScollBarCell.swift */; };
@@ -182,6 +190,15 @@
 		2CB380B71C4D0D1F009A681A /* CTAPreviewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB380B61C4D0D1F009A681A /* CTAPreviewLayout.swift */; };
 		2CB380B91C4D20E5009A681A /* CTAPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB380B81C4D20E5009A681A /* CTAPreviewCell.swift */; };
 		2CB3C8C21C859B8E00CF2BD2 /* ImagePickerResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB3C8C11C859B8E00CF2BD2 /* ImagePickerResource.swift */; };
+		2CB66A961CD8566B006B9282 /* GIFCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB66A951CD8566B006B9282 /* GIFCreator.swift */; };
+		2CB66A9D1CD86F6C006B9282 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB66A981CD86F6C006B9282 /* libWeChatSDK.a */; };
+		2CB66A9E1CD86F6C006B9282 /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2CB66A991CD86F6C006B9282 /* read_me.txt */; };
+		2CB66AA01CD872B3006B9282 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB66A9F1CD872B3006B9282 /* SystemConfiguration.framework */; };
+		2CB66AA21CD872CE006B9282 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB66AA11CD872CE006B9282 /* libsqlite3.0.tbd */; };
+		2CB66AAC1CD8A86E006B9282 /* ANGifBitmap.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB66AA51CD8A86E006B9282 /* ANGifBitmap.m */; };
+		2CB66AAD1CD8A86E006B9282 /* ANGifEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB66AA71CD8A86E006B9282 /* ANGifEncoder.m */; };
+		2CB66AAE1CD8A86E006B9282 /* ANImageBitmapRep.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB66AA91CD8A86E006B9282 /* ANImageBitmapRep.m */; };
+		2CB66AAF1CD8A86E006B9282 /* BitBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB66AAB1CD8A86E006B9282 /* BitBuffer.m */; };
 		2CC1C9411C58D36800844A33 /* CTABarItemsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC1C9401C58D36800844A33 /* CTABarItemsFactory.swift */; };
 		2CC5744B1C89D3F70083DFFF /* CTAPublishCacheProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC5744A1C89D3F70083DFFF /* CTAPublishCacheProtocol.swift */; };
 		2CC5A7CB1C89B82100A773E9 /* AsyncDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC5A7CA1C89B82100A773E9 /* AsyncDrawing.swift */; };
@@ -203,6 +220,7 @@
 		2CC9307F1C7464D000FB02A9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC9307E1C7464D000FB02A9 /* AVFoundation.framework */; };
 		2CCBE4961C870AA4001E1CD8 /* CTAShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCBE4951C870AA4001E1CD8 /* CTAShareView.swift */; };
 		2CCD94DC1C43B4AA001E5D08 /* CTATextSpacingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */; };
+		2CCFD54B1CE49CAC00D58043 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CCFD54D1CE49CAC00D58043 /* Share.storyboard */; };
 		2CD08F5D1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD08F5C1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift */; };
 		2CD11A9A1CB7545F00A79305 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD11A8D1CB7545F00A79305 /* Animation.swift */; };
 		2CD11A9B1CB7545F00A79305 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD11A8E1CB7545F00A79305 /* Canvas.swift */; };
@@ -240,6 +258,9 @@
 		2CD4DC0A1CA4E25F00790A55 /* CTACycleColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD4DC091CA4E25F00790A55 /* CTACycleColorView.swift */; };
 		2CD71E311C72D5C6007B635C /* KeyboardMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD71E301C72D5C6007B635C /* KeyboardMan.framework */; };
 		2CD8F4091C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8F4081C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift */; };
+		2CDDE6481CE16E0200B6E6A9 /* FLAnimatedImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CDDE6471CE16E0200B6E6A9 /* FLAnimatedImage.framework */; };
+		2CDDE64D1CE1732900B6E6A9 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDE64C1CE1732900B6E6A9 /* ShareViewController.swift */; };
+		2CDDE64F1CE18BED00B6E6A9 /* animation.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2CDDE64E1CE18BED00B6E6A9 /* animation.gif */; };
 		2CDDF5091C5F3BE00019FC83 /* AESCrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDF5021C5F3BE00019FC83 /* AESCrypt.m */; };
 		2CDDF50A1C5F3BE00019FC83 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDF5041C5F3BE00019FC83 /* NSData+Base64.m */; };
 		2CDDF50B1C5F3BE00019FC83 /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDF5061C5F3BE00019FC83 /* NSData+CommonCrypto.m */; };
@@ -330,6 +351,8 @@
 		2C0404631C3EC35D00A5B017 /* Tools.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Tools.playground; sourceTree = "<group>"; };
 		2C0404651C3EC58100A5B017 /* CTASelectorsFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorsFlowLayout.swift; sourceTree = "<group>"; };
 		2C0404671C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorRotatorCell.swift; sourceTree = "<group>"; };
+		2C042B731CE3226000C13FED /* CTAHeartAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAHeartAnimationView.swift; sourceTree = "<group>"; };
+		2C042B751CE3248E00C13FED /* Heart.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Heart.storyboard; sourceTree = "<group>"; };
 		2C05BB851C9FAA7200667A75 /* PhotoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoHelper.swift; sourceTree = "<group>"; };
 		2C09F2461C896EED00F6034F /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = "Pods/../build/Debug-iphoneos/PromiseKit.framework"; sourceTree = "<group>"; };
 		2C0C14E51C60D95A0011A31D /* CTASetUserNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASetUserNameViewController.swift; sourceTree = "<group>"; };
@@ -337,6 +360,25 @@
 		2C0C14E81C60D9640011A31D /* CTASetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASetPasswordViewController.swift; sourceTree = "<group>"; };
 		2C10F7971C77540F00CCE34A /* CTAMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAMainViewController.swift; sourceTree = "<group>"; };
 		2C1312351C59966C00346804 /* CTAUserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUserManager.swift; sourceTree = "<group>"; };
+		2C160D5D1CE58C36005B67F8 /* CTAPhotoAlbumListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPhotoAlbumListViewController.swift; sourceTree = "<group>"; };
+		2C160D5F1CE58C54005B67F8 /* PhotoAlbumList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PhotoAlbumList.storyboard; sourceTree = "<group>"; };
+		2C1A12111CE014FD0071BD35 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
+		2C1A12121CE014FD0071BD35 /* WBHttpRequest+WeiboGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboGame.h"; sourceTree = "<group>"; };
+		2C1A12131CE014FD0071BD35 /* WBHttpRequest+WeiboShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboShare.h"; sourceTree = "<group>"; };
+		2C1A12141CE014FD0071BD35 /* WBHttpRequest+WeiboToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboToken.h"; sourceTree = "<group>"; };
+		2C1A12151CE014FD0071BD35 /* WBHttpRequest+WeiboUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboUser.h"; sourceTree = "<group>"; };
+		2C1A12161CE014FD0071BD35 /* WBHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBHttpRequest.h; sourceTree = "<group>"; };
+		2C1A12171CE014FD0071BD35 /* WBSDKBasicButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSDKBasicButton.h; sourceTree = "<group>"; };
+		2C1A12181CE014FD0071BD35 /* WBSDKCommentButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSDKCommentButton.h; sourceTree = "<group>"; };
+		2C1A12191CE014FD0071BD35 /* WBSDKRelationshipButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSDKRelationshipButton.h; sourceTree = "<group>"; };
+		2C1A121A1CE014FD0071BD35 /* WeiboSDK+Statistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WeiboSDK+Statistics.h"; sourceTree = "<group>"; };
+		2C1A121B1CE014FD0071BD35 /* WeiboSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WeiboSDK.bundle; sourceTree = "<group>"; };
+		2C1A121C1CE014FD0071BD35 /* WeiboSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSDK.h; sourceTree = "<group>"; };
+		2C1A121D1CE014FD0071BD35 /* WeiboUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboUser.h; sourceTree = "<group>"; };
+		2C1A12601CE07C250071BD35 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Photo.strings; sourceTree = "<group>"; };
+		2C1A12621CE07C430071BD35 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Photo.strings"; sourceTree = "<group>"; };
+		2C1A12641CE081570071BD35 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Camera.strings; sourceTree = "<group>"; };
+		2C1A12661CE081660071BD35 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Camera.strings"; sourceTree = "<group>"; };
 		2C1B2AAB1C3520160053BE5E /* CTASelectorsReuseableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorsReuseableView.swift; sourceTree = "<group>"; };
 		2C1B88951C5F35B9000403FD /* CTAEncryptManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAEncryptManager.swift; sourceTree = "<group>"; };
 		2C1B88A31C5F366F000403FD /* CTAPhoneProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPhoneProtocol.swift; sourceTree = "<group>"; };
@@ -418,6 +460,7 @@
 		2C47F89D1C7171380068F215 /* CTAPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPageViewModel.swift; sourceTree = "<group>"; };
 		2C47F89F1C7174D20068F215 /* CTATextContainerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATextContainerViewModel.swift; sourceTree = "<group>"; };
 		2C47F8A11C7175A50068F215 /* CTAImgContainerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAImgContainerViewModel.swift; sourceTree = "<group>"; };
+		2C4B08F71CD9F63C00A58B0E /* GIFCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GIFCreateViewController.swift; sourceTree = "<group>"; };
 		2C5378371C5C71BB004BCF40 /* CTATabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATabView.swift; sourceTree = "<group>"; };
 		2C567A6A1C5CBAF200F11369 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/Countries.plist; sourceTree = "<group>"; };
 		2C567A6C1C5CBAF500F11369 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/Countries.plist"; sourceTree = "<group>"; };
@@ -438,16 +481,13 @@
 		2C610A361C902BCE00DFE315 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ImagePicker.strings; sourceTree = "<group>"; };
 		2C610A381C902BCF00DFE315 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/ImagePicker.strings"; sourceTree = "<group>"; };
 		2C610A3A1C902BF100DFE315 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Camera.storyboard; sourceTree = "<group>"; };
-		2C610A3D1C902BF400DFE315 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Camera.strings; sourceTree = "<group>"; };
-		2C610A3F1C902BF600DFE315 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Camera.strings"; sourceTree = "<group>"; };
 		2C610A411C902C0B00DFE315 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Photo.storyboard; sourceTree = "<group>"; };
-		2C610A441C902C0E00DFE315 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Photo.strings; sourceTree = "<group>"; };
-		2C610A461C902C0F00DFE315 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Photo.strings"; sourceTree = "<group>"; };
 		2C65B6671C4F514D007B4DEA /* Preview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Preview.storyboard; sourceTree = "<group>"; };
 		2C65B6691C4F517A007B4DEA /* CTAPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewViewController.swift; sourceTree = "<group>"; };
 		2C65B66B1C4F55F8007B4DEA /* CTAAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAnimation.swift; sourceTree = "<group>"; };
 		2C65B66D1C4F690C007B4DEA /* CTAPreviewVIew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewVIew.swift; sourceTree = "<group>"; };
 		2C65B6711C4F6F4C007B4DEA /* ValueExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueExtension.swift; sourceTree = "<group>"; };
+		2C66896B1CDC2B7A00B6DFD2 /* CTAGIFProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAGIFProtocol.swift; sourceTree = "<group>"; };
 		2C6C67FE1C350A4800CCE81C /* CTALineFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTALineFlowLayout.swift; sourceTree = "<group>"; };
 		2C6C68001C350A8500CCE81C /* CTASelectorCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorCollectionView.swift; sourceTree = "<group>"; };
 		2C6C68021C350B4400CCE81C /* CTAScollBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAScollBarCell.swift; sourceTree = "<group>"; };
@@ -512,6 +552,22 @@
 		2CB380B61C4D0D1F009A681A /* CTAPreviewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewLayout.swift; sourceTree = "<group>"; };
 		2CB380B81C4D20E5009A681A /* CTAPreviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewCell.swift; sourceTree = "<group>"; };
 		2CB3C8C11C859B8E00CF2BD2 /* ImagePickerResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerResource.swift; sourceTree = "<group>"; };
+		2CB66A951CD8566B006B9282 /* GIFCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GIFCreator.swift; sourceTree = "<group>"; };
+		2CB66A981CD86F6C006B9282 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		2CB66A991CD86F6C006B9282 /* read_me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = read_me.txt; sourceTree = "<group>"; };
+		2CB66A9A1CD86F6C006B9282 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		2CB66A9B1CD86F6C006B9282 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		2CB66A9C1CD86F6C006B9282 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		2CB66A9F1CD872B3006B9282 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		2CB66AA11CD872CE006B9282 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		2CB66AA41CD8A86E006B9282 /* ANGifBitmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifBitmap.h; sourceTree = "<group>"; };
+		2CB66AA51CD8A86E006B9282 /* ANGifBitmap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANGifBitmap.m; sourceTree = "<group>"; };
+		2CB66AA61CD8A86E006B9282 /* ANGifEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifEncoder.h; sourceTree = "<group>"; };
+		2CB66AA71CD8A86E006B9282 /* ANGifEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANGifEncoder.m; sourceTree = "<group>"; };
+		2CB66AA81CD8A86E006B9282 /* ANImageBitmapRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANImageBitmapRep.h; sourceTree = "<group>"; };
+		2CB66AA91CD8A86E006B9282 /* ANImageBitmapRep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANImageBitmapRep.m; sourceTree = "<group>"; };
+		2CB66AAA1CD8A86E006B9282 /* BitBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitBuffer.h; sourceTree = "<group>"; };
+		2CB66AAB1CD8A86E006B9282 /* BitBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BitBuffer.m; sourceTree = "<group>"; };
 		2CC1C9401C58D36800844A33 /* CTABarItemsFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTABarItemsFactory.swift; sourceTree = "<group>"; };
 		2CC5744A1C89D3F70083DFFF /* CTAPublishCacheProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishCacheProtocol.swift; sourceTree = "<group>"; };
 		2CC5A7CA1C89B82100A773E9 /* AsyncDrawing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncDrawing.swift; sourceTree = "<group>"; };
@@ -534,6 +590,9 @@
 		2CC9307E1C7464D000FB02A9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		2CCBE4951C870AA4001E1CD8 /* CTAShareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAShareView.swift; sourceTree = "<group>"; };
 		2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATextSpacingView.swift; sourceTree = "<group>"; };
+		2CCFD54C1CE49CAC00D58043 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Share.storyboard; sourceTree = "<group>"; };
+		2CCFD54F1CE49CC700D58043 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Share.strings; sourceTree = "<group>"; };
+		2CCFD5511CE49CCC00D58043 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Share.strings"; sourceTree = "<group>"; };
 		2CD08F5C1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAnimationPlayNodeManager.swift; sourceTree = "<group>"; };
 		2CD11A8D1CB7545F00A79305 /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		2CD11A8E1CB7545F00A79305 /* Canvas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
@@ -571,6 +630,9 @@
 		2CD4DC091CA4E25F00790A55 /* CTACycleColorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACycleColorView.swift; sourceTree = "<group>"; };
 		2CD71E301C72D5C6007B635C /* KeyboardMan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KeyboardMan.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/CuriosTextApp-ghmaohhqthcdzjazajbpgawqdsoq/Build/Products/Debug-iphonesimulator/KeyboardMan.framework"; sourceTree = "<group>"; };
 		2CD8F4081C4633B200DFC649 /* CTAVerticalItemFontsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAVerticalItemFontsCollectionViewCell.swift; sourceTree = "<group>"; };
+		2CDDE6471CE16E0200B6E6A9 /* FLAnimatedImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLAnimatedImage.framework; path = "Pods/../build/Debug-iphoneos/FLAnimatedImage.framework"; sourceTree = "<group>"; };
+		2CDDE64C1CE1732900B6E6A9 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		2CDDE64E1CE18BED00B6E6A9 /* animation.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = animation.gif; sourceTree = "<group>"; };
 		2CDDF5001C5F3B860019FC83 /* CuriosTextApp-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CuriosTextApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		2CDDF5011C5F3BE00019FC83 /* AESCrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AESCrypt.h; path = AESEncypt/AESCrypt.h; sourceTree = SOURCE_ROOT; };
 		2CDDF5021C5F3BE00019FC83 /* AESCrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AESCrypt.m; path = AESEncypt/AESCrypt.m; sourceTree = SOURCE_ROOT; };
@@ -644,13 +706,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CDDE6481CE16E0200B6E6A9 /* FLAnimatedImage.framework in Frameworks */,
+				2CB66AA21CD872CE006B9282 /* libsqlite3.0.tbd in Frameworks */,
+				2CB66AA01CD872B3006B9282 /* SystemConfiguration.framework in Frameworks */,
 				2C85C59A1C9FC2470042CD0F /* SVProgressHUD.framework in Frameworks */,
 				2C09F2471C896EED00F6034F /* PromiseKit.framework in Frameworks */,
+				2CB66A9D1CD86F6C006B9282 /* libWeChatSDK.a in Frameworks */,
 				2CC9307F1C7464D000FB02A9 /* AVFoundation.framework in Frameworks */,
 				2CD71E311C72D5C6007B635C /* KeyboardMan.framework in Frameworks */,
 				2CC74C9F1C5A2BFA00B536C2 /* libstdc++.tbd in Frameworks */,
 				2CC74C9A1C5A28BA00B536C2 /* libicucore.tbd in Frameworks */,
 				2CC74C961C5A27D400B536C2 /* libz.tbd in Frameworks */,
+				2C1A121E1CE014FD0071BD35 /* libWeiboSDK.a in Frameworks */,
 				2CC74C981C5A27F800B536C2 /* MessageUI.framework in Frameworks */,
 				2CC74C931C5A275C00B536C2 /* MOBFoundation.framework in Frameworks */,
 				2CC74C941C5A275C00B536C2 /* SMS_SDK.framework in Frameworks */,
@@ -699,6 +766,27 @@
 				2C0404651C3EC58100A5B017 /* CTASelectorsFlowLayout.swift */,
 			);
 			name = Layout;
+			sourceTree = "<group>";
+		};
+		2C1A12101CE014FD0071BD35 /* libWeiboSDK */ = {
+			isa = PBXGroup;
+			children = (
+				2C1A12111CE014FD0071BD35 /* libWeiboSDK.a */,
+				2C1A12121CE014FD0071BD35 /* WBHttpRequest+WeiboGame.h */,
+				2C1A12131CE014FD0071BD35 /* WBHttpRequest+WeiboShare.h */,
+				2C1A12141CE014FD0071BD35 /* WBHttpRequest+WeiboToken.h */,
+				2C1A12151CE014FD0071BD35 /* WBHttpRequest+WeiboUser.h */,
+				2C1A12161CE014FD0071BD35 /* WBHttpRequest.h */,
+				2C1A12171CE014FD0071BD35 /* WBSDKBasicButton.h */,
+				2C1A12181CE014FD0071BD35 /* WBSDKCommentButton.h */,
+				2C1A12191CE014FD0071BD35 /* WBSDKRelationshipButton.h */,
+				2C1A121A1CE014FD0071BD35 /* WeiboSDK+Statistics.h */,
+				2C1A121B1CE014FD0071BD35 /* WeiboSDK.bundle */,
+				2C1A121C1CE014FD0071BD35 /* WeiboSDK.h */,
+				2C1A121D1CE014FD0071BD35 /* WeiboUser.h */,
+			);
+			name = libWeiboSDK;
+			path = Pods/WeiboSDK/libWeiboSDK;
 			sourceTree = "<group>";
 		};
 		2C1B88941C5F357E000403FD /* AES256 */ = {
@@ -795,6 +883,7 @@
 				2C8DD2121C4A34230035C52D /* CTAImageControllerProtocol.swift */,
 				2C2B45AB1C5CBCE7004A4809 /* CTAAddBarProtocol.swift */,
 				2C2B45AD1C5CBD16004A4809 /* CTAPublishProtocol.swift */,
+				2C66896B1CDC2B7A00B6DFD2 /* CTAGIFProtocol.swift */,
 				2CC5744A1C89D3F70083DFFF /* CTAPublishCacheProtocol.swift */,
 				2C32653D1C7321A80000B89B /* CTAUploadIconProtocol.swift */,
 			);
@@ -818,6 +907,8 @@
 				2C3B33E81C1176D000738166 /* CuriosTextAppUITests */,
 				2C3B33C71C1176D000738166 /* Products */,
 				03F562127B9340BB0C7224EC /* Pods */,
+				2CB66A971CD86F6C006B9282 /* WechatSDK1.7 */,
+				2C1A12101CE014FD0071BD35 /* libWeiboSDK */,
 				2CC74C8C1C5A275C00B536C2 /* SMS_SDK */,
 				3971561C9A2A856DEC31B599 /* Frameworks */,
 			);
@@ -836,10 +927,15 @@
 		2C3B33C81C1176D000738166 /* CuriosTextApp */ = {
 			isa = PBXGroup;
 			children = (
+				2C042B731CE3226000C13FED /* CTAHeartAnimationView.swift */,
+				2C042B751CE3248E00C13FED /* Heart.storyboard */,
+				2CDDE6491CE16E1400B6E6A9 /* ShareModule */,
 				2CDDF5001C5F3B860019FC83 /* CuriosTextApp-Bridging-Header.h */,
+				2CB66A951CD8566B006B9282 /* GIFCreator.swift */,
 				2C81B59E1C58B10600AE16E0 /* Gobal */,
 				2CD11A8B1CB7534600A79305 /* AniPreviewModule */,
 				2CE063CB1C857D2F001F7F4E /* ImagePickerModule */,
+				2C4B08F61CD9F60300A58B0E /* GIFModule */,
 				2CD4DC0B1CA4E26C00790A55 /* EditorModule */,
 				2CAEAC8A1C323EC600C9F9AC /* Deprecated */,
 				661D29F21C2A968E0073FC0E /* Upload */,
@@ -964,7 +1060,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		2C5C24991C44FA8B00A70F1B /* Mangers_model */ = {
+		2C4B08F61CD9F60300A58B0E /* GIFModule */ = {
+			isa = PBXGroup;
+			children = (
+				2C4B08F71CD9F63C00A58B0E /* GIFCreateViewController.swift */,
+			);
+			name = GIFModule;
+			sourceTree = "<group>";
+		};
+		2C5C24991C44FA8B00A70F1B /* Mangers */ = {
 			isa = PBXGroup;
 			children = (
 				2CA860BF1C8FC157000BCF8A /* LocalizationManager.swift */,
@@ -975,7 +1079,7 @@
 				2C1B88951C5F35B9000403FD /* CTAEncryptManager.swift */,
 				2CED15AF1C5F6F990086976E /* CTADocumentManager.swift */,
 			);
-			name = Mangers_model;
+			name = Mangers;
 			sourceTree = "<group>";
 		};
 		2C6C67FD1C35082C00CCE81C /* CTAUIKit_view */ = {
@@ -991,6 +1095,7 @@
 		2C81B59E1C58B10600AE16E0 /* Gobal */ = {
 			isa = PBXGroup;
 			children = (
+				2CB66AA31CD8A858006B9282 /* AnGIF */,
 				2CF4D4181CBE38B0001DC7C4 /* FontManager */,
 				2CF4B7D01CBBA58F009B12C3 /* Fonts */,
 				2C5EA2551C479CE000DCEE7B /* Print.swift */,
@@ -1007,7 +1112,7 @@
 				2CC811561C79A6D5003CE8BF /* BlackCat */,
 				2C1B88941C5F357E000403FD /* AES256 */,
 				2C6C67FD1C35082C00CCE81C /* CTAUIKit_view */,
-				2C5C24991C44FA8B00A70F1B /* Mangers_model */,
+				2C5C24991C44FA8B00A70F1B /* Mangers */,
 				2C3CAD071C21825100D8DE4B /* Document_model */,
 				2C3CAD101C21825900D8DE4B /* Page_model */,
 				2C31EB5F1C451AD9002A4D71 /* Extensions */,
@@ -1061,6 +1166,34 @@
 				2C8DD2101C4A33770035C52D /* CTAUserDetailViewController.swift */,
 			);
 			name = UserPublishes;
+			sourceTree = "<group>";
+		};
+		2CB66A971CD86F6C006B9282 /* WechatSDK1.7 */ = {
+			isa = PBXGroup;
+			children = (
+				2CB66A981CD86F6C006B9282 /* libWeChatSDK.a */,
+				2CB66A991CD86F6C006B9282 /* read_me.txt */,
+				2CB66A9A1CD86F6C006B9282 /* WechatAuthSDK.h */,
+				2CB66A9B1CD86F6C006B9282 /* WXApi.h */,
+				2CB66A9C1CD86F6C006B9282 /* WXApiObject.h */,
+			);
+			name = WechatSDK1.7;
+			path = WechatSDK1.6.2;
+			sourceTree = "<group>";
+		};
+		2CB66AA31CD8A858006B9282 /* AnGIF */ = {
+			isa = PBXGroup;
+			children = (
+				2CB66AA41CD8A86E006B9282 /* ANGifBitmap.h */,
+				2CB66AA51CD8A86E006B9282 /* ANGifBitmap.m */,
+				2CB66AA61CD8A86E006B9282 /* ANGifEncoder.h */,
+				2CB66AA71CD8A86E006B9282 /* ANGifEncoder.m */,
+				2CB66AA81CD8A86E006B9282 /* ANImageBitmapRep.h */,
+				2CB66AA91CD8A86E006B9282 /* ANImageBitmapRep.m */,
+				2CB66AAA1CD8A86E006B9282 /* BitBuffer.h */,
+				2CB66AAB1CD8A86E006B9282 /* BitBuffer.m */,
+			);
+			name = AnGIF;
 			sourceTree = "<group>";
 		};
 		2CC74C8C1C5A275C00B536C2 /* SMS_SDK */ = {
@@ -1263,6 +1396,16 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		2CDDE6491CE16E1400B6E6A9 /* ShareModule */ = {
+			isa = PBXGroup;
+			children = (
+				2CDDE64E1CE18BED00B6E6A9 /* animation.gif */,
+				2CDDE64C1CE1732900B6E6A9 /* ShareViewController.swift */,
+				2CCFD54D1CE49CAC00D58043 /* Share.storyboard */,
+			);
+			name = ShareModule;
+			sourceTree = "<group>";
+		};
 		2CE063CB1C857D2F001F7F4E /* ImagePickerModule */ = {
 			isa = PBXGroup;
 			children = (
@@ -1281,12 +1424,14 @@
 				2CE063D71C857D2F001F7F4E /* CTAPhotoPreviewView.swift */,
 				2CE063D81C857D2F001F7F4E /* CTAPhotoThumbnailCollectionViewCell.swift */,
 				2CE063D91C857D2F001F7F4E /* CTAPhotoViewController.swift */,
+				2C160D5D1CE58C36005B67F8 /* CTAPhotoAlbumListViewController.swift */,
 				2CE063DB1C857D2F001F7F4E /* ImagePickerViewController.swift */,
 				2CE063DC1C857D2F001F7F4E /* ImageViewController.swift */,
 				2CE063DE1C857D2F001F7F4E /* PhotoAccessManager.swift */,
 				2C610A341C902BCA00DFE315 /* ImagePicker.storyboard */,
 				2C610A3B1C902BF100DFE315 /* Camera.storyboard */,
 				2C610A421C902C0B00DFE315 /* Photo.storyboard */,
+				2C160D5F1CE58C54005B67F8 /* PhotoAlbumList.storyboard */,
 				2CE063DA1C857D2F001F7F4E /* ImageCrop.storyboard */,
 			);
 			name = ImagePickerModule;
@@ -1311,6 +1456,9 @@
 		3971561C9A2A856DEC31B599 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2CDDE6471CE16E0200B6E6A9 /* FLAnimatedImage.framework */,
+				2CB66AA11CD872CE006B9282 /* libsqlite3.0.tbd */,
+				2CB66A9F1CD872B3006B9282 /* SystemConfiguration.framework */,
 				2C85C5991C9FC2470042CD0F /* SVProgressHUD.framework */,
 				2C09F2461C896EED00F6034F /* PromiseKit.framework */,
 				2CC9307E1C7464D000FB02A9 /* AVFoundation.framework */,
@@ -1413,7 +1561,7 @@
 				TargetAttributes = {
 					2C3B33C51C1176D000738166 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = P36PRJCB4C;
+						DevelopmentTeam = H7HX4A2DL8;
 					};
 					2C3B33D91C1176D000738166 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -1456,19 +1604,25 @@
 				2C610A401C902C0B00DFE315 /* Photo.storyboard in Resources */,
 				2C610A391C902BF100DFE315 /* Camera.storyboard in Resources */,
 				2C32BD561C4CB89100788A97 /* Localizable.strings in Resources */,
+				2CCFD54B1CE49CAC00D58043 /* Share.storyboard in Resources */,
 				2C3B33D11C1176D000738166 /* Assets.xcassets in Resources */,
 				2C567A691C5CBAF200F11369 /* Countries.plist in Resources */,
+				2C1A121F1CE014FD0071BD35 /* WeiboSDK.bundle in Resources */,
 				2C610A2B1C902B0300DFE315 /* Editor.storyboard in Resources */,
 				2CF4B7D11CBBA58F009B12C3 /* Fonts in Resources */,
 				2C2B45B21C5CC077004A4809 /* SupportCountryZone in Resources */,
 				2CE063ED1C857D2F001F7F4E /* ImageCrop.storyboard in Resources */,
 				2C3CAD2C1C21828200D8DE4B /* 2.jpg in Resources */,
 				2C65B6681C4F514D007B4DEA /* Preview.storyboard in Resources */,
+				2C160D601CE58C54005B67F8 /* PhotoAlbumList.storyboard in Resources */,
 				2C3AE3F11C59F5E3004D62B4 /* CTASocial.storyboard in Resources */,
+				2C042B761CE3248E00C13FED /* Heart.storyboard in Resources */,
 				2CC74C921C5A275C00B536C2 /* SMS_SDKLocalizable.strings in Resources */,
+				2CB66A9E1CD86F6C006B9282 /* read_me.txt in Resources */,
 				2C610A321C902BCA00DFE315 /* ImagePicker.storyboard in Resources */,
 				2CD11AD01CB7A7A400A79305 /* AniPreView.storyboard in Resources */,
 				2C3B33CF1C1176D000738166 /* Main.storyboard in Resources */,
+				2CDDE64F1CE18BED00B6E6A9 /* animation.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1548,9 +1702,11 @@
 				2CFC65901C5630C700E8ADE7 /* CTAUserDetailProtocol.swift in Sources */,
 				2CAEAC9E1C323F4300C9F9AC /* ContainerTextView.swift in Sources */,
 				2CC811601C79A6D5003CE8BF /* BlackCatManager.swift in Sources */,
+				2C160D5E1CE58C36005B67F8 /* CTAPhotoAlbumListViewController.swift in Sources */,
 				2C1B2AAC1C3520160053BE5E /* CTASelectorsReuseableView.swift in Sources */,
 				2C5C248C1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift in Sources */,
 				2CC5744B1C89D3F70083DFFF /* CTAPublishCacheProtocol.swift in Sources */,
+				2C66896C1CDC2B7A00B6DFD2 /* CTAGIFProtocol.swift in Sources */,
 				66C7BF251C3114BD00ADF251 /* CTADomainListInfo.swift in Sources */,
 				2C1B88AD1C5F3741000403FD /* CTASMSVerifyViewController.swift in Sources */,
 				2CE063E31C857D2F001F7F4E /* CTACameraPreviewView.swift in Sources */,
@@ -1579,6 +1735,7 @@
 				2CF4D4231CBE38F9001DC7C4 /* FontFamiliesList.swift in Sources */,
 				6628C7031C200C11007F873C /* CTAViewUserModel.swift in Sources */,
 				2C05BB861C9FAA7200667A75 /* PhotoHelper.swift in Sources */,
+				2CDDE64D1CE1732900B6E6A9 /* ShareViewController.swift in Sources */,
 				2CC811631C79A6D5003CE8BF /* BlackCatResultExtension.swift in Sources */,
 				2C1B88AB1C5F371A000403FD /* CTAAlertProtocol.swift in Sources */,
 				2C31EB631C452597002A4D71 /* SwiftHEXColors.swift in Sources */,
@@ -1589,12 +1746,15 @@
 				2C5ACC121C439E8100B96CCD /* CTAStyleKit.swift in Sources */,
 				2C3CAD161C21825900D8DE4B /* CTAContainer.swift in Sources */,
 				2CDDF50C1C5F3BE00019FC83 /* NSString+Base64.m in Sources */,
+				2C4B08F81CD9F63C00A58B0E /* GIFCreateViewController.swift in Sources */,
 				2CDDF50A1C5F3BE00019FC83 /* NSData+Base64.m in Sources */,
+				2CB66A961CD8566B006B9282 /* GIFCreator.swift in Sources */,
 				2CA3AA551C8D7A0E00CE8191 /* Extension+Document.swift in Sources */,
 				66A072AF1C18713F0046C72F /* CTAUploadRequestAPI.swift in Sources */,
 				2C1312361C59966C00346804 /* CTAUserManager.swift in Sources */,
 				2CB380B91C4D20E5009A681A /* CTAPreviewCell.swift in Sources */,
 				2C2088621C8C1BC200172B27 /* CTACache.swift in Sources */,
+				2CB66AAF1CD8A86E006B9282 /* BitBuffer.m in Sources */,
 				2C9706CB1C1E713A00FA2E17 /* CTABaseModel.swift in Sources */,
 				2C3CAD1A1C21825900D8DE4B /* CTATextElement.swift in Sources */,
 				2C82FF551C4362FA001D927A /* CTASegementControl.swift in Sources */,
@@ -1656,6 +1816,7 @@
 				2CE063E91C857D2F001F7F4E /* CTAPhotoPickerDelegate.swift in Sources */,
 				2C3B34061C11B4F900738166 /* CTAConstants.swift in Sources */,
 				2CFC658E1C56305500E8ADE7 /* CTAFullPublishesCell.swift in Sources */,
+				2C042B741CE3226000C13FED /* CTAHeartAnimationView.swift in Sources */,
 				2CB3C8C21C859B8E00CF2BD2 /* ImagePickerResource.swift in Sources */,
 				2CC8115E1C79A6D5003CE8BF /* BlackCatCache.swift in Sources */,
 				2CD11AA31CB7545F00A79305 /* ContentTextLayer.swift in Sources */,
@@ -1680,6 +1841,7 @@
 				2CF4D4211CBE38F9001DC7C4 /* Font.swift in Sources */,
 				2CE063EF1C857D2F001F7F4E /* ImageViewController.swift in Sources */,
 				2C3265401C7321B60000B89B /* CTASetUserInfoViewController.swift in Sources */,
+				2CB66AAD1CD8A86E006B9282 /* ANGifEncoder.m in Sources */,
 				2C3B33F91C11775E00738166 /* CTABaseRequest.swift in Sources */,
 				2C88A3751C51F0BA00C6D687 /* CTAAnimationController.swift in Sources */,
 				2CD11AA51CB7545F00A79305 /* Layerable.swift in Sources */,
@@ -1707,6 +1869,7 @@
 				2C8DD2151C4A342C0035C52D /* CTALoadingProtocol.swift in Sources */,
 				2CCBE4961C870AA4001E1CD8 /* CTAShareView.swift in Sources */,
 				2C1F015C1C3CE3770033CED8 /* CTACanvasCell.swift in Sources */,
+				2CB66AAE1CD8A86E006B9282 /* ANImageBitmapRep.m in Sources */,
 				2C65B66E1C4F690C007B4DEA /* CTAPreviewVIew.swift in Sources */,
 				2C2B45AA1C5CBCC8004A4809 /* CTALoginProtocol.swift in Sources */,
 				2C6C67FF1C350A4800CCE81C /* CTALineFlowLayout.swift in Sources */,
@@ -1783,6 +1946,7 @@
 				2CE063F11C857D2F001F7F4E /* PhotoAccessManager.swift in Sources */,
 				2CFC658C1C56301600E8ADE7 /* CTAPublishCellProtocol.swift in Sources */,
 				2C9706C71C1E6FE100FA2E17 /* CTAUserDomain.swift in Sources */,
+				2CB66AAC1CD8A86E006B9282 /* ANGifBitmap.m in Sources */,
 				2CD11AB11CB7547500A79305 /* AniCanvasView.swift in Sources */,
 				2CD11AA01CB7545F00A79305 /* ContainerLayout.swift in Sources */,
 				2C3CAD181C21825900D8DE4B /* CTAImageElement.swift in Sources */,
@@ -1889,8 +2053,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				2C610A3A1C902BF100DFE315 /* Base */,
-				2C610A3D1C902BF400DFE315 /* en */,
-				2C610A3F1C902BF600DFE315 /* zh-Hans */,
+				2C1A12641CE081570071BD35 /* en */,
+				2C1A12661CE081660071BD35 /* zh-Hans */,
 			);
 			name = Camera.storyboard;
 			sourceTree = "<group>";
@@ -1899,8 +2063,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				2C610A411C902C0B00DFE315 /* Base */,
-				2C610A441C902C0E00DFE315 /* en */,
-				2C610A461C902C0F00DFE315 /* zh-Hans */,
+				2C1A12601CE07C250071BD35 /* en */,
+				2C1A12621CE07C430071BD35 /* zh-Hans */,
 			);
 			name = Photo.storyboard;
 			sourceTree = "<group>";
@@ -1912,6 +2076,16 @@
 				2CC74C911C5A275C00B536C2 /* zh-Hans */,
 			);
 			name = SMS_SDKLocalizable.strings;
+			sourceTree = "<group>";
+		};
+		2CCFD54D1CE49CAC00D58043 /* Share.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2CCFD54C1CE49CAC00D58043 /* Base */,
+				2CCFD54F1CE49CC700D58043 /* en */,
+				2CCFD5511CE49CCC00D58043 /* zh-Hans */,
+			);
+			name = Share.storyboard;
 			sourceTree = "<group>";
 		};
 		2CE6D21C1C60D00A0064A9B0 /* InfoPlist.strings */ = {
@@ -2024,11 +2198,16 @@
 				INFOPLIST_FILE = CuriosTextApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/WechatSDK1.6.2",
+					"$(PROJECT_DIR)/Pods/WeiboSDK/libWeiboSDK",
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c5382dfa-5b86-4513-922e-ed753947577f";
-				SWIFT_OBJC_BRIDGING_HEADER = "CuriosTextApp-Bridging-Header.h";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/CuriosTextApp/CuriosTextApp-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2038,8 +2217,8 @@
 			baseConfigurationReference = FEA1095AC8443011149CF7A8 /* Pods-CuriosTextApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Curios Technology Co., Ltd. (H7HX4A2DL8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing Curios Technology Co., Ltd. (H7HX4A2DL8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -2048,11 +2227,16 @@
 				INFOPLIST_FILE = CuriosTextApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/WechatSDK1.6.2",
+					"$(PROJECT_DIR)/Pods/WeiboSDK/libWeiboSDK",
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c5382dfa-5b86-4513-922e-ed753947577f";
-				SWIFT_OBJC_BRIDGING_HEADER = "CuriosTextApp-Bridging-Header.h";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/CuriosTextApp/CuriosTextApp-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -2061,6 +2245,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Curios Technology Co., Ltd. (H7HX4A2DL8)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -2069,6 +2254,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosTextAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "c5382dfa-5b86-4513-922e-ed753947577f";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CuriosTextApp.app/CuriosTextApp";
 			};
 			name = Debug;
@@ -2077,6 +2263,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Curios Technology Co., Ltd. (H7HX4A2DL8)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -2085,6 +2272,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosTextAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "c5382dfa-5b86-4513-922e-ed753947577f";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CuriosTextApp.app/CuriosTextApp";
 			};
 			name = Release;

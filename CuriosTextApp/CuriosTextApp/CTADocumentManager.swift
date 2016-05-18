@@ -11,6 +11,9 @@ import Foundation
 class CTADocumentManager {
     
     static var openedDocument: CTADocument?
+    static var openedDocumentPublishID: String? {
+        return CTADocumentManager.openedDocument?.fileURL.lastPathComponent
+    }
     
     class func generateDocumentURL(fileRootURL: NSURL) -> NSURL {
         
@@ -102,7 +105,7 @@ class CTADocumentManager {
 
 extension CTADocumentManager {
     
-    class func uploadFiles(completedBlock:((Bool, String, String) -> Void)?) { // success?, publishID, 'publishID' + 'Page'
+    class func uploadFiles(progressBlock:((String, Float) -> Void)?, completedBlock:((Bool, String, String) -> Void)?) { // success?, publishID, 'publishID' + 'Page'
         
         guard let openedDocument = openedDocument else {
             return
@@ -120,12 +123,9 @@ extension CTADocumentManager {
             if let models = domainListInfo.modelArray as? [CTAUpTokenModel] {
                 
                 let uploadModels = models.map {CTAUploadModel(key: $0.upTokenKey, token: $0.upToken, filePath: files[$0.upTokenKey]!)}
-                
-                CTAUploadAction().uploadFileArray(publishID, uploadArray: uploadModels, progress: { (uploadProgressInfo) -> Void in
-                    
-                    
-                    }, complete: { (uploadInfo) -> Void in
-                            
+                CTAUploadAction().uploadFileArray(publishID, uploadArray: uploadModels, progress: { (uploadProgressInfo) in
+                        progressBlock?(uploadProgressInfo.uploadID, uploadProgressInfo.progress)
+                    }, complete: { (uploadInfo) in
                         completedBlock?(uploadInfo.result, publishID, publishPath)
                 })
                 

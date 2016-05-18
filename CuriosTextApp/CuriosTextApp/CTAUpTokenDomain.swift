@@ -30,9 +30,11 @@ class CTAUpTokenDomain: CTABaseDomain {
                 if result {
                     let publishFilePath = json[key(.PublishFilePath)].string ?? ""
                     let userFilePath = json[key(.UserFilePath)].string ?? ""
+                    let resourceFilePath = json[key(.ResourceFilePath)].string ?? ""
                     let dic:Dictionary<String, String> = [
                         key(.PublishFilePath) : publishFilePath,
-                        key(.UserFilePath)    : userFilePath
+                        key(.UserFilePath)    : userFilePath,
+                        key(.ResourceFilePath): resourceFilePath
                     ];
                     compelecationBlock(CTADomainListInfo.init(result: true, modelDic: dic, successType: 0))
                 } else {
@@ -72,6 +74,25 @@ class CTAUpTokenDomain: CTABaseDomain {
     func publishUpToken(list:Array<CTAUpTokenModel>, compelecationBlock: (CTADomainListInfo!) -> Void)  {
         
         CTAPublishUpTokenRequest.init(list: list).startWithCompletionBlockWithSuccess { (response) -> Void in
+            switch response.result {
+            case .Success(let json):
+                let json:JSON = JSON(json)
+                let result = self.checkJsonResult(json)
+                if result {
+                    let upTokenArray: Array<CTAUpTokenModel> = self.uptokenListResult(json)
+                    compelecationBlock(CTADomainListInfo.init(result: true, modelArray: upTokenArray, successType: 0))
+                } else {
+                    compelecationBlock(CTADomainListInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
+                }
+            case .Failure( _):
+                compelecationBlock(CTADomainListInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            }
+        }
+    }
+    
+    func resourceUpToken(list:Array<CTAUpTokenModel>, compelecationBlock: (CTADomainListInfo!) -> Void)  {
+        
+        CTAResourceUpTokenRequest.init(list: list).startWithCompletionBlockWithSuccess { (response) in
             switch response.result {
             case .Success(let json):
                 let json:JSON = JSON(json)

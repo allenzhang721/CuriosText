@@ -1,0 +1,12 @@
+
+/* Class = "UILabel"; text = "/140"; ObjectID = "8XO-mM-ikQ"; */
+"8XO-mM-ikQ.text" = "/140";
+
+/* Class = "UILabel"; text = "新浪微博"; ObjectID = "b0C-4f-nTw"; */
+"b0C-4f-nTw.text" = "分享到新浪微博";
+
+/* Class = "UILabel"; text = "140"; ObjectID = "gWJ-lY-5uW"; */
+"gWJ-lY-5uW.text" = "140";
+
+/* Class = "UIButton"; normalTitle = "Send"; ObjectID = "lgO-lT-5kQ"; */
+"lgO-lT-5kQ.normalTitle" = "发送";
