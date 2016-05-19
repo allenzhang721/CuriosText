@@ -302,7 +302,13 @@ extension CTAPublishProtocol{
                 let publishID = self.publishModel!.publishID
                 self.exportGIF(publishID, page: page, gifType: .Normal, viewController: self as! UIViewController, completedHandler: { (fileURL, thumbImg) in
                     let message =  WXMediaMessage()
-                    message.setThumbImage(thumbImg)
+                    UIGraphicsBeginImageContext(CGSize(width: 160, height: 160))
+                    thumbImg.drawInRect(CGRect(origin: CGPoint.zero, size: CGSize(width: 160, height: 160)))
+                    let img = UIGraphicsGetImageFromCurrentImageContext()
+                    UIGraphicsEndImageContext()
+                        
+                    
+                    message.setThumbImage(img)
                     
                     let ext =  WXEmoticonObject()
                     let filePath = fileURL.path
