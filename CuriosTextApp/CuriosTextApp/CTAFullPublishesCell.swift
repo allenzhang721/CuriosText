@@ -42,6 +42,10 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
     var cellColorView:UIView?
     
+    var isLoading:Bool = false
+    
+    var loadErrorCount:Int = 0
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.cellImageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
@@ -76,6 +80,8 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     }
     
     func reloadCell(){
+        self.loadErrorCount = 0
+        self.isLoading = false
         self.bringSubviewToFront(self.cellImageView)
         if self.cellColorView != nil {
             self.bringSubviewToFront(self.cellColorView!)
@@ -109,7 +115,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     }
     
     func loadAnimation(){
-        if self.animationEnable{
+        if self.animationEnable && !self.isLoading{
             if self.publishModel != nil {
                 self.isLoadComplete = false
                 let purl = CTAFilePath.publishFilePath
@@ -118,6 +124,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                 if self.cellColorView != nil {
                     self.bringSubviewToFront(self.cellColorView!)
                 }
+                self.isLoading = true
                 BlackCatManager.sharedManager.retrieveDataWithURL(NSURL(string: url)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self](data, error, cacheType, URL) -> () in
                     if let strongSelf = self {
                         if let data = data,
@@ -194,6 +201,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     }
     
     func readyCompleted() -> () {
+        self.isLoading = false
         dispatch_async(dispatch_get_main_queue(), {[weak self] in
             guard let strongSelf = self else { return }
             strongSelf.isLoadComplete = true
@@ -209,12 +217,17 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     }
     
     func readyFailed() -> (){
+        self.isLoading = false
         dispatch_async(dispatch_get_main_queue(), {[weak self] in
             guard let strongSelf = self else { return }
             strongSelf.isLoadComplete = false
             strongSelf.bringSubviewToFront(strongSelf.cellImageView)
             if strongSelf.cellColorView != nil {
                 strongSelf.bringSubviewToFront(strongSelf.cellColorView!)
+            }
+            if strongSelf.loadErrorCount < 3{
+                strongSelf.loadErrorCount += 1
+                strongSelf.loadAnimation()
             }
         })
     }

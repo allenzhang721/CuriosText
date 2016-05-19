@@ -118,6 +118,8 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         self.userIconImage.addGestureRecognizer(iconTap)
         
         let pan = UIPanGestureRecognizer(target: self, action: #selector(CTAPublishDetailViewController.viewPanHandler(_:)))
+        pan.maximumNumberOfTouches = 1
+        pan.minimumNumberOfTouches = 1
         self.view.addGestureRecognizer(pan)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(CTAPublishDetailViewController.viewBackHandler(_:)))
@@ -418,6 +420,8 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
     }
     
     // view pan
+    var isPaning:Bool = false
+    
     
     func viewPanHandler(sender: UIPanGestureRecognizer) {
         switch sender.state {
@@ -949,27 +953,35 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
     }
     
     func viewBackHandler(sender: UIPanGestureRecognizer) {
-        var isHave:Bool = false
-        let subViews = self.view.subviews
-        for i in 0..<subViews.count{
-            let subView = subViews[i]
-            let pt = sender.locationInView(subView)
-            if subView.pointInside(pt, withEvent: nil){
-                isHave = true
+        if self.panDirection == .None{
+            var isHave:Bool = false
+            let subViews = self.view.subviews
+            for i in 0..<subViews.count{
+                let subView = subViews[i]
+                let pt = sender.locationInView(subView)
+                if subView.pointInside(pt, withEvent: nil){
+                    isHave = true
+                }
             }
-        }
-        if !isHave {
-            self.currentCenter = self.currentFullCell.center
-            self.setVerCellCenter()
-            self.verPanAnimation(500.00)
+            if !isHave {
+                self.viewBackHandler()
+            }
         }
     }
     
+    func viewBackHandler(){
+        self.currentCenter = self.currentFullCell.center
+        self.setVerCellCenter()
+        self.verPanAnimation(500.00)
+    }
+    
     func doubleTapHandler(sender: UIPanGestureRecognizer) {
-        let pt = sender.locationInView(self.currentFullCell)
-        if self.currentFullCell.pointInside(pt, withEvent: nil){
-            if self.currentFullCell.publishModel != nil{
-                self.likeHandler(true)
+        if self.panDirection == .None{
+            let pt = sender.locationInView(self.currentFullCell)
+            if self.currentFullCell.pointInside(pt, withEvent: nil){
+                if self.currentFullCell.publishModel != nil{
+                    self.likeHandler(true)
+                }
             }
         }
     }
@@ -1007,13 +1019,13 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
     }
     
     func likeButtonClick(sender: UIButton){
-        if self.currentFullCell.publishModel != nil{
+        if self.currentFullCell.publishModel != nil && self.panDirection == .None{
             self.likeHandler(false)
         }
     }
     
     func moreButtonClick(sender: UIButton){
-        if self.currentFullCell.publishModel != nil{
+        if self.currentFullCell.publishModel != nil && self.panDirection == .None{
             let user = self.currentFullCell.publishModel!.userModel
             if user.userID != self.loginUser!.userID{
                self.moreSelectionHandler(false)
@@ -1024,17 +1036,29 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
     }
     
     func rebuildButtonClick(sender: UIButton){
-        if self.currentFullCell.publishModel != nil{
+        if self.currentFullCell.publishModel != nil && self.panDirection == .None{
             self.rebuildHandler()
         }
     }
     
     func userIconClick(sender: UIPanGestureRecognizer) {
-        if let publish = self.currentFullCell.publishModel{
-            let viewUserModel = publish.userModel
-            let userPublish = CTAUserPublishesViewController()
-            userPublish.viewUser = viewUserModel
-            self.navigationController?.pushViewController(userPublish, animated: true)
+        if self.panDirection == .None{
+            if let publish = self.currentFullCell.publishModel{
+                let viewUserModel = publish.userModel
+                var canGo:Bool = false
+                if self.viewUser == nil {
+                    canGo = true
+                }else if viewUserModel.userID != self.viewUser!.userID{
+                    canGo = true
+                }
+                if canGo{
+                    let userPublish = CTAUserPublishesViewController()
+                    userPublish.viewUser = viewUserModel
+                    self.navigationController?.pushViewController(userPublish, animated: true)
+                }else {
+                    self.viewBackHandler()
+                }
+            }
         }
     }
     
@@ -1044,11 +1068,12 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
                 if result{
                     SVProgressHUD.setDefaultMaskType(.Clear)
                     SVProgressHUD.showWithStatus(NSLocalizedString("DeletProgressLabel", comment: ""))
-                    let userID = self.loginUser == nil ? "" : self.viewUser!.userID
+                    let userID = self.viewUser == nil ? "" : self.viewUser!.userID
                     CTAPublishDomain.getInstance().deletePublishFile(publish.publishID, userID: userID, compelecationBlock: { (info) -> Void in
                         SVProgressHUD.dismiss()
                         if info.result{
                             let selectedIndex = self.getPublishIndex(self.selectedPublishID)
+                            self.currentFullCell.alpha = 1
                             UIView.animateWithDuration(0.3, animations: { () -> Void in
                                 self.currentFullCell.alpha = 0
                                 }, completion: { (_) -> Void in
@@ -1065,9 +1090,7 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
                                         }
                                     }else {
                                         self.currentFullCell.hidden = true
-                                        self.currentCenter = self.currentFullCell.center
-                                        self.setVerCellCenter()
-                                        self.verPanAnimation(500.00)
+                                        self.viewBackHandler()
                                     }
                             })
                         }
