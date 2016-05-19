@@ -306,7 +306,8 @@ extension CTAPublishProtocol{
                     
                     let ext =  WXEmoticonObject()
                     let filePath = fileURL.path
-                    ext.emoticonData = NSData(contentsOfFile:filePath!)
+                    let data = NSData(contentsOfURL: fileURL)
+                    ext.emoticonData = data
                     message.mediaObject = ext
                     
                     let req =  SendMessageToWXReq()

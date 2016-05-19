@@ -53,7 +53,7 @@ class GIFCreator {
         instance.images = images
         instance.delays = delays
         
-        return cached && thumbCached ? CacheStatus.Cached(GIFURL: gifURL, thumbURL: thumbURL) : CacheStatus.NoCached
+        return cached && thumbCached && useCache ? CacheStatus.Cached(GIFURL: gifURL, thumbURL: thumbURL) : CacheStatus.NoCached
     }
     
     class func setThumbImage(image: UIImage) {
