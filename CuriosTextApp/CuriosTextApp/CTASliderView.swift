@@ -45,6 +45,8 @@ public struct CTASliderAttributes {
 
 public class CTASliderView: UIControl, ValueTuneable {
     
+    var targetValues = [CGFloat]()
+    
     private var leftValue: CGFloat = 0.5
     private var rightValue: CGFloat = 2.5
     private var currentValue: CGFloat = 0.0
@@ -195,9 +197,19 @@ extension CTASliderView: UIScrollViewDelegate {
         let v = floor(offset.x * calibrationUnit * 1000) / 1000.0
         let nextValue = leftValue + CGFloat(v)
         
+        var targetValue = nextValue
+        for v in targetValues {
+            if fabs(v * 1000.0 - nextValue * 1000.0) < 3 {
+                targetValue = v
+                updateOffsetByValue(targetValue)
+                break
+            }
+        }
+        
+        
         //if fabs(nextScale * 100.0 - oldScale * 100.0) > 0.1
-        if fabs(nextValue * 1000.0 - currentValue * 1000.0) > 0.1 {
-            currentValue = nextValue
+        if fabs(targetValue * 1000.0 - currentValue * 1000.0) > 0.1 {
+            currentValue = targetValue
             sendActionsForControlEvents(.ValueChanged)
             //        print(currentValue)
             updateCalibarationOffset(offset.x)
