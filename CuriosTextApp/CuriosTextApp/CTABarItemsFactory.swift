@@ -45,6 +45,14 @@ class CTABarItemsFactory {
     
     // Sort Search in CTAContainerViewModel
     static let textSelectorItems = [
+        
+        
+        CTABarItem(
+            normalImage: CTAStyleKit.imageOfAnimationBarItemNormal,
+            selectedImage: CTAStyleKit.imageOfAnimationBarItemSelected,
+            normalColor: CTAStyleKit.normalColor,
+            selectedColor: CTAStyleKit.selectedColor,
+            title: LocalStrings.Animation.description),
     
         CTABarItem(
             normalImage: CTAStyleKit.imageOfFontBarItemNormal,
@@ -89,12 +97,6 @@ class CTABarItemsFactory {
             selectedColor: CTAStyleKit.selectedColor,
             title: LocalStrings.Alignment.description),
         
-        CTABarItem(
-            normalImage: CTAStyleKit.imageOfAnimationBarItemNormal,
-            selectedImage: CTAStyleKit.imageOfAnimationBarItemSelected,
-            normalColor: CTAStyleKit.normalColor,
-            selectedColor: CTAStyleKit.selectedColor,
-            title: LocalStrings.Animation.description)
     
     ]
 }
