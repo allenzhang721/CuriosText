@@ -36,8 +36,9 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     var loadDataCompleteFuc:((CTADomainListInfo!)->Void)?
     
     var beganLocation: CGPoint! = CGPoint(x: 0, y: 0)
-    var panDirection:CTAPanHorDirection = .None
-
+    var panDirection:CTAPanDirection = .None
+    var panHorDirection:CTAPanHorDirection = .None
+    
     var loadMoreChangeView:Bool = false
     
     var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 80, height: 80))
@@ -100,6 +101,8 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.handView.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2+self.verSpace + 3)
         self.handView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
         let pan = UIPanGestureRecognizer(target: self, action: #selector(CTAHomeViewController.viewPanHandler(_:)))
+        pan.minimumNumberOfTouches = 1
+        pan.maximumNumberOfTouches = 1
         self.handView.addGestureRecognizer(pan)
         let tap = UITapGestureRecognizer(target: self, action: #selector(CTAHomeViewController.viewTapHandler(_:)))
         tap.numberOfTapsRequired=2
@@ -286,7 +289,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     }
     
     func loadNewCellData(){
-        self.firstLoadViewMove(-100)
+        self.firstLoadViewMove(40)
         self.showLoadingView()
         self.loadDataCompleteFuc = self.loadNewComplete
         self.loadNewPublishes(0)
@@ -298,12 +301,15 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         })
         if info.result {
             let modelArray = info.modelArray
-            if self.loadFirstModelArray(modelArray!){
-                self.currentPublishIndex = 0
-                self.setCellPublishModel()
-            }else {
-                self.setCellsPosition()
-            }
+            self.loadFirstModelArray(modelArray!)
+            self.currentPublishIndex = 0
+            self.setCellPublishModel()
+//            if self.loadFirstModelArray(modelArray!){
+//                self.currentPublishIndex = 0
+//                self.setCellPublishModel()
+//            }else {
+//                self.setCellsPosition()
+//            }
         }else {
             self.setCellsPosition()
         }
@@ -530,17 +536,39 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             self.panDirection = .None
         case .Changed:
             let newLocation = sender.locationInView(view)
-            self.viewHorPanHandler(newLocation)
+            if self.panDirection == .None {
+                if abs(newLocation.x - self.beganLocation!.x)*2 > abs(newLocation.y - self.beganLocation!.y){
+                    self.panDirection = .Hor
+                    self.panHorDirection = .None
+                    self.viewHorPanHandler(newLocation)
+                }else {
+                    self.panDirection = .Ver
+                    self.viewVerPanHandler(newLocation)
+                }
+            }else if self.panDirection == .Hor{
+                self.viewHorPanHandler(newLocation)
+            }else if self.panDirection == .Ver{
+                self.viewVerPanHandler(newLocation)
+            }
         case .Ended, .Cancelled, .Failed:
             let velocity = sender.velocityInView(view)
             let newLocation = sender.locationInView(view)
-            if velocity.x > 500 || velocity.x < -500{
-                self.horPanAnimation(velocity.x)
-            }else {
-                self.viewHorComplete(newLocation)
+            if self.panDirection == .Hor {
+                if velocity.x > 500 || velocity.x < -500{
+                    self.horPanAnimation(velocity.x)
+                }else {
+                    self.viewHorComplete(newLocation)
+                }
+                self.beganLocation = CGPoint(x: 0, y: 0)
+                self.panHorDirection = .None
+            }else if self.panDirection == .Ver {
+                if velocity.y > 500 || velocity.y < -500{
+                    self.verPanAnimation(velocity.y)
+                }else {
+                   self.viewVerComplete(newLocation)
+                }
+                
             }
-            self.beganLocation = CGPoint(x: 0, y: 0)
-            self.panDirection = .None
         default:
             ()
         }
@@ -554,7 +582,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         let maxR:CGFloat = 30.00
         var xChange = location.x - self.beganLocation.x
         if xChange > 0{
-            self.panDirection = .Next
+            self.panHorDirection = .Next
             var percent = xChange / maxX
             if self.currentPublishIndex > self.publishModelArray.count - 2 {
                 xChange = 0
@@ -571,7 +599,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             self.changeCellSizeBySpace(nextHor, verSpace: nextVer, ischangeCurrent: false)
             self.changeViewColor(percent)
         }else {
-            self.panDirection = .Previous
+            self.panHorDirection = .Previous
             if self.currentPublishIndex > 0 {
                 xChange = maxX+xChange
                 let percent = xChange / maxX
@@ -586,13 +614,37 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 self.changeCellSizeBySpace(nextHor, verSpace: nextVer, ischangeCurrent: true)
                 self.changeViewColor(percent)
             }else {
-                self.firstLoadViewMove(xChange/4)
+                //self.firstLoadViewMove(0-xChange/4)
             }
         }
     }
     
+    func viewVerPanHandler(location:CGPoint){
+        let yChange = location.y - self.beganLocation.y
+        if yChange > 0{
+            self.firstLoadViewMove(yChange)
+        }
+    }
+    
+    func viewVerComplete(newLocation:CGPoint){
+        let yRate = newLocation.y - beganLocation.y
+        if yRate >= 20{
+            self.loadNewCellData()
+        }else {
+            self.resetFirstLoadView({ () -> Void in
+                self.horPanComplete(.Previous, isChange: false)
+            })
+        }
+    }
+    
+    func verPanAnimation(yRate:CGFloat){
+        if yRate > 0{
+            self.loadNewCellData()
+        }
+    }
+    
     func changeViewColor(percent:CGFloat){
-        switch self.panDirection{
+        switch self.panHorDirection{
         case .Next:
             self.changeNextViewColor(percent)
         case .Previous:
@@ -642,7 +694,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         let maxY = (bounds.width-fullSize.width)
         let maxR:CGFloat = 30.00
         if xRate > 0{
-            if self.panDirection == .Next{
+            if self.panHorDirection == .Next{
                 if self.currentPublishIndex < self.publishModelArray.count - 1 {
                     let rChange = 0+maxR
                     let rChangePI=rChange/360*CGFloat(M_PI)
@@ -663,7 +715,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 }
             }
         }else {
-            if self.panDirection == .Previous{
+            if self.panHorDirection == .Previous{
                 if self.currentPublishIndex > 0 {
                     let rChange:CGFloat = 0
                     let rChangePI=rChange/360*CGFloat(M_PI)
@@ -678,7 +730,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                             self.horPanComplete(.Previous, isChange: true)
                     })
                 }else {
-                    self.loadNewCellData()
+                    //self.loadNewCellData()
                 }
             }
         }
@@ -716,33 +768,34 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                         self.horPanComplete(.Previous, isChange: false)
                 })
             }else {
-                self.resetFirstLoadView({ () -> Void in
-                    self.horPanComplete(.Previous, isChange: false)
-                })
+//                self.resetFirstLoadView({ () -> Void in
+//                    self.horPanComplete(.Previous, isChange: false)
+//                })
             }
             
         }
     }
     
-    func firstLoadViewMove(xMove:CGFloat){
+    func firstLoadViewMove(yMove:CGFloat){
         let bounds = UIScreen.mainScreen().bounds
         let fullSize = self.getCellSize()
 
         if !self.loadingImageView!.isDescendantOfView(self.view){
             self.view.addSubview(self.loadingImageView!)
-            self.loadingImageView?.image = UIImage(named: "fresh-icon-1")
-            self.loadingImageView?.frame = CGRect.init(x: bounds.width, y: self.handView.frame.origin.y+self.handView.frame.height/2-20, width: 40, height: 40)
+            self.loadingImageView!.image = UIImage(named: "fresh-icon-1")
+            self.loadingImageView!.frame = CGRect.init(x: bounds.width/2-20, y: self.handView.frame.origin.y, width: 40, height: 40)
+            self.view.sendSubviewToBack(self.loadingImageView!)
         }
-        var xChange = xMove
-        let maxSpace = (fullSize.width - bounds.width)/2 - 40
-        if xChange < maxSpace {
-            xChange = maxSpace
+        var yChange = yMove
+        let maxSpace:CGFloat = 40
+        if yChange > maxSpace {
+            yChange = maxSpace
         }
-        self.currentFullCell.center = CGPoint.init(x: bounds.width/2+xChange, y: fullSize.height/2)
-        self.nextMoreCell.center = CGPoint.init(x: bounds.width/2+xChange, y: (self.horSpace+self.verSpace)*2+fullSize.height/2)
-        self.nextFullCell.center = CGPoint.init(x: bounds.width/2+xChange, y: (self.horSpace+self.verSpace)+fullSize.height/2)
-        self.shadeView.center = CGPoint.init(x: bounds.width/2+xChange, y: self.nextFullCell.frame.origin.y+self.nextFullCell.frame.height-5)
-        self.loadingImageView?.center = CGPoint.init(x: bounds.width+xChange+20, y: self.handView.frame.origin.y+self.handView.frame.height/2)
+        self.currentFullCell.center = CGPoint.init(x: bounds.width/2, y: fullSize.height/2+yChange)
+        self.nextMoreCell.center = CGPoint.init(x: bounds.width/2, y: (self.horSpace+self.verSpace)*2+fullSize.height/2+yChange)
+        self.nextFullCell.center = CGPoint.init(x: bounds.width/2, y: (self.horSpace+self.verSpace)+fullSize.height/2+yChange)
+        self.shadeView.center = CGPoint.init(x: bounds.width/2, y: self.nextFullCell.frame.origin.y+self.nextFullCell.frame.height-5)
+        //self.loadingImageView?.center = CGPoint.init(x: bounds.width/2, y: self.handView.frame.origin.y+self.handView.frame.height/2+xChange)
     }
     
     func resetFirstLoadView(completion: (() -> Void)?){
@@ -753,7 +806,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             self.nextMoreCell.center = CGPoint.init(x: bounds.width/2, y: (self.horSpace+self.verSpace)*2+fullSize.height/2)
             self.nextFullCell.center = CGPoint.init(x: bounds.width/2, y: (self.horSpace+self.verSpace)+fullSize.height/2)
             self.shadeView.center = CGPoint.init(x: bounds.width/2, y: self.nextFullCell.frame.origin.y+self.nextFullCell.frame.height-5)
-            self.loadingImageView?.center = CGPoint.init(x: bounds.width+20, y: self.handView.frame.origin.y+self.handView.frame.height/2)
+            //self.loadingImageView?.center = CGPoint.init(x: bounds.width+20, y: self.handView.frame.origin.y+self.handView.frame.height/2)
             }, completion: { (_) -> Void in
                 if completion != nil{
                     completion!()

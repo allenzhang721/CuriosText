@@ -35,7 +35,7 @@ extension CTAPublishProtocol where Self: UIViewController{
     func initPublishSubView(publishRect:CGRect, horRate:CGFloat){
         let bounds = UIScreen.mainScreen().bounds
         var butY   =  bounds.height - 75 //publishRect.origin.y + publishRect.height + 20 + 10*horRate
-        let originy = publishRect.origin.y + publishRect.height + 20 + 10*horRate //bounds.height - 60
+        let originy = publishRect.origin.y + publishRect.height + 55  //bounds.height - 60
         if butY < originy{
             butY = originy
         }
@@ -311,7 +311,6 @@ extension CTAPublishProtocol{
                     message.setThumbImage(img)
                     
                     let ext =  WXEmoticonObject()
-                    let filePath = fileURL.path
                     let data = NSData(contentsOfURL: fileURL)
                     ext.emoticonData = data
                     message.mediaObject = ext

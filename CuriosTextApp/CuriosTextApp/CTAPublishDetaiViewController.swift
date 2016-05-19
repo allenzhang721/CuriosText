@@ -431,7 +431,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         case .Changed:
             let newLocation = sender.locationInView(view)
             if self.panDirection == .None {
-                if abs(newLocation.x - self.beganLocation!.x) > abs(newLocation.y - self.beganLocation!.y){
+                if abs(newLocation.x - self.beganLocation!.x)*2 > abs(newLocation.y - self.beganLocation!.y){
                     self.nextCenter = self.nextFullCell.center
                     self.preCenter = self.previousFullCell.center
                     self.currentCenter = self.currentFullCell.center

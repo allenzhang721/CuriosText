@@ -80,6 +80,8 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     }
     
     func reloadCell(){
+        self.isPlaying = false
+        self.isPause = false
         self.loadErrorCount = 0
         self.isLoading = false
         self.bringSubviewToFront(self.cellImageView)
