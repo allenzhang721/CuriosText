@@ -34,13 +34,13 @@ extension CTAPublishProtocol where Self: UIViewController{
 
     func initPublishSubView(publishRect:CGRect, horRate:CGFloat){
         let bounds = UIScreen.mainScreen().bounds
-        var butY   =  bounds.height - 75 //publishRect.origin.y + publishRect.height + 20 + 10*horRate
+        var butY   =  bounds.height - 80 //publishRect.origin.y + publishRect.height + 20 + 10*horRate
         let originy = publishRect.origin.y + publishRect.height + 55  //bounds.height - 60
         if butY < originy{
             butY = originy
         }
         self.likeButton.frame = CGRect.init(x: 0, y: 0, width: 40, height: 40)
-        self.likeButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 100*horRate,y: butY)
+        self.likeButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2,y: butY)
         self.likeButton.setImage(UIImage.init(named: "like-button"), forState: .Normal)
         self.likeButton.setImage(UIImage.init(named: "like-highlighted-button"), forState: .Highlighted)
         self.likeButton.setImage(UIImage.init(named: "like-disable-button"), forState: .Disabled)
@@ -57,7 +57,7 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.rebuildButton.setImage(UIImage.init(named: "rebuild-button"), forState: .Normal)
         self.rebuildButton.setImage(UIImage.init(named: "rebuild-selected-button"), forState: .Highlighted)
         self.rebuildButton.setImage(UIImage.init(named: "rebuild-disable-button"), forState: .Disabled)
-        self.rebuildButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: butY)
+        self.rebuildButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 100*horRate, y: butY)
         self.view.addSubview(self.rebuildButton)
         
         self.userIconImage.frame = CGRect.init(x: UIScreen.mainScreen().bounds.width/2, y: 9, width: 40*horRate, height: 40*horRate)

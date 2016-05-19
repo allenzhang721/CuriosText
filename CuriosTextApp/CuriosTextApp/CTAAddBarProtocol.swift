@@ -10,7 +10,7 @@ import Foundation
 
 func setAddBarView(barView:CTAAddBarView, view:UIView){
     barView.translatesAutoresizingMaskIntoConstraints = false
-    barView.heightAnchor.constraintEqualToConstant(40).active = true
+    barView.heightAnchor.constraintEqualToConstant(35).active = true
     barView.widthAnchor.constraintEqualToAnchor(view.widthAnchor, multiplier: 0.66).active = true
     barView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor).active = true
     barView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor).active = true

@@ -97,9 +97,9 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         let fullSize = self.getCellSize()
         self.horSpace = 10*self.getHorRate()
         self.verSpace = 5*self.getHorRate()
-        self.handView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: bounds.width, height: fullSize.height + self.verSpace*2 + 6))
-        self.handView.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2+self.verSpace + 3)
-        self.handView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
+        self.handView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: bounds.width, height: fullSize.height+(self.verSpace*3 + 6)))
+        self.handView.center = CGPoint.init(x: bounds.width/2, y: bounds.height/2)
+        self.handView.backgroundColor = UIColor.clearColor()
         let pan = UIPanGestureRecognizer(target: self, action: #selector(CTAHomeViewController.viewPanHandler(_:)))
         pan.minimumNumberOfTouches = 1
         pan.maximumNumberOfTouches = 1
@@ -622,7 +622,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     func viewVerPanHandler(location:CGPoint){
         let yChange = location.y - self.beganLocation.y
         if yChange > 0{
-            self.firstLoadViewMove(yChange)
+            self.firstLoadViewMove(yChange/4)
         }
     }
     
@@ -791,10 +791,11 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         if yChange > maxSpace {
             yChange = maxSpace
         }
-        self.currentFullCell.center = CGPoint.init(x: bounds.width/2, y: fullSize.height/2+yChange)
-        self.nextMoreCell.center = CGPoint.init(x: bounds.width/2, y: (self.horSpace+self.verSpace)*2+fullSize.height/2+yChange)
-        self.nextFullCell.center = CGPoint.init(x: bounds.width/2, y: (self.horSpace+self.verSpace)+fullSize.height/2+yChange)
-        self.shadeView.center = CGPoint.init(x: bounds.width/2, y: self.nextFullCell.frame.origin.y+self.nextFullCell.frame.height-5)
+        self.handView.center = CGPoint.init(x: bounds.width/2, y: bounds.height/2+yChange)
+//        self.currentFullCell.center = CGPoint.init(x: bounds.width/2, y: fullSize.height/2+yChange)
+//        self.nextMoreCell.center = CGPoint.init(x: bounds.width/2, y: (self.horSpace+self.verSpace)*2+fullSize.height/2+yChange)
+//        self.nextFullCell.center = CGPoint.init(x: bounds.width/2, y: (self.horSpace+self.verSpace)+fullSize.height/2+yChange)
+//        self.shadeView.center = CGPoint.init(x: bounds.width/2, y: self.nextFullCell.frame.origin.y+self.nextFullCell.frame.height-5)
         //self.loadingImageView?.center = CGPoint.init(x: bounds.width/2, y: self.handView.frame.origin.y+self.handView.frame.height/2+xChange)
     }
     
@@ -802,15 +803,14 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         let bounds = UIScreen.mainScreen().bounds
         let fullSize = self.getCellSize()
         UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.currentFullCell.center = CGPoint.init(x: bounds.width/2, y: fullSize.height/2)
-            self.nextMoreCell.center = CGPoint.init(x: bounds.width/2, y: (self.horSpace+self.verSpace)*2+fullSize.height/2)
-            self.nextFullCell.center = CGPoint.init(x: bounds.width/2, y: (self.horSpace+self.verSpace)+fullSize.height/2)
-            self.shadeView.center = CGPoint.init(x: bounds.width/2, y: self.nextFullCell.frame.origin.y+self.nextFullCell.frame.height-5)
+            self.handView.center = CGPoint.init(x: bounds.width/2, y: bounds.height/2)
+//            self.currentFullCell.center = CGPoint.init(x: bounds.width/2, y: fullSize.height/2)
+//            self.nextMoreCell.center = CGPoint.init(x: bounds.width/2, y: (self.horSpace+self.verSpace)*2+fullSize.height/2)
+//            self.nextFullCell.center = CGPoint.init(x: bounds.width/2, y: (self.horSpace+self.verSpace)+fullSize.height/2)
+//            self.shadeView.center = CGPoint.init(x: bounds.width/2, y: self.nextFullCell.frame.origin.y+self.nextFullCell.frame.height-5)
             //self.loadingImageView?.center = CGPoint.init(x: bounds.width+20, y: self.handView.frame.origin.y+self.handView.frame.height/2)
             }, completion: { (_) -> Void in
-                if completion != nil{
-                    completion!()
-                }
+                completion?()
         })
     }
     
