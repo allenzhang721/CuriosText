@@ -201,7 +201,7 @@ extension CTASliderView: UIScrollViewDelegate {
         for v in targetValues {
             if fabs(v * 1000.0 - nextValue * 1000.0) < 3 {
                 targetValue = v
-                updateOffsetByValue(targetValue)
+//                updateOffsetByValue(targetValue)
                 break
             }
         }

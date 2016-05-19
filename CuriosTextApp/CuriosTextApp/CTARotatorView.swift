@@ -71,7 +71,8 @@ class CTARotatorView: UIControl {
     func updateRotator(radian: CGFloat) {
         
         let offsetx = (radian - minimumRadian) / radianUnit
-        scrollView.contentOffset = CGPoint(x: offsetx, y: 0)
+//        .contentOffset =
+        scrollView.setContentOffset(CGPoint(x: offsetx, y: 0), animated: false)
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         nodeLayer.transform = CATransform3DMakeRotation(radian, 0, 0, 1)
@@ -96,12 +97,16 @@ extension CTARotatorView: UIScrollViewDelegate {
         }()
         
         var targetRadian = nextRadian
-        for  r in targetRadians {
-            if fabs((nextRadian * 1000.0 - r * 1000.0)) < 10 {
-                targetRadian = r
-                updateRotator(targetRadian)
-                break
+        if targetRadians.count > 0 {
+            for  r in targetRadians {
+                if fabs((nextRadian * 1000.0 - r * 1000.0)) < 10 {
+                    targetRadian = r
+//                    updateRotator(targetRadian)
+                    break
+                }
             }
+        } else {
+            
         }
         
         
