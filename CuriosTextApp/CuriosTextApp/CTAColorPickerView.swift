@@ -261,7 +261,7 @@ class CTAColorPickerView: UIControl{
                 let magnitude:CGFloat = sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y))
                 let slideMult = magnitude / 200;
                 let slideFactor = 0.15 * slideMult;
-                self.sliderXRate = (self.sliderLocation.x-self.beganLocation.x)*slideFactor
+                self.sliderXRate = (self.sliderLocation.x-self.beganLocation.x)*slideFactor*2
                 self.sliderYRate = (self.sliderLocation.y-self.beganLocation.y)*slideFactor*4
                 
                 let maxW = self.frame.size.width
