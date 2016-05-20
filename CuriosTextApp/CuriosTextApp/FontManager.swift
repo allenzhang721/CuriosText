@@ -95,6 +95,11 @@ class FontManager {
         return share.fontsBy(familyName)
     }
     
+    class func unregisterFontWith(info: FontInfoAttributes) {
+        share.beganAdd(info)
+        share.save()
+    }
+    
     class func familiesList() -> FontFamiliesList {
         return share.familiesList()
     }
@@ -145,12 +150,35 @@ extension FontManager {
         case Failture(ErrorType)
     }
     
+    enum FontManagerRemoveResult {
+        case NotExisted
+        case ShouldRemove(NSManagedObject)
+        case Failture(ErrorType)
+    }
+    
     private func familiesListMoveFrom(index: Int, toIndex: Int) {
         let list = familiesList()
         guard let order = list.families?.mutableCopy() as? NSMutableOrderedSet else { return }
         order.exchangeObjectAtIndex(index, withObjectAtIndex: toIndex)
         list.families = order
         save()
+    }
+    
+    private func shouldRemoveFontBy(fullName: String) -> FontManagerRemoveResult {
+        let predicate = NSPredicate(format: "fullName == %@", fullName)
+        let fullNameFetch = NSFetchRequest(entityName: "Font")
+//        fullNameFetch.resultType = .CountResultType
+        fullNameFetch.fetchLimit = 1
+        fullNameFetch.predicate = predicate
+        
+        do {
+            let result = try record.managedObjectContext.executeFetchRequest(fullNameFetch)
+            
+            
+            return result.count > 0 ? .ShouldRemove(result.first! as! NSManagedObject) : .NotExisted
+        } catch let error {
+            return .Failture(error)
+        }
     }
     
     private func shouldInsertFontBy(fullName: String) -> FontManagerInsertResult {
@@ -185,6 +213,21 @@ extension FontManager {
         } catch let error {
             return .Failture(error)
         }
+    }
+    
+    private func beganRemove(info: FontInfoAttributes) {
+        let fullName = info.fullName
+        let familyName = info.familyName
+        let result = shouldInsertFontBy(fullName)
+        let familyResult = shouldInsertFamilyBy(familyName)
+        
+        if  case .Existed = result { addFont(info) }
+    }
+    
+    private func removeFont(info: FontInfoAttributes) {
+        let context = record.managedObjectContext
+        guard let entity = NSEntityDescription.entityForName("Font", inManagedObjectContext: context) else { return }
+        
     }
     
     private func beganAdd(info: FontInfoAttributes) {

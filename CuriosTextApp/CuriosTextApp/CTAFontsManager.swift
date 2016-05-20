@@ -118,6 +118,13 @@ class CTAFontsManager {
         FontManager.registerFontWith(info)
     }
     
+    class func unregisterFontWith(familyName: String, fullName: String, postscriptName: String, copyRight: String, style: String, size: String, version: String) {
+        
+        let info = FontInfo(familyName: familyName, fullName: fullName, postscriptName: postscriptName, copyRight: copyRight, style: style, size: size, version: version)
+        
+        FontManager.registerFontWith(info)
+    }
+    
     class func reloadData() {
         
         let vf = UIFont.familyNames()

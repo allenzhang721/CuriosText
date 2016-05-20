@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
 //        registerFonts()
 //        prints()
         registerLocalFonts()
-        registerSystemFonts()
+//        registerSystemFonts()
         familiesDisplayNames()
         familiesFixRatio()
         ImageCache.defaultCache.maxMemoryCost = 100 * 1024 * 1024 // Allen: 100 MB
