@@ -558,41 +558,63 @@ extension EditViewController {
             
             switch r {
             case .Success(let image):
-                let publishName = CTAIDGenerator.fileID() + ".jpg"
-                strongSelf.document.storeResource(compressJPGImage(image), withName: publishName)
                 
-                CTADocumentManager.saveDoucment {[weak self] (success) -> Void in
+                draw(aPage, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.imageBy ,local: true) { [weak self] (previewR) in
+                    guard let sf = self else { return }
                     
-                    if let strongSelf = self where success {
+                    var previewImage: UIImage?
+                    var previewName = ""
+                    
+                    switch previewR {
+                    case .Success(let apreviewImage):
+                        previewImage = apreviewImage
+                    case .Failure():
+                        ()
+                    }
+                    
+                    if let p = previewImage {
+                        previewName = CTAIDGenerator.fileID() + ".jpg"
+                        sf.document.storeResource(compressJPGImage(p), withName: previewName)
+                    }
+                    
+                    let publishName = CTAIDGenerator.fileID() + ".jpg"
+                    sf.document.storeResource(compressJPGImage(image), withName: publishName)
+                    
+                    CTADocumentManager.saveDoucment {[weak self] (success) -> Void in
+                        
+                        if let strongSelf = self where success {
                             
-                        CTADocumentManager.uploadFiles({ (publishID, progress) in
+                            CTADocumentManager.uploadFiles({ (publishID, progress) in
                                 SVProgressHUD.showProgress(progress, status: "\(Int(progress * 100.0))%")
-                            }, completedBlock: { (success, publishID, publishURL) in
-                                if !success {
-                                    dispatch_async(dispatch_get_main_queue(), {
-                                        SVProgressHUD.showErrorWithStatus(LocalStrings.PublishFailure.description)
-                                    })
+                                }, completedBlock: { (success, publishID, publishURL) in
+                                    if !success {
+                                        dispatch_async(dispatch_get_main_queue(), {
+                                            SVProgressHUD.showErrorWithStatus(LocalStrings.PublishFailure.description)
+                                        })
+                                        
+                                        return
+                                    }
                                     
-                                    return
-                                }
-                                
-                                let publishIconURL = publishID + "/" + publishName
-                                
-                                CTAPublishDomain().createPublishFile(publishID, userID: CTAUserManager.user!.userID, title: "", publishDesc: "", publishIconURL: publishIconURL, previewIconURL: "", publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
+                                    let publishIconURL = publishID + "/" + publishName
+                                    let previewURL = previewName.isEmpty ? publishIconURL : publishID + "/" + previewName
                                     
-                                    dispatch_async(dispatch_get_main_queue(), {
-                                        SVProgressHUD.dismiss()
-                                        strongSelf.delegate?.EditControllerDidPublished(strongSelf)
-                                        strongSelf.dismissViewControllerAnimated(true, completion: {
-                                            
+                                    CTAPublishDomain().createPublishFile(publishID, userID: CTAUserManager.user!.userID, title: "", publishDesc: "", publishIconURL: publishIconURL, previewIconURL: previewURL, publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
+                                        
+                                        dispatch_async(dispatch_get_main_queue(), {
+                                            SVProgressHUD.dismiss()
+                                            strongSelf.delegate?.EditControllerDidPublished(strongSelf)
+                                            strongSelf.dismissViewControllerAnimated(true, completion: {
+                                                
+                                            })
                                         })
                                     })
-                                })
-
-                        })
+                                    
+                            })
+                        }
                     }
+                    
                 }
-                
+
             default:
                 debug_print("Fail", context: defaultContext)
             }
