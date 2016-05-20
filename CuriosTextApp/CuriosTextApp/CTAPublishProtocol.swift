@@ -319,10 +319,14 @@ extension CTAPublishProtocol{
                     req.bText = false
                     req.message = message
                     req.scene = 0
-                    WXApi.sendReq(req)
-                    let userID = self.userModel == nil ? "" : self.userModel!.userID
-                    CTAPublishDomain.getInstance().sharePublish(userID, publishID: self.publishModel!.publishID, sharePlatform: 0, compelecationBlock: { (_) -> Void in
-                    })
+                    let result = WXApi.sendReq(req)
+                    if result {
+                        let userID = self.userModel == nil ? "" : self.userModel!.userID
+                        CTAPublishDomain.getInstance().sharePublish(userID, publishID: self.publishModel!.publishID, sharePlatform: 0, compelecationBlock: { (_) -> Void in
+                        })
+                    }else {
+                        SVProgressHUD.showErrorWithStatus(NSLocalizedString("ShareErrorLabel", comment: ""))
+                    }
                 })
             }else {
                 self.publishCell.getEndImg({ (img) -> () in
@@ -344,6 +348,8 @@ extension CTAPublishProtocol{
                                 let userID = self.userModel == nil ? "" : self.userModel!.userID
                                 CTAPublishDomain.getInstance().sharePublish(userID, publishID: self.publishModel!.publishID, sharePlatform: 0, compelecationBlock: { (_) -> Void in
                                 })
+                            }else {
+                                SVProgressHUD.showErrorWithStatus(NSLocalizedString("ShareErrorLabel", comment: ""))
                             }
                         }
                     }
@@ -375,6 +381,8 @@ extension CTAPublishProtocol{
                             let userID = self.userModel == nil ? "" : self.userModel!.userID
                             CTAPublishDomain.getInstance().sharePublish(userID, publishID: self.publishModel!.publishID, sharePlatform: 1, compelecationBlock: { (_) -> Void in
                             })
+                        }else {
+                            SVProgressHUD.showErrorWithStatus(NSLocalizedString("ShareErrorLabel", comment: ""))
                         }
                     }
                 }
