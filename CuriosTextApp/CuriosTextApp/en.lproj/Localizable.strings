@@ -47,6 +47,13 @@
 "UserFemaleLabel" = "Female";
 "UserRegion" = "Region";
 "UserDesc" = "Bio";
+"AccountLabel" = "Account";
+"BindingAccountLabel" = "Accounts";
+"ChangePasswordLabel" = "Password";
+"SystemSettingLabel" = "Setting";
+"AboutLabel" = "About";
+"InviteFriendsLabel" = "Invite Friends";
+"ReviewUSLabel" = "Rate Curios";
 "SaveButtonLabel" = "Save";
 "WechatShareLabel" = "Friends";
 "MomentsShareLabel" = "Moments";
