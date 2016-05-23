@@ -474,62 +474,67 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     }
     
     func bindingAccountClick(sender: UIPanGestureRecognizer){
-        print("bindingAccountClick")
+        if isLogin {
+            let accountSetting = CTAAccountSettingViewController.getInstance()
+            self.navigationController?.pushViewController(accountSetting, animated: true)
+        }
     }
     
     func changePasswordClick(sender: UIPanGestureRecognizer){
-        let userPhone = self.loginUser!.phone
-        if userPhone == "" {
-            self.showSelectedAlert(NSLocalizedString("AlertTitleSetPhoneFirst", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.Setting.description, cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result) in
-                if result {
-                    let setMobileView = CTASetMobileNumberViewController.getInstance()
-                    setMobileView.isChangeContry = true
-                    setMobileView.setMobileNumberType = .setMobileNumber
-                    let navigationController = UINavigationController(rootViewController: setMobileView)
-                    navigationController.navigationBarHidden = true
-                    self.presentViewController(navigationController, animated: true, completion: {
-                    })
-                }
-            })
-        }else {
-            self.showTextAlert(NSLocalizedString("ChangePasswordLabel", comment: ""), alertMessage: NSLocalizedString("AlertCurrentPassword", comment: ""), okAlertLabel: LocalStrings.OK.description, cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result, password) in
-                if result{
-                    SVProgressHUD.setDefaultMaskType(.Clear)
-                    SVProgressHUD.showWithStatus("")
-                    let userID = self.loginUser!.userID
-                    let cryptPassword = CTAEncryptManager.hash256(password)
-                    CTAUserDomain.getInstance().checkPassword(userID, passwd: cryptPassword, compelecationBlock: { (info) in
-                        SVProgressHUD.dismiss()
-                        if info.result{
-                            let setView = CTASetPasswordViewController.getInstance()
-                            setView.userModel = self.loginUser!
-                            setView.setPasswordType = .changePassword
-                            self.presentViewController(setView, animated: true, completion: {
-                            })
-                        }else {
-                            if info.errorType is CTAInternetError {
-                                self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+        if isLogin {
+            let userPhone = self.loginUser!.phone
+            if userPhone == "" {
+                self.showSelectedAlert(NSLocalizedString("AlertTitleSetPhoneFirst", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.Setting.description, cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result) in
+                    if result {
+                        let setMobileView = CTASetMobileNumberViewController.getInstance()
+                        setMobileView.isChangeContry = true
+                        setMobileView.setMobileNumberType = .setMobileNumber
+                        let navigationController = UINavigationController(rootViewController: setMobileView)
+                        navigationController.navigationBarHidden = true
+                        self.presentViewController(navigationController, animated: true, completion: {
+                        })
+                    }
+                })
+            }else {
+                self.showTextAlert(NSLocalizedString("ChangePasswordLabel", comment: ""), alertMessage: NSLocalizedString("AlertCurrentPassword", comment: ""), okAlertLabel: LocalStrings.OK.description, cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result, password) in
+                    if result{
+                        SVProgressHUD.setDefaultMaskType(.Clear)
+                        SVProgressHUD.showWithStatus("")
+                        let userID = self.loginUser!.userID
+                        let cryptPassword = CTAEncryptManager.hash256(password)
+                        CTAUserDomain.getInstance().checkPassword(userID, passwd: cryptPassword, compelecationBlock: { (info) in
+                            SVProgressHUD.dismiss()
+                            if info.result{
+                                let setView = CTASetPasswordViewController.getInstance()
+                                setView.userModel = self.loginUser!
+                                setView.setPasswordType = .changePassword
+                                self.presentViewController(setView, animated: true, completion: {
                                 })
                             }else {
-                                let error = info.errorType as! CTACheckPasswordError
-                                if error == .PasswordIncorrect {
-                                    self.showSingleAlert(NSLocalizedString("AlertTitlePasswordIncorrect", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                    })
-                                }else if error == .UserIDNotExist || error == .UserIDIsEmpty{
-                                    self.showSingleAlert(NSLocalizedString("AlertTitleUserIDNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                    })
-                                }else if error == .DataIsEmpty{
-                                    self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                if info.errorType is CTAInternetError {
+                                    self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                     })
                                 }else {
-                                    self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                    })
+                                    let error = info.errorType as! CTACheckPasswordError
+                                    if error == .PasswordIncorrect {
+                                        self.showSingleAlert(NSLocalizedString("AlertTitlePasswordIncorrect", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        })
+                                    }else if error == .UserIDNotExist || error == .UserIDIsEmpty{
+                                        self.showSingleAlert(NSLocalizedString("AlertTitleUserIDNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        })
+                                    }else if error == .DataIsEmpty{
+                                        self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        })
+                                    }else {
+                                        self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        })
+                                    }
                                 }
                             }
-                        }
-                    })
-                }
-            })
+                        })
+                    }
+                })
+            }
         }
     }
     

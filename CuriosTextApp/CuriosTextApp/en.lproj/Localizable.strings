@@ -48,8 +48,8 @@
 "UserFemaleLabel" = "Female";
 "UserRegion" = "Region";
 "UserDesc" = "Bio";
-"AccountLabel" = "Account";
-"BindingAccountLabel" = "Accounts";
+"AccountLabel" = "Account settings";
+"BindingAccountLabel" = "Account";
 "ChangePasswordLabel" = "Password";
 "SystemSettingLabel" = "Setting";
 "AboutLabel" = "About";
