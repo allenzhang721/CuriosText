@@ -374,7 +374,7 @@ extension CTASetUserInfoViewController: UITextViewDelegate{
 extension CTASetUserInfoViewController: UIGestureRecognizerDelegate{
     
     func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return false
+        return true
     }
     
 }

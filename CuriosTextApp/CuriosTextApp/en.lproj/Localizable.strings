@@ -55,6 +55,11 @@
 "AboutLabel" = "About";
 "InviteFriendsLabel" = "Invite Friends";
 "ReviewUSLabel" = "Rate Curios";
+"PhoneLabel" = "Phone";
+"WechatLabel" = "Wechat";
+"WeiboLabel" = "Weibo";
+"LinkedLabel" = "Linked";
+"UnlinkedLabel" = "Not Set";
 "SaveButtonLabel" = "Save";
 "WechatShareLabel" = "Friends";
 "MomentsShareLabel" = "Moments";
@@ -99,14 +104,18 @@
 "AlertTitlePhoneExist" = "Mobile Number existed. Login this account?";
 "AlertTitlePhoneRegistExist" = "Mobile Number existed. Please try other.";
 "AlertTitlePhoneNotExist" = "Mobile Number not registered. Please try other.";
-"AlertTitlePhoneNil" = "Mobile Number null";
+"AlertTitlePhoneNil" = "Mobile Number is null";
 "AlertTitleConnectUs" = "Please connect service.";
 "AlertTitleWechatNil" = "Login with Wechat failed.";
 "AlertTitleWeiboNil" = "Login with Weibo failed.";
-"AlertTitleDataNil" = "Data null";
+"AlertTitleDataNil" = "Data is null";
 "AlertTitlePasswordIncorrect" = "Incorrect password.";
 "AlertTitleUserNotExist" = "User not exist";
 "AlertTitleLinkPhoneReady" = "You've linked this mobile number.";
+"AlertTitleUnlink" = "Are you sure want to unlink?";
+"AlertTitleUnlikeAllAccount" = "Can not unlink all account";
+"AlertTitleAccountRegistExist" = "This account have be linked. Please try other";
+"AlertTitleAccountNil" = "Account is null";
 
 "AllPhotoLibraryTitle" = "Please Allow Access to Your Photos";
 "AllPhotoLibraryMessage" = "This allow Curios to share photos from your library and save photos to your camera roll.";

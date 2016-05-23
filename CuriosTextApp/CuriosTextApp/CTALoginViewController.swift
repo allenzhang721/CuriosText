@@ -323,7 +323,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
                 if OAuthInfo != nil {
                     self.login(.Weibo, OAuthInfo: OAuthInfo, completionHandler: { (resultDic, urlResponse, error) in
                         if error == nil && resultDic != nil {
-                            let weiboIDInt:Int = resultDic![key(.WeiBoUserID)] as! Int
+                            let weiboIDInt:Int = resultDic![key(.WeiBoID)] as! Int
                             let weiboID = String(weiboIDInt)
                             let userIconURL:String = resultDic![key(.Avatarhd)] as! String
                             let nickName:String = resultDic![key(.WeiboName)] as! String

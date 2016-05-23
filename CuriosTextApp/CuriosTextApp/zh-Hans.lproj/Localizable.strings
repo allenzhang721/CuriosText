@@ -57,6 +57,11 @@
 "AboutLabel" = "关于";
 "InviteFriendsLabel" = "邀请好友";
 "ReviewUSLabel" = "给我们评分吧";
+"PhoneLabel" = "手机号";
+"WechatLabel" = "微信";
+"WeiboLabel" = "微博";
+"LinkedLabel" = "已关联";
+"UnlinkedLabel" = "未关联";
 "SaveButtonLabel" = "保存";
 "WechatShareLabel" = "微信好友";
 "MomentsShareLabel" = "朋友圈";
@@ -109,6 +114,10 @@
 "AlertTitlePasswordIncorrect" = "密码错误";
 "AlertTitleUserNotExist" = "用户不存在";
 "AlertTitleLinkPhoneReady" = "你已经关联了此号码";
+"AlertTitleUnlink" = "确定取消关联？";
+"AlertTitleUnlikeAllAccount" = "不能取消所有账号的关联";
+"AlertTitleAccountRegistExist" = "此账号已被绑定，请尝试其他账号";
+"AlertTitleAccountNil" = "账号为空";
 
 "AllPhotoLibraryTitle" = "设置";
 "AllPhotoLibraryMessage" = "请允许奇思访问你的相册。";

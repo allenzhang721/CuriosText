@@ -226,13 +226,13 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
                                 })
                             }
                         }else {
+                            self.isBackDirect = true
                             if info.errorType is CTAInternetError {
                                 self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                     self.resetView()
                                 })
                             }else {
                                 let error = info.errorType as! CTAPhoneRegisterError
-                                self.isBackDirect = true
                                 if error == .PhoneIsEmpty {
                                     self.showSingleAlert(NSLocalizedString("AlertTitlePhoneNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                         self.resetView()
@@ -255,13 +255,13 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
                         if info.result{
                             self.pushSetPasswordView(nil, setPasswordType: .resetPassword)
                         }else {
+                            self.isBackDirect = true
                             if info.errorType is CTAInternetError {
                                 self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                     self.resetView()
                                 })
                             }else {
                                 let error = info.errorType as! CTARequestUserError
-                                self.isBackDirect = true
                                 if error == .UserIDIsEmpty {
                                     self.showSingleAlert(NSLocalizedString("AlertTitlePhoneNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                         self.resetView()
@@ -289,6 +289,9 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
                         let userID = user!.userID
                         CTAUserDomain.getInstance().bindingUserPhone(userID, phone: self.phone, areaCode: self.areaZone, compelecationBlock: { (info) in
                             self.changeToUnloadingView()
+                            user!.phone = self.phone
+                            user!.areaCode = self.areaZone
+                            CTAUserManager.save(user!)
                             if info.result{
                                 if self.smsType == .setMobileNumber{
                                     self.pushSetPasswordView(user, setPasswordType: .setMobileNumber)
@@ -296,13 +299,13 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
                                     self.dismissViewControllerAnimated(true, completion: nil)
                                 }
                             }else {
+                                self.isBackDirect = true
                                 if info.errorType is CTAInternetError {
                                     self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                         self.resetView()
                                     })
                                 }else {
                                     let error = info.errorType as! CTABindingUserPhoneError
-                                    self.isBackDirect = true
                                     if error == .UserIDIsEmpty {
                                         self.showSingleAlert(NSLocalizedString("AlertTitleUserNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                             self.resetView()
