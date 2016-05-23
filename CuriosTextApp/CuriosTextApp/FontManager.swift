@@ -77,6 +77,10 @@ class FontManager {
         
     }
     
+    class func cleanFontFamilyList() {
+        
+    }
+    
     class func registerFontAt(url: NSURL, customInfo: FontInfoAttributes? = nil) {
         share.registerFontAt(url)
     }
@@ -154,6 +158,30 @@ extension FontManager {
         case NotExisted
         case ShouldRemove(NSManagedObject)
         case Failture(ErrorType)
+    }
+    
+    private func _cleanFontFamilyList() {
+        let context = record.managedObjectContext
+        let name = FontManager.defaultFontFamiliesListName
+        let predicate = NSPredicate(format: "name == %@", name)
+        let fullNameFetch = NSFetchRequest(entityName: "FontFamiliesList")
+        fullNameFetch.fetchLimit = 1
+        fullNameFetch.predicate = predicate
+        
+        do {
+            let list = try record.managedObjectContext.executeFetchRequest(fullNameFetch) as! [FontFamiliesList]
+            
+            if let alist = list.first {
+                context.deleteObject(alist)
+            } else {
+                
+            }
+            
+        } catch {
+            fatalError()
+        }
+        
+        save()
     }
     
     private func familiesListMoveFrom(index: Int, toIndex: Int) {

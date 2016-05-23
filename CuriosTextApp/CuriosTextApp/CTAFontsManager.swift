@@ -31,6 +31,10 @@ class CTAFontsManager {
         return validFamilies
     }
     
+    class func cleanCacheFamilyList() {
+        FontManager.cleanFontFamilyList()
+    }
+    
     class func customFamilyDisplayNameBy(familyName: String) -> String? {
         guard let displayName = CTAFontsManager.familiyDisplayNameDic[familyName] else { return nil }
         

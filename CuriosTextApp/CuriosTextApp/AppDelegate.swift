@@ -21,10 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         SVProgressHUD.setDefaultStyle(.Custom)
         SVProgressHUD.setForegroundColor(CTAStyleKit.selectedColor)
         SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
-//        registerFonts()
-//        prints()
+
+        cleanFontCache()
         registerLocalFonts()
-//        registerSystemFonts()
+        registerSystemFonts()
         familiesDisplayNames()
         familiesFixRatio()
         ImageCache.defaultCache.maxMemoryCost = 100 * 1024 * 1024 // Allen: 100 MB
@@ -42,6 +42,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         CTASocialManager.register(.SMS, appID: CTAConfigs.SMS.appID, appKey: CTAConfigs.SMS.appKey) // http://dashboard.mob.com/#/sms/index
         
         return true
+    }
+    
+    func cleanFontCache() {
+        CTAFontsManager.cleanCacheFamilyList()
     }
     
     func registerLocalFonts() {
