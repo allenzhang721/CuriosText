@@ -237,8 +237,8 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
                         adjustOffset = adjust
                     }
                 }
-                
-                let point = CGPoint(x: proposedContentOffset.x + adjustOffset + 0.5, y: proposedContentOffset.y)
+                let offset = adjustOffset < 0 ? adjustOffset + 0.5 : adjustOffset
+                let point = CGPoint(x: proposedContentOffset.x + offset, y: proposedContentOffset.y)
 //                collectionView.setContentOffset(point, animated: false)
                 return point
                 
