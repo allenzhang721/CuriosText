@@ -247,7 +247,12 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
                         CTAUserDomain.getInstance().updatePassword(self.userModel!.userID, newPasswd: cryptPassword, compelecationBlock: { (info) -> Void in
                             self.changeToUnloadingView()
                             if info.result{
-                                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("AlertPasswordset", comment: ""))
+                                if self.setPasswordType == .changePassword{
+                                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("AlertPasswordset", comment: ""))
+                                }else if self.setPasswordType == .setMobileNumber{
+                                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("AlertPhoneSet", comment: ""))
+                                }
+                                
                                 self.dismissViewControllerAnimated(true, completion: { () -> Void in
                                 })
                             }else {

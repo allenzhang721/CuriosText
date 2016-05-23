@@ -207,58 +207,63 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
             let wechatID = self.loginUser!.weixinID
             let userID = self.loginUser!.userID
             if wechatID == "" {
-                CTASocialManager.OAuth(.WeChat) { (resultDic, urlResponse, error) -> Void in
-                    if error == nil {
-                        if resultDic != nil {
-                            let weixinID:String = resultDic![key(.Openid)] as! String
-                            SVProgressHUD.show()
-                            CTAUserDomain.getInstance().bindingUserWeixin(userID, weixinID: weixinID, compelecationBlock: { (info) in
-                                SVProgressHUD.dismiss()
-                                if info.result{
-                                    self.loginUser!.weixinID = weixinID
-                                    CTAUserManager.save(self.loginUser!)
-                                    self.reloadWechat()
-                                }else {
-                                    if info.errorType is CTAInternetError {
-                                        self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                        })
+                if CTASocialManager.isAppInstaller(.WeChat){
+                    CTASocialManager.OAuth(.WeChat) { (resultDic, urlResponse, error) -> Void in
+                        if error == nil {
+                            if resultDic != nil {
+                                let weixinID:String = resultDic![key(.Openid)] as! String
+                                SVProgressHUD.show()
+                                CTAUserDomain.getInstance().bindingUserWeixin(userID, weixinID: weixinID, compelecationBlock: { (info) in
+                                    SVProgressHUD.dismiss()
+                                    if info.result{
+                                        self.loginUser!.weixinID = weixinID
+                                        CTAUserManager.save(self.loginUser!)
+                                        self.reloadWechat()
+                                        SVProgressHUD.showSuccessWithStatus(NSLocalizedString("AlertLinkSuccess", comment: ""))
                                     }else {
-                                        let error = info.errorType as! CTABindingUserWeixinError
-                                        if error == .UserIDIsEmpty {
-                                            self.showSingleAlert(NSLocalizedString("AlertTitleUserNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        if info.errorType is CTAInternetError {
+                                            self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                             })
-                                        }else if error == .UserIDNotExist {
-                                            self.showSingleAlert(NSLocalizedString("AlertTitleUserNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                            })
-                                        }else if error == .WeixinIsEmpty {
-                                            self.showSingleAlert(NSLocalizedString("AlertTitleAccountNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                            })
-                                        }else if error == .WeixinExist {
-                                            self.showSingleAlert(NSLocalizedString("AlertTitleAccountRegistExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                            })
-                                        }else if error == .NeedContactWithService{
-                                            self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                            })
-                                        }else if error == .DataIsEmpty{
-                                            self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                            })
+                                        }else {
+                                            let error = info.errorType as! CTABindingUserWeixinError
+                                            if error == .UserIDIsEmpty {
+                                                self.showSingleAlert(NSLocalizedString("AlertTitleUserNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                                })
+                                            }else if error == .UserIDNotExist {
+                                                self.showSingleAlert(NSLocalizedString("AlertTitleUserNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                                })
+                                            }else if error == .WeixinIsEmpty {
+                                                self.showSingleAlert(NSLocalizedString("AlertTitleAccountNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                                })
+                                            }else if error == .WeixinExist {
+                                                self.showSingleAlert(NSLocalizedString("AlertTitleAccountRegistExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                                })
+                                            }else if error == .NeedContactWithService{
+                                                self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                                })
+                                            }else if error == .DataIsEmpty{
+                                                self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                                })
+                                            }
                                         }
                                     }
-                                }
-                            })
-                        }
-                    }else {
-                        if error!.code == -1{
-                            
-                        }
-                        else if error!.code == -2{
-                            self.showSingleAlert(NSLocalizedString("AlertTitleWeChatUninstall", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                            })
+                                })
+                            }
                         }else {
-                            self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                            })
+                            if error!.code == -1{
+                                
+                            }
+                            else if error!.code == -2{
+                                self.showSingleAlert(NSLocalizedString("AlertTitleWeChatUninstall", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                })
+                            }else {
+                                self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                })
+                            }
                         }
                     }
+                }else {
+                    self.showSingleAlert(NSLocalizedString("AlertTitleNoInstallWechat", comment: ""), alertMessage: "", compelecationBlock: nil)
                 }
             }else {
                 if self.checkUnlinkStyle(){
@@ -271,6 +276,7 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
                                     self.loginUser!.weixinID = ""
                                     CTAUserManager.save(self.loginUser!)
                                     self.reloadWechat()
+                                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("AlertUnLinkSuccess", comment: ""))
                                 }else {
                                     self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                     })
@@ -290,59 +296,64 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
             let weiboID = self.loginUser!.weiboID
             let userID = self.loginUser!.userID
             if weiboID == "" {
-                CTASocialManager.OAuth(.Weibo){ (OAuthInfo, urlResponse, error) -> Void in
-                    if error == nil {
-                        if OAuthInfo != nil {
-                            let weiboUID = (OAuthInfo?["uid"] ?? OAuthInfo?["userID"]) as? String
-                            let weiboID = weiboUID == nil ? "" : weiboUID
-                            SVProgressHUD.show()
-                            CTAUserDomain.getInstance().bindingUserWeibo(userID, weibo: weiboID!, compelecationBlock: { (info) in
-                                SVProgressHUD.dismiss()
-                                if info.result{
-                                    self.loginUser!.weiboID = weiboID!
-                                    CTAUserManager.save(self.loginUser!)
-                                    self.reloadWeibo()
-                                }else {
-                                    if info.errorType is CTAInternetError {
-                                        self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                        })
+                if CTASocialManager.isAppInstaller(.Weibo){
+                    CTASocialManager.OAuth(.Weibo){ (OAuthInfo, urlResponse, error) -> Void in
+                        if error == nil {
+                            if OAuthInfo != nil {
+                                let weiboUID = (OAuthInfo?["uid"] ?? OAuthInfo?["userID"]) as? String
+                                let weiboID = weiboUID == nil ? "" : weiboUID
+                                SVProgressHUD.show()
+                                CTAUserDomain.getInstance().bindingUserWeibo(userID, weibo: weiboID!, compelecationBlock: { (info) in
+                                    SVProgressHUD.dismiss()
+                                    if info.result{
+                                        self.loginUser!.weiboID = weiboID!
+                                        CTAUserManager.save(self.loginUser!)
+                                        self.reloadWeibo()
+                                        SVProgressHUD.showSuccessWithStatus(NSLocalizedString("AlertLinkSuccess", comment: ""))
                                     }else {
-                                        let error = info.errorType as! CTABindingUserWeiboError
-                                        if error == .UserIDIsEmpty {
-                                            self.showSingleAlert(NSLocalizedString("AlertTitleUserNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        if info.errorType is CTAInternetError {
+                                            self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                             })
-                                        }else if error == .UserIDNotExist {
-                                            self.showSingleAlert(NSLocalizedString("AlertTitleUserNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                            })
-                                        }else if error == .WeiboIsEmpty {
-                                            self.showSingleAlert(NSLocalizedString("AlertTitleAccountNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                            })
-                                        }else if error == .WeiboExist {
-                                            self.showSingleAlert(NSLocalizedString("AlertTitleAccountRegistExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                            })
-                                        }else if error == .NeedContactWithService{
-                                            self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                            })
-                                        }else if error == .DataIsEmpty{
-                                            self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                            })
+                                        }else {
+                                            let error = info.errorType as! CTABindingUserWeiboError
+                                            if error == .UserIDIsEmpty {
+                                                self.showSingleAlert(NSLocalizedString("AlertTitleUserNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                                })
+                                            }else if error == .UserIDNotExist {
+                                                self.showSingleAlert(NSLocalizedString("AlertTitleUserNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                                })
+                                            }else if error == .WeiboIsEmpty {
+                                                self.showSingleAlert(NSLocalizedString("AlertTitleAccountNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                                })
+                                            }else if error == .WeiboExist {
+                                                self.showSingleAlert(NSLocalizedString("AlertTitleAccountRegistExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                                })
+                                            }else if error == .NeedContactWithService{
+                                                self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                                })
+                                            }else if error == .DataIsEmpty{
+                                                self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                                })
+                                            }
                                         }
                                     }
-                                }
-                            })
-                        }
-                    }else {
-                        if error!.code == -1{
-                            
-                        }
-                        else if error!.code == -2{
-                            self.showSingleAlert(NSLocalizedString("AlertTitleWeiboUninstall", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                            })
+                                })
+                            }
                         }else {
-                            self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                            })
+                            if error!.code == -1{
+                                
+                            }
+                            else if error!.code == -2{
+                                self.showSingleAlert(NSLocalizedString("AlertTitleWeiboUninstall", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                })
+                            }else {
+                                self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                })
+                            }
                         }
                     }
+                }else {
+                    self.showSingleAlert(NSLocalizedString("AlertTitleNoInstallWeibo", comment: ""), alertMessage: "", compelecationBlock: nil)
                 }
             }else {
                 if self.checkUnlinkStyle(){
@@ -355,6 +366,7 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
                                     self.loginUser!.weiboID = ""
                                     CTAUserManager.save(self.loginUser!)
                                     self.reloadWeibo()
+                                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("AlertUnLinkSuccess", comment: ""))
                                 }else {
                                     self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                     })

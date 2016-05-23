@@ -254,7 +254,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     func playComplete(){
         self.isPlaying = false
         self.isPause = false
-        let time: NSTimeInterval = NSTimeInterval(1.0)
+        let time: NSTimeInterval = NSTimeInterval(3.0)
         let delay = dispatch_time(DISPATCH_TIME_NOW,
                                   Int64(time * Double(NSEC_PER_SEC)))
         dispatch_after(delay, dispatch_get_main_queue()) { [weak self] in

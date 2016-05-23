@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SVProgressHUD
 
 enum CTASMSVerifyType{
     case register, resetPassword, setMobileNumber, changeMobileNumber
@@ -296,6 +297,7 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
                                 if self.smsType == .setMobileNumber{
                                     self.pushSetPasswordView(user, setPasswordType: .setMobileNumber)
                                 }else {
+                                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("AlertPhoneSet", comment: ""))
                                     self.dismissViewControllerAnimated(true, completion: nil)
                                 }
                             }else {

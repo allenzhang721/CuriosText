@@ -96,6 +96,9 @@
 "AlertTitleSetPhoneFirst" = "请先设置手机号";
 "AlertCurrentPassword" = "输入当前密码";
 "AlertPasswordset" = "修改密码成功";
+"AlertLinkSuccess" = "关联成功";
+"AlertUnLinkSuccess" = "取消关联成功";
+"AlertPhoneSet" = "设置成功";
 
 "AlertTitleLoginFaile" = "账号或密码错误,请重新输入";
 "AlertTitleWeChatUninstall" = "未找到微信，暂时无法微信登录";

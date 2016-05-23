@@ -94,6 +94,9 @@
 "AlertTitleSetPhoneFirst" = "Mobile number have not linked";
 "AlertCurrentPassword" = "Enter current password";
 "AlertPasswordset" = "Password set";
+"AlertLinkSuccess" = "Link success";
+"AlertUnLinkSuccess" = "Unlink success";
+"AlertPhoneSet" = "Phone set";
 
 "AlertTitleLoginFaile" = "Account or password error. Enter again.";
 "AlertTitleWeChatUninstall" = "Not find weChat, Can't login with weChat";
