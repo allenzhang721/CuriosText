@@ -157,6 +157,9 @@
 // MARK: - Publish
 "PublishFailure" = "发布失败，请稍后再试。";
 
+// MARK: - About
+"AboutLabel" = "关于";
+
 // MARK: - AnimationName
 "NONE" = "无动画";
 "MOVE_IN" = "移入";

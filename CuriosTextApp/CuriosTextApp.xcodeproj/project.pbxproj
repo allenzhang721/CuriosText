@@ -190,6 +190,9 @@
 		2CB380B71C4D0D1F009A681A /* CTAPreviewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB380B61C4D0D1F009A681A /* CTAPreviewLayout.swift */; };
 		2CB380B91C4D20E5009A681A /* CTAPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB380B81C4D20E5009A681A /* CTAPreviewCell.swift */; };
 		2CB3C8C21C859B8E00CF2BD2 /* ImagePickerResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB3C8C11C859B8E00CF2BD2 /* ImagePickerResource.swift */; };
+		2CB5B1D71CF2A7200028EA7D /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB5B1D61CF2A7200028EA7D /* AboutViewController.swift */; };
+		2CB5B1D91CF2A7700028EA7D /* ViewControllerModuleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB5B1D81CF2A7700028EA7D /* ViewControllerModuleProtocol.swift */; };
+		2CB5B1DB1CF2A7FE0028EA7D /* About.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CB5B1DA1CF2A7FE0028EA7D /* About.storyboard */; };
 		2CB66A961CD8566B006B9282 /* GIFCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB66A951CD8566B006B9282 /* GIFCreator.swift */; };
 		2CB66A9D1CD86F6C006B9282 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB66A981CD86F6C006B9282 /* libWeChatSDK.a */; };
 		2CB66A9E1CD86F6C006B9282 /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2CB66A991CD86F6C006B9282 /* read_me.txt */; };
@@ -552,6 +555,9 @@
 		2CB380B61C4D0D1F009A681A /* CTAPreviewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewLayout.swift; sourceTree = "<group>"; };
 		2CB380B81C4D20E5009A681A /* CTAPreviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewCell.swift; sourceTree = "<group>"; };
 		2CB3C8C11C859B8E00CF2BD2 /* ImagePickerResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerResource.swift; sourceTree = "<group>"; };
+		2CB5B1D61CF2A7200028EA7D /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		2CB5B1D81CF2A7700028EA7D /* ViewControllerModuleProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerModuleProtocol.swift; sourceTree = "<group>"; };
+		2CB5B1DA1CF2A7FE0028EA7D /* About.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = About.storyboard; sourceTree = "<group>"; };
 		2CB66A951CD8566B006B9282 /* GIFCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GIFCreator.swift; sourceTree = "<group>"; };
 		2CB66A981CD86F6C006B9282 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		2CB66A991CD86F6C006B9282 /* read_me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = read_me.txt; sourceTree = "<group>"; };
@@ -927,6 +933,9 @@
 		2C3B33C81C1176D000738166 /* CuriosTextApp */ = {
 			isa = PBXGroup;
 			children = (
+				2CB5B1D81CF2A7700028EA7D /* ViewControllerModuleProtocol.swift */,
+				2CB5B1D61CF2A7200028EA7D /* AboutViewController.swift */,
+				2CB5B1DA1CF2A7FE0028EA7D /* About.storyboard */,
 				2C042B731CE3226000C13FED /* CTAHeartAnimationView.swift */,
 				2C042B751CE3248E00C13FED /* Heart.storyboard */,
 				2CDDE6491CE16E1400B6E6A9 /* ShareModule */,
@@ -1605,6 +1614,7 @@
 				2C610A391C902BF100DFE315 /* Camera.storyboard in Resources */,
 				2C32BD561C4CB89100788A97 /* Localizable.strings in Resources */,
 				2CCFD54B1CE49CAC00D58043 /* Share.storyboard in Resources */,
+				2CB5B1DB1CF2A7FE0028EA7D /* About.storyboard in Resources */,
 				2C3B33D11C1176D000738166 /* Assets.xcassets in Resources */,
 				2C567A691C5CBAF200F11369 /* Countries.plist in Resources */,
 				2C1A121F1CE014FD0071BD35 /* WeiboSDK.bundle in Resources */,
@@ -1724,6 +1734,7 @@
 				2C3CAD171C21825900D8DE4B /* CTAElement.swift in Sources */,
 				2C32BD491C4CA7A100788A97 /* CTAPreviewCanvasView.swift in Sources */,
 				2C82FF571C437F58001D927A /* CTASelectorAligmentsCell.swift in Sources */,
+				2CB5B1D91CF2A7700028EA7D /* ViewControllerModuleProtocol.swift in Sources */,
 				2C929DD71C60962B00F90BF4 /* CTAConfig.swift in Sources */,
 				2CDDF5091C5F3BE00019FC83 /* AESCrypt.m in Sources */,
 				2CD11AB61CB7547500A79305 /* AniNode.swift in Sources */,
@@ -1804,6 +1815,7 @@
 				2CAEAC9D1C323F4300C9F9AC /* ContainerImgView.swift in Sources */,
 				2C247FEB1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift in Sources */,
 				2CD11AB81CB7547500A79305 /* TextSpliter.swift in Sources */,
+				2CB5B1D71CF2A7200028EA7D /* AboutViewController.swift in Sources */,
 				2CA9933E1C75DD4700B5EEDC /* SimpleNetworking.swift in Sources */,
 				2C9706CD1C1E794B00FA2E17 /* CTAError.swift in Sources */,
 				661D29F61C2AD5E60073FC0E /* CTAUploadController.swift in Sources */,
