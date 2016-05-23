@@ -631,11 +631,25 @@ extension CTASettingViewController: UIGestureRecognizerDelegate{
 extension CTASettingViewController: CTAShareViewDelegate{
     func weChatShareHandler(){
         
-    }
-    func momentsShareHandler(){
+        let url = NSURL(string: "https://itunes.apple.com/cn/app/curios-let-photos-lively/id1090836500?l=en&mt=8")!
+        CTASocialManager.shareMessage(CTASocialManager.Message.WeChat(CTASocialManager.Message.WeChatSubtype.Session(info: (title: "奇思-让图片更有意思", description: "这个应用很好玩，可以给照片添加会动的文字，快来下载吧！", thumbnail: UIImage(named: "ShareIcon"), media: CTASocialManager.Media.URL(url))))) { (result) in
+        }
         
     }
+    func momentsShareHandler(){
+        let url = NSURL(string: "https://itunes.apple.com/cn/app/curios-let-photos-lively/id1090836500?l=en&mt=8")!
+        CTASocialManager.shareMessage(CTASocialManager.Message.WeChat(CTASocialManager.Message.WeChatSubtype.Timeline(info: (title: "奇思-让图片更有意思", description: "这个应用很好玩，可以给照片添加会动的文字，快来下载吧！", thumbnail: UIImage(named: "ShareIcon"), media: CTASocialManager.Media.URL(url))))) { (result) in
+        }
+    }
     func weiBoShareHandler(){
+        let url = NSURL(string: "https://itunes.apple.com/cn/app/curios-let-photos-lively/id1090836500?l=en&mt=8")!
+        
+        CTASocialManager.shareMessage(CTASocialManager.Message.Weibo(CTASocialManager.Message.WeiboSubtype.Default(info: (title: "奇思-让图片更有意思", description: "奇思, 让图片更有意思! 这个应用很好玩，可以给照片添加会动的文字，快来下载吧！", thumbnail: UIImage(named: "ShareIcon"), media: CTASocialManager.Media.URL(url)), accessToken: ""))) { (result) in
+            
+        }
+        
+//        CTASocialManager.shareMessage(CTASocialManager.Message.Weibo(CTASocialManager.Message.Weibo(info: (title: "奇思-让图片更有意思", description: "这个应用很好玩，可以给照片添加会动的文字，快来下载吧！", thumbnail: UIImage(named: "fresh-icon-1"), media: CTASocialManager.Media.URL(url))))) { (result) in
+//        }
         
     }
     func deleteHandler(){
