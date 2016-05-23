@@ -24,8 +24,8 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Curios" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uZ4-0n-moJ">
-                                <rect key="frame" x="135" y="196" width="50" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="131" y="186" width="58" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -116,7 +116,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LaB-GK-oFn">
-                                <rect key="frame" x="100" y="221" width="120" height="21"/>
+                                <rect key="frame" x="100" y="210" width="120" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="J8d-oK-cjN"/>
                                     <constraint firstAttribute="height" constant="21" id="yuA-ql-lvK"/>
@@ -129,10 +129,10 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="ZMr-kh-tPm" firstAttribute="centerX" secondItem="tpr-gs-N1c" secondAttribute="centerX" constant="-2" id="2ra-Rt-hxv"/>
-                            <constraint firstItem="uZ4-0n-moJ" firstAttribute="top" secondItem="blp-Nn-N7C" secondAttribute="bottom" constant="30" id="6Dt-ls-f2G"/>
+                            <constraint firstItem="uZ4-0n-moJ" firstAttribute="top" secondItem="blp-Nn-N7C" secondAttribute="bottom" constant="20" id="6Dt-ls-f2G"/>
                             <constraint firstItem="blp-Nn-N7C" firstAttribute="top" secondItem="dpS-Hd-9Re" secondAttribute="bottom" constant="94" id="7jB-Oq-pmw"/>
                             <constraint firstItem="ih4-TN-Gq9" firstAttribute="centerX" secondItem="tpr-gs-N1c" secondAttribute="centerX" id="K5c-bV-EFs"/>
-                            <constraint firstItem="LaB-GK-oFn" firstAttribute="top" secondItem="uZ4-0n-moJ" secondAttribute="bottom" constant="4" id="Q6J-Rk-SeR"/>
+                            <constraint firstItem="LaB-GK-oFn" firstAttribute="top" secondItem="uZ4-0n-moJ" secondAttribute="bottom" id="Q6J-Rk-SeR"/>
                             <constraint firstItem="ZMr-kh-tPm" firstAttribute="centerY" secondItem="tpr-gs-N1c" secondAttribute="centerY" constant="20.5" id="SOw-tw-l8g"/>
                             <constraint firstItem="uZ4-0n-moJ" firstAttribute="centerX" secondItem="tpr-gs-N1c" secondAttribute="centerX" id="XxY-Rj-yZs"/>
                             <constraint firstItem="blp-Nn-N7C" firstAttribute="centerX" secondItem="tpr-gs-N1c" secondAttribute="centerX" id="aJt-A1-i2w"/>
