@@ -46,9 +46,7 @@ class AboutViewController: UIViewController {
         }
     }
     
-    
-    
-    private func _versionTag(rect: CGRect = CGRectMake(0, 0, 41, 21), text2: String = "v1.2.3") -> UIImage {
+    private func _versionTag(rect: CGRect = CGRectMake(0, 0, 41, 21), text2: String = "1.0.0") -> UIImage {
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
         _drawVersionTag(frame3: rect, text2: text2)
         let image = UIGraphicsGetImageFromCurrentImageContext()

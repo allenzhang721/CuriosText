@@ -193,6 +193,7 @@
 		2CB5B1D71CF2A7200028EA7D /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB5B1D61CF2A7200028EA7D /* AboutViewController.swift */; };
 		2CB5B1D91CF2A7700028EA7D /* ViewControllerModuleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB5B1D81CF2A7700028EA7D /* ViewControllerModuleProtocol.swift */; };
 		2CB5B1DB1CF2A7FE0028EA7D /* About.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CB5B1DA1CF2A7FE0028EA7D /* About.storyboard */; };
+		2CB5B1DD1CF2C1200028EA7D /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB5B1DC1CF2C1200028EA7D /* Utilities.swift */; };
 		2CB66A961CD8566B006B9282 /* GIFCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB66A951CD8566B006B9282 /* GIFCreator.swift */; };
 		2CB66A9D1CD86F6C006B9282 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB66A981CD86F6C006B9282 /* libWeChatSDK.a */; };
 		2CB66A9E1CD86F6C006B9282 /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2CB66A991CD86F6C006B9282 /* read_me.txt */; };
@@ -558,6 +559,7 @@
 		2CB5B1D61CF2A7200028EA7D /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		2CB5B1D81CF2A7700028EA7D /* ViewControllerModuleProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerModuleProtocol.swift; sourceTree = "<group>"; };
 		2CB5B1DA1CF2A7FE0028EA7D /* About.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = About.storyboard; sourceTree = "<group>"; };
+		2CB5B1DC1CF2C1200028EA7D /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		2CB66A951CD8566B006B9282 /* GIFCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GIFCreator.swift; sourceTree = "<group>"; };
 		2CB66A981CD86F6C006B9282 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		2CB66A991CD86F6C006B9282 /* read_me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = read_me.txt; sourceTree = "<group>"; };
@@ -1104,6 +1106,7 @@
 		2C81B59E1C58B10600AE16E0 /* Gobal */ = {
 			isa = PBXGroup;
 			children = (
+				2CB5B1DC1CF2C1200028EA7D /* Utilities.swift */,
 				2CB66AA31CD8A858006B9282 /* AnGIF */,
 				2CF4D4181CBE38B0001DC7C4 /* FontManager */,
 				2CF4B7D01CBBA58F009B12C3 /* Fonts */,
@@ -1748,6 +1751,7 @@
 				2C05BB861C9FAA7200667A75 /* PhotoHelper.swift in Sources */,
 				2CDDE64D1CE1732900B6E6A9 /* ShareViewController.swift in Sources */,
 				2CC811631C79A6D5003CE8BF /* BlackCatResultExtension.swift in Sources */,
+				2CB5B1DD1CF2C1200028EA7D /* Utilities.swift in Sources */,
 				2C1B88AB1C5F371A000403FD /* CTAAlertProtocol.swift in Sources */,
 				2C31EB631C452597002A4D71 /* SwiftHEXColors.swift in Sources */,
 				2C247FE91C5CA10E0069CFFC /* CTASelectorAnimationCell.swift in Sources */,
