@@ -53,6 +53,7 @@
 		2C2B45B21C5CC077004A4809 /* SupportCountryZone in Resources */ = {isa = PBXBuildFile; fileRef = 2C2B45B11C5CC077004A4809 /* SupportCountryZone */; };
 		2C3097061C3F5F9200D996A4 /* CTASelectorFontCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3097051C3F5F9200D996A4 /* CTASelectorFontCell.swift */; };
 		2C30970A1C3F7FA800D996A4 /* CTAScrollSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3097091C3F7FA800D996A4 /* CTAScrollSelectView.swift */; };
+		2C31D6891CF301C0000A2ECE /* CTAAccountSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C31D6881CF301C0000A2ECE /* CTAAccountSettingViewController.swift */; };
 		2C31EB611C451AEE002A4D71 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C31EB601C451AEE002A4D71 /* UIColorExtensions.swift */; };
 		2C31EB631C452597002A4D71 /* SwiftHEXColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C31EB621C452597002A4D71 /* SwiftHEXColors.swift */; };
 		2C32653E1C7321A80000B89B /* CTAUploadIconProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C32653D1C7321A80000B89B /* CTAUploadIconProtocol.swift */; };
@@ -403,6 +404,7 @@
 		2C2B45B11C5CC077004A4809 /* SupportCountryZone */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SupportCountryZone; sourceTree = "<group>"; };
 		2C3097051C3F5F9200D996A4 /* CTASelectorFontCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorFontCell.swift; sourceTree = "<group>"; };
 		2C3097091C3F7FA800D996A4 /* CTAScrollSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAScrollSelectView.swift; sourceTree = "<group>"; };
+		2C31D6881CF301C0000A2ECE /* CTAAccountSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAccountSettingViewController.swift; sourceTree = "<group>"; };
 		2C31EB601C451AEE002A4D71 /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
 		2C31EB621C452597002A4D71 /* SwiftHEXColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftHEXColors.swift; sourceTree = "<group>"; };
 		2C32653D1C7321A80000B89B /* CTAUploadIconProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUploadIconProtocol.swift; sourceTree = "<group>"; };
@@ -857,6 +859,16 @@
 			name = Cells;
 			sourceTree = "<group>";
 		};
+		2C31D68A1CF301CE000A2ECE /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				2C7A95241C3A520B005B0EAE /* CTASettingViewController.swift */,
+				2C31D6881CF301C0000A2ECE /* CTAAccountSettingViewController.swift */,
+				2C32653F1C7321B60000B89B /* CTASetUserInfoViewController.swift */,
+			);
+			name = Setting;
+			sourceTree = "<group>";
+		};
 		2C31EB5F1C451AD9002A4D71 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -960,6 +972,7 @@
 				2CB322301C4533BE00BD06F5 /* UserPublishes */,
 				2C32BD4A1C4CB56E00788A97 /* UseCase */,
 				2C3AE3ED1C59F5A9004D62B4 /* SocialShareTest */,
+				2C31D68A1CF301CE000A2ECE /* Setting */,
 				2C3B33C91C1176D000738166 /* AppDelegate.swift */,
 				2C10F7971C77540F00CCE34A /* CTAMainViewController.swift */,
 				2C3B33CB1C1176D000738166 /* ViewController.swift */,
@@ -969,8 +982,6 @@
 				2C7A951C1C3A50F6005B0EAE /* CTATemplateViewController.swift */,
 				2C7A951E1C3A511B005B0EAE /* CTADocmentPreviewViewController.swift */,
 				2C7A95201C3A51D6005B0EAE /* CTAUserInfoViewController.swift */,
-				2C7A95241C3A520B005B0EAE /* CTASettingViewController.swift */,
-				2C32653F1C7321B60000B89B /* CTASetUserInfoViewController.swift */,
 				2C3B33CD1C1176D000738166 /* Main.storyboard */,
 				2C3B33D01C1176D000738166 /* Assets.xcassets */,
 				2C3B33D21C1176D000738166 /* LaunchScreen.storyboard */,
@@ -1809,6 +1820,7 @@
 				2CB380AF1C4CF86D009A681A /* CTAPreviewProtocol.swift in Sources */,
 				2CD488151C4E1A7300D11CB7 /* CTAPreviewPlay.swift in Sources */,
 				2CE063E41C857D2F001F7F4E /* CTACameraViewController.swift in Sources */,
+				2C31D6891CF301C0000A2ECE /* CTAAccountSettingViewController.swift in Sources */,
 				2CA3AA531C8D472400CE8191 /* CTAPublishViewController.swift in Sources */,
 				2CD11AB31CB7547500A79305 /* AniContent.swift in Sources */,
 				2CE063EE1C857D2F001F7F4E /* ImagePickerViewController.swift in Sources */,
