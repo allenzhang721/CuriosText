@@ -46,6 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     
     func cleanFontCache() {
         CTAFontsManager.cleanCacheFamilyList()
+        CTAFontsManager.cleanCacheFamily()
     }
     
     func registerLocalFonts() {

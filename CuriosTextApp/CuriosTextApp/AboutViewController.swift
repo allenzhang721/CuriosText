@@ -37,12 +37,10 @@ class AboutViewController: UIViewController {
         
         if let info = NSBundle.mainBundle().infoDictionary {
             
-//            let appName = info["CFBundleDisplayName"]
             let appVersion = info["CFBundleShortVersionString"] as! String
-//            let appBuild = info["CFBundleVersion"]
             
-            let imageView = view.viewWithTag(1000) as! UIImageView
-            imageView.image = _versionTag(text2:"v" + appVersion)
+            let versionLabel = view.viewWithTag(1000) as! UILabel
+            versionLabel.text = "Version" + appVersion
         }
     }
     

@@ -157,6 +157,7 @@
 		2C8DD2151C4A342C0035C52D /* CTALoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8DD2141C4A342C0035C52D /* CTALoadingProtocol.swift */; };
 		2C9043F81C589E0000E62B19 /* CTAAddBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9043F71C589E0000E62B19 /* CTAAddBarView.swift */; };
 		2C929DD71C60962B00F90BF4 /* CTAConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C929DD61C60962B00F90BF4 /* CTAConfig.swift */; };
+		2C9307B51CF2E34600D0E5F6 /* About.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C9307B71CF2E34600D0E5F6 /* About.storyboard */; };
 		2C9374F81CC3983A0002C806 /* OrbitalAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9374F71CC3983A0002C806 /* OrbitalAnimation.swift */; };
 		2C9706C11C1E6EC200FA2E17 /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */; };
 		2C9706C21C1E6EC200FA2E17 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9706C01C1E6EC200FA2E17 /* SwiftyJSON.framework */; };
@@ -192,7 +193,6 @@
 		2CB3C8C21C859B8E00CF2BD2 /* ImagePickerResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB3C8C11C859B8E00CF2BD2 /* ImagePickerResource.swift */; };
 		2CB5B1D71CF2A7200028EA7D /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB5B1D61CF2A7200028EA7D /* AboutViewController.swift */; };
 		2CB5B1D91CF2A7700028EA7D /* ViewControllerModuleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB5B1D81CF2A7700028EA7D /* ViewControllerModuleProtocol.swift */; };
-		2CB5B1DB1CF2A7FE0028EA7D /* About.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CB5B1DA1CF2A7FE0028EA7D /* About.storyboard */; };
 		2CB5B1DD1CF2C1200028EA7D /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB5B1DC1CF2C1200028EA7D /* Utilities.swift */; };
 		2CB66A961CD8566B006B9282 /* GIFCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB66A951CD8566B006B9282 /* GIFCreator.swift */; };
 		2CB66A9D1CD86F6C006B9282 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB66A981CD86F6C006B9282 /* libWeChatSDK.a */; };
@@ -522,6 +522,9 @@
 		2C9043F71C589E0000E62B19 /* CTAAddBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAddBarView.swift; sourceTree = "<group>"; };
 		2C929DD51C60809D00F90BF4 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		2C929DD61C60962B00F90BF4 /* CTAConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAConfig.swift; sourceTree = "<group>"; };
+		2C9307B61CF2E34600D0E5F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/About.storyboard; sourceTree = "<group>"; };
+		2C9307B91CF2E34900D0E5F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/About.strings; sourceTree = "<group>"; };
+		2C9307BB1CF2E34A00D0E5F6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/About.strings"; sourceTree = "<group>"; };
 		2C9374F71CC3983A0002C806 /* OrbitalAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrbitalAnimation.swift; sourceTree = "<group>"; };
 		2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Locksmith.framework; path = "Pods/../build/Debug-iphoneos/Locksmith.framework"; sourceTree = "<group>"; };
 		2C9706C01C1E6EC200FA2E17 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "Pods/../build/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
@@ -558,7 +561,6 @@
 		2CB3C8C11C859B8E00CF2BD2 /* ImagePickerResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerResource.swift; sourceTree = "<group>"; };
 		2CB5B1D61CF2A7200028EA7D /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		2CB5B1D81CF2A7700028EA7D /* ViewControllerModuleProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerModuleProtocol.swift; sourceTree = "<group>"; };
-		2CB5B1DA1CF2A7FE0028EA7D /* About.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = About.storyboard; sourceTree = "<group>"; };
 		2CB5B1DC1CF2C1200028EA7D /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		2CB66A951CD8566B006B9282 /* GIFCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GIFCreator.swift; sourceTree = "<group>"; };
 		2CB66A981CD86F6C006B9282 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
@@ -937,7 +939,7 @@
 			children = (
 				2CB5B1D81CF2A7700028EA7D /* ViewControllerModuleProtocol.swift */,
 				2CB5B1D61CF2A7200028EA7D /* AboutViewController.swift */,
-				2CB5B1DA1CF2A7FE0028EA7D /* About.storyboard */,
+				2C9307B71CF2E34600D0E5F6 /* About.storyboard */,
 				2C042B731CE3226000C13FED /* CTAHeartAnimationView.swift */,
 				2C042B751CE3248E00C13FED /* Heart.storyboard */,
 				2CDDE6491CE16E1400B6E6A9 /* ShareModule */,
@@ -1617,7 +1619,7 @@
 				2C610A391C902BF100DFE315 /* Camera.storyboard in Resources */,
 				2C32BD561C4CB89100788A97 /* Localizable.strings in Resources */,
 				2CCFD54B1CE49CAC00D58043 /* Share.storyboard in Resources */,
-				2CB5B1DB1CF2A7FE0028EA7D /* About.storyboard in Resources */,
+				2C9307B51CF2E34600D0E5F6 /* About.storyboard in Resources */,
 				2C3B33D11C1176D000738166 /* Assets.xcassets in Resources */,
 				2C567A691C5CBAF200F11369 /* Countries.plist in Resources */,
 				2C1A121F1CE014FD0071BD35 /* WeiboSDK.bundle in Resources */,
@@ -2083,6 +2085,16 @@
 				2C1A12621CE07C430071BD35 /* zh-Hans */,
 			);
 			name = Photo.storyboard;
+			sourceTree = "<group>";
+		};
+		2C9307B71CF2E34600D0E5F6 /* About.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2C9307B61CF2E34600D0E5F6 /* Base */,
+				2C9307B91CF2E34900D0E5F6 /* en */,
+				2C9307BB1CF2E34A00D0E5F6 /* zh-Hans */,
+			);
+			name = About.storyboard;
 			sourceTree = "<group>";
 		};
 		2CC74C8D1C5A275C00B536C2 /* SMS_SDKLocalizable.strings */ = {

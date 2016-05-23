@@ -77,8 +77,12 @@ class FontManager {
         
     }
     
+    class func cleanCacheFamily() {
+        share._cleanFontFamily()
+    }
+    
     class func cleanFontFamilyList() {
-        
+        share._cleanFontFamilyList()
     }
     
     class func registerFontAt(url: NSURL, customInfo: FontInfoAttributes? = nil) {
@@ -160,21 +164,38 @@ extension FontManager {
         case Failture(ErrorType)
     }
     
+    private func _cleanFontFamily() {
+        let context = record.managedObjectContext
+        let fullNameFetch = NSFetchRequest(entityName: "FontFamily")
+        
+        do {
+            if let list = try record.managedObjectContext.executeFetchRequest(fullNameFetch) as? [FontFamily] {
+                
+                for l in list {
+                    context.deleteObject(l)
+                }
+            }
+            
+        } catch {
+            fatalError()
+        }
+        
+        save()
+    }
+    
     private func _cleanFontFamilyList() {
         let context = record.managedObjectContext
         let name = FontManager.defaultFontFamiliesListName
         let predicate = NSPredicate(format: "name == %@", name)
         let fullNameFetch = NSFetchRequest(entityName: "FontFamiliesList")
-        fullNameFetch.fetchLimit = 1
         fullNameFetch.predicate = predicate
         
         do {
-            let list = try record.managedObjectContext.executeFetchRequest(fullNameFetch) as! [FontFamiliesList]
-            
-            if let alist = list.first {
-                context.deleteObject(alist)
-            } else {
+            if let list = try record.managedObjectContext.executeFetchRequest(fullNameFetch) as? [FontFamiliesList] {
                 
+                for l in list {
+                    context.deleteObject(l)
+                }
             }
             
         } catch {

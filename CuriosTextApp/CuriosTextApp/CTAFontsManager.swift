@@ -31,6 +31,10 @@ class CTAFontsManager {
         return validFamilies
     }
     
+    class func cleanCacheFamily() {
+        FontManager.cleanCacheFamily()
+    }
+    
     class func cleanCacheFamilyList() {
         FontManager.cleanFontFamilyList()
     }
