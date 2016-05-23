@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import SVProgressHUD
 
 enum CTASetPasswordType{
-    case register, resetPassword, changePassword
+    case register, resetPassword, changePassword, setMobileNumber
 }
 
 class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CTATextInputProtocol, CTAAlertProtocol, CTALoadingProtocol, CTALoginProtocol{
@@ -26,6 +27,8 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
     var submitButton:UIButton!
     var passwordTextinput:UITextField!
     var passwordVisibleButton:UIButton!
+    var setPasswordTitle:UILabel!
+    var backButton:UIButton!
     
     var confirmTextinput:UITextField!
     
@@ -47,7 +50,6 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         
         // Do any additional setup after loading the view.
         self.initView()
-        self.navigationController!.interactivePopGestureRecognizer?.delegate = self
         self.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
     }
     
@@ -72,19 +74,19 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         let tap = UITapGestureRecognizer(target: self, action: #selector(CTASetPasswordViewController.bgViewClick(_:)))
         self.view.addGestureRecognizer(tap)
     
-        let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
-        backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
-        backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
-        backButton.addTarget(self, action: #selector(CTASetPasswordViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
-        self.view.addSubview(backButton)
+        self.backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
+        self.backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
+        self.backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
+        self.backButton.addTarget(self, action: #selector(CTASetPasswordViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.view.addSubview(self.backButton)
         
-        let setPasswordTitle = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 60*self.getVerRate(), width: 100, height: 40))
-        setPasswordTitle.font = UIFont.systemFontOfSize(28)
-        setPasswordTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        setPasswordTitle.text = NSLocalizedString("SetPasswordTitle", comment: "")
-        setPasswordTitle.sizeToFit()
-        setPasswordTitle.frame.origin.x = (bouns.width - setPasswordTitle.frame.width)/2
-        self.view.addSubview(setPasswordTitle)
+        self.setPasswordTitle = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 60*self.getVerRate(), width: 100, height: 40))
+        self.setPasswordTitle.font = UIFont.systemFontOfSize(28)
+        self.setPasswordTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        self.setPasswordTitle.text = NSLocalizedString("SetPasswordTitle", comment: "")
+        self.setPasswordTitle.sizeToFit()
+        self.setPasswordTitle.frame.origin.x = (bouns.width - self.setPasswordTitle.frame.width)/2
+        self.view.addSubview(self.setPasswordTitle)
         
         self.passwordTextinput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: 150*self.getVerRate(), width: 190*self.getHorRate(), height: 50))
         self.passwordTextinput.placeholder = NSLocalizedString("SetPasswordPlaceholder", comment: "")
@@ -148,6 +150,23 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
             if self.resetPhone == "" {
                 self.resetPhone = self.userModel!.phone
                 self.resetAreaCode = self.userModel!.areaCode
+            }
+        }
+        let bouns = UIScreen.mainScreen().bounds
+        if self.setPasswordType == .changePassword{
+            self.backButton.setImage(UIImage(named: "close-button"), forState: .Normal)
+            self.backButton.setImage(UIImage(named: "close-selected-button"), forState: .Highlighted)
+            self.setPasswordTitle.text = NSLocalizedString("ChangePasswordTitle", comment: "")
+            self.setPasswordTitle.sizeToFit()
+            self.setPasswordTitle.frame.origin.x = (bouns.width - self.setPasswordTitle.frame.width)/2
+        }else {
+            self.backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
+            self.backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
+            self.setPasswordTitle.text = NSLocalizedString("SetPasswordTitle", comment: "")
+            self.setPasswordTitle.sizeToFit()
+            self.setPasswordTitle.frame.origin.x = (bouns.width - self.setPasswordTitle.frame.width)/2
+            if self.navigationController != nil{
+                self.navigationController!.interactivePopGestureRecognizer?.delegate = self
             }
         }
     }
@@ -222,12 +241,13 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
                             }
                         }
                     })
-                }else if self.setPasswordType == .changePassword{
+                }else if self.setPasswordType == .changePassword || self.setPasswordType == .setMobileNumber{
                     if self.userModel != nil {
                         self.changeToLoadingView()
                         CTAUserDomain.getInstance().updatePassword(self.userModel!.userID, newPasswd: cryptPassword, compelecationBlock: { (info) -> Void in
                             self.changeToUnloadingView()
                             if info.result{
+                                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("AlertPasswordset", comment: ""))
                                 self.dismissViewControllerAnimated(true, completion: { () -> Void in
                                 })
                             }else {
@@ -241,7 +261,6 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
                             }
                         })
                     }
-                    
                 }
             }else {
                 self.showSingleAlert(NSLocalizedString("AlertConfirmPasswordError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
@@ -255,10 +274,16 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
     
     func backButtonClick(send: UIButton){
         self.resignView()
-        self.showSelectedAlert(NSLocalizedString("AlertTitlePasswordBack", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.OK.description, cancelAlertLabel: LocalStrings.Cancel.description) { (result) -> Void in
-            if result {
-                self.backHandler()
+        if self.setPasswordType == .changePassword{
+            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            })
+        }else {
+            self.showSelectedAlert(NSLocalizedString("AlertTitlePasswordBack", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.OK.description, cancelAlertLabel: LocalStrings.Cancel.description) { (result) -> Void in
+                if result {
+                    self.backHandler()
+                }
             }
+
         }
     }
     

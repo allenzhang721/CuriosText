@@ -29,7 +29,7 @@ enum LocalStrings: CustomStringConvertible {
     case AniType(CTAAnimationType)
     
     //Alert 
-    case OK, Yes, No, Resend, TakePhoto, ChoosePhoto, Back, Wait
+    case OK, Yes, No, Resend, TakePhoto, ChoosePhoto, Back, Wait, Setting
     
     //Report
     case Porn, Scam, Sensitive
@@ -124,7 +124,8 @@ enum LocalStrings: CustomStringConvertible {
             return NSLocalizedString("AlertBackLabel", comment: "")
         case .Wait:
             return NSLocalizedString("AlertWaitLabel", comment: "")
-            
+        case .Setting:
+            return NSLocalizedString("AlertSettingLabel", comment: "")
             //Report
         case .Porn:
             return NSLocalizedString("ReportPornLabel", comment: "")

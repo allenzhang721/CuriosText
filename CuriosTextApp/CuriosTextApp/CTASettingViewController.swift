@@ -196,12 +196,6 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.userDescLabel.addGestureRecognizer(userDescTap)
         
         self.accountSettingView = UIView(frame: CGRect(x: 0, y: self.descLineImg.frame.origin.y + 40, width: bouns.width, height: 80))
-//        let accountSettingLabel = UILabel(frame: CGRect(x: 25*self.getHorRate(), y: 0, width: 60, height: 20))
-//        accountSettingLabel.text = NSLocalizedString("AccountLabel", comment: "")
-//        accountSettingLabel.font = UIFont.systemFontOfSize(14)
-//        accountSettingLabel.textColor = UIColor.init(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0)
-//        accountSettingLabel.textAlignment = .Left
-//        self.accountSettingView.addSubview(accountSettingLabel)
         let bindingAccoutView = UIView(frame: CGRect(x: 0, y: 0, width: bouns.width, height: 40))
         self.accountSettingView.addSubview(bindingAccoutView)
         let bindingAccoutTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: 9, width: 50, height: 22))
@@ -243,12 +237,6 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.scrollView.addSubview(self.accountSettingView)
         
         self.systemSettingView = UIView(frame: CGRect(x: 0, y: self.descLineImg.frame.origin.y + 160, width: bouns.width, height: 120))
-//        let systemSettingLabel = UILabel(frame: CGRect(x: 25*self.getHorRate(), y: 0, width: 60, height: 20))
-//        systemSettingLabel.text = NSLocalizedString("SystemSettingLabel", comment: "")
-//        systemSettingLabel.font = UIFont.systemFontOfSize(14)
-//        systemSettingLabel.textColor = UIColor.init(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0)
-//        systemSettingLabel.textAlignment = .Left
-//        self.systemSettingView.addSubview(systemSettingLabel)
         let aboutView = UIView(frame: CGRect(x: 0, y: 0, width: bouns.width, height: 40))
         self.systemSettingView.addSubview(aboutView)
         let aboutTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: 9, width: 50, height: 22))
@@ -490,7 +478,59 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     }
     
     func changePasswordClick(sender: UIPanGestureRecognizer){
-        print("changePasswordClick")
+        let userPhone = self.loginUser!.phone
+        if userPhone == "" {
+            self.showSelectedAlert(NSLocalizedString("AlertTitleSetPhoneFirst", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.Setting.description, cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result) in
+                if result {
+                    let setMobileView = CTASetMobileNumberViewController.getInstance()
+                    setMobileView.isChangeContry = true
+                    setMobileView.setMobileNumberType = .setMobileNumber
+                    let navigationController = UINavigationController(rootViewController: setMobileView)
+                    navigationController.navigationBarHidden = true
+                    self.presentViewController(navigationController, animated: true, completion: {
+                    })
+                }
+            })
+        }else {
+            self.showTextAlert(NSLocalizedString("ChangePasswordLabel", comment: ""), alertMessage: NSLocalizedString("AlertCurrentPassword", comment: ""), okAlertLabel: LocalStrings.OK.description, cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result, password) in
+                if result{
+                    SVProgressHUD.setDefaultMaskType(.Clear)
+                    SVProgressHUD.showWithStatus("")
+                    let userID = self.loginUser!.userID
+                    let cryptPassword = CTAEncryptManager.hash256(password)
+                    CTAUserDomain.getInstance().checkPassword(userID, passwd: cryptPassword, compelecationBlock: { (info) in
+                        SVProgressHUD.dismiss()
+                        if info.result{
+                            let setView = CTASetPasswordViewController.getInstance()
+                            setView.userModel = self.loginUser!
+                            setView.setPasswordType = .changePassword
+                            self.presentViewController(setView, animated: true, completion: {
+                            })
+                        }else {
+                            if info.errorType is CTAInternetError {
+                                self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                })
+                            }else {
+                                let error = info.errorType as! CTACheckPasswordError
+                                if error == .PasswordIncorrect {
+                                    self.showSingleAlert(NSLocalizedString("AlertTitlePasswordIncorrect", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                    })
+                                }else if error == .UserIDNotExist || error == .UserIDIsEmpty{
+                                    self.showSingleAlert(NSLocalizedString("AlertTitleUserIDNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                    })
+                                }else if error == .DataIsEmpty{
+                                    self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                    })
+                                }else {
+                                    self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                    })
+                                }
+                            }
+                        }
+                    })
+                }
+            })
+        }
     }
     
     func aboutClick(sender: UIPanGestureRecognizer){

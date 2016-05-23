@@ -9,7 +9,7 @@
 import Foundation
 
 enum CTASMSVerifyType{
-    case register, resetPassword
+    case register, resetPassword, setMobileNumber, changeMobileNumber
 }
 
 class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAAlertProtocol, CTALoadingProtocol, CTALoginProtocol{
@@ -282,6 +282,56 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
                             }
                         }
                     })
+                }else if self.smsType == .setMobileNumber || self.smsType == .changeMobileNumber{
+                    
+                    if CTAUserManager.isLogin{
+                        let user = CTAUserManager.user
+                        let userID = user!.userID
+                        CTAUserDomain.getInstance().bindingUserPhone(userID, phone: self.phone, areaCode: self.areaZone, compelecationBlock: { (info) in
+                            self.changeToUnloadingView()
+                            if info.result{
+                                if self.smsType == .setMobileNumber{
+                                    self.pushSetPasswordView(user, setPasswordType: .setMobileNumber)
+                                }else {
+                                    self.dismissViewControllerAnimated(true, completion: nil)
+                                }
+                            }else {
+                                if info.errorType is CTAInternetError {
+                                    self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        self.resetView()
+                                    })
+                                }else {
+                                    let error = info.errorType as! CTABindingUserPhoneError
+                                    self.isBackDirect = true
+                                    if error == .UserIDIsEmpty {
+                                        self.showSingleAlert(NSLocalizedString("AlertTitleUserNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                            self.resetView()
+                                        })
+                                    }else if error == .UserIDNotExist {
+                                        self.showSingleAlert(NSLocalizedString("AlertTitleUserNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                            self.resetView()
+                                        })
+                                    }else if error == .PhoneIsEmpty {
+                                        self.showSingleAlert(NSLocalizedString("AlertTitlePhoneNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                            self.resetView()
+                                        })
+                                    }else if error == .PhoneExist {
+                                        self.showSingleAlert(NSLocalizedString("AlertTitlePhoneRegistExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                            self.resetView()
+                                        })
+                                    }else if error == .NeedContactWithService{
+                                        self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                            self.resetView()
+                                        })
+                                    }else if error == .DataIsEmpty{
+                                        self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                            self.resetView()
+                                        })
+                                    }
+                                }
+                            }
+                        })
+                    }
                 }
             }else {
                 self.changeToUnloadingView()
@@ -309,6 +359,9 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
             setView.setPasswordType = setPasswordType
             setView.resetAreaCode = self.areaZone
             setView.resetPhone = self.phone
+        }else if self.smsType == .setMobileNumber{
+            setView.userModel = userModel
+            setView.setPasswordType = setPasswordType
         }
         self.navigationController?.pushViewController(setView, animated: true)
     }

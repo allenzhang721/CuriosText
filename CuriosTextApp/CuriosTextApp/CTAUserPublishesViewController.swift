@@ -400,7 +400,9 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     }
     
     func settingButtonClick(sender: UIButton){
-        self.setting = CTASettingViewController()
+        if self.setting == nil {
+            self.setting = CTASettingViewController()
+        }
         NSNotificationCenter.defaultCenter().postNotificationName("showNavigationView", object: self.setting)
     }
     

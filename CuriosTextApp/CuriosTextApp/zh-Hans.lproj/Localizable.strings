@@ -35,6 +35,7 @@
 "SMSVerifyMessage" = "短信已发送至:";
 "NoReceivedCodeLabel" = "收不到验证码?";
 "SetPasswordTitle" = "设置密码";
+"ChangePasswordTitle" = "修改密码";
 "SubmitLabel" = "提交";
 "SetPasswordPlaceholder" = "密码长度为6-16位";
 "ConfirmPasswordLabel" = "确认密码";
@@ -75,6 +76,7 @@
 "AlertChoosePhoteLabel" = "从相册中选择";
 "AlertBackLabel" = "返回";
 "AlertWaitLabel" = "等待";
+"AlertSettingLabel" = "设置";
 "AlertTitleDeleteFile" = "确定删除吗?";
 "AlertTitleNoInstallWechat" = "你未安装微信";
 "AlertTitleNoInstallWeibo" = "你未安装微博";
@@ -86,6 +88,9 @@
 "AlertTitleNumberVerifyError" = "发送验证码失败,请稍后再试";
 "AlertTitleCodeVerifyError" = "验证码不正确,请重新输入";
 "AlertConfirmPasswordError" = "两次填写的密码不正确";
+"AlertTitleSetPhoneFirst" = "请先设置手机号";
+"AlertCurrentPassword" = "输入当前密码";
+"AlertPasswordset" = "修改密码成功";
 
 "AlertTitleLoginFaile" = "账号或密码错误,请重新输入";
 "AlertTitleWeChatUninstall" = "未找到微信，暂时无法微信登录";
@@ -94,12 +99,16 @@
 "AlertTitleRegisterError" = "注册失败,请稍后再试";
 "AlertTitleChangeError" = "修改失败,请稍后再试";
 "AlertTitlePhoneExist" = "手机号码已存在,是否直接登录";
+"AlertTitlePhoneRegistExist" = "此手机号码已被使用,请尝试其他号码";
 "AlertTitlePhoneNotExist" = "此手机号码还没有注册,请尝试其他号码";
 "AlertTitlePhoneNil" = "手机号码为空";
 "AlertTitleConnectUs" = "请联系客服";
 "AlertTitleWechatNil" = "微信登录失败";
 "AlertTitleWeiboNil" = "微博登录失败";
 "AlertTitleDataNil" = "数据为空";
+"AlertTitlePasswordIncorrect" = "密码错误";
+"AlertTitleUserNotExist" = "用户不存在";
+"AlertTitleLinkPhoneReady" = "你已经关联了此号码";
 
 "AllPhotoLibraryTitle" = "设置";
 "AllPhotoLibraryMessage" = "请允许奇思访问你的相册。";

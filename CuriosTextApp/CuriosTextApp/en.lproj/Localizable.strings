@@ -33,6 +33,7 @@
 "SMSVerifyMessage" = "Verification code has been sent to your phone:";
 "NoReceivedCodeLabel" = "No verification code received?";
 "SetPasswordTitle" = "Set Password";
+"ChangePasswordTitle" = "Change Password";
 "SubmitLabel" = "Submit";
 "SetPasswordPlaceholder" = "6-16 characters";
 "ConfirmPasswordLabel" = "Confirm";
@@ -73,6 +74,7 @@
 "AlertChoosePhoteLabel" = "Choose from Photos";
 "AlertBackLabel" = "Back";
 "AlertWaitLabel" = "Wait";
+"AlertSettingLabel" = "Setting";
 "AlertTitleDeleteFile" = "Confirm deletion?";
 "AlertTitleNoInstallWechat" = "weChat has not been installed";
 "AlertTitleNoInstallWeibo" = "Weibo has not been installed";
@@ -84,6 +86,9 @@
 "AlertTitleNumberVerifyError" = "Unable to send verification code. Try again.";
 "AlertTitleCodeVerifyError" = "Incorrect verification code. Please enter again.";
 "AlertConfirmPasswordError" = "Passwords do not match";
+"AlertTitleSetPhoneFirst" = "Mobile number have not linked";
+"AlertCurrentPassword" = "Enter current password";
+"AlertPasswordset" = "Password set";
 
 "AlertTitleLoginFaile" = "Account or password error. Enter again.";
 "AlertTitleWeChatUninstall" = "Not find weChat, Can't login with weChat";
@@ -92,12 +97,16 @@
 "AlertTitleRegisterError" = "Sign up failed. Please try it again later.";
 "AlertTitleChangeError" = "Change failed. Please try it again later.";
 "AlertTitlePhoneExist" = "Mobile Number existed. Login this account?";
+"AlertTitlePhoneRegistExist" = "Mobile Number existed. Please try other.";
 "AlertTitlePhoneNotExist" = "Mobile Number not registered. Please try other.";
 "AlertTitlePhoneNil" = "Mobile Number null";
 "AlertTitleConnectUs" = "Please connect service.";
 "AlertTitleWechatNil" = "Login with Wechat failed.";
 "AlertTitleWeiboNil" = "Login with Weibo failed.";
 "AlertTitleDataNil" = "Data null";
+"AlertTitlePasswordIncorrect" = "Incorrect password.";
+"AlertTitleUserNotExist" = "User not exist";
+"AlertTitleLinkPhoneReady" = "You've linked this mobile number.";
 
 "AllPhotoLibraryTitle" = "Please Allow Access to Your Photos";
 "AllPhotoLibraryMessage" = "This allow Curios to share photos from your library and save photos to your camera roll.";

@@ -115,8 +115,7 @@ enum CTABindingUserPhoneError:Int, ErrorType{
     case UserIDIsEmpty  = 1
     case UserIDNotExist = 2
     case PhoneIsEmpty   = 3
-    case UserHavePhone  = 4
-    case PhoneExist     = 5
+    case PhoneExist     = 4
     case NeedContactWithService = 8
     case DataIsEmpty = 9
     
