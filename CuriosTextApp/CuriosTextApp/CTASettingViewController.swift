@@ -534,19 +534,25 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     }
     
     func aboutClick(sender: UIPanGestureRecognizer){
-        print("aboutClick")
-        
         if let vc = UIViewController.module_About() {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
     
     func shareToFriendClick(sender: UIPanGestureRecognizer){
-        print("shareToFriendClick")
+        let shareView = CTAShareView.getInstance()
+        shareView.delegate = self
+        let mainController = CTAMainViewController.getInstance()
+        if self.view.isDescendantOfView(mainController.view){
+            mainController.view.addSubview(shareView)
+        }else {
+            self.view.superview?.addSubview(shareView)
+        }
+        shareView.shareType = .setting
+        shareView.showViewHandler()
     }
     
     func reviewUSClick(sender: UIPanGestureRecognizer){
-        print("reviewUSClick")
         gobal_jumpToAppStoreRation()
     }
     
@@ -620,5 +626,31 @@ extension CTASettingViewController: UIGestureRecognizerDelegate{
     func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
-    
+}
+
+extension CTASettingViewController: CTAShareViewDelegate{
+    func weChatShareHandler(){
+        
+    }
+    func momentsShareHandler(){
+        
+    }
+    func weiBoShareHandler(){
+        
+    }
+    func deleteHandler(){
+        
+    }
+    func copyLinkHandler(){
+        
+    }
+    func saveLocalHandler(){
+        
+    }
+    func reportHandler(){
+        
+    }
+    func uploadResourceHandler(){
+        
+    }
 }

@@ -51,7 +51,7 @@
 "UserRegion" = "地区";
 "UserDesc" = "简介";
 "AccountLabel" = "账号设置";
-"BindingAccountLabel" = "账号绑定";
+"BindingAccountLabel" = "账号设置";
 "ChangePasswordLabel" = "修改密码";
 "SystemSettingLabel" = "系统设置";
 "AboutLabel" = "关于";

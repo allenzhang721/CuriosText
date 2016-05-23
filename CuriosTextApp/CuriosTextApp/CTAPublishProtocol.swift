@@ -222,7 +222,12 @@ extension CTAPublishProtocol where Self: UIViewController{
         }else {
             self.view.superview?.addSubview(shareView)
         }
-        shareView.showViewHandler(isSelf)
+        if isSelf{
+            shareView.shareType = .loginUser
+        }else {
+            shareView.shareType = .normal
+        }
+        shareView.showViewHandler()
     }
     
     func rebuildHandler() {
