@@ -535,6 +535,10 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     
     func aboutClick(sender: UIPanGestureRecognizer){
         print("aboutClick")
+        
+        if let vc = UIViewController.module_About() {
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func shareToFriendClick(sender: UIPanGestureRecognizer){
@@ -543,6 +547,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     
     func reviewUSClick(sender: UIPanGestureRecognizer){
         print("reviewUSClick")
+        gobal_jumpToAppStoreRation()
     }
     
     func logoutButtonClick(sender: UIButton){
