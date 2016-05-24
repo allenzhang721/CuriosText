@@ -908,11 +908,7 @@ extension CTAHomeViewController: CTAPublishProtocol{
     }
     
     func moreButtonClick(sender: UIButton){
-        if self.loginUser == nil {
-            self.showLoginView()
-        }else if self.currentFullCell.publishModel != nil{
-            self.moreSelectionHandler(false)
-        }
+        self.moreSelectionHandler(false)
     }
     
     func rebuildButtonClick(sender: UIButton){

@@ -574,11 +574,11 @@ extension EditViewController {
                     
                     if let p = previewImage {
                         previewName = CTAIDGenerator.fileID() + ".jpg"
-                        sf.document.storeResource(compressJPGImage(p), withName: previewName)
+                        sf.document.storeResource(compressJPGImage(p, maxWidth: 640.00, needScale: true), withName: previewName)
                     }
                     
                     let publishName = CTAIDGenerator.fileID() + ".jpg"
-                    sf.document.storeResource(compressJPGImage(image), withName: publishName)
+                    sf.document.storeResource(compressJPGImage(image, maxWidth: 640.00, needScale: true), withName: publishName)
                     
                     CTADocumentManager.saveDoucment {[weak self] (success) -> Void in
                         

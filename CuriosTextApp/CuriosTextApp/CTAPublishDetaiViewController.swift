@@ -274,7 +274,6 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
     }
     
     func getCurrentPublishIndex(selectedIndex:Int) -> Int{
-        let count = self.getCellCount()-1
         let selectedPo = selectedIndex % self.cellHorCount
         let verCount = self.getCellCount()/self.cellHorCount
         let midVerCount = verCount % 2 == 0 ? (verCount/2)-1 : (verCount/2)
@@ -284,7 +283,9 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         if publishCount - selectedIndex > midCount {
             
         }else {
-            midCount = count - (publishCount - selectedIndex)
+            let allCount = publishCount % self.cellHorCount + (verCount - 1)*self.cellHorCount
+            
+            midCount = allCount - (publishCount - selectedIndex)
         }
         let newIndex = selectedIndex > midCount ? midCount : selectedIndex
         return newIndex
@@ -909,7 +910,9 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         let screenH = UIScreen.mainScreen().bounds.height
         let verCount = Int(currentIndex / self.cellHorCount)
         var centY:CGFloat = 0.0
-        centY = CGFloat(verCount) * (space + cellRect.height) + cellRect.height/2 + headerTop
+        let a = CGFloat(verCount) * (space + cellRect.height)
+        let b = cellRect.height/2 + headerTop
+        centY = a + b
         let maxY = screenH - cellRect.height/2 - 40
         if centY > maxY{
             centY = maxY

@@ -14,14 +14,21 @@ func getIconData(image:UIImage) -> NSData{
     return newData!
 }
 
-func compressJPGImage(image:UIImage) -> NSData{
-    let newImage = compressImage(image)
-    let newData = UIImageJPEGRepresentation(newImage, 0.5)
+func compressJPGImage(image:UIImage, maxWidth:CGFloat = 1280.00, needScale:Bool = false) -> NSData{
+    let result = compressImage(image, maxWidth: maxWidth, needScale: needScale)
+    let newImage = result.0
+    let compress = result.1
+    var newData:NSData?
+    if compress {
+        newData = UIImageJPEGRepresentation(newImage, 0.5)
+    }else {
+        newData = UIImageJPEGRepresentation(newImage, 1.0)
+    }
     return newData!
 }
 
 func compressPNGImage(image:UIImage) -> NSData{
-    let newImage = compressImage(image)
+    let newImage = compressImage(image).0
     let newData = UIImagePNGRepresentation(newImage)
     return newData!
 }
@@ -47,38 +54,46 @@ func compressIconImage(image:UIImage) -> UIImage{
     return image
 }
 
-func compressImage(image:UIImage, maxWidth:CGFloat = 1280.00) -> UIImage{
+func compressImage(image:UIImage, maxWidth:CGFloat = 1280.00, needScale:Bool = false) -> (UIImage, Bool){
     let maxWidth = maxWidth
     let maxHeight = maxWidth
     let imageSize = image.size
+    let imageScale = image.scale
+    var imageW = imageSize.width
+    var imageH = imageSize.height
+    if needScale{
+        imageW = imageW*imageScale
+        imageH = imageH*imageScale
+    }
 
     var rate:CGFloat
-    let imageRate = imageSize.width / imageSize.height
+    let imageRate = imageW / imageH
     let maxRate = maxWidth / maxHeight
-    if image.size.width > maxWidth*6 || image.size.height > maxHeight*6{
+    if imageW > maxWidth*6 || imageH > maxHeight*6{
         if maxRate > imageRate{
-            rate = maxHeight*6 / imageSize.height
+            rate = maxHeight*6 / imageH
         }else {
-            rate = maxWidth*6 / imageSize.width
+            rate = maxWidth*6 / imageW
         }
     }else {
         if maxRate > imageRate{
-            rate = maxWidth / imageSize.width
+            rate = maxWidth / imageW
         }else {
-            rate = maxHeight / imageSize.height
+            rate = maxHeight / imageH
         }
     }
     var newImage:UIImage!
     if rate < 1{
-        let newSize = CGSize.init(width: rate*image.size.width, height: rate*image.size.height)
+        let newSize = CGSize.init(width: rate*imageW, height: rate*imageH)
         UIGraphicsBeginImageContextWithOptions(newSize, false, 1)
         image.drawInRect(CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height), blendMode: .Normal, alpha: 1.0)
         newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+        return (newImage, true)
     }else {
         newImage = image
+        return (newImage, false)
     }
-    return newImage
 }
 
 func addCellShadow(cell:UIView){

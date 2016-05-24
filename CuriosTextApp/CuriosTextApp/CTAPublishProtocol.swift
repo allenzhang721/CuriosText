@@ -336,7 +336,7 @@ extension CTAPublishProtocol{
             }else {
                 self.publishCell.getEndImg({ (img) -> () in
                     if let image = img{
-                        let thumb = compressImage(image, maxWidth: image.size.width/2)
+                        let thumb = compressImage(image, maxWidth: image.size.width/2).0
                         let message = CTASocialManager.Message
                             .WeChat(
                                 .Session(
@@ -369,7 +369,7 @@ extension CTAPublishProtocol{
         if CTASocialManager.isAppInstaller(.WeChat){
             self.publishCell.getEndImg({ (img) -> () in
                 if let image = img{
-                    let thumb = compressImage(image, maxWidth: image.size.width/2)
+                    let thumb = compressImage(image, maxWidth: image.size.width/2).0
                     let message = CTASocialManager.Message
                         .WeChat(
                             .Timeline(
@@ -524,8 +524,8 @@ extension CTAPublishProtocol{
         //alertArray.append(LocalStrings.Sensitive.description)
         self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
             if index != -1{
-                let userID = self.userModel == nil ? "" : self.userModel!.userID
                 let reportType = index + 1
+                let userID = self.userModel == nil ? "" : self.userModel!.userID
                 CTAPublishDomain.getInstance().reportPublish(userID, publishID: self.publishModel!.publishID, reportType: reportType, reportMessage: "", compelecationBlock: { (_) -> Void in
                 })
                 SVProgressHUD.showSuccessWithStatus(NSLocalizedString("ReportSuccess", comment: ""))
