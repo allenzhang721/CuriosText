@@ -340,3 +340,19 @@ enum CTAUserRelationListError:Int, ErrorType{
 9:数据为空
 
 */
+
+enum CTAPublishHotError:Int, ErrorType{
+    
+    case PublishIDNotExist = 1
+    case NeedContactWithService = 8
+    case DataIsEmpty = 9
+    
+}
+
+/*
+ 
+ 1:publishID为空
+ 8:请联系客服
+ 9:数据为空
+ 
+ */

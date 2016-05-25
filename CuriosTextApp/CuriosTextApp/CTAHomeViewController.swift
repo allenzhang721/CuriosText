@@ -45,13 +45,20 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     
     var shadeView:UIView!
     
+    var isAddOber:Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.initView()
         self.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
+        if !self.isAddOber{
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CTAHomeViewController.reloadViewHandler(_:)), name: "publishEditFile", object: nil)
+            self.isAddOber = true
+        }
     }
+    
     override func didReceiveMemoryWarning() {
 
         super.didReceiveMemoryWarning()
@@ -63,6 +70,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         if self.isDisMis{
             self.reloadView()
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CTAHomeViewController.reloadViewHandler(_:)), name: "loginComplete", object: nil)
+
         }
     }
     
@@ -195,7 +203,11 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     
     func getLoadCellData(){
         let userID = (self.loginUser == nil) ? "" : self.loginUser!.userID
-        let request = CTANewPublishListRequest.init(userID: userID, start: 0)
+        #if DEBUG
+            let request = CTANewPublishListRequest.init(userID: userID, start: 0)
+        #else
+            let request = CTAHotPublishListRequest.init(userID: userID, start: 0)
+        #endif
         let data = self.getPublishArray(request)
         if data == nil {
             self.isLoadLocal = false
@@ -214,6 +226,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     }
     
     func reloadViewHandler(noti: NSNotification){
+        self.viewUserID = ""
         self.reloadView()
         self.viewAppearBegin()
     }
@@ -503,16 +516,32 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     
     func loadNewPublishes(startIndex:Int){
         let userID = (self.loginUser == nil) ? "" : self.loginUser!.userID
-        CTAPublishDomain.getInstance().newPublishList(userID, start: startIndex) { (info) -> Void in
-            if self.loadDataCompleteFuc != nil{
-                self.loadDataCompleteFuc!(info)
+        
+        #if DEBUG
+            CTAPublishDomain.getInstance().newPublishList(userID, start: startIndex) { (info) -> Void in
+                if self.loadDataCompleteFuc != nil{
+                    self.loadDataCompleteFuc!(info)
+                }
             }
-        }
+        #else
+            CTAPublishDomain.getInstance().hotPublishList(userID, start: startIndex) { (info) in
+                if self.loadDataCompleteFuc != nil{
+                    self.loadDataCompleteFuc!(info)
+                }
+            }
+        #endif
+        
     }
     
     func saveArrayToLocaol(){
         let userID = (self.loginUser == nil) ? "" : self.loginUser!.userID
-        let request = CTANewPublishListRequest.init(userID: userID, start: 0)
+        
+        #if DEBUG
+            let request = CTANewPublishListRequest.init(userID: userID, start: 0)
+        #else
+            let request = CTAHotPublishListRequest.init(userID: userID, start: 0)
+        #endif
+        
         var savePublishModel:Array<CTAPublishModel> = []
         if self.publishModelArray.count < 40 {
             savePublishModel = self.publishModelArray
@@ -778,8 +807,6 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     
     func firstLoadViewMove(yMove:CGFloat){
         let bounds = UIScreen.mainScreen().bounds
-        let fullSize = self.getCellSize()
-
         if !self.loadingImageView!.isDescendantOfView(self.view){
             self.view.addSubview(self.loadingImageView!)
             self.loadingImageView!.image = UIImage(named: "fresh-icon-1")
@@ -792,23 +819,12 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             yChange = maxSpace
         }
         self.handView.center = CGPoint.init(x: bounds.width/2, y: bounds.height/2+yChange)
-//        self.currentFullCell.center = CGPoint.init(x: bounds.width/2, y: fullSize.height/2+yChange)
-//        self.nextMoreCell.center = CGPoint.init(x: bounds.width/2, y: (self.horSpace+self.verSpace)*2+fullSize.height/2+yChange)
-//        self.nextFullCell.center = CGPoint.init(x: bounds.width/2, y: (self.horSpace+self.verSpace)+fullSize.height/2+yChange)
-//        self.shadeView.center = CGPoint.init(x: bounds.width/2, y: self.nextFullCell.frame.origin.y+self.nextFullCell.frame.height-5)
-        //self.loadingImageView?.center = CGPoint.init(x: bounds.width/2, y: self.handView.frame.origin.y+self.handView.frame.height/2+xChange)
     }
     
     func resetFirstLoadView(completion: (() -> Void)?){
         let bounds = UIScreen.mainScreen().bounds
-        let fullSize = self.getCellSize()
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.handView.center = CGPoint.init(x: bounds.width/2, y: bounds.height/2)
-//            self.currentFullCell.center = CGPoint.init(x: bounds.width/2, y: fullSize.height/2)
-//            self.nextMoreCell.center = CGPoint.init(x: bounds.width/2, y: (self.horSpace+self.verSpace)*2+fullSize.height/2)
-//            self.nextFullCell.center = CGPoint.init(x: bounds.width/2, y: (self.horSpace+self.verSpace)+fullSize.height/2)
-//            self.shadeView.center = CGPoint.init(x: bounds.width/2, y: self.nextFullCell.frame.origin.y+self.nextFullCell.frame.height-5)
-            //self.loadingImageView?.center = CGPoint.init(x: bounds.width+20, y: self.handView.frame.origin.y+self.handView.frame.height/2)
             }, completion: { (_) -> Void in
                 completion?()
         })

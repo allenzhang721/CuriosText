@@ -69,7 +69,7 @@
 "SaveLocalLabel" = "Save";
 "ReportLabel" = "Report";
 "UploadFileLabel" = "Upload";
-
+"AddToHotLabel" = "Add to hot";
 
 "AlertOkLabel" = "OK";
 "AlertYesLabel" = "Yes";

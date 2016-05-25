@@ -552,16 +552,25 @@ extension CTAPublishProtocol{
                                     self.showSingleAlert(filePath, alertMessage: "", compelecationBlock: { () -> Void in
                                     })
                                 }else {
-                                    self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                    })
+                                    SVProgressHUD.showErrorWithStatus("Failed")
                                 }
                         })
                     }else {
-                        self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                        })
+                        SVProgressHUD.showErrorWithStatus("Failed")
                     }
                 }
             })
+        }
+    }
+    
+    func addToHotHandler(){
+        let publishID = self.publishModel!.publishID
+        CTAPublishDomain.getInstance().setPublishHot(publishID) { (info) in
+            if info.result{
+                SVProgressHUD.showSuccessWithStatus("Success")
+            }else {
+                SVProgressHUD.showErrorWithStatus("Failed")
+            }
         }
     }
 }

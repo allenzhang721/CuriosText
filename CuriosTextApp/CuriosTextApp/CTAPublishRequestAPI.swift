@@ -238,6 +238,25 @@ class CTAHotPublishListRequest: CTABaseRequest {
     }
 }
 
+class CTASetHotPublishRequest: CTABaseRequest{
+    let publishID:String;
+    
+    init(publishID:String) {
+        self.publishID   = publishID;
+    }
+    
+    override func requestUrl() -> String {
+        return CTARequestUrl.SetHotPublish.description;
+    }
+    
+    override func parameter() -> String {
+        let dic:Dictionary<String, AnyObject> = [
+            key(.PublishID)  : publishID
+        ];
+        return self.getParameterString(dic, errorMessage: "CTASetHotPublishRequest");
+    }
+}
+
 class CTALikePublishRequest: CTABaseRequest {
     let userID:String;
     let publishID:String;

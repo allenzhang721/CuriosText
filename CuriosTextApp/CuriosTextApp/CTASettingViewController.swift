@@ -672,4 +672,7 @@ extension CTASettingViewController: CTAShareViewDelegate{
     func uploadResourceHandler(){
         
     }
+    func addToHotHandler(){
+        
+    }
 }
