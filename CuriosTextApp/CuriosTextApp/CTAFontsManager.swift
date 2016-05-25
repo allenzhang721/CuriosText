@@ -45,6 +45,19 @@ class CTAFontsManager {
         return displayName
     }
     
+    class func registedFontNames() -> [String] {
+        var names = [String]()
+        let families = CTAFontsManager.families
+        for fa in families {
+            if let fonts = fontNamesWithFamily(fa) {
+                for f in fonts {
+                    names.append(f)
+                }
+            }
+        }
+        return names
+    }
+    
     class func defaultFamily() -> String {
         return CTAFontsManager.families[0]
     }

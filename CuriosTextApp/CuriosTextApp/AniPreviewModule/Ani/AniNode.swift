@@ -9,6 +9,18 @@
 import Foundation
 import UIKit
 
+private let registedFonts: [String] = {
+    var fonts = [String]()
+    let families = UIFont.familyNames()
+    for family in families {
+        let ff = UIFont.fontNamesForFamilyName(family)
+        for f in ff {
+            fonts.append(f)
+        }
+    }
+    return fonts
+}()
+
 enum AniNodeFinderResult {
     case Success(Int, Container)
     case NotFound
@@ -73,9 +85,37 @@ class AniNode {
         return ac
     }
     
+    
+    
     private func containersBy(container: Container, spliteType type: (TextSpliter.TextLineSpliteType, TextSpliter.TextSpliteType)) -> Container {
         let source = container.contents.first!.source
-        let r = TextSpliter.spliteText(source.texts, withAttributes: source.attribute, inConstraintSize: CGSize(width: CGFloat(container.width), height: CGFloat.max), bySpliteType:type)
+        
+        var width = container.width
+        var registedNames = [String]()
+        
+        if let font = source.attribute?[NSFontAttributeName] as? UIFont where CTAFontsManager.registedFontNames().contains(font.fontName) {
+            
+        } else {
+            width += 100
+        }
+//
+//            print(font.fontDescriptor())
+//            
+//        } else {
+//            
+//            let constraintSize = CGSize(width: 414, height: 414)
+//            let storage = NSTextStorage(attributedString: NSAttributedString(string: source.texts,attributes: source.attribute))
+//            let container = NSTextContainer(size: constraintSize)
+//            let manager = NSLayoutManager()
+//            manager.addTextContainer(container)
+//            storage.addLayoutManager(manager)
+//            container.lineFragmentPadding = 0
+//            let textSize = manager.usedRectForTextContainer(container).size
+//            
+//            width = textSize.width
+//        }
+        
+        let r = TextSpliter.spliteText(source.texts, withAttributes: source.attribute, inConstraintSize: CGSize(width: CGFloat(width), height: CGFloat.max), bySpliteType:type)
         let units = r.0
         let size = r.1
         
