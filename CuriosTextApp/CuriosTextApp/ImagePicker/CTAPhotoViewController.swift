@@ -306,7 +306,7 @@ extension CTAPhotoViewController {
                 
                 if let strongSelf = self {
                     if let image = image {
-                        UIGraphicsBeginImageContextWithOptions(imageDisplayRect.size, true, UIScreen.mainScreen().scale)
+                        UIGraphicsBeginImageContextWithOptions(imageDisplayRect.size, true, 1)
                         
                         image.drawAtPoint(CGPoint(x: -imageDisplayRect.minX, y: -imageDisplayRect.minY))
                         let aimage = UIGraphicsGetImageFromCurrentImageContext()

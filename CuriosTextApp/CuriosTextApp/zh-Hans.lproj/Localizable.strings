@@ -130,7 +130,8 @@
 
 "SavePhotoSuccess" = "已保存到相册";
 "ReportSuccess" = "举报成功";
-"DeletProgressLabel" = "删除中...";
+"DeleteProgressLabel" = "删除中...";
+"DeleteSuccess" = "删除成功";
 "UploadProgressLabel" = "上传中...";
 "SendProgressLabel" = "发送中...";
 "ShareSuccessLabel" = "分享成功";

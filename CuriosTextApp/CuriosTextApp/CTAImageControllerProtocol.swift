@@ -15,20 +15,15 @@ func getIconData(image:UIImage) -> NSData{
 }
 
 func compressJPGImage(image:UIImage, maxWidth:CGFloat = 1280.00, needScale:Bool = false) -> NSData{
-    let result = compressImage(image, maxWidth: maxWidth, needScale: needScale)
-    let newImage = result.0
-    let compress = result.1
+    let newImage = compressImage(image, maxWidth: maxWidth, needScale: needScale)
     var newData:NSData?
-    if compress {
-        newData = UIImageJPEGRepresentation(newImage, 0.5)
-    }else {
-        newData = UIImageJPEGRepresentation(newImage, 1.0)
-    }
+    newData = UIImageJPEGRepresentation(newImage, 0.5)
+    
     return newData!
 }
 
 func compressPNGImage(image:UIImage) -> NSData{
-    let newImage = compressImage(image).0
+    let newImage = compressImage(image)
     let newData = UIImagePNGRepresentation(newImage)
     return newData!
 }
@@ -54,7 +49,7 @@ func compressIconImage(image:UIImage) -> UIImage{
     return image
 }
 
-func compressImage(image:UIImage, maxWidth:CGFloat = 1280.00, needScale:Bool = false) -> (UIImage, Bool){
+func compressImage(image:UIImage, maxWidth:CGFloat = 1280.00, needScale:Bool = false) -> UIImage{
     let maxWidth = maxWidth
     let maxHeight = maxWidth
     let imageSize = image.size
@@ -89,11 +84,10 @@ func compressImage(image:UIImage, maxWidth:CGFloat = 1280.00, needScale:Bool = f
         image.drawInRect(CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height), blendMode: .Normal, alpha: 1.0)
         newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return (newImage, true)
     }else {
         newImage = image
-        return (newImage, false)
     }
+    return newImage
 }
 
 func addCellShadow(cell:UIView){

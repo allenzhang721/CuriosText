@@ -128,7 +128,8 @@
 
 "SavePhotoSuccess" = "Save to album";
 "ReportSuccess" = "Thanks for the report!";
-"DeletProgressLabel" = "Deleting...";
+"DeleteProgressLabel" = "Deleting...";
+"DeleteSuccess" = "Delete Success";
 "UploadProgressLabel" = "Uploading...";
 "SendProgressLabel" = "Sending...";
 "ShareSuccessLabel" = "Share Success";
