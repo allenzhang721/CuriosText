@@ -134,7 +134,8 @@ class GIFCreateViewController: UIViewController {
                 
                 let img = image//UIImage(data: UIImageJPEGRepresentation(image, 1)!)!
 //                if i == count - 1 { thumbImage = img }
-                GIFCreator.addImage(img, delay: 1.0 / CGFloat(24))
+                let delay = (i == indexs.last) ? 1.0 + 1.0 / CGFloat(24) : 1.0 / CGFloat(24)
+                GIFCreator.addImage(img, delay: delay)
             }
         }
         
