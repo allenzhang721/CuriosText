@@ -1070,7 +1070,7 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
             self.showSelectedAlert(NSLocalizedString("AlertTitleDeleteFile", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.DeleteFile.description, cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result) -> Void in
                 if result{
                     SVProgressHUD.setDefaultMaskType(.Clear)
-                    SVProgressHUD.showWithStatus(NSLocalizedString("DeletProgressLabel", comment: ""))
+                    SVProgressHUD.showWithStatus(NSLocalizedString("DeleteProgressLabel", comment: ""))
                     let userID = self.viewUser == nil ? "" : self.viewUser!.userID
                     CTAPublishDomain.getInstance().deletePublishFile(publish.publishID, userID: userID, compelecationBlock: { (info) -> Void in
                         SVProgressHUD.dismiss()

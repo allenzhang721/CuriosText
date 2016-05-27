@@ -336,7 +336,7 @@ extension CTAPublishProtocol{
             }else {
                 self.publishCell.getEndImg({ (img) -> () in
                     if let image = img{
-                        let thumb = compressImage(image, maxWidth: image.size.width/2).0
+                        let thumb = compressImage(image, maxWidth: image.size.width/2)
                         let message = CTASocialManager.Message
                             .WeChat(
                                 .Session(
@@ -369,7 +369,7 @@ extension CTAPublishProtocol{
         if CTASocialManager.isAppInstaller(.WeChat){
             self.publishCell.getEndImg({ (img) -> () in
                 if let image = img{
-                    let thumb = compressImage(image, maxWidth: image.size.width/2).0
+                    let thumb = compressImage(image, maxWidth: image.size.width/2)
                     let message = CTASocialManager.Message
                         .WeChat(
                             .Timeline(
