@@ -306,7 +306,7 @@ extension CTAPhotoViewController {
                 
                 if let strongSelf = self {
                     if let image = image {
-                        let imageScale = image.scale
+                        let imageScale = UIScreen.mainScreen().scale//image.scale
                         let imageSize = image.size
                         let displaySize = imageDisplayRect.size
                         let newSize = CGSize(width: displaySize.width*imageScale, height: displaySize.height*imageScale)

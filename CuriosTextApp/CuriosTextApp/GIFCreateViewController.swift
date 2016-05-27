@@ -49,10 +49,7 @@ class GIFCreateViewController: UIViewController {
     
     func began() {
         
-        debug_print("Will Reload")
-        
         self.aniCanvasView.reloadData { [weak self] in
-            debug_print("Did Reload")
             guard let sf = self else { return }
             sf.aniCanvasView.ready()
             
@@ -67,19 +64,26 @@ class GIFCreateViewController: UIViewController {
     }
     
     private func next() {
-        print("next \(currentIndex) all \(indexs.count)")
         let index = indexs[currentIndex]
         makeGIF(index)
     }
     
     func makeGIFBegan() {
         
-        let cacheStatus = GIFCreator.beganWith(publishID, images: [], delays: [], useCache: true)
+        var publishFile = publishID
+        switch self.gifType{
+        case .Small:
+            publishFile = publishFile+"(120*120)"
+        case .Normal:
+            publishFile = publishFile+"(320*320)"
+        case .Big:
+            publishFile = publishFile+"(640*640)"
+        }
+        let cacheStatus = GIFCreator.beganWith(publishFile, images: [], delays: [], useCache: true)
         
         switch cacheStatus {
         case .Cached(GIFURL: _, thumbURL: _): commit()
         default:
-            debug_print("Did MakeGIF")
             let result = aniCanvasView.progressBegan()
             
             switch result {
