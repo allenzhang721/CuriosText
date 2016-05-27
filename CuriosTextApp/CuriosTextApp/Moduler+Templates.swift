@@ -10,18 +10,42 @@ import Foundation
 
 private let moduleName = "Templates"
 private struct Actions {
-    let aboutVC = "templateListVC:"
+    let templateListVC = "templateListVC:"
+    let templateVC = "templateVC:"
 }
 
 extension Moduler {
-    class func module_templateVC(selectedHandler: ((NSData?) -> ())?) -> UIViewController? {
+    
+    class func module_templateVC(changed: (() -> ())?, dismiss: (() -> ())?, cancel: (() -> ())?, done: (() -> ())?) -> UIViewController? {
+        var paras: [String: AnyObject] = [:]
+
+        if let h = changed {
+            paras["didChangedHandler"] = FunctionWrapper(f: h)
+        }
+        if let h = dismiss {
+            paras["dismissHandler"] = FunctionWrapper(f: h)
+        }
+        if let h = cancel {
+            paras["cancelHandler"] = FunctionWrapper(f: h)
+        }
+        if let h = done {
+            paras["doneHandler"] = FunctionWrapper(f: h)
+        }
+        
+        let vc = Moduler.target(moduleName, performAction: Actions().templateVC, paras: paras)?.takeUnretainedValue() as? UIViewController
+        
+        return vc
+    }
+    
+    
+    class func module_templateListVC(selectedHandler: ((NSData?) -> ())?) -> UIViewController? {
         var paras: [String: AnyObject] = [:]
         
         if let s = selectedHandler {
             paras["selectedHandler"] = FunctionWrapper(f: s)
         }
         
-        let vc = Moduler.target(moduleName, performAction: Actions().aboutVC, paras: paras)?.takeUnretainedValue() as? UIViewController
+        let vc = Moduler.target(moduleName, performAction: Actions().templateListVC, paras: paras)?.takeUnretainedValue() as? UIViewController
         
         return vc
     }

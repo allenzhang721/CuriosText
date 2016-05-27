@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="xPn-sp-c2u">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Tempate List View Controller-->
@@ -18,15 +19,15 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Ajf-eh-NBB">
                                 <rect key="frame" x="0.0" y="234" width="320" height="100"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="3LR-cn-bOx"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="OVz-Ex-SYT">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="OVz-Ex-SYT">
                                     <size key="itemSize" width="80" height="80"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TemplateImgCell" id="HuW-US-EeX">
@@ -50,7 +51,7 @@
                                 </connections>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Ajf-eh-NBB" firstAttribute="centerY" secondItem="x9R-bJ-dxZ" secondAttribute="centerY" id="TWc-fS-PKF"/>
                             <constraint firstItem="Ajf-eh-NBB" firstAttribute="centerX" secondItem="x9R-bJ-dxZ" secondAttribute="centerX" id="WXe-av-5Ga"/>
@@ -64,7 +65,51 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kil-bn-aa5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="517" y="152"/>
+            <point key="canvasLocation" x="988" y="884"/>
+        </scene>
+        <!--Template View Controller-->
+        <scene sceneID="MMe-DG-dgK">
+            <objects>
+                <viewController storyboardIdentifier="TemplateVC" id="xPn-sp-c2u" customClass="CTATemplateViewController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Xam-Zq-hQr"/>
+                        <viewControllerLayoutGuide type="bottom" id="HFK-3n-tat"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PHh-Ke-KRB">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Pc2-fq-Wev">
+                                <rect key="frame" x="0.0" y="44" width="320" height="320"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Pc2-fq-Wev" secondAttribute="height" multiplier="1:1" id="M3p-3r-gp0"/>
+                                </constraints>
+                            </imageView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8L6-O0-xNz">
+                                <rect key="frame" x="0.0" y="364" width="320" height="155"/>
+                                <connections>
+                                    <segue destination="yH6-rU-Vhb" kind="embed" id="nmT-MQ-2mN"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Pc2-fq-Wev" firstAttribute="top" secondItem="Xam-Zq-hQr" secondAttribute="bottom" constant="44" id="2xS-gg-WqS"/>
+                            <constraint firstItem="HFK-3n-tat" firstAttribute="top" secondItem="8L6-O0-xNz" secondAttribute="bottom" constant="49" id="Bst-r3-bPX"/>
+                            <constraint firstItem="8L6-O0-xNz" firstAttribute="centerX" secondItem="PHh-Ke-KRB" secondAttribute="centerX" id="Iwc-AC-J9A"/>
+                            <constraint firstItem="8L6-O0-xNz" firstAttribute="width" secondItem="PHh-Ke-KRB" secondAttribute="width" id="KID-Io-oWc"/>
+                            <constraint firstItem="8L6-O0-xNz" firstAttribute="top" secondItem="Pc2-fq-Wev" secondAttribute="bottom" id="Ly0-5h-ovr"/>
+                            <constraint firstItem="Pc2-fq-Wev" firstAttribute="centerX" secondItem="PHh-Ke-KRB" secondAttribute="centerX" id="mkV-gM-Iat"/>
+                            <constraint firstItem="Pc2-fq-Wev" firstAttribute="width" secondItem="PHh-Ke-KRB" secondAttribute="width" id="yQ3-4f-NzY"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NC8-Nn-xy1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="988" y="152"/>
         </scene>
     </scenes>
 </document>
