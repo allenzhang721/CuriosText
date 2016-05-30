@@ -23,7 +23,7 @@ enum LocalStrings: CustomStringConvertible {
     case PublishFailure
     
     // Edior Tab
-    case Size, Rotation, Font, Spacing, Alignment, Color, Animation, AnimationType, AnimationDuration, AnimationDelay
+    case Size, Rotation, Font, Spacing, Alignment, Color, Animation, AnimationType, AnimationDuration, AnimationDelay, Templates
     
     //Animations
     case AniType(CTAAnimationType)
@@ -67,6 +67,8 @@ enum LocalStrings: CustomStringConvertible {
             return NSLocalizedString("EditTextPlaceHolder", comment: "")
         case .EditorDismissMessage:
             return NSLocalizedString("EditorDismissMessage", comment: "")
+        case .Templates:
+            return NSLocalizedString("Templates", comment: "")
             
             // Publish
         case .PublishFailure:

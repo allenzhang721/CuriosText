@@ -29,11 +29,11 @@ class CTABarItemsFactory {
     static let imgSelectorItems = [
         
         CTABarItem(
-            normalImage: CTAStyleKit.imageOfSizeBarItemNormal,
-            selectedImage: CTAStyleKit.imageOfSizeBarItemSelected,
+            normalImage: CTAStyleKit.imageOfTemplatesNormal,
+            selectedImage: CTAStyleKit.imageOfTemplatesSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: LocalStrings.Size.description),
+            title: LocalStrings.Templates.description),
         
 //        CTABarItem(
 //            normalImage: CTAStyleKit.imageOfRotationBarItemNormal,

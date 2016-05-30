@@ -160,6 +160,7 @@
 // MARK: - Editor
 "EditTextPlaceHolder" = "Double Click to Edit";
 "Publish" = "Publish";
+"Templates" = "Templates";
 
 "Size" = "Size";
 "Rotation" = "Rotation";

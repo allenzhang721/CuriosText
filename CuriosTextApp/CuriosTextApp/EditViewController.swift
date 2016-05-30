@@ -502,7 +502,7 @@ extension EditViewController {
                         let canvasSize = strongSelf.canvasViewController.view.bounds.size
                         (container as! ImageContainerVMProtocol).updateWithImageSize(image!.size, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
                         
-                        strongSelf.document.storeResource(UIImageJPEGRepresentation(image!, 0.1)!, withName: (container as! ImageContainerVMProtocol).imageElement!.resourceName)
+                        strongSelf.document.storeResource(compressJPGImage(image!), withName: (container as! ImageContainerVMProtocol).imageElement!.resourceName)
                         
                         
                         strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
