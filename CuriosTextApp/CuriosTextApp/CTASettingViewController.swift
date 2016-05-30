@@ -120,7 +120,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         userNickNameTitle.text = NSLocalizedString("UserNickNameLabel", comment: "")
         userNickNameTitle.sizeToFit()
         self.scrollView.addSubview(userNickNameTitle)
-        var nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: self.userNickNameLabel.frame.origin.y+8, width: 6, height: 10))
+        var nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: self.userNickNameLabel.frame.origin.y+6, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         self.scrollView.addSubview(nextImage)
         var textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y + 31, width: 330*self.getHorRate(), height: 1))
@@ -141,7 +141,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         userSexTitle.text = NSLocalizedString("UserSexLabel", comment: "")
         userSexTitle.sizeToFit()
         self.scrollView.addSubview(userSexTitle)
-        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: self.userSexLabel.frame.origin.y+8, width: 6, height: 10))
+        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: self.userSexLabel.frame.origin.y+6, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         self.scrollView.addSubview(nextImage)
         textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userSexLabel.frame.origin.y + 31, width: 330*self.getHorRate(), height: 1))
@@ -185,7 +185,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         userDesxTitle.text = NSLocalizedString("UserDesc", comment: "")
         userDesxTitle.sizeToFit()
         self.scrollView.addSubview(userDesxTitle)
-        self.descNextImg = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: self.userDescLabel.frame.origin.y+8, width: 6, height: 10))
+        self.descNextImg = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: self.userDescLabel.frame.origin.y+6, width: 6, height: 10))
         self.descNextImg.image = UIImage(named: "next-icon")
         self.scrollView.addSubview(self.descNextImg)
         self.descLineImg = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userDescLabel.frame.origin.y + 31, width: 330*self.getHorRate(), height: 1))
@@ -204,7 +204,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         bindingAccoutTitle.text = NSLocalizedString("BindingAccountLabel", comment: "")
         bindingAccoutTitle.sizeToFit()
         bindingAccoutView.addSubview(bindingAccoutTitle)
-        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: 17, width: 6, height: 10))
+        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         bindingAccoutView.addSubview(nextImage)
         textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 0, width: 330*self.getHorRate(), height: 1))
@@ -225,7 +225,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         changePasswordTitle.text = NSLocalizedString("ChangePasswordLabel", comment: "")
         changePasswordTitle.sizeToFit()
         changePasswordView.addSubview(changePasswordTitle)
-        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: 17, width: 6, height: 10))
+        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         changePasswordView.addSubview(nextImage)
         textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
@@ -245,7 +245,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         aboutTitle.text = NSLocalizedString("AboutLabel", comment: "")
         aboutTitle.sizeToFit()
         aboutView.addSubview(aboutTitle)
-        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: 17, width: 6, height: 10))
+        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         aboutView.addSubview(nextImage)
         textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 0, width: 330*self.getHorRate(), height: 1))
@@ -266,7 +266,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         shareToFriendTitle.text = NSLocalizedString("InviteFriendsLabel", comment: "")
         shareToFriendTitle.sizeToFit()
         shareToFriendView.addSubview(shareToFriendTitle)
-        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: 17, width: 6, height: 10))
+        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         shareToFriendView.addSubview(nextImage)
         textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
@@ -284,7 +284,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         reviewUSTitle.text = NSLocalizedString("ReviewUSLabel", comment: "")
         reviewUSTitle.sizeToFit()
         reviewUSView.addSubview(reviewUSTitle)
-        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: 17, width: 6, height: 10))
+        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         reviewUSView.addSubview(nextImage)
         textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
@@ -383,11 +383,11 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         if texth < 37{
             self.userDescLabel.frame.size.height = 22
             self.userDescLabel.textAlignment = .Right
-            self.descNextImg.frame.origin.y = self.userDescLabel.frame.origin.y+8
+            self.descNextImg.frame.origin.y = self.userDescLabel.frame.origin.y+6
             self.descLineImg.frame.origin.y = self.userDescLabel.frame.origin.y+31
         }else {
             self.userDescLabel.textAlignment = .Right
-            self.descNextImg.frame.origin.y = self.userDescLabel.frame.origin.y + texth - 8
+            self.descNextImg.frame.origin.y = self.userDescLabel.frame.origin.y + texth - 14
             self.descLineImg.frame.origin.y = self.userDescLabel.frame.origin.y + texth + 6
         }
         
