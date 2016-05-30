@@ -539,7 +539,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     }
     
     func aboutClick(sender: UIPanGestureRecognizer){
-        if let vc = UIViewController.module_About() {
+        if let vc = Moduler.module_aboutUS() {
             navigationController?.pushViewController(vc, animated: true)
         }
     }

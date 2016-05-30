@@ -278,7 +278,10 @@ extension CTACanvasViewController {
     func reloadSection() {
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
             guard let strongSelf = self else { return }
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
             strongSelf.collectionView.reloadSections(NSIndexSet(index: 0))
+            CATransaction.commit()
         }
     }
     

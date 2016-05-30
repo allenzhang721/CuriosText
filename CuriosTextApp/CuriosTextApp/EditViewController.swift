@@ -35,8 +35,17 @@ class EditViewController: UIViewController {
     weak var delegate: CTAEditViewControllerDelegate?
     
     private var page: CTAPage {
-        return document.page!
+        get {
+            return document.page!
+        }
+        
+        set {
+            document.page = newValue
+        }
     }
+    
+    private var useTemplate: Bool = false
+    private var originPage: CTAPage?
     
     private var selectedContainer: ContainerVMProtocol? {
         guard let selectedIndexPath = selectedIndexPath else { return nil }
@@ -65,8 +74,10 @@ class EditViewController: UIViewController {
             if let strongSelf = self, let image = image {
 //                dispatch_async(dispatch_get_main_queue(), { 
                 
-                    
-                    strongSelf.insertImage(image, size: image.size)
+//                    strongSelf.selectorViewController.snapImage = image
+                
+                    let image = strongSelf.insertImage(image, size: image.size)
+                strongSelf.selectorViewController.snapImage = image
                     cameraVC.removeFromParentViewController()
                     cameraVC.view.removeFromSuperview()
 //                })
@@ -243,12 +254,12 @@ extension EditViewController {
         }
     }
     
-    func insertImage(s: UIImage, size: CGSize) {
+    func insertImage(s: UIImage, size: CGSize) -> UIImage {
         
         let ID = CTAIDGenerator.fileID()
         let imageName = document.resourcePath + ID + ".jpg"
-        
-        let name = document.storeResource(compressJPGImage(s), withName: imageName)
+        let imageData = compressJPGImage(s)
+        let name = document.storeResource(imageData, withName: imageName)
         let imgContainer = EditorFactory.generateImageContainer(page.width, pageHeigh: page.height, imageSize: size, imgName: name)
         
         page.insert(imgContainer, atIndex: 0)
@@ -261,10 +272,11 @@ extension EditViewController {
                 strongSelf.canvasViewController.reloadSection()
                 strongSelf.selectBottomContainer()
             }
-            
 //           self.canvasViewController.insertAt(NSIndexPath(forItem: 0, inSection: 0))
             
         }
+        
+        return UIImage(data: imageData)!
         
 //        CATransaction.commit()
     }
@@ -926,6 +938,34 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         )
         canvasViewController.updateAt(selectedIndexPath, updateContents: true)
     }
+    
+    // MARK: - template Changed
+    func templateDidChanged(pageData: NSData?, origin: Bool) {
+        
+        if origin == false {
+            if useTemplate == false {
+                originPage = CTAPage(containers: page.containers, anis: page.animatoins)
+                useTemplate = true
+            }
+            if let data = pageData, let apage = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
+                apage.removeLastImageContainer()
+                
+                page.replaceBy(template: apage)
+                
+                canvasViewController.reloadSection()
+            }
+        } else {
+            if useTemplate == true {
+                useTemplate = false
+                if let apage = originPage {
+                    page.replaceBy(containers: apage.containers, animations: apage.animatoins)
+                    canvasViewController.reloadSection()
+                }
+            }
+            print("Origin")
+        }
+    }
+    
     
     // MARK: - Animation Changed
     func animationDurationDidChanged(t: CGFloat) {

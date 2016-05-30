@@ -19,6 +19,7 @@ protocol CTASelectorable: class {
 }
 
 protocol CTASelectorScaleable: CTASelectorable {
+    func templateDidChanged(pageData: NSData?, origin: Bool)
     func scaleDidChanged(scale: CGFloat)
     func radianDidChanged(radian: CGFloat)
     func fontDidChanged(fontFamily: String, fontName: String)
@@ -37,6 +38,7 @@ typealias CTASelectorViewControllerDelegate = protocol<CTASelectorScaleable>
 
 final class CTASelectorsViewController: UIViewController, UICollectionViewDataSource {
     
+    var snapImage: UIImage?
     private var animation: Bool = false
     var dataSource: CTASelectorsViewControllerDataSource?
     var delegate: CTASelectorViewControllerDelegate?
@@ -49,6 +51,8 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
     }
     private var action: String {
         switch currentType {
+            
+        case .Templates: return "templateDidChanged:"
         case .Size: return "scaleChanged:"
         case .Rotator: return "radianChanged:"
         case .Fonts: return "indexPathOfFontsChanged:"
@@ -170,6 +174,10 @@ extension CTASelectorsViewController {
             cell.delegate = self
         }
         
+        if let cell = cell as? CTASelectorTemplatesCell {
+            cell.templateList?.originImage = snapImage
+        }
+        
         cell.beganLoad()
         if action.characters.count > 0 {
             cell.addTarget(self, action: Selector(action), forControlEvents: .ValueChanged)
@@ -265,6 +273,23 @@ extension CTASelectorsViewController: CTASelectorDataSource {
 
 // MARK: - Actions
 extension CTASelectorsViewController {
+    
+    func templateDidChanged(info: [String: AnyObject]) {
+        if let origin = info["origin"] as? Bool {
+            if let data = info["data"] as? NSData {
+                delegate?.templateDidChanged(data, origin: origin)
+            } else {
+                delegate?.templateDidChanged(nil, origin: origin)
+            }
+        }
+        
+//        if let data = data, let apage = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
+//            apage.removeLastImageContainer()
+//            
+//        }
+        
+    }
+    
     func scaleChanged(sender: CTASliderView) {
         let v = CGFloat(Int(sender.value * 100.0)) / 100.0
         delegate?.scaleDidChanged(v)

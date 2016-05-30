@@ -37,8 +37,9 @@ extension ContainerVMProtocol {
             
         case .Image:
             let types: [CTAContainerFeatureType] = [
-                .Size,
-                .Rotator
+//                .Size,
+//                .Rotator
+                .Templates
             ]
             
             return types

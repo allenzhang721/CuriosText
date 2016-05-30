@@ -40,7 +40,7 @@ class AboutViewController: UIViewController {
             let appVersion = info["CFBundleShortVersionString"] as! String
             
             let versionLabel = view.viewWithTag(1000) as! UILabel
-            versionLabel.text = "Version" + appVersion
+            versionLabel.text = "Version " + appVersion
         }
     }
     
