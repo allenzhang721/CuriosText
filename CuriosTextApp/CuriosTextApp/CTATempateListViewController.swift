@@ -93,6 +93,13 @@ extension CTATempateListViewController: UICollectionViewDataSource {
             }
         }
         
+        if cell.selectedBackgroundView == nil {
+            let v = UIView(frame: cell.bounds)
+            v.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
+            cell.selectedBackgroundView = v
+            cell.bringSubviewToFront(v)
+        }
+        
         cell.backgroundColor = UIColor.redColor()
         
         return cell

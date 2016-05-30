@@ -125,6 +125,11 @@ extension CTACanvasViewController {
     func removeNotification() {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
+    
+    func setSelectedItemAt(indexPath i: NSIndexPath) {
+        debug_print("")
+        collectionView.selectItemAtIndexPath(i, animated: false, scrollPosition: .None)
+    }
 
 }
 
@@ -151,6 +156,7 @@ extension CTACanvasViewController {
         }
         
         if let selectedIndexPath = collectionView.indexPathsForSelectedItems()?.first {
+            debug_print("has selected")
             guard index.compare(selectedIndexPath) != .OrderedSame else { return }
         }
         

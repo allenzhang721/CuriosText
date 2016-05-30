@@ -942,6 +942,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     // MARK: - template Changed
     func templateDidChanged(pageData: NSData?, origin: Bool) {
         
+        
         if origin == false {
             if useTemplate == false {
                 originPage = CTAPage(containers: page.containers, anis: page.animatoins)
@@ -953,6 +954,10 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
                 page.replaceBy(template: apage)
                 
                 canvasViewController.reloadSection()
+                
+            dispatch_async(dispatch_get_main_queue(), {
+                self.canvasViewController.setSelectedItemAt(indexPath: NSIndexPath(forItem: 0, inSection: 0))
+            })
             }
         } else {
             if useTemplate == true {
@@ -960,10 +965,18 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
                 if let apage = originPage {
                     page.replaceBy(containers: apage.containers, animations: apage.animatoins)
                     canvasViewController.reloadSection()
+                    
+                    dispatch_async(dispatch_get_main_queue(), { 
+                        self.canvasViewController.setSelectedItemAt(indexPath: NSIndexPath(forItem: 0, inSection: 0))
+                    })
                 }
             }
             print("Origin")
         }
+        
+        
+        
+//        selectBottomContainer()
     }
     
     

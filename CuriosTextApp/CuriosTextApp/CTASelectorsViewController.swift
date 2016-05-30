@@ -42,7 +42,7 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
     private var animation: Bool = false
     var dataSource: CTASelectorsViewControllerDataSource?
     var delegate: CTASelectorViewControllerDelegate?
-    private(set) var currentType: CTAContainerFeatureType = .Empty
+    private(set) var currentType: CTAContainerFeatureType = .Templates
     private var container: ContainerVMProtocol? {
         return dataSource?.selectorsViewControllerContainer(self)
     }
