@@ -35,12 +35,12 @@ class CTABarItemsFactory {
             selectedColor: CTAStyleKit.selectedColor,
             title: LocalStrings.Size.description),
         
-        CTABarItem(
-            normalImage: CTAStyleKit.imageOfRotationBarItemNormal,
-            selectedImage: CTAStyleKit.imageOfRotationBarItemSelected,
-            normalColor: CTAStyleKit.normalColor,
-            selectedColor: CTAStyleKit.selectedColor,
-            title: LocalStrings.Rotation.description)
+//        CTABarItem(
+//            normalImage: CTAStyleKit.imageOfRotationBarItemNormal,
+//            selectedImage: CTAStyleKit.imageOfRotationBarItemSelected,
+//            normalColor: CTAStyleKit.normalColor,
+//            selectedColor: CTAStyleKit.selectedColor,
+//            title: LocalStrings.Rotation.description)
     ]
     
     // Sort Search in CTAContainerViewModel

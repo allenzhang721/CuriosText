@@ -37,7 +37,7 @@ class Templates: NSObject {
         
         let listVC = UIStoryboard(name: "Templates", bundle: nil).instantiateViewControllerWithIdentifier("TemplateList") as? CTATempateListViewController
         
-        if let selectedHandler = paras["selectedHandler"] as? FunctionWrapper<((NSData?) -> ())?> {
+        if let selectedHandler = paras["selectedHandler"] as? FunctionWrapper<(NSData?) -> ()> {
             listVC?.selectedHandler = selectedHandler.method
         }
         

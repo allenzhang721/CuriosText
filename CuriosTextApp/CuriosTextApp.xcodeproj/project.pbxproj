@@ -193,6 +193,8 @@
 		2CAEAC9E1C323F4300C9F9AC /* ContainerTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC991C323F4300C9F9AC /* ContainerTextView.swift */; };
 		2CAEAC9F1C323F4300C9F9AC /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEAC9A1C323F4300C9F9AC /* ContainerView.swift */; };
 		2CAEACA31C323F9700C9F9AC /* TexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAEACA11C323F9700C9F9AC /* TexView.swift */; };
+		2CB175B21CF831C800819825 /* CTASelectorTemplatesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB175B11CF831C800819825 /* CTASelectorTemplatesCell.swift */; };
+		2CB175B81CF8432100819825 /* Templates in Resources */ = {isa = PBXBuildFile; fileRef = 2CB175B71CF8432100819825 /* Templates */; };
 		2CB3222F1C45334900BD06F5 /* CTAUserPublishesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB3222E1C45334900BD06F5 /* CTAUserPublishesViewController.swift */; };
 		2CB322321C4533E200BD06F5 /* CTAPublishesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB322311C4533E200BD06F5 /* CTAPublishesCell.swift */; };
 		2CB380AF1C4CF86D009A681A /* CTAPreviewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB380AE1C4CF86D009A681A /* CTAPreviewProtocol.swift */; };
@@ -569,6 +571,8 @@
 		2CAEAC991C323F4300C9F9AC /* ContainerTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerTextView.swift; sourceTree = "<group>"; };
 		2CAEAC9A1C323F4300C9F9AC /* ContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
 		2CAEACA11C323F9700C9F9AC /* TexView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TexView.swift; sourceTree = "<group>"; };
+		2CB175B11CF831C800819825 /* CTASelectorTemplatesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorTemplatesCell.swift; sourceTree = "<group>"; };
+		2CB175B71CF8432100819825 /* Templates */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Templates; sourceTree = "<group>"; };
 		2CB3222E1C45334900BD06F5 /* CTAUserPublishesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUserPublishesViewController.swift; sourceTree = "<group>"; };
 		2CB322311C4533E200BD06F5 /* CTAPublishesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishesCell.swift; sourceTree = "<group>"; };
 		2CB380AD1C4CC6D3009A681A /* preview.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = preview.playground; sourceTree = "<group>"; };
@@ -854,6 +858,7 @@
 				2C401DB01C70D05400AE45FE /* CTACanvasImageCell.swift */,
 				2C6C68021C350B4400CCE81C /* CTAScollBarCell.swift */,
 				2C1F01571C3BD5960033CED8 /* CTASelectorCell.swift */,
+				2CB175B11CF831C800819825 /* CTASelectorTemplatesCell.swift */,
 				2C3097051C3F5F9200D996A4 /* CTASelectorFontCell.swift */,
 				2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */,
 				2C0404671C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift */,
@@ -965,6 +970,7 @@
 		2C3B33C81C1176D000738166 /* CuriosTextApp */ = {
 			isa = PBXGroup;
 			children = (
+				2CB175B71CF8432100819825 /* Templates */,
 				2C7AD3A61CF6AFD0009AEDA8 /* Moduler */,
 				2C7AD3AB1CF6B090009AEDA8 /* m_AboutUs */,
 				2C7AD3AE1CF6BC2B009AEDA8 /* m_Templates */,
@@ -1696,6 +1702,7 @@
 				2CB66A9E1CD86F6C006B9282 /* read_me.txt in Resources */,
 				2C610A321C902BCA00DFE315 /* ImagePicker.storyboard in Resources */,
 				2CD11AD01CB7A7A400A79305 /* AniPreView.storyboard in Resources */,
+				2CB175B81CF8432100819825 /* Templates in Resources */,
 				2C3B33CF1C1176D000738166 /* Main.storyboard in Resources */,
 				2CDDE64F1CE18BED00B6E6A9 /* animation.gif in Resources */,
 			);
@@ -1796,6 +1803,7 @@
 				2CE063E71C857D2F001F7F4E /* CTAImageCropAttributes.swift in Sources */,
 				2C2B45AC1C5CBCE7004A4809 /* CTAAddBarProtocol.swift in Sources */,
 				2CD11AC81CB7632D00A79305 /* AniPage.swift in Sources */,
+				2CB175B21CF831C800819825 /* CTASelectorTemplatesCell.swift in Sources */,
 				2C3CAD171C21825900D8DE4B /* CTAElement.swift in Sources */,
 				2C32BD491C4CA7A100788A97 /* CTAPreviewCanvasView.swift in Sources */,
 				2C82FF571C437F58001D927A /* CTASelectorAligmentsCell.swift in Sources */,

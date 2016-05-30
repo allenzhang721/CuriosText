@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 
 enum CTAContainerFeatureType: String {
-    
+
+    case Templates
     case Size, Rotator
     case Fonts, Aligments, TextSpacing, Colors, Animation //Text
     case Empty

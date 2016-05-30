@@ -49,6 +49,8 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
     }
     private var action: String {
         switch currentType {
+            
+        case .Templates: return "templateDidChanged:"
         case .Size: return "scaleChanged:"
         case .Rotator: return "radianChanged:"
         case .Fonts: return "indexPathOfFontsChanged:"
@@ -265,6 +267,11 @@ extension CTASelectorsViewController: CTASelectorDataSource {
 
 // MARK: - Actions
 extension CTASelectorsViewController {
+    
+    func templateDidChanged(data: NSData?) {
+        
+    }
+    
     func scaleChanged(sender: CTASliderView) {
         let v = CGFloat(Int(sender.value * 100.0)) / 100.0
         delegate?.scaleDidChanged(v)

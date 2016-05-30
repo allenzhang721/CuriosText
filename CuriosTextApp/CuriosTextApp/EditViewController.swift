@@ -927,6 +927,13 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         canvasViewController.updateAt(selectedIndexPath, updateContents: true)
     }
     
+    // MARK: - template Changed
+    func templateDidChanged(pageData: NSData?) {
+        
+        
+    }
+    
+    
     // MARK: - Animation Changed
     func animationDurationDidChanged(t: CGFloat) {
         guard var animation = animation else {
