@@ -494,17 +494,17 @@ extension EditViewController {
                     
                     strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
                     
-                    draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.imageBy ,local: true) { [weak self] (previewR) in
-                        
-                        switch previewR {
-                        case .Success(let img):
-                            dispatch_async(dispatch_get_main_queue(), {
-                                strongSelf.selectorViewController.snapImage = img
-                            })
-                        default:
-                            ()
-                        }
-                    }
+//                    draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.imageBy ,local: true) { [weak self] (previewR) in
+//                        
+//                        switch previewR {
+//                        case .Success(let img):
+//                            dispatch_async(dispatch_get_main_queue(), {
+//                                strongSelf.selectorViewController.snapImage = img
+//                            })
+//                        default:
+//                            ()
+//                        }
+//                    }
                 }
                 
                 

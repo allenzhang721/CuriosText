@@ -130,7 +130,6 @@ extension CTACanvasViewController {
         debug_print("")
         collectionView.selectItemAtIndexPath(i, animated: false, scrollPosition: .None)
     }
-
 }
 
 

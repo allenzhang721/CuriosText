@@ -19,7 +19,6 @@ class CTATempateListViewController: UIViewController {
             if collectionView.dataSource?.collectionView(collectionView, numberOfItemsInSection: 0) > 0 {
                 collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             }
-            
         }
     }
     
@@ -30,9 +29,11 @@ class CTATempateListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        collectionView.delegate = self
+        
         setup()
         
-        collectionView.delegate = self
+        
         
         //        let time: NSTimeInterval = 3.0
         //        let delay = dispatch_time(DISPATCH_TIME_NOW,
@@ -41,6 +42,12 @@ class CTATempateListViewController: UIViewController {
         //            self.collectionView.reloadData()
         //
         //        }
+    }
+    
+    func defaultSelected() {
+        if collectionView.dataSource?.collectionView(collectionView, numberOfItemsInSection: 0) > 0 && collectionView.indexPathsForSelectedItems()?.count < 1 {
+            collectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
+        }
     }
     
     private func setup() {
@@ -62,6 +69,9 @@ class CTATempateListViewController: UIViewController {
             
             dispatch_async(dispatch_get_main_queue(), {
                 sf.collectionView.reloadData()
+                dispatch_async(dispatch_get_main_queue(), { 
+                    sf.collectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
+                })
             })
         }
         
@@ -107,7 +117,7 @@ extension CTATempateListViewController: UICollectionViewDataSource {
             cell.bringSubviewToFront(v)
         }
         
-        cell.backgroundColor = UIColor.redColor()
+//        cell.backgroundColor = UIColor.redColor()
         
         return cell
     }

@@ -20,20 +20,8 @@ class CTASelectorTemplatesCell: CTASelectorCell {
 //        userInteractionEnabled = false
     }
     
-    override func didMoveToSuperview() {
-       
-        
-    }
-    
     
     private func setup() {
-        
-//        ((pageData: NSData?, origin: Bool) -> ())?
-
-//        let selected: (NSData?, Bool) -> () = {[weak self] (data, origin) in
-//            guard let sf = self, let target = sf.target, let action = sf.action else {return}
-//            target.performSelector(action, withObject: ["data": data, "origin": origin])
-//        }
         
         func selected(data: NSData?, origin: Bool) {
             guard let target = target, let action = action else {return}
@@ -60,6 +48,11 @@ class CTASelectorTemplatesCell: CTASelectorCell {
             
             templateList = templateListVC
         }
+    }
+    
+    override func beganLoad() {
+        
+        templateList?.defaultSelected()
     }
     
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
