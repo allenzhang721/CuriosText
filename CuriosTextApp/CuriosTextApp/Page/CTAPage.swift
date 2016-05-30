@@ -82,6 +82,16 @@ final class CTAPage:NSObject, NSCoding {
 //        }
     }
     
+    func replaceBy(template temp: CTAPage) {
+        if containers.count > 1 {
+            containers.removeRange(1..<containers.count)
+        }
+        
+        containers.appendContentsOf(temp.containers)
+        animatoins = temp.animatoins
+        
+    }
+    
     func removeAnimationAtIndex(i: Int, completedHandler:(() -> ())?) {
 //        dispatch_sync(containerQueue) {
         

@@ -19,6 +19,7 @@ protocol CTASelectorable: class {
 }
 
 protocol CTASelectorScaleable: CTASelectorable {
+    func templateDidChanged(pageData: NSData)
     func scaleDidChanged(scale: CGFloat)
     func radianDidChanged(radian: CGFloat)
     func fontDidChanged(fontFamily: String, fontName: String)
@@ -269,6 +270,14 @@ extension CTASelectorsViewController: CTASelectorDataSource {
 extension CTASelectorsViewController {
     
     func templateDidChanged(data: NSData?) {
+        if let data = data {
+            delegate?.templateDidChanged(data)
+        }
+        
+//        if let data = data, let apage = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
+//            apage.removeLastImageContainer()
+//            
+//        }
         
     }
     

@@ -928,9 +928,15 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     }
     
     // MARK: - template Changed
-    func templateDidChanged(pageData: NSData?) {
+    func templateDidChanged(pageData: NSData) {
         
-        
+        if let apage = NSKeyedUnarchiver.unarchiveObjectWithData(pageData) as? CTAPage {
+            apage.removeLastImageContainer()
+            
+            page.replaceBy(template: apage)
+            
+            canvasViewController.reloadSection()
+        }
     }
     
     

@@ -108,7 +108,7 @@ extension CTATempateListViewController: UICollectionViewDelegate {
         
         if indexPath.item < localTemplates.count {
             let temp = localTemplates[indexPath.item]
-            let localDir = ""
+            let localDir = NSBundle.mainBundle().bundlePath + "/" + "Templates" + "/"
             let pagePath = localDir + temp.pagePath
             let data = NSData(contentsOfFile: pagePath)
             if let preTask = selectedTask {
