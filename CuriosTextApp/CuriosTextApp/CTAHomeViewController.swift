@@ -508,7 +508,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     func showCellAnimation(cell:UIView){
         cell.alpha = 0
         cell.hidden = false
-        UIView.animateWithDuration(0.4) { () -> Void in
+        UIView.animateWithDuration(0.2) { () -> Void in
             cell.alpha = 1
         }
     }
@@ -566,7 +566,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         case .Changed:
             let newLocation = sender.locationInView(view)
             if self.panDirection == .None {
-                if abs(newLocation.x - self.beganLocation!.x)*2 > abs(newLocation.y - self.beganLocation!.y){
+                if abs(newLocation.x - self.beganLocation!.x)*5 > abs(newLocation.y - self.beganLocation!.y){
                     self.panDirection = .Hor
                     self.panHorDirection = .None
                     self.viewHorPanHandler(newLocation)
@@ -728,7 +728,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                     let rChange = 0+maxR
                     let rChangePI=rChange/360*CGFloat(M_PI)
                     
-                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
                         self.currentFullCell.transform = CGAffineTransformMakeRotation(rChangePI)
                         self.currentFullCell.center = CGPoint.init(x: bounds.width/2+maxX, y: fullSize.height/2+maxY)
                         let nextHor = self.horSpace
@@ -748,7 +748,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 if self.currentPublishIndex > 0 {
                     let rChange:CGFloat = 0
                     let rChangePI=rChange/360*CGFloat(M_PI)
-                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
                         self.preFullCell.transform = CGAffineTransformMakeRotation(rChangePI)
                         self.preFullCell.center = CGPoint.init(x: bounds.width/2, y: fullSize.height/2)
                         let nextHor = 0 - self.horSpace
@@ -774,7 +774,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         if xRate > 0{
             let rChange:CGFloat = 0.0
             let rChangePI=rChange/360*CGFloat(M_PI)
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
+            UIView.animateWithDuration(0.2, animations: { () -> Void in
                 self.currentFullCell.transform = CGAffineTransformMakeRotation(rChangePI)
                 self.currentFullCell.center = CGPoint.init(x: bounds.width/2, y: fullSize.height/2)
                 self.changeCellSizeBySpace(0, verSpace: 0, ischangeCurrent: false)
@@ -788,7 +788,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 let rChangePI=rChange/360*CGFloat(M_PI)
                 let yChange = maxY
                 let xChange = maxX
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
                     self.preFullCell.transform = CGAffineTransformMakeRotation(rChangePI)
                     self.preFullCell.center = CGPoint.init(x: bounds.width/2+xChange, y: fullSize.height/2+yChange)
                     self.changeCellSizeBySpace(0, verSpace: 0, ischangeCurrent: true)

@@ -432,7 +432,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         case .Changed:
             let newLocation = sender.locationInView(view)
             if self.panDirection == .None {
-                if abs(newLocation.x - self.beganLocation!.x)*2 > abs(newLocation.y - self.beganLocation!.y){
+                if abs(newLocation.x - self.beganLocation!.x)*5 > abs(newLocation.y - self.beganLocation!.y){
                     self.nextCenter = self.nextFullCell.center
                     self.preCenter = self.previousFullCell.center
                     self.currentCenter = self.currentFullCell.center
@@ -543,7 +543,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
                     let xChange = self.currentCenter!.x - self.previousFullCell.center.x
                     let yChange = self.currentCenter!.y - self.previousFullCell.center.y
                     
-                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
                         self.changCellsCenter(xChange, yChange: yChange)
                         if self.previousFullCell.isVisible {
                             self.previousFullCell.transform = CGAffineTransformMakeScale(1, 1)
@@ -564,7 +564,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
                     let xChange = self.currentCenter!.x - self.nextFullCell!.center.x
                     let yChange = self.currentCenter!.y - self.nextFullCell!.center.y
                     
-                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
                         self.changCellsCenter(xChange, yChange: yChange)
                         if self.nextFullCell.isVisible {
                             self.nextFullCell.transform = CGAffineTransformMakeScale(1, 1)
@@ -589,7 +589,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
                 let xChange = self.preCenter!.x - self.previousFullCell.center.x
                 let yChange = self.preCenter!.y - self.previousFullCell.center.y
                 
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
                     self.changCellsCenter(xChange, yChange: yChange)
                     if self.previousFullCell.isVisible {
                         self.previousFullCell.transform = CGAffineTransformMakeScale(cellScale, cellScale)
@@ -608,7 +608,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
                 let xChange = self.nextCenter!.x - self.nextFullCell!.center.x
                 let yChange = self.nextCenter!.y - self.nextFullCell!.center.y
                 
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
                     self.changCellsCenter(xChange, yChange: yChange)
                     if self.nextFullCell.isVisible {
                         self.nextFullCell.transform = CGAffineTransformMakeScale(cellScale, cellScale)
@@ -794,7 +794,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         }
     }
     
-    func verPanAnimation(yRate:CGFloat, duration:NSTimeInterval = 0.3){
+    func verPanAnimation(yRate:CGFloat, duration:NSTimeInterval = 0.2){
         let currentVerCenterPoint = self.getCurrentVerCenterPoint()
         let cellRect = self.getCellRect()
         let fullRect = self.getFullCellRect(nil, rate: 1)
@@ -821,7 +821,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
     
     func verPanResetAnimation(yRate:CGFloat){
         if self.currentCenter != nil {
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
+            UIView.animateWithDuration(0.2, animations: { () -> Void in
                 if self.currentFullCell.isVisible {
                     self.currentFullCell.transform = CGAffineTransformMakeScale(1, 1)
                     self.currentFullCell.alpha = 1
@@ -1077,7 +1077,7 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
                         if info.result{
                             let selectedIndex = self.getPublishIndex(self.selectedPublishID)
                             self.currentFullCell.alpha = 1
-                            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                            UIView.animateWithDuration(0.2, animations: { () -> Void in
                                 self.currentFullCell.alpha = 0
                                 }, completion: { (_) -> Void in
                                     self.publishModelArray.removeAtIndex(selectedIndex)

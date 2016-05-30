@@ -96,7 +96,7 @@ extension CTAPublishProtocol where Self: UIViewController{
         }
         self.userNicknameLabel.frame.size.width = labelWidth
         self.userNicknameLabel.frame.origin.x = (UIScreen.mainScreen().bounds.width - labelWidth)/2
-        UIView.transitionWithView(self.userNicknameLabel, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
+        UIView.transitionWithView(self.userNicknameLabel, duration: 0.2, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
             self.userNicknameLabel.text = userModel.nickName
             }) { (_) in
         }
@@ -105,12 +105,12 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.publishDateLabel.text = publishDate
         self.publishDateLabel.sizeToFit()
         self.publishDateLabel.frame.origin.x = UIScreen.mainScreen().bounds.width - self.publishDateLabel.frame.size.width-10
-        UIView.transitionWithView(self.userNicknameLabel, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
+        UIView.transitionWithView(self.userNicknameLabel, duration: 0.2, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
             self.publishDateLabel.text = publishDate
         }) { (_) in
         }
         
-        UIView.transitionWithView(self.userIconImage, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
+        UIView.transitionWithView(self.userIconImage, duration: 0.2, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
             let defaultImg = UIImage.init(named: "default-usericon")
             let imagePath = CTAFilePath.userFilePath+userModel.userIconURL
             let imageURL = NSURL(string: imagePath)!
