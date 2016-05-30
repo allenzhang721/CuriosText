@@ -12,7 +12,7 @@ class CTASelectorTemplatesCell: CTASelectorCell {
     
     var target: AnyObject?
     var action: Selector?
-    var templateList: UIViewController?
+    var templateList: CTATempateListViewController?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,12 +27,27 @@ class CTASelectorTemplatesCell: CTASelectorCell {
     
     
     private func setup() {
+        
+//        ((pageData: NSData?, origin: Bool) -> ())?
 
-        let selected: (NSData?) -> () = {[weak self] data in
-            guard let sf = self, let target = sf.target, let action = sf.action else {return}
-            target.performSelector(action, withObject: data)
+//        let selected: (NSData?, Bool) -> () = {[weak self] (data, origin) in
+//            guard let sf = self, let target = sf.target, let action = sf.action else {return}
+//            target.performSelector(action, withObject: ["data": data, "origin": origin])
+//        }
+        
+        func selected(data: NSData?, origin: Bool) {
+            guard let target = target, let action = action else {return}
+            let object: [String: AnyObject]
+            if let data = data {
+                object = ["data": data, "origin": origin]
+            } else {
+                object = ["origin": origin]
+            }
+            
+            target.performSelector(action, withObject: object)
         }
-        if let templateListVC = Moduler.module_templateListVC(selected) {
+        
+        if let templateListVC = Moduler.module_templateListVC(selected) as? CTATempateListViewController {
             print("cell bounds = \(self.bounds)")
             templateListVC.view.frame = self.bounds
             contentView.addSubview(templateListVC.view)

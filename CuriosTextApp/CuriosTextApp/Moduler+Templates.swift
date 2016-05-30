@@ -38,7 +38,7 @@ extension Moduler {
     }
     
     
-    class func module_templateListVC(selectedHandler: ((NSData?) -> ())?) -> UIViewController? {
+    class func module_templateListVC(selectedHandler: ((pageData: NSData?, origin: Bool) -> ())?) -> UIViewController? {
         var paras: [String: AnyObject] = [:]
         
         if let s = selectedHandler {

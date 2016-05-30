@@ -454,6 +454,7 @@ extension CTAPublishProtocol{
                                     })
                                 }
                             } else {
+                                print(error)
                                 SVProgressHUD.showErrorWithStatus(NSLocalizedString("ShareErrorLabel", comment: ""))
                                 dispatch_async(dispatch_get_main_queue(), {
                                     w.sending = false

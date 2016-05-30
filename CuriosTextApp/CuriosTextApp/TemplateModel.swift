@@ -28,4 +28,17 @@ struct TemplateModel {
         self.pagePath = pagePath
         self.thumbImgPath = thumbImg
     }
+    
+    static func placeholder() -> TemplateModel {
+        let para = [
+            "ID": "",
+            "author": "",
+            "date":"",
+            "name":"",
+            "pagePath":"",
+            "thumbImgPath":""
+        ]
+        
+        return TemplateModel(para)!
+    }
 }

@@ -19,7 +19,7 @@ protocol CTASelectorable: class {
 }
 
 protocol CTASelectorScaleable: CTASelectorable {
-    func templateDidChanged(pageData: NSData)
+    func templateDidChanged(pageData: NSData?, origin: Bool)
     func scaleDidChanged(scale: CGFloat)
     func radianDidChanged(radian: CGFloat)
     func fontDidChanged(fontFamily: String, fontName: String)
@@ -38,6 +38,7 @@ typealias CTASelectorViewControllerDelegate = protocol<CTASelectorScaleable>
 
 final class CTASelectorsViewController: UIViewController, UICollectionViewDataSource {
     
+    var snapImage: UIImage?
     private var animation: Bool = false
     var dataSource: CTASelectorsViewControllerDataSource?
     var delegate: CTASelectorViewControllerDelegate?
@@ -173,6 +174,10 @@ extension CTASelectorsViewController {
             cell.delegate = self
         }
         
+        if let cell = cell as? CTASelectorTemplatesCell {
+            cell.templateList?.originImage = snapImage
+        }
+        
         cell.beganLoad()
         if action.characters.count > 0 {
             cell.addTarget(self, action: Selector(action), forControlEvents: .ValueChanged)
@@ -269,9 +274,13 @@ extension CTASelectorsViewController: CTASelectorDataSource {
 // MARK: - Actions
 extension CTASelectorsViewController {
     
-    func templateDidChanged(data: NSData?) {
-        if let data = data {
-            delegate?.templateDidChanged(data)
+    func templateDidChanged(info: [String: AnyObject]) {
+        if let origin = info["origin"] as? Bool {
+            if let data = info["data"] as? NSData {
+                delegate?.templateDidChanged(data, origin: origin)
+            } else {
+                delegate?.templateDidChanged(nil, origin: origin)
+            }
         }
         
 //        if let data = data, let apage = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {

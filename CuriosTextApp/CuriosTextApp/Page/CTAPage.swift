@@ -89,13 +89,16 @@ final class CTAPage:NSObject, NSCoding {
         
         containers.appendContentsOf(temp.containers)
         animatoins = temp.animatoins
-        
+    }
+    
+    func replaceBy(containers container: [CTAContainer], animations anis: [CTAAnimation] ) {
+        self.containers = container
+        self.animatoins = anis
     }
     
     func removeAnimationAtIndex(i: Int, completedHandler:(() -> ())?) {
 //        dispatch_sync(containerQueue) {
         
-            
             dispatch_async(dispatch_get_main_queue(), {
                 self.animatoins.removeAtIndex(i)
                 completedHandler?()

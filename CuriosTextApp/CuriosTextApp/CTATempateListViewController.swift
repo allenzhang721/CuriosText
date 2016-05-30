@@ -10,10 +10,11 @@ import UIKit
 import Kingfisher
 
 class CTATempateListViewController: UIViewController {
-
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var selectedHandler: ((pageData: NSData?) -> ())?
+    var selectedHandler: ((pageData: NSData?, origin: Bool) -> ())?
+    var originImage: UIImage?
     
     private let queue = dispatch_queue_create("templatesQueue", DISPATCH_QUEUE_CONCURRENT)
     private var localTemplates = [TemplateModel]()
@@ -26,13 +27,13 @@ class CTATempateListViewController: UIViewController {
         
         collectionView.delegate = self
         
-//        let time: NSTimeInterval = 3.0
-//        let delay = dispatch_time(DISPATCH_TIME_NOW,
-//                                  Int64(time * Double(NSEC_PER_SEC)))
-//        dispatch_after(delay, dispatch_get_main_queue()) {
-//            self.collectionView.reloadData()
-//            
-//        }
+        //        let time: NSTimeInterval = 3.0
+        //        let delay = dispatch_time(DISPATCH_TIME_NOW,
+        //                                  Int64(time * Double(NSEC_PER_SEC)))
+        //        dispatch_after(delay, dispatch_get_main_queue()) {
+        //            self.collectionView.reloadData()
+        //
+        //        }
     }
     
     private func setup() {
@@ -49,7 +50,10 @@ class CTATempateListViewController: UIViewController {
                 }
             }
             
-            dispatch_async(dispatch_get_main_queue(), { 
+            let template = TemplateModel.placeholder()
+            sf.localTemplates.insert(template, atIndex: 0)
+            
+            dispatch_async(dispatch_get_main_queue(), {
                 sf.collectionView.reloadData()
             })
         }
@@ -68,22 +72,17 @@ extension CTATempateListViewController: UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TemplateImgCell", forIndexPath: indexPath)
-
+        
         if let imageView = cell.contentView.viewWithTag(1000) as? UIImageView {
-            if indexPath.item < localTemplates.count {
+            if indexPath.item == 0 {
+                imageView.image = originImage
+                
+            } else if indexPath.item < localTemplates.count {
                 let temp = localTemplates[indexPath.item]
                 let localDir = NSBundle.mainBundle().bundlePath + "/" + "Templates" + "/"
                 let imagePath = localDir + temp.thumbImgPath
                 let img = UIImage(contentsOfFile: imagePath)
                 imageView.image = img
-                
-                print(collectionView.bounds)
-                
-                
-//                let v = UIView(frame: cell.frame)
-//                v.backgroundColor = UIColor.yellowColor()
-//                print(v.frame)
-//                collectionView.addSubview(imageView)
                 
             } else {
                 let temp = onlineTemplates[indexPath.item - localTemplates.count]
@@ -106,7 +105,14 @@ extension CTATempateListViewController: UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        if indexPath.item < localTemplates.count {
+        if indexPath.item == 0 {
+            if let preTask = selectedTask {
+                preTask.cancel()
+                selectedTask = nil
+            }
+            selectedHandler?(pageData: nil, origin: true)
+            
+        } else { if indexPath.item < localTemplates.count {
             let temp = localTemplates[indexPath.item]
             let localDir = NSBundle.mainBundle().bundlePath + "/" + "Templates" + "/"
             let pagePath = localDir + temp.pagePath
@@ -115,19 +121,20 @@ extension CTATempateListViewController: UICollectionViewDelegate {
                 preTask.cancel()
                 selectedTask = nil
             }
-            selectedHandler?(pageData: data)
-  
+            selectedHandler?(pageData: data, origin: false)
+            
         } else {
             let temp = localTemplates[indexPath.item]
             let host = ""
             let pagePath = host + temp.pagePath
             let task = BlackCatManager.sharedManager.retrieveDataWithURL(NSURL(string: pagePath)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self] (data, error, cacheType, URL) in
                 guard let sf = self else {return }
-                sf.selectedHandler?(pageData: data)
-            })
+                sf.selectedHandler?(pageData: data, origin: false)
+                })
             if let preTask = selectedTask {
                 preTask.cancel()
                 selectedTask = task
+            }
             }
         }
     }
