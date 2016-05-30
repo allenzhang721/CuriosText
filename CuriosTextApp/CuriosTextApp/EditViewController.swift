@@ -77,7 +77,19 @@ class EditViewController: UIViewController {
 //                    strongSelf.selectorViewController.snapImage = image
                 
                     let image = strongSelf.insertImage(image, size: image.size)
-                strongSelf.selectorViewController.snapImage = image
+//                strongSelf.selectorViewController.snapImage = image
+                
+                draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.imageBy ,local: true) { [weak self] (previewR) in
+                    
+                    switch previewR {
+                    case .Success(let img):
+                        dispatch_async(dispatch_get_main_queue(), {
+                            strongSelf.selectorViewController.snapImage = img
+                        })
+                    default:
+                        strongSelf.selectorViewController.snapImage = image
+                    }
+                }
                     cameraVC.removeFromParentViewController()
                     cameraVC.view.removeFromSuperview()
 //                })
@@ -481,7 +493,21 @@ extension EditViewController {
                     (container as! TextContainerVMProtocol).updateWithText(text, constraintSize: CGSize(width: size.width, height: size.height * 2))
                     
                     strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
+                    
+                    draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.imageBy ,local: true) { [weak self] (previewR) in
+                        
+                        switch previewR {
+                        case .Success(let img):
+                            dispatch_async(dispatch_get_main_queue(), {
+                                strongSelf.selectorViewController.snapImage = img
+                            })
+                        default:
+                            ()
+                        }
+                    }
                 }
+                
+                
             }
             
             presentViewController(textmodifyVC, animated: true, completion: {
@@ -506,7 +532,18 @@ extension EditViewController {
                         
                         
                         strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
+                    
+                    draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.imageBy ,local: true) { [weak self] (previewR) in
                         
+                        switch previewR {
+                        case .Success(let img):
+                            dispatch_async(dispatch_get_main_queue(), {
+                                strongSelf.selectorViewController.snapImage = img
+                            })
+                        default:
+                            strongSelf.selectorViewController.snapImage = image
+                        }
+                    }
                         
 //                    })
                     strongSelf.dismissViewControllerAnimated(false, completion: nil)

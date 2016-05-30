@@ -38,7 +38,14 @@ typealias CTASelectorViewControllerDelegate = protocol<CTASelectorScaleable>
 
 final class CTASelectorsViewController: UIViewController, UICollectionViewDataSource {
     
-    var snapImage: UIImage?
+    var snapImage: UIImage? {
+        didSet {
+            let index = NSIndexPath(forItem: 0, inSection: 0)
+            if let cell = collectionview.cellForItemAtIndexPath(index) as? CTASelectorTemplatesCell {
+                cell.templateList?.originImage = snapImage
+            }
+        }
+    }
     private var animation: Bool = false
     var dataSource: CTASelectorsViewControllerDataSource?
     var delegate: CTASelectorViewControllerDelegate?

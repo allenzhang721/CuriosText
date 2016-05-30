@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CuriosTextApp/CTASelectorsViewController.swift"
-            timestampString = "486281132.807616"
+            timestampString = "486293855.949955"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "279"
-            endingLineNumber = "279"
+            startingLineNumber = "286"
+            endingLineNumber = "286"
             landmarkName = "templateDidChanged(_:)"
             landmarkType = "5">
             <Locations>
