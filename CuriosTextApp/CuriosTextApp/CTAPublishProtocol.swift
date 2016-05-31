@@ -305,7 +305,7 @@ extension CTAPublishProtocol{
         if CTASocialManager.isAppInstaller(.WeChat){
             if let page = publishCell.getPage(){
                 let publishID = self.publishModel!.publishID
-                self.exportGIF(publishID, page: page, gifType: .Normal, viewController: self as! UIViewController, completedHandler: { (fileURL, thumbImg) in
+                self.exportGIF(publishID, page: page, gifType: .Small, viewController: self as! UIViewController, completedHandler: { (fileURL, thumbImg) in
                     let message =  WXMediaMessage()
                     UIGraphicsBeginImageContext(CGSize(width: 160, height: 160))
                     thumbImg.drawInRect(CGRect(origin: CGPoint.zero, size: CGSize(width: 160, height: 160)))
@@ -427,7 +427,7 @@ extension CTAPublishProtocol{
         if CTASocialManager.isAppInstaller(.Weibo){
             if let page = self.publishCell.getPage(){
                 let publishID = self.publishModel!.publishID
-                self.exportGIF(publishID, page: page, gifType: .Normal, viewController: self as! UIViewController, completedHandler: { [weak self] (fileURL, thumbImg) in
+                self.exportGIF(publishID, page: page, gifType: .Big, viewController: self as! UIViewController, completedHandler: { [weak self] (fileURL, thumbImg) in
                     
                     guard let sf = self, let vc = sf as? UIViewController else {return}
                     
@@ -437,11 +437,26 @@ extension CTAPublishProtocol{
                         
                         let imageObject = WBImageObject()
                         imageObject.imageData = imageData
-                        
+                        var shareURL = CTAShareConfig.shareURL
+                        shareURL = shareURL+"?sto=weibo&sfrom=message"
+                        if let info = NSBundle.mainBundle().infoDictionary {
+                            let appVersion = info["CFBundleShortVersionString"] as! String
+                            shareURL = shareURL+"&v="+appVersion
+                        }
+                        if let s = self{
+                            if s.userModel != nil {
+                                let userID = s.userModel!.userID
+                                shareURL = shareURL+"&uid="+userID
+                            }
+                            let publishID = s.publishModel!.publishID
+                            shareURL = shareURL+"&pid="+publishID
+                        }
+
+                        let weiboMessage = text+" "+shareURL
                         let accessToken = token
                         SVProgressHUD.setDefaultMaskType(.Clear)
                         SVProgressHUD.showWithStatus(NSLocalizedString("SendProgressLabel", comment: ""))
-                        WBHttpRequest(forShareAStatus: text, contatinsAPicture: imageObject, orPictureUrl: nil, withAccessToken: accessToken, andOtherProperties: nil, queue: nil, withCompletionHandler: { [weak weiboShare] (request, object, error) in
+                        WBHttpRequest(forShareAStatus: weiboMessage, contatinsAPicture: imageObject, orPictureUrl: nil, withAccessToken: accessToken, andOtherProperties: nil, queue: nil, withCompletionHandler: { [weak weiboShare] (request, object, error) in
                             guard let w = weiboShare else { return }
                             if error == nil {
                                 SVProgressHUD.showSuccessWithStatus(NSLocalizedString("ShareSuccessLabel", comment: ""))

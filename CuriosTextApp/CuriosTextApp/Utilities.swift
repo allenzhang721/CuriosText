@@ -16,3 +16,7 @@ func gobal_jumpToAppStoreRation() {
     
     UIApplication.sharedApplication().openURL(NSURL(string: url)!)
 }
+
+struct CTAShareConfig {
+    static let shareURL = "http://www.curiosapp.com/sharedownload/index.html"//"https://itunes.apple.com/cn/app/curios-let-photos-lively/id1090836500?l=en&mt=8"
+}

@@ -634,21 +634,42 @@ extension CTASettingViewController: UIGestureRecognizerDelegate{
 }
 
 extension CTASettingViewController: CTAShareViewDelegate{
+    
+    func addShareURL(shareURL:String) -> String{
+        var url = shareURL
+        if let info = NSBundle.mainBundle().infoDictionary {
+            let appVersion = info["CFBundleShortVersionString"] as! String
+            url = url+"&v="+appVersion
+        }
+        if CTAUserManager.isLogin{
+            let userID = CTAUserManager.user?.userID
+            url = url+"&uid="+userID!
+        }
+        return url
+    }
+    
     func weChatShareHandler(){
-        
-        let url = NSURL(string: "https://itunes.apple.com/cn/app/curios-let-photos-lively/id1090836500?l=en&mt=8")!
+        var shareURL = CTAShareConfig.shareURL
+        shareURL = shareURL+"?sto=wechat_friend&sfrom=invite"
+        shareURL = self.addShareURL(shareURL)
+        let url = NSURL(string: shareURL)!
         CTASocialManager.shareMessage(CTASocialManager.Message.WeChat(CTASocialManager.Message.WeChatSubtype.Session(info: (title: "奇思-让图片更有意思", description: "这个应用很好玩，可以给照片添加会动的文字，快来下载吧！", thumbnail: UIImage(named: "ShareIcon"), media: CTASocialManager.Media.URL(url))))) { (result) in
         }
         
     }
     func momentsShareHandler(){
-        let url = NSURL(string: "https://itunes.apple.com/cn/app/curios-let-photos-lively/id1090836500?l=en&mt=8")!
+        var shareURL = CTAShareConfig.shareURL
+        shareURL = shareURL+"?sto=wechat_moment&sfrom=invite"
+        shareURL = self.addShareURL(shareURL)
+        let url = NSURL(string: shareURL)!
         CTASocialManager.shareMessage(CTASocialManager.Message.WeChat(CTASocialManager.Message.WeChatSubtype.Timeline(info: (title: "奇思-让图片更有意思", description: "这个应用很好玩，可以给照片添加会动的文字，快来下载吧！", thumbnail: UIImage(named: "ShareIcon"), media: CTASocialManager.Media.URL(url))))) { (result) in
         }
     }
     func weiBoShareHandler(){
-        let url = NSURL(string: "https://itunes.apple.com/cn/app/curios-let-photos-lively/id1090836500?l=en&mt=8")!
-        
+        var shareURL = CTAShareConfig.shareURL
+        shareURL = shareURL+"?sto=weibo&sfrom=invite"
+        shareURL = self.addShareURL(shareURL)
+        let url = NSURL(string: shareURL)!
         CTASocialManager.shareMessage(CTASocialManager.Message.Weibo(CTASocialManager.Message.WeiboSubtype.Default(info: (title: "奇思-让图片更有意思", description: "奇思, 让图片更有意思! 这个应用很好玩，可以给照片添加会动的文字，快来下载吧！", thumbnail: UIImage(named: "ShareIcon"), media: CTASocialManager.Media.URL(url)), accessToken: ""))) { (result) in
             
         }

@@ -15,7 +15,7 @@ enum CTAGIFCreateType: String {
 
 class GIFCreateViewController: UIViewController {
     
-    var gifType:CTAGIFCreateType = .Normal
+    var gifType:CTAGIFCreateType = .Small
     var fakeView: UIView?
     var publishID: String!
     var canvas: AniCanvas!
@@ -73,9 +73,9 @@ class GIFCreateViewController: UIViewController {
         var publishFile = publishID
         switch self.gifType{
         case .Small:
-            publishFile = publishFile+"(120*120)"
-        case .Normal:
             publishFile = publishFile+"(320*320)"
+        case .Normal:
+            publishFile = publishFile+"(480*480)"
         case .Big:
             publishFile = publishFile+"(640*640)"
         }
@@ -125,9 +125,9 @@ class GIFCreateViewController: UIViewController {
                 var gifSize:CGSize = CGSize(width: 320, height: 320)
                 switch self.gifType{
                 case .Small:
-                    gifSize = CGSize(width: 160, height: 160)
-                case .Normal:
                     gifSize = CGSize(width: 320, height: 320)
+                case .Normal:
+                    gifSize = CGSize(width: 480, height: 480)
                 case .Big:
                     gifSize = CGSize(width: 640, height: 640)
                 }
