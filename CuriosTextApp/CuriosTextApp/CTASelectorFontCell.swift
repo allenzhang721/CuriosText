@@ -22,7 +22,7 @@ final class CTASelectorFontCell: CTASelectorCell {
         view.collectionView.clipsToBounds = false
 //        view.collectionView.backgroundColor = UIColor.yellowColor()
         contentView.addSubview(view)
-        view.backgroundColor = CTAStyleKit.intoDreams1
+        view.backgroundColor = UIColor.whiteColor()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.leadingAnchor.constraintEqualToAnchor(leadingAnchor, constant: 20).active = true
         view.topAnchor.constraintEqualToAnchor(topAnchor).active = true
