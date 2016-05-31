@@ -329,12 +329,9 @@ extension CTASelectorsViewController {
         delegate?.spacingDidChanged(sender.spacing.0, textSpacing: sender.spacing.1)
     }
     
-    func colorChanged(sender: CTAColorPickerView) {
+    func colorChanged(sender: CTAColorPickerNodeCollectionView) {
         
-        guard
-            let selectedColor = sender.selectedColor where animation == false else {
-            return
-        }
+        guard let selectedColor = sender.selectedColor where animation == false else { return }
         let colorItem = CTAColorItem(color: selectedColor)
         delegate?.colorDidChanged(colorItem)
     }

@@ -12,7 +12,9 @@ final class CTASelectorColorsCell: CTASelectorCell {
 
 //    private var view: CTAPickerView!
     
-    private var view: CTAColorPickerView!
+//    private var view: CTAColorPickerView!
+    
+    private var view: CTAColorPickerNodeCollectionView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,7 +25,7 @@ final class CTASelectorColorsCell: CTASelectorCell {
         
         clipsToBounds = false
 //        backgroundColor = UIColor.clearColor()
-        view = CTAColorPickerView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)))
+        view = CTAColorPickerNodeCollectionView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)))
 //        view.backgroundColor = UIColor.clearColor()
         contentView.addSubview(view)
 //        view.backgroundColor = CTAStyleKit.intoDreams1
@@ -49,7 +51,8 @@ final class CTASelectorColorsCell: CTASelectorCell {
         }
         
         let color = dataSource.selectorBeganColor(self)
-        view.selectedColor = color
+//        view.selectedColor = color
+        view.selectColor(color)
         
 //        if let color = dataSource.selectorBeganColor(self) {
 //        
@@ -82,51 +85,51 @@ final class CTASelectorColorsCell: CTASelectorCell {
     }
 }
 
-extension CTASelectorColorsCell: CTAPickerViewDataSource {
-    
-    func pickViewRegisterItemCellClass(view: CTAPickerView) -> (AnyClass?, String) {
-        
-        return (CTAVerticalItemColorCollectionViewCell.self, "SelectorColorItemCell")
-    }
-    
-    func numberOfSectionsInCollectionView(view: CTAPickerView) -> Int {
-        
-        return CTAColorsManger.colorsCatagory.count
-    }
-    
-    func pickView(view: CTAPickerView, numberOfItemsAtSection section: Int) -> Int {
-        
-        let catagory = CTAColorsManger.colorsCatagory[section]
-        return CTAColorsManger.colors[catagory]!.count
-    }
-    
-    func pickView(view: CTAPickerView, indexAtSection section: Int) -> Int {
-        
-        guard let index = CTAColorsManger.itemAtSection(section) else {
-            return 0
-        }
-        
-        return index
-    }
-    
-   func pickView(view: CTAPickerView, configItemCell itemCell: CTAVerticalItemCollectionViewCell, itemAtSection section: Int, ItemAtIndex index: Int) {
-    
-    if let itemCell = itemCell as? CTAVerticalItemColorCollectionViewCell {
-        itemCell.colorView.backgroundColor = CTAColorsManger.colorAtIndexPath(NSIndexPath(forItem: index, inSection: section))?.color
-    }
-    }
-}
-
-extension CTASelectorColorsCell: CTAPickerViewDelegate {
-    
-    func pickView(view: CTAPickerView, itemDidChangedToIndexPath indexPath: NSIndexPath) {
-        
-        debug_print("color cell will began at \(indexPath)", context: colorContext)
-        CTAColorsManger.updateSection(indexPath.section, withItem: indexPath.item)
-    }
-    
-    func pickView(view: CTAPickerView, sectionDidChangedToIndexPath indexPath: NSIndexPath) {
-        
-    }
-    
-}
+//extension CTASelectorColorsCell: CTAPickerViewDataSource {
+//    
+//    func pickViewRegisterItemCellClass(view: CTAPickerView) -> (AnyClass?, String) {
+//        
+//        return (CTAVerticalItemColorCollectionViewCell.self, "SelectorColorItemCell")
+//    }
+//    
+//    func numberOfSectionsInCollectionView(view: CTAPickerView) -> Int {
+//        
+//        return CTAColorsManger.colorsCatagory.count
+//    }
+//    
+//    func pickView(view: CTAPickerView, numberOfItemsAtSection section: Int) -> Int {
+//        
+//        let catagory = CTAColorsManger.colorsCatagory[section]
+//        return CTAColorsManger.colors[catagory]!.count
+//    }
+//    
+//    func pickView(view: CTAPickerView, indexAtSection section: Int) -> Int {
+//        
+//        guard let index = CTAColorsManger.itemAtSection(section) else {
+//            return 0
+//        }
+//        
+//        return index
+//    }
+//    
+//   func pickView(view: CTAPickerView, configItemCell itemCell: CTAVerticalItemCollectionViewCell, itemAtSection section: Int, ItemAtIndex index: Int) {
+//    
+//    if let itemCell = itemCell as? CTAVerticalItemColorCollectionViewCell {
+//        itemCell.colorView.backgroundColor = CTAColorsManger.colorAtIndexPath(NSIndexPath(forItem: index, inSection: section))?.color
+//    }
+//    }
+//}
+//
+//extension CTASelectorColorsCell: CTAPickerViewDelegate {
+//    
+//    func pickView(view: CTAPickerView, itemDidChangedToIndexPath indexPath: NSIndexPath) {
+//        
+//        debug_print("color cell will began at \(indexPath)", context: colorContext)
+//        CTAColorsManger.updateSection(indexPath.section, withItem: indexPath.item)
+//    }
+//    
+//    func pickView(view: CTAPickerView, sectionDidChangedToIndexPath indexPath: NSIndexPath) {
+//        
+//    }
+//    
+//}

@@ -180,6 +180,8 @@
 		2C98D6CF1C86EBFA007AB3F7 /* CTAHUDLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98D6CE1C86EBFA007AB3F7 /* CTAHUDLabel.swift */; };
 		2C9F5E251CC08E75003B192B /* CTAColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F5E241CC08E75003B192B /* CTAColorPickerView.swift */; };
 		2C9F8C9E1CC1E50600F99C83 /* IrisAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F8C9D1CC1E50600F99C83 /* IrisAnimation.swift */; };
+		2CA05E481CFD649800EFE805 /* CTAColorPickerNodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA05E471CFD649800EFE805 /* CTAColorPickerNodeView.swift */; };
+		2CA05E4A1CFD6A4900EFE805 /* CTAColorPickerNodeCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA05E491CFD6A4900EFE805 /* CTAColorPickerNodeCollectionView.swift */; };
 		2CA3AA531C8D472400CE8191 /* CTAPublishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA3AA521C8D472400CE8191 /* CTAPublishViewController.swift */; };
 		2CA3AA551C8D7A0E00CE8191 /* Extension+Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA3AA541C8D7A0E00CE8191 /* Extension+Document.swift */; };
 		2CA860C01C8FC157000BCF8A /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA860BF1C8FC157000BCF8A /* LocalizationManager.swift */; };
@@ -558,6 +560,9 @@
 		2C98D6CE1C86EBFA007AB3F7 /* CTAHUDLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAHUDLabel.swift; sourceTree = "<group>"; };
 		2C9F5E241CC08E75003B192B /* CTAColorPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAColorPickerView.swift; sourceTree = "<group>"; };
 		2C9F8C9D1CC1E50600F99C83 /* IrisAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IrisAnimation.swift; sourceTree = "<group>"; };
+		2CA05E461CFD25A700EFE805 /* ControlView.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = ControlView.playground; sourceTree = "<group>"; };
+		2CA05E471CFD649800EFE805 /* CTAColorPickerNodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CTAColorPickerNodeView.swift; path = ControlView.playground/Sources/CTAColorPickerNodeView.swift; sourceTree = "<group>"; };
+		2CA05E491CFD6A4900EFE805 /* CTAColorPickerNodeCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAColorPickerNodeCollectionView.swift; sourceTree = "<group>"; };
 		2CA3AA521C8D472400CE8191 /* CTAPublishViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishViewController.swift; sourceTree = "<group>"; };
 		2CA3AA541C8D7A0E00CE8191 /* Extension+Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+Document.swift"; sourceTree = "<group>"; };
 		2CA860BF1C8FC157000BCF8A /* LocalizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
@@ -852,11 +857,7 @@
 		2C1F01561C3BD5540033CED8 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				2C8A84C41C7EEC4B0017F81F /* CTACellDisplayProtocol.swift */,
-				2C1F015B1C3CE3770033CED8 /* CTACanvasCell.swift */,
-				2C04045B1C3EC25A00A5B017 /* CTACanvasTextCell.swift */,
-				2C401DB01C70D05400AE45FE /* CTACanvasImageCell.swift */,
-				2C6C68021C350B4400CCE81C /* CTAScollBarCell.swift */,
+				2CA05E441CFD23DB00EFE805 /* SelectorCells */,
 				2C1F01571C3BD5960033CED8 /* CTASelectorCell.swift */,
 				2CB175B11CF831C800819825 /* CTASelectorTemplatesCell.swift */,
 				2C3097051C3F5F9200D996A4 /* CTASelectorFontCell.swift */,
@@ -865,11 +866,17 @@
 				2C82FF561C437F58001D927A /* CTASelectorAligmentsCell.swift */,
 				2C7336DE1C43CFCD00E1D511 /* CTASelectorSpacingCell.swift */,
 				2C5C24951C44F5D800A70F1B /* CTASelectorColorsCell.swift */,
+				2C247FE81C5CA10E0069CFFC /* CTASelectorAnimationCell.swift */,
+				2CA05E451CFD241900EFE805 /* OtherCells */,
+				2C8A84C41C7EEC4B0017F81F /* CTACellDisplayProtocol.swift */,
+				2C1F015B1C3CE3770033CED8 /* CTACanvasCell.swift */,
+				2C04045B1C3EC25A00A5B017 /* CTACanvasTextCell.swift */,
+				2C401DB01C70D05400AE45FE /* CTACanvasImageCell.swift */,
+				2C6C68021C350B4400CCE81C /* CTAScollBarCell.swift */,
 				2C247FEA1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift */,
 				2C3FD9831C5E17BA0064179F /* CTAConfigAnimationCell.swift */,
 				2C0126A11C7F20030071F9C1 /* CTAActivableCollectionViewCell.swift */,
 				2C0126A31C7F20C10071F9C1 /* CTAAnimationNameCell.swift */,
-				2C247FE81C5CA10E0069CFFC /* CTASelectorAnimationCell.swift */,
 				2C3FD9811C5E175A0064179F /* CTAConfigCell.swift */,
 				2C3FD9871C5E21260064179F /* CTAConfigSliderCell.swift */,
 				2C5C248B1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift */,
@@ -1227,6 +1234,20 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		2CA05E441CFD23DB00EFE805 /* SelectorCells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = SelectorCells;
+			sourceTree = "<group>";
+		};
+		2CA05E451CFD241900EFE805 /* OtherCells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = OtherCells;
+			sourceTree = "<group>";
+		};
 		2CAEAC8A1C323EC600C9F9AC /* Deprecated */ = {
 			isa = PBXGroup;
 			children = (
@@ -1433,18 +1454,21 @@
 		2CD4DC121CA4E50F00790A55 /* ControlView */ = {
 			isa = PBXGroup;
 			children = (
+				2CA05E461CFD25A700EFE805 /* ControlView.playground */,
+				2CA05E471CFD649800EFE805 /* CTAColorPickerNodeView.swift */,
+				2CA05E491CFD6A4900EFE805 /* CTAColorPickerNodeCollectionView.swift */,
+				2C7C27DD1C58B83F00975D4A /* CTABarItemView.swift */,
+				2C9F5E241CC08E75003B192B /* CTAColorPickerView.swift */,
 				2CD4DC091CA4E25F00790A55 /* CTACycleColorView.swift */,
-				2C04045F1C3EC2C500A5B017 /* CTASliderView.swift */,
 				2C22FAC11C7C299C00667295 /* CTAGradientButtonView.swift */,
 				2C98D6CE1C86EBFA007AB3F7 /* CTAHUDLabel.swift */,
-				2C7C27DD1C58B83F00975D4A /* CTABarItemView.swift */,
-				2C3097091C3F7FA800D996A4 /* CTAScrollSelectView.swift */,
-				2C0404611C3EC31100A5B017 /* CTARotatorView.swift */,
-				2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */,
-				2C82FF541C4362FA001D927A /* CTASegementControl.swift */,
-				2C5378371C5C71BB004BCF40 /* CTATabView.swift */,
-				2C9F5E241CC08E75003B192B /* CTAColorPickerView.swift */,
 				2C5C24911C44E82100A70F1B /* CTAPickerView.swift */,
+				2C0404611C3EC31100A5B017 /* CTARotatorView.swift */,
+				2C3097091C3F7FA800D996A4 /* CTAScrollSelectView.swift */,
+				2C82FF541C4362FA001D927A /* CTASegementControl.swift */,
+				2C04045F1C3EC2C500A5B017 /* CTASliderView.swift */,
+				2C5378371C5C71BB004BCF40 /* CTATabView.swift */,
+				2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */,
 			);
 			name = ControlView;
 			sourceTree = "<group>";
@@ -1890,6 +1914,7 @@
 				2C3B33FE1C117C8000738166 /* CTANetworkConig.swift in Sources */,
 				2CAEAC9D1C323F4300C9F9AC /* ContainerImgView.swift in Sources */,
 				2C247FEB1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift in Sources */,
+				2CA05E481CFD649800EFE805 /* CTAColorPickerNodeView.swift in Sources */,
 				2CD11AB81CB7547500A79305 /* TextSpliter.swift in Sources */,
 				2CB5B1D71CF2A7200028EA7D /* AboutViewController.swift in Sources */,
 				2CA9933E1C75DD4700B5EEDC /* SimpleNetworking.swift in Sources */,
@@ -2004,6 +2029,7 @@
 				661D29F41C2A97060073FC0E /* CTAUploadProtocol.swift in Sources */,
 				2C0404541C3EBB6800A5B017 /* CTACanvasViewController.swift in Sources */,
 				2C3CAD0C1C21825100D8DE4B /* CTADocument.swift in Sources */,
+				2CA05E4A1CFD6A4900EFE805 /* CTAColorPickerNodeCollectionView.swift in Sources */,
 				2C5C24901C44E1EE00A70F1B /* CTAVerticalItemColorCollectionViewCell.swift in Sources */,
 				2C04045E1C3EC29800A5B017 /* EditCanvasLayout.swift in Sources */,
 				2CD11AC31CB75A6500A79305 /* Strings.swift in Sources */,
