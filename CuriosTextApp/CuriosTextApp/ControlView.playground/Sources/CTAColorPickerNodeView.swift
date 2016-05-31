@@ -47,6 +47,7 @@ public class CTAColorPickerNodeView: UIControl {
             changedIndicator(colorLayers[index].position, hidden: false)
         } else {
             selectedColor = nil
+            selectedLayer = nil
             changedIndicator(CGPoint.zero, hidden: true)
         }
     }

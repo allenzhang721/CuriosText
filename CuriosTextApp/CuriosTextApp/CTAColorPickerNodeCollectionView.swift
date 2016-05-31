@@ -53,13 +53,22 @@ class CTAColorPickerNodeCollectionView: UIControl {
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         
-        layout.itemSize = CGSize(width: bounds.width * 0.9, height: bounds.height)
+        let ratio = CGFloat(0.85)
+        let lastRatio = 1 - ratio
+        layout.itemSize = CGSize(width: bounds.width * ratio, height: bounds.height)
         collectionView.setCollectionViewLayout(layout, animated: false)
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: bounds.width * 0.05, bottom: 0, right: bounds.width * 0.05)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: bounds.width * lastRatio / 2.0, bottom: 0, right: bounds.width * lastRatio / 2.0)
     }
     
     func colorChanged(sender: CTAColorPickerNodeView) {
         selectedColor = sender.selectedColor
+        
+        for c in collectionView.visibleCells() {
+            if let colorPickerNodeView = c.viewWithTag(1000) as? CTAColorPickerNodeView {
+                colorPickerNodeView.changedToColor(sender.selectedColor)
+            }
+        }
+        
         sendActionsForControlEvents(.ValueChanged)
     }
 }

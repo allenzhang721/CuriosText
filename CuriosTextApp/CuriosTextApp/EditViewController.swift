@@ -803,7 +803,9 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
                 let cener = attri.center
                 tabViewController.changingContainer = hadSelected ? true : false
                 self.tabViewController.collectionView.setContentOffset(CGPoint(x: cener.x - self.tabViewController.collectionView.bounds.width / 2.0, y: 0), animated: false)
-//                tabViewController.changingContainer = false
+                dispatch_async(dispatch_get_main_queue(), {[weak self] in
+                    self?.tabViewController.changingContainer = false
+                })
             }
         }
         

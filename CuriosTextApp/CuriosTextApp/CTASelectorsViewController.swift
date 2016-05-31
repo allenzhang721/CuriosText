@@ -144,6 +144,7 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
                     self?.animation = false
                 })
         })
+        
     }
     
     func updateIfNeed() {
