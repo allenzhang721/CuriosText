@@ -27,6 +27,13 @@ class CTAColorPickerNodeCollectionView: UIControl {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func willBeganDisplay() {
+        if let color = selectedColor {
+            if let indexPath = CTAColorsManger.indexPathOfColor(color.toHex().0) {
+                collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: indexPath.section, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: false)
+            }
+        }
+    }
     
     func selectColor(color: UIColor?) {
         selectedColor = color

@@ -16,6 +16,8 @@ public class CTAColorPickerNodeView: UIControl {
         for c in colors {
             let l = CAShapeLayer()
             l.fillColor = c.CGColor
+            l.lineWidth = 0.5
+            l.strokeColor = UIColor.lightGrayColor().CGColor
             layer.addSublayer(l)
             colorLayers.append(l)
         }

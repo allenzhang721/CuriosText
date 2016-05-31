@@ -65,6 +65,10 @@ final class CTASelectorColorsCell: CTASelectorCell {
 //        }
     }
     
+    override func willBeDisplayed() {
+        view.willBeganDisplay()
+    }
+    
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
         
         view.addTarget(target, action: action, forControlEvents: controlEvents)
