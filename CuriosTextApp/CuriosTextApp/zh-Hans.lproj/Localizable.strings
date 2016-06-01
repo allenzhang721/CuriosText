@@ -185,8 +185,10 @@
 
 // MARK: - AnimationName
 "NONE" = "无动画";
-"MOVE_IN" = "移入";
-"MOVE_OUT" = "移出";
+"MOVE_IN" = "右移入";
+"MOVE_OUT" = "右移出";
+"MOVE_IN_LEFT" = "左移入";
+"MOVE_OUT_LEFT" = "左移出";
 "SCALE_IN" = "缩放入";
 "SCALE_OUT" = "缩放出";
 "IRIS_IN" = "中心渐显";

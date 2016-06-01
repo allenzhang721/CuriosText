@@ -25,6 +25,9 @@ enum CTAAnimationName: String {
     case FadeOut = "FADE_OUT"
     case OrbitalIn = "ORBITAL_IN"
     case OrbitalOut = "ORBITAL_OUT"
+    // new add
+    case MoveInLeft = "MOVE_IN_LEFT" //FlyIn
+    case MoveOutLeft = "MOVE_OUT_LEFT"//FlyOut
     
     static func nameByInt(i: Int) -> String {
         switch i {
@@ -52,6 +55,10 @@ enum CTAAnimationName: String {
             return CTAAnimationName.OrbitalIn.rawValue
         case 12:
             return CTAAnimationName.OrbitalOut.rawValue
+        case 13:
+            return CTAAnimationName.MoveInLeft.rawValue
+        case 14:
+            return CTAAnimationName.MoveOutLeft.rawValue
         default:
             return i % 2 == 0 ? CTAAnimationName.MoveOut.rawValue : CTAAnimationName.MoveIn.rawValue
         }
@@ -59,9 +66,9 @@ enum CTAAnimationName: String {
     
     func shouldVisalbeBeforeBegan() -> Bool {
         switch self {
-        case .MoveIn, .ScaleIn, IrisIn, .CurlIn, .FadeIn, .OrbitalIn:
+        case .MoveIn, .MoveInLeft, .ScaleIn, IrisIn, .CurlIn, .FadeIn, .OrbitalIn:
             return false
-        case .MoveOut, .ScaleOut, IrisOut, .CurlOut, .FadeOut, .OrbitalOut:
+        case .MoveOut, .MoveOutLeft,.ScaleOut, IrisOut, .CurlOut, .FadeOut, .OrbitalOut:
             return true
         case .None:
             return true
@@ -70,9 +77,9 @@ enum CTAAnimationName: String {
     
     func shouldVisableAfterEnd() -> Bool {
         switch self {
-        case .MoveIn, .ScaleIn, IrisIn, .CurlIn, .FadeIn, .OrbitalIn:
+        case .MoveIn, .MoveInLeft,.ScaleIn, IrisIn, .CurlIn, .FadeIn, .OrbitalIn:
             return true
-        case .MoveOut, .ScaleOut, IrisOut, .CurlOut, .FadeOut, .OrbitalOut:
+        case .MoveOut, .MoveOutLeft, .ScaleOut, IrisOut, .CurlOut, .FadeOut, .OrbitalOut:
             return false
         case .None:
             return true
@@ -81,15 +88,15 @@ enum CTAAnimationName: String {
     
     static var names: [CTAAnimationName] {
         return [.None,
-                .MoveIn, .FadeIn, .ScaleIn, .IrisIn, .OrbitalIn, .CurlIn,
-                .MoveOut, .FadeOut, .ScaleOut, .IrisOut, .OrbitalOut, .CurlOut,]
+                .MoveIn, .MoveInLeft,.FadeIn, .ScaleIn, .IrisIn, .OrbitalIn, .CurlIn,
+                .MoveOut, MoveOutLeft,.FadeOut, .ScaleOut, .IrisOut, .OrbitalOut, .CurlOut,]
     }
     
     var defaultDuration: Float {
         switch self {
         case .None:
             return 0.0
-        case .MoveIn, .MoveOut:
+        case .MoveIn, .MoveInLeft, .MoveOut, .MoveOutLeft:
             return 1.0
         case .ScaleIn, .ScaleOut:
             return 2.0

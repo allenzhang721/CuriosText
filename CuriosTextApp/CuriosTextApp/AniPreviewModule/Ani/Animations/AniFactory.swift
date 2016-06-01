@@ -69,6 +69,11 @@ class AniFactory {
         case .MoveOut:
             return moveOut(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
             
+        case .MoveInLeft:
+            return moveIn(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime, direction: 1)
+        case .MoveOutLeft:
+            return moveOut(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime, direction: 1)
+            
         case .ScaleIn:
             return scaleIn(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
             

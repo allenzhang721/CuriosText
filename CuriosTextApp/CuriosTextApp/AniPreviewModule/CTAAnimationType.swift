@@ -21,6 +21,10 @@ extension CTAAnimationName {
             return CTAAnimationType.MoveIn
         case .MoveOut:
             return CTAAnimationType.MoveOut
+        case .MoveInLeft:
+            return CTAAnimationType.MoveInLeft
+        case .MoveOutLeft:
+            return CTAAnimationType.MoveOutLeft
         case .ScaleIn:
             return CTAAnimationType.ScaleIn
         case .ScaleOut:
@@ -60,6 +64,7 @@ extension CTAAnimationName {
 enum CTAAnimationType: String {
     case Unknown = "NONE"
     case MoveIn = "MOVE_IN", MoveOut = "MOVE_OUT"
+    case MoveInLeft = "MOVE_IN_LEFT", MoveOutLeft = "MOVE_OUT_LEFT"
     case ScaleIn = "SCALE_IN", ScaleOut = "SCALE_OUT"
     case IrisIn = "IRIS_IN", IrisOut = "IRIS_OUT"
     case CurlIn = "CURL_IN", CurlOut = "CURL_OUT"
@@ -79,25 +84,25 @@ enum CTAAnimationType: String {
     
     func displayAtEnd() -> Bool {
         switch self {
-        case .Unknown, .MoveIn, .ScaleIn, .IrisIn, .CurlIn, .FadeIn, .OrbitalIn:
+        case .Unknown, .MoveIn, .MoveInLeft, .ScaleIn, .IrisIn, .CurlIn, .FadeIn, .OrbitalIn:
             return true
-        case .MoveOut, .ScaleOut, .IrisOut, .CurlOut, .FadeOut, .OrbitalOut:
+        case .MoveOut, .ScaleOut, .MoveOutLeft, .IrisOut, .CurlOut, .FadeOut, .OrbitalOut:
             return false
         }
     }
     
     func displayAtBegan() -> Bool {
         switch self  {
-        case .MoveIn, .ScaleIn, .IrisIn, .CurlIn, .FadeIn, .OrbitalIn:
+        case .MoveIn, .MoveInLeft, .ScaleIn, .IrisIn, .CurlIn, .FadeIn, .OrbitalIn:
             return false
-        case.Unknown, .MoveOut, .ScaleOut, IrisOut, .CurlOut, .FadeOut, .OrbitalOut:
+        case.Unknown, .MoveOut, .MoveOutLeft, .ScaleOut, IrisOut, .CurlOut, .FadeOut, .OrbitalOut:
             return true
         }
     }
     
     func needMask() -> AnimationMaskType {
         switch self {
-        case .Unknown, .MoveIn, .MoveOut, .CurlIn, .CurlOut, .FadeIn, .FadeOut, .OrbitalIn, .OrbitalOut:
+        case .Unknown, .MoveIn, .MoveInLeft, .MoveOut, .MoveOutLeft, .CurlIn, .CurlOut, .FadeIn, .FadeOut, .OrbitalIn, .OrbitalOut:
             return .None
         case .ScaleIn, .ScaleOut:
             return .Gradient(.Rect)
@@ -110,7 +115,7 @@ enum CTAAnimationType: String {
         switch self {
         case .Unknown:
             return []
-        case .MoveIn, .MoveOut:
+        case .MoveIn, .MoveOut, .MoveInLeft, .MoveOutLeft:
             return [position, opacity, transform]
         case .ScaleIn, .ScaleOut:
             return [opacity, transform, mask+colors]

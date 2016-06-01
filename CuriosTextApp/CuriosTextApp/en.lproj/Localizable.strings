@@ -183,8 +183,10 @@
 
 // MARK: - AnimationName
 "NONE" = "None";
-"MOVE_IN" = "Move In";
-"MOVE_OUT" = "Move Out";
+"MOVE_IN" = "Right In";
+"MOVE_OUT" = "Right Out";
+"MOVE_IN_LEFT" = "Left In";
+"MOVE_OUT_LEFT" = "Left Out";
 "SCALE_IN" = "Scale In";
 "SCALE_OUT" = "Scale Out";
 "IRIS_IN" = "Iris In";
