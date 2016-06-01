@@ -50,10 +50,14 @@ class CTASelectorTemplatesCell: CTASelectorCell {
         }
     }
     
-    override func beganLoad() {
+    override func willBeDisplayed() {
         
         templateList?.defaultSelected()
     }
+//    override func beganLoad() {
+//        
+//        templateList?.defaultSelected()
+//    }
     
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
         

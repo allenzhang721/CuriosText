@@ -26,21 +26,14 @@ class CTATempateListViewController: UIViewController {
         collectionView.delegate = self
         
         setup()
-        
-        
-        
-        //        let time: NSTimeInterval = 3.0
-        //        let delay = dispatch_time(DISPATCH_TIME_NOW,
-        //                                  Int64(time * Double(NSEC_PER_SEC)))
-        //        dispatch_after(delay, dispatch_get_main_queue()) {
-        //            self.collectionView.reloadData()
-        //
-        //        }
     }
     
     func defaultSelected() {
-        if collectionView.dataSource?.collectionView(collectionView, numberOfItemsInSection: 0) > 0 && collectionView.indexPathsForSelectedItems()?.count < 1 {
-            collectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
+        dispatch_async(dispatch_get_main_queue()) {[weak self] in
+            guard let sf = self else {return}
+            if sf.collectionView.dataSource?.collectionView(sf.collectionView, numberOfItemsInSection: 0) > 0 {
+                sf.collectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
+            }
         }
     }
     
@@ -50,6 +43,13 @@ class CTATempateListViewController: UIViewController {
             guard let sf = self else {return}
             if sf.collectionView.dataSource?.collectionView(sf.collectionView, numberOfItemsInSection: 0) > 0 {
                 sf.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
+                dispatch_async(dispatch_get_main_queue(), {
+                    if let selectedItem = sf.collectionView.indexPathsForSelectedItems()?.first {
+                        sf.collectionView.selectItemAtIndexPath(selectedItem, animated: false, scrollPosition: .None)
+                    } else {
+                        sf.collectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
+                    }
+                })
             }
         }
     }
@@ -73,7 +73,7 @@ class CTATempateListViewController: UIViewController {
             
             dispatch_async(dispatch_get_main_queue(), {
                 sf.collectionView.reloadData()
-                dispatch_async(dispatch_get_main_queue(), { 
+                dispatch_async(dispatch_get_main_queue(), {
                     sf.collectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
                 })
             })
@@ -118,10 +118,8 @@ extension CTATempateListViewController: UICollectionViewDataSource {
             let v = UIView(frame: cell.bounds)
             v.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
             cell.selectedBackgroundView = v
-            cell.bringSubviewToFront(v)
+            cell.bringSubviewToFront(cell.selectedBackgroundView!)
         }
-        
-//        cell.backgroundColor = UIColor.redColor()
         
         return cell
     }
@@ -130,6 +128,12 @@ extension CTATempateListViewController: UICollectionViewDataSource {
 
 // MARK: - CollectionViewDeleagte
 extension CTATempateListViewController: UICollectionViewDelegate {
+    
+    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        
+        
+        
+    }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
