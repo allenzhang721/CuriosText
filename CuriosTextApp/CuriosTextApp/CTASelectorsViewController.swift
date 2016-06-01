@@ -38,14 +38,7 @@ typealias CTASelectorViewControllerDelegate = protocol<CTASelectorScaleable>
 
 final class CTASelectorsViewController: UIViewController, UICollectionViewDataSource {
     
-    var snapImage: UIImage? {
-        didSet {
-            let index = NSIndexPath(forItem: 0, inSection: 0)
-            if let cell = collectionview.cellForItemAtIndexPath(index) as? CTASelectorTemplatesCell {
-                cell.templateList?.originImage = snapImage
-            }
-        }
-    }
+    var snapImage: UIImage?
     private var animation: Bool = false
     var dataSource: CTASelectorsViewControllerDataSource?
     var delegate: CTASelectorViewControllerDelegate?
@@ -77,6 +70,17 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
         super.viewDidLoad()
         view.backgroundColor = CTAStyleKit.commonBackgroundColor
         collectionview.layer.masksToBounds = false
+    }
+    
+    func updateSnapshotImage(image: UIImage?) {
+        snapImage = image
+            dispatch_async(dispatch_get_main_queue()) { [weak self] in
+                guard let sf = self else {return}
+                let index = NSIndexPath(forItem: 0, inSection: 0)
+                if let cell = sf.collectionview.cellForItemAtIndexPath(index) as? CTASelectorTemplatesCell {
+                    cell.templateList?.updateCurrentOriginImage(image)
+                }
+        }
     }
     
     func changeToSelector(type: CTAContainerFeatureType) {

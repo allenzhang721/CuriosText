@@ -84,10 +84,10 @@ class EditViewController: UIViewController {
                     switch previewR {
                     case .Success(let img):
                         dispatch_async(dispatch_get_main_queue(), {
-                            strongSelf.selectorViewController.snapImage = img
+                            strongSelf.selectorViewController.updateSnapshotImage(img)
                         })
                     default:
-                        strongSelf.selectorViewController.snapImage = image
+                        strongSelf.selectorViewController.updateSnapshotImage(image)
                     }
                 }
                     cameraVC.removeFromParentViewController()
@@ -538,10 +538,12 @@ extension EditViewController {
                         switch previewR {
                         case .Success(let img):
                             dispatch_async(dispatch_get_main_queue(), {
-                                strongSelf.selectorViewController.snapImage = img
+                                strongSelf.selectorViewController.updateSnapshotImage(img)
                             })
                         default:
-                            strongSelf.selectorViewController.snapImage = image
+                            dispatch_async(dispatch_get_main_queue(), { 
+                                strongSelf.selectorViewController.updateSnapshotImage(image)
+                            })
                         }
                     }
                         
