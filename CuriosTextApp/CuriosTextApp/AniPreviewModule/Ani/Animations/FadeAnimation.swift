@@ -11,12 +11,12 @@ import UIKit
 
 extension AniFactory {
     
-    class func fade(appear: Bool, canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, descriptor: Descriptor, beganTime: Float) -> AniDescriptor {
-        
+    class func fade(appear: Bool, canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, descriptor: Descriptor, beganTime: Float, isRandom: Bool = true) -> AniDescriptor {
+        let i = isRandom ? random() % contentsCount : index
         let duration = descriptor.config.duration
         let time = duration * 0.4
         let interdelay = duration * (1 - 0.4) / Float(contentsCount)
-        let b = Float(index) * interdelay + beganTime + descriptor.config.delay
+        let b = Float(i) * interdelay + beganTime + descriptor.config.delay
     
         let bt = [
             "opacity": CFTimeInterval(b),

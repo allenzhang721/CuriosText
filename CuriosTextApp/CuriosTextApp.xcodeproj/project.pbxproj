@@ -983,13 +983,13 @@
 				2C7AD3AB1CF6B090009AEDA8 /* m_AboutUs */,
 				2C7AD3AE1CF6BC2B009AEDA8 /* m_Templates */,
 				2CD4DC0B1CA4E26C00790A55 /* m_Editor */,
+				2CD11A8B1CB7534600A79305 /* m_Animation & Preview */,
 				2C042B731CE3226000C13FED /* CTAHeartAnimationView.swift */,
 				2C042B751CE3248E00C13FED /* Heart.storyboard */,
 				2CDDE6491CE16E1400B6E6A9 /* ShareModule */,
 				2CDDF5001C5F3B860019FC83 /* CuriosTextApp-Bridging-Header.h */,
 				2CB66A951CD8566B006B9282 /* GIFCreator.swift */,
-				2CD11A8B1CB7534600A79305 /* AniPreviewModule */,
-				2CE063CB1C857D2F001F7F4E /* ImagePickerModule */,
+				2CE063CB1C857D2F001F7F4E /* m_ImagePicker */,
 				2C4B08F61CD9F60300A58B0E /* GIFModule */,
 				2CAEAC8A1C323EC600C9F9AC /* Deprecated */,
 				661D29F21C2A968E0073FC0E /* Upload */,
@@ -1321,7 +1321,7 @@
 			path = BlackCat;
 			sourceTree = "<group>";
 		};
-		2CD11A8B1CB7534600A79305 /* AniPreviewModule */ = {
+		2CD11A8B1CB7534600A79305 /* m_Animation & Preview */ = {
 			isa = PBXGroup;
 			children = (
 				2C7EC60F1CC079F40077E79E /* CTAAnimationType.swift */,
@@ -1346,13 +1346,13 @@
 				2CD11ACB1CB7A36900A79305 /* AniPreviewCanvasViewController.swift */,
 				2CD11ACF1CB7A7A400A79305 /* AniPreView.storyboard */,
 			);
+			name = "m_Animation & Preview";
 			path = AniPreviewModule;
 			sourceTree = "<group>";
 		};
 		2CD11A8C1CB753BF00A79305 /* Ani */ = {
 			isa = PBXGroup;
 			children = (
-				2CD11AB91CB7547C00A79305 /* Animations */,
 				2CD11AAC1CB7547500A79305 /* AniDescriptor.swift */,
 				2CD11AA71CB7547500A79305 /* AniCanvas.swift */,
 				2CD11AA91CB7547500A79305 /* AniContainer.swift */,
@@ -1364,6 +1364,7 @@
 				2CD11AAE1CB7547500A79305 /* AniPlayCanvasView.swift */,
 				2CD11AC21CB75A6500A79305 /* Strings.swift */,
 				2CD11AAF1CB7547500A79305 /* TextSpliter.swift */,
+				2CD11AB91CB7547C00A79305 /* Animations */,
 			);
 			name = Ani;
 			path = Animations;
@@ -1509,7 +1510,7 @@
 			name = ShareModule;
 			sourceTree = "<group>";
 		};
-		2CE063CB1C857D2F001F7F4E /* ImagePickerModule */ = {
+		2CE063CB1C857D2F001F7F4E /* m_ImagePicker */ = {
 			isa = PBXGroup;
 			children = (
 				2C05BB851C9FAA7200667A75 /* PhotoHelper.swift */,
@@ -1537,7 +1538,7 @@
 				2C160D5F1CE58C54005B67F8 /* PhotoAlbumList.storyboard */,
 				2CE063DA1C857D2F001F7F4E /* ImageCrop.storyboard */,
 			);
-			name = ImagePickerModule;
+			name = m_ImagePicker;
 			path = ImagePicker;
 			sourceTree = "<group>";
 		};

@@ -183,8 +183,10 @@
 
 // MARK: - AnimationName
 "NONE" = "None";
-"MOVE_IN" = "Move In";
-"MOVE_OUT" = "Move Out";
+"MOVE_IN" = "Right In";
+"MOVE_OUT" = "Right Out";
+"MOVE_IN_LEFT" = "Left In";
+"MOVE_OUT_LEFT" = "Left Out";
 "SCALE_IN" = "Scale In";
 "SCALE_OUT" = "Scale Out";
 "IRIS_IN" = "Iris In";
@@ -193,5 +195,7 @@
 "CURL_OUT" = "Curl Out";
 "FADE_IN" = "Fade In";
 "FADE_OUT" = "Fade Out";
+"FADE_IN_ORDER" = "Order Fadein";
+"FADE_OUT_ORDER" = "Order Fadeut";
 "ORBITAL_IN" = "Spin In";
 "ORBITAL_OUT" = "Spin Out";

@@ -185,8 +185,10 @@
 
 // MARK: - AnimationName
 "NONE" = "无动画";
-"MOVE_IN" = "移入";
-"MOVE_OUT" = "移出";
+"MOVE_IN" = "右移入";
+"MOVE_OUT" = "右移出";
+"MOVE_IN_LEFT" = "左移入";
+"MOVE_OUT_LEFT" = "左移出";
 "SCALE_IN" = "缩放入";
 "SCALE_OUT" = "缩放出";
 "IRIS_IN" = "中心渐显";
@@ -195,5 +197,7 @@
 "CURL_OUT" = "卷曲出";
 "FADE_IN" = "渐显";
 "FADE_OUT" = "渐隐";
+"FADE_IN_ORDER" = "顺序渐显";
+"FADE_OUT_ORDER" = "顺序渐隐";
 "ORBITAL_IN" = "旋转入";
 "ORBITAL_OUT" = "旋转出";
