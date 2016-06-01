@@ -90,10 +90,10 @@ public class CTAColorPickerNodeView: UIControl {
     
     override public func layoutSubviews() {
         
-        let lineSpacing = CGFloat(2)
+        let lineSpacing = CGFloat(0)
         let itemSpacing = CGFloat(2)
-        let top = CGFloat(2)
-        let bottom = CGFloat(2)
+        let top = CGFloat(10)
+        let bottom = CGFloat(10)
         let left = CGFloat(2)
         let right = CGFloat(2)
         
