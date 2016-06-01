@@ -982,6 +982,7 @@
 				2C7AD3A61CF6AFD0009AEDA8 /* Moduler */,
 				2C7AD3AB1CF6B090009AEDA8 /* m_AboutUs */,
 				2C7AD3AE1CF6BC2B009AEDA8 /* m_Templates */,
+				2CD4DC0B1CA4E26C00790A55 /* m_Editor */,
 				2C042B731CE3226000C13FED /* CTAHeartAnimationView.swift */,
 				2C042B751CE3248E00C13FED /* Heart.storyboard */,
 				2CDDE6491CE16E1400B6E6A9 /* ShareModule */,
@@ -990,7 +991,6 @@
 				2CD11A8B1CB7534600A79305 /* AniPreviewModule */,
 				2CE063CB1C857D2F001F7F4E /* ImagePickerModule */,
 				2C4B08F61CD9F60300A58B0E /* GIFModule */,
-				2CD4DC0B1CA4E26C00790A55 /* EditorModule */,
 				2CAEAC8A1C323EC600C9F9AC /* Deprecated */,
 				661D29F21C2A968E0073FC0E /* Upload */,
 				2C9706D21C1E855000FA2E17 /* Model */,
@@ -1386,7 +1386,7 @@
 			path = CuriosTextApp/AniPreviewModule/Ani/Animations;
 			sourceTree = SOURCE_ROOT;
 		};
-		2CD4DC0B1CA4E26C00790A55 /* EditorModule */ = {
+		2CD4DC0B1CA4E26C00790A55 /* m_Editor */ = {
 			isa = PBXGroup;
 			children = (
 				2CD4DC0E1CA4E3B600790A55 /* MainController */,
@@ -1397,7 +1397,7 @@
 				2C610A2D1C902B0300DFE315 /* Editor.storyboard */,
 				2CAEAC8E1C323F2600C9F9AC /* EditorFactory.swift */,
 			);
-			name = EditorModule;
+			name = m_Editor;
 			sourceTree = "<group>";
 		};
 		2CD4DC0C1CA4E29300790A55 /* PublishController */ = {

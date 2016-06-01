@@ -53,7 +53,7 @@ class CTAColorPickerNodeCollectionView: UIControl {
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         
-        let ratio = CGFloat(0.85)
+        let ratio = CGFloat(0.8)
         let lastRatio = 1 - ratio
         layout.itemSize = CGSize(width: bounds.width * ratio, height: bounds.height)
         collectionView.setCollectionViewLayout(layout, animated: false)
@@ -124,6 +124,7 @@ private class ColorPickerLayout: UICollectionViewFlowLayout {
             switch scrollDirection {
             case .Horizontal:
                 
+                print(velocity)
                 var adjustOffset = CGFloat.max
                 let visualCenter = CGPoint(
                     x: proposedContentOffset.x + CGRectGetWidth(collectionView.bounds) / 2.0,
@@ -135,13 +136,34 @@ private class ColorPickerLayout: UICollectionViewFlowLayout {
                 }
                 
                 let centerXs = attributes.map{$0.center.x}
-                for x in centerXs {
-                    let adjust = x - visualCenter.x
-                    if fabs(adjust) < fabs(adjustOffset) {
-                        adjustOffset = adjust
+                if fabs(velocity.x) == 0 {
+                    for x in centerXs {
+                        let adjust = x - visualCenter.x
+                        if fabs(adjust) < fabs(adjustOffset) {
+                            adjustOffset = adjust
+                        }
+                    }
+                } else {
+                    if velocity.x < 0 {
+                        adjustOffset = 0
+                        for x in centerXs {
+                            let adjust = x - visualCenter.x
+                            if adjust < adjustOffset {
+                                adjustOffset = adjust
+                            }
+                        }
+                    } else {
+                        adjustOffset = 0
+                        for x in centerXs {
+                            let adjust = x - visualCenter.x
+                            if adjust > adjustOffset {
+                                adjustOffset = adjust
+                            }
+                        }
                     }
                 }
-                let offset = adjustOffset < 0 ? adjustOffset + 0.5 : adjustOffset
+                
+                let offset = adjustOffset < 0 ? adjustOffset : adjustOffset
                 let point = CGPoint(x: proposedContentOffset.x + offset, y: proposedContentOffset.y)
                 //                collectionView.setContentOffset(point, animated: false)
                 return point
