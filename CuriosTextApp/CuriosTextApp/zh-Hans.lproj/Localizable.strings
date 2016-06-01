@@ -197,5 +197,7 @@
 "CURL_OUT" = "卷曲出";
 "FADE_IN" = "渐显";
 "FADE_OUT" = "渐隐";
+"FADE_IN_ORDER" = "顺序渐显";
+"FADE_OUT_ORDER" = "顺序渐隐";
 "ORBITAL_IN" = "旋转入";
 "ORBITAL_OUT" = "旋转出";

@@ -68,10 +68,11 @@ class AniNode {
 
         let nc = containersBy(c, spliteType: TextSpliter.defaultSpliteBy(type))
         let count = nc.contents.count
-        let half = Int(count / 2)
-        let randomIndexs = (0..<count).sort { (a, b) -> Bool in
-            return (random() % count - half) < 0
-        }
+//        let half = Int(count / 2)
+//        let randomIndexs = (0..<count).sort { (a, b) -> Bool in
+//            return (random() % count - half) < 0
+//        }
+        let randomIndexs = (0..<count).map{$0}
         var anis = [Int: AniDescriptor]()
         for (i, content) in nc.contents.enumerate() {
             
