@@ -13,6 +13,8 @@ struct Content {
     let positionY: CGFloat
     let source: Source
     let width: CGFloat
+//    let section: Int
+//    let indexInSection: Int
     init?(_ info: [String: AnyObject]) {
         guard let height = info["height"] as? CGFloat else { return nil }
         guard let positionX = info["positionX"] as? CGFloat else { return nil }
@@ -20,11 +22,15 @@ struct Content {
         guard let sourceJSONDictionary = info["source"] as? [String: AnyObject] else { return nil }
         guard let source = Source(sourceJSONDictionary) else { return nil }
         guard let width = info["width"] as? CGFloat else { return nil }
+//        guard let section = info["section"] as? Int else { return nil }
+//        guard let index = info["indexInSection"] as? Int else { return nil }
         self.height = height
         self.positionX = positionX
         self.positionY = positionY
         self.source = source
         self.width = width
+//        self.section = section
+//        self.indexInSection = index
     }
     
     init(cx: CGFloat, cy: CGFloat, width: CGFloat, height: CGFloat, source: Source) {
@@ -32,6 +38,8 @@ struct Content {
         self.positionX = cx
         self.positionY = cy
         self.width = width
+//        self.section = section
+//        self.indexInSection = index
         self.source = source
     }
 }

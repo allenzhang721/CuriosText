@@ -67,28 +67,39 @@ class AniNode {
     func generateContaienrBy(canvasSize: CGSize, addBeganTime: Float, type: CTAAnimationType, descriptor: Descriptor, c: Container) -> AniContainer {
 
         let nc = containersBy(c, spliteType: TextSpliter.defaultSpliteBy(type))
-        let count = nc.contents.count
-//        let half = Int(count / 2)
-//        let randomIndexs = (0..<count).sort { (a, b) -> Bool in
-//            return (random() % count - half) < 0
-//        }
+        let indexPaths = nc.1
+        let count = nc.0.contents.count
+        let sectionCount = indexPaths.sort{$0.section > $1.section}.first!.section + 1
+        
+        var rowCountInSection = [Int: Int]()
+        for i in 0..<sectionCount {
+            let rowCount = indexPaths.filter{$0.section == i}.count
+            rowCountInSection[i] = rowCount
+        }
+        
         let randomIndexs = (0..<count).map{$0}
         var anis = [Int: AniDescriptor]()
-        for (i, content) in nc.contents.enumerate() {
+        for (i, content) in nc.0.contents.enumerate() {
+            
+            let row = indexPaths[i].row
+            let section = indexPaths[i].section
+            let rowCount = rowCountInSection[section]!
+            //sectionCount, rowCountInSection, section, row
+            // index =
             
             // TODO: 2. Need an Animation Type Factory.  -- EMIAOSTEIN, 4/04/16, 16:38
-            if let a = AniFactory.animationWith(descriptor.type, canvasSize: canvasSize, container: c, content: content, contentsCount: nc.contents.count, index: i, descriptor: descriptor, addBeganTime: addBeganTime,randomIndexs: randomIndexs) {
+            if let a = AniFactory.animationWith(descriptor.type, canvasSize: canvasSize, container: c, content: content, contentsCount: nc.0.contents.count, index: i, inSection: section, rowAtSection: row, sectionCount: sectionCount, rowCountAtSection: rowCount,  descriptor: descriptor, addBeganTime: addBeganTime,randomIndexs: randomIndexs) {
                 anis[i] = a
             }
         }
-        let ac = AniContainer(container: nc, animations: anis)
+        let ac = AniContainer(container: nc.0, animations: anis)
 
         return ac
     }
     
     
     
-    private func containersBy(container: Container, spliteType type: (TextSpliter.TextLineSpliteType, TextSpliter.TextSpliteType)) -> Container {
+    private func containersBy(container: Container, spliteType type: (TextSpliter.TextLineSpliteType, TextSpliter.TextSpliteType)) -> (Container, [NSIndexPath]) {
         let source = container.contents.first!.source
         
         var width = container.width
@@ -119,6 +130,7 @@ class AniNode {
         let r = TextSpliter.spliteText(source.texts, withAttributes: source.attribute, inConstraintSize: CGSize(width: CGFloat(width), height: CGFloat.max), bySpliteType:type)
         let units = r.0
         let size = r.1
+        let indexPaths = units.map{NSIndexPath(forItem: $0.row, inSection: $0.section)}
         
         var contents = [Content]()
         
@@ -132,7 +144,7 @@ class AniNode {
 
         let c = Container(cx: container.positionX, cy: container.positionY, width: size.width, height: size.height, rotation: container.rotation, identifier: container.identifier, contents: contents)
         
-        return c
+        return (c, indexPaths)
     }
 }
 

@@ -36,7 +36,7 @@ class TextSpliter {
         return []
     }
     
-    class func spliteText(text: String, withAttributes attributes: [String: AnyObject]?, inConstraintSize size: CGSize, bySpliteType type: (TextLineSpliteType, TextSpliteType) = (.AllatOnce, .ByObject)) -> ([TextUnit], CGSize) {
+    class func spliteText(text: String, withAttributes attributes: [String: AnyObject]?, inConstraintSize size: CGSize, bySpliteType type: (TextLineSpliteType, TextSpliteType) = (.AllatOnce, .ByObject)) -> ([TextUnit], CGSize, Int) { // units, size, sectionCount, []
         
         let constraintSize = size
         let storage = NSTextStorage(string: text, attributes: attributes)
@@ -48,6 +48,7 @@ class TextSpliter {
         
         let glyphCount = manager.numberOfGlyphs
         
+        var sectionCount  = 0
         var inSize = CGSize.zero
         var units = [TextUnit]()
         
@@ -172,6 +173,7 @@ class TextSpliter {
                 units.append(unit)
                 
                 section += 1
+                sectionCount += 1
             })
             
         case (.ByLine, .ByCharacter):
@@ -222,11 +224,12 @@ class TextSpliter {
                 }
                 
                 section += 1
+                sectionCount += 1
                 row = 0
             })
         }
         
-        return (units, inSize)
+        return (units, inSize, sectionCount)
     }
 }
 

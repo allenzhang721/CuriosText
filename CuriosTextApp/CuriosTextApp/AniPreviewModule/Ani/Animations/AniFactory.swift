@@ -54,7 +54,7 @@ class AniFactory {
 //        }
 //    }
     
-    class func animationWith(name: String, canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, descriptor: Descriptor, addBeganTime: Float, randomIndexs: [Int]? = nil) -> AniDescriptor? {
+    class func animationWith(name: String, canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, inSection section: Int, rowAtSection row: Int, sectionCount: Int, rowCountAtSection: Int, descriptor: Descriptor, addBeganTime: Float, randomIndexs: [Int]? = nil) -> AniDescriptor? {
         
         guard let type = CTAAnimationType(rawValue: name) else {
             print("Not Support \(name) Animation Type!")
@@ -65,14 +65,14 @@ class AniFactory {
         case .Unknown:
              return nil
         case .MoveIn:
-            return moveIn(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
+            return moveIn(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, inSection: section, rowAtSection: row, sectionCount: sectionCount, rowCountAtSection: rowCountAtSection, descriptor: descriptor, beganTime: addBeganTime)
         case .MoveOut:
-            return moveOut(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
+            return moveOut(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, inSection: section, rowAtSection: row, sectionCount: sectionCount, rowCountAtSection: rowCountAtSection, descriptor: descriptor, beganTime: addBeganTime)
             
         case .MoveInLeft:
-            return moveIn(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime, direction: 1)
+            return moveIn(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, inSection: section, rowAtSection: row, sectionCount: sectionCount, rowCountAtSection: rowCountAtSection, descriptor: descriptor, beganTime: addBeganTime, direction: 1)
         case .MoveOutLeft:
-            return moveOut(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime, direction: 1)
+            return moveOut(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, inSection: section, rowAtSection: row, sectionCount: sectionCount, rowCountAtSection: rowCountAtSection, descriptor: descriptor, beganTime: addBeganTime, direction: 1)
             
         case .ScaleIn:
             return scaleIn(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)

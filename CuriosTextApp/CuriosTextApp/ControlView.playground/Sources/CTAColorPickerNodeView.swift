@@ -1,6 +1,21 @@
 import Foundation
 import UIKit
 
+//private extension UIColor {
+//    
+//    func toHexs() -> (String, CGFloat) {
+//        
+//        let component = CGColorGetComponents(self.CGColor)
+//        let r = component[0]
+//        let g = component[1]
+//        let b = component[2]
+//        let a = component[3]
+//        
+//        let hex = NSString(format: "#%02lX%02lX%02lX", lroundf(Float(r * CGFloat(255.0))), lroundf(Float(g * CGFloat(255.0))), lroundf(Float(b * CGFloat(255.0)))) as String
+//        return (hex, a)
+//    }
+//}
+
 public class CTAColorPickerNodeView: UIControl {
     
     private(set) var selectedColor: UIColor?
@@ -9,6 +24,11 @@ public class CTAColorPickerNodeView: UIControl {
     private var colorLayers = [CAShapeLayer]()
     private var indicatorLayer = CAShapeLayer()
     private var selectedLayer: CAShapeLayer?
+    
+//    func hex(color: UIColor) -> String {
+//        let r = color.toHex()
+//        return r.0
+//    }
 
     public init(frame: CGRect, colors: [UIColor]) {
         super.init(frame: frame)
@@ -22,7 +42,7 @@ public class CTAColorPickerNodeView: UIControl {
             colorLayers.append(l)
         }
         
-        let hexs = colors.map{return $0.toHex().0}
+        let hexs = colors.map{$0.toHex().0}
         self.colorHexs = hexs
         
         indicatorLayer.lineWidth = 2
@@ -59,7 +79,7 @@ public class CTAColorPickerNodeView: UIControl {
             l.fillColor = c.CGColor
         }
         
-        let hexs = colors.map{return $0.toHex().0}
+        let hexs = colors.map{$0.toHex().0}
         self.colorHexs = hexs
     }
     

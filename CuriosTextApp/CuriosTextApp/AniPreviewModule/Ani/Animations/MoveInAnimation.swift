@@ -11,13 +11,16 @@ import UIKit
 
 extension AniFactory {
     
-    class func moveIn(canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, descriptor: Descriptor, beganTime: Float, direction: Int = 0) -> AniDescriptor {
+    class func moveIn(canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, inSection section: Int, rowAtSection row: Int, sectionCount: Int, rowCountAtSection: Int, descriptor: Descriptor, beganTime: Float, direction: Int = 0) -> AniDescriptor {
         
     let duration = descriptor.config.duration
     let time = duration * 0.6
-    let interdelay = duration * (1 - 0.6) / Float(contentsCount)
-        let b = direction == 0 ? Float(index) * interdelay + beganTime + descriptor.config.delay : Float(contentsCount - 1 - index) * interdelay + beganTime + descriptor.config.delay
-    
+//    let interdelay = duration * (1 - 0.6) / Float(contentsCount)
+//    let b = direction == 0 ? Float(index) * interdelay + beganTime + descriptor.config.delay : Float(contentsCount - 1 - index) * interdelay + beganTime + descriptor.config.delay
+    let sectionInterdelay = duration * (1 - 0.6) / Float(sectionCount)
+    let interdelay = sectionInterdelay / Float(rowCountAtSection)
+        let b = direction == 0 ? Float(row) * interdelay + sectionInterdelay * Float(section) + beganTime + descriptor.config.delay :
+        Float(rowCountAtSection - 1 - row) * interdelay + sectionInterdelay * Float(section) + beganTime + descriptor.config.delay
     
         let bt = [
             "position": CFTimeInterval(b),
