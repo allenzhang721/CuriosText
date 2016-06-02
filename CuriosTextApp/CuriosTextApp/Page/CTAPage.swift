@@ -15,10 +15,12 @@ final class CTAPage:NSObject, NSCoding {
     private struct SerialKeys {
         static let width = "width"
         static let height = "height"
+        static let backgroundColor = "backgroundColor"
         static let containers = "containers"
         static let animations = "animations"
     }
     
+    private(set) var backgroundColor = "FFFFFF"
     private(set) var width = 414.0
     private(set) var height = 414.0
     private(set) var containers = [CTAContainer]()
@@ -30,18 +32,21 @@ final class CTAPage:NSObject, NSCoding {
         height = aDecoder.decodeDoubleForKey(SerialKeys.height)
         containers = aDecoder.decodeObjectForKey(SerialKeys.containers) as! [CTAContainer]
         animatoins = aDecoder.decodeObjectForKey(SerialKeys.animations) as! [CTAAnimation]
+        backgroundColor = aDecoder.decodeObjectForKey(SerialKeys.backgroundColor) as? String ?? "FFFFFF"
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeDouble(width, forKey: SerialKeys.width)
         aCoder.encodeDouble(height, forKey: SerialKeys.height)
+        aCoder.encodeObject(backgroundColor, forKey: SerialKeys.backgroundColor)
         aCoder.encodeObject(containers, forKey: SerialKeys.containers)
         aCoder.encodeObject(animatoins, forKey: SerialKeys.animations)
     }
     
-    init(containers: [CTAContainer], anis: [CTAAnimation] = []) {
+    init(containers: [CTAContainer], anis: [CTAAnimation] = [], background: String = "FFFFFF") {
         self.containers = containers
         self.animatoins = anis
+        self.backgroundColor = background
         super.init()
     }
     
@@ -53,6 +58,10 @@ final class CTAPage:NSObject, NSCoding {
 //        }
         
         return container
+    }
+    
+    func changeBackColor(hex: String) {
+        backgroundColor = hex
     }
     
     func append(container: CTAContainer) {
@@ -136,6 +145,6 @@ extension CTAPage {
 //        containers = c
 //        animatoins = a
         
-        return CTAPage(containers: c, anis: a)
+        return CTAPage(containers: c, anis: a, background: backgroundColor)
     }
 }

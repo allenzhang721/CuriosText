@@ -87,7 +87,7 @@ extension CTAPublishViewController {
     
     func setupViews() {
         aniCanvasView = AniPlayCanvasView(frame: CGRect(origin: CGPoint(x: 0, y: 44), size: canvas.size))
-        aniCanvasView.backgroundColor = UIColor.groupTableViewBackgroundColor()
+//        aniCanvasView.backgroundColor = UIColor.groupTableViewBackgroundColor()
         
         for c in canvas.containers {
             if let content = c.contents.first where content.type == .Image {
@@ -103,7 +103,7 @@ extension CTAPublishViewController {
     }
     
     func setupStyles() {
-        aniCanvasView.backgroundColor = CTAStyleKit.commonBackgroundColor
+        aniCanvasView.backgroundColor = UIColor(hexString: canvas.canvas.backgroundColor)
         view.backgroundColor = CTAStyleKit.ediorBackgroundColor
         publishButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
     }

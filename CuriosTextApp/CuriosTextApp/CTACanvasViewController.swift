@@ -97,7 +97,6 @@ extension CTACanvasViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = CTAStyleKit.commonBackgroundColor
         collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         collectionView.registerClass(CTACanvasTextCell.self, forCellWithReuseIdentifier: "TextCell")
         collectionView.registerClass(CTACanvasImageCell.self, forCellWithReuseIdentifier: "ImageCell")
@@ -120,6 +119,10 @@ extension CTACanvasViewController {
     func setupRegisterNotifiction() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "menuWillHidden:", name:
             UIMenuControllerWillHideMenuNotification, object: nil)
+    }
+    
+    func changeBackgroundColor(color: UIColor) {
+        collectionView.backgroundColor = color
     }
     
     func removeNotification() {

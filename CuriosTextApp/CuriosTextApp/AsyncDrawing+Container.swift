@@ -69,9 +69,9 @@ func drawPageWithNoImage(page: CTAPage, containImage: Bool = true) -> UIImage? {
     
     UIGraphicsBeginImageContextWithOptions(page.size, false, UIScreen.mainScreen().scale)
     
-    // back ground
-//    let path = UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: size))
-//    UIColor.whiteColor().setFill()
+//     back ground
+//    let path = UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: page.size))
+//    UIColor.blackColor().setFill()
 //    path.fill()
     
     for d in noImageDrawables {
@@ -102,10 +102,10 @@ func drawPageWithNoImage(page: CTAPage, containImage: Bool = true) -> UIImage? {
         
         UIGraphicsBeginImageContextWithOptions(page.size, false, UIScreen.mainScreen().scale)
         
-        // back ground
-        //    let path = UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: size))
-        //    UIColor.whiteColor().setFill()
-        //    path.fill()
+//         back ground
+//            let path = UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: page.size))
+//            UIColor.blackColor().setFill()
+//            path.fill()
         
         for d in noImageDrawables {
             if let d = d as? TextDrawable {
@@ -156,7 +156,9 @@ func draw(page: CTAPage, atBegan: Bool, filterWithVisible: Bool = true, baseURL:
         fatalError("Container can not map to Promise<Drawable>")
     }
 
-    drawing(promises, size: page.size) { (r) in
+    let backgroundColor = UIColor(hexString: page.backgroundColor) ?? UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+    
+    drawing(promises, size: page.size, backgroundColor: backgroundColor) { (r) in
         completedHandler(r)
     }
 }

@@ -47,6 +47,7 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhoto
         var showAlbums = false
     }
     
+    @IBOutlet weak var zoomButton: UIButton!
     @IBOutlet weak var cancelItem: UIBarButtonItem!
     @IBOutlet weak var nextItem: UIBarButtonItem!
     @IBOutlet weak var titleItem: UIBarButtonItem!
@@ -62,6 +63,8 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhoto
     var photolistViewController: CTAPhotoAlbumListViewController?
     
     var templateImage: UIImage?
+    var backgroundColor: UIColor = UIColor.whiteColor()
+    var backgroundColorHex: String = "FFFFFF"
     
     weak var pickerDelegate: CTAPhotoPickerProtocol?
     private var inner = Inner()
@@ -126,6 +129,8 @@ extension CTAPhotoViewController {
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(CTAPhotoViewController.tap(_:)))
         previewView.addGestureRecognizer(tap)
+        
+        previewView.backgroundColor = backgroundColor
         
         setupDelegateAndDataSource()
         fetchAllPhotos()
@@ -195,6 +200,26 @@ extension CTAPhotoViewController {
 
 // MARK: - Action
 extension CTAPhotoViewController {
+    
+    @IBAction func changeBackgroundColor(sender: AnyObject) {
+        if backgroundColorHex == "FFFFFF" || backgroundColorHex == "#FFFFFF" {
+            backgroundColorHex = "000000"
+        } else {
+            backgroundColorHex = "FFFFFF"
+        }
+        backgroundColor = UIColor(hexString: backgroundColorHex)!
+        previewView.backgroundColor = backgroundColor
+    }
+    
+    @IBAction func changeScale(sender: AnyObject?) {
+        let changeToMax = previewView.changeScale()
+        if changeToMax {
+            zoomButton.setImage(UIImage(named: "zoom_in"), forState: .Normal)
+        } else {
+            zoomButton.setImage(UIImage(named: "zoom_out"), forState: .Normal)
+        }
+    }
+    
     @IBAction func changeAlbumClick(sender: AnyObject?) {
         
         if photolistViewController == nil {
@@ -320,7 +345,7 @@ extension CTAPhotoViewController {
                         UIGraphicsEndImageContext()
                         
                         dispatch_async(dispatch_get_main_queue(), {
-                            strongSelf.pickerDelegate?.pickerDidSelectedImage(aimage)
+                            strongSelf.pickerDelegate?.pickerDidSelectedImage(aimage, backgroundColor: strongSelf.backgroundColor)
                             strongSelf.dismiss(nil)
                         })
                     }

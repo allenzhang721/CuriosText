@@ -44,7 +44,7 @@ class ImageViewController: UIViewController {
 
 extension ImageViewController: CTAPhotoPickerProtocol {
     
-    func pickerDidSelectedImage(image: UIImage) {
+    func pickerDidSelectedImage(image: UIImage, backgroundColor: UIColor) {
         
         imageView.image = image
     }

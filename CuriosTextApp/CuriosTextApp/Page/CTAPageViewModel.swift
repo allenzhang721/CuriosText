@@ -11,7 +11,7 @@ import Foundation
 protocol PageVMProtocol {
     
     var size: CGSize { get }
-    
+    var backgroundColor: String { get }
     var containerVMs: [ContainerVMProtocol] { get }
     var animationBinders: [CTAAnimationBinder] { get }
 }

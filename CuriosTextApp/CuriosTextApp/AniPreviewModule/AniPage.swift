@@ -30,7 +30,7 @@ extension PageVMProtocol {
         
         let animations = self.animationBinders.map{ $0.toAnimation() }
         
-        return Canvas(width: Float(size.width), height: Float(size.height), containers: containers, animations: animations)
+        return Canvas(width: Float(size.width), height: Float(size.height), containers: containers, animations: animations, backgroundColor: backgroundColor)
     }
 }
 

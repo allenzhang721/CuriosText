@@ -12,6 +12,8 @@ class CTAPhotoPreviewView: UIView {
     
     var templateImage: UIImage?
     
+    private var scaleMax: Bool = true
+    
     var image: UIImage? {
         get { return imageView.image }
         set { loadImage(newValue) }
@@ -71,7 +73,7 @@ extension CTAPhotoPreviewView {
     
     func setupStyle() {
         backgroundColor = UIColor.whiteColor()
-        scrollView.backgroundColor = UIColor.whiteColor()
+        scrollView.backgroundColor = UIColor.clearColor()
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         
@@ -119,7 +121,7 @@ extension CTAPhotoPreviewView {
         scrollView.maximumZoomScale = maxScale
         imageView.image = image
         imageView.bounds.size = imgSize
-        scrollView.setZoomScale(minScale, animated: false)
+        scrollView.setZoomScale(scaleMax ? maxScale : minScale, animated: false)
     }
     
     private func loadEmptyImage() {
@@ -160,13 +162,17 @@ extension CTAPhotoPreviewView {
         return CGRect(x: x, y: y, width: w, height: h)
     }
     
-    func changeScale() {
+    func changeScale() -> Bool {
         let minScale = scrollView.minimumZoomScale
         let maxScale = scrollView.maximumZoomScale
         let curScale = scrollView.zoomScale
         
         let nextScale = curScale > minScale ? minScale : maxScale
+        scaleMax = nextScale == maxScale ? true : false
+        
         scrollView.setZoomScale(nextScale, animated: true)
+        
+        return nextScale == maxScale
     }
     
 //    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {

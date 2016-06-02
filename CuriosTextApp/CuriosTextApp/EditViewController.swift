@@ -67,15 +67,19 @@ class EditViewController: UIViewController {
         let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
         
         let cleanPage = page.cleanEmptyContainers()
+        cameraVC.backgroundHex = cleanPage.backgroundColor
+        cameraVC.backgroundColor = UIColor(hexString: cleanPage.backgroundColor)!
         let image = drawPageWithNoImage(cleanPage, containImage: false)
         cameraVC.templateImage = image
         
-        cameraVC.didSelectedImageHandler = {[weak self] image in
+        cameraVC.didSelectedImageHandler = {[weak self] (image, backgrounColor) in
             if let strongSelf = self, let image = image {
 //                dispatch_async(dispatch_get_main_queue(), { 
                 
 //                    strongSelf.selectorViewController.snapImage = image
-                
+                let hex = backgrounColor.toHex().0
+                strongSelf.page.changeBackColor(hex)
+                strongSelf.canvasViewController.changeBackgroundColor(backgrounColor)
                     let image = strongSelf.insertImage(image, size: image.size)
 //                strongSelf.selectorViewController.snapImage = image
                 
@@ -85,6 +89,7 @@ class EditViewController: UIViewController {
                     case .Success(let img):
                         dispatch_async(dispatch_get_main_queue(), {
                             strongSelf.selectorViewController.updateSnapshotImage(img)
+                            
                         })
                     default:
                         strongSelf.selectorViewController.updateSnapshotImage(image)
@@ -522,7 +527,7 @@ extension EditViewController {
             let image = drawPageWithNoImage(cleanPage)
             cameraVC.templateImage = image
             
-            cameraVC.didSelectedImageHandler = {[weak self] image in
+            cameraVC.didSelectedImageHandler = {[weak self] (image, backgroundColor) in
                 if let strongSelf = self {
 //                    dispatch_async(dispatch_get_main_queue(), {
                         let canvasSize = strongSelf.canvasViewController.view.bounds.size
@@ -576,7 +581,6 @@ extension EditViewController {
                 let image = data == nil ? nil : UIImage(data: data!)
                 handler(name, image)
             }
-            
         }
         publishViewController.imageRetriver = retriver
         publishViewController.publishDismiss = { [weak self] in

@@ -176,7 +176,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                 let scale = min(sf.bounds.size.width / canvas.size.width, sf.bounds.size.height / canvas.size.height)
                 previewView.center = CGPoint(x: sf.bounds.midX, y: sf.bounds.midY)
                 previewView.transform = CGAffineTransformMakeScale(scale, scale)
-                previewView.backgroundColor = UIColor.whiteColor()
+                
                 previewView.completedBlock = {[weak self] in
                     self?.playComplete()
                 }
@@ -191,6 +191,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
             }
             
             let previewView = sf.previewView
+            previewView.backgroundColor = UIColor(hexString: canvas.canvas.backgroundColor)
             previewView.dataSource = canvas
             previewView.aniDataSource = canvas
             previewView.reloadData { [weak self] in
