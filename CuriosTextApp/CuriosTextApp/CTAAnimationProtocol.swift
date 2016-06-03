@@ -103,17 +103,17 @@ enum CTAAnimationName: String {
         case .None:
             return 0.0
         case .MoveIn, .MoveInLeft, .MoveOut, .MoveOutLeft:
-            return 1.0
+            return 1.6
         case .ScaleIn, .ScaleOut:
-            return 2.0
+            return 1.6
         case .IrisIn, .IrisOut:
-            return 2.0
+            return 1.6
         case .CurlIn, .CurlOut:
-            return 2.0
+            return 1.6
         case .FadeIn, .FadeOut, .FadeInOrder, .FadeOutOrder:
-            return 1.0
+            return 1.6
         case .OrbitalIn, .OrbitalOut:
-            return 2.0
+            return 1.6
         
         }
     }
