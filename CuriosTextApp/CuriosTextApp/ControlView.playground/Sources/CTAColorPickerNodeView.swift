@@ -64,6 +64,7 @@ public class CTAColorPickerNodeView: UIControl {
         
         if let c = color, let index = colorHexs.indexOf(c.toHex().0) {
             selectedColor = colors[index]
+            selectedLayer = colorLayers[index]
             changedIndicator(colorLayers[index].position, hidden: false)
         } else {
             selectedColor = nil
@@ -98,6 +99,8 @@ public class CTAColorPickerNodeView: UIControl {
         for (i, l) in colorLayers.enumerate() {
             if CGRectContainsPoint(l.frame, location) {
                 if let selectedLayer = selectedLayer where selectedLayer == l {
+                    
+                    
                 } else {
                     selectedColor = colors[i]
                     selectedLayer = l
