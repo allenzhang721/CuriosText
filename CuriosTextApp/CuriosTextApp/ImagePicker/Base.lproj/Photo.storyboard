@@ -34,8 +34,8 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fH3-U7-Ix8">
                                 <rect key="frame" x="321" y="365" width="44" height="44"/>
-                                <state key="normal" image="backgroundColor_black"/>
-                                <state key="selected" image="backgroundColor_white"/>
+                                <state key="normal" image="backgroundColor_white"/>
+                                <state key="selected" image="backgroundColor_black"/>
                                 <connections>
                                     <action selector="changeBackgroundColor:" destination="cMe-yS-ZkE" eventType="touchUpInside" id="CeX-RX-SNn"/>
                                 </connections>
