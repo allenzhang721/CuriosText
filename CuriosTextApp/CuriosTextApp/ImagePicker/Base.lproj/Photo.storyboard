@@ -26,7 +26,8 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eSd-Fd-d2f">
                                 <rect key="frame" x="20" y="377" width="20" height="22"/>
-                                <state key="normal" image="zoom_in"/>
+                                <state key="normal" image="zoom_out"/>
+                                <state key="selected" image="zoom_in"/>
                                 <connections>
                                     <action selector="changeScale:" destination="cMe-yS-ZkE" eventType="touchUpInside" id="UTu-3U-wbu"/>
                                 </connections>
@@ -223,5 +224,6 @@
         <image name="icon_photoAlbumsArrow" width="20" height="20"/>
         <image name="next-button" width="40" height="40"/>
         <image name="zoom_in" width="20" height="20"/>
+        <image name="zoom_out" width="20" height="20"/>
     </resources>
 </document>

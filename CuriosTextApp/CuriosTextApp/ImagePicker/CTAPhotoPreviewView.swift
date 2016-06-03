@@ -10,6 +10,8 @@ import UIKit
 
 class CTAPhotoPreviewView: UIView {
     
+    var didChangedHandler: ((Bool) -> ())?
+    
     var templateImage: UIImage?
     
     private var scaleMax: Bool = true
@@ -108,7 +110,7 @@ extension CTAPhotoPreviewView {
     private func loadImage(image: UIImage?) {
         if let image = image {loadRealImage(image)} else {loadEmptyImage()}
         
-        updateImgViewPosition()
+//        updateImgViewPosition()
     }
     
     private func loadRealImage(image: UIImage) {
@@ -117,10 +119,11 @@ extension CTAPhotoPreviewView {
         let minScale = min(size.width / imgSize.width, size.height / imgSize.height)
         let maxScale = max(size.width / imgSize.width, size.height / imgSize.height)
         
-        scrollView.minimumZoomScale = minScale
-        scrollView.maximumZoomScale = maxScale
         imageView.image = image
         imageView.bounds.size = imgSize
+        scrollView.minimumZoomScale = minScale
+        scrollView.maximumZoomScale = maxScale
+        
         scrollView.setZoomScale(scaleMax ? maxScale : minScale, animated: false)
     }
     
@@ -134,9 +137,11 @@ extension CTAPhotoPreviewView {
     private func updateImgViewPosition() {
         let contentSize = scrollView.contentSize
         let boundSize = scrollView.bounds.size
-        let centerX = max(contentSize.width / 2.0, boundSize.width / 2.0)
-        let centerY = max(contentSize.height / 2.0, boundSize.height / 2.0)
-        imageView.center = CGPoint(x: centerX, y: centerY)
+        let centerX = (contentSize.width - boundSize.width) / 2.0
+        let centerY = (contentSize.height - boundSize.height) / 2.0
+        imageView.frame.origin = CGPoint.zero
+        scrollView.contentOffset = CGPoint(x: centerX, y: centerY)
+//        imageView.center = CGPoint(x: centerX, y: centerY)
     }
     
     private func imageDisplayRect() -> CGRect {
@@ -162,7 +167,7 @@ extension CTAPhotoPreviewView {
         return CGRect(x: x, y: y, width: w, height: h)
     }
     
-    func changeScale() -> Bool {
+    func changeScale() {
         let minScale = scrollView.minimumZoomScale
         let maxScale = scrollView.maximumZoomScale
         let curScale = scrollView.zoomScale
@@ -172,7 +177,7 @@ extension CTAPhotoPreviewView {
         
         scrollView.setZoomScale(nextScale, animated: true)
         
-        return nextScale == maxScale
+        didChangedHandler?(nextScale == maxScale)
     }
     
 //    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {

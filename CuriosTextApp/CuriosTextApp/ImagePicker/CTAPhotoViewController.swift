@@ -132,6 +132,12 @@ extension CTAPhotoViewController {
         
         previewView.backgroundColor = backgroundColor
         
+        zoomButton.selected = true
+        previewView.didChangedHandler = {[weak self] scaledToMax in
+            guard let sf = self else {return}
+            sf.zoomButton.selected = scaledToMax
+        }
+        
         setupDelegateAndDataSource()
         fetchAllPhotos()
         fetchPreviewPhoto()
@@ -161,7 +167,10 @@ extension CTAPhotoViewController {
         if let assetFetchResults = inner.assetFetchResults where assetFetchResults.count > 0, let asset = assetFetchResults[0] as? PHAsset {
             
             thumbCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
-            inner.imageManager.requestImageForAsset(asset, targetSize: previewView.bounds.size, contentMode: .AspectFill, options: nil) {[weak self] (image, info) in
+            
+            let options = PHImageRequestOptions()
+            options.synchronous = true
+            inner.imageManager.requestImageForAsset(asset, targetSize: previewView.bounds.size, contentMode: .AspectFill, options: options) {[weak self] (image, info) in
                 
                 if let strongSelf = self, let image = image {
                     dispatch_async(dispatch_get_main_queue(), {
@@ -212,12 +221,7 @@ extension CTAPhotoViewController {
     }
     
     @IBAction func changeScale(sender: AnyObject?) {
-        let changeToMax = previewView.changeScale()
-        if changeToMax {
-            zoomButton.setImage(UIImage(named: "zoom_in"), forState: .Normal)
-        } else {
-            zoomButton.setImage(UIImage(named: "zoom_out"), forState: .Normal)
-        }
+        previewView.changeScale()
     }
     
     @IBAction func changeAlbumClick(sender: AnyObject?) {
@@ -596,7 +600,10 @@ extension CTAPhotoViewController: UICollectionViewDelegate {
 //                    strongSelf.previewView.image = image
                 })
                 
-                inner.imageManager.requestImageForAsset(asset, targetSize: previewView.bounds.size, contentMode: .AspectFill, options: nil) {[weak self] (image, info) in
+                let options = PHImageRequestOptions()
+                options.synchronous = true
+                
+                inner.imageManager.requestImageForAsset(asset, targetSize: previewView.bounds.size, contentMode: .AspectFill, options: options) {[weak self] (image, info) in
                     
                     if let strongSelf = self, let image = image {
                         strongSelf.previewView.image = image
