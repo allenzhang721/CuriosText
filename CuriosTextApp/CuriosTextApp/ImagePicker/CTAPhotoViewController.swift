@@ -48,6 +48,7 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhoto
     }
     
     @IBOutlet weak var zoomButton: UIButton!
+    @IBOutlet weak var backgroundButton: UIButton!
     @IBOutlet weak var cancelItem: UIBarButtonItem!
     @IBOutlet weak var nextItem: UIBarButtonItem!
     @IBOutlet weak var titleItem: UIBarButtonItem!
@@ -213,8 +214,10 @@ extension CTAPhotoViewController {
     @IBAction func changeBackgroundColor(sender: AnyObject) {
         if backgroundColorHex == "FFFFFF" || backgroundColorHex == "#FFFFFF" {
             backgroundColorHex = "000000"
+            backgroundButton.selected = true
         } else {
             backgroundColorHex = "FFFFFF"
+            backgroundButton.selected = false
         }
         backgroundColor = UIColor(hexString: backgroundColorHex)!
         previewView.backgroundColor = backgroundColor
