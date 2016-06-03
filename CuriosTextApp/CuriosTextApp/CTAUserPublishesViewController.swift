@@ -164,9 +164,9 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
             }
             var request:CTABaseRequest?
             if self.publishType == .Posts{
-                request = CTAUserPublishListRequest.init(userID: userID, beUserID: beUserID, start: 0)
+                request = CTAUserPublishListRequest(userID: userID, beUserID: beUserID, start: 0)
             }else if self.publishType == .Likes{
-                request = CTAUserLikePublishListRequest.init(userID: userID, beUserID: beUserID, start: 0)
+                request = CTAUserLikePublishListRequest(userID: userID, beUserID: beUserID, start: 0)
             }
             if request != nil {
                 self.savePublishArray(request!, modelArray: savePublishModel)
@@ -180,9 +180,9 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
             let beUserID = self.viewUser!.userID
             var request:CTABaseRequest?
             if self.publishType == .Posts{
-                request = CTAUserPublishListRequest.init(userID: userID, beUserID: beUserID, start: 0)
+                request = CTAUserPublishListRequest(userID: userID, beUserID: beUserID, start: 0)
             }else if self.publishType == .Likes{
-                request = CTAUserLikePublishListRequest.init(userID: userID, beUserID: beUserID, start: 0)
+                request = CTAUserLikePublishListRequest(userID: userID, beUserID: beUserID, start: 0)
             }
             if request != nil{
                 let data = self.getPublishArray(request!)
@@ -196,15 +196,15 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     func initCollectionView(){
         let bounds = UIScreen.mainScreen().bounds
         let space:CGFloat = self.getCellSpace()
-        let rect:CGRect = CGRect.init(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
-        self.collectionLayout = UICollectionViewFlowLayout.init()
+        let rect:CGRect = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height)
+        self.collectionLayout = UICollectionViewFlowLayout()
         
         self.collectionLayout.itemSize = self.getCellRect()
         self.collectionLayout.sectionInset = UIEdgeInsets(top: 0, left: space, bottom: 0, right: space)
         self.collectionLayout.minimumLineSpacing = space
         self.collectionLayout.minimumInteritemSpacing = space
         self.collectionLayout.headerReferenceSize = CGSize(width: bounds.width, height: 100)
-        self.collectionView = UICollectionView.init(frame: rect, collectionViewLayout: self.collectionLayout)
+        self.collectionView = UICollectionView(frame: rect, collectionViewLayout: self.collectionLayout)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.registerClass(CTAPublishesCell.self, forCellWithReuseIdentifier: "ctaPublishesCell")
@@ -213,9 +213,9 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.view.addSubview(self.collectionView!);
         self.collectionView.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
     
-        let freshIcon1:UIImage = UIImage.init(named: "fresh-icon-1")!
+        let freshIcon1:UIImage = UIImage(named: "fresh-icon-1")!
         
-        self.headerFresh = MJRefreshGifHeader.init(refreshingTarget: self, refreshingAction: #selector(CTAUserPublishesViewController.loadFirstData))
+        self.headerFresh = MJRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(CTAUserPublishesViewController.loadFirstData))
         self.headerFresh.setImages([freshIcon1], forState: .Idle)
         self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Pulling)
         self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Refreshing)
@@ -224,7 +224,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.headerFresh.stateLabel?.hidden = true
         self.collectionView.mj_header = self.headerFresh
         
-        self.footerFresh = MJRefreshAutoGifFooter.init(refreshingTarget: self, refreshingAction: #selector(CTAUserPublishesViewController.loadLastData))
+        self.footerFresh = MJRefreshAutoGifFooter(refreshingTarget: self, refreshingAction: #selector(CTAUserPublishesViewController.loadLastData))
         self.footerFresh.refreshingTitleHidden = true
         self.footerFresh.setTitle("", forState: .Idle)
         self.footerFresh.setTitle("", forState: .NoMoreData)
@@ -247,21 +247,21 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.topView = UIView(frame: CGRectMake(0, 0, bounds.width, 30))
         
         self.userInfoView = UIView(frame: CGRectMake(0, 0, bounds.width, 100))
-        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bounds.size.width-60)/2, y: 0, width: 60*self.getHorRate(), height: 60*self.getHorRate()));
+        self.userIconImage = UIImageView(frame: CGRect(x: (bounds.size.width-60)/2, y: 0, width: 60*self.getHorRate(), height: 60*self.getHorRate()));
         self.cropImageCircle(self.userIconImage)
         self.userIconImage.image = UIImage(named: "default-usericon")
         
-        self.userNicknameLabel = UILabel.init(frame: CGRect.init(x: (bounds.size.width-maxWidth)/2, y: 70*self.getHorRate(), width: maxWidth, height: 30))
+        self.userNicknameLabel = UILabel(frame: CGRect(x: (bounds.size.width-maxWidth)/2, y: 70*self.getHorRate(), width: maxWidth, height: 30))
         self.userNicknameLabel.font = UIFont.systemFontOfSize(16)
-        self.userNicknameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        self.userNicknameLabel.textColor = UIColor(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.userNicknameLabel.textAlignment = .Center
         self.userInfoView.addSubview(self.userIconImage)
         self.userInfoView.addSubview(self.userNicknameLabel)
         
-        self.userDescLabel = UILabel.init(frame: CGRect.init(x: (bounds.size.width-maxWidth)/2, y: (self.userNicknameLabel.frame.origin.y+40), width: maxWidth, height: 140))
+        self.userDescLabel = UILabel(frame: CGRect(x: (bounds.size.width-maxWidth)/2, y: (self.userNicknameLabel.frame.origin.y+40), width: maxWidth, height: 140))
         self.userDescLabel.numberOfLines = 10
         self.userDescLabel.font = UIFont.systemFontOfSize(12)
-        self.userDescLabel.textColor = UIColor.init(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0)
+        self.userDescLabel.textColor = UIColor(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0)
         self.userDescLabel.text = " "
         self.userDescLabel.textAlignment = .Center
         self.userInfoView.addSubview(self.userDescLabel)
@@ -271,14 +271,14 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
         self.userPostButton.center = CGPoint(x: bounds.width/4, y: 25)
         self.userPostButton.titleLabel?.font = UIFont.systemFontOfSize(16)
         self.userPostButton.setTitle(NSLocalizedString("PostsButtonLabel", comment: ""), forState: .Normal)
-        self.userPostButton.setTitleColor(UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0), forState: .Normal)
+        self.userPostButton.setTitleColor(UIColor(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0), forState: .Normal)
         self.userLikeButton = UIButton(frame: CGRectMake(0, 0, (bounds.width-20)/2, 50))
         self.userLikeButton.center = CGPoint(x: bounds.width*3/4, y: 25)
         self.userLikeButton.titleLabel?.font = UIFont.systemFontOfSize(16)
         self.userLikeButton.setTitle(NSLocalizedString("LikesButtonLabel", comment: ""), forState: .Normal)
-        self.userLikeButton.setTitleColor(UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0), forState: .Normal)
-        let lineImageView = UIImageView(frame: CGRect.init(x: 0, y: 0, width: 2, height: 18))
-        lineImageView.image = UIImage.init(named: "follow-line")
+        self.userLikeButton.setTitleColor(UIColor(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0), forState: .Normal)
+        let lineImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 2, height: 18))
+        lineImageView.image = UIImage(named: "follow-line")
         lineImageView.center = CGPoint(x: bounds.width/2, y: 25)
         self.collectionControllerView = UIView(frame: CGRectMake(0, 0, bounds.width, 50))
         self.collectionControllerView.addSubview(self.userPostButton)
@@ -292,15 +292,15 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     
     func initViewNavigateBar(){
         let bounds = UIScreen.mainScreen().bounds
-        self.settingButton = UIButton.init(frame: CGRect.init(x: bounds.size.width - 45, y: 2, width: 40, height: 40))
-        self.settingButton.setImage(UIImage.init(named: "setting-button"), forState: .Normal)
-        self.settingButton.setImage(UIImage.init(named: "setting-selected-button"), forState: .Highlighted)
-        self.homeViewButton = UIButton.init(frame: CGRect.init(x: 5, y: 2, width: 40, height: 40))
-        self.homeViewButton.setImage(UIImage.init(named: "homeview-button"), forState: .Normal)
-        self.homeViewButton.setImage(UIImage.init(named: "homeview-selected-button"), forState: .Highlighted)
-        self.backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
-        self.backButton.setImage(UIImage.init(named: "back-button"), forState: .Normal)
-        self.backButton.setImage(UIImage.init(named: "back-selected-button"), forState: .Highlighted)
+        self.settingButton = UIButton(frame: CGRect(x: bounds.size.width - 45, y: 2, width: 40, height: 40))
+        self.settingButton.setImage(UIImage(named: "setting-button"), forState: .Normal)
+        self.settingButton.setImage(UIImage(named: "setting-selected-button"), forState: .Highlighted)
+        self.homeViewButton = UIButton(frame: CGRect(x: 5, y: 2, width: 40, height: 40))
+        self.homeViewButton.setImage(UIImage(named: "homeview-button"), forState: .Normal)
+        self.homeViewButton.setImage(UIImage(named: "homeview-selected-button"), forState: .Highlighted)
+        self.backButton = UIButton(frame: CGRect(x: 0, y: 2, width: 40, height: 40))
+        self.backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
+        self.backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
         
         self.headerToolView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: 44))
         self.headerToolView.addSubview(self.settingButton)
@@ -365,11 +365,11 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
     func changeButtonStatus(){
         switch self.publishType {
         case .Posts:
-            self.userPostButton.setTitleColor(UIColor.init(red: 240/255, green: 50/255, blue: 75/255, alpha: 1.0), forState: .Normal)
-            self.userLikeButton.setTitleColor(UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0), forState: .Normal)
+            self.userPostButton.setTitleColor(UIColor(red: 240/255, green: 50/255, blue: 75/255, alpha: 1.0), forState: .Normal)
+            self.userLikeButton.setTitleColor(UIColor(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0), forState: .Normal)
         case .Likes:
-            self.userPostButton.setTitleColor(UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0), forState: .Normal)
-            self.userLikeButton.setTitleColor(UIColor.init(red: 240/255, green: 50/255, blue: 75/255, alpha: 1.0), forState: .Normal)
+            self.userPostButton.setTitleColor(UIColor(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0), forState: .Normal)
+            self.userLikeButton.setTitleColor(UIColor(red: 240/255, green: 50/255, blue: 75/255, alpha: 1.0), forState: .Normal)
         }
     }
     
@@ -607,7 +607,7 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
         self.view.addSubview(headerView)
         self.collectionView.hidden = true
         headerView.alpha = 1
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
             self.doCellTransitionAnimation(animationView, isPersent: true)
             headerView.alpha = 0
             }, completion: { (_) -> Void in
@@ -740,7 +740,7 @@ extension CTAUserPublishesViewController: UIViewControllerAnimatedTransitioning{
         let topView = self.topView.snapshotViewAfterScreenUpdates(true)
         topView.frame.origin.y = 0
         topView.frame.origin.x = 0
-        let animationView = UIView.init(frame: topView.frame)
+        let animationView = UIView(frame: topView.frame)
         animationView.backgroundColor = UIColor.clearColor()
 //        animationView.addSubview(toolView)
         animationView.addSubview(topView)
@@ -748,7 +748,7 @@ extension CTAUserPublishesViewController: UIViewControllerAnimatedTransitioning{
     }
     
     func getCollectionHeaderView() -> UIView{
-        let animationView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
+        let animationView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
         animationView.backgroundColor = UIColor.clearColor()
         
         let headerView = self.headerToolView.snapshotViewAfterScreenUpdates(true)
@@ -765,11 +765,11 @@ extension CTAUserPublishesViewController: UIViewControllerAnimatedTransitioning{
     
     func getCellAnimationView() -> UIView{
         let visibleCells = self.collectionView.visibleCells();
-        let animationView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
+        let animationView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
         for i in 0..<visibleCells.count{
             let cell = visibleCells[i] as! CTAPublishesCell
             let cellImage = cell.cellImageView.snapshotViewAfterScreenUpdates(true)
-            let cellUIView = CTAPublishTransitionCell.init(frame: cell.frame)
+            let cellUIView = CTAPublishTransitionCell(frame: cell.frame)
             cellUIView.addCellView(cellImage, cellPublishID: cell.publishModel.publishID)
             self.addImageShadow(cellUIView)
             cellUIView.frame.origin.y = cell.frame.origin.y + self.collectionView.frame.origin.y - self.collectionView.contentOffset.y
@@ -796,7 +796,7 @@ extension CTAUserPublishesViewController: UIViewControllerAnimatedTransitioning{
                 for i in 0..<subViews.count{
                     let cellView = subViews[i] as! CTAPublishTransitionCell
                     if cellView.publishID == self.selectedPublishID{
-                        cellView.center = CGPoint.init(x: fullx, y: fully)
+                        cellView.center = CGPoint(x: fullx, y: fully)
                         cellView.alpha = 1
                         cellView.transform = CGAffineTransformMakeScale(rateW, rateH)
                     }else {

@@ -34,6 +34,8 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
     var loadCompeteHandler:(() -> Void)?
     
+    var loadAgainHandler:(() -> Void)?
+    
     var imgLoaded:Bool = false
     
     var isPlaying:Bool = false
@@ -48,7 +50,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.cellImageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
+        self.cellImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
         self.cropImageRound(self.cellImageView)
         self.addSubview(self.cellImageView)
     }
@@ -63,8 +65,8 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
     func setViewColor(color:UIColor){
         if self.cellColorView == nil {
-            let cellBoud = CGRect.init(x: -1, y: -1, width: self.bounds.width+2, height: self.bounds.height+2)
-            self.cellColorView = UIView.init(frame: cellBoud)
+            let cellBoud = CGRect(x: -1, y: -1, width: self.bounds.width+2, height: self.bounds.height+2)
+            self.cellColorView = UIView(frame: cellBoud)
             self.cropImageRound(self.cellColorView!)
             self.addSubview(self.cellColorView!)
             self.bringSubviewToFront(self.cellColorView!)
@@ -117,7 +119,11 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     }
     
     func loadAnimation(){
-        if self.animationEnable && !self.isLoading{
+        if self.animationEnable{
+            if self.isLoading{
+                self.loadAgainHandler = self.loadAnimation
+                return
+            }
             if self.publishModel != nil {
                 self.isLoadComplete = false
                 let purl = CTAFilePath.publishFilePath
@@ -127,6 +133,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                     self.bringSubviewToFront(self.cellColorView!)
                 }
                 self.isLoading = true
+                self.loadAgainHandler = nil
                 BlackCatManager.sharedManager.retrieveDataWithURL(NSURL(string: url)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self](data, error, cacheType, URL) -> () in
                     if let strongSelf = self {
                         if let data = data,
@@ -216,6 +223,10 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                 strongSelf.loadCompeteHandler!()
                 strongSelf.loadCompeteHandler = nil
             }
+            if strongSelf.loadAgainHandler != nil {
+                strongSelf.loadAgainHandler!()
+                strongSelf.loadAgainHandler = nil
+            }
         })
     }
     
@@ -231,7 +242,14 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
             if strongSelf.loadErrorCount < 3{
                 strongSelf.loadErrorCount += 1
                 strongSelf.loadAnimation()
+            }else {
+                strongSelf.loadCompeteHandler = nil
+                if strongSelf.loadAgainHandler != nil {
+                    strongSelf.loadAgainHandler!()
+                    strongSelf.loadAgainHandler = nil
+                }
             }
+            
         })
     }
     
