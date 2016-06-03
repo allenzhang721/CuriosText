@@ -530,6 +530,10 @@ extension EditViewController {
             cameraVC.didSelectedImageHandler = {[weak self] (image, backgroundColor) in
                 if let strongSelf = self {
 //                    dispatch_async(dispatch_get_main_queue(), {
+                    let hex = backgroundColor.toHex().0
+                    strongSelf.page.changeBackColor(hex)
+                    strongSelf.canvasViewController.changeBackgroundColor(backgroundColor)
+                    
                         let canvasSize = strongSelf.canvasViewController.view.bounds.size
                         (container as! ImageContainerVMProtocol).updateWithImageSize(image!.size, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
                         
