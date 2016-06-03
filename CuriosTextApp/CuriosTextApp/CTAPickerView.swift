@@ -99,6 +99,7 @@ final class CTAPickerView: UIControl {
                 if let visualCells = sf.collectionView.visibleCells() as? [CTASelectorVerticalCell] where visualCells.count > 0 {
                     
                     for cell in visualCells  {
+                        
                         cell.reloadData()
                     }
                 }

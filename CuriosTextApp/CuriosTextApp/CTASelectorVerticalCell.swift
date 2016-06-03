@@ -122,28 +122,31 @@ final class CTASelectorVerticalCell: CTASelectorCell {
             return
         }
         
-        if !actived {
-            alpha = 0.8
-        } else {
+        if actived {
             alpha = 1.0
+        } else {
+            alpha = 0.8
         }
         
         if actived != layoutAttributes.actived {
             actived = layoutAttributes.actived
-            UIView.transitionWithView(self, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {[weak self] () -> Void in
-                
-                if let sr = self {
-                    sr.alpha = sr.actived ? 1.0 : 0.8
+            
+            dispatch_async(dispatch_get_main_queue(), { 
+                UIView.transitionWithView(self, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {[weak self] () -> Void in
                     
-                    if let cells = sr.collectionView.visibleCells() as? [CTAVerticalItemCollectionViewCell] {
+                    if let sr = self {
+                        sr.alpha = sr.actived ? 1.0 : 0.8
                         
-                        for cell in cells {
-                            cell.update()
+                        if let cells = sr.collectionView.visibleCells() as? [CTAVerticalItemCollectionViewCell] {
+                            
+                            for cell in cells {
+                                cell.update()
+                            }
                         }
                     }
-                }
-                
-                }, completion: nil)
+                    
+                    }, completion: nil)
+            })
         }
     }
 }
