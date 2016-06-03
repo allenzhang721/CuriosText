@@ -94,12 +94,15 @@ final class CTAPickerView: UIControl {
             let offset = CGPoint(x: center.x - collectionView.bounds.width / 2.0, y: 0)
             collectionView.setContentOffset(offset, animated: false)
 
-            if let visualCells = collectionView.visibleCells() as? [CTASelectorVerticalCell] where visualCells.count > 0 {
-                
-                for cell in visualCells  {
-                    cell.reloadData()
+            dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                guard let sf = self else { return}
+                if let visualCells = sf.collectionView.visibleCells() as? [CTASelectorVerticalCell] where visualCells.count > 0 {
+                    
+                    for cell in visualCells  {
+                        cell.reloadData()
+                    }
                 }
-            }            
+            })
         }
     }
 }

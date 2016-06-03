@@ -45,7 +45,15 @@ final class CTASelectorFontCell: CTASelectorCell {
         
         if let indexPath = dataSource.selectorBeganFontIndexPath(self) {
             CTAFontsManager.updateSection(indexPath.section, withItem: indexPath.item)
-            self.view.updateTo(indexPath)
+            
+        }
+    }
+    
+    override func willBeDisplayed() {
+        if let indexPath = dataSource?.selectorBeganFontIndexPath(self) {
+            dispatch_async(dispatch_get_main_queue(), {[weak self] in
+                self?.view.updateTo(indexPath)
+                })
         }
     }
     
