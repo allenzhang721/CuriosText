@@ -154,8 +154,8 @@ extension CTAPhotoPreviewView {
         let boundsSize = scrollView.bounds.size
         let scale = scrollView.zoomScale
         
-        let scaledX = offset.x
-        let scaledY = offset.y
+        let scaledX = max(0, offset.x)
+        let scaledY = max(0, offset.y)
         let scaledW = min(scaledSize.width, boundsSize.width)
         let scaledH = min(scaledSize.height, boundsSize.height)
         
