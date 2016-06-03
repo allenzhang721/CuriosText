@@ -83,6 +83,20 @@ final class CTAPickerView: UIControl {
     func reloadData() {
         collectionView.reloadData()
     }
+    
+    func didEndDisplay() {
+        
+        if collectionView.visibleCells().count > 0 {
+            
+            for cell in collectionView.visibleCells() {
+                if let c = cell as? CTASelectorVerticalCell {
+                    c.didEndDiplayed()
+                }
+            }
+            
+        }
+        
+    }
 
     func updateTo(indexPath: NSIndexPath) {
         

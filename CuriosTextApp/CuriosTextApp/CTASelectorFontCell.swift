@@ -57,6 +57,10 @@ final class CTASelectorFontCell: CTASelectorCell {
         }
     }
     
+    override func didEndDiplayed() {
+        view.didEndDisplay()
+    }
+    
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
         view.addTarget(target, action: action, forControlEvents: controlEvents)
     }

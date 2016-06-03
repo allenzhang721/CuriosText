@@ -80,7 +80,6 @@ class CTAVerticalItemFontsCollectionViewCell: CTAVerticalItemCollectionViewCell 
         update()
         
         if actived != layoutAttributes.actived {
-            
             actived = layoutAttributes.actived
             UIView.transitionWithView(self, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {[weak self] () -> Void in
                 
