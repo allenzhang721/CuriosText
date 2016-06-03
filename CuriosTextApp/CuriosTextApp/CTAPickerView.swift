@@ -78,6 +78,16 @@ final class CTAPickerView: UIControl {
         layout.delegate = self
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(CTAPickerView.tap(_:)))
+        addGestureRecognizer(tap)
+    }
+    
+    func tap(sender: UITapGestureRecognizer) {
+        let location = sender.locationInView(collectionView)
+        if let indexPath = collectionView.indexPathForItemAtPoint(location) {
+            collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredHorizontally, animated: true)
+        }
     }
     
     func reloadData() {
@@ -122,7 +132,7 @@ final class CTAPickerView: UIControl {
     }
 }
 
-extension CTAPickerView: UICollectionViewDataSource, UICollectionViewDelegate {
+extension CTAPickerView: UICollectionViewDataSource {
     
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -150,6 +160,14 @@ extension CTAPickerView: UICollectionViewDataSource, UICollectionViewDelegate {
         cell.register()
         cell.reloadData()
         return cell
+    }
+}
+
+extension CTAPickerView: UICollectionViewDelegate {
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        
     }
 }
 
