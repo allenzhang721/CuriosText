@@ -184,7 +184,7 @@ extension CTAPhotoPreviewView {
         let maxScale = scrollView.maximumZoomScale
         let curScale = scrollView.zoomScale
         
-        let nextScale = curScale > minScale ? minScale : maxScale
+        let nextScale = curScale < maxScale ? maxScale : minScale
         scaleMax = nextScale == maxScale ? true : false
         
         scrollView.setZoomScale(nextScale, animated: true)
@@ -220,6 +220,8 @@ extension CTAPhotoPreviewView: UIScrollViewDelegate {
     func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
         print("End Zoom")
 //        updateImgViewPosition()
+        scaleMax = scale == scrollView.maximumZoomScale ? true : false
+        didChangedHandler?(scaleMax)
     }
 }
 
