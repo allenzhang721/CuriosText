@@ -93,7 +93,16 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
         if publishModel != nil {
             self.imgLoaded = false
             let defaultImg = self.getDefaultIcon(self.bounds)
-            let imagePath = CTAFilePath.publishFilePath+self.publishModel!.publishIconURL
+            var previewIconURL = ""
+            if self.animationEnable{
+                previewIconURL = self.publishModel!.publishIconURL
+            }else {
+                previewIconURL = self.publishModel!.previewIconURL
+                if previewIconURL == "" {
+                    previewIconURL = self.publishModel!.publishIconURL
+                }
+            }
+            let imagePath = CTAFilePath.publishFilePath+previewIconURL
             let imageURL = NSURL(string: imagePath)!
             self.cellImageView.kf_setImageWithURL(imageURL, placeholderImage: defaultImg, optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in
                 if error != nil {

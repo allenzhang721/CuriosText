@@ -168,16 +168,18 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         let selectedIndex = self.getPublishIndex(self.selectedPublishID)
         let publishArray = self.getCurrentPublishArray(selectedIndex)
         let currentIndex = self.getCurrentPublishIndex(selectedIndex)
-        self.resetCells()
+        self.resetCells(false)
         for i in 0..<publishArray.count{
             if i < currentIndex - 1{
-                let previousCell = self.fullCellArray[i]
                 let previousPublish = publishArray[i]
-                previousCell.isVisible = true
-                if previousCell.publishModel == nil || previousCell.publishModel!.publishID != previousPublish.publishID{
-                    previousCell.publishModel = previousPublish
+                let previousCell =  self.getPublishCellByModel(previousPublish)//self.fullCellArray[i]
+                if previousCell != nil {
+                    previousCell!.isVisible = true
+                    if previousCell!.publishModel == nil {
+                        previousCell!.publishModel = previousPublish
+                    }
+                    self.setPublishCellPosition(previousCell!)
                 }
-                self.setPublishCellPosition(previousCell)
             }
             if i == currentIndex - 1 {
                 let preModel = publishArray[i]
@@ -203,16 +205,11 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
                 self.setPublishCellPosition(self.nextFullCell!)
             }
             if i > currentIndex + 1{
-                var nextCell:CTAFullPublishesCell?
-                if  i > self.fullCellArray.count - 1{
-                    nextCell = self.getNextEnableCell()
-                }else{
-                    nextCell = self.fullCellArray[i]
-                }
+                let nextPublish = publishArray[i]
+                let nextCell = self.getPublishCellByModel(nextPublish)
                 if nextCell != nil {
-                    let nextPublish = publishArray[i]
                     nextCell!.isVisible = true
-                    if nextCell!.publishModel == nil || nextCell!.publishModel!.publishID != nextPublish.publishID{
+                    if nextCell!.publishModel == nil{
                         nextCell!.publishModel = nextPublish
                     }
                     self.setPublishCellPosition(nextCell!)
@@ -243,16 +240,25 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         self.currentFullCell!.playAnimation()
     }
     
-    func getNextEnableCell() -> CTAFullPublishesCell? {
+    
+    func getPublishCellByModel(publishModel:CTAPublishModel) -> CTAFullPublishesCell?{
+        var publishNilCell:CTAFullPublishesCell? = nil
         for i in 0..<self.fullCellArray.count{
-            if !self.fullCellArray[i].isVisible {
-                return self.fullCellArray[i]
+            let publishCell = self.fullCellArray[i]
+            if publishCell.publishModel != nil{
+                if publishCell.publishModel!.publishID == publishModel.publishID{
+                    return publishCell
+                }
+            }else {
+                if !publishCell.isVisible{
+                    publishNilCell = publishCell
+                }
             }
         }
-        return nil
+        return publishNilCell
     }
     
-    func resetCells(){
+    func resetCells(isCleanDate:Bool){
         self.previousFullCell!.isVisible = false
         self.previousFullCell!.alpha = 0.0
         self.nextFullCell!.isVisible = false
@@ -262,6 +268,14 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         for i in 0..<self.fullCellArray.count{
             self.fullCellArray[i].isVisible = false
             self.fullCellArray[i].alpha = 0.0
+        }
+        if isCleanDate{
+            self.previousFullCell!.publishModel = nil
+            self.nextFullCell!.publishModel = nil
+            self.currentFullCell!.publishModel = nil
+            for i in 0..<self.fullCellArray.count{
+                self.fullCellArray[i].publishModel = nil
+            }
         }
     }
     
@@ -864,9 +878,9 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
                 self.currentFullCell.transform = CGAffineTransformMakeScale(1, 1)
                 self.currentFullCell.alpha = 1
                 self.removeVerHeaderView(true)
+                self.resetCells(true)
             }
         }else {
-            self.currentFullCell!.playAnimation()
             self.removeVerHeaderView(false)
         }
     }
