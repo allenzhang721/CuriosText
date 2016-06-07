@@ -205,7 +205,6 @@ extension GIFCreateViewController {
     
     func setupViews() {
         aniCanvasView = AniPlayCanvasView(frame: CGRect(origin: CGPoint(x: 0, y: 44), size: canvas.size))
-        aniCanvasView.backgroundColor = UIColor.groupTableViewBackgroundColor()
         aniCanvasView.dataSource = canvas
         aniCanvasView.aniDataSource = canvas
         view.addSubview(aniCanvasView) // debug
@@ -236,7 +235,7 @@ extension GIFCreateViewController {
     }
     
     func setupStyles() {
-        aniCanvasView.backgroundColor = CTAStyleKit.commonBackgroundColor
+        aniCanvasView.backgroundColor = UIColor(hexString: canvas.canvas.backgroundColor)
         view.backgroundColor = CTAStyleKit.ediorBackgroundColor
     }
     
