@@ -106,12 +106,12 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
                 collectionview.deleteItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             }
             
-            }, completion: { finished in
+            }, completion: {[weak self] finished in
                 
-                dispatch_async(dispatch_get_main_queue(), {[weak self] () -> Void in
-                    
+//                dispatch_async(dispatch_get_main_queue(), {[weak self] () -> Void in
+                
                     self?.animation = false
-                    })
+//                    })
         })
     }
     
@@ -141,12 +141,12 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
             if currentCount > 0 {
                 collectionview.deleteItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             }
-            }, completion: { finished in
+            }, completion: {[weak self] finished in
                 
-                dispatch_async(dispatch_get_main_queue(), {[weak self] () -> Void in
-                    
+//                dispatch_async(dispatch_get_main_queue(), {[weak self] () -> Void in
+                
                     self?.animation = false
-                })
+//                })
         })
         
     }
