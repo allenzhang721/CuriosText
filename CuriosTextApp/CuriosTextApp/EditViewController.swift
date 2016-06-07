@@ -833,24 +833,25 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
         let next = aselectedIndexPath.item > 0 ? aselectedIndexPath.item - 1 : 0
         
         
-        let preType = selectorViewController.currentType
-        let currentCon = selectedContainer?.type
+        
+//        let preType = selectorViewController.currentType
+//        let currentCon = selectedContainer?.type
         selectedIndexPath = NSIndexPath(forItem: next, inSection: 0)
-        let nextCon = selectedContainer?.type
+//        let nextCon = selectedContainer?.type
+//        
+//        if (currentCon != nextCon) { // need update tab
+//            let nextIndex = selectedContainer?.featureTypes.indexOf(preType) ?? 0
+//            tabViewController.collectionView.reloadData()
+//            
+//            if let attri = self.tabViewController.collectionView.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: nextIndex, inSection: 0)) {
+//                let cener = attri.center
+//                self.tabViewController.collectionView.setContentOffset(CGPoint(x: cener.x - self.tabViewController.collectionView.bounds.width / 2.0, y: 0), animated: false)
+//            }
+//        }
+//        
+//        selectorViewController.updateSelector()
         
-        if (currentCon != nextCon) { // need update tab
-            let nextIndex = selectedContainer?.featureTypes.indexOf(preType) ?? 0
-            tabViewController.collectionView.reloadData()
-            
-            if let attri = self.tabViewController.collectionView.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: nextIndex, inSection: 0)) {
-                let cener = attri.center
-                self.tabViewController.collectionView.setContentOffset(CGPoint(x: cener.x - self.tabViewController.collectionView.bounds.width / 2.0, y: 0), animated: false)
-            }
-        }
-        
-        selectorViewController.updateSelector()
-        
-        
+        canvasViewController.showOverlayAndSelectedAt(NSIndexPath(forItem: next, inSection: 0))
         page.removeAt(aselectedIndexPath.item)
         canvasViewController.removeAt(aselectedIndexPath)
         

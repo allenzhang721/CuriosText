@@ -144,25 +144,7 @@ extension CTACanvasViewController {
         let location = sender.locationInView(collectionView)
         guard let index = indexPathAtPoint(location) else { return }
         
-        if index.item > 0 {
-            
-            let attributes = collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(index)!
-            let size = attributes.size
-            let position = collectionView.convertPoint(attributes.center, toView: view)
-            let transform = attributes.transform
-            
-            let attr = OverlayAttributes(postioin: position, size: size, transform: transform)
-            
-            menuShowAt(index)
-            overlayShowWith(attr)
-        }
-        
-        if let selectedIndexPath = collectionView.indexPathsForSelectedItems()?.first {
-            debug_print("has selected")
-            guard index.compare(selectedIndexPath) != .OrderedSame else { return }
-        }
-        
-        selectAt(index)
+        showOverlayAndSelectedAt(index)
     }
 }
 
@@ -291,6 +273,29 @@ extension CTACanvasViewController {
             strongSelf.collectionView.reloadSections(NSIndexSet(index: 0))
             CATransaction.commit()
         }
+    }
+    
+    func showOverlayAndSelectedAt(index: NSIndexPath) {
+        
+        if index.item > 0 {
+            
+            let attributes = collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(index)!
+            let size = attributes.size
+            let position = collectionView.convertPoint(attributes.center, toView: view)
+            let transform = attributes.transform
+            
+            let attr = OverlayAttributes(postioin: position, size: size, transform: transform)
+            
+            menuShowAt(index)
+            overlayShowWith(attr)
+        }
+        
+        if let selectedIndexPath = collectionView.indexPathsForSelectedItems()?.first {
+            debug_print("has selected")
+            guard index.compare(selectedIndexPath) != .OrderedSame else { return }
+        }
+        
+        selectAt(index)
     }
     
     func selectAt(indexPath: NSIndexPath) {
