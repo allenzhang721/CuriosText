@@ -16,6 +16,10 @@ class ImagePickerViewController: UIViewController {
     var backgroundColor: UIColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
     var backgroundHex: String = "FFFFFF"
     var didSelectedImageHandler: ((UIImage?, UIColor) -> ())?
+    
+    deinit {
+        print("\(#file) deinit")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

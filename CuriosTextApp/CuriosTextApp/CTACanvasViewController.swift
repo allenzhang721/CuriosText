@@ -50,7 +50,7 @@ final class CTACanvasViewController: UIViewController {
     weak var dataSource: CanvasViewControllerDataSource!
     private var collectionView: UICollectionView!
     var scale: CGFloat = 1.0
-    var document: CTADocument?
+    weak var document: CTADocument? 
     
     let selectedOverlayLayer = CAShapeLayer()
     
@@ -79,6 +79,7 @@ final class CTACanvasViewController: UIViewController {
     }
     
     deinit {
+        print("\(#file) deinit")
         removeNotification()
     }
 }

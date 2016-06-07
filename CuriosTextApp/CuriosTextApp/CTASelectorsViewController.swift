@@ -40,8 +40,8 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
     
     var snapImage: UIImage?
     private var animation: Bool = false
-    var dataSource: CTASelectorsViewControllerDataSource?
-    var delegate: CTASelectorViewControllerDelegate?
+    weak var dataSource: CTASelectorsViewControllerDataSource?
+    weak var delegate: CTASelectorViewControllerDelegate?
     private(set) var currentType: CTAContainerFeatureType = .Templates
     private var container: ContainerVMProtocol? {
         return dataSource?.selectorsViewControllerContainer(self)
@@ -65,6 +65,10 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
     }
 
     @IBOutlet weak var collectionview: UICollectionView!
+    
+    deinit {
+        print("\(#file) deinit")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

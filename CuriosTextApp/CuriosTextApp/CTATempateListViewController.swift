@@ -20,6 +20,11 @@ class CTATempateListViewController: UIViewController {
     private var localTemplates = [TemplateModel]()
     private var onlineTemplates = [TemplateModel]()
     private var selectedTask: RetrieveDataTask?
+    
+    deinit {
+        print("\(#file) deinit")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

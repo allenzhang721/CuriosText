@@ -57,6 +57,10 @@ class EditViewController: UIViewController {
         return anis.count > 0 ? anis.first : nil
     }
     
+    deinit {
+        print("\(#file) deinit")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addGestures()

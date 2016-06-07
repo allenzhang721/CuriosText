@@ -57,6 +57,10 @@ class CTAPublishViewController: UIViewController {
     var imageRetriver: ((String, (String, UIImage?) -> ()) -> ())?
     
     var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
+    
+    deinit {
+        print("\(#file) deinit")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
