@@ -82,7 +82,7 @@ class GIFCreator {
         let count = instance.images.count
         
         let destination = CGImageDestinationCreateWithURL(instance.fileURL, kUTTypeGIF, count, nil)!
-        let gifProperties = [(kCGImagePropertyGIFLoopCount as String): 0]
+        let gifProperties = [(kCGImagePropertyGIFDictionary as String):[(kCGImagePropertyGIFLoopCount as String): 0]]
         CGImageDestinationSetProperties(destination, gifProperties)
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
