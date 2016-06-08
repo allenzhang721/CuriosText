@@ -24,9 +24,9 @@ class EditViewController: UIViewController {
     }
     
     @IBOutlet weak var addView: CTAGradientButtonView!
-    private var tabViewController: CTATabViewController!
-    private var canvasViewController: CTACanvasViewController!
-    private var selectorViewController: CTASelectorsViewController!
+    private weak var tabViewController: CTATabViewController!
+    private weak var canvasViewController: CTACanvasViewController!
+    private weak var selectorViewController: CTASelectorsViewController!
     private var selectedIndexPath: NSIndexPath?
     var document: CTADocument!
     var tempValues = TempValues()
@@ -76,7 +76,7 @@ class EditViewController: UIViewController {
         let image = drawPageWithNoImage(cleanPage, containImage: false)
         cameraVC.templateImage = image
         
-        cameraVC.didSelectedImageHandler = {[weak self] (image, backgrounColor) in
+        cameraVC.didSelectedImageHandler = {[weak self, weak cameraVC] (image, backgrounColor) in
             if let strongSelf = self, let image = image {
 //                dispatch_async(dispatch_get_main_queue(), { 
                 
@@ -99,8 +99,8 @@ class EditViewController: UIViewController {
                         strongSelf.selectorViewController.updateSnapshotImage(image)
                     }
                 }
-                    cameraVC.removeFromParentViewController()
-                    cameraVC.view.removeFromSuperview()
+                    cameraVC?.removeFromParentViewController()
+                    cameraVC?.view.removeFromSuperview()
 //                })
             }
         }
@@ -112,8 +112,7 @@ class EditViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         if isFirstAppear {
             isFirstAppear = false
-            
-            
+ 
         }
     }
     
@@ -498,31 +497,13 @@ extension EditViewController {
                 
                 if let strongSelf = self {
                     let size = strongSelf.page.size
-//                    let canvasSize = strongSelf.canvasViewController.view.bounds.size
                     (container as! TextContainerVMProtocol).updateWithText(text, constraintSize: CGSize(width: size.width, height: size.height * 2))
                     
                     strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
-                    
-//                    draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.imageBy ,local: true) { [weak self] (previewR) in
-//                        
-//                        switch previewR {
-//                        case .Success(let img):
-//                            dispatch_async(dispatch_get_main_queue(), {
-//                                strongSelf.selectorViewController.snapImage = img
-//                            })
-//                        default:
-//                            ()
-//                        }
-//                    }
                 }
-                
-                
             }
             
-            presentViewController(textmodifyVC, animated: true, completion: {
-                
-                
-            })
+            presentViewController(textmodifyVC, animated: true, completion: {})
             
         case .Image:
             let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
@@ -830,36 +811,13 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
     
     func canvasViewControllerWillDeleted(viewController: CTACanvasViewController) {
         
-        guard let aselectedIndexPath = selectedIndexPath else {
-            return
-        }
-       
+        guard let aselectedIndexPath = selectedIndexPath else { return }
+        
         let next = aselectedIndexPath.item > 0 ? aselectedIndexPath.item - 1 : 0
-        
-        
-        
-//        let preType = selectorViewController.currentType
-//        let currentCon = selectedContainer?.type
         selectedIndexPath = NSIndexPath(forItem: next, inSection: 0)
-//        let nextCon = selectedContainer?.type
-//        
-//        if (currentCon != nextCon) { // need update tab
-//            let nextIndex = selectedContainer?.featureTypes.indexOf(preType) ?? 0
-//            tabViewController.collectionView.reloadData()
-//            
-//            if let attri = self.tabViewController.collectionView.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: nextIndex, inSection: 0)) {
-//                let cener = attri.center
-//                self.tabViewController.collectionView.setContentOffset(CGPoint(x: cener.x - self.tabViewController.collectionView.bounds.width / 2.0, y: 0), animated: false)
-//            }
-//        }
-//        
-//        selectorViewController.updateSelector()
-        
         canvasViewController.showOverlayAndSelectedAt(NSIndexPath(forItem: next, inSection: 0))
         page.removeAt(aselectedIndexPath.item)
         canvasViewController.removeAt(aselectedIndexPath)
-        
-        
     }
 }
 
@@ -891,8 +849,6 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         } else {
             return container.featureTypes[0]
         }
-        
-//        selectorViewController.changeToSelector(container.featureTypes[indexPath.item])
     }
     
     // MARK: - Delegate
