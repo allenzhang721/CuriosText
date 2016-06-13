@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        SVProgressHUD.setDefaultMaskType(.Clear)
         SVProgressHUD.setDefaultStyle(.Custom)
         SVProgressHUD.setForegroundColor(CTAStyleKit.selectedColor)
         SVProgressHUD.setBackgroundColor(UIColor.whiteColor())

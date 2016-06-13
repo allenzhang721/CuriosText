@@ -126,6 +126,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                     self.viewUserID = self.viewUser!.userID
                     if !self.isLoginUser {
                         self.headerFresh.beginRefreshing()
+                        self.footerFresh.resetNoMoreData()
                     }else {
                         self.loadFirstData()
                     }
@@ -474,12 +475,18 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                                 }
                             }
                             if !isChange{
-                                for j in 0..<self.publishModelArray.count{
-                                    let oldModel = self.publishModelArray[j]
-                                    if !self.checkPublishModelIsHave(oldModel.publishID, publishArray: modelArray as! Array<CTAPublishModel>){
+                                for j in 0..<modelArray!.count{
+                                    if j > self.publishModelArray.count{
                                         isChange = true
                                         break
+                                    }else {
+                                        let oldModel = self.publishModelArray[j]
+                                        if !self.checkPublishModelIsHave(oldModel.publishID, publishArray: modelArray as! Array<CTAPublishModel>){
+                                            isChange = true
+                                            break
+                                        }
                                     }
+                                    
                                 }
                             }
                         }else {
@@ -491,6 +498,7 @@ class CTAUserPublishesViewController: UIViewController, CTAImageControllerProtoc
                     if isChange{
                         self.publishModelArray.removeAll()
                         self.loadMoreModelArray(modelArray!)
+                        self.footerFresh.resetNoMoreData()
                         self.saveArrayToLocal()
                     }
                 }else {
@@ -652,6 +660,7 @@ extension CTAUserPublishesViewController: UICollectionViewDelegate, UICollection
             self.publishModelArray.removeAll()
             self.publishModelArray = publishModelArray
             self.collectionView.reloadData()
+            self.footerFresh.resetNoMoreData()
             self.saveArrayToLocal()
         }
         

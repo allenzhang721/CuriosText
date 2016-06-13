@@ -247,11 +247,13 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
             let publishCell = self.fullCellArray[i]
             if publishCell.publishModel != nil{
                 if publishCell.publishModel!.publishID == publishModel.publishID{
-                    return publishCell
+                    publishNilCell = publishCell
+                    break
                 }
             }else {
                 if !publishCell.isVisible{
                     publishNilCell = publishCell
+                    break
                 }
             }
         }
@@ -382,11 +384,16 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
                                 }
                             }
                             if !isChange{
-                                for j in 0..<self.publishModelArray.count{
-                                    let oldModel = self.publishModelArray[j]
-                                    if !self.checkPublishModelIsHave(oldModel.publishID, publishArray: modelArray as! Array<CTAPublishModel>){
+                                for j in 0..<modelArray!.count{
+                                    if j > self.publishModelArray.count{
                                         isChange = true
                                         break
+                                    }else {
+                                        let oldModel = self.publishModelArray[j]
+                                        if !self.checkPublishModelIsHave(oldModel.publishID, publishArray: modelArray as! Array<CTAPublishModel>){
+                                            isChange = true
+                                            break
+                                        }
                                     }
                                 }
                             }
