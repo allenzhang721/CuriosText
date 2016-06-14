@@ -237,6 +237,10 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
             if strongSelf.cellColorView != nil {
                 strongSelf.bringSubviewToFront(strongSelf.cellColorView!)
             }
+            strongSelf.previewView.alpha = 0
+            UIView.animateWithDuration(0.2, animations: { 
+                strongSelf.previewView.alpha = 1
+            })
             strongSelf.isLoadComplete = true
             if strongSelf.loadCompeteHandler != nil {
                 strongSelf.loadCompeteHandler!()

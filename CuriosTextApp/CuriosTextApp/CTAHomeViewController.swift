@@ -231,9 +231,9 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     }
     
     func reloadViewHandler(noti: NSNotification){
-        self.viewUserID = ""
-        self.reloadView()
-        self.viewAppearBegin()
+        self.getLoginUser()
+        self.viewUserID = (self.loginUser == nil) ? "-1" : self.loginUser!.userID
+        self.loadNewCellData()
     }
     
     func reloadView(){
