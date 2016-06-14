@@ -18,7 +18,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     var publishModel:CTAPublishModel?{
         didSet{
             self.reloadCell()
-            self.loadAnimation()
+            self.reLoadAnimation()
         }
     }
     
@@ -82,17 +82,17 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     }
     
     func reloadCell(){
-        self.isPlaying = false
-        self.isPause = false
-        self.loadErrorCount = 0
-        self.isLoading = false
         self.bringSubviewToFront(self.cellImageView)
         if self.cellColorView != nil {
             self.bringSubviewToFront(self.cellColorView!)
         }
         if publishModel != nil {
+            var defaultImg = self.getDefaultIcon(self.bounds)
+            if self.imgLoaded{
+                defaultImg = self.cellImageView.image!
+            }
             self.imgLoaded = false
-            let defaultImg = self.getDefaultIcon(self.bounds)
+            
             var previewIconURL = ""
             if self.animationEnable{
                 previewIconURL = self.publishModel!.publishIconURL
@@ -117,14 +117,24 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     }
     
     func resetCell(){
-        let whiteImg = self.getWhiteBg(self.bounds)
+        let whiteImg = self.getDefaultIcon(self.bounds)
         self.cellImageView.image = whiteImg
         if self.isLoadComplete{
             self.previewView.dataSource = nil
             self.previewView.aniDataSource = nil
             self.previewView.reloadData({
             })
+            self.isLoadComplete = false
         }
+    }
+    
+    func reLoadAnimation(){
+        self.isPlaying = false
+        self.isPause = false
+        self.loadErrorCount = 0
+        self.isLoading = false
+        self.isLoadComplete = false
+        self.loadAnimation()
     }
     
     func loadAnimation(){
@@ -223,17 +233,16 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
         self.isLoading = false
         dispatch_async(dispatch_get_main_queue(), {[weak self] in
             guard let strongSelf = self else { return }
-            strongSelf.isLoadComplete = true
             strongSelf.bringSubviewToFront(strongSelf.previewView)
             if strongSelf.cellColorView != nil {
                 strongSelf.bringSubviewToFront(strongSelf.cellColorView!)
             }
+            strongSelf.isLoadComplete = true
             if strongSelf.loadCompeteHandler != nil {
                 strongSelf.loadCompeteHandler!()
                 strongSelf.loadCompeteHandler = nil
             }
             if strongSelf.loadAgainHandler != nil {
-                strongSelf.loadAgainHandler!()
                 strongSelf.loadAgainHandler = nil
             }
         })
@@ -280,13 +289,15 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     }
     
     func playComplete(){
-        self.isPlaying = false
-        self.isPause = false
-        let time: NSTimeInterval = NSTimeInterval(1.0)
-        let delay = dispatch_time(DISPATCH_TIME_NOW,
-                                  Int64(time * Double(NSEC_PER_SEC)))
-        dispatch_after(delay, dispatch_get_main_queue()) { [weak self] in
-            self?.playAnimation()
+        if self.isLoadComplete{
+            self.isPlaying = false
+            self.isPause = false
+            let time: NSTimeInterval = NSTimeInterval(1.0)
+            let delay = dispatch_time(DISPATCH_TIME_NOW,
+                                      Int64(time * Double(NSEC_PER_SEC)))
+            dispatch_after(delay, dispatch_get_main_queue()) { [weak self] in
+                self?.playAnimation()
+            }
         }
     }
 

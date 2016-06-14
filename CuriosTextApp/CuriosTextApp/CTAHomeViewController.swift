@@ -30,6 +30,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     
     var viewUserID:String = ""
     var loginUser:CTAUserModel?
+    var isAddNew:Bool = false
     
     var isDisMis:Bool = true
     var isLoadLocal:Bool = false
@@ -54,7 +55,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.initView()
         self.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
         if !self.isAddOber{
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CTAHomeViewController.reloadViewHandler(_:)), name: "publishEditFile", object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CTAHomeViewController.addNewPublish(_:)), name: "publishEditFile", object: nil)
             self.isAddOber = true
         }
     }
@@ -225,6 +226,10 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         }
     }
     
+    func addNewPublish(noti: NSNotification){
+        self.isAddNew = true
+    }
+    
     func reloadViewHandler(noti: NSNotification){
         self.viewUserID = ""
         self.reloadView()
@@ -256,6 +261,9 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             }else {
                 self.loadNewCellData()
             }
+        }else if self.isAddNew{
+            self.loadNewCellData()
+            self.isAddNew = false
         }
     }
     
