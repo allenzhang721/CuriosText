@@ -22,6 +22,7 @@ class AniPreviewCanvasViewController: UIViewController {
         super.viewDidLoad()
         setup()
         
+        fakePauseAllView.userInteractionEnabled = false
         fakePauseView.needGradient = false
     }
     
@@ -41,8 +42,10 @@ class AniPreviewCanvasViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            guard let sf = self else {return}
             self?.aniCanvasView.alpha = 1.0
             self?.aniCanvasView.play()
+            self?.aniCanvasView.backgroundColor = UIColor(hexString: sf.canvas.canvas.backgroundColor)
         }
     }
     

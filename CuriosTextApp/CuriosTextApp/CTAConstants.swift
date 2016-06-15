@@ -59,7 +59,7 @@ enum CTARequestUrl: CustomStringConvertible {
   case CheckPassword, UpdatePassword, ResetPassword, UserDetail
     
   case GetPublishID, CreatePublish, DeletePublish
-  case UserPublishList, UserLikePublishList, UserRebuildPublishList, UserFollowPublishList, NewPubulishList, HotPublishList
+  case UserPublishList, UserLikePublishList, UserRebuildPublishList, UserFollowPublishList, NewPubulishList, HotPublishList, SetHotPublish
   case LikePublish, UnLikePublish, RebuildPublish, SharePublish, ReportPublish
   case FollowUser, UnFollowUser, BlockUser, UnBlockUser, UserFollowList, UserBeFollowList
   case UserUpToken, PublishUpToken, UploadFilePath, ResourceUpToken
@@ -126,6 +126,8 @@ enum CTARequestUrl: CustomStringConvertible {
         return "/publish/newPublishList"
     case .HotPublishList:
         return "/publish/hotPublishList"
+    case .SetHotPublish:
+        return "/publish/setHotPublish"
     case .LikePublish:
         return "/publish/likePublish"
     case .UnLikePublish:
@@ -170,7 +172,7 @@ enum CTAParameterKey: CustomStringConvertible {
   case UpToken, UpTokenKey
   case ShareCount, RebuildCount, LikeCount, LikeStatus
   case Openid, Headimgurl, WechatName
-  case WeiBoUserID, Avatarhd, Gender, WeiboName, WeiboDesc
+  case WeiBoUserID, WeiBoID, Avatarhd, Gender, WeiboName, WeiboDesc
     
   var description: String {
     switch self {
@@ -269,6 +271,8 @@ enum CTAParameterKey: CustomStringConvertible {
     case .WechatName:
         return "nickname"
     case .WeiBoUserID:
+        return "userID"
+    case .WeiBoID:
         return "id"
     case .Avatarhd:
         return "avatar_hd"

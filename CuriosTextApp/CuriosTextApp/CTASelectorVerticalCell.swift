@@ -53,6 +53,10 @@ final class CTASelectorVerticalCell: CTASelectorCell {
         collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredVertically, animated: false)
     }
     
+    override func didEndDiplayed() {
+//        actived = false
+    }
+    
     private func setup() {
         
         let layout = CTALineFlowLayout()
@@ -91,9 +95,9 @@ final class CTASelectorVerticalCell: CTASelectorCell {
         if let index = verticalDataSource?.verticalCellBeganIndex(self) {
             debug_print("verticalCell reloadData and will scroll to item = \(index)", context: colorContext)
             dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
-                if let sr = self {
+                if let sf = self {
                     
-                    sr.load(index)
+                    sf.load(index)
                 }
             })
             
@@ -107,6 +111,19 @@ final class CTASelectorVerticalCell: CTASelectorCell {
         
         collectionView?.scrollToItemAtIndexPath(NSIndexPath(forItem: next, inSection: 0), atScrollPosition: .CenteredVertically, animated: false)
         
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            if let sf = self {
+                sf.alpha = sf.actived ? 1.0 : 0.8
+                
+                if let cells = sf.collectionView.visibleCells() as? [CTAVerticalItemCollectionViewCell] {
+                    
+                    for cell in cells {
+                        cell.update()
+                    }
+                }
+            }
+        }
+        
 //        guard let attribute = collectionView?.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0)) else {
 //            return
 //        }
@@ -114,6 +131,7 @@ final class CTASelectorVerticalCell: CTASelectorCell {
 //            collectionView.setContentOffset(CGPoint(x: 0, y: center.y - collectionView.bounds.height / 2.0), animated: false)
     }
     
+    // 没有产生 boundsChange，就不会调用
     override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
         
         super.applyLayoutAttributes(layoutAttributes)
@@ -122,28 +140,42 @@ final class CTASelectorVerticalCell: CTASelectorCell {
             return
         }
         
-        if !actived {
-            alpha = 0.8
-        } else {
+        if actived {
             alpha = 1.0
+        } else {
+            alpha = 0.8
         }
         
         if actived != layoutAttributes.actived {
             actived = layoutAttributes.actived
-            UIView.transitionWithView(self, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {[weak self] () -> Void in
+            
+            dispatch_async(dispatch_get_main_queue(), {[weak self] in
                 
-                if let sr = self {
-                    sr.alpha = sr.actived ? 1.0 : 0.8
+                if let sf = self {
+                    sf.alpha = sf.actived ? 1.0 : 0.8
                     
-                    if let cells = sr.collectionView.visibleCells() as? [CTAVerticalItemCollectionViewCell] {
+                    if let cells = sf.collectionView.visibleCells() as? [CTAVerticalItemCollectionViewCell] {
                         
                         for cell in cells {
                             cell.update()
                         }
                     }
                 }
-                
-                }, completion: nil)
+//                UIView.transitionWithView(self, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {[weak self] () -> Void in
+//                    
+//                    if let sr = self {
+//                        sr.alpha = sr.actived ? 1.0 : 0.8
+//                        
+//                        if let cells = sr.collectionView.visibleCells() as? [CTAVerticalItemCollectionViewCell] {
+//                            
+//                            for cell in cells {
+//                                cell.update()
+//                            }
+//                        }
+//                    }
+//                    
+//                    }, completion: nil)
+            })
         }
     }
 }
@@ -169,7 +201,7 @@ extension CTASelectorVerticalCell: UICollectionViewDataSource {
             cell = aCell
             
             aCell.delegate = self
-            
+//            aCell.actived = false
             if let verticalDelegate = verticalDelegate {
                 verticalDelegate.verticalCell(self, configItemCell: aCell, itemCellForItemAtIndexPath: indexPath)
             }

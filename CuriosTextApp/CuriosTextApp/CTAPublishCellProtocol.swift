@@ -60,14 +60,14 @@ extension CTAPublishCellProtocol{
     
     func getCellSpace() -> CGFloat{
         let screenWidth = UIScreen.mainScreen().bounds.width
-        let space:CGFloat = 2.00/375.00*screenWidth
-        return space
+        let space:Int = Int(2.00/375.00*screenWidth)
+        return CGFloat(space)
     }
     
     func getCellRect() -> CGSize{
         let screenWidth = UIScreen.mainScreen().bounds.width
         let space = getCellSpace()
-        let itemWidth = Int((screenWidth - space*4)/3)
+        let itemWidth = (screenWidth - space*4)/3
         return CGSize.init(width: itemWidth, height: itemWidth)
     }
     

@@ -35,6 +35,7 @@
 "SMSVerifyMessage" = "短信已发送至:";
 "NoReceivedCodeLabel" = "收不到验证码?";
 "SetPasswordTitle" = "设置密码";
+"ChangePasswordTitle" = "修改密码";
 "SubmitLabel" = "提交";
 "SetPasswordPlaceholder" = "密码长度为6-16位";
 "ConfirmPasswordLabel" = "确认密码";
@@ -49,6 +50,18 @@
 "UserFemaleLabel" = "女";
 "UserRegion" = "地区";
 "UserDesc" = "简介";
+"AccountLabel" = "账号设置";
+"BindingAccountLabel" = "账号设置";
+"ChangePasswordLabel" = "修改密码";
+"SystemSettingLabel" = "系统设置";
+"AboutLabel" = "关于";
+"InviteFriendsLabel" = "邀请好友";
+"ReviewUSLabel" = "给我们评分吧";
+"PhoneLabel" = "手机号";
+"WechatLabel" = "微信";
+"WeiboLabel" = "微博";
+"LinkedLabel" = "已关联";
+"UnlinkedLabel" = "未关联";
 "SaveButtonLabel" = "保存";
 "WechatShareLabel" = "微信好友";
 "MomentsShareLabel" = "朋友圈";
@@ -58,7 +71,7 @@
 "SaveLocalLabel" = "保存";
 "ReportLabel" = "举报";
 "UploadFileLabel" = "上传";
-
+"AddToHotLabel" = "添加到热门";
 
 "AlertOkLabel" = "确定";
 "AlertYesLabel" = "是";
@@ -68,6 +81,7 @@
 "AlertChoosePhoteLabel" = "从相册中选择";
 "AlertBackLabel" = "返回";
 "AlertWaitLabel" = "等待";
+"AlertSettingLabel" = "设置";
 "AlertTitleDeleteFile" = "确定删除吗?";
 "AlertTitleNoInstallWechat" = "你未安装微信";
 "AlertTitleNoInstallWeibo" = "你未安装微博";
@@ -79,6 +93,12 @@
 "AlertTitleNumberVerifyError" = "发送验证码失败,请稍后再试";
 "AlertTitleCodeVerifyError" = "验证码不正确,请重新输入";
 "AlertConfirmPasswordError" = "两次填写的密码不正确";
+"AlertTitleSetPhoneFirst" = "请先设置手机号";
+"AlertCurrentPassword" = "输入当前密码";
+"AlertPasswordset" = "修改密码成功";
+"AlertLinkSuccess" = "关联成功";
+"AlertUnLinkSuccess" = "取消关联成功";
+"AlertPhoneSet" = "设置成功";
 
 "AlertTitleLoginFaile" = "账号或密码错误,请重新输入";
 "AlertTitleWeChatUninstall" = "未找到微信，暂时无法微信登录";
@@ -87,12 +107,20 @@
 "AlertTitleRegisterError" = "注册失败,请稍后再试";
 "AlertTitleChangeError" = "修改失败,请稍后再试";
 "AlertTitlePhoneExist" = "手机号码已存在,是否直接登录";
+"AlertTitlePhoneRegistExist" = "此手机号码已被使用,请尝试其他号码";
 "AlertTitlePhoneNotExist" = "此手机号码还没有注册,请尝试其他号码";
 "AlertTitlePhoneNil" = "手机号码为空";
 "AlertTitleConnectUs" = "请联系客服";
 "AlertTitleWechatNil" = "微信登录失败";
 "AlertTitleWeiboNil" = "微博登录失败";
 "AlertTitleDataNil" = "数据为空";
+"AlertTitlePasswordIncorrect" = "密码错误";
+"AlertTitleUserNotExist" = "用户不存在";
+"AlertTitleLinkPhoneReady" = "你已经关联了此号码";
+"AlertTitleUnlink" = "确定取消关联？";
+"AlertTitleUnlikeAllAccount" = "不能取消所有账号的关联";
+"AlertTitleAccountRegistExist" = "此账号已被绑定，请尝试其他账号";
+"AlertTitleAccountNil" = "账号为空";
 
 "AllPhotoLibraryTitle" = "设置";
 "AllPhotoLibraryMessage" = "请允许奇思访问你的相册。";
@@ -102,7 +130,8 @@
 
 "SavePhotoSuccess" = "已保存到相册";
 "ReportSuccess" = "举报成功";
-"DeletProgressLabel" = "删除中...";
+"DeleteProgressLabel" = "删除中...";
+"DeleteSuccess" = "删除成功";
 "UploadProgressLabel" = "上传中...";
 "SendProgressLabel" = "发送中...";
 "ShareSuccessLabel" = "分享成功";
@@ -133,6 +162,7 @@
 // MARK: - Editor
 "EditTextPlaceHolder" = "双击编辑";
 "Publish" = "发布";
+"Templates" = "模版";
 
 "Size" = "大小";
 "Rotation" = "旋转";
@@ -150,10 +180,15 @@
 // MARK: - Publish
 "PublishFailure" = "发布失败，请稍后再试。";
 
+// MARK: - About
+"AboutLabel" = "关于";
+
 // MARK: - AnimationName
 "NONE" = "无动画";
-"MOVE_IN" = "移入";
-"MOVE_OUT" = "移出";
+"MOVE_IN" = "右移入";
+"MOVE_OUT" = "右移出";
+"MOVE_IN_LEFT" = "左移入";
+"MOVE_OUT_LEFT" = "左移出";
 "SCALE_IN" = "缩放入";
 "SCALE_OUT" = "缩放出";
 "IRIS_IN" = "中心渐显";
@@ -162,5 +197,7 @@
 "CURL_OUT" = "卷曲出";
 "FADE_IN" = "渐显";
 "FADE_OUT" = "渐隐";
+"FADE_IN_ORDER" = "顺序渐显";
+"FADE_OUT_ORDER" = "顺序渐隐";
 "ORBITAL_IN" = "旋转入";
 "ORBITAL_OUT" = "旋转出";

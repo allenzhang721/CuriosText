@@ -45,7 +45,7 @@ struct ImageDrawing: ImageDrawable {
 
 // MARK: - Drawing
 
-func drawing(promises: [Promise<Drawable>], size: CGSize, completed:(Result<UIImage>) -> ()) {
+func drawing(promises: [Promise<Drawable>], size: CGSize, backgroundColor: UIColor = UIColor.whiteColor() ,completed:(Result<UIImage>) -> ()) {
     
     when(promises).then { drawables -> UIImage in
         
@@ -53,7 +53,7 @@ func drawing(promises: [Promise<Drawable>], size: CGSize, completed:(Result<UIIm
         
         // back ground
                 let path = UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: size))
-                UIColor.whiteColor().setFill()
+                backgroundColor.setFill()
                 path.fill()
         
         for d in drawables {

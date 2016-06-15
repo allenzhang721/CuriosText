@@ -9,27 +9,59 @@
 import UIKit
 
 class CTATemplateViewController: UIViewController {
+    
+    var canvas: AniCanvas?
+    var didChangedHandler: (() -> ())?
+    var dismissHandler: (() -> ())?
+    var doneHandler: (() -> ())?
+    var cancelHandler: (() -> ())?
+    
+    private var previewView: AniPlayCanvasView!
+    private var listVC: CTATempateListViewController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    private func setup() {
+        
+        // create previewView
+        createPreView()
     }
-    */
+    
+    private func createPreView() {
+        if let canvas = canvas where previewView == nil {
+            let screenSize = UIScreen.mainScreen().bounds.size
+            let previewView = AniPlayCanvasView(frame: CGRect(origin: CGPoint.zero, size: canvas.size))
+            let scale = min(screenSize.width / canvas.size.width, screenSize.width / canvas.size.height)
+            previewView.center = CGPoint(x: screenSize.width / 2.0, y: screenSize.width / 2.0 + 44)
+            previewView.transform = CGAffineTransformMakeScale(scale, scale)
+            previewView.backgroundColor = UIColor.whiteColor()
+            previewView.completedBlock = {[weak self] in
+            }
+            previewView.dataSource = canvas
+            previewView.aniDataSource = canvas
+            view.addSubview(previewView)
+            self.previewView = previewView
+        }
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        switch segue.destinationViewController {
+        case let vc as CTATempateListViewController:
+            listVC = vc
+            listVC.selectedHandler = { data in
+                
+            }
 
+        default:
+            ()
+        }
+    }
+    
+    
 }

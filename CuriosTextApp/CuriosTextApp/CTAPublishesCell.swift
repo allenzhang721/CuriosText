@@ -21,7 +21,7 @@ class CTAPublishesCell: UICollectionViewCell, CTAImageControllerProtocol{
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.cellImageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
+        self.cellImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
         self.cropImageRound(self.cellImageView)
         self.contentView.addSubview(self.cellImageView)
     }
@@ -33,7 +33,11 @@ class CTAPublishesCell: UICollectionViewCell, CTAImageControllerProtocol{
     func reloadCell(){
         if publishModel != nil {
             let defaultImg = self.getDefaultIcon(self.bounds)
-            let imagePath = CTAFilePath.publishFilePath+self.publishModel!.publishIconURL
+            var previewIconURL = self.publishModel!.previewIconURL
+            if previewIconURL == "" {
+                previewIconURL = self.publishModel!.publishIconURL
+            }
+            let imagePath = CTAFilePath.publishFilePath+previewIconURL
             let imageURL = NSURL(string: imagePath)!
             self.cellImageView.kf_showIndicatorWhenLoading = true
             self.cellImageView.kf_setImageWithURL(imageURL, placeholderImage: defaultImg, optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in

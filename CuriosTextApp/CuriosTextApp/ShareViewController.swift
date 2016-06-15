@@ -82,7 +82,7 @@ class ShareViewController: UIViewController {
         }
         
         textView.delegate = self
-        textView.text = ""
+        textView.text = "#Curios奇思#"
         let alength = textView.attributedText.length
         let attr = [NSForegroundColorAttributeName: alength > 140 ? UIColor.redColor() : UIColor.lightGrayColor()]
         lengthLabel.attributedText = NSAttributedString(string: "0", attributes: attr)

@@ -50,7 +50,7 @@ final class CTACanvasViewController: UIViewController {
     weak var dataSource: CanvasViewControllerDataSource!
     private var collectionView: UICollectionView!
     var scale: CGFloat = 1.0
-    var document: CTADocument?
+    weak var document: CTADocument? 
     
     let selectedOverlayLayer = CAShapeLayer()
     
@@ -79,6 +79,7 @@ final class CTACanvasViewController: UIViewController {
     }
     
     deinit {
+        print("\(#file) deinit")
         removeNotification()
     }
 }
@@ -97,7 +98,6 @@ extension CTACanvasViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = CTAStyleKit.commonBackgroundColor
         collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         collectionView.registerClass(CTACanvasTextCell.self, forCellWithReuseIdentifier: "TextCell")
         collectionView.registerClass(CTACanvasImageCell.self, forCellWithReuseIdentifier: "ImageCell")
@@ -122,10 +122,18 @@ extension CTACanvasViewController {
             UIMenuControllerWillHideMenuNotification, object: nil)
     }
     
+    func changeBackgroundColor(color: UIColor) {
+        collectionView.backgroundColor = color
+    }
+    
     func removeNotification() {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
-
+    
+    func setSelectedItemAt(indexPath i: NSIndexPath) {
+        debug_print("")
+        collectionView.selectItemAtIndexPath(i, animated: false, scrollPosition: .None)
+    }
 }
 
 
@@ -137,24 +145,7 @@ extension CTACanvasViewController {
         let location = sender.locationInView(collectionView)
         guard let index = indexPathAtPoint(location) else { return }
         
-        if index.item > 0 {
-            
-            let attributes = collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(index)!
-            let size = attributes.size
-            let position = collectionView.convertPoint(attributes.center, toView: view)
-            let transform = attributes.transform
-            
-            let attr = OverlayAttributes(postioin: position, size: size, transform: transform)
-            
-            menuShowAt(index)
-            overlayShowWith(attr)
-        }
-        
-        if let selectedIndexPath = collectionView.indexPathsForSelectedItems()?.first {
-            guard index.compare(selectedIndexPath) != .OrderedSame else { return }
-        }
-        
-        selectAt(index)
+        showOverlayAndSelectedAt(index)
     }
 }
 
@@ -278,8 +269,34 @@ extension CTACanvasViewController {
     func reloadSection() {
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
             guard let strongSelf = self else { return }
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
             strongSelf.collectionView.reloadSections(NSIndexSet(index: 0))
+            CATransaction.commit()
         }
+    }
+    
+    func showOverlayAndSelectedAt(index: NSIndexPath) {
+        
+        if index.item > 0 {
+            
+            let attributes = collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(index)!
+            let size = attributes.size
+            let position = collectionView.convertPoint(attributes.center, toView: view)
+            let transform = attributes.transform
+            
+            let attr = OverlayAttributes(postioin: position, size: size, transform: transform)
+            
+            menuShowAt(index)
+            overlayShowWith(attr)
+        }
+        
+        if let selectedIndexPath = collectionView.indexPathsForSelectedItems()?.first {
+            debug_print("has selected")
+            guard index.compare(selectedIndexPath) != .OrderedSame else { return }
+        }
+        
+        selectAt(index)
     }
     
     func selectAt(indexPath: NSIndexPath) {

@@ -15,6 +15,7 @@ class CTARotatorView: UIControl {
     var maximumRadian: CGFloat = CGFloat(M_PI * round)
     var minimumRadian: CGFloat = -CGFloat(M_PI * round)
     var currentValue: CGFloat = 0
+    var targetRadians = [0.0, 0.5 * CGFloat(M_PI), CGFloat(M_PI), 1.5 * CGFloat(M_PI), 2.0 * CGFloat(M_PI)]
     
     private var validRadian: CGFloat = 0.0
     var radianUnit: CGFloat {
@@ -70,7 +71,8 @@ class CTARotatorView: UIControl {
     func updateRotator(radian: CGFloat) {
         
         let offsetx = (radian - minimumRadian) / radianUnit
-        scrollView.contentOffset = CGPoint(x: offsetx, y: 0)
+//        .contentOffset =
+        scrollView.setContentOffset(CGPoint(x: offsetx, y: 0), animated: false)
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         nodeLayer.transform = CATransform3DMakeRotation(radian, 0, 0, 1)
@@ -83,13 +85,35 @@ extension CTARotatorView: UIScrollViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
         let offset = scrollView.contentOffset.x
+        let nextRadian: CGFloat = {
+            let r = offset * radianUnit + minimumRadian
+            if r < 0 {
+                return 2.0 * CGFloat(M_PI) - (fabs(r) % (2.0 * CGFloat(M_PI)))
+            } else if r >= 2.0 * CGFloat(M_PI) {
+                return r % (2.0 * CGFloat(M_PI))
+            } else {
+                return r
+            }
+        }()
         
-        
-        let nextRadian = offset * radianUnit + minimumRadian
-        
-        if (fabs(nextRadian * 1000 - currentValue * 1000)) > 0.1 {
+        var targetRadian = nextRadian
+        if targetRadians.count > 0 {
+            for  r in targetRadians {
+                if fabs((nextRadian * 1000.0 - r * 1000.0)) < 10 {
+                    targetRadian = r
+//                    updateRotator(targetRadian)
+                    break
+                }
+            }
+        } else {
             
-            currentValue = floor(nextRadian * 1000) / 1000.0
+        }
+        
+        
+        
+        if (fabs(targetRadian * 1000 - currentValue * 1000)) > 0.1 {
+            
+            currentValue = targetRadian
             CATransaction.begin()
             CATransaction.setDisableActions(true)
             nodeLayer.transform = CATransform3DMakeRotation(currentValue, 0, 0, 1)

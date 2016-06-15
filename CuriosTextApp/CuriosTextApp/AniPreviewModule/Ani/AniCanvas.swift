@@ -108,7 +108,7 @@ extension Canvas {
         
         let validContainers = containers.filter{ !notDisplayContainerID.contains($0.identifier) }
         
-        let canvas = Canvas(width: width, height: height, containers: validContainers, animations: [animation])
+        let canvas = Canvas(width: width, height: height, containers: validContainers, animations: [animation], backgroundColor: backgroundColor)
         
         return canvas
     }

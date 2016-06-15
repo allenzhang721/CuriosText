@@ -34,13 +34,13 @@ extension CTAPublishProtocol where Self: UIViewController{
 
     func initPublishSubView(publishRect:CGRect, horRate:CGFloat){
         let bounds = UIScreen.mainScreen().bounds
-        var butY   =  bounds.height - 75 //publishRect.origin.y + publishRect.height + 20 + 10*horRate
-        let originy = publishRect.origin.y + publishRect.height + 20 + 10*horRate //bounds.height - 60
+        var butY   =  bounds.height - 80 //publishRect.origin.y + publishRect.height + 20 + 10*horRate
+        let originy = publishRect.origin.y + publishRect.height + 55  //bounds.height - 60
         if butY < originy{
             butY = originy
         }
         self.likeButton.frame = CGRect.init(x: 0, y: 0, width: 40, height: 40)
-        self.likeButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 100*horRate,y: butY)
+        self.likeButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2,y: butY)
         self.likeButton.setImage(UIImage.init(named: "like-button"), forState: .Normal)
         self.likeButton.setImage(UIImage.init(named: "like-highlighted-button"), forState: .Highlighted)
         self.likeButton.setImage(UIImage.init(named: "like-disable-button"), forState: .Disabled)
@@ -57,7 +57,7 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.rebuildButton.setImage(UIImage.init(named: "rebuild-button"), forState: .Normal)
         self.rebuildButton.setImage(UIImage.init(named: "rebuild-selected-button"), forState: .Highlighted)
         self.rebuildButton.setImage(UIImage.init(named: "rebuild-disable-button"), forState: .Disabled)
-        self.rebuildButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2, y: butY)
+        self.rebuildButton.center = CGPoint.init(x: UIScreen.mainScreen().bounds.width/2 - 100*horRate, y: butY)
         self.view.addSubview(self.rebuildButton)
         
         self.userIconImage.frame = CGRect.init(x: UIScreen.mainScreen().bounds.width/2, y: 9, width: 40*horRate, height: 40*horRate)
@@ -96,7 +96,7 @@ extension CTAPublishProtocol where Self: UIViewController{
         }
         self.userNicknameLabel.frame.size.width = labelWidth
         self.userNicknameLabel.frame.origin.x = (UIScreen.mainScreen().bounds.width - labelWidth)/2
-        UIView.transitionWithView(self.userNicknameLabel, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
+        UIView.transitionWithView(self.userNicknameLabel, duration: 0.2, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
             self.userNicknameLabel.text = userModel.nickName
             }) { (_) in
         }
@@ -105,12 +105,12 @@ extension CTAPublishProtocol where Self: UIViewController{
         self.publishDateLabel.text = publishDate
         self.publishDateLabel.sizeToFit()
         self.publishDateLabel.frame.origin.x = UIScreen.mainScreen().bounds.width - self.publishDateLabel.frame.size.width-10
-        UIView.transitionWithView(self.userNicknameLabel, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
+        UIView.transitionWithView(self.userNicknameLabel, duration: 0.2, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
             self.publishDateLabel.text = publishDate
         }) { (_) in
         }
         
-        UIView.transitionWithView(self.userIconImage, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
+        UIView.transitionWithView(self.userIconImage, duration: 0.2, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
             let defaultImg = UIImage.init(named: "default-usericon")
             let imagePath = CTAFilePath.userFilePath+userModel.userIconURL
             let imageURL = NSURL(string: imagePath)!
@@ -222,7 +222,12 @@ extension CTAPublishProtocol where Self: UIViewController{
         }else {
             self.view.superview?.addSubview(shareView)
         }
-        shareView.showViewHandler(isSelf)
+        if isSelf{
+            shareView.shareType = .loginUser
+        }else {
+            shareView.shareType = .normal
+        }
+        shareView.showViewHandler()
     }
     
     func rebuildHandler() {
@@ -300,23 +305,33 @@ extension CTAPublishProtocol{
         if CTASocialManager.isAppInstaller(.WeChat){
             if let page = publishCell.getPage(){
                 let publishID = self.publishModel!.publishID
-                self.exportGIF(publishID, page: page, gifType: .Normal, viewController: self as! UIViewController, completedHandler: { (fileURL, thumbImg) in
+                self.exportGIF(publishID, page: page, gifType: .Small, viewController: self as! UIViewController, completedHandler: { (fileURL, thumbImg) in
                     let message =  WXMediaMessage()
-                    message.setThumbImage(thumbImg)
+                    UIGraphicsBeginImageContext(CGSize(width: 160, height: 160))
+                    thumbImg.drawInRect(CGRect(origin: CGPoint.zero, size: CGSize(width: 160, height: 160)))
+                    let img = UIGraphicsGetImageFromCurrentImageContext()
+                    UIGraphicsEndImageContext()
+                        
+                    
+                    message.setThumbImage(img)
                     
                     let ext =  WXEmoticonObject()
-                    let filePath = fileURL.path
-                    ext.emoticonData = NSData(contentsOfFile:filePath!)
+                    let data = NSData(contentsOfURL: fileURL)
+                    ext.emoticonData = data
                     message.mediaObject = ext
                     
                     let req =  SendMessageToWXReq()
                     req.bText = false
                     req.message = message
                     req.scene = 0
-                    WXApi.sendReq(req)
-                    let userID = self.userModel == nil ? "" : self.userModel!.userID
-                    CTAPublishDomain.getInstance().sharePublish(userID, publishID: self.publishModel!.publishID, sharePlatform: 0, compelecationBlock: { (_) -> Void in
-                    })
+                    let result = WXApi.sendReq(req)
+                    if result {
+                        let userID = self.userModel == nil ? "" : self.userModel!.userID
+                        CTAPublishDomain.getInstance().sharePublish(userID, publishID: self.publishModel!.publishID, sharePlatform: 0, compelecationBlock: { (_) -> Void in
+                        })
+                    }else {
+                        SVProgressHUD.showErrorWithStatus(NSLocalizedString("ShareErrorLabel", comment: ""))
+                    }
                 })
             }else {
                 self.publishCell.getEndImg({ (img) -> () in
@@ -338,6 +353,8 @@ extension CTAPublishProtocol{
                                 let userID = self.userModel == nil ? "" : self.userModel!.userID
                                 CTAPublishDomain.getInstance().sharePublish(userID, publishID: self.publishModel!.publishID, sharePlatform: 0, compelecationBlock: { (_) -> Void in
                                 })
+                            }else {
+                                SVProgressHUD.showErrorWithStatus(NSLocalizedString("ShareErrorLabel", comment: ""))
                             }
                         }
                     }
@@ -369,6 +386,8 @@ extension CTAPublishProtocol{
                             let userID = self.userModel == nil ? "" : self.userModel!.userID
                             CTAPublishDomain.getInstance().sharePublish(userID, publishID: self.publishModel!.publishID, sharePlatform: 1, compelecationBlock: { (_) -> Void in
                             })
+                        }else {
+                            SVProgressHUD.showErrorWithStatus(NSLocalizedString("ShareErrorLabel", comment: ""))
                         }
                     }
                 }
@@ -408,7 +427,7 @@ extension CTAPublishProtocol{
         if CTASocialManager.isAppInstaller(.Weibo){
             if let page = self.publishCell.getPage(){
                 let publishID = self.publishModel!.publishID
-                self.exportGIF(publishID, page: page, gifType: .Normal, viewController: self as! UIViewController, completedHandler: { [weak self] (fileURL, thumbImg) in
+                self.exportGIF(publishID, page: page, gifType: .Big, viewController: self as! UIViewController, completedHandler: { [weak self] (fileURL, thumbImg) in
                     
                     guard let sf = self, let vc = sf as? UIViewController else {return}
                     
@@ -418,11 +437,26 @@ extension CTAPublishProtocol{
                         
                         let imageObject = WBImageObject()
                         imageObject.imageData = imageData
-                        
+                        var shareURL = CTAShareConfig.shareURL
+                        shareURL = shareURL+"?sto=weibo&sfrom=message"
+                        if let info = NSBundle.mainBundle().infoDictionary {
+                            let appVersion = info["CFBundleShortVersionString"] as! String
+                            shareURL = shareURL+"&v="+appVersion
+                        }
+                        if let s = self{
+                            if s.userModel != nil {
+                                let userID = s.userModel!.userID
+                                shareURL = shareURL+"&uid="+userID
+                            }
+                            let publishID = s.publishModel!.publishID
+                            shareURL = shareURL+"&pid="+publishID
+                        }
+
+                        let weiboMessage = text+" "+shareURL
                         let accessToken = token
                         SVProgressHUD.setDefaultMaskType(.Clear)
                         SVProgressHUD.showWithStatus(NSLocalizedString("SendProgressLabel", comment: ""))
-                        WBHttpRequest(forShareAStatus: text, contatinsAPicture: imageObject, orPictureUrl: nil, withAccessToken: accessToken, andOtherProperties: nil, queue: nil, withCompletionHandler: { [weak weiboShare] (request, object, error) in
+                        WBHttpRequest(forShareAStatus: weiboMessage, contatinsAPicture: imageObject, orPictureUrl: nil, withAccessToken: accessToken, andOtherProperties: nil, queue: nil, withCompletionHandler: { [weak weiboShare] (request, object, error) in
                             guard let w = weiboShare else { return }
                             if error == nil {
                                 SVProgressHUD.showSuccessWithStatus(NSLocalizedString("ShareSuccessLabel", comment: ""))
@@ -435,6 +469,7 @@ extension CTAPublishProtocol{
                                     })
                                 }
                             } else {
+                                print(error)
                                 SVProgressHUD.showErrorWithStatus(NSLocalizedString("ShareErrorLabel", comment: ""))
                                 dispatch_async(dispatch_get_main_queue(), {
                                     w.sending = false
@@ -505,8 +540,8 @@ extension CTAPublishProtocol{
         //alertArray.append(LocalStrings.Sensitive.description)
         self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
             if index != -1{
-                let userID = self.userModel == nil ? "" : self.userModel!.userID
                 let reportType = index + 1
+                let userID = self.userModel == nil ? "" : self.userModel!.userID
                 CTAPublishDomain.getInstance().reportPublish(userID, publishID: self.publishModel!.publishID, reportType: reportType, reportMessage: "", compelecationBlock: { (_) -> Void in
                 })
                 SVProgressHUD.showSuccessWithStatus(NSLocalizedString("ReportSuccess", comment: ""))
@@ -533,16 +568,25 @@ extension CTAPublishProtocol{
                                     self.showSingleAlert(filePath, alertMessage: "", compelecationBlock: { () -> Void in
                                     })
                                 }else {
-                                    self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                                    })
+                                    SVProgressHUD.showErrorWithStatus("Failed")
                                 }
                         })
                     }else {
-                        self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
-                        })
+                        SVProgressHUD.showErrorWithStatus("Failed")
                     }
                 }
             })
+        }
+    }
+    
+    func addToHotHandler(){
+        let publishID = self.publishModel!.publishID
+        CTAPublishDomain.getInstance().setPublishHot(publishID) { (info) in
+            if info.result{
+                SVProgressHUD.showSuccessWithStatus("Success")
+            }else {
+                SVProgressHUD.showErrorWithStatus("Failed")
+            }
         }
     }
 }

@@ -54,7 +54,7 @@ class AniFactory {
 //        }
 //    }
     
-    class func animationWith(name: String, canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, descriptor: Descriptor, addBeganTime: Float, randomIndexs: [Int]? = nil) -> AniDescriptor? {
+    class func animationWith(name: String, canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, inSection section: Int, rowAtSection row: Int, sectionCount: Int, rowCountAtSection: Int, descriptor: Descriptor, addBeganTime: Float, randomIndexs: [Int]? = nil) -> AniDescriptor? {
         
         guard let type = CTAAnimationType(rawValue: name) else {
             print("Not Support \(name) Animation Type!")
@@ -65,9 +65,14 @@ class AniFactory {
         case .Unknown:
              return nil
         case .MoveIn:
-            return moveIn(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
+            return moveIn(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, inSection: section, rowAtSection: row, sectionCount: sectionCount, rowCountAtSection: rowCountAtSection, descriptor: descriptor, beganTime: addBeganTime)
         case .MoveOut:
-            return moveOut(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
+            return moveOut(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, inSection: section, rowAtSection: row, sectionCount: sectionCount, rowCountAtSection: rowCountAtSection, descriptor: descriptor, beganTime: addBeganTime)
+            
+        case .MoveInLeft:
+            return moveIn(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, inSection: section, rowAtSection: row, sectionCount: sectionCount, rowCountAtSection: rowCountAtSection, descriptor: descriptor, beganTime: addBeganTime, direction: 1)
+        case .MoveOutLeft:
+            return moveOut(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, inSection: section, rowAtSection: row, sectionCount: sectionCount, rowCountAtSection: rowCountAtSection, descriptor: descriptor, beganTime: addBeganTime, direction: 1)
             
         case .ScaleIn:
             return scaleIn(canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
@@ -88,16 +93,28 @@ class AniFactory {
             
         case .FadeIn:
             if let randomIndexs = randomIndexs where index < randomIndexs.count {
-                let i = randomIndexs[index]
-                return fade(true, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: i, descriptor: descriptor, beganTime: addBeganTime)
+                return fade(true, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
             } else {
                 return fade(true, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
             }
             
         case .FadeOut:
             if let randomIndexs = randomIndexs where index < randomIndexs.count {
-                let i = randomIndexs[index]
-                return fade(false, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: i, descriptor: descriptor, beganTime: addBeganTime)
+                return fade(false, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
+            } else {
+                return fade(false, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
+            }
+            
+        case .FadeInOrder:
+            if let randomIndexs = randomIndexs where index < randomIndexs.count {
+                return fade(true, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime, isRandom: false)
+            } else {
+                return fade(true, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
+            }
+            
+        case .FadeOutOrder:
+            if let randomIndexs = randomIndexs where index < randomIndexs.count {
+                return fade(false, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime, isRandom: false)
             } else {
                 return fade(false, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
             }

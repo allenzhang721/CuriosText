@@ -23,21 +23,23 @@ extension ContainerVMProtocol {
          // Text Bar Items
         case .Text:
             let textTypes: [CTAContainerFeatureType] = [
+                .Animation,
                 .Fonts,
                 .Colors,
                 .Size,
                 .Rotator,
                 .TextSpacing,
                 .Aligments,
-                .Animation
+                
             ]
             
             return textTypes
             
         case .Image:
             let types: [CTAContainerFeatureType] = [
-                .Size,
-                .Rotator
+//                .Size,
+//                .Rotator
+                .Templates
             ]
             
             return types

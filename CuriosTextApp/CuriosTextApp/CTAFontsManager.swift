@@ -31,10 +31,31 @@ class CTAFontsManager {
         return validFamilies
     }
     
+    class func cleanCacheFamily() {
+        FontManager.cleanCacheFamily()
+    }
+    
+    class func cleanCacheFamilyList() {
+        FontManager.cleanFontFamilyList()
+    }
+    
     class func customFamilyDisplayNameBy(familyName: String) -> String? {
         guard let displayName = CTAFontsManager.familiyDisplayNameDic[familyName] else { return nil }
         
         return displayName
+    }
+    
+    class func registedFontNames() -> [String] {
+        var names = [String]()
+        let families = CTAFontsManager.families
+        for fa in families {
+            if let fonts = fontNamesWithFamily(fa) {
+                for f in fonts {
+                    names.append(f)
+                }
+            }
+        }
+        return names
     }
     
     class func defaultFamily() -> String {
@@ -112,6 +133,13 @@ class CTAFontsManager {
      let version: String
      */
     class func registerFontWith(familyName: String, fullName: String, postscriptName: String, copyRight: String, style: String, size: String, version: String) {
+        
+        let info = FontInfo(familyName: familyName, fullName: fullName, postscriptName: postscriptName, copyRight: copyRight, style: style, size: size, version: version)
+        
+        FontManager.registerFontWith(info)
+    }
+    
+    class func unregisterFontWith(familyName: String, fullName: String, postscriptName: String, copyRight: String, style: String, size: String, version: String) {
         
         let info = FontInfo(familyName: familyName, fullName: fullName, postscriptName: postscriptName, copyRight: copyRight, style: style, size: size, version: version)
         

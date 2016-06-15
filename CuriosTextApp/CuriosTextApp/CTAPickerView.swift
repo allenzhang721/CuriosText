@@ -78,10 +78,34 @@ final class CTAPickerView: UIControl {
         layout.delegate = self
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(CTAPickerView.tap(_:)))
+        addGestureRecognizer(tap)
+    }
+    
+    func tap(sender: UITapGestureRecognizer) {
+        let location = sender.locationInView(collectionView)
+        if let indexPath = collectionView.indexPathForItemAtPoint(location) {
+            collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredHorizontally, animated: true)
+        }
     }
     
     func reloadData() {
         collectionView.reloadData()
+    }
+    
+    func didEndDisplay() {
+        
+        if collectionView.visibleCells().count > 0 {
+            
+            for cell in collectionView.visibleCells() {
+                if let c = cell as? CTASelectorVerticalCell {
+                    c.didEndDiplayed()
+                }
+            }
+            
+        }
+        
     }
 
     func updateTo(indexPath: NSIndexPath) {
@@ -94,17 +118,21 @@ final class CTAPickerView: UIControl {
             let offset = CGPoint(x: center.x - collectionView.bounds.width / 2.0, y: 0)
             collectionView.setContentOffset(offset, animated: false)
 
-            if let visualCells = collectionView.visibleCells() as? [CTASelectorVerticalCell] where visualCells.count > 0 {
-                
-                for cell in visualCells  {
-                    cell.reloadData()
+            dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                guard let sf = self else { return}
+                if let visualCells = sf.collectionView.visibleCells() as? [CTASelectorVerticalCell] where visualCells.count > 0 {
+                    
+                    for cell in visualCells  {
+                        
+                        cell.reloadData()
+                    }
                 }
-            }            
+            })
         }
     }
 }
 
-extension CTAPickerView: UICollectionViewDataSource, UICollectionViewDelegate {
+extension CTAPickerView: UICollectionViewDataSource {
     
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -132,6 +160,14 @@ extension CTAPickerView: UICollectionViewDataSource, UICollectionViewDelegate {
         cell.register()
         cell.reloadData()
         return cell
+    }
+}
+
+extension CTAPickerView: UICollectionViewDelegate {
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        
     }
 }
 

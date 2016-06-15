@@ -47,6 +47,8 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
     weak var pickerDelegate: CTAPhotoPickerProtocol?
     
     var templateImage: UIImage?
+    var backgroundColor: UIColor = UIColor.whiteColor()
+    var backgroundColorHex: String = "FFFFFF"
     var frontCamera = false
     
     @IBOutlet weak var flashButton: UIButton!
@@ -283,7 +285,7 @@ extension CTACameraViewController {
         captureStillImage {[weak self] (data) in
             if let data = data {
                 dispatch_async(dispatch_get_main_queue(), {
-                    self?.pickerDelegate?.pickerDidSelectedImage(UIImage(data: data)!)
+                    self?.pickerDelegate?.pickerDidSelectedImage(UIImage(data: data)!, backgroundColor: self!.backgroundColor)
                 })
             }
         }

@@ -23,19 +23,19 @@ enum LocalStrings: CustomStringConvertible {
     case PublishFailure
     
     // Edior Tab
-    case Size, Rotation, Font, Spacing, Alignment, Color, Animation, AnimationType, AnimationDuration, AnimationDelay
+    case Size, Rotation, Font, Spacing, Alignment, Color, Animation, AnimationType, AnimationDuration, AnimationDelay, Templates
     
     //Animations
     case AniType(CTAAnimationType)
     
     //Alert 
-    case OK, Yes, No, Resend, TakePhoto, ChoosePhoto, Back, Wait
+    case OK, Yes, No, Resend, TakePhoto, ChoosePhoto, Back, Wait, Setting
     
     //Report
     case Porn, Scam, Sensitive
     
     //Share
-    case DeleteFile, Wechat, Moments, Weibo, CopyLink, SaveLocal, Report, UploadFile
+    case DeleteFile, Wechat, Moments, Weibo, CopyLink, SaveLocal, Report, UploadFile, AddToHot
     
     var description: String {
         
@@ -67,6 +67,8 @@ enum LocalStrings: CustomStringConvertible {
             return NSLocalizedString("EditTextPlaceHolder", comment: "")
         case .EditorDismissMessage:
             return NSLocalizedString("EditorDismissMessage", comment: "")
+        case .Templates:
+            return NSLocalizedString("Templates", comment: "")
             
             // Publish
         case .PublishFailure:
@@ -124,7 +126,8 @@ enum LocalStrings: CustomStringConvertible {
             return NSLocalizedString("AlertBackLabel", comment: "")
         case .Wait:
             return NSLocalizedString("AlertWaitLabel", comment: "")
-            
+        case .Setting:
+            return NSLocalizedString("AlertSettingLabel", comment: "")
             //Report
         case .Porn:
             return NSLocalizedString("ReportPornLabel", comment: "")
@@ -150,6 +153,8 @@ enum LocalStrings: CustomStringConvertible {
             return NSLocalizedString("CopyLinkLabel", comment: "")
         case .UploadFile:
             return NSLocalizedString("UploadFileLabel", comment: "")
+        case .AddToHot:
+            return NSLocalizedString("AddToHotLabel", comment: "")
         }
     }
 }

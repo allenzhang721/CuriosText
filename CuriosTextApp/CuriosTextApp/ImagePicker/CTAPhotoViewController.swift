@@ -47,6 +47,8 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhoto
         var showAlbums = false
     }
     
+    @IBOutlet weak var zoomButton: UIButton!
+    @IBOutlet weak var backgroundButton: UIButton!
     @IBOutlet weak var cancelItem: UIBarButtonItem!
     @IBOutlet weak var nextItem: UIBarButtonItem!
     @IBOutlet weak var titleItem: UIBarButtonItem!
@@ -62,6 +64,8 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhoto
     var photolistViewController: CTAPhotoAlbumListViewController?
     
     var templateImage: UIImage?
+    var backgroundColor: UIColor = UIColor.whiteColor()
+    var backgroundColorHex: String = "FFFFFF"
     
     weak var pickerDelegate: CTAPhotoPickerProtocol?
     private var inner = Inner()
@@ -127,6 +131,14 @@ extension CTAPhotoViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(CTAPhotoViewController.tap(_:)))
         previewView.addGestureRecognizer(tap)
         
+        previewView.backgroundColor = backgroundColor
+        
+        zoomButton.selected = true
+        previewView.didChangedHandler = {[weak self] scaledToMax in
+            guard let sf = self else {return}
+            sf.zoomButton.selected = scaledToMax
+        }
+        
         setupDelegateAndDataSource()
         fetchAllPhotos()
         fetchPreviewPhoto()
@@ -156,7 +168,10 @@ extension CTAPhotoViewController {
         if let assetFetchResults = inner.assetFetchResults where assetFetchResults.count > 0, let asset = assetFetchResults[0] as? PHAsset {
             
             thumbCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
-            inner.imageManager.requestImageForAsset(asset, targetSize: previewView.bounds.size, contentMode: .AspectFill, options: nil) {[weak self] (image, info) in
+            
+            let options = PHImageRequestOptions()
+            options.synchronous = true
+            inner.imageManager.requestImageForAsset(asset, targetSize: previewView.bounds.size, contentMode: .AspectFill, options: options) {[weak self] (image, info) in
                 
                 if let strongSelf = self, let image = image {
                     dispatch_async(dispatch_get_main_queue(), {
@@ -195,6 +210,23 @@ extension CTAPhotoViewController {
 
 // MARK: - Action
 extension CTAPhotoViewController {
+    
+    @IBAction func changeBackgroundColor(sender: AnyObject) {
+        if backgroundColorHex == "FFFFFF" || backgroundColorHex == "#FFFFFF" {
+            backgroundColorHex = "000000"
+            backgroundButton.selected = true
+        } else {
+            backgroundColorHex = "FFFFFF"
+            backgroundButton.selected = false
+        }
+        backgroundColor = UIColor(hexString: backgroundColorHex)!
+        previewView.backgroundColor = backgroundColor
+    }
+    
+    @IBAction func changeScale(sender: AnyObject?) {
+        previewView.changeScale()
+    }
+    
     @IBAction func changeAlbumClick(sender: AnyObject?) {
         
         if photolistViewController == nil {
@@ -306,14 +338,20 @@ extension CTAPhotoViewController {
                 
                 if let strongSelf = self {
                     if let image = image {
-                        UIGraphicsBeginImageContextWithOptions(imageDisplayRect.size, true, UIScreen.mainScreen().scale)
+                        let imageScale = image.scale//UIScreen.mainScreen().scale
+                        let displaySize = imageDisplayRect.size
+                        let newSize = CGSize(width: displaySize.width*imageScale, height: displaySize.height*imageScale)
+                        let origin = CGPoint(x: -imageDisplayRect.minX * imageScale, y: -imageDisplayRect.minY * imageScale)
+                        UIGraphicsBeginImageContextWithOptions(newSize, true, 1)
                         
-                        image.drawAtPoint(CGPoint(x: -imageDisplayRect.minX, y: -imageDisplayRect.minY))
+//                        let drawRect = CGRect(x: origin.x, y: origin.y, width: newSize.width, height: newSize.width)
+//                        image.drawInRect(drawRect)
+                        image.drawAtPoint(origin)
                         let aimage = UIGraphicsGetImageFromCurrentImageContext()
                         UIGraphicsEndImageContext()
                         
                         dispatch_async(dispatch_get_main_queue(), {
-                            strongSelf.pickerDelegate?.pickerDidSelectedImage(aimage)
+                            strongSelf.pickerDelegate?.pickerDidSelectedImage(aimage, backgroundColor: strongSelf.backgroundColor)
                             strongSelf.dismiss(nil)
                         })
                     }
@@ -564,7 +602,10 @@ extension CTAPhotoViewController: UICollectionViewDelegate {
 //                    strongSelf.previewView.image = image
                 })
                 
-                inner.imageManager.requestImageForAsset(asset, targetSize: previewView.bounds.size, contentMode: .AspectFill, options: nil) {[weak self] (image, info) in
+                let options = PHImageRequestOptions()
+                options.synchronous = true
+                
+                inner.imageManager.requestImageForAsset(asset, targetSize: previewView.bounds.size, contentMode: .AspectFill, options: options) {[weak self] (image, info) in
                     
                     if let strongSelf = self, let image = image {
                         strongSelf.previewView.image = image

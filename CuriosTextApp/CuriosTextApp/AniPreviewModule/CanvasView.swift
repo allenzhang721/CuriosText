@@ -63,6 +63,7 @@ extension CanvasView {
             guard let sf = self else {return}
             CATransaction.begin()
             CATransaction.setDisableActions(true)
+//            sf.collectionView.reloadData()
             sf.collectionView.reloadSections(NSIndexSet(index: 0))
             CATransaction.commit()
         

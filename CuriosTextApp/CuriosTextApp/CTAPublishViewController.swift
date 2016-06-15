@@ -57,6 +57,10 @@ class CTAPublishViewController: UIViewController {
     var imageRetriver: ((String, (String, UIImage?) -> ()) -> ())?
     
     var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
+    
+    deinit {
+        print("\(#file) deinit")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,7 +91,7 @@ extension CTAPublishViewController {
     
     func setupViews() {
         aniCanvasView = AniPlayCanvasView(frame: CGRect(origin: CGPoint(x: 0, y: 44), size: canvas.size))
-        aniCanvasView.backgroundColor = UIColor.groupTableViewBackgroundColor()
+//        aniCanvasView.backgroundColor = UIColor.groupTableViewBackgroundColor()
         
         for c in canvas.containers {
             if let content = c.contents.first where content.type == .Image {
@@ -103,7 +107,7 @@ extension CTAPublishViewController {
     }
     
     func setupStyles() {
-        aniCanvasView.backgroundColor = CTAStyleKit.commonBackgroundColor
+        aniCanvasView.backgroundColor = UIColor(hexString: canvas.canvas.backgroundColor)
         view.backgroundColor = CTAStyleKit.ediorBackgroundColor
         publishButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
     }

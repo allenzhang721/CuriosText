@@ -100,10 +100,12 @@ extension CTATabViewController: LineFlowLayoutDelegate {
 //            print("didchange")
         
         
-        if !changingContainer {
-            delegate?.tabViewController(self, didChangedToIndexPath: indexPath, oldIndexPath: oldIndexPath)
-        } else {
+        if changingContainer {
             changingContainer = false
+//            delegate?.tabViewController(self, didChangedToIndexPath: indexPath, oldIndexPath: oldIndexPath)
+            
+        } else {
+            delegate?.tabViewController(self, didChangedToIndexPath: indexPath, oldIndexPath: oldIndexPath)
         }
         
     }

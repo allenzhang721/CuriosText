@@ -115,8 +115,7 @@ enum CTABindingUserPhoneError:Int, ErrorType{
     case UserIDIsEmpty  = 1
     case UserIDNotExist = 2
     case PhoneIsEmpty   = 3
-    case UserHavePhone  = 4
-    case PhoneExist     = 5
+    case PhoneExist     = 4
     case NeedContactWithService = 8
     case DataIsEmpty = 9
     
@@ -341,3 +340,19 @@ enum CTAUserRelationListError:Int, ErrorType{
 9:数据为空
 
 */
+
+enum CTAPublishHotError:Int, ErrorType{
+    
+    case PublishIDNotExist = 1
+    case NeedContactWithService = 8
+    case DataIsEmpty = 9
+    
+}
+
+/*
+ 
+ 1:publishID为空
+ 8:请联系客服
+ 9:数据为空
+ 
+ */

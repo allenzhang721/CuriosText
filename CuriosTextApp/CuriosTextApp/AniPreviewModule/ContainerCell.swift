@@ -79,8 +79,11 @@ extension ContainerCell {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         collectionView.reloadSections(NSIndexSet(index: 0))
+        collectionView.reloadData()
         CATransaction.commit()
-        completed()
+//        dispatch_async(dispatch_get_main_queue()) { 
+            completed()
+//        }
     }
     
     func removeAllAnimations() {

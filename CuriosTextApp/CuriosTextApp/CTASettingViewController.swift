@@ -25,6 +25,9 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     var descNextImg:UIImageView!
     var descLineImg:UIImageView!
     
+    var accountSettingView:UIView!
+    var systemSettingView:UIView!
+    
     var logoutButton:UIButton!
     
     var isLogin:Bool = false
@@ -106,49 +109,49 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         
         self.imagePicker.delegate = self
         
-        self.userNickNameLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 112, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
+        self.userNickNameLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 109, width: bouns.width - 153*self.getHorRate() - 15, height: 22))
         self.userNickNameLabel.font = UIFont.systemFontOfSize(16)
         self.userNickNameLabel.textColor = UIColor.init(red: 108/255, green: 108/255, blue: 108/255, alpha: 1.0)
         self.userNickNameLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userNickNameLabel)
-        let userNickNameTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y, width: 50, height: 25))
+        let userNickNameTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y, width: 50, height: 22))
         userNickNameTitle.font = UIFont.systemFontOfSize(16)
         userNickNameTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         userNickNameTitle.text = NSLocalizedString("UserNickNameLabel", comment: "")
         userNickNameTitle.sizeToFit()
         self.scrollView.addSubview(userNickNameTitle)
-        var nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 11, y: self.userNickNameLabel.frame.origin.y+2, width: 11, height: 20))
+        var nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: self.userNickNameLabel.frame.origin.y+6, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         self.scrollView.addSubview(nextImage)
-        var textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y + 37, width: 330*self.getHorRate(), height: 1))
+        var textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y + 31, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "textinput-line")
         self.scrollView.addSubview(textLine)
         self.userNickNameLabel.userInteractionEnabled = true
         let nickNameTap = UITapGestureRecognizer(target: self, action: #selector(CTASettingViewController.userNickNameClick(_:)))
         self.userNickNameLabel.addGestureRecognizer(nickNameTap)
         
-        self.userSexLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y+50, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
+        self.userSexLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y+40, width: bouns.width - 153*self.getHorRate() - 15, height: 22))
         self.userSexLabel.font = UIFont.systemFontOfSize(16)
         self.userSexLabel.textColor = UIColor.init(red: 108/255, green: 108/255, blue: 108/255, alpha: 1.0)
         self.userSexLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userSexLabel)
-        let userSexTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userSexLabel.frame.origin.y, width: 50, height: 25))
+        let userSexTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userSexLabel.frame.origin.y, width: 50, height: 22))
         userSexTitle.font = UIFont.systemFontOfSize(16)
         userSexTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         userSexTitle.text = NSLocalizedString("UserSexLabel", comment: "")
         userSexTitle.sizeToFit()
         self.scrollView.addSubview(userSexTitle)
-        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 11, y: self.userSexLabel.frame.origin.y+2, width: 11, height: 20))
+        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: self.userSexLabel.frame.origin.y+6, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         self.scrollView.addSubview(nextImage)
-        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userSexLabel.frame.origin.y + 37, width: 330*self.getHorRate(), height: 1))
+        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userSexLabel.frame.origin.y + 31, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "textinput-line")
         self.scrollView.addSubview(textLine)
         self.userSexLabel.userInteractionEnabled = true
         let userSexTap = UITapGestureRecognizer(target: self, action: #selector(CTASettingViewController.userSexClick(_:)))
         self.userSexLabel.addGestureRecognizer(userSexTap)
         
-        self.userRegionLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+50, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
+        self.userRegionLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+40, width: bouns.width - 153*self.getHorRate() - 15, height: 22))
         self.userRegionLabel.font = UIFont.systemFontOfSize(16)
         self.userRegionLabel.textColor = UIColor.init(red: 108/255, green: 108/255, blue: 108/255, alpha: 1.0)
         self.userRegionLabel.textAlignment = .Right
@@ -162,7 +165,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
 //        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 11, y: self.userRegionLabel.frame.origin.y+2, width: 11, height: 20))
 //        nextImage.image = UIImage(named: "next-icon")
 //        self.scrollView.addSubview(nextImage)
-//        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userRegionLabel.frame.origin.y + 37, width: 330*self.getHorRate(), height: 1))
+//        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userRegionLabel.frame.origin.y + 31, width: 330*self.getHorRate(), height: 1))
 //        textLine.image = UIImage(named: "textinput-line")
 //        self.scrollView.addSubview(textLine)
         self.userRegionLabel.userInteractionEnabled = true
@@ -170,29 +173,129 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.userRegionLabel.addGestureRecognizer(userRegionTap)
         self.userRegionLabel.hidden = true
         
-        self.userDescLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+50, width: bouns.width - 153*self.getHorRate() - 15, height: 25))
+        self.userDescLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+40, width: bouns.width - 153*self.getHorRate() - 15, height: 22))
         self.userDescLabel.numberOfLines = 12
         self.userDescLabel.font = UIFont.systemFontOfSize(16)
         self.userDescLabel.textColor = UIColor.init(red: 108/255, green: 108/255, blue: 108/255, alpha: 1.0)
         self.userDescLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userDescLabel)
-        let userDesxTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userDescLabel.frame.origin.y, width: 50, height: 25))
+        let userDesxTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userDescLabel.frame.origin.y, width: 50, height: 22))
         userDesxTitle.font = UIFont.systemFontOfSize(16)
         userDesxTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         userDesxTitle.text = NSLocalizedString("UserDesc", comment: "")
         userDesxTitle.sizeToFit()
         self.scrollView.addSubview(userDesxTitle)
-        self.descNextImg = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 11, y: self.userDescLabel.frame.origin.y+2, width: 11, height: 20))
+        self.descNextImg = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: self.userDescLabel.frame.origin.y+6, width: 6, height: 10))
         self.descNextImg.image = UIImage(named: "next-icon")
         self.scrollView.addSubview(self.descNextImg)
-        self.descLineImg = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userDescLabel.frame.origin.y + 37, width: 330*self.getHorRate(), height: 1))
+        self.descLineImg = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userDescLabel.frame.origin.y + 31, width: 330*self.getHorRate(), height: 1))
         self.descLineImg.image = UIImage(named: "textinput-line")
         self.scrollView.addSubview(self.descLineImg)
         self.userDescLabel.userInteractionEnabled = true
         let userDescTap = UITapGestureRecognizer(target: self, action: #selector(CTASettingViewController.userDescClick(_:)))
         self.userDescLabel.addGestureRecognizer(userDescTap)
         
-        self.logoutButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: self.descLineImg.frame.origin.y+21, width: 40, height: 28))
+        self.accountSettingView = UIView(frame: CGRect(x: 0, y: self.descLineImg.frame.origin.y + 40, width: bouns.width, height: 80))
+        let bindingAccoutView = UIView(frame: CGRect(x: 0, y: 0, width: bouns.width, height: 40))
+        self.accountSettingView.addSubview(bindingAccoutView)
+        let bindingAccoutTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: 9, width: 50, height: 22))
+        bindingAccoutTitle.font = UIFont.systemFontOfSize(16)
+        bindingAccoutTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        bindingAccoutTitle.text = NSLocalizedString("BindingAccountLabel", comment: "")
+        bindingAccoutTitle.sizeToFit()
+        bindingAccoutView.addSubview(bindingAccoutTitle)
+        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
+        nextImage.image = UIImage(named: "next-icon")
+        bindingAccoutView.addSubview(nextImage)
+        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 0, width: 330*self.getHorRate(), height: 1))
+        textLine.image = UIImage(named: "textinput-line")
+        bindingAccoutView.addSubview(textLine)
+        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
+        textLine.image = UIImage(named: "textinput-line")
+        bindingAccoutView.addSubview(textLine)
+        bindingAccoutView.userInteractionEnabled = true
+        let bindingAccoutTap = UITapGestureRecognizer(target: self, action: #selector(CTASettingViewController.bindingAccountClick(_:)))
+        bindingAccoutView.addGestureRecognizer(bindingAccoutTap)
+        
+        let changePasswordView = UIView(frame: CGRect(x: 0, y: bindingAccoutView.frame.origin.y + 40, width: bouns.width, height: 40))
+        self.accountSettingView.addSubview(changePasswordView)
+        let changePasswordTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: 9, width: 50, height: 22))
+        changePasswordTitle.font = UIFont.systemFontOfSize(16)
+        changePasswordTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        changePasswordTitle.text = NSLocalizedString("ChangePasswordLabel", comment: "")
+        changePasswordTitle.sizeToFit()
+        changePasswordView.addSubview(changePasswordTitle)
+        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
+        nextImage.image = UIImage(named: "next-icon")
+        changePasswordView.addSubview(nextImage)
+        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
+        textLine.image = UIImage(named: "textinput-line")
+        changePasswordView.addSubview(textLine)
+        changePasswordView.userInteractionEnabled = true
+        let changePasswordTap = UITapGestureRecognizer(target: self, action: #selector(CTASettingViewController.changePasswordClick(_:)))
+        changePasswordView.addGestureRecognizer(changePasswordTap)
+        self.scrollView.addSubview(self.accountSettingView)
+        
+        self.systemSettingView = UIView(frame: CGRect(x: 0, y: self.descLineImg.frame.origin.y + 160, width: bouns.width, height: 120))
+        let aboutView = UIView(frame: CGRect(x: 0, y: 0, width: bouns.width, height: 40))
+        self.systemSettingView.addSubview(aboutView)
+        let aboutTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: 9, width: 50, height: 22))
+        aboutTitle.font = UIFont.systemFontOfSize(16)
+        aboutTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        aboutTitle.text = NSLocalizedString("AboutLabel", comment: "")
+        aboutTitle.sizeToFit()
+        aboutView.addSubview(aboutTitle)
+        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
+        nextImage.image = UIImage(named: "next-icon")
+        aboutView.addSubview(nextImage)
+        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 0, width: 330*self.getHorRate(), height: 1))
+        textLine.image = UIImage(named: "textinput-line")
+        aboutView.addSubview(textLine)
+        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
+        textLine.image = UIImage(named: "textinput-line")
+        aboutView.addSubview(textLine)
+        aboutView.userInteractionEnabled = true
+        let aboutTap = UITapGestureRecognizer(target: self, action: #selector(CTASettingViewController.aboutClick(_:)))
+        aboutView.addGestureRecognizer(aboutTap)
+        
+        let shareToFriendView = UIView(frame: CGRect(x: 0, y: aboutView.frame.origin.y + 40, width: bouns.width, height: 40))
+        self.systemSettingView.addSubview(shareToFriendView)
+        let shareToFriendTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: 9, width: 50, height: 22))
+        shareToFriendTitle.font = UIFont.systemFontOfSize(16)
+        shareToFriendTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        shareToFriendTitle.text = NSLocalizedString("InviteFriendsLabel", comment: "")
+        shareToFriendTitle.sizeToFit()
+        shareToFriendView.addSubview(shareToFriendTitle)
+        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
+        nextImage.image = UIImage(named: "next-icon")
+        shareToFriendView.addSubview(nextImage)
+        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
+        textLine.image = UIImage(named: "textinput-line")
+        shareToFriendView.addSubview(textLine)
+        shareToFriendView.userInteractionEnabled = true
+        let shareToFriendTap = UITapGestureRecognizer(target: self, action: #selector(CTASettingViewController.shareToFriendClick(_:)))
+        shareToFriendView.addGestureRecognizer(shareToFriendTap)
+        
+        let reviewUSView = UIView(frame: CGRect(x: 0, y: shareToFriendView.frame.origin.y + 40, width: bouns.width, height: 40))
+        self.systemSettingView.addSubview(reviewUSView)
+        let reviewUSTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: 9, width: 50, height: 22))
+        reviewUSTitle.font = UIFont.systemFontOfSize(16)
+        reviewUSTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        reviewUSTitle.text = NSLocalizedString("ReviewUSLabel", comment: "")
+        reviewUSTitle.sizeToFit()
+        reviewUSView.addSubview(reviewUSTitle)
+        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
+        nextImage.image = UIImage(named: "next-icon")
+        reviewUSView.addSubview(nextImage)
+        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
+        textLine.image = UIImage(named: "textinput-line")
+        reviewUSView.addSubview(textLine)
+        reviewUSView.userInteractionEnabled = true
+        let reviewUSTap = UITapGestureRecognizer(target: self, action: #selector(CTASettingViewController.reviewUSClick(_:)))
+        reviewUSView.addGestureRecognizer(reviewUSTap)
+        self.scrollView.addSubview(self.systemSettingView)
+        
+        self.logoutButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: self.descLineImg.frame.origin.y + 320, width: 40, height: 28))
         self.logoutButton.setTitle(NSLocalizedString("LogoutButtonLabel", comment: ""), forState: .Normal)
         self.logoutButton.setTitleColor(UIColor.init(red: 239/255, green: 51/255, blue: 74/255, alpha: 1.0), forState: .Normal)
         self.logoutButton.setTitleColor(UIColor.init(red: 216/255, green: 216/255, blue: 216/255, alpha: 1.0), forState: .Disabled)
@@ -278,18 +381,20 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.userDescLabel.frame.size.width = maxW
         let texth = self.userDescLabel.frame.height
         if texth < 37{
-            self.userDescLabel.frame.size.height = 25
+            self.userDescLabel.frame.size.height = 22
             self.userDescLabel.textAlignment = .Right
-            self.descNextImg.frame.origin.y = self.userDescLabel.frame.origin.y+2
-            self.descLineImg.frame.origin.y = self.userDescLabel.frame.origin.y+37
+            self.descNextImg.frame.origin.y = self.userDescLabel.frame.origin.y+6
+            self.descLineImg.frame.origin.y = self.userDescLabel.frame.origin.y+31
         }else {
-            self.userDescLabel.textAlignment = .Left
-            self.descNextImg.frame.origin.y = self.userDescLabel.frame.origin.y + texth - 22
-            self.descLineImg.frame.origin.y = self.userDescLabel.frame.origin.y + texth + 12
+            self.userDescLabel.textAlignment = .Right
+            self.descNextImg.frame.origin.y = self.userDescLabel.frame.origin.y + texth - 14
+            self.descLineImg.frame.origin.y = self.userDescLabel.frame.origin.y + texth + 6
         }
         
+        self.accountSettingView.frame.origin.y = self.descLineImg.frame.origin.y + 40
+        self.systemSettingView.frame.origin.y = self.descLineImg.frame.origin.y + 160
         self.logoutButton.enabled = true
-        self.logoutButton.frame.origin.y = self.descLineImg.frame.origin.y + 21
+        self.logoutButton.frame.origin.y = self.descLineImg.frame.origin.y + 320
     }
     
     func resetScrollView(){
@@ -368,6 +473,94 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         }
     }
     
+    func bindingAccountClick(sender: UIPanGestureRecognizer){
+        if isLogin {
+            let accountSetting = CTAAccountSettingViewController.getInstance()
+            self.navigationController?.pushViewController(accountSetting, animated: true)
+        }
+    }
+    
+    func changePasswordClick(sender: UIPanGestureRecognizer){
+        if isLogin {
+            let userPhone = self.loginUser!.phone
+            if userPhone == "" {
+                self.showSelectedAlert(NSLocalizedString("AlertTitleSetPhoneFirst", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.Setting.description, cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result) in
+                    if result {
+                        let setMobileView = CTASetMobileNumberViewController.getInstance()
+                        setMobileView.isChangeContry = true
+                        setMobileView.setMobileNumberType = .setMobileNumber
+                        let navigationController = UINavigationController(rootViewController: setMobileView)
+                        navigationController.navigationBarHidden = true
+                        self.presentViewController(navigationController, animated: true, completion: {
+                        })
+                    }
+                })
+            }else {
+                self.showTextAlert(NSLocalizedString("ChangePasswordLabel", comment: ""), alertMessage: NSLocalizedString("AlertCurrentPassword", comment: ""), okAlertLabel: LocalStrings.OK.description, cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result, password) in
+                    if result{
+                        SVProgressHUD.setDefaultMaskType(.Clear)
+                        SVProgressHUD.showWithStatus("")
+                        let userID = self.loginUser!.userID
+                        let cryptPassword = CTAEncryptManager.hash256(password)
+                        CTAUserDomain.getInstance().checkPassword(userID, passwd: cryptPassword, compelecationBlock: { (info) in
+                            SVProgressHUD.dismiss()
+                            if info.result{
+                                let setView = CTASetPasswordViewController.getInstance()
+                                setView.userModel = self.loginUser!
+                                setView.setPasswordType = .changePassword
+                                self.presentViewController(setView, animated: true, completion: {
+                                })
+                            }else {
+                                if info.errorType is CTAInternetError {
+                                    self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                    })
+                                }else {
+                                    let error = info.errorType as! CTACheckPasswordError
+                                    if error == .PasswordIncorrect {
+                                        self.showSingleAlert(NSLocalizedString("AlertTitlePasswordIncorrect", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        })
+                                    }else if error == .UserIDNotExist || error == .UserIDIsEmpty{
+                                        self.showSingleAlert(NSLocalizedString("AlertTitleUserIDNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        })
+                                    }else if error == .DataIsEmpty{
+                                        self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        })
+                                    }else {
+                                        self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                        })
+                                    }
+                                }
+                            }
+                        })
+                    }
+                })
+            }
+        }
+    }
+    
+    func aboutClick(sender: UIPanGestureRecognizer){
+        if let vc = Moduler.module_aboutUS() {
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func shareToFriendClick(sender: UIPanGestureRecognizer){
+        let shareView = CTAShareView.getInstance()
+        shareView.delegate = self
+        let mainController = CTAMainViewController.getInstance()
+        if self.view.isDescendantOfView(mainController.view){
+            mainController.view.addSubview(shareView)
+        }else {
+            self.view.superview?.addSubview(shareView)
+        }
+        shareView.shareType = .setting
+        shareView.showViewHandler()
+    }
+    
+    func reviewUSClick(sender: UIPanGestureRecognizer){
+        gobal_jumpToAppStoreRation()
+    }
+    
     func logoutButtonClick(sender: UIButton){
         if isLogin{
             var alertArray:Array<String> = []
@@ -438,5 +631,69 @@ extension CTASettingViewController: UIGestureRecognizerDelegate{
     func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
+}
+
+extension CTASettingViewController: CTAShareViewDelegate{
     
+    func addShareURL(shareURL:String) -> String{
+        var url = shareURL
+        if let info = NSBundle.mainBundle().infoDictionary {
+            let appVersion = info["CFBundleShortVersionString"] as! String
+            url = url+"&v="+appVersion
+        }
+        if CTAUserManager.isLogin{
+            let userID = CTAUserManager.user?.userID
+            url = url+"&uid="+userID!
+        }
+        return url
+    }
+    
+    func weChatShareHandler(){
+        var shareURL = CTAShareConfig.shareURL
+        shareURL = shareURL+"?sto=wechat_friend&sfrom=invite"
+        shareURL = self.addShareURL(shareURL)
+        let url = NSURL(string: shareURL)!
+        CTASocialManager.shareMessage(CTASocialManager.Message.WeChat(CTASocialManager.Message.WeChatSubtype.Session(info: (title: "奇思-让图片更有意思", description: "这个应用很好玩，可以给照片添加会动的文字，快来下载吧！", thumbnail: UIImage(named: "ShareIcon"), media: CTASocialManager.Media.URL(url))))) { (result) in
+        }
+        
+    }
+    func momentsShareHandler(){
+        var shareURL = CTAShareConfig.shareURL
+        shareURL = shareURL+"?sto=wechat_moment&sfrom=invite"
+        shareURL = self.addShareURL(shareURL)
+        let url = NSURL(string: shareURL)!
+        CTASocialManager.shareMessage(CTASocialManager.Message.WeChat(CTASocialManager.Message.WeChatSubtype.Timeline(info: (title: "奇思-让图片更有意思", description: "这个应用很好玩，可以给照片添加会动的文字，快来下载吧！", thumbnail: UIImage(named: "ShareIcon"), media: CTASocialManager.Media.URL(url))))) { (result) in
+        }
+    }
+    func weiBoShareHandler(){
+        var shareURL = CTAShareConfig.shareURL
+        shareURL = shareURL+"?sto=weibo&sfrom=invite"
+        shareURL = self.addShareURL(shareURL)
+        let url = NSURL(string: shareURL)!
+        CTASocialManager.shareMessage(CTASocialManager.Message.Weibo(CTASocialManager.Message.WeiboSubtype.Default(info: (title: "奇思-让图片更有意思", description: "奇思, 让图片更有意思! 这个应用很好玩，可以给照片添加会动的文字，快来下载吧！", thumbnail: UIImage(named: "ShareIcon"), media: CTASocialManager.Media.URL(url)), accessToken: ""))) { (result) in
+            
+        }
+        
+//        CTASocialManager.shareMessage(CTASocialManager.Message.Weibo(CTASocialManager.Message.Weibo(info: (title: "奇思-让图片更有意思", description: "这个应用很好玩，可以给照片添加会动的文字，快来下载吧！", thumbnail: UIImage(named: "fresh-icon-1"), media: CTASocialManager.Media.URL(url))))) { (result) in
+//        }
+        
+    }
+    func deleteHandler(){
+        
+    }
+    func copyLinkHandler(){
+        
+    }
+    func saveLocalHandler(){
+        
+    }
+    func reportHandler(){
+        
+    }
+    func uploadResourceHandler(){
+        
+    }
+    func addToHotHandler(){
+        
+    }
 }

@@ -39,6 +39,7 @@ class CTASelectorSizeCell: CTASelectorCell {
     
     func setup() {
         sizeView = CTASliderView(frame: bounds, attribute: CTASliderAttributes(showMinorLine: true, seniorRatio: 0.5))
+        sizeView.targetValues = [1.0]
         sizeView.minumValue = 0.2
         sizeView.maxiumValue = 2.0
         addSubview(sizeView)

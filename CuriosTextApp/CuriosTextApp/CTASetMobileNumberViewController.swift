@@ -9,7 +9,7 @@
 import Foundation
 
 enum CTASetMobileNumberType{
-    case register, resetPassword
+    case register, resetPassword, setMobileNumber, changeMobileNumber
 }
 
 class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAAlertProtocol, CTALoadingProtocol{
@@ -28,6 +28,7 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
     var areaCodeLabel:UILabel = UILabel()
     var loadingImageView:UIImageView? = UIImageView(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
     var registerButton:UIButton!
+    var backButton:UIButton!
     
     var selectedModel:CountryZone?
     var isChangeContry:Bool = false
@@ -61,11 +62,11 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
         let tap = UITapGestureRecognizer(target: self, action: #selector(CTASetMobileNumberViewController.bgViewClick(_:)))
         self.view.addGestureRecognizer(tap)
         
-        let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
-        backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
-        backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
-        backButton.addTarget(self, action: #selector(CTASetMobileNumberViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
-        self.view.addSubview(backButton)
+        self.backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
+        self.backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
+        self.backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
+        self.backButton.addTarget(self, action: #selector(CTASetMobileNumberViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.view.addSubview(self.backButton)
 
         let enterMobileLabel = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 60*self.getVerRate(), width: 100, height: 40))
         enterMobileLabel.font = UIFont.systemFontOfSize(28)
@@ -96,11 +97,21 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
         if self.phoneTextinput.text == "" {
             self.registerButton.enabled = false
         }
-        if self.setMobileNumberType == .register{
-            self.registerButton.setTitle(NSLocalizedString("RegisterLabel", comment: ""), forState: .Normal)
-        }else if self.setMobileNumberType == .resetPassword{
+        if self.setMobileNumberType == .setMobileNumber || self.setMobileNumberType == .changeMobileNumber{
             self.registerButton.setTitle(NSLocalizedString("NextButtonLabel", comment: ""), forState: .Normal)
+            self.backButton.setImage(UIImage(named: "close-button"), forState: .Normal)
+            self.backButton.setImage(UIImage(named: "close-selected-button"), forState: .Highlighted)
+        }else {
+            self.backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
+            self.backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
+            if self.setMobileNumberType == .register{
+                self.registerButton.setTitle(NSLocalizedString("RegisterLabel", comment: ""), forState: .Normal)
+                
+            }else if self.setMobileNumberType == .resetPassword{
+                self.registerButton.setTitle(NSLocalizedString("NextButtonLabel", comment: ""), forState: .Normal)
+            }
         }
+        
         self.registerButton.sizeToFit()
         self.registerButton.frame.origin.x = (UIScreen.mainScreen().bounds.width - self.registerButton.frame.width)/2
         self.isChangeContry = false
@@ -112,7 +123,12 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
     
     func backHandler(){
         self.resignView()
-        self.navigationController?.popViewControllerAnimated(true)
+        if self.setMobileNumberType == .setMobileNumber || self.setMobileNumberType == .changeMobileNumber{
+            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            })
+        }else {
+            self.navigationController?.popViewControllerAnimated(true)
+        }
     }
     
     func registerButtonClick(sender: UIButton){
@@ -125,6 +141,20 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
             self.resignView()
             self.showSelectedAlert(NSLocalizedString("AlertTitleNumberConfirm", comment: ""), alertMessage: message, okAlertLabel: LocalStrings.OK.description, cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result) -> Void in
                 if result {
+                    if self.setMobileNumberType == .setMobileNumber || self.setMobileNumberType == .changeMobileNumber{
+                        if CTAUserManager.isLogin{
+                            let user = CTAUserManager.user
+                            let userPhone = user!.phone
+                            let userArea  = user!.areaCode
+                            if userPhone == phoneNumber && userArea == zone{
+                                self.showSingleAlert(NSLocalizedString("AlertTitleLinkPhoneReady", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
+                                })
+                                return
+                            }
+                        }else {
+                            return
+                        }
+                    }
                     self.showLoadingViewByView(sender)
                     CTASocialManager.getVerificationCode(phoneNumber, zone: zone, completionHandler: { (result) -> Void in
                         self.hideLoadingViewByView(sender)
@@ -136,6 +166,10 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
                                 verify.smsType = .register
                             }else if self.setMobileNumberType == .resetPassword{
                                 verify.smsType = .resetPassword
+                            }else if self.setMobileNumberType == .setMobileNumber{
+                                verify.smsType = .setMobileNumber
+                            }else if self.setMobileNumberType == .changeMobileNumber{
+                                verify.smsType = .changeMobileNumber
                             }
                             self.navigationController?.pushViewController(verify, animated: true)
                         }else {

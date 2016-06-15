@@ -19,6 +19,7 @@ protocol CTASelectorable: class {
 }
 
 protocol CTASelectorScaleable: CTASelectorable {
+    func templateDidChanged(pageData: NSData?, origin: Bool)
     func scaleDidChanged(scale: CGFloat)
     func radianDidChanged(radian: CGFloat)
     func fontDidChanged(fontFamily: String, fontName: String)
@@ -37,10 +38,11 @@ typealias CTASelectorViewControllerDelegate = protocol<CTASelectorScaleable>
 
 final class CTASelectorsViewController: UIViewController, UICollectionViewDataSource {
     
+    var snapImage: UIImage?
     private var animation: Bool = false
-    var dataSource: CTASelectorsViewControllerDataSource?
-    var delegate: CTASelectorViewControllerDelegate?
-    private(set) var currentType: CTAContainerFeatureType = .Empty
+    weak var dataSource: CTASelectorsViewControllerDataSource?
+    weak var delegate: CTASelectorViewControllerDelegate?
+    private(set) var currentType: CTAContainerFeatureType = .Templates
     private var container: ContainerVMProtocol? {
         return dataSource?.selectorsViewControllerContainer(self)
     }
@@ -49,6 +51,8 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
     }
     private var action: String {
         switch currentType {
+            
+        case .Templates: return "templateDidChanged:"
         case .Size: return "scaleChanged:"
         case .Rotator: return "radianChanged:"
         case .Fonts: return "indexPathOfFontsChanged:"
@@ -62,10 +66,25 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
 
     @IBOutlet weak var collectionview: UICollectionView!
     
+    deinit {
+        print("\(#file) deinit")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = CTAStyleKit.commonBackgroundColor
         collectionview.layer.masksToBounds = false
+    }
+    
+    func updateSnapshotImage(image: UIImage?) {
+        snapImage = image
+            dispatch_async(dispatch_get_main_queue()) { [weak self] in
+                guard let sf = self else {return}
+                let index = NSIndexPath(forItem: 0, inSection: 0)
+                if let cell = sf.collectionview.cellForItemAtIndexPath(index) as? CTASelectorTemplatesCell {
+                    cell.templateList?.updateCurrentOriginImage(image)
+                }
+        }
     }
     
     func changeToSelector(type: CTAContainerFeatureType) {
@@ -91,12 +110,12 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
                 collectionview.deleteItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             }
             
-            }, completion: { finished in
+            }, completion: {[weak self] finished in
                 
-                dispatch_async(dispatch_get_main_queue(), {[weak self] () -> Void in
-                    
+//                dispatch_async(dispatch_get_main_queue(), {[weak self] () -> Void in
+                
                     self?.animation = false
-                    })
+//                    })
         })
     }
     
@@ -126,13 +145,14 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
             if currentCount > 0 {
                 collectionview.deleteItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             }
-            }, completion: { finished in
+            }, completion: {[weak self] finished in
                 
-                dispatch_async(dispatch_get_main_queue(), {[weak self] () -> Void in
-                    
+//                dispatch_async(dispatch_get_main_queue(), {[weak self] () -> Void in
+                
                     self?.animation = false
-                })
+//                })
         })
+        
     }
     
     func updateIfNeed() {
@@ -168,6 +188,10 @@ extension CTASelectorsViewController {
         
         if let cell = cell as? CTASelectorAnimationCell {
             cell.delegate = self
+        }
+        
+        if let cell = cell as? CTASelectorTemplatesCell {
+            cell.templateList?.originImage = snapImage
         }
         
         cell.beganLoad()
@@ -265,6 +289,23 @@ extension CTASelectorsViewController: CTASelectorDataSource {
 
 // MARK: - Actions
 extension CTASelectorsViewController {
+    
+    func templateDidChanged(info: [String: AnyObject]) {
+        if let origin = info["origin"] as? Bool {
+            if let data = info["data"] as? NSData {
+                delegate?.templateDidChanged(data, origin: origin)
+            } else {
+                delegate?.templateDidChanged(nil, origin: origin)
+            }
+        }
+        
+//        if let data = data, let apage = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
+//            apage.removeLastImageContainer()
+//            
+//        }
+        
+    }
+    
     func scaleChanged(sender: CTASliderView) {
         let v = CGFloat(Int(sender.value * 100.0)) / 100.0
         delegate?.scaleDidChanged(v)
@@ -297,12 +338,9 @@ extension CTASelectorsViewController {
         delegate?.spacingDidChanged(sender.spacing.0, textSpacing: sender.spacing.1)
     }
     
-    func colorChanged(sender: CTAColorPickerView) {
+    func colorChanged(sender: CTAColorPickerNodeCollectionView) {
         
-        guard
-            let selectedColor = sender.selectedColor where animation == false else {
-            return
-        }
+        guard let selectedColor = sender.selectedColor where animation == false else { return }
         let colorItem = CTAColorItem(color: selectedColor)
         delegate?.colorDidChanged(colorItem)
     }

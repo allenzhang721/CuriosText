@@ -10,7 +10,11 @@ import UIKit
 
 class CTAPhotoPreviewView: UIView {
     
+    var didChangedHandler: ((Bool) -> ())?
+    
     var templateImage: UIImage?
+    
+    private var scaleMax: Bool = true
     
     var image: UIImage? {
         get { return imageView.image }
@@ -71,7 +75,7 @@ extension CTAPhotoPreviewView {
     
     func setupStyle() {
         backgroundColor = UIColor.whiteColor()
-        scrollView.backgroundColor = UIColor.whiteColor()
+        scrollView.backgroundColor = UIColor.clearColor()
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         
@@ -106,7 +110,7 @@ extension CTAPhotoPreviewView {
     private func loadImage(image: UIImage?) {
         if let image = image {loadRealImage(image)} else {loadEmptyImage()}
         
-        updateImgViewPosition()
+//        updateImgViewPosition()
     }
     
     private func loadRealImage(image: UIImage) {
@@ -115,11 +119,20 @@ extension CTAPhotoPreviewView {
         let minScale = min(size.width / imgSize.width, size.height / imgSize.height)
         let maxScale = max(size.width / imgSize.width, size.height / imgSize.height)
         
-        scrollView.minimumZoomScale = minScale
-        scrollView.maximumZoomScale = maxScale
         imageView.image = image
         imageView.bounds.size = imgSize
-        scrollView.setZoomScale(minScale, animated: false)
+        scrollView.minimumZoomScale = minScale
+        scrollView.maximumZoomScale = maxScale
+        
+        imageView.frame.origin = CGPoint.zero
+        
+        scrollView.setZoomScale(scaleMax ? maxScale : minScale, animated: false)
+        
+        let contentSize = scrollView.contentSize
+        let boundSize = scrollView.bounds.size
+        let offsetx = (contentSize.width - boundSize.width) / 2.0
+        let offsetY = (contentSize.height - boundSize.height) / 2.0
+        scrollView.contentOffset = CGPoint(x: offsetx, y: offsetY)
     }
     
     private func loadEmptyImage() {
@@ -132,9 +145,15 @@ extension CTAPhotoPreviewView {
     private func updateImgViewPosition() {
         let contentSize = scrollView.contentSize
         let boundSize = scrollView.bounds.size
-        let centerX = max(contentSize.width / 2.0, boundSize.width / 2.0)
-        let centerY = max(contentSize.height / 2.0, boundSize.height / 2.0)
-        imageView.center = CGPoint(x: centerX, y: centerY)
+        let centerX = (contentSize.width - boundSize.width) / 2.0
+        let centerY = (contentSize.height - boundSize.height) / 2.0
+        //imageView.frame.origin = CGPoint.zero
+       
+//        scrollView.contentOffset = CGPoint(x: centerX, y: centerY)
+        scrollView.contentInset.left = max(0, -centerX)
+        scrollView.contentInset.top = max(0, -centerY)
+         print("scaled offset = \( scrollView.contentOffset), frame = \(imageView.frame.origin)")
+//        imageView.center = CGPoint(x: centerX, y: centerY)
     }
     
     private func imageDisplayRect() -> CGRect {
@@ -147,8 +166,8 @@ extension CTAPhotoPreviewView {
         let boundsSize = scrollView.bounds.size
         let scale = scrollView.zoomScale
         
-        let scaledX = offset.x
-        let scaledY = offset.y
+        let scaledX = max(0, offset.x)
+        let scaledY = max(0, offset.y)
         let scaledW = min(scaledSize.width, boundsSize.width)
         let scaledH = min(scaledSize.height, boundsSize.height)
         
@@ -165,8 +184,12 @@ extension CTAPhotoPreviewView {
         let maxScale = scrollView.maximumZoomScale
         let curScale = scrollView.zoomScale
         
-        let nextScale = curScale > minScale ? minScale : maxScale
+        let nextScale = curScale < maxScale ? maxScale : minScale
+        scaleMax = nextScale == maxScale ? true : false
+        
         scrollView.setZoomScale(nextScale, animated: true)
+        
+        didChangedHandler?(nextScale == maxScale)
     }
     
 //    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
@@ -190,11 +213,15 @@ extension CTAPhotoPreviewView: UIScrollViewDelegate {
     }
     
     func scrollViewDidZoom(scrollView: UIScrollView) {
+        print("Did Zoom")
         updateImgViewPosition()
     }
     
     func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
-        
+        print("End Zoom")
+//        updateImgViewPosition()
+        scaleMax = scale == scrollView.maximumZoomScale ? true : false
+        didChangedHandler?(scaleMax)
     }
 }
 

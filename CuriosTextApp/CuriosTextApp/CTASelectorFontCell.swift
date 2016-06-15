@@ -22,7 +22,7 @@ final class CTASelectorFontCell: CTASelectorCell {
         view.collectionView.clipsToBounds = false
 //        view.collectionView.backgroundColor = UIColor.yellowColor()
         contentView.addSubview(view)
-        view.backgroundColor = CTAStyleKit.intoDreams1
+        view.backgroundColor = UIColor.whiteColor()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.leadingAnchor.constraintEqualToAnchor(leadingAnchor, constant: 20).active = true
         view.topAnchor.constraintEqualToAnchor(topAnchor).active = true
@@ -45,8 +45,20 @@ final class CTASelectorFontCell: CTASelectorCell {
         
         if let indexPath = dataSource.selectorBeganFontIndexPath(self) {
             CTAFontsManager.updateSection(indexPath.section, withItem: indexPath.item)
-            self.view.updateTo(indexPath)
+            
         }
+    }
+    
+    override func willBeDisplayed() {
+        if let indexPath = dataSource?.selectorBeganFontIndexPath(self) {
+            dispatch_async(dispatch_get_main_queue(), {[weak self] in
+                self?.view.updateTo(indexPath)
+                })
+        }
+    }
+    
+    override func didEndDiplayed() {
+        view.didEndDisplay()
     }
     
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {

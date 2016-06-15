@@ -31,7 +31,7 @@ struct CTAIndexPath {
 
 final class CTAColorsManger {
     
-    static let colorsCatagory = ["red", "yellow", "blue", "green", "orange", "indigo", "purple", "black"]
+    static let colorsCatagory = ["one", "two", "three", "four", "five"]
     static var indexPaths = [CTAIndexPath]()
     
 //    "salamander", "intoDreams", "cynicide", "birdsofParadise", "brokenGlass", "vintagePattern", "sunset", "rosanne", "joyful", "starSeeker", "cloudyDay", "monoPolygons"
@@ -44,8 +44,8 @@ final class CTAColorsManger {
             
             var items = ContiguousArray<CTAColorItem>()
             
-            for i in 0..<7 {
-              let color =  CTAStyleKit.performSelector(Selector("\(catagory)\(i + 2)")).takeUnretainedValue() as! UIColor
+            for i in 0..<9 {
+              let color =  CTAStyleKit.performSelector(Selector("\(catagory)\(i)")).takeUnretainedValue() as! UIColor
                 let item = CTAColorItem(color: color)
                 items.append(item)
             }

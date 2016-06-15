@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum CTAShareViewType{
+    case normal, loginUser, setting
+}
+
 class CTAShareView: UIView{
     
     var delegate:CTAShareViewDelegate?
@@ -22,6 +26,9 @@ class CTAShareView: UIView{
     var saveLocolView:UIView!
     var reportView:UIView!
     var uploadResourceView:UIView!
+    var addToHotView:UIView!
+    
+    var shareType:CTAShareViewType = .normal
     //var copyLinkView:UIView!
     
     var space:CGFloat = 15.00
@@ -187,11 +194,22 @@ class CTAShareView: UIView{
         self.uploadResourceView.frame.origin.x = 230
         self.scrollView.addSubview(self.uploadResourceView)
         
-        #if DEBUG
-            self.uploadResourceView.hidden = false
-        #else
-            self.uploadResourceView.hidden = true
-        #endif
+        self.addToHotView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
+        let addToHotButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
+        addToHotButton.setImage(UIImage.init(named: "copy-link-button"), forState: .Normal)
+        addToHotButton.addTarget(self, action: #selector(CTAShareView.addToHotButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.addToHotView.addSubview(addToHotButton)
+        let addToHotLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
+        addToHotLabel.font = UIFont.systemFontOfSize(8)
+        addToHotLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        addToHotLabel.text = LocalStrings.AddToHot.description
+        addToHotLabel.sizeToFit()
+        addToHotLabel.center = CGPoint.init(x: uploadButton.center.x, y: buttonW+20)
+        self.addToHotView.addSubview(addToHotLabel)
+        self.addToHotView.sizeToFit()
+        self.addToHotView.frame.origin.x = 230
+        self.scrollView.addSubview(self.addToHotView)
+        
 //        self.copyLinkView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
 //        let copyLinkButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
 //        copyLinkButton.setImage(UIImage.init(named: "copy-link-button"), forState: .Normal)
@@ -209,13 +227,16 @@ class CTAShareView: UIView{
 //        self.buttonView.addSubview(self.copyLinkView)
     }
     
-    func showViewHandler(isSelf:Bool){
+    func showViewHandler(){
         let bounds = UIScreen.mainScreen().bounds
         self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
-        if isSelf{
-            self.selfShareView()
-        }else {
+        switch self.shareType {
+        case .normal:
             self.unSelfShareView()
+        case .loginUser:
+            self.selfShareView()
+        case .setting:
+            self.settingShareView()
         }
         self.resetScrollView()
         UIView.animateWithDuration(0.3) { () -> Void in
@@ -226,6 +247,15 @@ class CTAShareView: UIView{
     
     func selfShareView(){
         self.deleteView.hidden = false
+        self.saveLocolView.hidden = false
+        self.reportView.hidden = false
+        #if DEBUG
+            self.uploadResourceView.hidden = false
+            self.addToHotView.hidden = false
+        #else
+            self.uploadResourceView.hidden = true
+            self.addToHotView.hidden = true
+        #endif
         let rate =  UIScreen.mainScreen().bounds.width / 375
         self.space = 15.00 * rate
         self.wechatShareView.frame.origin.x = space
@@ -234,20 +264,49 @@ class CTAShareView: UIView{
         self.deleteView.frame.origin.x = space+(space+buttonW)*3
         self.saveLocolView.frame.origin.x = space+(space+buttonW)*4
         self.reportView.frame.origin.x = space+(space+buttonW)*5
-        self.uploadResourceView.frame.origin.x = space+(space+buttonW)*6
+        self.addToHotView.frame.origin.x = space+(space+buttonW)*6
+        self.uploadResourceView.frame.origin.x = space+(space+buttonW)*7
     }
     
     func unSelfShareView(){
         self.deleteView.hidden = true
+        self.saveLocolView.hidden = false
+        self.reportView.hidden = false
+        #if DEBUG
+            self.uploadResourceView.hidden = false
+            self.addToHotView.hidden = false
+        #else
+            self.uploadResourceView.hidden = true
+            self.addToHotView.hidden = true
+        #endif
         let rate =  UIScreen.mainScreen().bounds.width / 375
-        self.space = 20.00 * rate
+        self.space = 15.00 * rate
         self.wechatShareView.frame.origin.x = space
         self.momentsShareView.frame.origin.x = space+(space+buttonW)*1
         self.weiboShareView.frame.origin.x = space+(space+buttonW)*2
         self.deleteView.frame.origin.x = space+(space+buttonW)*3
         self.saveLocolView.frame.origin.x = space+(space+buttonW)*3
         self.reportView.frame.origin.x = space+(space+buttonW)*4
-        self.uploadResourceView.frame.origin.x = space+(space+buttonW)*5
+        self.addToHotView.frame.origin.x = space+(space+buttonW)*5
+        self.uploadResourceView.frame.origin.x = space+(space+buttonW)*6
+    }
+    
+    func settingShareView(){
+        self.deleteView.hidden = true
+        self.saveLocolView.hidden = true
+        self.reportView.hidden = true
+        self.uploadResourceView.hidden = true
+        self.addToHotView.hidden = true
+        let maxWidth =  UIScreen.mainScreen().bounds.width
+        let space = (maxWidth - 3*buttonW)/4
+        self.wechatShareView.frame.origin.x = space
+        self.momentsShareView.frame.origin.x = space+(space+buttonW)*1
+        self.weiboShareView.frame.origin.x = space+(space+buttonW)*2
+        self.deleteView.frame.origin.x = space+(space+buttonW)*3
+        self.saveLocolView.frame.origin.x = space+(space+buttonW)*3
+        self.reportView.frame.origin.x = space+(space+buttonW)*3
+        self.uploadResourceView.frame.origin.x = space+(space+buttonW)*3
+        self.addToHotView.frame.origin.x = space+(space+buttonW)*3
     }
     
     func resetScrollView(){
@@ -343,6 +402,14 @@ class CTAShareView: UIView{
         })
     }
     
+    func addToHotButtonClick(sender: UIButton){
+        self.cancelHandler({
+            if self.delegate != nil {
+                self.delegate!.addToHotHandler()
+            }
+        })
+    }
+    
     func copyLinkButtonClick(sender: UIButton){
         self.cancelHandler({
             if self.delegate != nil {
@@ -360,5 +427,6 @@ protocol CTAShareViewDelegate{
     func copyLinkHandler()
     func saveLocalHandler()
     func reportHandler()
+    func addToHotHandler()
     func uploadResourceHandler()
 }

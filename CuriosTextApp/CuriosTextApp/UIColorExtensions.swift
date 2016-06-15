@@ -12,7 +12,7 @@ extension UIColor {
     
     func toHex() -> (String, CGFloat) {
         
-        let component = CGColorGetComponents(self.CGColor)
+        let component = CGColorGetComponents(CGColor)
         let r = component[0]
         let g = component[1]
         let b = component[2]

@@ -11,6 +11,7 @@ import UIKit
 protocol CTAAlertProtocol{
     
     func showSelectedAlert(alertTile:String, alertMessage:String, okAlertLabel:String, cancelAlertLabel:String, compelecationBlock: (Bool) -> Void)
+    func showTextAlert(alertTile:String, alertMessage:String, okAlertLabel:String, cancelAlertLabel:String, compelecationBlock: (Bool, String) -> Void)
     func showSingleAlert(alertTile:String, alertMessage:String, compelecationBlock: (() -> Void)?)
     func showSheetAlert(alertTile:String?, okAlertArray:Array<String>, cancelAlertLabel:String, compelecationBlock: (index:Int) -> Void)
 }
@@ -25,6 +26,21 @@ extension CTAAlertProtocol where Self: UIViewController{
         alert.addAction(UIAlertAction(title: cancelAlertLabel, style: UIAlertActionStyle.Cancel, handler: { (_) -> Void in
             compelecationBlock(false)
         }))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func showTextAlert(alertTile:String, alertMessage:String, okAlertLabel:String, cancelAlertLabel:String, compelecationBlock: (Bool, String) -> Void){
+        let alert = UIAlertController(title: alertTile, message: alertMessage, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: okAlertLabel, style: .Default, handler: { (_) -> Void in
+            let firstTextField = alert.textFields![0] as UITextField
+            compelecationBlock(true, firstTextField.text!)
+        }))
+        alert.addAction(UIAlertAction(title: cancelAlertLabel, style: UIAlertActionStyle.Cancel, handler: { (_) -> Void in
+            compelecationBlock(false, "")
+        }))
+        alert.addTextFieldWithConfigurationHandler { (textField) in
+            textField.secureTextEntry = true
+        }
         self.presentViewController(alert, animated: true, completion: nil)
     }
     

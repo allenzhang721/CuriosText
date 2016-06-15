@@ -208,6 +208,24 @@ class CTAPublishDomain: CTABaseDomain {
         }
     }
     
+    func setPublishHot(publishID:String, compelecationBlock: (CTADomainInfo!) -> Void){
+        CTASetHotPublishRequest.init(publishID: publishID).startWithCompletionBlockWithSuccess { (response) in
+            switch response.result{
+            case .Success(let json):
+                let json:JSON = JSON(json)
+                let resultIndex = json[CTARequestResultKey.resultIndex].int!
+                let result = self.checkJsonResult(json)
+                if result {
+                    compelecationBlock(CTADomainInfo(result: true, successType: resultIndex))
+                } else{
+                    compelecationBlock(CTADomainInfo(result: false, errorType: CTAPublishHotError(rawValue: resultIndex)!))
+                }
+            case .Failure(_):
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            }
+        }
+    }
+    
     func publishListResult(json:JSON) -> Array<CTAPublishModel>{
         let listArray = json[key(.List)].array;
         var publishArray: Array<CTAPublishModel> = [];
