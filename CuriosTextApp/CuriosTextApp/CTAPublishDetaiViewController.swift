@@ -302,12 +302,13 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
     
     func getCurrentPublishIndex(selectedIndex:Int) -> Int{
         let selectedPo = selectedIndex % self.cellHorCount
-        let verCount = self.getCellCount()/self.cellHorCount
+        let cellAll = self.getCellCount()
+        let verCount = cellAll/self.cellHorCount
         let midVerCount = verCount % 2 == 0 ? (verCount/2)-1 : (verCount/2)
         var midCount = midVerCount*self.cellHorCount+selectedPo
-
+        let leastCell = cellAll - midCount
         let publishCount = self.publishModelArray.count - 1
-        if publishCount - selectedIndex > midCount {
+        if publishCount - selectedIndex > leastCell {
             
         }else {
             let allCount = publishCount % self.cellHorCount + (verCount - 1)*self.cellHorCount
@@ -977,13 +978,14 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
             if verCount == 0 {
                 let rateCount = Int(currentIndex / self.cellHorCount)
                 headerTop = self.headerHeight - CGFloat(rateCount)*(space + cellRect.height)
-                if headerTop < topSpace && hSpace > 0{
+                if headerTop < hSpace{
                     headerTop = hSpace
                 }
             }else{
                 headerTop = topSpace
             }
         }
+        
         return headerTop
     }
     
