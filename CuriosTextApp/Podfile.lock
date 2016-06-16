@@ -52,7 +52,7 @@ PODS:
   - Qiniu (7.0.16):
     - AFNetworking (~> 2.0)
     - HappyDNS (~> 0.2)
-  - SVProgressHUD (2.0-beta8)
+  - SVProgressHUD (2.0.3)
   - SwiftyJSON (2.3.2)
   - WeiboSDK (3.1.4)
 
@@ -68,7 +68,7 @@ DEPENDENCIES:
   - pop (~> 1.0.8)
   - PromiseKit (~> 3.1.1)
   - Qiniu (~> 7.0)
-  - SVProgressHUD (~> 2.0-beta8)
+  - SVProgressHUD (~> 2.0.3)
   - SwiftyJSON (~> 2.3.2)
   - WeiboSDK (from `https://raw.githubusercontent.com/liu3399shuai/weibo_podspec/master/WeiboSDK.podspec`)
 
@@ -96,10 +96,10 @@ SPEC CHECKSUMS:
   pop: bb773ae2c791ca2629de13b347e7a8b450fa6a57
   PromiseKit: 4e8127c22a9b29d1b44958ab2ec762ea6115cbfb
   Qiniu: 51a8702cddc02b50867e10cef99291b9a8a006b1
-  SVProgressHUD: 6e48a1dda09ce3b58adc41d013baed3a8e8980ff
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   WeiboSDK: d4a15a3a1ab74d578fd7cb5da91bad36ba602ad2
 
-PODFILE CHECKSUM: 2af2e59e4b8c7603b9ab9a101973796aba6a6dc3
+PODFILE CHECKSUM: 32fefae1fffca69df128d00181c4d8aed0633b99
 
 COCOAPODS: 1.0.0

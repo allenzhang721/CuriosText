@@ -19,14 +19,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
 
         setup()
         
+//        SVProgressHUD.setDefaultMaskType(.Clear)
+//        SVProgressHUD.setDefaultStyle(.Custom)
+//        SVProgressHUD.setForegroundColor(CTAStyleKit.selectedColor)
+//        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+
+        
         return true
     }
     
     func setup() {
-        SVProgressHUD.setDefaultMaskType(.Clear)
-        SVProgressHUD.setDefaultStyle(.Custom)
-        SVProgressHUD.setForegroundColor(CTAStyleKit.selectedColor)
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
         
         cleanFontCache()
         registerLocalFonts()
