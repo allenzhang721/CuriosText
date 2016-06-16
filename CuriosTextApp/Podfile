@@ -15,8 +15,10 @@ pod 'MonkeyKing', '~> 0.9.2'
 pod 'KeyboardMan', '~> 0.5.2'
 pod 'PromiseKit', '~> 3.1.1’
 pod 'SVProgressHUD', '~> 2.0-beta8'
-pod "WeiboSDK", :git => "https://github.com/sinaweibosdk/weibo_ios_sdk.git"
+# pod 'WeiboSDK', :git => 'https://github.com/sinaweibosdk/weibo_ios_sdk.git'
+pod 'WeiboSDK', :podspec => 'https://raw.githubusercontent.com/liu3399shuai/weibo_podspec/master/WeiboSDK.podspec'
 pod 'FLAnimatedImage', '~> 1.0.12'
+pod 'CYLTabBarController'
 end
 
 target 'CuriosTextAppTests' do

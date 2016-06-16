@@ -14,15 +14,20 @@ import SVProgressHUD
 class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     
     var window: UIWindow?
-    
-    
+
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+
+        setup()
         
+        return true
+    }
+    
+    func setup() {
         SVProgressHUD.setDefaultMaskType(.Clear)
         SVProgressHUD.setDefaultStyle(.Custom)
         SVProgressHUD.setForegroundColor(CTAStyleKit.selectedColor)
         SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
-
+        
         cleanFontCache()
         registerLocalFonts()
         registerSystemFonts()
@@ -42,7 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         CTASocialManager.register(.Weibo, appID: CTAConfigs.weibo.appID, appKey: CTAConfigs.weibo.appKey)
         CTASocialManager.register(.SMS, appID: CTAConfigs.SMS.appID, appKey: CTAConfigs.SMS.appKey) // http://dashboard.mob.com/#/sms/index
         
-        return true
+        PlusButton.registerSubclass()
+        window?.rootViewController = RootAction.rootTabViewController()
     }
     
     func cleanFontCache() {
@@ -101,8 +107,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         
         CTAFontsManager.reloadData()
     }
-    
-    
     
     func familiesDisplayNames() {
         
