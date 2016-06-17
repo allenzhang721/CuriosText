@@ -1089,9 +1089,9 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
                     canGo = true
                 }
                 if canGo{
-                    let userPublish = CTAUserPublishesViewController()
-                    userPublish.viewUser = viewUserModel
-                    self.navigationController?.pushViewController(userPublish, animated: true)
+//                    let userPublish = CTAUserPublishesViewController()
+//                    userPublish.viewUser = viewUserModel
+//                    self.navigationController?.pushViewController(userPublish, animated: true)
                 }else {
                     self.viewBackHandler()
                 }

@@ -19,11 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
 
         setup()
         
-//        SVProgressHUD.setDefaultMaskType(.Clear)
-//        SVProgressHUD.setDefaultStyle(.Custom)
-//        SVProgressHUD.setForegroundColor(CTAStyleKit.selectedColor)
-//        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
-
+        SVProgressHUD.setDefaultMaskType(.Clear)
+        SVProgressHUD.setDefaultStyle(.Custom)
+        SVProgressHUD.setForegroundColor(CTAStyleKit.selectedColor)
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
         
         return true
     }
@@ -48,9 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         CTASocialManager.register(.WeChat, appID: CTAConfigs.weChat.appID, appKey: CTAConfigs.weChat.appKey)
         CTASocialManager.register(.Weibo, appID: CTAConfigs.weibo.appID, appKey: CTAConfigs.weibo.appKey)
         CTASocialManager.register(.SMS, appID: CTAConfigs.SMS.appID, appKey: CTAConfigs.SMS.appKey) // http://dashboard.mob.com/#/sms/index
-        
-        PlusButton.registerSubclass()
-        window?.rootViewController = RootAction.rootTabViewController()
     }
     
     func cleanFontCache() {

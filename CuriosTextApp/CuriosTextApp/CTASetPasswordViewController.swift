@@ -106,7 +106,7 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         passwordLabel.sizeToFit()
         self.view.addSubview(passwordLabel)
         var textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.passwordTextinput.frame.origin.y + 49, width: 330*self.getHorRate(), height: 1))
-        textLine.image = UIImage(named: "textinput-line")
+        textLine.image = UIImage(named: "space-line")
         self.view.addSubview(textLine)
     
         self.confirmTextinput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: self.passwordTextinput.frame.origin.y + 50, width: 190*self.getHorRate(), height: 50))
@@ -123,7 +123,7 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         confirmLabel.sizeToFit()
         self.view.addSubview(confirmLabel)
         textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.confirmTextinput.frame.origin.y + 49, width: 330*self.getHorRate(), height: 1))
-        textLine.image = UIImage(named: "textinput-line")
+        textLine.image = UIImage(named: "space-line")
         self.view.addSubview(textLine)
         
         

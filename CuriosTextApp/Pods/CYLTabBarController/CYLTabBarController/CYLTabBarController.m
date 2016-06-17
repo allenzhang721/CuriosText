@@ -154,6 +154,8 @@ NSString *const CYLTabBarItemWidthDidChangeNotification = @"CYLTabBarItemWidthDi
                 selectedImageName:(NSString *)selectedImageName {
     
     viewController.tabBarItem.title = title;
+    viewController.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0);
+    
     if (normalImageName) {
         UIImage *normalImage = [UIImage imageNamed:normalImageName];
         normalImage = [normalImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];

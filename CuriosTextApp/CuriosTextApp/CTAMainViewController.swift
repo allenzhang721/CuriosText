@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class CTAMainViewController: UIViewController, CTAAddBarProtocol, CTALoginProtocol{
+class CTAMainViewController: UIViewController, CTALoginProtocol{
     
     static var _instance:CTAMainViewController?;
     
@@ -51,8 +51,6 @@ class CTAMainViewController: UIViewController, CTAAddBarProtocol, CTALoginProtoc
         
         
         pageViewController.setViewControllers([pageControllers.controllers[0]], direction: .Forward, animated: false, completion: nil)
-        
-        self.initAddBarView(self.view)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CTAMainViewController.changePageView(_:)), name: "changePageView", object: nil)
     }
@@ -101,7 +99,7 @@ class CTAMainViewController: UIViewController, CTAAddBarProtocol, CTALoginProtoc
     
     func addBarViewClick(sender: UIPanGestureRecognizer){
         if CTAUserManager.isLogin {
-            self.showEditView()
+            //self.showEditView()
         }else {
             self.showLoginView()
         }

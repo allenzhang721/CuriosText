@@ -952,10 +952,10 @@ extension CTAHomeViewController: CTAPublishProtocol{
         if self.loginUser == nil {
             self.showLoginView()
         }else if let publishModel = self.currentFullCell.publishModel{
-            let viewUserModel = publishModel.userModel
-            let userPublish = CTAUserPublishesViewController()
-            userPublish.viewUser = viewUserModel
-            self.navigationController?.pushViewController(userPublish, animated: true)
+//            let viewUserModel = publishModel.userModel
+//            let userPublish = CTAUserPublishesViewController()
+//            userPublish.viewUser = viewUserModel
+//            self.navigationController?.pushViewController(userPublish, animated: true)
         }
     }
 }

@@ -118,7 +118,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         self.view.addSubview(self.passwordVisibleButton)
         self.passwordVisibleButton.addTarget(self, action: #selector(CTALoginViewController.passwordVisibleClick(_:)), forControlEvents: .TouchUpInside)
         let textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.passwordTextinput.frame.origin.y+49, width: 330*self.getHorRate(), height: 1))
-        textLine.image = UIImage(named: "textinput-line")
+        textLine.image = UIImage(named: "space-line")
         self.view.addSubview(textLine)
         
         self.loginButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: self.passwordTextinput.frame.origin.y+70, width: 40, height: 28))

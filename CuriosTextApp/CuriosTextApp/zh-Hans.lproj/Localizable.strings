@@ -12,7 +12,7 @@
 "FollowLabel" = "关注";
 "BeFollowLabel" = "粉丝";
 "FollowButtonLabel" = "关注";
-"UnFollowButtonLabel" = "取消关注";
+"UnFollowButtonLabel" = "关注中";
 "PostsButtonLabel" = "我的";
 "LikesButtonLabel" = "赞过";
 "TenThousand" = "万";

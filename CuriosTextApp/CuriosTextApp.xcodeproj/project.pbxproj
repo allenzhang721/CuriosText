@@ -47,7 +47,6 @@
 		2C247FE91C5CA10E0069CFFC /* CTASelectorAnimationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C247FE81C5CA10E0069CFFC /* CTASelectorAnimationCell.swift */; };
 		2C247FEB1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C247FEA1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift */; };
 		2C2B45AA1C5CBCC8004A4809 /* CTALoginProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B45A91C5CBCC8004A4809 /* CTALoginProtocol.swift */; };
-		2C2B45AC1C5CBCE7004A4809 /* CTAAddBarProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B45AB1C5CBCE7004A4809 /* CTAAddBarProtocol.swift */; };
 		2C2B45AE1C5CBD16004A4809 /* CTAPublishProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B45AD1C5CBD16004A4809 /* CTAPublishProtocol.swift */; };
 		2C2B45B01C5CBED1004A4809 /* LocaleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B45AF1C5CBED1004A4809 /* LocaleHelper.swift */; };
 		2C2B45B21C5CC077004A4809 /* SupportCountryZone in Resources */ = {isa = PBXBuildFile; fileRef = 2C2B45B11C5CC077004A4809 /* SupportCountryZone */; };
@@ -163,7 +162,6 @@
 		2C8DD2111C4A33770035C52D /* CTAUserDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8DD2101C4A33770035C52D /* CTAUserDetailViewController.swift */; };
 		2C8DD2131C4A34230035C52D /* CTAImageControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8DD2121C4A34230035C52D /* CTAImageControllerProtocol.swift */; };
 		2C8DD2151C4A342C0035C52D /* CTALoadingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8DD2141C4A342C0035C52D /* CTALoadingProtocol.swift */; };
-		2C9043F81C589E0000E62B19 /* CTAAddBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9043F71C589E0000E62B19 /* CTAAddBarView.swift */; };
 		2C929DD71C60962B00F90BF4 /* CTAConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C929DD61C60962B00F90BF4 /* CTAConfig.swift */; };
 		2C9307B51CF2E34600D0E5F6 /* About.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C9307B71CF2E34600D0E5F6 /* About.storyboard */; };
 		2C9374F81CC3983A0002C806 /* OrbitalAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9374F71CC3983A0002C806 /* OrbitalAnimation.swift */; };
@@ -324,7 +322,6 @@
 		2CF8ADFE1CB9CB2700244006 /* ContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF8ADFD1CB9CB2700244006 /* ContentCell.swift */; };
 		2CFC658C1C56301600E8ADE7 /* CTAPublishCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFC658B1C56301600E8ADE7 /* CTAPublishCellProtocol.swift */; };
 		2CFC658E1C56305500E8ADE7 /* CTAFullPublishesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFC658D1C56305500E8ADE7 /* CTAFullPublishesCell.swift */; };
-		2CFC65901C5630C700E8ADE7 /* CTAUserDetailProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFC658F1C5630C700E8ADE7 /* CTAUserDetailProtocol.swift */; };
 		2CFC65921C5630EA00E8ADE7 /* CTASystemLanguageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFC65911C5630EA00E8ADE7 /* CTASystemLanguageProtocol.swift */; };
 		2CFC65941C56310800E8ADE7 /* CTAPublishDetaiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFC65931C56310800E8ADE7 /* CTAPublishDetaiViewController.swift */; };
 		661D29F11C2A8FC30073FC0E /* CTAUploadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D29F01C2A8FC30073FC0E /* CTAUploadModel.swift */; };
@@ -420,7 +417,6 @@
 		2C247FE81C5CA10E0069CFFC /* CTASelectorAnimationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorAnimationCell.swift; sourceTree = "<group>"; };
 		2C247FEA1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTALabelCollectionViewCell.swift; sourceTree = "<group>"; };
 		2C2B45A91C5CBCC8004A4809 /* CTALoginProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTALoginProtocol.swift; sourceTree = "<group>"; };
-		2C2B45AB1C5CBCE7004A4809 /* CTAAddBarProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAddBarProtocol.swift; sourceTree = "<group>"; };
 		2C2B45AD1C5CBD16004A4809 /* CTAPublishProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishProtocol.swift; sourceTree = "<group>"; };
 		2C2B45AF1C5CBED1004A4809 /* LocaleHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleHelper.swift; sourceTree = "<group>"; };
 		2C2B45B11C5CC077004A4809 /* SupportCountryZone */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SupportCountryZone; sourceTree = "<group>"; };
@@ -550,7 +546,6 @@
 		2C8DD2101C4A33770035C52D /* CTAUserDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUserDetailViewController.swift; sourceTree = "<group>"; };
 		2C8DD2121C4A34230035C52D /* CTAImageControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAImageControllerProtocol.swift; sourceTree = "<group>"; };
 		2C8DD2141C4A342C0035C52D /* CTALoadingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTALoadingProtocol.swift; sourceTree = "<group>"; };
-		2C9043F71C589E0000E62B19 /* CTAAddBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAddBarView.swift; sourceTree = "<group>"; };
 		2C929DD51C60809D00F90BF4 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		2C929DD61C60962B00F90BF4 /* CTAConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAConfig.swift; sourceTree = "<group>"; };
 		2C9307B61CF2E34600D0E5F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/About.storyboard; sourceTree = "<group>"; };
@@ -728,7 +723,6 @@
 		2CF8ADFD1CB9CB2700244006 /* ContentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCell.swift; sourceTree = "<group>"; };
 		2CFC658B1C56301600E8ADE7 /* CTAPublishCellProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishCellProtocol.swift; sourceTree = "<group>"; };
 		2CFC658D1C56305500E8ADE7 /* CTAFullPublishesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAFullPublishesCell.swift; sourceTree = "<group>"; };
-		2CFC658F1C5630C700E8ADE7 /* CTAUserDetailProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUserDetailProtocol.swift; sourceTree = "<group>"; };
 		2CFC65911C5630EA00E8ADE7 /* CTASystemLanguageProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASystemLanguageProtocol.swift; sourceTree = "<group>"; };
 		2CFC65931C56310800E8ADE7 /* CTAPublishDetaiViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishDetaiViewController.swift; sourceTree = "<group>"; };
 		3147C32D2124C223C0A10204 /* Pods_CuriosTextAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CuriosTextAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -941,11 +935,9 @@
 				2C1B88A31C5F366F000403FD /* CTAPhoneProtocol.swift */,
 				2C2B45A91C5CBCC8004A4809 /* CTALoginProtocol.swift */,
 				2CFC65911C5630EA00E8ADE7 /* CTASystemLanguageProtocol.swift */,
-				2CFC658F1C5630C700E8ADE7 /* CTAUserDetailProtocol.swift */,
 				2C8DD2141C4A342C0035C52D /* CTALoadingProtocol.swift */,
 				2CFC658B1C56301600E8ADE7 /* CTAPublishCellProtocol.swift */,
 				2C8DD2121C4A34230035C52D /* CTAImageControllerProtocol.swift */,
-				2C2B45AB1C5CBCE7004A4809 /* CTAAddBarProtocol.swift */,
 				2C2B45AD1C5CBD16004A4809 /* CTAPublishProtocol.swift */,
 				2C66896B1CDC2B7A00B6DFD2 /* CTAGIFProtocol.swift */,
 				2CC5744A1C89D3F70083DFFF /* CTAPublishCacheProtocol.swift */,
@@ -1027,7 +1019,6 @@
 				2C3B33C91C1176D000738166 /* AppDelegate.swift */,
 				2C3B33CB1C1176D000738166 /* ViewController.swift */,
 				2C10F7971C77540F00CCE34A /* CTAMainViewController.swift */,
-				2C9043F71C589E0000E62B19 /* CTAAddBarView.swift */,
 				2C7A959E1C3A6A4F005B0EAE /* CTAPageControllers.swift */,
 				2C7A95181C3A507A005B0EAE /* CTAHomeViewController.swift */,
 				2C3B33CD1C1176D000738166 /* Main.storyboard */,
@@ -1975,7 +1966,6 @@
 				2CD08F5D1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift in Sources */,
 				2C47F89E1C7171380068F215 /* CTAPageViewModel.swift in Sources */,
 				2C1B88961C5F35B9000403FD /* CTAEncryptManager.swift in Sources */,
-				2CFC65901C5630C700E8ADE7 /* CTAUserDetailProtocol.swift in Sources */,
 				2CAEAC9E1C323F4300C9F9AC /* ContainerTextView.swift in Sources */,
 				2CC811601C79A6D5003CE8BF /* BlackCatManager.swift in Sources */,
 				2C160D5E1CE58C36005B67F8 /* CTAPhotoAlbumListViewController.swift in Sources */,
@@ -1995,7 +1985,6 @@
 				2C5FF8181C72C85A00649FD7 /* CTATextModifyViewController.swift in Sources */,
 				2CB380B71C4D0D1F009A681A /* CTAPreviewLayout.swift in Sources */,
 				2CE063E71C857D2F001F7F4E /* CTAImageCropAttributes.swift in Sources */,
-				2C2B45AC1C5CBCE7004A4809 /* CTAAddBarProtocol.swift in Sources */,
 				2CD11AC81CB7632D00A79305 /* AniPage.swift in Sources */,
 				2CB175B21CF831C800819825 /* CTASelectorTemplatesCell.swift in Sources */,
 				2C3CAD171C21825900D8DE4B /* CTAElement.swift in Sources */,
@@ -2058,7 +2047,6 @@
 				2CED15AE1C5F65E10086976E /* CTADocumentProtocol.swift in Sources */,
 				2C0404601C3EC2C500A5B017 /* CTASliderView.swift in Sources */,
 				2CF4D4291CBE3926001DC7C4 /* FontManager.xcdatamodeld in Sources */,
-				2C9043F81C589E0000E62B19 /* CTAAddBarView.swift in Sources */,
 				2C3B33FC1C11798F00738166 /* CTANetworkAgent.swift in Sources */,
 				2C0C14E61C60D95A0011A31D /* CTASetUserNameViewController.swift in Sources */,
 				2CED15B01C5F6F990086976E /* CTADocumentManager.swift in Sources */,

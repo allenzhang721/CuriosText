@@ -21,8 +21,8 @@ class CTAPageControllers: NSObject, UIPageViewControllerDataSource {
             switch i {
             case 0:
                 controller = CTAHomeViewController()
-            case 1:
-                controller = CTAUserPublishesViewController()
+            case 1: break
+                //controller = CTAUserPublishesViewController()
             default:
                 ()
             }

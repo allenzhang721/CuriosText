@@ -127,18 +127,18 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
         self.verifyLabel4.textAlignment = .Center
         
         var line:UIImageView = UIImageView.init(frame: CGRect.init(x: bouns.width/2 - 60, y: self.verifyLabel1.frame.origin.y+49, width: 50, height: 1))
-        line.image = UIImage(named: "textinput-line")
+        line.image = UIImage(named: "space-line")
         self.view.addSubview(line)
         line = UIImageView.init(frame: CGRect.init(x: bouns.width/2 + 10, y: self.verifyLabel1.frame.origin.y+49, width: 50, height: 1))
-        line.image = UIImage(named: "textinput-line")
+        line.image = UIImage(named: "space-line")
         self.view.addSubview(line)
         
         line = UIImageView.init(frame: CGRect.init(x: bouns.width/2 - 130, y: self.verifyLabel1.frame.origin.y+49, width: 50, height: 1))
-        line.image = UIImage(named: "textinput-line")
+        line.image = UIImage(named: "space-line")
         self.view.addSubview(line)
         
         line = UIImageView.init(frame: CGRect.init(x: bouns.width/2 + 80, y: self.verifyLabel1.frame.origin.y+49, width: 50, height: 1))
-        line.image = UIImage(named: "textinput-line")
+        line.image = UIImage(named: "space-line")
         self.view.addSubview(line)
         
         self.resendButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: self.verifyLabel1.frame.origin.y+70, width: 70, height: 20))

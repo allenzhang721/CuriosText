@@ -9,18 +9,14 @@
 import UIKit
 
 class ViewController: UIViewController{
-    
-    var navigate:UINavigationController!
-    
-    let mainView = CTAMainViewController.getInstance()
 
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
+    var mainTab:UITabBarController!
+    
+    let mainDefaultSelected = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         CTAUpTokenDomain.getInstance().uploadFilePath { (info) -> Void in
             if info.result {
                 let dic = info.modelDic
@@ -33,31 +29,74 @@ class ViewController: UIViewController{
             }
         }
         CTAUserManager.load()
-        
-        self.navigate = UINavigationController(rootViewController: mainView)
-        self.navigate.navigationBarHidden = true
 
-        addChildViewController(self.navigate)
-        view.addSubview(self.navigate.view)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.showNavigationView(_:)), name: "showNavigationView", object: nil)
+        PlusButton.registerSubclass()
+        self.mainTab = RootAction.rootTabViewController()
+        self.mainTab.delegate = self
+        
+        addChildViewController(self.mainTab)
+        view.addSubview(self.mainTab.view)
+        self.mainTab.selectedIndex = self.mainDefaultSelected
+        
+        
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.showNavigationView(_:)), name: "showNavigationView", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.showLoginView(_:)), name: "showLoginView", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.addPublishFile(_:)), name: "addPublishFile", object: nil)
     }
     
-    func showNavigationView(noti: NSNotification){
-        let popView = noti.object as! UIViewController
-        self.navigate.pushViewController(popView, animated: true)
-    }
+    
+//    func showNavigationView(noti: NSNotification){
+//        let popView = noti.object as! UIViewController
+//        self.navigate.pushViewController(popView, animated: true)
+//    }
     
     func showLoginView(noti: NSNotification){
+        self.showLoginHandler()
+    }
+    
+    func showLoginHandler(){
         let login = CTALoginViewController.getInstance()
         login.isChangeContry = true
         let navigationController = UINavigationController(rootViewController: login)
         navigationController.navigationBarHidden = true
         self.presentViewController(navigationController, animated: true, completion: {
-            self.navigate.popToRootViewControllerAnimated(false)
-            self.mainView.goToFirstView()
+            //            self.navigate.popToRootViewControllerAnimated(false)
+            self.mainTab.selectedIndex = self.mainDefaultSelected
         })
+    }
+    
+    func addPublishFile(noti: NSNotification){
+        if CTAUserManager.isLogin{
+            self.showEditView()
+        }else {
+            self.showLoginHandler()
+        }
+    }
+    
+    func showEditView(){
+        let page = EditorFactory.generateRandomPage()
+        let documentURL = try! NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
+        let fileUrl = CTADocumentManager.generateDocumentURL(documentURL)
+        CTADocumentManager.createNewDocumentAt(fileUrl, page: page) { (success) -> Void in
+            
+            if success {
+                CTADocumentManager.openDocument(fileUrl, completedBlock: { (success) -> Void in
+                    
+                    if let openDocument = CTADocumentManager.openedDocument {
+                        
+                        let editNaviVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("EditorNavigationController") as! UINavigationController
+                        
+                        let editVC = editNaviVC.topViewController as! EditViewController
+                        
+                        editVC.document = openDocument
+                        editVC.delegate = self
+                        self.presentViewController(editNaviVC, animated: true, completion: { () -> Void in
+                        })
+                    }
+                })
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -66,61 +105,23 @@ class ViewController: UIViewController{
     }
 }
 
-//extension ViewController: UIScrollViewDelegate {
+extension ViewController: CTAEditViewControllerDelegate{
+    func EditControllerDidPublished(viewController: EditViewController){
+        NSNotificationCenter.defaultCenter().postNotificationName("publishEditFile", object: nil)
+    }
+}
 
-//    func scrollViewDidScroll(scrollView: UIScrollView) {
-//        
-//        if let i = pageControllers.controllers.indexOf(pageViewController.viewControllers!.first!) where currentPageIndex != i {
-//            currentPageIndex = i
-//        }
-//       
-//        debugPrint(scrollView.contentOffset)
-//        let nextOffset = scrollView.contentOffset.x
-//        
-//        switch currentPageIndex {
-//            
-//        case 0:
-//            if nextOffset <= scrollView.bounds.width {
-//                //            scrollView.bounces = false
-//                scrollView.contentOffset = CGPoint(x: view.bounds.width, y: 0)
-//            }
-//            
-//        case 1:
-//            if nextOffset >= view.bounds.width {
-//                //            scrollView.bounces = false
-//                scrollView.contentOffset = CGPoint(x: view.bounds.width, y: 0)
-//            }
-//            
-//        default:
-//            ()
-//            
-//        }
-//    }
-//
-////    
-//    
-//    func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-//        
-//        let nextOffset = scrollView.contentOffset.x
-//        
-//        switch currentPageIndex {
-//            
-//        case 0:
-//            if nextOffset <= scrollView.bounds.width {
-//                //            scrollView.bounces = false
-//                targetContentOffset.memory = CGPointMake(scrollView.bounds.size.width * 2, 0);
-//            }
-//            
-//        case 1:
-//            if nextOffset >= view.bounds.width {
-//                //            scrollView.bounces = false
-//                targetContentOffset.memory = CGPointMake(scrollView.bounds.size.width * 2, 0);
-//            }
-//            
-//        default:
-//            ()
-//            
-//        }
-//    }
-//}
+extension ViewController: UITabBarControllerDelegate{
+    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool{
+        if !(viewController is HomeViewController){
+            if CTAUserManager.isLogin{
+                return true
+            }else {
+                self.showLoginHandler()
+                return false
+            }
+        }
+        return true
+    }
+}
 

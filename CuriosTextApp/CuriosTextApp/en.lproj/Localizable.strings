@@ -6,10 +6,10 @@
 
 */
 "DefaultName" = "Curios";
-"FollowLabel" = "following";
-"BeFollowLabel" = "followers";
+"FollowLabel" = "Following";
+"BeFollowLabel" = "Followers";
 "FollowButtonLabel" = "Follow";
-"UnFollowButtonLabel" = "Unfollow";
+"UnFollowButtonLabel" = "Following";
 "PostsButtonLabel" = "Posts";
 "LikesButtonLabel" = "Likes";
 "Thousand" = "K";

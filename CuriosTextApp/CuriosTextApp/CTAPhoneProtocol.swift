@@ -41,7 +41,7 @@ extension CTAPhoneProtocol where Self: UIViewController{
         nextImage.image = UIImage(named: "next-icon")
         self.view.addSubview(nextImage)
         var textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.countryNameLabel.frame.origin.y+37, width: 330*self.getHorRate(), height: 1))
-        textLine.image = UIImage(named: "textinput-line")
+        textLine.image = UIImage(named: "space-line")
         self.view.addSubview(textLine)
         
         
@@ -51,7 +51,7 @@ extension CTAPhoneProtocol where Self: UIViewController{
         self.phoneTextinput.keyboardType = .NumberPad
         self.phoneTextinput.clearButtonMode = .WhileEditing
         textLine = UIImageView.init(frame: CGRect.init(x: 125*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+49, width: 230*self.getHorRate(), height: 1))
-        textLine.image = UIImage(named: "textinput-line")
+        textLine.image = UIImage(named: "space-line")
         self.view.addSubview(textLine)
         
         self.areaCodeLabel.frame = CGRect.init(x: 27*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+12, width: 50, height: 25)
@@ -59,7 +59,7 @@ extension CTAPhoneProtocol where Self: UIViewController{
         self.areaCodeLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.areaCodeLabel)
         textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+49, width: 90*self.getHorRate(), height: 1))
-        textLine.image = UIImage(named: "textinput-line")
+        textLine.image = UIImage(named: "space-line")
         self.view.addSubview(textLine)
     }
     
