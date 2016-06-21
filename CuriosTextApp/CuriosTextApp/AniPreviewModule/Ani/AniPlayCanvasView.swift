@@ -137,7 +137,7 @@ extension AniPlayCanvasView {
             case .Playing(let p, let d):
                 sf.layer.timeOffset = CFTimeInterval(d) * CFTimeInterval(p)
             case .Completed:
-                sf.reset()
+//                sf.reset()
                 sf.currentNode = sf.currentNode?.nextNode
                 guard let aniNode = sf.currentNode else {
                     self?.completedBlock?()
