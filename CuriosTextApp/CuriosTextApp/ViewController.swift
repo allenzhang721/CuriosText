@@ -75,6 +75,7 @@ class ViewController: UIViewController{
     }
     
     func showEditView(){
+        self.view.userInteractionEnabled = false
         let page = EditorFactory.generateRandomPage()
         let documentURL = try! NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
         let fileUrl = CTADocumentManager.generateDocumentURL(documentURL)
@@ -92,6 +93,7 @@ class ViewController: UIViewController{
                         editVC.document = openDocument
                         editVC.delegate = self
                         self.presentViewController(editNaviVC, animated: true, completion: { () -> Void in
+                            self.view.userInteractionEnabled = true
                         })
                     }
                 })

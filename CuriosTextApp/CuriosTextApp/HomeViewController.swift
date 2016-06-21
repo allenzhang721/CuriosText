@@ -92,7 +92,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         let homeLabel = UILabel(frame: CGRect(x: 0, y: 8, width: bounds.width, height: 28))
         homeLabel.font = UIFont.boldSystemFontOfSize(18)
         homeLabel.textColor = CTAStyleKit.normalColor
-        homeLabel.text = NSLocalizedString("HomeLabel", comment: "")
+        homeLabel.text = NSLocalizedString("DefaultName", comment: "")
         homeLabel.textAlignment = .Center
         self.headerView.addSubview(homeLabel)
         let textLine = UIImageView.init(frame: CGRect.init(x: 0, y: 43, width: bounds.width, height: 1))
@@ -377,17 +377,89 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         publishCell.releaseView()
     }
     
+    //scroll view hide tool bar
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        let scrollY = scrollView.frame.origin.y
-        let offY = scrollView.contentOffset.y
-        var cells = self.collectionView.visibleCells()
+        var toolBarViewframe = self.headerView.frame
+        var collectViewFrame = self.collectionView.frame
+        let size  = toolBarViewframe.height
+        let framePercentageHidden = ( (20-toolBarViewframe.origin.y) / size)
+        let scrollOffset = self.collectionView.contentOffset.y
+        let scrollDiff   = scrollOffset - self.previousScrollViewYOffset
+        let scrollHeight = collectViewFrame.size.height
+        let scrollContentSizeHeight = self.collectionView.contentSize.height + self.collectionView.contentInset.bottom
+        if scrollOffset <= -self.collectionView.contentInset.top {
+            toolBarViewframe.origin.y = 20
+        }else if (scrollOffset + scrollHeight) >= scrollContentSizeHeight {
+            toolBarViewframe.origin.y = -size+20
+        } else {
+            toolBarViewframe.origin.y = min(20, max(-size+20, toolBarViewframe.origin.y - scrollDiff));
+        }
+        collectViewFrame.origin.y = size + toolBarViewframe.origin.y - 18
+        collectViewFrame.size.height = UIScreen.mainScreen().bounds.height - collectViewFrame.origin.y
+        self.headerView.frame = toolBarViewframe
+        self.collectionView.frame = collectViewFrame
+        self.updateBarButtonsAlpha(1-framePercentageHidden)
+        self.previousScrollViewYOffset = scrollOffset
+        let viewY = collectViewFrame.origin.y
+        self.playCellAnimation(scrollOffset - viewY)
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        self.stoppedScrolling()
+    }
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            self.stoppedScrolling()
+        }
+    }
+    
+    func stoppedScrolling(){
+        let frame = self.headerView.frame
+        if frame.origin.y < 0 {
+            self.animationNavBarTo((20-frame.size.height))
+        }else {
+            self.animationNavBarTo(20)
+        }
+    }
+    
+    func updateBarButtonsAlpha(alpha:CGFloat){
+        let subViews = self.headerView.subviews
+        for i in 0..<subViews.count{
+            let subView = subViews[i]
+            subView.alpha = alpha
+        }
+    }
+    
+    func animationNavBarTo(y:CGFloat){
+        UIView.animateWithDuration(0.2) { () -> Void in
+            var toolBarViewframe = self.headerView.frame
+            var collectViewFrame = self.collectionView.frame
+            toolBarViewframe.origin.y = y
+            collectViewFrame.origin.y = toolBarViewframe.height + toolBarViewframe.origin.y - 18
+            collectViewFrame.size.height = self.view.frame.height - collectViewFrame.origin.y
+            self.headerView.frame = toolBarViewframe
+            self.collectionView.frame = collectViewFrame
+            let alpha:CGFloat = (y == 20 ? 1.0 : 0.0)
+            self.updateBarButtonsAlpha(alpha)
+        }
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
+        let bounds = UIScreen.mainScreen().bounds
+        let itemW = bounds.width
+        return CGSize(width: itemW, height: itemW+100)
+    }
+    
+    func playCellAnimation(offY:CGFloat){
+        let bounds = UIScreen.mainScreen().bounds
+        let cells = self.collectionView.visibleCells()
         for i in 0..<cells.count{
             let cell = cells[i]
             let cellFrame = cell.frame
-            let cellY = cellFrame.origin.y - offY + scrollY
-            let bounds = UIScreen.mainScreen().bounds
-            let min = bounds.width/4
-            let max = bounds.height - bounds.width/4
+            let cellY = cellFrame.origin.y - offY
+            let min = bounds.height/2 - bounds.width/2
+            let max = bounds.height/2 + bounds.width/2
             let maxRect = CGRect(x: 0, y: min, width: bounds.width, height: (max-min))
             let cellRect = CGRect(x: 10, y: cellY, width: bounds.width-10, height: cellFrame.height)
             let publishCell = (cell as! CTAHomePublishesCell)
@@ -395,13 +467,6 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                 publishCell.playAnimation()
             }
         }
-        self.previousScrollViewYOffset = scrollY
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
-        let bounds = UIScreen.mainScreen().bounds
-        let itemW = bounds.width
-        return CGSize(width: itemW, height: itemW+100)
     }
 }
 
