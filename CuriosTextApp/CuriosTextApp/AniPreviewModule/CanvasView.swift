@@ -60,10 +60,11 @@ extension CanvasView {
     
     func reloadData(completed:(() -> ())?) {
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
-            guard let sf = self else {return}
+            guard let sf = self where sf.collectionView.dataSource?.collectionView(sf.collectionView, numberOfItemsInSection: 0) > 0 else {return}
             CATransaction.begin()
             CATransaction.setDisableActions(true)
 //            sf.collectionView.reloadData()
+            
             sf.collectionView.reloadSections(NSIndexSet(index: 0))
             CATransaction.commit()
         
