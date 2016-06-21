@@ -22,7 +22,7 @@ public class CTAStyleKit : NSObject {
         static let disableColor: UIColor = UIColor(red: 0.607, green: 0.607, blue: 0.607, alpha: 1.000)
         static let ediorBackgroundColor: UIColor = UIColor(red: 0.827, green: 0.827, blue: 0.827, alpha: 1.000)
         static let commonBackgroundColor: UIColor = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1.000)
-        static let lightGrayBackgroundColor: UIColor = UIColor(red: 0.949, green: 0.949, blue: 0.965, alpha: 1.000)
+        static let lightGrayBackgroundColor: UIColor = UIColor(red: 0.945, green: 0.945, blue: 0.945, alpha: 1.000)
         static let one0: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)
         static let one1: UIColor = UIColor(red: 0.357, green: 0.271, blue: 0.561, alpha: 1.000)
         static let one2: UIColor = UIColor(red: 0.749, green: 0.573, blue: 0.686, alpha: 1.000)

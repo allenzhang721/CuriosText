@@ -81,7 +81,7 @@ class CTAUserDetailViewController: UIViewController, CTAImageControllerProtocol,
         self.addImageShadow(self.shadowCanvas)
         self.backImageView = UIView.init(frame: CGRect.init(x: (self.view.frame.width - backWidth)/2, y: (self.view.frame.height - backHeight)/2, width: backWidth, height: backHeight))
         self.view.addSubview(self.backImageView!)
-        self.backImageView.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
+        self.backImageView.backgroundColor = CTAStyleKit.commonBackgroundColor
         self.cropImageRound(self.backImageView)
 
         self.userIconImageView = UIImageView.init(frame:CGRect.init(x: (self.view.frame.size.width - 60)/2 - canvasx, y: 25*rate, width: 60, height: 60))

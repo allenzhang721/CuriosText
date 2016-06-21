@@ -6,6 +6,10 @@
 
 */
 "DefaultName" = "Curios";
+"HomeLabel" = "Home";
+"RecommendLabel" = "New";
+"NoticeLabel" = "Notification";
+"UserLabel" = "User";
 "FollowLabel" = "Following";
 "BeFollowLabel" = "Followers";
 "FollowButtonLabel" = "Follow";

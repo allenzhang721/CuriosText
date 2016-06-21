@@ -14,7 +14,7 @@ enum CTAPublishType: String {
     case Posts, Likes
 }
 
-class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTAPublishCacheProtocol, CTASystemLanguageProtocol{
+class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTAPublishCacheProtocol, CTAPublishModelProtocol{
 
     var viewUser:CTAUserModel?
     var loginUser:CTAUserModel?
@@ -48,11 +48,9 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     
     var followButton:UIButton!
     
-    var headerToolView:UIView!
     var backButton:UIButton!
     var settingButton:UIButton!
-    
-    var previousScrollViewYOffset:CGFloat = 0.0
+
     var isLoading:Bool = false
     
     var headerFresh:MJRefreshGifHeader!
@@ -79,6 +77,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.initTopView()
         self.initCollectionView();
         self.initViewNavigateBar();
+        self.navigationController?.navigationBarHidden = true
         self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
         if self.isLoginUser && !self.isAddOber{
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UserViewController.reloadViewHandler(_:)), name: "publishEditFile", object: nil)
@@ -101,17 +100,14 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
                     self.publishModelArray.removeAll()
                     self.loadArrayFromLocal()
                     self.collectionView.reloadData()
-                    self.previousScrollViewYOffset = 0.0
                 }
             }else {
                 self.resetView()
                 self.resetButton()
                 self.publishModelArray.removeAll()
                 self.collectionView.reloadData()
-                self.previousScrollViewYOffset = 0.0
             }
         }
-        self.navigationController?.navigationBarHidden = true
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -207,9 +203,6 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.collectionView.registerClass(CTAPublishHeaderView.self, forSupplementaryViewOfKind:UICollectionElementKindSectionHeader, withReuseIdentifier: "ctaPublishHeader")
         self.collectionView.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
         self.view.addSubview(self.collectionView!);
-        let timeView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: 20))
-        timeView.backgroundColor = CTAStyleKit.commonBackgroundColor
-        self.view.addSubview(timeView)
         
         let freshIcon1:UIImage = UIImage(named: "fresh-icon-1")!
         
@@ -354,19 +347,21 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     
     func initViewNavigateBar(){
         let bounds = UIScreen.mainScreen().bounds
-        self.settingButton = UIButton(frame: CGRect(x: bounds.width - 40, y: 2, width: 40, height: 40))
+        self.settingButton = UIButton(frame: CGRect(x: bounds.width - 40, y: 22, width: 40, height: 40))
         self.settingButton.setImage(UIImage(named: "setting-button"), forState: .Normal)
         self.settingButton.setImage(UIImage(named: "setting-selected-button"), forState: .Highlighted)
         self.backButton = UIButton(frame: CGRect(x: 0, y: 22, width: 40, height: 40))
         self.backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         self.backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
         
-        self.headerToolView = UIView(frame: CGRect(x: 0, y: 20, width: bounds.width, height: 44))
-        self.headerToolView.addSubview(self.settingButton)
-        self.headerToolView.addSubview(self.backButton)
-        self.view.addSubview(self.headerToolView)
+        self.view.addSubview(self.settingButton)
+        self.view.addSubview(self.backButton)
         self.settingButton.addTarget(self, action: #selector(UserViewController.settingButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.backButton.addTarget(self, action: #selector(UserViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
+        
+        let timeView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: 20))
+        timeView.backgroundColor = CTAStyleKit.commonBackgroundColor
+        self.view.addSubview(timeView)
     }
     
     func setNavigateButton(){
@@ -451,7 +446,6 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
             self.publishModelArray.removeAll()
             self.loadArrayFromLocal()
             self.collectionView.reloadData()
-            self.previousScrollViewYOffset = 0.0
             self.isLoading = false
             self.loadFirstData()
         }
@@ -464,7 +458,6 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
             self.publishModelArray.removeAll()
             self.loadArrayFromLocal()
             self.collectionView.reloadData()
-            self.previousScrollViewYOffset = 0.0
             self.isLoading = false
             self.loadFirstData()
         }
@@ -606,37 +599,6 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         }
     }
     
-    func getPublishIndex(publishID:String, publishArray:Array<CTAPublishModel>) -> Int{
-        for i in 0..<publishArray.count{
-            let oldPublihModel = publishArray[i]
-            if oldPublihModel.publishID == publishID{
-                return i
-            }
-        }
-        return -1
-    }
-    
-    func checkPublishModelIsHave(publishID:String, publishArray:Array<CTAPublishModel>) -> Bool{
-        for i in 0..<publishArray.count{
-            let oldPublihModel = publishArray[i]
-            if oldPublihModel.publishID == publishID{
-                return true
-            }
-        }
-        return false
-    }
-    
-    func removePublishModelByID(publishID:String) -> Bool{
-        for i in 0..<self.publishModelArray.count{
-            let oldPublihModel = self.publishModelArray[i]
-            if oldPublihModel.publishID == publishID {
-                self.publishModelArray.removeAtIndex(i)
-                return true
-            }
-        }
-        return false
-    }
-    
     func loadUserDetail(){
         if self.loginUser != nil {
             let userID = self.loginUser!.userID
@@ -694,81 +656,6 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         }
         self.followButton.hidden = isHidden
         self.followButton.setTitle(buttonLabel, forState: .Normal)
-    }
-    
-    func changeCountToString(count:Int) -> String{
-        var countString:String = ""
-        let language = self.getCurrentLanguage()
-        if language == "zh-Hant-US" || language == "zh-Hans-US" || language == "zh-HK" {
-            if count < 10000 {
-                countString = String(count)
-            }else if count < 100000000{
-                if count < 1000000{
-                    var countFloat = Double(count) / 10000.00
-                    let countNumber = floor(countFloat*10)
-                    countFloat = Double(countNumber)/10
-                    if (countFloat - floor(countFloat))*10 < 1 {
-                        countString = String(Int(countFloat)) + NSLocalizedString("TenThousand", comment: "")
-                    }else {
-                        countString = String(format: "%.1f", countFloat) + NSLocalizedString("TenThousand", comment: "")
-                    }
-                }else {
-                    let countInt = count / 10000
-                    countString = String(countInt) + NSLocalizedString("TenThousand", comment: "")
-                }
-            }else {
-                var countFloat = Double(count) / 100000000.00
-                let countNumber = floor(countFloat*10)
-                countFloat = Double(countNumber)/10
-                if (countFloat - floor(countFloat))*10 < 1 {
-                    countString = String(Int(countFloat)) + NSLocalizedString("HundredMillion", comment: "")
-                }else {
-                    countString =  String(format: "%.1f", countFloat) + NSLocalizedString("HundredMillion", comment: "")
-                }
-            }
-        }else {
-            if count < 1000 {
-                countString = String(count)
-            }else if count < 1000000{
-                if count < 100000{
-                    var countFloat = Double(count) / 1000.00
-                    let countNumber = floor(countFloat*10)
-                    countFloat = Double(countNumber)/10
-                    if (countFloat - floor(countFloat))*10 < 1 {
-                        countString = String(Int(countFloat)) + NSLocalizedString("Thousand", comment: "")
-                    }else {
-                        countString =  String(format: "%.1f", countFloat) + NSLocalizedString("Thousand", comment: "")
-                    }
-                }else {
-                    let countInt = count / 1000
-                    countString = String(countInt) + NSLocalizedString("Thousand", comment: "")
-                }
-            }else if count < 1000000000{
-                if count < 100000000{
-                    var countFloat = Double(count) / 1000000.00
-                    let countNumber = floor(countFloat*10)
-                    countFloat = Double(countNumber)/10
-                    if (countFloat - floor(countFloat))*10 < 1 {
-                        countString = String(Int(countFloat)) + NSLocalizedString("Million", comment: "")
-                    }else {
-                        countString =  String(format: "%.1f", countFloat) + NSLocalizedString("Million", comment: "")
-                    }
-                }else {
-                    let countInt = count / 1000000
-                    countString = String(countInt) + NSLocalizedString("Million", comment: "")
-                }
-            }else {
-                var countFloat = Double(count) / 1000000000.00
-                let countNumber = floor(countFloat*10)
-                countFloat = Double(countNumber)/10
-                if (countFloat - floor(countFloat))*10 < 1 {
-                    countString = String(Int(countFloat)) + NSLocalizedString("Billion", comment: "")
-                }else {
-                    countString =  String(format: "%.1f", countFloat) + NSLocalizedString("Billion", comment: "")
-                }
-            }
-        }
-        return countString
     }
     /*
     // MARK: - Navigation

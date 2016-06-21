@@ -22,7 +22,6 @@ class CTAPublishesCell: UICollectionViewCell, CTAImageControllerProtocol{
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.cellImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
-        self.cropImageRound(self.cellImageView)
         self.contentView.addSubview(self.cellImageView)
     }
 

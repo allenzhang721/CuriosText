@@ -59,7 +59,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         
         // Do any additional setup after loading the view.
         self.initView();
-        self.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
+        self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
     }
     
     override func viewWillAppear(animated: Bool) {
