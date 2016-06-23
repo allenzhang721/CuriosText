@@ -12,6 +12,8 @@ protocol CTAPublishModelProtocol: CTASystemLanguageProtocol{
     func checkPublishModelIsHave(publishID:String, publishArray:Array<CTAPublishModel>) -> Bool
     func removePublishModelByID(publishID:String, publishArray:Array<CTAPublishModel>) -> Array<CTAPublishModel>
     func changeCountToString(count:Int) -> String
+    func changeCountToAllString(count:Int) -> String
+    func getPublishDate(publishDate:NSDate) -> String
 }
 
 extension CTAPublishModelProtocol{
@@ -121,5 +123,57 @@ extension CTAPublishModelProtocol{
             }
         }
         return countString
+    }
+    
+    func changeCountToAllString(count:Int) -> String{
+        let countString:String = self.getCountThStr(count)
+        return countString
+    }
+    
+    func getCountThStr(count:Int) -> String{
+        var countString:String = ""
+        let remainder = Int(count % 1000)
+        let divided   = Int(count / 1000)
+        if divided > 0{
+            countString = self.getCountThStr(divided)+","+String(remainder)
+        }else {
+            countString = String(remainder)
+        }
+        return countString
+    }
+    
+    func getPublishDate(publishDate:NSDate) -> String{
+        var time = publishDate.timeIntervalSinceNow
+        if time < 0{
+            time = 0-time
+        }
+        var dateString:String = ""
+        if time < 60{
+            dateString = NSLocalizedString("PublishDateJustNow", comment: "")
+        }else if time < 3600{
+            let mins = Int(time / 60)
+            dateString = String(mins)+NSLocalizedString("PublishDateMins", comment: "")
+        }else if time < 3600*2{
+            dateString = NSLocalizedString("PublishDateOneHour", comment: "")
+        }else if time < 86400{
+            let hours = Int(time / 3600)
+            dateString = String(hours)+NSLocalizedString("PublishDateHours", comment: "")
+        }else if time < 86400 * 2{
+            dateString = NSLocalizedString("PublishDateYesterDay", comment: "")
+        }else if time < 86400*30{
+            let days = Int(time / 86400)
+            dateString = String(days)+NSLocalizedString("PublishDateDays", comment: "")
+        }else if time < 86400*30*2{
+            dateString = NSLocalizedString("PublishDateOneMonth", comment: "")
+        }else if time < 86400*365{
+            let months = Int(time / (86400*30))
+            dateString = String(months)+NSLocalizedString("PublishDateMonths", comment: "")
+        }else if time < 86400*365*2{
+            dateString = NSLocalizedString("PublishDateOneYear", comment: "")
+        }else{
+            let years = Int(time / (86400*365))
+            dateString = String(years)+NSLocalizedString("PublishDateYears", comment: "")
+        }
+        return dateString
     }
 }

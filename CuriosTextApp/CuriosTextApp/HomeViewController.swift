@@ -9,7 +9,7 @@
 import UIKit
 import MJRefresh
 
-class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishModelProtocol{
+class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishModelProtocol, CTALoginProtocol{
     
     var loginUser:CTAUserModel?
     var viewUserID:String = ""
@@ -95,7 +95,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         homeLabel.text = NSLocalizedString("DefaultName", comment: "")
         homeLabel.textAlignment = .Center
         self.headerView.addSubview(homeLabel)
-        let textLine = UIImageView.init(frame: CGRect.init(x: 0, y: 43, width: bounds.width, height: 1))
+        let textLine = UIImageView(frame: CGRect(x: 0, y: 43, width: bounds.width, height: 1))
         textLine.image = UIImage(named: "space-line")
         headerView.addSubview(textLine)
         self.view.addSubview(self.headerView)
@@ -478,4 +478,66 @@ extension HomeViewController:CTALoadingProtocol{
 
 extension HomeViewController:CTAHomePublishesCellDelegate{
     
+    func userIconTap(publishModel:CTAPublishModel?){
+        if self.loginUser != nil {
+            if publishModel != nil {
+                let viewUserModel = publishModel!.userModel
+                let userPublish = UserViewController()
+                userPublish.viewUser = viewUserModel
+                self.navigationController?.pushViewController(userPublish, animated: true)
+            }
+        }else {
+            self.showLoginView()
+        }
+    }
+    
+    func likeListTap(publishModel:CTAPublishModel?){
+        if self.loginUser != nil {
+            if publishModel != nil {
+                print("likeListTap")
+            }
+        }else {
+            self.showLoginView()
+        }
+    }
+    
+    func likeHandler(publishModel:CTAPublishModel?){
+        if self.loginUser != nil {
+            if publishModel != nil {
+                print("likeHandler")
+            }
+        }else {
+            self.showLoginView()
+        }
+    }
+    
+    func commentHandler(publishModel:CTAPublishModel?){
+        if self.loginUser != nil {
+            if publishModel != nil {
+                print("commentHandler")
+            }
+        }else {
+            self.showLoginView()
+        }
+    }
+    
+    func rebuildHandler(publishModel:CTAPublishModel?){
+        if self.loginUser != nil {
+            if publishModel != nil {
+                print("rebuildHandler")
+            }
+        }else {
+            self.showLoginView()
+        }
+    }
+    
+    func moreHandler(publishModel:CTAPublishModel?){
+        if self.loginUser != nil {
+            if publishModel != nil {
+                print("moreHandler")
+            }
+        }else {
+            self.showLoginView()
+        }
+    }
 }

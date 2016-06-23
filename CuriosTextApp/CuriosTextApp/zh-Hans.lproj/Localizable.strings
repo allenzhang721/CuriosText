@@ -18,6 +18,8 @@
 "UnFollowButtonLabel" = "关注中";
 "PostsButtonLabel" = "我的";
 "LikesButtonLabel" = "赞过";
+"LikesLabel" = "赞";
+"CommentsLabel" = "Comments";
 "TenThousand" = "万";
 "HundredMillion" = "亿";
 "LoginLabel" = "欢迎使用奇思";

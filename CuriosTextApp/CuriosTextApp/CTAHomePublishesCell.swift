@@ -23,10 +23,13 @@ class CTAHomePublishesCell: UICollectionViewCell{
     var publishModel:CTAPublishModel?{
         didSet{
             self.didSetPublishModel()
+            self.controllerView.publishModel = self.publishModel
         }
     }
     
     var previewView:CTAPublishPreviewView!
+    
+    var controllerView:CTAPublishControllerView!
     
     var delegate:CTAHomePublishesCellDelegate?
     
@@ -45,8 +48,13 @@ class CTAHomePublishesCell: UICollectionViewCell{
         self.contentView.addSubview(self.previewView)
         self.previewView.animationEnable = true
         self.previewView.delegate = self
-        
+        self.controllerView = CTAPublishControllerView(frame: CGRect(x: 0, y: self.getViewSize().height, width: self.getViewSize().width, height: 100))
+        self.contentView.addSubview(self.controllerView)
+        self.controllerView.delegate = self
         self.backgroundColor = CTAStyleKit.commonBackgroundColor
+        let textLine = UIImageView(frame: CGRect(x: 0, y: frame.size.height-1, width: frame.size.width, height: 1))
+        textLine.image = UIImage(named: "space-line")
+        self.contentView.addSubview(textLine)
     }
     
     func didSetPublishModel(){
@@ -92,6 +100,7 @@ class CTAHomePublishesCell: UICollectionViewCell{
         self.isLoadComplete = false
         self.loadCompeteHandler = nil
         self.isPlayed = false
+        self.delegate = nil
     }
     
     func playAnimation(){
@@ -112,7 +121,12 @@ class CTAHomePublishesCell: UICollectionViewCell{
 }
 
 protocol CTAHomePublishesCellDelegate {
-    
+    func userIconTap(publishModel:CTAPublishModel?)
+    func likeListTap(publishModel:CTAPublishModel?)
+    func likeHandler(publishModel:CTAPublishModel?)
+    func commentHandler(publishModel:CTAPublishModel?)
+    func rebuildHandler(publishModel:CTAPublishModel?)
+    func moreHandler(publishModel:CTAPublishModel?)
 }
 
 extension CTAHomePublishesCell: CTAPublishPreviewViewDelegate{
@@ -129,5 +143,43 @@ extension CTAHomePublishesCell: CTAPublishPreviewViewDelegate{
     
     func loadFailed(){
         
+    }
+}
+
+extension CTAHomePublishesCell: CTAPublishControllerDelegate{
+    func userIconTap(){
+        if self.delegate != nil{
+            self.delegate?.userIconTap(self.publishModel)
+        }
+    }
+    
+    func likeListTap(){
+        if self.delegate != nil{
+            self.delegate?.likeListTap(self.publishModel)
+        }
+    }
+    
+    func likeHandler(){
+        if self.delegate != nil{
+            self.delegate?.likeHandler(self.publishModel)
+        }
+    }
+    
+    func commentHandler(){
+        if self.delegate != nil{
+            self.delegate?.commentHandler(self.publishModel)
+        }
+    }
+    
+    func rebuildHandler(){
+        if self.delegate != nil{
+            self.delegate?.rebuildHandler(self.publishModel)
+        }
+    }
+    
+    func moreHandler(){
+        if self.delegate != nil{
+            self.delegate?.moreHandler(self.publishModel)
+        }
     }
 }

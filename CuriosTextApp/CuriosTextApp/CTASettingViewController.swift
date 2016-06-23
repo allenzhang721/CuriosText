@@ -12,7 +12,7 @@ import SVProgressHUD
 
 class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTALoadingProtocol, CTALoginProtocol{
     
-    var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
+    var loadingImageView:UIImageView? = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     
     var scrollView:UIScrollView!
     var userIconImage:UIImageView!
@@ -94,14 +94,14 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         backButton.addTarget(self, action: #selector(CTASettingViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
         headerView.addSubview(backButton)
         
-        var textLine = UIImageView.init(frame: CGRect.init(x: 0, y: 63, width: bounds.width, height: 1))
+        var textLine = UIImageView(frame: CGRect(x: 0, y: 63, width: bounds.width, height: 1))
         textLine.image = UIImage(named: "space-line")
         headerView.addSubview(textLine)
         
-        self.scrollView = UIScrollView.init(frame: CGRect.init(x: 0, y: 64, width: bounds.width, height: bounds.height-64))
+        self.scrollView = UIScrollView(frame: CGRect(x: 0, y: 64, width: bounds.width, height: bounds.height-64))
         self.view.addSubview(self.scrollView)
         
-        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bounds.width - 60)/2, y: 20, width: 60*self.getHorRate(), height: 60*self.getHorRate()))
+        self.userIconImage = UIImageView(frame: CGRect(x: (bounds.width - 60)/2, y: 20, width: 60*self.getHorRate(), height: 60*self.getHorRate()))
         self.userIconImage.image = UIImage(named: "default-usericon")
         self.cropImageCircle(self.userIconImage)
         self.scrollView.addSubview(self.userIconImage)
@@ -110,55 +110,55 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.userIconImage.addGestureRecognizer(iconTap)
         
         let imgFrame = self.userIconImage.frame
-        let cameraView = UIImageView.init(frame: CGRect.init(x: (imgFrame.origin.x+imgFrame.size.width)-20, y: (imgFrame.origin.y+imgFrame.size.height)-20, width: 20, height: 20))
-        cameraView.image = UIImage.init(named: "usercamera-icon")
+        let cameraView = UIImageView(frame: CGRect(x: (imgFrame.origin.x+imgFrame.size.width)-20, y: (imgFrame.origin.y+imgFrame.size.height)-20, width: 20, height: 20))
+        cameraView.image = UIImage(named: "usercamera-icon")
         self.scrollView.addSubview(cameraView)
         
         self.imagePicker.delegate = self
         
-        self.userNickNameLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 109, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
+        self.userNickNameLabel = UILabel(frame: CGRect(x: 128*self.getHorRate(), y: 109, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
         self.userNickNameLabel.font = UIFont.systemFontOfSize(16)
         self.userNickNameLabel.textColor = CTAStyleKit.disableColor
         self.userNickNameLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userNickNameLabel)
-        let userNickNameTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y, width: 50, height: 22))
+        let userNickNameTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y, width: 50, height: 22))
         userNickNameTitle.font = UIFont.systemFontOfSize(16)
         userNickNameTitle.textColor = CTAStyleKit.normalColor
         userNickNameTitle.text = NSLocalizedString("UserNickNameLabel", comment: "")
         userNickNameTitle.sizeToFit()
         self.scrollView.addSubview(userNickNameTitle)
-        var nextImage = UIImageView.init(frame: CGRect.init(x: bounds.width - 25*self.getHorRate() - 5, y: self.userNickNameLabel.frame.origin.y+6, width: 6, height: 10))
+        var nextImage = UIImageView(frame: CGRect(x: bounds.width - 25*self.getHorRate() - 5, y: self.userNickNameLabel.frame.origin.y+6, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         self.scrollView.addSubview(nextImage)
-        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y + 31, width: 330*self.getHorRate(), height: 1))
+        textLine = UIImageView(frame: CGRect(x: 25*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y + 31, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "space-line")
         self.scrollView.addSubview(textLine)
         self.userNickNameLabel.userInteractionEnabled = true
         let nickNameTap = UITapGestureRecognizer(target: self, action: #selector(CTASettingViewController.userNickNameClick(_:)))
         self.userNickNameLabel.addGestureRecognizer(nickNameTap)
         
-        self.userSexLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y+40, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
+        self.userSexLabel = UILabel(frame: CGRect(x: 128*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y+40, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
         self.userSexLabel.font = UIFont.systemFontOfSize(16)
         self.userSexLabel.textColor = CTAStyleKit.disableColor
         self.userSexLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userSexLabel)
-        let userSexTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userSexLabel.frame.origin.y, width: 50, height: 22))
+        let userSexTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: self.userSexLabel.frame.origin.y, width: 50, height: 22))
         userSexTitle.font = UIFont.systemFontOfSize(16)
         userSexTitle.textColor = CTAStyleKit.normalColor
         userSexTitle.text = NSLocalizedString("UserSexLabel", comment: "")
         userSexTitle.sizeToFit()
         self.scrollView.addSubview(userSexTitle)
-        nextImage = UIImageView.init(frame: CGRect.init(x: bounds.width - 25*self.getHorRate() - 5, y: self.userSexLabel.frame.origin.y+6, width: 6, height: 10))
+        nextImage = UIImageView(frame: CGRect(x: bounds.width - 25*self.getHorRate() - 5, y: self.userSexLabel.frame.origin.y+6, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         self.scrollView.addSubview(nextImage)
-        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userSexLabel.frame.origin.y + 31, width: 330*self.getHorRate(), height: 1))
+        textLine = UIImageView(frame: CGRect(x: 25*self.getHorRate(), y: self.userSexLabel.frame.origin.y + 31, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "space-line")
         self.scrollView.addSubview(textLine)
         self.userSexLabel.userInteractionEnabled = true
         let userSexTap = UITapGestureRecognizer(target: self, action: #selector(CTASettingViewController.userSexClick(_:)))
         self.userSexLabel.addGestureRecognizer(userSexTap)
         
-        self.userRegionLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+40, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
+        self.userRegionLabel = UILabel(frame: CGRect(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+40, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
         self.userRegionLabel.font = UIFont.systemFontOfSize(16)
         self.userRegionLabel.textColor = CTAStyleKit.disableColor
         self.userRegionLabel.textAlignment = .Right
@@ -180,22 +180,22 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.userRegionLabel.addGestureRecognizer(userRegionTap)
         self.userRegionLabel.hidden = true
         
-        self.userDescLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+40, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
+        self.userDescLabel = UILabel(frame: CGRect(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+40, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
         self.userDescLabel.numberOfLines = 12
         self.userDescLabel.font = UIFont.systemFontOfSize(16)
         self.userDescLabel.textColor = CTAStyleKit.disableColor
         self.userDescLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userDescLabel)
-        let userDesxTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userDescLabel.frame.origin.y, width: 50, height: 22))
+        let userDesxTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: self.userDescLabel.frame.origin.y, width: 50, height: 22))
         userDesxTitle.font = UIFont.systemFontOfSize(16)
         userDesxTitle.textColor = CTAStyleKit.normalColor
         userDesxTitle.text = NSLocalizedString("UserDesc", comment: "")
         userDesxTitle.sizeToFit()
         self.scrollView.addSubview(userDesxTitle)
-        self.descNextImg = UIImageView.init(frame: CGRect.init(x: bounds.width - 25*self.getHorRate() - 5, y: self.userDescLabel.frame.origin.y+6, width: 6, height: 10))
+        self.descNextImg = UIImageView(frame: CGRect(x: bounds.width - 25*self.getHorRate() - 5, y: self.userDescLabel.frame.origin.y+6, width: 6, height: 10))
         self.descNextImg.image = UIImage(named: "next-icon")
         self.scrollView.addSubview(self.descNextImg)
-        self.descLineImg = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userDescLabel.frame.origin.y + 31, width: 330*self.getHorRate(), height: 1))
+        self.descLineImg = UIImageView(frame: CGRect(x: 25*self.getHorRate(), y: self.userDescLabel.frame.origin.y + 31, width: 330*self.getHorRate(), height: 1))
         self.descLineImg.image = UIImage(named: "space-line")
         self.scrollView.addSubview(self.descLineImg)
         self.userDescLabel.userInteractionEnabled = true
@@ -211,13 +211,13 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         bindingAccoutTitle.text = NSLocalizedString("BindingAccountLabel", comment: "")
         bindingAccoutTitle.sizeToFit()
         bindingAccoutView.addSubview(bindingAccoutTitle)
-        nextImage = UIImageView.init(frame: CGRect.init(x: bounds.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
+        nextImage = UIImageView(frame: CGRect(x: bounds.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         bindingAccoutView.addSubview(nextImage)
-        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 0, width: 330*self.getHorRate(), height: 1))
+        textLine = UIImageView(frame: CGRect(x: 25*self.getHorRate(), y: 0, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "space-line")
         bindingAccoutView.addSubview(textLine)
-        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
+        textLine = UIImageView(frame: CGRect(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "space-line")
         bindingAccoutView.addSubview(textLine)
         bindingAccoutView.userInteractionEnabled = true
@@ -232,10 +232,10 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         changePasswordTitle.text = NSLocalizedString("ChangePasswordLabel", comment: "")
         changePasswordTitle.sizeToFit()
         changePasswordView.addSubview(changePasswordTitle)
-        nextImage = UIImageView.init(frame: CGRect.init(x: bounds.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
+        nextImage = UIImageView(frame: CGRect(x: bounds.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         changePasswordView.addSubview(nextImage)
-        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
+        textLine = UIImageView(frame: CGRect(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "space-line")
         changePasswordView.addSubview(textLine)
         changePasswordView.userInteractionEnabled = true
@@ -252,13 +252,13 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         aboutTitle.text = NSLocalizedString("AboutLabel", comment: "")
         aboutTitle.sizeToFit()
         aboutView.addSubview(aboutTitle)
-        nextImage = UIImageView.init(frame: CGRect.init(x: bounds.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
+        nextImage = UIImageView(frame: CGRect(x: bounds.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         aboutView.addSubview(nextImage)
-        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 0, width: 330*self.getHorRate(), height: 1))
+        textLine = UIImageView(frame: CGRect(x: 25*self.getHorRate(), y: 0, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "space-line")
         aboutView.addSubview(textLine)
-        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
+        textLine = UIImageView(frame: CGRect(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "space-line")
         aboutView.addSubview(textLine)
         aboutView.userInteractionEnabled = true
@@ -273,10 +273,10 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         shareToFriendTitle.text = NSLocalizedString("InviteFriendsLabel", comment: "")
         shareToFriendTitle.sizeToFit()
         shareToFriendView.addSubview(shareToFriendTitle)
-        nextImage = UIImageView.init(frame: CGRect.init(x: bounds.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
+        nextImage = UIImageView(frame: CGRect(x: bounds.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         shareToFriendView.addSubview(nextImage)
-        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
+        textLine = UIImageView(frame: CGRect(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "space-line")
         shareToFriendView.addSubview(textLine)
         shareToFriendView.userInteractionEnabled = true
@@ -291,10 +291,10 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         reviewUSTitle.text = NSLocalizedString("ReviewUSLabel", comment: "")
         reviewUSTitle.sizeToFit()
         reviewUSView.addSubview(reviewUSTitle)
-        nextImage = UIImageView.init(frame: CGRect.init(x: bounds.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
+        nextImage = UIImageView(frame: CGRect(x: bounds.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         reviewUSView.addSubview(nextImage)
-        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
+        textLine = UIImageView(frame: CGRect(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "space-line")
         reviewUSView.addSubview(textLine)
         reviewUSView.userInteractionEnabled = true
@@ -302,7 +302,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         reviewUSView.addGestureRecognizer(reviewUSTap)
         self.scrollView.addSubview(self.systemSettingView)
         
-        self.logoutButton = UIButton.init(frame: CGRect.init(x: (bounds.width - 40)/2, y: self.descLineImg.frame.origin.y + 320, width: 40, height: 28))
+        self.logoutButton = UIButton(frame: CGRect(x: (bounds.width - 40)/2, y: self.descLineImg.frame.origin.y + 320, width: 40, height: 28))
         self.logoutButton.setTitle(NSLocalizedString("LogoutButtonLabel", comment: ""), forState: .Normal)
         self.logoutButton.setTitleColor(CTAStyleKit.selectedColor, forState: .Normal)
         self.logoutButton.setTitleColor(CTAStyleKit.disableColor, forState: .Disabled)
@@ -355,7 +355,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         let imageURL = NSURL(string: imagePath)!
         var defaultImg:UIImage!
         if loadImg == nil{
-            defaultImg = UIImage.init(named: "default-usericon")
+            defaultImg = UIImage(named: "default-usericon")
         }else {
             defaultImg = loadImg
         }

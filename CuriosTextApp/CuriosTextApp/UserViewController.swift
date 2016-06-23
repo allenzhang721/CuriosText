@@ -31,7 +31,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     
     var topView:UIView!
     var collectionView:UICollectionView!
-    var collectionLayout:UICollectionViewFlowLayout!
+    var collectionLayout:CTACollectionViewStickyFlowLayout!
     
     var collectionControllerView:UIView!
     var userPostButton:UIButton!
@@ -78,6 +78,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.initCollectionView();
         self.initViewNavigateBar();
         self.navigationController?.navigationBarHidden = true
+        self.navigationController?.interactivePopGestureRecognizer!.delegate = self
         self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
         if self.isLoginUser && !self.isAddOber{
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UserViewController.reloadViewHandler(_:)), name: "publishEditFile", object: nil)
@@ -188,8 +189,8 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     func initCollectionView(){
         let bounds = UIScreen.mainScreen().bounds
         let space:CGFloat = self.getCellSpace()
-        let rect:CGRect = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height-0)
-        self.collectionLayout = UICollectionViewFlowLayout()
+        let rect:CGRect = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height)
+        self.collectionLayout = CTACollectionViewStickyFlowLayout()
         
         self.collectionLayout.itemSize = self.getCellRect()
         self.collectionLayout.sectionInset = UIEdgeInsets(top: 0, left: space, bottom: 0, right: space)
@@ -315,6 +316,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.followButton.setBackgroundImage(UIImage(named: "follow-button"), forState: .Normal)
         self.followButton.setTitle(NSLocalizedString("FollowButtonLabel", comment: ""), forState: .Normal)
         self.followButton.setTitleColor(CTAStyleKit.normalColor, forState: .Normal)
+        self.followButton.titleLabel?.font = UIFont.systemFontOfSize(13)
         if self.isLoginUser{
             self.userFollowView.frame = CGRectMake(0, 0, bounds.width, 30)
             textLine.frame = CGRect.init(x: 0, y: 29, width: bounds.width, height: 1)
@@ -389,10 +391,14 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     }
     
     func setUserIcon(iconPath:String){
+        var defaultImg = UIImage(named: "default-usericon")
+        if self.userIconImage.image != nil {
+            defaultImg = self.userIconImage.image
+        }
         let imagePath = CTAFilePath.userFilePath+iconPath
         let imageURL = NSURL(string: imagePath)!
         self.userIconImage.kf_showIndicatorWhenLoading = true
-        self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: UIImage(named: "default-usericon"), optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in
+        self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: defaultImg, optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in
             if error != nil {
                 self.userIconImage.image = UIImage(named: "default-usericon")
             }
@@ -426,6 +432,8 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         let frame = self.topView.frame
         self.collectionLayout.headerReferenceSize = CGSize(width: frame.width, height: frame.height)
         self.collectionView.collectionViewLayout = self.collectionLayout
+        let headerHMin = self.collectionControllerView.frame.origin.y-64
+        self.collectionLayout.stickyHeight = headerHMin
     }
     
     func changeButtonStatus(){
@@ -443,6 +451,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         if self.publishType != .Posts{
             self.publishType = .Posts
             self.changeButtonStatus()
+            self.changeCollectionViewOffY()
             self.publishModelArray.removeAll()
             self.loadArrayFromLocal()
             self.collectionView.reloadData()
@@ -455,12 +464,21 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         if self.publishType != .Likes{
             self.publishType = .Likes
             self.changeButtonStatus()
+            self.changeCollectionViewOffY()
             self.publishModelArray.removeAll()
             self.loadArrayFromLocal()
             self.collectionView.reloadData()
             self.isLoading = false
             self.loadFirstData()
         }
+    }
+    
+    func changeCollectionViewOffY(){
+        var offY = self.collectionView.contentOffset.y
+        if offY > self.collectionLayout.stickyHeight{
+            offY = self.collectionLayout.stickyHeight
+        }
+        self.collectionView.contentOffset.y = offY
     }
     
     func settingButtonClick(sender: UIButton){
@@ -679,6 +697,7 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         let headerView = self.collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "ctaPublishHeader", forIndexPath: indexPath)
         headerView.addSubview(self.topView)
+        
         return headerView
     }
     
@@ -702,11 +721,29 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
             //self.selectCellAnimation()
         }
     }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let offY = self.collectionView.contentOffset.y
+        print("scroll = \(offY)  he = \(self.collectionLayout.stickyHeight)")
+        if offY > self.collectionLayout.stickyHeight{
+            self.collectionLayout.isSticky = true
+            self.collectionLayout.isHold = true
+        }else {
+            self.collectionLayout.isSticky = false
+        }
+    }
 }
 
 extension UserViewController:CTALoadingProtocol{
     var loadingImageView:UIImageView?{
         return nil
+    }
+}
+
+extension UserViewController: UIGestureRecognizerDelegate{
+    
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }
 
@@ -722,5 +759,108 @@ class CTAPublishTransitionCell: UIView{
 class CTAPublishHeaderView: UICollectionReusableView{
     
 }
+
+class CTACollectionViewStickyFlowLayout: UICollectionViewFlowLayout {
+    
+    var isSticky:Bool = false
+    
+    var stickyHeight:CGFloat = 0.0
+    
+    var isHold:Bool = false
+    
+    override func collectionViewContentSize() -> CGSize{
+        let superSize = super.collectionViewContentSize()
+        if self.isHold {
+            let offY = self.collectionView?.contentOffset.y
+            if offY > 0{
+                let viewFrame = self.collectionView!.frame
+                let maxHeight = viewFrame.height + stickyHeight
+                if superSize.height < maxHeight {
+                    let newSize = CGSizeMake(superSize.width, maxHeight)
+                    return newSize
+                }else {
+                    return superSize
+                }
+            }else {
+                self.isHold = false
+                return superSize
+            }
+        }else {
+            return superSize
+        }
+        
+    }
+    
+    override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool{
+        return true
+    }
+    
+    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]?{
+        
+        var answer = super.layoutAttributesForElementsInRect(rect)
+        if self.isSticky{
+            let missingSections:NSMutableIndexSet = NSMutableIndexSet()
+            for var i in 0..<answer!.count{
+                let layoutAttributes = answer![i]
+                if layoutAttributes.representedElementCategory == .Cell {
+                    missingSections.addIndex(layoutAttributes.indexPath.section)
+                }
+                if layoutAttributes.representedElementKind == UICollectionElementKindSectionHeader{
+                    answer?.removeAtIndex(i)
+                    i=i-1
+                }
+            }
+            
+            if missingSections.count == 0 {
+                missingSections.addIndex(0)
+            }
+            missingSections.enumerateIndexesUsingBlock { (idx, stop) in
+                let indexPath = NSIndexPath(forItem: 0, inSection: idx)
+                let layoutAttributes = self.layoutAttributesForSupplementaryViewOfKind(UICollectionElementKindSectionHeader, atIndexPath: indexPath)
+                answer?.append(layoutAttributes!)
+            }
+        }
+        return answer;
+    }
+    
+    override func layoutAttributesForSupplementaryViewOfKind(elementKind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes?{
+        let attributes = super.layoutAttributesForSupplementaryViewOfKind(elementKind, atIndexPath: indexPath)
+        if self.isSticky{
+            if elementKind == UICollectionElementKindSectionHeader {
+                let cv = self.collectionView!;
+                let contentOffset = cv.contentOffset;
+                var nextHeaderOrigin = CGPointMake(CGFloat(Float.infinity), CGFloat(Float.infinity))
+                
+                if (indexPath.section+1 < cv.numberOfSections()) {
+                    let nextHeaderAttributes =  super.layoutAttributesForSupplementaryViewOfKind(elementKind, atIndexPath: NSIndexPath(forItem: 0, inSection: indexPath.section+1))
+                    nextHeaderOrigin = nextHeaderAttributes!.frame.origin;
+                }
+                
+                var frame = attributes!.frame;
+                if (self.scrollDirection == .Vertical) {
+                    frame.origin.y = min(max(contentOffset.y, frame.origin.y), nextHeaderOrigin.y - CGRectGetHeight(frame)) - stickyHeight;
+                }
+                else { // UICollectionViewScrollDirectionHorizontal
+                    frame.origin.x = min(max(contentOffset.x, frame.origin.x), nextHeaderOrigin.x - CGRectGetWidth(frame));
+                }
+                attributes!.zIndex = 1024;
+                attributes!.frame = frame;
+            }
+        }
+        return attributes;
+    }
+    
+    override func initialLayoutAttributesForAppearingSupplementaryElementOfKind(elementKind: String, atIndexPath elementIndexPath: NSIndexPath) -> UICollectionViewLayoutAttributes?{
+        let attributes = self.layoutAttributesForSupplementaryViewOfKind(elementKind, atIndexPath: elementIndexPath)
+        return attributes
+    }
+    
+    override func finalLayoutAttributesForDisappearingSupplementaryElementOfKind(elementKind: String, atIndexPath elementIndexPath: NSIndexPath) -> UICollectionViewLayoutAttributes?{
+        let attributes = self.layoutAttributesForSupplementaryViewOfKind(elementKind, atIndexPath: elementIndexPath)
+        return attributes
+    }
+}
+
+
 
 
