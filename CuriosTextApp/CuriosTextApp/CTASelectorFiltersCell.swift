@@ -10,6 +10,8 @@ import UIKit
 
 class CTASelectorFiltersCell: CTASelectorCell {
     
+    var image: UIImage?
+    
     private var collectionView: UICollectionView!
     
     override func awakeFromNib() {
@@ -51,7 +53,7 @@ extension CTASelectorFiltersCell: UICollectionViewDataSource {
         }
         
         if let imgView = cell.contentView.viewWithTag(1000) as? UIImageView {
-            
+            imgView.image = image
             imgView.backgroundColor = UIColor.redColor()
         }
         

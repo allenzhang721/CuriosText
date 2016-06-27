@@ -123,6 +123,7 @@
 		2C610A401C902C0B00DFE315 /* Photo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C610A421C902C0B00DFE315 /* Photo.storyboard */; };
 		2C655B521D2104F2009E45F2 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C655B511D2104F2009E45F2 /* Filter.swift */; };
 		2C655B541D2114FD009E45F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C655B531D2114FD009E45F2 /* Assets.xcassets */; };
+		2C655B561D21172B009E45F2 /* FIlterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C655B551D21172B009E45F2 /* FIlterItem.swift */; };
 		2C65B6681C4F514D007B4DEA /* Preview.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C65B6671C4F514D007B4DEA /* Preview.storyboard */; };
 		2C65B66A1C4F517A007B4DEA /* CTAPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C65B6691C4F517A007B4DEA /* CTAPreviewViewController.swift */; };
 		2C65B66C1C4F55F8007B4DEA /* CTAAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C65B66B1C4F55F8007B4DEA /* CTAAnimation.swift */; };
@@ -513,6 +514,7 @@
 		2C610A411C902C0B00DFE315 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Photo.storyboard; sourceTree = "<group>"; };
 		2C655B511D2104F2009E45F2 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		2C655B531D2114FD009E45F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2C655B551D21172B009E45F2 /* FIlterItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FIlterItem.swift; sourceTree = "<group>"; };
 		2C65B6671C4F514D007B4DEA /* Preview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Preview.storyboard; sourceTree = "<group>"; };
 		2C65B6691C4F517A007B4DEA /* CTAPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewViewController.swift; sourceTree = "<group>"; };
 		2C65B66B1C4F55F8007B4DEA /* CTAAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAnimation.swift; sourceTree = "<group>"; };
@@ -1558,6 +1560,7 @@
 			isa = PBXGroup;
 			children = (
 				2C655B511D2104F2009E45F2 /* Filter.swift */,
+				2C655B551D21172B009E45F2 /* FIlterItem.swift */,
 				2CC1C9401C58D36800844A33 /* CTABarItemsFactory.swift */,
 				2C0404591C3EBDBF00A5B017 /* CTATabItemFactory.swift */,
 				2CAEAC901C323F2600C9F9AC /* ElementProtocol.swift */,
@@ -2083,6 +2086,7 @@
 				2C31EB611C451AEE002A4D71 /* UIColorExtensions.swift in Sources */,
 				2C0404661C3EC58100A5B017 /* CTASelectorsFlowLayout.swift in Sources */,
 				2CB380B11C4CF8D2009A681A /* CTAAnimationProtocol.swift in Sources */,
+				2C655B561D21172B009E45F2 /* FIlterItem.swift in Sources */,
 				2C3CAD231C21826800D8DE4B /* CTAContainerLayer.swift in Sources */,
 				2CE063E01C857D2F001F7F4E /* CTACameraAspectRatioCollectionViewCell.swift in Sources */,
 				2CB380AF1C4CF86D009A681A /* CTAPreviewProtocol.swift in Sources */,

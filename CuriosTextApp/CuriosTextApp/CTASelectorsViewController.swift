@@ -195,6 +195,10 @@ extension CTASelectorsViewController {
             cell.templateList?.originImage = snapImage
         }
         
+        if let cell = cell as? CTASelectorFiltersCell {
+            cell.image = snapImage
+        }
+        
         cell.beganLoad()
         if action.characters.count > 0 {
             cell.addTarget(self, action: Selector(action), forControlEvents: .ValueChanged)
