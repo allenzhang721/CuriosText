@@ -87,7 +87,7 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
         textLine.image = UIImage(named: "space-line")
         self.addSubview(textLine)
         
-        let moreW = bounds.width*0.25
+        let moreW:CGFloat = 50
         let buttonW = (bounds.width - moreW)/3
         self.likeView = UIView(frame: CGRect(x: 0, y: 50, width: buttonW, height: 50))
         self.addSubview(self.likeView)
@@ -227,7 +227,7 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
         if itemW > viewW{
             let itemX = (buttonView.frame.width - img.frame.width - label.frame.width)/2
             img.frame.origin.x = itemX
-            label.frame.origin.x = img.frame.width + itemX
+            label.frame.origin.x = img.frame.width + img.frame.origin.x
         }else {
             img.frame.origin.x = 10
             label.frame.origin.x = 50

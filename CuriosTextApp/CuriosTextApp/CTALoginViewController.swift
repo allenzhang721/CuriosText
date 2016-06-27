@@ -37,11 +37,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
     var wechatButton:UIButton!
     var weiboButton:UIButton!
     
-    var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
-    
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
+    var loadingImageView:UIImageView? = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,20 +82,20 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         let tap = UITapGestureRecognizer(target: self, action: #selector(CTALoginViewController.bgViewClick(_:)))
         self.view.addGestureRecognizer(tap)
         
-        let closeButton = UIButton.init(frame: CGRect.init(x: 5, y: 2, width: 40, height: 40))
+        let closeButton = UIButton(frame: CGRect(x: 5, y: 22, width: 40, height: 40))
         closeButton.setImage(UIImage(named: "close-button"), forState: .Normal)
         closeButton.setImage(UIImage(named: "close-selected-button"), forState: .Highlighted)
         closeButton.addTarget(self, action: #selector(CTALoginViewController.closeButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(closeButton)
         
-        let iconImage = UIImageView.init(frame: CGRect.init(x: (bouns.width - 60)/2, y: 60*self.getVerRate(), width: 60, height: 62))
+        let iconImage = UIImageView(frame: CGRect(x: (bouns.width - 60)/2, y: 70*self.getVerRate(), width: 60, height: 62))
         iconImage.image = UIImage(named: "Launch-icon")
         self.view.addSubview(iconImage)
         
         self.initPhoneView()
         self.phoneTextinput.delegate = self
     
-        self.passwordTextinput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+50, width: 190*self.getHorRate(), height: 50))
+        self.passwordTextinput = UITextField(frame: CGRect(x:128*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+50, width: 190*self.getHorRate(), height: 50))
         self.passwordTextinput.font = UIFont.systemFontOfSize(16)
         self.passwordTextinput.placeholder = NSLocalizedString("PasswordPlaceholder", comment: "")
         self.passwordTextinput.secureTextEntry = true
@@ -107,67 +103,67 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         self.passwordTextinput.delegate = self
         self.passwordTextinput.returnKeyType = .Go
         self.view.addSubview(self.passwordTextinput)
-        let passwordLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.passwordTextinput.frame.origin.y+12, width: 50, height: 25))
+        let passwordLabel = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: self.passwordTextinput.frame.origin.y+12, width: 50, height: 25))
         passwordLabel.font = UIFont.systemFontOfSize(16)
-        passwordLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        passwordLabel.textColor = CTAStyleKit.normalColor
         passwordLabel.text = NSLocalizedString("PasswordLabel", comment: "")
         passwordLabel.sizeToFit()
         self.view.addSubview(passwordLabel)
-        self.passwordVisibleButton = UIButton.init(frame: CGRect.init(x: bouns.width - 27*self.getHorRate() - 20, y: self.passwordTextinput.frame.origin.y+19, width: 20, height: 13))
+        self.passwordVisibleButton = UIButton(frame: CGRect(x: bouns.width - 27*self.getHorRate() - 20, y: self.passwordTextinput.frame.origin.y+19, width: 20, height: 13))
         self.passwordVisibleButton.setImage(UIImage(named: "passwordhide-icon"), forState: .Normal)
         self.view.addSubview(self.passwordVisibleButton)
         self.passwordVisibleButton.addTarget(self, action: #selector(CTALoginViewController.passwordVisibleClick(_:)), forControlEvents: .TouchUpInside)
-        let textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.passwordTextinput.frame.origin.y+49, width: 330*self.getHorRate(), height: 1))
+        let textLine = UIImageView(frame: CGRect(x: 25*self.getHorRate(), y: self.passwordTextinput.frame.origin.y+49, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "space-line")
         self.view.addSubview(textLine)
         
-        self.loginButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: self.passwordTextinput.frame.origin.y+70, width: 40, height: 28))
+        self.loginButton = UIButton(frame: CGRect(x: (bouns.width - 40)/2, y: self.passwordTextinput.frame.origin.y+70, width: 40, height: 28))
         self.loginButton.setTitle(NSLocalizedString("LoginButtonLabel", comment: ""), forState: .Normal)
-        self.loginButton.setTitleColor(UIColor.init(red: 239/255, green: 51/255, blue: 74/255, alpha: 1.0), forState: .Normal)
-        self.loginButton.setTitleColor(UIColor.init(red: 216/255, green: 216/255, blue: 216/255, alpha: 1.0), forState: .Disabled)
+        self.loginButton.setTitleColor(CTAStyleKit.selectedColor, forState: .Normal)
+        self.loginButton.setTitleColor(CTAStyleKit.disableColor, forState: .Disabled)
         self.loginButton.titleLabel?.font = UIFont.systemFontOfSize(20)
         self.loginButton.sizeToFit()
         self.loginButton.frame.origin.x = (bouns.width - self.loginButton.frame.width)/2
         self.loginButton.addTarget(self, action: #selector(CTALoginViewController.loginButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(self.loginButton)
         
-        self.otherAccountView = UIView.init(frame: CGRect.init(x: 0, y: bouns.height - 175*self.getVerRate(), width: bouns.width, height: 175*self.getVerRate()))
-        self.otherAccountView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
+        self.otherAccountView = UIView(frame: CGRect(x: 0, y: bouns.height - 175*self.getVerRate(), width: bouns.width, height: 175*self.getVerRate()))
+        self.otherAccountView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(self.otherAccountView)
         
-        let spaceView = UIImageView.init(frame: CGRect.init(x: (bouns.width - 215)/2, y: 5, width: 215, height: 3))
+        let spaceView = UIImageView(frame: CGRect(x: (bouns.width - 215)/2, y: 5, width: 215, height: 3))
         spaceView.image = UIImage(named: "login-spaceline")
         self.otherAccountView.addSubview(spaceView)
         
-        let otherAccountLabel = UILabel.init(frame: CGRect.init(x: (bouns.width - 215)/2, y: 0, width: 50, height: 14))
+        let otherAccountLabel = UILabel(frame: CGRect(x: (bouns.width - 215)/2, y: 0, width: 50, height: 14))
         otherAccountLabel.font = UIFont.systemFontOfSize(12)
-        otherAccountLabel.textColor = UIColor.init(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0)
+        otherAccountLabel.textColor = CTAStyleKit.labelShowColor
         otherAccountLabel.text = NSLocalizedString("OtherAccountLoginLabel", comment: "")
         otherAccountLabel.sizeToFit()
         otherAccountLabel.frame.origin.x = (bouns.width - otherAccountLabel.frame.width)/2
         self.otherAccountView.addSubview(otherAccountLabel)
         
-        self.wechatButton = UIButton.init(frame: CGRect.init(x: bouns.width/2+30, y: 45, width: 44, height: 44))
+        self.wechatButton = UIButton(frame: CGRect(x: bouns.width/2+30, y: 45, width: 44, height: 44))
         self.wechatButton.setImage(UIImage(named: "wechat-icon"), forState: .Normal)
         self.wechatButton.addTarget(self, action: #selector(CTALoginViewController.wechatButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.otherAccountView.addSubview(self.wechatButton)
         
-        self.weiboButton = UIButton.init(frame: CGRect.init(x: bouns.width/2-74, y: 45, width: 44, height: 44))
+        self.weiboButton = UIButton(frame: CGRect(x: bouns.width/2-74, y: 45, width: 44, height: 44))
         self.weiboButton.setImage(UIImage(named: "weibo-icon"), forState: .Normal)
         self.weiboButton.addTarget(self, action: #selector(CTALoginViewController.weiboButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.otherAccountView.addSubview(self.weiboButton)
         
-        let forgetButton = UIButton.init(frame: CGRect.init(x: 27, y: bouns.height - 52*self.getVerRate(), width: 20, height: 84))
+        let forgetButton = UIButton(frame: CGRect(x: 27*self.getHorRate(), y: bouns.height - 52*self.getVerRate(), width: 20, height: 84))
         forgetButton.setTitle(NSLocalizedString("ForgetPasswordLabel", comment: ""), forState: .Normal)
-        forgetButton.setTitleColor(UIColor.init(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0), forState: .Normal)
+        forgetButton.setTitleColor(CTAStyleKit.labelShowColor, forState: .Normal)
         forgetButton.titleLabel?.font = UIFont.systemFontOfSize(14)
         forgetButton.sizeToFit()
         forgetButton.addTarget(self, action: #selector(CTALoginViewController.forgetButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(forgetButton)
         
-        let registerButton = UIButton.init(frame: CGRect.init(x: 27*self.getHorRate(), y: bouns.height - 52*self.getVerRate(), width: 20, height: 84))
+        let registerButton = UIButton(frame: CGRect(x: 27*self.getHorRate(), y: bouns.height - 52*self.getVerRate(), width: 20, height: 84))
         registerButton.setTitle(NSLocalizedString("RegisterLabel", comment: ""), forState: .Normal)
-        registerButton.setTitleColor(UIColor.init(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0), forState: .Normal)
+        registerButton.setTitleColor(CTAStyleKit.labelShowColor, forState: .Normal)
         registerButton.titleLabel?.font = UIFont.systemFontOfSize(14)
         registerButton.sizeToFit()
         registerButton.frame.origin.x = bouns.width - 27*self.getHorRate() - registerButton.frame.width

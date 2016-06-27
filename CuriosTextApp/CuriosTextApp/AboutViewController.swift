@@ -20,19 +20,23 @@ class AboutViewController: UIViewController {
     }
     
     private func _setup() {
-        let bouns = UIScreen.mainScreen().bounds
-        let settingLabel = UILabel.init(frame: CGRect.init(x: 0, y: 8, width: bouns.width, height: 28))
+        let bounds = UIScreen.mainScreen().bounds
+        let settingLabel = UILabel.init(frame: CGRect.init(x: 0, y: 28, width: bounds.width, height: 28))
         settingLabel.font = UIFont.systemFontOfSize(18)
         settingLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         settingLabel.text = title ??  NSLocalizedString("AboutLabel", comment: "")
         settingLabel.textAlignment = .Center
         self.view.addSubview(settingLabel)
         
-        let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
+        let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 22, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
         backButton.addTarget(self, action: #selector(CTASettingViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
+        
+        let textLine = UIImageView(frame: CGRect(x: 0, y: 63, width: bounds.width, height: 1))
+        textLine.image = UIImage(named: "space-line")
+        self.view.addSubview(textLine)
         
         
         if let info = NSBundle.mainBundle().infoDictionary {
@@ -42,6 +46,8 @@ class AboutViewController: UIViewController {
             let versionLabel = view.viewWithTag(1000) as! UILabel
             versionLabel.text = "Version " + appVersion
         }
+        
+        self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
     }
     
     private func _versionTag(rect: CGRect = CGRectMake(0, 0, 41, 21), text2: String = "1.0.0") -> UIImage {

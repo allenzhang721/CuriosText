@@ -91,7 +91,7 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
         phoneView.addSubview(textLine)
         self.phoneNumberLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 9, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
         self.phoneNumberLabel.font = UIFont.systemFontOfSize(16)
-        self.phoneNumberLabel.textColor = CTAStyleKit.disableColor
+        self.phoneNumberLabel.textColor = CTAStyleKit.labelShowColor
         self.phoneNumberLabel.textAlignment = .Right
         phoneView.addSubview(self.phoneNumberLabel)
         phoneView.userInteractionEnabled = true
@@ -114,7 +114,7 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
         weChatView.addSubview(textLine)
         self.wechatLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 9, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
         self.wechatLabel.font = UIFont.systemFontOfSize(16)
-        self.wechatLabel.textColor = CTAStyleKit.disableColor
+        self.wechatLabel.textColor = CTAStyleKit.labelShowColor
         self.wechatLabel.textAlignment = .Right
         weChatView.addSubview(self.wechatLabel)
         weChatView.userInteractionEnabled = true
@@ -137,7 +137,7 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
         weiboView.addSubview(textLine)
         self.weiboLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 9, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
         self.weiboLabel.font = UIFont.systemFontOfSize(16)
-        self.weiboLabel.textColor = CTAStyleKit.disableColor
+        self.weiboLabel.textColor = CTAStyleKit.labelShowColor
         self.weiboLabel.textAlignment = .Right
         weiboView.addSubview(self.weiboLabel)
         weiboView.userInteractionEnabled = true

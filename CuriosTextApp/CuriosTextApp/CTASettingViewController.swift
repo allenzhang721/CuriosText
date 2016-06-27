@@ -118,7 +118,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         
         self.userNickNameLabel = UILabel(frame: CGRect(x: 128*self.getHorRate(), y: 109, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
         self.userNickNameLabel.font = UIFont.systemFontOfSize(16)
-        self.userNickNameLabel.textColor = CTAStyleKit.disableColor
+        self.userNickNameLabel.textColor = CTAStyleKit.labelShowColor
         self.userNickNameLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userNickNameLabel)
         let userNickNameTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y, width: 50, height: 22))
@@ -139,7 +139,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         
         self.userSexLabel = UILabel(frame: CGRect(x: 128*self.getHorRate(), y: self.userNickNameLabel.frame.origin.y+40, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
         self.userSexLabel.font = UIFont.systemFontOfSize(16)
-        self.userSexLabel.textColor = CTAStyleKit.disableColor
+        self.userSexLabel.textColor = CTAStyleKit.labelShowColor
         self.userSexLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userSexLabel)
         let userSexTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: self.userSexLabel.frame.origin.y, width: 50, height: 22))
@@ -160,7 +160,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         
         self.userRegionLabel = UILabel(frame: CGRect(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+40, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
         self.userRegionLabel.font = UIFont.systemFontOfSize(16)
-        self.userRegionLabel.textColor = CTAStyleKit.disableColor
+        self.userRegionLabel.textColor = CTAStyleKit.labelShowColor
         self.userRegionLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userRegionLabel)
 //        let userRegionTitle = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.userRegionLabel.frame.origin.y, width: 50, height: 25))
@@ -183,7 +183,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.userDescLabel = UILabel(frame: CGRect(x: 128*self.getHorRate(), y: self.userSexLabel.frame.origin.y+40, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
         self.userDescLabel.numberOfLines = 12
         self.userDescLabel.font = UIFont.systemFontOfSize(16)
-        self.userDescLabel.textColor = CTAStyleKit.disableColor
+        self.userDescLabel.textColor = CTAStyleKit.labelShowColor
         self.userDescLabel.textAlignment = .Right
         self.scrollView.addSubview(self.userDescLabel)
         let userDesxTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: self.userDescLabel.frame.origin.y, width: 50, height: 22))

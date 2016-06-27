@@ -29,7 +29,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     var userIconImage:UIImageView!
     let imagePicker:UIImagePickerController = UIImagePickerController()
     
-    var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
+    var loadingImageView:UIImageView? = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     
     var userNameType:CTASetUserNameType = .register
     var selectedImage:UIImage?
@@ -39,10 +39,6 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     var userModel:CTAUserModel?
     
     var isChange:Bool = false
-    
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,21 +69,20 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         let tap = UITapGestureRecognizer(target: self, action: #selector(CTASetUserNameViewController.bgViewClick(_:)))
         self.view.addGestureRecognizer(tap)
         
-        let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
+        let backButton = UIButton(frame: CGRect(x: 0, y: 22, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
         backButton.addTarget(self, action: #selector(CTASetUserNameViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
         
-        let userInfoLabel = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 60*self.getVerRate(), width: 100, height: 40))
-        userInfoLabel.font = UIFont.systemFontOfSize(28)
-        userInfoLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        let userInfoLabel = UILabel(frame: CGRect(x: 0, y: 60*self.getVerRate(), width: bouns.width, height: 40))
+        userInfoLabel.font = UIFont.boldSystemFontOfSize(28)
+        userInfoLabel.textColor = CTAStyleKit.normalColor
         userInfoLabel.text = NSLocalizedString("UserInfoLabel", comment: "")
-        userInfoLabel.sizeToFit()
-        userInfoLabel.frame.origin.x = (bouns.width - userInfoLabel.frame.width)/2
+        userInfoLabel.textAlignment = .Center
         self.view.addSubview(userInfoLabel)
         
-        self.userIconImage = UIImageView.init(frame: CGRect.init(x: (bouns.width - 60)/2, y: 100*self.getVerRate()+20, width: 60, height: 60))
+        self.userIconImage = UIImageView(frame: CGRect(x: (bouns.width - 60)/2, y: 140*self.getVerRate(), width: 60, height: 60))
         self.userIconImage.image = UIImage(named: "default-usericon")
         self.cropImageCircle(self.userIconImage)
         self.view.addSubview(self.userIconImage)
@@ -96,14 +91,14 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         self.userIconImage.addGestureRecognizer(iconTap)
     
         let imgFrame = self.userIconImage.frame
-        let cameraView = UIImageView.init(frame: CGRect.init(x: (imgFrame.origin.x+imgFrame.size.width)-20, y: (imgFrame.origin.y+imgFrame.size.height)-20, width: 20, height: 20))
-        cameraView.image = UIImage.init(named: "usercamera-icon")
+        let cameraView = UIImageView(frame: CGRect(x: (imgFrame.origin.x+imgFrame.size.width)-20, y: (imgFrame.origin.y+imgFrame.size.height)-20, width: 20, height: 20))
+        cameraView.image = UIImage(named: "usercamera-icon")
         self.view.addSubview(cameraView)
         
         self.imagePicker.delegate = self
         
-        self.userNickNameTextInput = UITextField.init(frame: CGRect.init(x:27*self.getHorRate(), y: 150*self.getVerRate()+50, width: 280*self.getHorRate(), height: 50))
-        self.userNickNameTextInput.center = CGPoint.init(x: bouns.width/2, y: 150*self.getVerRate()+75)
+        self.userNickNameTextInput = UITextField(frame: CGRect(x:27*self.getHorRate(), y: self.userIconImage.frame.origin.y + 100, width: 280*self.getHorRate(), height: 50))
+        self.userNickNameTextInput.center = CGPoint(x: bouns.width/2, y: 150*self.getVerRate()+75)
         self.userNickNameTextInput.placeholder = NSLocalizedString("UserNickNameLabel", comment: "") + ":  "+NSLocalizedString("UserNamePlaceholder", comment: "")
         self.userNickNameTextInput.delegate = self
         self.userNickNameTextInput.clearButtonMode = .WhileEditing
@@ -111,15 +106,15 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         self.view.addSubview(self.userNickNameTextInput)
         
         
-        let textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userNickNameTextInput.frame.origin.y + 49, width: 290*self.getHorRate(), height: 1))
-        textLine.center = CGPoint.init(x: bouns.width/2, y: self.userNickNameTextInput.frame.origin.y+49)
+        let textLine = UIImageView(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userNickNameTextInput.frame.origin.y + 49, width: 290*self.getHorRate(), height: 1))
+        textLine.center = CGPoint(x: bouns.width/2, y: self.userNickNameTextInput.frame.origin.y+49)
         textLine.image = UIImage(named: "space-line")
         self.view.addSubview(textLine)
         
-        self.completeButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: self.userNickNameTextInput.frame.origin.y + 70, width: 40, height: 28))
+        self.completeButton = UIButton(frame: CGRect(x: (bouns.width - 40)/2, y: self.userNickNameTextInput.frame.origin.y + 70, width: 40, height: 28))
         self.completeButton.setTitle(NSLocalizedString("CompleteButtonLabel", comment: ""), forState: .Normal)
-        self.completeButton.setTitleColor(UIColor.init(red: 239/255, green: 51/255, blue: 74/255, alpha: 1.0), forState: .Normal)
-        self.completeButton.setTitleColor(UIColor.init(red: 216/255, green: 216/255, blue: 216/255, alpha: 1.0), forState: .Disabled)
+        self.completeButton.setTitleColor(CTAStyleKit.selectedColor, forState: .Normal)
+        self.completeButton.setTitleColor(CTAStyleKit.disableColor, forState: .Disabled)
         self.completeButton.titleLabel?.font = UIFont.systemFontOfSize(20)
         self.completeButton.sizeToFit()
         self.completeButton.frame.origin.x = (bouns.width - self.completeButton.frame.width)/2
