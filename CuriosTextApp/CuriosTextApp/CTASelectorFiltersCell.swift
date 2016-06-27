@@ -21,6 +21,7 @@ class CTASelectorFiltersCell: CTASelectorCell {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .Horizontal
         let view = UICollectionView(frame: bounds, collectionViewLayout: layout)
+        view.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "FilterPreviewCell")
         contentView.addSubview(view)
         view.backgroundColor = UIColor.whiteColor()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -37,11 +38,22 @@ class CTASelectorFiltersCell: CTASelectorCell {
 extension CTASelectorFiltersCell: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return 100
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("FilterPreviewCell", forIndexPath: indexPath)
+        
+        if (cell.contentView.viewWithTag(1000) as? UIImageView) == nil {
+            let imgView = UIImageView(frame: cell.contentView.bounds)
+            imgView.tag = 1000
+            cell.contentView.addSubview(imgView)
+        }
+        
+        if let imgView = cell.contentView.viewWithTag(1000) as? UIImageView {
+            
+            imgView.backgroundColor = UIColor.redColor()
+        }
         
         return cell
     }

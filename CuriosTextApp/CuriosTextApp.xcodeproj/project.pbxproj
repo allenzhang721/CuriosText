@@ -66,7 +66,6 @@
 		2C3B33CA1C1176D000738166 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33C91C1176D000738166 /* AppDelegate.swift */; };
 		2C3B33CC1C1176D000738166 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33CB1C1176D000738166 /* ViewController.swift */; };
 		2C3B33CF1C1176D000738166 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C3B33CD1C1176D000738166 /* Main.storyboard */; };
-		2C3B33D11C1176D000738166 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C3B33D01C1176D000738166 /* Assets.xcassets */; };
 		2C3B33D41C1176D000738166 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C3B33D21C1176D000738166 /* LaunchScreen.storyboard */; };
 		2C3B33DF1C1176D000738166 /* CuriosTextAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33DE1C1176D000738166 /* CuriosTextAppTests.swift */; };
 		2C3B33EA1C1176D000738166 /* CuriosTextAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B33E91C1176D000738166 /* CuriosTextAppUITests.swift */; };
@@ -123,6 +122,7 @@
 		2C610A391C902BF100DFE315 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C610A3B1C902BF100DFE315 /* Camera.storyboard */; };
 		2C610A401C902C0B00DFE315 /* Photo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C610A421C902C0B00DFE315 /* Photo.storyboard */; };
 		2C655B521D2104F2009E45F2 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C655B511D2104F2009E45F2 /* Filter.swift */; };
+		2C655B541D2114FD009E45F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C655B531D2114FD009E45F2 /* Assets.xcassets */; };
 		2C65B6681C4F514D007B4DEA /* Preview.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C65B6671C4F514D007B4DEA /* Preview.storyboard */; };
 		2C65B66A1C4F517A007B4DEA /* CTAPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C65B6691C4F517A007B4DEA /* CTAPreviewViewController.swift */; };
 		2C65B66C1C4F55F8007B4DEA /* CTAAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C65B66B1C4F55F8007B4DEA /* CTAAnimation.swift */; };
@@ -447,7 +447,6 @@
 		2C3B33C91C1176D000738166 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2C3B33CB1C1176D000738166 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2C3B33CE1C1176D000738166 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		2C3B33D01C1176D000738166 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2C3B33D31C1176D000738166 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2C3B33D51C1176D000738166 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C3B33DA1C1176D000738166 /* CuriosTextAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CuriosTextAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -513,6 +512,7 @@
 		2C610A3A1C902BF100DFE315 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Camera.storyboard; sourceTree = "<group>"; };
 		2C610A411C902C0B00DFE315 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Photo.storyboard; sourceTree = "<group>"; };
 		2C655B511D2104F2009E45F2 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		2C655B531D2114FD009E45F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2C65B6671C4F514D007B4DEA /* Preview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Preview.storyboard; sourceTree = "<group>"; };
 		2C65B6691C4F517A007B4DEA /* CTAPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewViewController.swift; sourceTree = "<group>"; };
 		2C65B66B1C4F55F8007B4DEA /* CTAAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAnimation.swift; sourceTree = "<group>"; };
@@ -1037,8 +1037,8 @@
 				2C10F7971C77540F00CCE34A /* CTAMainViewController.swift */,
 				2C7A959E1C3A6A4F005B0EAE /* CTAPageControllers.swift */,
 				2C7A95181C3A507A005B0EAE /* CTAHomeViewController.swift */,
+				2C655B531D2114FD009E45F2 /* Assets.xcassets */,
 				2C3B33CD1C1176D000738166 /* Main.storyboard */,
-				2C3B33D01C1176D000738166 /* Assets.xcassets */,
 				2C3B33D21C1176D000738166 /* LaunchScreen.storyboard */,
 				2C3B33D51C1176D000738166 /* Info.plist */,
 				2C567A6B1C5CBAF200F11369 /* Countries.plist */,
@@ -1821,7 +1821,6 @@
 				2C32BD561C4CB89100788A97 /* Localizable.strings in Resources */,
 				2CCFD54B1CE49CAC00D58043 /* Share.storyboard in Resources */,
 				2C9307B51CF2E34600D0E5F6 /* About.storyboard in Resources */,
-				2C3B33D11C1176D000738166 /* Assets.xcassets in Resources */,
 				2C7AD3B61CF6BF33009AEDA8 /* Templates.storyboard in Resources */,
 				2C567A691C5CBAF200F11369 /* Countries.plist in Resources */,
 				2C1A121F1CE014FD0071BD35 /* WeiboSDK.bundle in Resources */,
@@ -1840,6 +1839,7 @@
 				2CD11AD01CB7A7A400A79305 /* AniPreView.storyboard in Resources */,
 				2CB175B81CF8432100819825 /* Templates in Resources */,
 				2C3B33CF1C1176D000738166 /* Main.storyboard in Resources */,
+				2C655B541D2114FD009E45F2 /* Assets.xcassets in Resources */,
 				2CDDE64F1CE18BED00B6E6A9 /* animation.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

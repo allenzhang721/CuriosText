@@ -39,7 +39,8 @@ extension ContainerVMProtocol {
             let types: [CTAContainerFeatureType] = [
 //                .Size,
 //                .Rotator
-                .Templates
+                .Templates,
+                .Filters
             ]
             
             return types

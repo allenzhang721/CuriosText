@@ -53,6 +53,7 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
         switch currentType {
             
         case .Templates: return "templateDidChanged:"
+        case .Filters: return "filterDidChanged:"
         case .Size: return "scaleChanged:"
         case .Rotator: return "radianChanged:"
         case .Fonts: return "indexPathOfFontsChanged:"
@@ -303,6 +304,10 @@ extension CTASelectorsViewController {
 //            apage.removeLastImageContainer()
 //            
 //        }
+        
+    }
+    
+    func filterDidChanged(i: Int) {
         
     }
     
