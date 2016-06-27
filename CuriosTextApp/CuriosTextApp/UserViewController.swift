@@ -14,7 +14,7 @@ enum CTAPublishType: String {
     case Posts, Likes
 }
 
-class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTAPublishCacheProtocol, CTAPublishModelProtocol{
+class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTAPublishCacheProtocol, CTAPublishModelProtocol, CTALoadingProtocol{
 
     var viewUser:CTAUserModel?
     var loginUser:CTAUserModel?
@@ -43,7 +43,9 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     var userDescLabel:UILabel!
     
     var userFollowView:UIView!
+    var followLabel:UILabel!
     var followCountLabel:UILabel!
+    var beFollowLabel:UILabel!
     var beFollowCountLabel:UILabel!
     
     var followButton:UIButton!
@@ -64,6 +66,8 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     
     var publishType:CTAPublishType = .Posts
     var userDetailModel:CTAViewUserModel?
+    
+    var loadingImageView:UIImageView? = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -264,49 +268,37 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         let lineImageView = UIImageView.init(frame: CGRect.init(x: bounds.width/2, y: 5, width: 1, height: 14))
         lineImageView.image = UIImage.init(named: "follow-line")
         self.userFollowView.addSubview(lineImageView)
-        let followView = UIView(frame: CGRectMake(bounds.width/2, 0, bounds.width/2, 25))
+        let followView = UIView(frame: CGRectMake(0, 0, bounds.width/2, 25))
         followView.backgroundColor = UIColor.clearColor()
-        let followLabel = UILabel()
-        followLabel.font = UIFont.systemFontOfSize(11)
-        followLabel.textColor = CTAStyleKit.disableColor
-        followLabel.text = NSLocalizedString("FollowLabel", comment: "")
-        followLabel.sizeToFit()
-        followLabel.frame.origin.x = 14
-        followLabel.frame.origin.y = 5
+        self.followLabel = UILabel()
+        self.followLabel.font = UIFont.systemFontOfSize(11)
+        self.followLabel.textColor = CTAStyleKit.disableColor
+        self.followLabel.text = NSLocalizedString("FollowLabel", comment: "")
         followView.addSubview(followLabel)
         self.followCountLabel = UILabel()
         self.followCountLabel.font = UIFont.systemFontOfSize(11)
         self.followCountLabel.textColor = CTAStyleKit.disableColor
         self.followCountLabel.text = "0"
-        self.followCountLabel.sizeToFit()
-        self.followCountLabel.frame.origin.x = followLabel.frame.width+20
-        self.followCountLabel.frame.origin.y = 5
         followView.addSubview(self.followCountLabel)
         self.userFollowView.addSubview(followView)
         followView.userInteractionEnabled = true
-        let followTap = UITapGestureRecognizer(target: self, action: #selector(UserViewController.followViewClickClick(_:)))
+        let followTap = UITapGestureRecognizer(target: self, action: #selector(followViewClickClick(_:)))
         followView.addGestureRecognizer(followTap)
         
-        let beFollowView = UIView(frame: CGRectMake(0, 0, bounds.width/2, 25))
+        let beFollowView = UIView(frame: CGRectMake(bounds.width/2, 0, bounds.width/2, 25))
         beFollowView.backgroundColor = UIColor.clearColor()
-        let beFollowLabel = UILabel()
-        beFollowLabel.font = UIFont.systemFontOfSize(11)
-        beFollowLabel.textColor = CTAStyleKit.disableColor
-        beFollowLabel.text = NSLocalizedString("BeFollowLabel", comment: "")
-        beFollowLabel.sizeToFit()
-        beFollowLabel.frame.origin.x = bounds.width/2 - 14 - beFollowLabel.frame.width
-        beFollowLabel.frame.origin.y = 5
+        self.beFollowLabel = UILabel()
+        self.beFollowLabel.font = UIFont.systemFontOfSize(11)
+        self.beFollowLabel.textColor = CTAStyleKit.disableColor
+        self.beFollowLabel.text = NSLocalizedString("BeFollowLabel", comment: "")
         beFollowView.addSubview(beFollowLabel)
-        let beFollowTap = UITapGestureRecognizer(target: self, action: #selector(UserViewController.beFollowViewClick(_:)))
+        let beFollowTap = UITapGestureRecognizer(target: self, action: #selector(beFollowViewClick(_:)))
         beFollowView.addGestureRecognizer(beFollowTap)
         
         self.beFollowCountLabel = UILabel()
         self.beFollowCountLabel.font = UIFont.systemFontOfSize(11)
         self.beFollowCountLabel.textColor = CTAStyleKit.disableColor
         self.beFollowCountLabel.text = "0"
-        self.beFollowCountLabel.sizeToFit()
-        self.beFollowCountLabel.frame.origin.x = bounds.width/2  - self.beFollowCountLabel.frame.width - beFollowLabel.frame.width - 20
-        self.beFollowCountLabel.frame.origin.y = 5
         beFollowView.addSubview(self.beFollowCountLabel)
         self.userFollowView.addSubview(beFollowView)
         var textLine = UIImageView.init(frame: CGRect.init(x: 0, y: 69, width: bounds.width, height: 1))
@@ -322,6 +314,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
             textLine.frame = CGRect.init(x: 0, y: 29, width: bounds.width, height: 1)
         }else {
             self.userFollowView.addSubview(self.followButton)
+            self.followButton.addTarget(self, action: #selector(followButtonClick(_:)), forControlEvents: .TouchUpInside)
         }
         self.topView.addSubview(self.userFollowView)
         
@@ -343,8 +336,8 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.collectionControllerView.addSubview(textLine)
         self.topView.addSubview(self.collectionControllerView)
         
-        self.userPostButton.addTarget(self, action: #selector(UserViewController.postsButtonClick(_:)), forControlEvents: .TouchUpInside)
-        self.userLikeButton.addTarget(self, action: #selector(UserViewController.likesButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.userPostButton.addTarget(self, action: #selector(postsButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.userLikeButton.addTarget(self, action: #selector(likesButtonClick(_:)), forControlEvents: .TouchUpInside)
     }
     
     func initViewNavigateBar(){
@@ -388,6 +381,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.userDescLabel.frame.size.width = maxWidth
         self.setUserIcon(self.viewUser!.userIconURL)
         self.setViewsPosition()
+        self.setFollowLabelPosition()
     }
     
     func setUserIcon(iconPath:String){
@@ -413,8 +407,11 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.userDescLabel.text = ""
         self.userDescLabel.sizeToFit()
         self.userDescLabel.frame.size.width = maxWidth
+        self.followCountLabel.text = "0"
+        self.beFollowCountLabel.text = "0"
         self.userIconImage.image = UIImage(named: "default-usericon")
         self.setViewsPosition()
+        self.setFollowLabelPosition()
     }
     
     func resetButton(){
@@ -434,6 +431,26 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.collectionView.collectionViewLayout = self.collectionLayout
         let headerHMin = self.collectionControllerView.frame.origin.y-64
         self.collectionLayout.stickyHeight = headerHMin
+    }
+    
+    func setFollowLabelPosition(){
+        let bounds = UIScreen.mainScreen().bounds
+        
+        self.followCountLabel.sizeToFit()
+        self.followCountLabel.frame.origin.x = bounds.width/2 - 14 - self.followCountLabel.frame.width
+        self.followCountLabel.frame.origin.y = 5
+        
+        self.followLabel.sizeToFit()
+        self.followLabel.frame.origin.x = self.followCountLabel.frame.origin.x - self.followLabel.frame.width - 5
+        self.followLabel.frame.origin.y = 5
+        
+        self.beFollowLabel.sizeToFit()
+        self.beFollowLabel.frame.origin.x = 14
+        self.beFollowLabel.frame.origin.y = 5
+        
+        self.beFollowCountLabel.sizeToFit()
+        self.beFollowCountLabel.frame.origin.x = self.beFollowLabel.frame.width+self.beFollowLabel.frame.origin.x+5
+        self.beFollowCountLabel.frame.origin.y = 5
     }
     
     func changeButtonStatus(){
@@ -501,6 +518,36 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     func beFollowViewClick(ender: UIPanGestureRecognizer){
         print("beFollowViewClick")
     }
+    
+    func followButtonClick(sender: UIButton){
+        if self.userDetailModel != nil && self.loginUser != nil{
+            let relationType:Int = self.userDetailModel!.relationType
+            switch  relationType{
+            case 0, 3:
+                self.showLoadingViewInView(self.followButton)
+                CTAUserRelationDomain.getInstance().followUser(self.loginUser!.userID, relationUserID: self.userDetailModel!.userID) { (info) -> Void in
+                    if info.result {
+                        self.userDetailModel!.relationType = (relationType==0 ? 1 : 5)
+                        self.userDetailModel!.beFollowCount += 1
+                        self.setViewByDetailUser()
+                    }
+                    self.hideLoadingViewInView(self.followButton)
+                }
+            case 1, 5:
+                self.showLoadingViewInView(self.followButton)
+                CTAUserRelationDomain.getInstance().unFollowUser(self.loginUser!.userID, relationUserID: self.userDetailModel!.userID) { (info) -> Void in
+                    if info.result {
+                        self.userDetailModel!.relationType = (relationType==1 ? 0 : 3)
+                        self.userDetailModel!.beFollowCount = (self.userDetailModel!.beFollowCount - 1  > 0 ? self.userDetailModel!.beFollowCount - 1 : 0)
+                        self.setViewByDetailUser()
+                    }
+                    self.hideLoadingViewInView(self.followButton)
+                }
+            default:
+                break
+            }
+        }
+    }
 
     func loadFirstData(){
         self.isLoadingFirstData = true
@@ -562,15 +609,15 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
                             }
                             if !isChange{
                                 for j in 0..<modelArray!.count{
-                                    if j > self.publishModelArray.count{
-                                        isChange = true
-                                        break
-                                    }else {
+                                    if j < self.publishModelArray.count{
                                         let oldModel = self.publishModelArray[j]
                                         if !self.checkPublishModelIsHave(oldModel.publishID, publishArray: modelArray as! Array<CTAPublishModel>){
                                             isChange = true
                                             break
                                         }
+                                    }else {
+                                        isChange = true
+                                        break
                                     }
                                     
                                 }
@@ -636,6 +683,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
             self.followButton.hidden = true
             self.followCountLabel.text = "0"
             self.beFollowCountLabel.text = "0"
+            self.setFollowLabelPosition()
         }else {
             let followCount = self.userDetailModel!.followCount
             let beFollowCount = self.userDetailModel!.beFollowCount
@@ -648,6 +696,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
             self.userNicknameLabel.text = self.userDetailModel!.nickName
             self.userDescLabel.text  = self.userDetailModel!.userDesc
             self.setViewsPosition()
+            self.setFollowLabelPosition()
         }
     }
     
@@ -724,19 +773,12 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let offY = self.collectionView.contentOffset.y
-        print("scroll = \(offY)  he = \(self.collectionLayout.stickyHeight)")
         if offY > self.collectionLayout.stickyHeight{
             self.collectionLayout.isSticky = true
             self.collectionLayout.isHold = true
         }else {
             self.collectionLayout.isSticky = false
         }
-    }
-}
-
-extension UserViewController:CTALoadingProtocol{
-    var loadingImageView:UIImageView?{
-        return nil
     }
 }
 

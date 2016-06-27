@@ -10,7 +10,7 @@
 "RecommendLabel" = "New";
 "NoticeLabel" = "Notification";
 "UserLabel" = "User";
-"FollowLabel" = "Following";
+"FollowLabel"   = "Following";
 "BeFollowLabel" = "Followers";
 "FollowButtonLabel" = "Follow";
 "UnFollowButtonLabel" = "Following";

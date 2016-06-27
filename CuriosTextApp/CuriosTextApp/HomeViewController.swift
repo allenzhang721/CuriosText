@@ -276,15 +276,15 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
                             }
                             if !isChange{
                                 for j in 0..<modelArray!.count{
-                                    if j > self.publishModelArray.count{
-                                        isChange = true
-                                        break
-                                    }else {
+                                    if j < self.publishModelArray.count{
                                         let oldModel = self.publishModelArray[j]
                                         if !self.checkPublishModelIsHave(oldModel.publishID, publishArray: modelArray as! Array<CTAPublishModel>){
                                             isChange = true
                                             break
                                         }
+                                    }else {
+                                        isChange = true
+                                        break
                                     }
                                     
                                 }
