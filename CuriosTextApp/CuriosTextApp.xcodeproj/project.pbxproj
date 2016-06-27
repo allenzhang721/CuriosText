@@ -122,6 +122,7 @@
 		2C610A321C902BCA00DFE315 /* ImagePicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C610A341C902BCA00DFE315 /* ImagePicker.storyboard */; };
 		2C610A391C902BF100DFE315 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C610A3B1C902BF100DFE315 /* Camera.storyboard */; };
 		2C610A401C902C0B00DFE315 /* Photo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C610A421C902C0B00DFE315 /* Photo.storyboard */; };
+		2C655B521D2104F2009E45F2 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C655B511D2104F2009E45F2 /* Filter.swift */; };
 		2C65B6681C4F514D007B4DEA /* Preview.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C65B6671C4F514D007B4DEA /* Preview.storyboard */; };
 		2C65B66A1C4F517A007B4DEA /* CTAPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C65B6691C4F517A007B4DEA /* CTAPreviewViewController.swift */; };
 		2C65B66C1C4F55F8007B4DEA /* CTAAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C65B66B1C4F55F8007B4DEA /* CTAAnimation.swift */; };
@@ -305,6 +306,7 @@
 		2CE063EF1C857D2F001F7F4E /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE063DC1C857D2F001F7F4E /* ImageViewController.swift */; };
 		2CE063F11C857D2F001F7F4E /* PhotoAccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE063DE1C857D2F001F7F4E /* PhotoAccessManager.swift */; };
 		2CE6D21A1C60D00A0064A9B0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2CE6D21C1C60D00A0064A9B0 /* InfoPlist.strings */; };
+		2CE9586C1D20E8070077A3B4 /* CTASelectorFiltersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9586B1D20E8070077A3B4 /* CTASelectorFiltersCell.swift */; };
 		2CED15AE1C5F65E10086976E /* CTADocumentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CED15AD1C5F65E10086976E /* CTADocumentProtocol.swift */; };
 		2CED15B01C5F6F990086976E /* CTADocumentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CED15AF1C5F6F990086976E /* CTADocumentManager.swift */; };
 		2CF4B7D11CBBA58F009B12C3 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 2CF4B7D01CBBA58F009B12C3 /* Fonts */; };
@@ -510,6 +512,7 @@
 		2C610A381C902BCF00DFE315 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/ImagePicker.strings"; sourceTree = "<group>"; };
 		2C610A3A1C902BF100DFE315 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Camera.storyboard; sourceTree = "<group>"; };
 		2C610A411C902C0B00DFE315 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Photo.storyboard; sourceTree = "<group>"; };
+		2C655B511D2104F2009E45F2 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		2C65B6671C4F514D007B4DEA /* Preview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Preview.storyboard; sourceTree = "<group>"; };
 		2C65B6691C4F517A007B4DEA /* CTAPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewViewController.swift; sourceTree = "<group>"; };
 		2C65B66B1C4F55F8007B4DEA /* CTAAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAnimation.swift; sourceTree = "<group>"; };
@@ -710,6 +713,7 @@
 		2CE063DE1C857D2F001F7F4E /* PhotoAccessManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAccessManager.swift; sourceTree = "<group>"; };
 		2CE6D21B1C60D00A0064A9B0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2CE6D21D1C60D00D0064A9B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		2CE9586B1D20E8070077A3B4 /* CTASelectorFiltersCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorFiltersCell.swift; sourceTree = "<group>"; };
 		2CED15AD1C5F65E10086976E /* CTADocumentProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTADocumentProtocol.swift; sourceTree = "<group>"; };
 		2CED15AF1C5F6F990086976E /* CTADocumentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTADocumentManager.swift; sourceTree = "<group>"; };
 		2CF4B7D01CBBA58F009B12C3 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
@@ -876,6 +880,7 @@
 				2CA05E441CFD23DB00EFE805 /* SelectorCells */,
 				2C1F01571C3BD5960033CED8 /* CTASelectorCell.swift */,
 				2CB175B11CF831C800819825 /* CTASelectorTemplatesCell.swift */,
+				2CE9586B1D20E8070077A3B4 /* CTASelectorFiltersCell.swift */,
 				2C3097051C3F5F9200D996A4 /* CTASelectorFontCell.swift */,
 				2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */,
 				2C0404671C3EC5BC00A5B017 /* CTASelectorRotatorCell.swift */,
@@ -1552,6 +1557,7 @@
 		2CD4DC161CA4E7FB00790A55 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2C655B511D2104F2009E45F2 /* Filter.swift */,
 				2CC1C9401C58D36800844A33 /* CTABarItemsFactory.swift */,
 				2C0404591C3EBDBF00A5B017 /* CTATabItemFactory.swift */,
 				2CAEAC901C323F2600C9F9AC /* ElementProtocol.swift */,
@@ -2103,6 +2109,7 @@
 				661D29F61C2AD5E60073FC0E /* CTAUploadController.swift in Sources */,
 				2C3AE3EC1C59EC9E004D62B4 /* CTASocialShareManager.swift in Sources */,
 				2C10F7981C77540F00CCE34A /* CTAMainViewController.swift in Sources */,
+				2CE9586C1D20E8070077A3B4 /* CTASelectorFiltersCell.swift in Sources */,
 				2C401DB11C70D05400AE45FE /* CTACanvasImageCell.swift in Sources */,
 				2CD418FB1D12A0EE00DDAAE4 /* Moduler+Comment.swift in Sources */,
 				2C3AE3EF1C59F5CD004D62B4 /* CTASocialTestViewController.swift in Sources */,
@@ -2217,6 +2224,7 @@
 				2C0404541C3EBB6800A5B017 /* CTACanvasViewController.swift in Sources */,
 				2C3CAD0C1C21825100D8DE4B /* CTADocument.swift in Sources */,
 				2CA05E4A1CFD6A4900EFE805 /* CTAColorPickerNodeCollectionView.swift in Sources */,
+				2C655B521D2104F2009E45F2 /* Filter.swift in Sources */,
 				66A3932F1D17C913002895A6 /* CTAPublishPreviewView.swift in Sources */,
 				2C5C24901C44E1EE00A70F1B /* CTAVerticalItemColorCollectionViewCell.swift in Sources */,
 				2C04045E1C3EC29800A5B017 /* EditCanvasLayout.swift in Sources */,
