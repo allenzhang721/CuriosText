@@ -19,6 +19,7 @@ pod 'SVProgressHUD', '~> 2.0.3'
 pod 'WeiboSDK', :podspec => 'https://raw.githubusercontent.com/liu3399shuai/weibo_podspec/master/WeiboSDK.podspec'
 pod 'FLAnimatedImage', '~> 1.0.12'
 pod 'CYLTabBarController'
+pod 'Zip', '~> 0.4.1'
 end
 
 target 'CuriosTextAppTests' do
