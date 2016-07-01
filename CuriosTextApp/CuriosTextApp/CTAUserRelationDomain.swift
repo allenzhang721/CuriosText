@@ -15,14 +15,14 @@ class CTAUserRelationDomain: CTABaseDomain {
     
     static func getInstance() -> CTAUserRelationDomain{
         if _instance == nil{
-            _instance = CTAUserRelationDomain.init();
+            _instance = CTAUserRelationDomain();
         }
         return _instance!
     }
     
     func followUser(userID:String, relationUserID:String, compelecationBlock: (CTADomainInfo!) -> Void){
         
-        CTAFollowUserRequest.init(userID: userID, relationUserID: relationUserID).startWithCompletionBlockWithSuccess { (response) -> Void in
+        CTAFollowUserRequest(userID: userID, relationUserID: relationUserID).startWithCompletionBlockWithSuccess { (response) -> Void in
             
             switch response.result{
             case .Success(let json):
@@ -30,19 +30,19 @@ class CTAUserRelationDomain: CTABaseDomain {
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
                 if result {
-                    compelecationBlock(CTADomainInfo.init(result: true, successType: resultIndex))
+                    compelecationBlock(CTADomainInfo(result: true, successType: resultIndex))
                 } else{
-                    compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAUserRelationError(rawValue: resultIndex)!))
+                    compelecationBlock(CTADomainInfo(result: false, errorType: CTAUserRelationError(rawValue: resultIndex)!))
                 }
             case .Failure( _):
-                compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
     
     func unFollowUser(userID:String, relationUserID:String, compelecationBlock: (CTADomainInfo!) -> Void){
         
-        CTAUnFollowUserRequest.init(userID: userID, relationUserID: relationUserID).startWithCompletionBlockWithSuccess { (response) -> Void in
+        CTAUnFollowUserRequest(userID: userID, relationUserID: relationUserID).startWithCompletionBlockWithSuccess { (response) -> Void in
             
             switch response.result{
             case .Success(let json):
@@ -50,19 +50,19 @@ class CTAUserRelationDomain: CTABaseDomain {
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
                 if result {
-                    compelecationBlock(CTADomainInfo.init(result: true, successType: resultIndex))
+                    compelecationBlock(CTADomainInfo(result: true, successType: resultIndex))
                 } else{
-                    compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAUserRelationError(rawValue: resultIndex)!))
+                    compelecationBlock(CTADomainInfo(result: false, errorType: CTAUserRelationError(rawValue: resultIndex)!))
                 }
             case .Failure( _):
-                compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
     
     func blockUser(userID:String, relationUserID:String, compelecationBlock: (CTADomainInfo!) -> Void){
         
-        CTABlockUserRequest.init(userID: userID, relationUserID: relationUserID).startWithCompletionBlockWithSuccess { (response) -> Void in
+        CTABlockUserRequest(userID: userID, relationUserID: relationUserID).startWithCompletionBlockWithSuccess { (response) -> Void in
             
             switch response.result{
             case .Success(let json):
@@ -70,19 +70,19 @@ class CTAUserRelationDomain: CTABaseDomain {
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
                 if result {
-                    compelecationBlock(CTADomainInfo.init(result: true, successType: resultIndex))
+                    compelecationBlock(CTADomainInfo(result: true, successType: resultIndex))
                 } else{
-                    compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAUserRelationError(rawValue: resultIndex)!))
+                    compelecationBlock(CTADomainInfo(result: false, errorType: CTAUserRelationError(rawValue: resultIndex)!))
                 }
             case .Failure( _):
-                compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
     
     func unBlockUser(userID:String, relationUserID:String, compelecationBlock: (CTADomainInfo!) -> Void){
         
-        CTAUnBlockUserRequest.init(userID: userID, relationUserID: relationUserID).startWithCompletionBlockWithSuccess { (response) -> Void in
+        CTAUnBlockUserRequest(userID: userID, relationUserID: relationUserID).startWithCompletionBlockWithSuccess { (response) -> Void in
             
             switch response.result{
             case .Success(let json):
@@ -90,19 +90,19 @@ class CTAUserRelationDomain: CTABaseDomain {
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
                 if result {
-                    compelecationBlock(CTADomainInfo.init(result: true, successType: resultIndex))
+                    compelecationBlock(CTADomainInfo(result: true, successType: resultIndex))
                 } else{
-                    compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAUserRelationError(rawValue: resultIndex)!))
+                    compelecationBlock(CTADomainInfo(result: false, errorType: CTAUserRelationError(rawValue: resultIndex)!))
                 }
             case .Failure( _):
-                compelecationBlock(CTADomainInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
     
     func userFollowList(userID:String, beUserID:String, start:Int, size:Int, compelecationBlock: (CTADomainListInfo!) -> Void){
         
-        CTAUserFollowListRequest.init(userID: userID, beUserID: beUserID, start: start, size: size).startWithCompletionBlockWithSuccess { (response) -> Void in
+        CTAUserFollowListRequest(userID: userID, beUserID: beUserID, start: start, size: size).startWithCompletionBlockWithSuccess { (response) -> Void in
             
             switch response.result{
             case .Success(let json):
@@ -111,19 +111,19 @@ class CTAUserRelationDomain: CTABaseDomain {
                 let result = self.checkJsonResult(json)
                 if result {
                     let userArray = self.userRelationListResult(json)
-                    compelecationBlock(CTADomainListInfo.init(result: true, modelArray: userArray, successType: resultIndex))
+                    compelecationBlock(CTADomainListInfo(result: true, modelArray: userArray, successType: resultIndex))
                 } else{
-                    compelecationBlock(CTADomainListInfo.init(result: false, errorType: CTAUserRelationListError(rawValue: resultIndex)!))
+                    compelecationBlock(CTADomainListInfo(result: false, errorType: CTAUserRelationListError(rawValue: resultIndex)!))
                 }
             case .Failure( _):
-                compelecationBlock(CTADomainListInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
+                compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
     
     func userBefollowList(userID:String, beUserID:String, start:Int, size:Int, compelecationBlock: (CTADomainListInfo!) -> Void){
         
-        CTAUserBeFollowListRequest.init(userID: userID, beUserID: beUserID, start: start, size: size).startWithCompletionBlockWithSuccess { (response) -> Void in
+        CTAUserBeFollowListRequest(userID: userID, beUserID: beUserID, start: start, size: size).startWithCompletionBlockWithSuccess { (response) -> Void in
             
             switch response.result{
             case .Success(let json):
@@ -132,12 +132,12 @@ class CTAUserRelationDomain: CTABaseDomain {
                 let result = self.checkJsonResult(json)
                 if result {
                     let userArray = self.userRelationListResult(json)
-                    compelecationBlock(CTADomainListInfo.init(result: true, modelArray: userArray, successType: resultIndex))
+                    compelecationBlock(CTADomainListInfo(result: true, modelArray: userArray, successType: resultIndex))
                 } else{
-                    compelecationBlock(CTADomainListInfo.init(result: false, errorType: CTAUserRelationListError(rawValue: resultIndex)!))
+                    compelecationBlock(CTADomainListInfo(result: false, errorType: CTAUserRelationListError(rawValue: resultIndex)!))
                 }
             case .Failure( _):
-                compelecationBlock(CTADomainListInfo.init(result: false, errorType: CTAInternetError(rawValue: 10)!))
+                compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }

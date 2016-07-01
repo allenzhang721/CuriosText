@@ -10,9 +10,20 @@ import UIKit
 
 class ViewController: UIViewController{
 
-    var mainTab:UITabBarController!
+    var mainTabBarController:UITabBarController!
     
     let mainDefaultSelected = 0
+    
+    var loadNoticeTask:Task?
+    
+    static var _instance:UIViewController?;
+    
+    static func getInstance() -> UIViewController{
+        if _instance == nil{
+            _instance = ViewController()
+        }
+        return _instance!
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,27 +43,50 @@ class ViewController: UIViewController{
 
         
         PlusButton.registerSubclass()
-        self.mainTab = RootAction.rootTabViewController()
-        self.mainTab.delegate = self
+        self.mainTabBarController = RootAction.rootTabViewController()
+        self.mainTabBarController.delegate = self
         
-        addChildViewController(self.mainTab)
-        view.addSubview(self.mainTab.view)
-        self.mainTab.selectedIndex = self.mainDefaultSelected
-        
-        
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.showNavigationView(_:)), name: "showNavigationView", object: nil)
+        addChildViewController(self.mainTabBarController)
+        view.addSubview(self.mainTabBarController.view)
+        self.mainTabBarController.selectedIndex = self.mainDefaultSelected
+        self.getUserNotice()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.showLoginView(_:)), name: "showLoginView", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.loginComplete(_:)), name: "loginComplete", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.addPublishFile(_:)), name: "addPublishFile", object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.addViewInRoot(_:)), name: "addViewInRoot", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.popupViewControllerInRoot(_:)), name: "popupViewControllerInRoot", object: nil)
     }
     
+    func repositionBadge(){
+        for tabBarButton in self.mainTabBarController.tabBar.subviews{
+            for badgeView in tabBarButton.subviews {
+                let className = NSStringFromClass(badgeView.classForCoder)
+                if className == "_UIBadgeView" {
+                    badgeView.layer.transform = CATransform3DIdentity
+                    badgeView.layer.transform = CATransform3DMakeTranslation(-12.0, 2.0, 1.0)
+                }
+            }
+        }
+    }
     
-//    func showNavigationView(noti: NSNotification){
-//        let popView = noti.object as! UIViewController
-//        self.navigate.pushViewController(popView, animated: true)
-//    }
+    func addViewInRoot(noti: NSNotification){
+        let popView = noti.object as! UIView
+        self.view.addSubview(popView)
+    }
+    
+    func popupViewControllerInRoot(noti: NSNotification){
+        let popView = noti.object as! UIViewController
+        self.presentViewController(popView, animated: true) {
+        }
+    }
     
     func showLoginView(noti: NSNotification){
         self.showLoginHandler()
+    }
+    
+    func loginComplete(noti: NSNotification){
+        self.getUserNotice()
     }
     
     func showLoginHandler(){
@@ -61,9 +95,12 @@ class ViewController: UIViewController{
         let navigationController = UINavigationController(rootViewController: login)
         navigationController.navigationBarHidden = true
         self.presentViewController(navigationController, animated: true, completion: {
-            //            self.navigate.popToRootViewControllerAnimated(false)
-            self.mainTab.selectedIndex = self.mainDefaultSelected
+            self.mainTabBarController.selectedIndex = self.mainDefaultSelected
         })
+        if self.loadNoticeTask != nil {
+            cancel(self.loadNoticeTask)
+            self.loadNoticeTask = nil
+        }
     }
     
     func addPublishFile(noti: NSNotification){
@@ -104,6 +141,48 @@ class ViewController: UIViewController{
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func getUserNotice(){
+        if CTAUserManager.isLogin{
+            self.getUserNoticeHandler()
+        }
+    }
+    
+    func getUserNoticeHandler(){
+        if CTAUserManager.isLogin{
+            let userID = CTAUserManager.user!.userID
+            CTANoticeDomain.getInstance().unReadNoticeCount(userID, compelecationBlock: { (info) in
+                if info.result{
+                    let count = info.successType
+                    if count > 0{
+                        var noticeText:String = ""
+                        if count > 9999{
+                            noticeText = "..."
+                        }else {
+                            noticeText = String(count)
+                        }
+                        self.mainTabBarController.tabBar.items![2].badgeValue = noticeText
+                        self.repositionBadge()
+                    }else {
+                        self.mainTabBarController.tabBar.items![2].badgeValue = nil
+                    }
+                    self.getUserNoticeComplete()
+                }else {
+                    self.getUserNoticeComplete()
+                }
+            })
+        }
+    }
+    
+    func getUserNoticeComplete(){
+        if self.loadNoticeTask == nil {
+            self.loadNoticeTask = delay(30.0){
+                cancel(self.loadNoticeTask)
+                self.loadNoticeTask = nil
+                self.getUserNotice()
+            }
+        }
     }
 }
 

@@ -19,7 +19,8 @@
 "PostsButtonLabel" = "我的";
 "LikesButtonLabel" = "赞过";
 "LikesLabel" = "赞";
-"CommentsLabel" = "Comments";
+"LikeDefaultLabel" = "快来赞我吧";
+"CommentsLabel" = "评论";
 "TenThousand" = "万";
 "HundredMillion" = "亿";
 "LoginLabel" = "欢迎使用奇思";

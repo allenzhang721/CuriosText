@@ -8,13 +8,6 @@
 
 import Foundation
 
-class CTAPublishIDRequest: CTABaseRequest {
-    
-    override func requestUrl() -> String {
-        return CTARequestUrl.GetPublishID.description;
-    }
-}
-
 class CTACreatePublishRequest: CTABaseRequest {
     
     let publishID:String;
@@ -373,5 +366,55 @@ class CTAReportPublishRequest: CTABaseRequest {
             key(.ReportMessage): reportMessage
         ];
         return self.getParameterString(dic, errorMessage: "CTAReportPublishRequest");
+    }
+}
+
+class CTAPublishDetailRequest: CTABaseRequest {
+    let userID:String;
+    let publishID:String;
+    
+    init(userID:String, publishID:String) {
+        self.userID        = userID;
+        self.publishID     = publishID;
+    }
+    
+    override func requestUrl() -> String {
+        return CTARequestUrl.PublishDetail.description;
+    }
+    
+    override func parameter() -> String {
+        let dic:Dictionary<String, AnyObject> = [
+            key(.UserID)       : userID,
+            key(.PublishID)    : publishID
+        ];
+        return self.getParameterString(dic, errorMessage: "CTAPublishDetailRequest");
+    }
+}
+
+class CTAPublishLikeUserListRequest: CTABaseRequest {
+    let userID:String;
+    let publishID:String;
+    let start:Int;
+    let size:Int;
+    
+    init(userID:String, publishID:String, start:Int, size:Int) {
+        self.userID        = userID;
+        self.publishID     = publishID;
+        self.start         = start;
+        self.size          = size;
+    }
+    
+    override func requestUrl() -> String {
+        return CTARequestUrl.PublishLikeUserList.description;
+    }
+    
+    override func parameter() -> String {
+        let dic:Dictionary<String, AnyObject> = [
+            key(.UserID)       : userID,
+            key(.PublishID)    : publishID,
+            key(.Start)        : start,
+            key(.Size)         : size
+        ];
+        return self.getParameterString(dic, errorMessage: "CTAPublishLikeUserList");
     }
 }

@@ -16,8 +16,7 @@ protocol CTAPublishCacheProtocol{
 
 extension CTAPublishCacheProtocol {
     
-    func savePublishArray(baseRequest:CTABaseRequest, modelArray:Array<CTAPublishModel>){
-        
+    func getRequestURL(baseRequest:CTABaseRequest) -> String{
         let requestUrl = buildRequestUrl(baseRequest)
         let parament = baseRequest.parameter()
         var newParment:String = ""
@@ -27,6 +26,11 @@ extension CTAPublishCacheProtocol {
             }
         }
         let dataURL = requestUrl+"?data="+newParment
+        return dataURL
+    }
+    
+    func savePublishArray(baseRequest:CTABaseRequest, modelArray:Array<CTAPublishModel>){
+        let dataURL = self.getRequestURL(baseRequest)
         var dataArray:Array<[String: AnyObject]> = []
         for i in 0..<modelArray.count{
             let model = modelArray[i]
@@ -42,15 +46,7 @@ extension CTAPublishCacheProtocol {
     }
     
     func getPublishArray(baseRequest:CTABaseRequest) -> Array<CTAPublishModel>?{
-        let requestUrl = buildRequestUrl(baseRequest) 
-        let parament = baseRequest.parameter()
-        var newParment:String = ""
-        for character in parament.characters {
-            if character != "\"" {
-                newParment = newParment+String(stringInterpolationSegment: character)
-            }
-        }
-        let dataURL = requestUrl+"?data="+newParment
+        let dataURL = self.getRequestURL(baseRequest)
         var modelArray:Array<CTAPublishModel>? = nil
         BlackCatManager.init().retriveDataForURL(dataURL) { (data) -> () in
             if data != nil {

@@ -20,12 +20,13 @@ final class CTAPublishModel: CTABaseModel{
     let publishDate:NSDate;
     let userModel:CTAUserModel;
     let relationType:Int;
-    let shareCount:Int;
-    let rebuildCount:Int;
-    let likeCount:Int;
+    var shareCount:Int;
+    var rebuildCount:Int;
+    var likeCount:Int;
+    var commentCount:Int;
     var likeStatus:Int = 0;
     
-    init(publishID:String, title:String, publishDesc:String, publishIconURL:String, previewIconURL:String, publishURL:String, publishDate:String, userID:String, nickName:String, userDesc:String, userIconURL:String, sex:Int, relationType:Int, shareCount:Int, rebuildCount:Int, likeCount:Int, likeStatus:Int) {
+    init(publishID:String, title:String, publishDesc:String, publishIconURL:String, previewIconURL:String, publishURL:String, publishDate:String, userID:String, nickName:String, userDesc:String, userIconURL:String, sex:Int, relationType:Int, shareCount:Int, rebuildCount:Int, likeCount:Int, likeStatus:Int, commentCount:Int) {
         self.publishID      = publishID;
         self.title          = title;
         self.publishDesc    = publishDesc;
@@ -50,6 +51,7 @@ final class CTAPublishModel: CTABaseModel{
         self.rebuildCount   = rebuildCount;
         self.likeCount      = likeCount;
         self.likeStatus     = likeStatus;
+        self.commentCount   = commentCount;
     }
     
     static func generateFrom(json: JSON) -> CTAPublishModel {
@@ -71,8 +73,9 @@ final class CTAPublishModel: CTABaseModel{
         let rebuildCount:Int      = json[key(.RebuildCount)].int ?? 0;
         let likeCount:Int         = json[key(.LikeCount)].int ?? 0;
         let likeStatus:Int        = json[key(.LikeStatus)].int ?? 0;
+        let commentCount:Int      = json[key(.CommentCount)].int ?? 0;
         
-        return CTAPublishModel.init(publishID: publishID, title: title, publishDesc: publishDesc, publishIconURL: publishIconURL, previewIconURL: previewIconURL, publishURL: publishURL, publishDate: publishDate, userID: userID, nickName: nickName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, relationType: relationType, shareCount: shareCount, rebuildCount: rebuildCount, likeCount: likeCount, likeStatus: likeStatus)
+        return CTAPublishModel.init(publishID: publishID, title: title, publishDesc: publishDesc, publishIconURL: publishIconURL, previewIconURL: previewIconURL, publishURL: publishURL, publishDate: publishDate, userID: userID, nickName: nickName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, relationType: relationType, shareCount: shareCount, rebuildCount: rebuildCount, likeCount: likeCount, likeStatus: likeStatus, commentCount: commentCount)
     }
     
     func save() throws {
@@ -80,6 +83,8 @@ final class CTAPublishModel: CTABaseModel{
     }
     
     func getData() -> [String: AnyObject]{
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
         return [
             key(.PublishID)  :self.publishID,
             key(.Title):self.title,
@@ -96,7 +101,9 @@ final class CTAPublishModel: CTABaseModel{
             key(.ShareCount):self.shareCount,
             key(.RebuildCount):self.rebuildCount,
             key(.LikeCount):self.likeCount,
-            key(.LikeStatus):self.likeStatus
+            key(.CommentCount):self.commentCount,
+            key(.LikeStatus):self.likeStatus,
+            key(.PublishDate):formatter.stringFromDate(self.publishDate)
         ]
     }
 }

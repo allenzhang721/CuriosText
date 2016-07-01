@@ -77,6 +77,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
             self.isLoginUser = true
         }else {
             self.isLoginUser = false
+            self.loadLocalUserModel()
         }
         self.initTopView()
         self.initCollectionView();
@@ -88,13 +89,14 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UserViewController.reloadViewHandler(_:)), name: "publishEditFile", object: nil)
             self.isAddOber = true
         }
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if self.isDisMis {
-            self.loadLocalUserModel()
+            if self.isLoginUser {
+                self.loadLocalUserModel()
+            }
             if self.loginUser != nil {
                 if self.isLoginUser {
                     self.viewUser = self.loginUser
@@ -149,43 +151,39 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     }
     
     func saveArrayToLocal(){
-        if self.isLoginUser {
-            let userID = self.loginUser!.userID
-            let beUserID = self.viewUser!.userID
-            var savePublishModel:Array<CTAPublishModel> = []
-            if self.publishModelArray.count < 100 {
-                savePublishModel = self.publishModelArray
-            }else {
-                let slice = self.publishModelArray[0...100]
-                savePublishModel = Array(slice)
-            }
-            var request:CTABaseRequest?
-            if self.publishType == .Posts{
-                request = CTAUserPublishListRequest(userID: userID, beUserID: beUserID, start: 0)
-            }else if self.publishType == .Likes{
-                request = CTAUserLikePublishListRequest(userID: userID, beUserID: beUserID, start: 0)
-            }
-            if request != nil {
-                self.savePublishArray(request!, modelArray: savePublishModel)
-            }
+        let userID = self.loginUser!.userID
+        let beUserID = self.viewUser!.userID
+        var savePublishModel:Array<CTAPublishModel> = []
+        if self.publishModelArray.count < 100 {
+            savePublishModel = self.publishModelArray
+        }else {
+            let slice = self.publishModelArray[0...100]
+            savePublishModel = Array(slice)
+        }
+        var request:CTABaseRequest?
+        if self.publishType == .Posts{
+            request = CTAUserPublishListRequest(userID: userID, beUserID: beUserID, start: 0)
+        }else if self.publishType == .Likes{
+            request = CTAUserLikePublishListRequest(userID: userID, beUserID: beUserID, start: 0)
+        }
+        if request != nil {
+            self.savePublishArray(request!, modelArray: savePublishModel)
         }
     }
     
     func loadArrayFromLocal(){
-        if self.isLoginUser {
-            let userID = self.loginUser!.userID
-            let beUserID = self.viewUser!.userID
-            var request:CTABaseRequest?
-            if self.publishType == .Posts{
-                request = CTAUserPublishListRequest(userID: userID, beUserID: beUserID, start: 0)
-            }else if self.publishType == .Likes{
-                request = CTAUserLikePublishListRequest(userID: userID, beUserID: beUserID, start: 0)
-            }
-            if request != nil{
-                let data = self.getPublishArray(request!)
-                if data != nil {
-                    self.publishModelArray = data!
-                }
+        let userID = self.loginUser!.userID
+        let beUserID = self.viewUser!.userID
+        var request:CTABaseRequest?
+        if self.publishType == .Posts{
+            request = CTAUserPublishListRequest(userID: userID, beUserID: beUserID, start: 0)
+        }else if self.publishType == .Likes{
+            request = CTAUserLikePublishListRequest(userID: userID, beUserID: beUserID, start: 0)
+        }
+        if request != nil{
+            let data = self.getPublishArray(request!)
+            if data != nil {
+                self.publishModelArray = data!
             }
         }
     }
@@ -206,7 +204,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.collectionView.dataSource = self
         self.collectionView.registerClass(CTAPublishesCell.self, forCellWithReuseIdentifier: "ctaPublishesCell")
         self.collectionView.registerClass(CTAPublishHeaderView.self, forSupplementaryViewOfKind:UICollectionElementKindSectionHeader, withReuseIdentifier: "ctaPublishHeader")
-        self.collectionView.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
+        self.collectionView.backgroundColor = CTAStyleKit.commonBackgroundColor
         self.view.addSubview(self.collectionView!);
         
         let freshIcon1:UIImage = UIImage(named: "fresh-icon-1")!
@@ -247,37 +245,37 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.cropImageCircle(self.userIconImage)
         self.userIconImage.image = UIImage(named: "default-usericon")
         
-        self.userNicknameLabel = UILabel(frame: CGRect(x: (bounds.size.width-maxWidth)/2, y: 70*self.getHorRate(), width: maxWidth, height: 20))
-        self.userNicknameLabel.font = UIFont.boldSystemFontOfSize(16)
+        self.userNicknameLabel = UILabel(frame: CGRect(x: (bounds.size.width-maxWidth)/2, y: self.userIconImage.frame.origin.y + self.userIconImage.frame.height+10, width: maxWidth, height: 22))
+        self.userNicknameLabel.font = UIFont.boldSystemFontOfSize(18)
         self.userNicknameLabel.textColor = CTAStyleKit.normalColor
         self.userNicknameLabel.textAlignment = .Center
         self.userInfoView.addSubview(self.userIconImage)
         self.userInfoView.addSubview(self.userNicknameLabel)
         
-        self.userDescLabel = UILabel(frame: CGRect(x: (bounds.size.width-maxWidth)/2, y: (self.userNicknameLabel.frame.origin.y+20), width: maxWidth, height: 140))
+        self.userDescLabel = UILabel(frame: CGRect(x: (bounds.size.width-maxWidth)/2, y: (self.userNicknameLabel.frame.origin.y+self.userNicknameLabel.frame.height+5), width: maxWidth, height: 140))
         self.userDescLabel.numberOfLines = 10
-        self.userDescLabel.font = UIFont.systemFontOfSize(11)
+        self.userDescLabel.font = UIFont.systemFontOfSize(13)
         
-        self.userDescLabel.textColor = CTAStyleKit.disableColor
+        self.userDescLabel.textColor = CTAStyleKit.labelShowColor
         self.userDescLabel.text = " "
         self.userDescLabel.textAlignment = .Center
         self.userInfoView.addSubview(self.userDescLabel)
         self.topView.addSubview(self.userInfoView)
         
-        self.userFollowView = UIView(frame: CGRectMake(0, 0, bounds.width, 70))
+        self.userFollowView = UIView(frame: CGRectMake(0, 0, bounds.width, 80))
         let lineImageView = UIImageView.init(frame: CGRect.init(x: bounds.width/2, y: 5, width: 1, height: 14))
         lineImageView.image = UIImage.init(named: "follow-line")
         self.userFollowView.addSubview(lineImageView)
         let followView = UIView(frame: CGRectMake(0, 0, bounds.width/2, 25))
         followView.backgroundColor = UIColor.clearColor()
         self.followLabel = UILabel()
-        self.followLabel.font = UIFont.systemFontOfSize(11)
-        self.followLabel.textColor = CTAStyleKit.disableColor
+        self.followLabel.font = UIFont.systemFontOfSize(13)
+        self.followLabel.textColor = CTAStyleKit.labelShowColor
         self.followLabel.text = NSLocalizedString("FollowLabel", comment: "")
         followView.addSubview(followLabel)
         self.followCountLabel = UILabel()
-        self.followCountLabel.font = UIFont.systemFontOfSize(11)
-        self.followCountLabel.textColor = CTAStyleKit.disableColor
+        self.followCountLabel.font = UIFont.systemFontOfSize(13)
+        self.followCountLabel.textColor = CTAStyleKit.labelShowColor
         self.followCountLabel.text = "0"
         followView.addSubview(self.followCountLabel)
         self.userFollowView.addSubview(followView)
@@ -288,30 +286,30 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         let beFollowView = UIView(frame: CGRectMake(bounds.width/2, 0, bounds.width/2, 25))
         beFollowView.backgroundColor = UIColor.clearColor()
         self.beFollowLabel = UILabel()
-        self.beFollowLabel.font = UIFont.systemFontOfSize(11)
-        self.beFollowLabel.textColor = CTAStyleKit.disableColor
+        self.beFollowLabel.font = UIFont.systemFontOfSize(13)
+        self.beFollowLabel.textColor = CTAStyleKit.labelShowColor
         self.beFollowLabel.text = NSLocalizedString("BeFollowLabel", comment: "")
         beFollowView.addSubview(beFollowLabel)
         let beFollowTap = UITapGestureRecognizer(target: self, action: #selector(beFollowViewClick(_:)))
         beFollowView.addGestureRecognizer(beFollowTap)
         
         self.beFollowCountLabel = UILabel()
-        self.beFollowCountLabel.font = UIFont.systemFontOfSize(11)
-        self.beFollowCountLabel.textColor = CTAStyleKit.disableColor
+        self.beFollowCountLabel.font = UIFont.systemFontOfSize(13)
+        self.beFollowCountLabel.textColor = CTAStyleKit.labelShowColor
         self.beFollowCountLabel.text = "0"
         beFollowView.addSubview(self.beFollowCountLabel)
         self.userFollowView.addSubview(beFollowView)
-        var textLine = UIImageView.init(frame: CGRect.init(x: 0, y: 69, width: bounds.width, height: 1))
+        var textLine = UIImageView.init(frame: CGRect.init(x: 0, y: 79, width: bounds.width, height: 1))
         textLine.image = UIImage(named: "space-line")
         self.userFollowView.addSubview(textLine)
-        self.followButton = UIButton(frame: CGRectMake((bounds.width-90)/2, 28, 90, 30))
-        self.followButton.setBackgroundImage(UIImage(named: "follow-button"), forState: .Normal)
+        self.followButton = UIButton(frame: CGRectMake((bounds.width-90)/2, 35, 90, 30))
+        self.followButton.setBackgroundImage(UIImage(named: "follow_bg"), forState: .Normal)
         self.followButton.setTitle(NSLocalizedString("FollowButtonLabel", comment: ""), forState: .Normal)
-        self.followButton.setTitleColor(CTAStyleKit.normalColor, forState: .Normal)
+        self.followButton.setTitleColor(CTAStyleKit.selectedColor, forState: .Normal)
         self.followButton.titleLabel?.font = UIFont.systemFontOfSize(13)
-        if self.isLoginUser{
-            self.userFollowView.frame = CGRectMake(0, 0, bounds.width, 30)
-            textLine.frame = CGRect.init(x: 0, y: 29, width: bounds.width, height: 1)
+        if self.isLoginUser || self.viewUser?.userID == self.loginUser?.userID{
+            self.userFollowView.frame = CGRectMake(0, 0, bounds.width, 35)
+            textLine.frame = CGRect.init(x: 0, y: 34, width: bounds.width, height: 1)
         }else {
             self.userFollowView.addSubview(self.followButton)
             self.followButton.addTarget(self, action: #selector(followButtonClick(_:)), forControlEvents: .TouchUpInside)
@@ -420,8 +418,8 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     }
     
     func setViewsPosition(){
-        self.userInfoView.frame.origin.y = 17
-        self.userInfoView.frame.size.height = self.userDescLabel.frame.origin.y + self.userDescLabel.frame.height
+        self.userInfoView.frame.origin.y = 20
+        self.userInfoView.frame.size.height = self.userDescLabel.frame.origin.y + self.userDescLabel.frame.height+5
         self.userFollowView.frame.origin.y = self.userInfoView.frame.origin.y+self.userInfoView.frame.height
         self.collectionControllerView.frame.origin.y = self.userFollowView.frame.origin.y+self.userFollowView.frame.height
         self.topView.frame.size.height = self.collectionControllerView.frame.origin.y + self.collectionControllerView.frame.height
@@ -704,15 +702,21 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         let relationType:Int = self.userDetailModel!.relationType
         var isHidden = false
         var buttonLabel:String = ""
+        var buttonBg:UIImage? = UIImage(named: "follow_bg")
+        var buttonLabelColor = CTAStyleKit.selectedColor
         switch  relationType{
         case -1:
             isHidden = true
             buttonLabel = ""
         case 0, 3:
             buttonLabel = NSLocalizedString("FollowButtonLabel", comment: "")
+            buttonBg    = UIImage(named: "follow_bg")
+            buttonLabelColor = CTAStyleKit.selectedColor
             isHidden = false
         case 1, 5:
             buttonLabel = NSLocalizedString("UnFollowButtonLabel", comment: "")
+            buttonBg    = UIImage(named: "following_bg")
+            buttonLabelColor = CTAStyleKit.commonBackgroundColor
             isHidden = false
         case 2, 4, 6:
             isHidden = true
@@ -723,6 +727,8 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         }
         self.followButton.hidden = isHidden
         self.followButton.setTitle(buttonLabel, forState: .Normal)
+        self.followButton.setBackgroundImage(buttonBg, forState: .Normal)
+        self.followButton.setTitleColor(buttonLabelColor, forState: .Normal)
     }
     /*
     // MARK: - Navigation

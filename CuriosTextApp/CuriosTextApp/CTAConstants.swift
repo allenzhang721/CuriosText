@@ -52,22 +52,22 @@ enum CTARequestHost: CustomStringConvertible {
 }
 
 enum CTARequestUrl: CustomStringConvertible {
-  case GetUserID,Login
+  case Login
   case PhoneRegister, WeixinRegister, WeiboRegister
   case UpdateUserInfo, UpdateUserNickname, UpdateUserDesc, UpdateUserIconURL, UpdateUserAddress, UpdateUserSex
   case CheckUserExist, BindingPhone, BindingWeixinID, UnbindingWeixinID, BingingWeiboID, UnbindingWeiboID
   case CheckPassword, UpdatePassword, ResetPassword, UserDetail
     
-  case GetPublishID, CreatePublish, DeletePublish
-  case UserPublishList, UserLikePublishList, UserRebuildPublishList, UserFollowPublishList, NewPubulishList, HotPublishList, SetHotPublish
+  case CreatePublish, DeletePublish, PublishDetail
+  case UserPublishList, UserLikePublishList, UserRebuildPublishList, UserFollowPublishList, NewPubulishList, HotPublishList, SetHotPublish, PublishLikeUserList
   case LikePublish, UnLikePublish, RebuildPublish, SharePublish, ReportPublish
   case FollowUser, UnFollowUser, BlockUser, UnBlockUser, UserFollowList, UserBeFollowList
   case UserUpToken, PublishUpToken, UploadFilePath, ResourceUpToken
+  case AddPublishComment, DeletePublishComment, PublishCommentList
+  case UnReadNoticeCount, NoticeList, DeleteNotice
   
   var description: String {
     switch self {
-    case .GetUserID:
-        return "/user/getUserID"
     case .Login:
         return "/user/login"
     case .PhoneRegister:
@@ -108,12 +108,12 @@ enum CTARequestUrl: CustomStringConvertible {
         return "/user/resetPassword"
     case .UserDetail:
         return "/user/userDetail"
-    case .GetPublishID:
-        return "/publish/getPublishID"
     case .CreatePublish:
         return "/publish/createPublishFile"
     case .DeletePublish:
         return "/publish/deletePublishFile"
+    case .PublishDetail:
+        return "/publish/publishFileDetail"
     case .UserPublishList:
         return "/publish/userPublishList"
     case .UserLikePublishList:
@@ -128,6 +128,8 @@ enum CTARequestUrl: CustomStringConvertible {
         return "/publish/hotPublishList"
     case .SetHotPublish:
         return "/publish/setHotPublish"
+    case .PublishLikeUserList:
+        return "/publish/publishLikeUserList"
     case .LikePublish:
         return "/publish/likePublish"
     case .UnLikePublish:
@@ -158,6 +160,18 @@ enum CTARequestUrl: CustomStringConvertible {
         return "/upload/uploadFilePath"
     case .ResourceUpToken:
         return "/upload/resourceUpToken"
+    case .AddPublishComment:
+        return "/comment/addPublishComment"
+    case .DeletePublishComment:
+        return "/comment/deletePublishComment"
+    case .PublishCommentList:
+        return "/comment/publishCommentList"
+    case .UnReadNoticeCount:
+        return "/notice/unReadNoticeCount"
+    case .NoticeList:
+        return "/notice/noticeList"
+    case .DeleteNotice:
+        return "/notice/deleteNotice"
     }
   }
 }
@@ -170,9 +184,11 @@ enum CTAParameterKey: CustomStringConvertible {
   case RelationType, RelationUserID, FollowCount, BeFollowCount, PublishCount
   case PublishFilePath, UserFilePath, ResourceFilePath
   case UpToken, UpTokenKey
-  case ShareCount, RebuildCount, LikeCount, LikeStatus
+  case ShareCount, RebuildCount, LikeCount, LikeStatus, CommentCount
   case Openid, Headimgurl, WechatName
   case WeiBoUserID, WeiBoID, Avatarhd, Gender, WeiboName, WeiboDesc
+  case CommentMessage, CommentID, BeCommentedNikeName, BeCommentedUserID, CommentDate
+  case NoticeID, NoticeMessage, NoticeDate, NoticeReaded, NoticeType, NoticeTypeID, NoticeCount
     
   var description: String {
     switch self {
@@ -264,6 +280,8 @@ enum CTAParameterKey: CustomStringConvertible {
         return "likeCount"
     case .LikeStatus:
         return "likeStatus"
+    case .CommentCount:
+        return "commentCount"
     case .Openid:
         return "openid"
     case .Headimgurl:
@@ -282,8 +300,30 @@ enum CTAParameterKey: CustomStringConvertible {
         return "screen_name"
     case .WeiboDesc:
         return "description"
+    case .CommentMessage:
+        return "commentMessage"
+    case .CommentID:
+        return "commentID"
+    case .BeCommentedUserID:
+        return "beCommentedUserID"
+    case .BeCommentedNikeName:
+        return "beCommentedNikeName"
+    case .CommentDate:
+        return "commentDate"
+    case .NoticeID:
+        return "noticeID"
+    case .NoticeMessage:
+        return "noticeMessage"
+    case .NoticeDate:
+        return "noticeDate"
+    case .NoticeReaded:
+        return "noticeReaded"
+    case .NoticeType:
+        return "noticeType"
+    case .NoticeTypeID:
+        return "noticeTypeID"
+    case .NoticeCount:
+        return "count"
     }
-    
-    //WeiBoUserID, Avatarhd, Gender, WeiboName, WeiboDesc
   }
 }

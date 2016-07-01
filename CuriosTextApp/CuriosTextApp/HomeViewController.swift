@@ -9,7 +9,7 @@
 import UIKit
 import MJRefresh
 
-class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishModelProtocol, CTALoginProtocol{
+class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishModelProtocol, CTALoginProtocol, CTAPublishControllerProtocol{
     
     var loginUser:CTAUserModel?
     var viewUserID:String = ""
@@ -37,6 +37,8 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
     var isLoadedAll:Bool = false
     
     var previousScrollViewYOffset:CGFloat = 0.0
+    
+    var selectedCell:CTAHomePublishesCell? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +69,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         self.loginUser = nil
+        self.selectedCell = nil
         self.isDisMis = true
         self.hideLoadingView()
     }
@@ -110,15 +113,13 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         let rect:CGRect = CGRect(x: 0, y: 46, width: bounds.width, height: bounds.height-46)
         self.collectionLayout = UICollectionViewFlowLayout()
 
-        let itemW = bounds.width
-        self.collectionLayout.itemSize = CGSize(width: itemW, height: itemW+100)
-        self.collectionLayout.minimumLineSpacing = 10
-        self.collectionLayout.minimumInteritemSpacing = 10
+        self.collectionLayout.minimumLineSpacing = 5
+        self.collectionLayout.minimumInteritemSpacing = 5
         self.collectionView = UICollectionView(frame: rect, collectionViewLayout: self.collectionLayout)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.registerClass(CTAHomePublishesCell.self, forCellWithReuseIdentifier: "ctahomepublishescell")
-        self.collectionView.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
+        self.collectionView.backgroundColor = CTAStyleKit.commonBackgroundColor
         self.view.addSubview(self.collectionView!);
         
         let freshIcon1:UIImage = UIImage(named: "fresh-icon-1")!
@@ -446,9 +447,22 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
+        let top:CGFloat = 50
+        var buttom:CGFloat = 100
         let bounds = UIScreen.mainScreen().bounds
-        let itemW = bounds.width
-        return CGSize(width: itemW, height: itemW+100)
+        let index = indexPath.row
+        if index < self.publishModelArray.count{
+            let publish = self.publishModelArray[index]
+            if publish.likeCount > 0{
+                buttom = 100
+            }else {
+                buttom = 100
+            }
+        }else {
+            buttom = 100
+        }
+        let size = CGSize(width: bounds.width, height: bounds.width + top+buttom)
+        return size
     }
     
     func playCellAnimation(offY:CGFloat){
@@ -478,66 +492,111 @@ extension HomeViewController:CTALoadingProtocol{
 
 extension HomeViewController:CTAHomePublishesCellDelegate{
     
-    func userIconTap(publishModel:CTAPublishModel?){
+    func cellUserIconTap(cell:CTAHomePublishesCell?){
         if self.loginUser != nil {
-            if publishModel != nil {
-                let viewUserModel = publishModel!.userModel
-                let userPublish = UserViewController()
-                userPublish.viewUser = viewUserModel
-                self.navigationController?.pushViewController(userPublish, animated: true)
+            if cell != nil {
+                if let publishModel = cell?.publishModel{
+                    let viewUserModel = publishModel.userModel
+                    let userPublish = UserViewController()
+                    userPublish.viewUser = viewUserModel
+                    self.navigationController?.pushViewController(userPublish, animated: true)
+                }
             }
         }else {
             self.showLoginView()
         }
     }
     
-    func likeListTap(publishModel:CTAPublishModel?){
+    func cellLikeListTap(cell:CTAHomePublishesCell?){
         if self.loginUser != nil {
-            if publishModel != nil {
-                print("likeListTap")
+            if cell != nil {
+                
             }
         }else {
             self.showLoginView()
         }
     }
     
-    func likeHandler(publishModel:CTAPublishModel?){
+    func cellLikeHandler(cell:CTAHomePublishesCell?, justLike:Bool){
         if self.loginUser != nil {
-            if publishModel != nil {
-                print("likeHandler")
+            if cell != nil {
+                self.selectedCell = cell
+                self.likeHandler(justLike)
             }
         }else {
             self.showLoginView()
         }
     }
     
-    func commentHandler(publishModel:CTAPublishModel?){
+    func cellCommentHandler(cell:CTAHomePublishesCell?){
         if self.loginUser != nil {
-            if publishModel != nil {
-                print("commentHandler")
+            if cell != nil {
+                self.selectedCell = cell
+                self.commentHandler()
             }
         }else {
             self.showLoginView()
         }
     }
     
-    func rebuildHandler(publishModel:CTAPublishModel?){
+    func cellRebuildHandler(cell:CTAHomePublishesCell?){
         if self.loginUser != nil {
-            if publishModel != nil {
-                print("rebuildHandler")
+            if cell != nil {
+                self.selectedCell = cell
+                self.rebuildHandler()
             }
         }else {
             self.showLoginView()
         }
     }
     
-    func moreHandler(publishModel:CTAPublishModel?){
+    func cellMoreHandler(cell:CTAHomePublishesCell?){
         if self.loginUser != nil {
-            if publishModel != nil {
-                print("moreHandler")
+            if cell != nil {
+                self.selectedCell = cell
+                self.moreSelectionHandler(false)
             }
         }else {
             self.showLoginView()
+        }
+    }
+}
+
+extension HomeViewController{
+    
+    var publishModel:CTAPublishModel?{
+        if self.selectedCell != nil {
+            let publishModel = self.selectedCell!.publishModel
+            return publishModel
+        }else {
+            return nil
+        }
+    }
+    
+    var userModel:CTAUserModel?{
+        if self.selectedCell != nil {
+            if let publishModel = self.selectedCell!.publishModel{
+                return publishModel.userModel
+            }else {
+                return nil
+            }
+        }else {
+            return nil
+        }
+    }
+    
+    var previewView:CTAPublishPreviewView?{
+        if self.selectedCell != nil {
+            let previewView = self.selectedCell!.previewView
+            return previewView
+        }else {
+            return nil
+        }
+    }
+    
+    func setLikeButtonStyle(){
+        if self.selectedCell != nil {
+            self.selectedCell?.changeLikeStatus()
         }
     }
 }

@@ -17,6 +17,7 @@
 "PostsButtonLabel" = "Posts";
 "LikesButtonLabel" = "Likes";
 "LikesLabel" = "Likes";
+"LikeDefaultLabel" = "Like me";
 "CommentsLabel" = "Comments";
 "Thousand" = "K";
 "Million" = "M";

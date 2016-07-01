@@ -344,6 +344,13 @@
 		66ADD74F1C28011B00FD9BAF /* CTAUpTokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ADD74E1C28011B00FD9BAF /* CTAUpTokenModel.swift */; };
 		66C7BF231C3111D700ADF251 /* CTADomainInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C7BF221C3111D700ADF251 /* CTADomainInfo.swift */; };
 		66C7BF251C3114BD00ADF251 /* CTADomainListInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C7BF241C3114BD00ADF251 /* CTADomainListInfo.swift */; };
+		66F4D44C1D24E28100587A54 /* CTACommentRequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4D44B1D24E28100587A54 /* CTACommentRequestAPI.swift */; };
+		66F4D44E1D24EE0F00587A54 /* CTANoticeRequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4D44D1D24EE0F00587A54 /* CTANoticeRequestAPI.swift */; };
+		66F4D4501D24EFA600587A54 /* CTACommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4D44F1D24EFA600587A54 /* CTACommentModel.swift */; };
+		66F4D4521D24F9A600587A54 /* CTANoticeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4D4511D24F9A600587A54 /* CTANoticeModel.swift */; };
+		66F4D4541D25069400587A54 /* CTACommentDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4D4531D25069400587A54 /* CTACommentDomain.swift */; };
+		66F4D4561D250E2C00587A54 /* CTANoticeDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4D4551D250E2C00587A54 /* CTANoticeDomain.swift */; };
+		66F4D4581D25468E00587A54 /* CTAPublishControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4D4571D25468E00587A54 /* CTAPublishControllerProtocol.swift */; };
 		858E2DE727C44D164260ACF3 /* Pods_CuriosTextAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3147C32D2124C223C0A10204 /* Pods_CuriosTextAppUITests.framework */; };
 		9ED2C941C16F44CAFB7F495A /* Pods_CuriosTextAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6371A19FAF6F9855E8BC000 /* Pods_CuriosTextAppTests.framework */; };
 /* End PBXBuildFile section */
@@ -751,6 +758,13 @@
 		66ADD74E1C28011B00FD9BAF /* CTAUpTokenModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUpTokenModel.swift; sourceTree = "<group>"; };
 		66C7BF221C3111D700ADF251 /* CTADomainInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTADomainInfo.swift; sourceTree = "<group>"; };
 		66C7BF241C3114BD00ADF251 /* CTADomainListInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTADomainListInfo.swift; sourceTree = "<group>"; };
+		66F4D44B1D24E28100587A54 /* CTACommentRequestAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACommentRequestAPI.swift; sourceTree = "<group>"; };
+		66F4D44D1D24EE0F00587A54 /* CTANoticeRequestAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTANoticeRequestAPI.swift; sourceTree = "<group>"; };
+		66F4D44F1D24EFA600587A54 /* CTACommentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACommentModel.swift; sourceTree = "<group>"; };
+		66F4D4511D24F9A600587A54 /* CTANoticeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTANoticeModel.swift; sourceTree = "<group>"; };
+		66F4D4531D25069400587A54 /* CTACommentDomain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACommentDomain.swift; sourceTree = "<group>"; };
+		66F4D4551D250E2C00587A54 /* CTANoticeDomain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTANoticeDomain.swift; sourceTree = "<group>"; };
+		66F4D4571D25468E00587A54 /* CTAPublishControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishControllerProtocol.swift; sourceTree = "<group>"; };
 		67C2EEF88688179070D1D030 /* Pods-CuriosTextAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CuriosTextAppUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CuriosTextAppUITests/Pods-CuriosTextAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		7859BD237000762D42F64FD7 /* Pods-CuriosTextApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CuriosTextApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CuriosTextApp/Pods-CuriosTextApp.debug.xcconfig"; sourceTree = "<group>"; };
 		889EB8CB224EF22C34C14F4F /* Pods-CuriosTextAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CuriosTextAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CuriosTextAppTests/Pods-CuriosTextAppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -952,6 +966,7 @@
 				2C32653D1C7321A80000B89B /* CTAUploadIconProtocol.swift */,
 				665509E81D18255B005146B5 /* CTAPublishModelProtocol.swift */,
 				665509EA1D18D935005146B5 /* CTATimeProtocol.swift */,
+				66F4D4571D25468E00587A54 /* CTAPublishControllerProtocol.swift */,
 			);
 			name = UseCase;
 			sourceTree = "<group>";
@@ -1019,8 +1034,8 @@
 				2C3AE3ED1C59F5A9004D62B4 /* SocialShareTest */,
 				2C31D68A1CF301CE000A2ECE /* Setting */,
 				2CD4189A1D12800200DDAAE4 /* Home */,
-				2CD4189B1D12800E00DDAAE4 /* Recommand */,
 				2CD4189C1D12801F00DDAAE4 /* NotiCenter */,
+				2CD4189B1D12800E00DDAAE4 /* Recommand */,
 				2CD4189D1D12804100DDAAE4 /* User */,
 				66A3932D1D17C8EF002895A6 /* Preview */,
 				2CD4189E1D12805B00DDAAE4 /* m_Comment */,
@@ -1085,6 +1100,8 @@
 				66A072AA1C1811810046C72F /* CTAPublishRequestAPI.swift */,
 				66A072AC1C186EFF0046C72F /* CTARelationRequestAPI.swift */,
 				66A072AE1C18713F0046C72F /* CTAUploadRequestAPI.swift */,
+				66F4D44B1D24E28100587A54 /* CTACommentRequestAPI.swift */,
+				66F4D44D1D24EE0F00587A54 /* CTANoticeRequestAPI.swift */,
 			);
 			name = CTARequestAPI;
 			sourceTree = "<group>";
@@ -1239,6 +1256,8 @@
 				66ADD74C1C27F69900FD9BAF /* CTAUserRelationDomain.swift */,
 				66C7BF221C3111D700ADF251 /* CTADomainInfo.swift */,
 				66C7BF241C3114BD00ADF251 /* CTADomainListInfo.swift */,
+				66F4D4531D25069400587A54 /* CTACommentDomain.swift */,
+				66F4D4551D250E2C00587A54 /* CTANoticeDomain.swift */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -1252,6 +1271,8 @@
 				6628C7021C200C11007F873C /* CTAViewUserModel.swift */,
 				665B97851C23CD950082A51C /* CTAPublishModel.swift */,
 				66ADD74E1C28011B00FD9BAF /* CTAUpTokenModel.swift */,
+				66F4D44F1D24EFA600587A54 /* CTACommentModel.swift */,
+				66F4D4511D24F9A600587A54 /* CTANoticeModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2015,6 +2036,7 @@
 				2CD11AB61CB7547500A79305 /* AniNode.swift in Sources */,
 				2C32653E1C7321A80000B89B /* CTAUploadIconProtocol.swift in Sources */,
 				2C5C24981C44FA5600A70F1B /* CTAColorsManger.swift in Sources */,
+				66F4D4541D25069400587A54 /* CTACommentDomain.swift in Sources */,
 				2CD11AB71CB7547500A79305 /* AniPlayCanvasView.swift in Sources */,
 				2CD418E71D12943E00DDAAE4 /* NotiCenterViewController.swift in Sources */,
 				2CD418F31D12A01800DDAAE4 /* LikersViewController.swift in Sources */,
@@ -2086,6 +2108,7 @@
 				2C31D6891CF301C0000A2ECE /* CTAAccountSettingViewController.swift in Sources */,
 				2CA3AA531C8D472400CE8191 /* CTAPublishViewController.swift in Sources */,
 				2CD11AB31CB7547500A79305 /* AniContent.swift in Sources */,
+				66F4D4561D250E2C00587A54 /* CTANoticeDomain.swift in Sources */,
 				2CE063EE1C857D2F001F7F4E /* ImagePickerViewController.swift in Sources */,
 				2CF4D4241CBE38F9001DC7C4 /* FontFamiliesList+CoreDataProperties.swift in Sources */,
 				2C2B45B01C5CBED1004A4809 /* LocaleHelper.swift in Sources */,
@@ -2112,6 +2135,7 @@
 				2C3B34061C11B4F900738166 /* CTAConstants.swift in Sources */,
 				2CFC658E1C56305500E8ADE7 /* CTAFullPublishesCell.swift in Sources */,
 				2C042B741CE3226000C13FED /* CTAHeartAnimationView.swift in Sources */,
+				66F4D4581D25468E00587A54 /* CTAPublishControllerProtocol.swift in Sources */,
 				2CB3C8C21C859B8E00CF2BD2 /* ImagePickerResource.swift in Sources */,
 				2CC8115E1C79A6D5003CE8BF /* BlackCatCache.swift in Sources */,
 				2CD11AA31CB7545F00A79305 /* ContentTextLayer.swift in Sources */,
@@ -2153,6 +2177,7 @@
 				66A072AB1C1811810046C72F /* CTAPublishRequestAPI.swift in Sources */,
 				2C0404581C3EBBB800A5B017 /* CTATabViewController.swift in Sources */,
 				2CAEAC951C323F2600C9F9AC /* ElementProtocol.swift in Sources */,
+				66F4D4501D24EFA600587A54 /* CTACommentModel.swift in Sources */,
 				2C5EA2561C479CE000DCEE7B /* Print.swift in Sources */,
 				2CFC65941C56310800E8ADE7 /* CTAPublishDetaiViewController.swift in Sources */,
 				2CD418ED1D129B7500DDAAE4 /* PlusButton.swift in Sources */,
@@ -2176,6 +2201,7 @@
 				2C2B45AA1C5CBCC8004A4809 /* CTALoginProtocol.swift in Sources */,
 				2CD418E51D12942D00DDAAE4 /* RecommandViewController.swift in Sources */,
 				2C6C67FF1C350A4800CCE81C /* CTALineFlowLayout.swift in Sources */,
+				66F4D44E1D24EE0F00587A54 /* CTANoticeRequestAPI.swift in Sources */,
 				2CB380B31C4D003B009A681A /* CTAAnimationConfig.swift in Sources */,
 				2CA860C01C8FC157000BCF8A /* LocalizationManager.swift in Sources */,
 				2CAEACA31C323F9700C9F9AC /* TexView.swift in Sources */,
@@ -2199,6 +2225,7 @@
 				2C3B33CA1C1176D000738166 /* AppDelegate.swift in Sources */,
 				2CD418E91D12945800DDAAE4 /* UserViewController.swift in Sources */,
 				2C0404561C3EBB7A00A5B017 /* CTASelectorsViewController.swift in Sources */,
+				66F4D4521D24F9A600587A54 /* CTANoticeModel.swift in Sources */,
 				2CD11AA11CB7545F00A79305 /* Content.swift in Sources */,
 				2CD11A9B1CB7545F00A79305 /* Canvas.swift in Sources */,
 				2C88A3731C50EBE700C6D687 /* CTAPreviewCanvasController.swift in Sources */,
@@ -2243,6 +2270,7 @@
 				665509EB1D18D935005146B5 /* CTATimeProtocol.swift in Sources */,
 				2CB322321C4533E200BD06F5 /* CTAPublishesCell.swift in Sources */,
 				2CD418F91D12A06700DDAAE4 /* LikersAction.swift in Sources */,
+				66F4D44C1D24E28100587A54 /* CTACommentRequestAPI.swift in Sources */,
 				2C85F81F1CC3273500C7186C /* CurlAnimation.swift in Sources */,
 				2C5378381C5C71BB004BCF40 /* CTATabView.swift in Sources */,
 				2C7C27DE1C58B83F00975D4A /* CTABarItemView.swift in Sources */,
