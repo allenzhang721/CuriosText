@@ -37,8 +37,6 @@ class CTAHomePublishesCell: UICollectionViewCell{
     
     var isLoadComplete:Bool = false
     
-    var isPlayed:Bool = false
-    
     var loadViewTask:Task?
     
     var loadCompeteHandler:(() -> Void)?
@@ -98,18 +96,20 @@ class CTAHomePublishesCell: UICollectionViewCell{
         self.publishModel = nil
         self.isLoadComplete = false
         self.loadCompeteHandler = nil
-        self.isPlayed = false
         self.delegate = nil
     }
     
     func playAnimation(){
         if self.isLoadComplete{
-            if !self.isPlayed{
-                self.previewView.playAnimation()
-                self.isPlayed = true
-            }
+            self.previewView.playAnimation()
         }else {
             self.loadCompeteHandler = self.playAnimation
+        }
+    }
+    
+    func stopAnimation(){
+        if self.isLoadComplete{
+            self.previewView.stopAnimation();
         }
     }
     

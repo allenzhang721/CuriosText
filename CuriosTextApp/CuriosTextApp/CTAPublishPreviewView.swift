@@ -272,7 +272,7 @@ class CTAPublishPreviewView: UIView, CTAImageControllerProtocol{
     
     func pauseAnimation(){
         if self.isLoadComplete{
-            if self.publishModel != nil {
+            if self.publishModel != nil && self.isPlaying{
                 if self.isPlaying {
                     self.previewView.pause()
                 }
@@ -285,7 +285,7 @@ class CTAPublishPreviewView: UIView, CTAImageControllerProtocol{
     
     func stopAnimation(){
         if self.isLoadComplete{
-            if self.publishModel != nil {
+            if self.publishModel != nil && self.isPlaying{
                 self.previewView.ready()
                 self.isPlaying = false
                 self.isPause = false

@@ -475,10 +475,12 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
             let min = bounds.height/2 - bounds.width/2
             let max = bounds.height/2 + bounds.width/2
             let maxRect = CGRect(x: 0, y: min, width: bounds.width, height: (max-min))
-            let cellRect = CGRect(x: 10, y: cellY, width: bounds.width-10, height: cellFrame.height)
+            let cellRect = CGRect(x: 10, y: cellY + 25, width: bounds.width-10, height: cellFrame.height - 100)
             let publishCell = (cell as! CTAHomePublishesCell)
             if maxRect.intersects(cellRect){
                 publishCell.playAnimation()
+            }else {
+                publishCell.stopAnimation()
             }
         }
     }

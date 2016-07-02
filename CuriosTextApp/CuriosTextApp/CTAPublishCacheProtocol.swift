@@ -12,22 +12,12 @@ import SwiftyJSON
 protocol CTAPublishCacheProtocol{
     func savePublishArray(baseRequest:CTABaseRequest, modelArray:Array<CTAPublishModel>)
     func getPublishArray(baseRequest:CTABaseRequest)->Array<CTAPublishModel>?
+    
+    func saveUserDetail(baseRequest:CTABaseRequest, userDetail:CTAViewUserModel)
+    func getUserDetail(baseRequest:CTABaseRequest) -> CTAViewUserModel?
 }
 
 extension CTAPublishCacheProtocol {
-    
-    func getRequestURL(baseRequest:CTABaseRequest) -> String{
-        let requestUrl = buildRequestUrl(baseRequest)
-        let parament = baseRequest.parameter()
-        var newParment:String = ""
-        for character in parament.characters {
-            if character != "\"" {
-                newParment = newParment+String(stringInterpolationSegment: character)
-            }
-        }
-        let dataURL = requestUrl+"?data="+newParment
-        return dataURL
-    }
     
     func savePublishArray(baseRequest:CTABaseRequest, modelArray:Array<CTAPublishModel>){
         let dataURL = self.getRequestURL(baseRequest)
@@ -63,6 +53,44 @@ extension CTAPublishCacheProtocol {
             }
         }
         return modelArray
+    }
+    
+    func saveUserDetail(baseRequest:CTABaseRequest, userDetail:CTAViewUserModel){
+        let dataURL = self.getRequestURL(baseRequest)
+        let dir:[String: AnyObject] = userDetail.getData()
+        let data = try? NSJSONSerialization.dataWithJSONObject(dir, options: NSJSONWritingOptions(rawValue: 0))
+        if data != nil{
+            BlackCatManager.init().storeData(data!, byURL: dataURL) { (result) -> () in
+            }
+        }
+    }
+    
+    func getUserDetail(baseRequest:CTABaseRequest) -> CTAViewUserModel?{
+        let dataURL = self.getRequestURL(baseRequest)
+        var model:CTAViewUserModel? = nil
+        BlackCatManager.init().retriveDataForURL(dataURL) { (data) -> () in
+            if data != nil {
+                let dic = try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(rawValue: 0)) as! [String: AnyObject]
+                let json:JSON = JSON(dic!)
+                if json != nil {
+                    model = CTAViewUserModel.generateFrom(json)
+                }
+            }
+        }
+        return model
+    }
+    
+    func getRequestURL(baseRequest:CTABaseRequest) -> String{
+        let requestUrl = buildRequestUrl(baseRequest)
+        let parament = baseRequest.parameter()
+        var newParment:String = ""
+        for character in parament.characters {
+            if character != "\"" {
+                newParment = newParment+String(stringInterpolationSegment: character)
+            }
+        }
+        let dataURL = requestUrl+"?data="+newParment
+        return dataURL
     }
     
     func getDicString(dic: AnyObject, errorMessage:String) ->String{
