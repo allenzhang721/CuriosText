@@ -10,6 +10,9 @@ import UIKit
 
 class CTASelectorFiltersCell: CTASelectorCell {
     
+    var target: AnyObject?
+    var action: Selector?
+    var filterManager: FilterManager?
     var image: UIImage?
     
     private var collectionView: UICollectionView!
@@ -35,12 +38,27 @@ class CTASelectorFiltersCell: CTASelectorCell {
         view.dataSource = self
         view.delegate = self
     }
+    
+    //TODO: Reload Data with preview image -- Emiaostein, 6/30/16, 17:38
+    func update(image: UIImage?) {
+        
+    }
+    
+    override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
+        
+        self.target = target
+        self.action = action
+    }
+    override func removeAllTarget() {
+        target = nil
+        action = nil
+    }
 }
 
 extension CTASelectorFiltersCell: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 100
+        return filterManager?.filters.count ?? 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -52,14 +70,55 @@ extension CTASelectorFiltersCell: UICollectionViewDataSource {
             cell.contentView.addSubview(imgView)
         }
         
-        if let imgView = cell.contentView.viewWithTag(1000) as? UIImageView {
-            imgView.image = image
-            imgView.backgroundColor = UIColor.redColor()
+        if let imgView = cell.contentView.viewWithTag(1000) as? UIImageView, let filter = filterManager?.filters[indexPath.item] {
+            let ID = filter.assetIdentifier
+            cell.restorationIdentifier = ID
+            if let img = filter.image {
+               imgView.image = img
+            } else {
+                if let data = filter.data {
+                    if let image = image {
+                        filter.createImage(from: image, complation: {[weak cell] (img) in
+                            dispatch_async(dispatch_get_main_queue(), { 
+                                if cell?.restorationIdentifier == ID {
+                                    (cell?.viewWithTag(1000) as! UIImageView).image = img
+                                }
+                            })
+                        })
+                    }
+                } else {
+                    let bundle = NSBundle.mainBundle().bundleURL
+                    if let image = image {
+                        let ID = filter.assetIdentifier
+                        cell.restorationIdentifier = ID
+                       filter.createData(fromColorDirAt: bundle, filtering: image, complation: { [weak cell] (filteredIamge) in
+                        dispatch_async(dispatch_get_main_queue(), {
+                            if cell?.restorationIdentifier == ID {
+                                (cell?.viewWithTag(1000) as! UIImageView).image = filteredIamge
+                            }
+                        })
+                       })
+                    }
+                }
+            }
         }
         
         return cell
     }
+}
+
+extension CTASelectorFiltersCell: UICollectionViewDelegate {
     
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        if let filter = filterManager?.filters[indexPath.item] {
+            let name = filter.name
+            
+            if let target = target, action = action {
+                target.performSelector(action, withObject: name)
+            }
+        }
+    }
 }
 
 extension CTASelectorFiltersCell: UICollectionViewDelegateFlowLayout {

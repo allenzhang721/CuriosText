@@ -29,5 +29,197 @@
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CuriosTextApp/FIlterItem.swift"
+            timestampString = "489057758.33557"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "createData(fromColorDirAt:filtering:complation:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CuriosTextApp/EditViewController.swift"
+            timestampString = "489297290.426269"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "649"
+            endingLineNumber = "649"
+            landmarkName = "beganGeneratePublishIconAndPublishWith(_:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CuriosTextApp.EditViewController.(beganGeneratePublishIconAndPublishWith (CuriosTextApp.CTAPage) -&gt; ()).(closure #1).(closure #1)"
+                  moduleName = "CuriosTextApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/EditViewController.swift"
+                  timestampString = "489298113.342483"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "650"
+                  endingLineNumber = "650"
+                  offsetFromSymbolStart = "1372">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CuriosTextApp.EditViewController.(beganGeneratePublishIconAndPublishWith (CuriosTextApp.CTAPage) -&gt; ()).(closure #1).(closure #1).(closure #1)"
+                  moduleName = "CuriosTextApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/EditViewController.swift"
+                  timestampString = "489298113.342914"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "650"
+                  endingLineNumber = "650"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CuriosTextApp/EditViewController.swift"
+            timestampString = "489297290.426269"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "642"
+            endingLineNumber = "642"
+            landmarkName = "beganGeneratePublishIconAndPublishWith(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CuriosTextApp/Document/CTADocument.swift"
+            timestampString = "489293905.510995"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
+            landmarkName = "storeResource(_:withName:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CuriosTextApp.CTADocument.storeResource (__ObjC.NSData, withName : Swift.String) -&gt; Swift.String"
+                  moduleName = "CuriosTextApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/Document/CTADocument.swift"
+                  timestampString = "489289385.615194"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "106"
+                  endingLineNumber = "106"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CuriosTextApp.CTADocument.storeResource (__ObjC.NSData, withName : Swift.String) -&gt; Swift.String"
+                  moduleName = "CuriosTextApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Emiaostein/Documents/GitHub/Projects/CuriosText/CuriosTextApp/CuriosTextApp/Document/CTADocument.swift"
+                  timestampString = "489289385.615395"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "106"
+                  endingLineNumber = "106"
+                  offsetFromSymbolStart = "460">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CuriosTextApp/EditViewController.swift"
+            timestampString = "489297290.426269"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "666"
+            endingLineNumber = "666"
+            landmarkName = "beganGeneratePublishIconAndPublishWith(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CuriosTextApp/Document/CTADocument.swift"
+            timestampString = "489293510.722602"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "contentsForType(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CuriosTextApp/EditViewController.swift"
+            timestampString = "489297290.426269"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "647"
+            endingLineNumber = "647"
+            landmarkName = "beganGeneratePublishIconAndPublishWith(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CuriosTextApp/Document/CTADocument.swift"
+            timestampString = "489294174.475542"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
+            landmarkName = "storeResource(_:withName:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

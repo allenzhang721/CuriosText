@@ -39,6 +39,9 @@
 		2C1B88A61C5F36A9000403FD /* CTASearchCountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B88A51C5F36A9000403FD /* CTASearchCountryViewController.swift */; };
 		2C1B88AB1C5F371A000403FD /* CTAAlertProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B88AA1C5F371A000403FD /* CTAAlertProtocol.swift */; };
 		2C1B88AD1C5F3741000403FD /* CTASMSVerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B88AC1C5F3741000403FD /* CTASMSVerifyViewController.swift */; };
+		2C1CB3BD1D26689A00C7A59E /* Ludwig.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CB3BA1D26689A00C7A59E /* Ludwig.JPG */; };
+		2C1CB3BE1D26689A00C7A59E /* Gingham.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CB3BB1D26689A00C7A59E /* Gingham.JPG */; };
+		2C1CB3BF1D26689A00C7A59E /* Clarendon.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CB3BC1D26689A00C7A59E /* Clarendon.JPG */; };
 		2C1F01581C3BD5960033CED8 /* CTASelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1F01571C3BD5960033CED8 /* CTASelectorCell.swift */; };
 		2C1F015A1C3BD7400033CED8 /* CTASelectorSizeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */; };
 		2C1F015C1C3CE3770033CED8 /* CTACanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1F015B1C3CE3770033CED8 /* CTACanvasCell.swift */; };
@@ -230,6 +233,8 @@
 		2CC9307F1C7464D000FB02A9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC9307E1C7464D000FB02A9 /* AVFoundation.framework */; };
 		2CCBE4961C870AA4001E1CD8 /* CTAShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCBE4951C870AA4001E1CD8 /* CTAShareView.swift */; };
 		2CCD94DC1C43B4AA001E5D08 /* CTATextSpacingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */; };
+		2CCE5E3D1D26540B00D70BA1 /* Be.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2CCE5E3C1D26540B00D70BA1 /* Be.JPG */; };
+		2CCE5E3F1D26572C00D70BA1 /* FilterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCE5E3E1D26572C00D70BA1 /* FilterManager.swift */; };
 		2CCFD54B1CE49CAC00D58043 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CCFD54D1CE49CAC00D58043 /* Share.storyboard */; };
 		2CD08F5D1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD08F5C1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift */; };
 		2CD11A9A1CB7545F00A79305 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD11A8D1CB7545F00A79305 /* Animation.swift */; };
@@ -416,6 +421,9 @@
 		2C1B88A51C5F36A9000403FD /* CTASearchCountryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASearchCountryViewController.swift; sourceTree = "<group>"; };
 		2C1B88AA1C5F371A000403FD /* CTAAlertProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAlertProtocol.swift; sourceTree = "<group>"; };
 		2C1B88AC1C5F3741000403FD /* CTASMSVerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASMSVerifyViewController.swift; sourceTree = "<group>"; };
+		2C1CB3BA1D26689A00C7A59E /* Ludwig.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Ludwig.JPG; sourceTree = "<group>"; };
+		2C1CB3BB1D26689A00C7A59E /* Gingham.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Gingham.JPG; sourceTree = "<group>"; };
+		2C1CB3BC1D26689A00C7A59E /* Clarendon.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Clarendon.JPG; sourceTree = "<group>"; };
 		2C1F01571C3BD5960033CED8 /* CTASelectorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorCell.swift; sourceTree = "<group>"; };
 		2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorSizeCell.swift; sourceTree = "<group>"; };
 		2C1F015B1C3CE3770033CED8 /* CTACanvasCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACanvasCell.swift; sourceTree = "<group>"; };
@@ -630,6 +638,8 @@
 		2CC9307E1C7464D000FB02A9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		2CCBE4951C870AA4001E1CD8 /* CTAShareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAShareView.swift; sourceTree = "<group>"; };
 		2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATextSpacingView.swift; sourceTree = "<group>"; };
+		2CCE5E3C1D26540B00D70BA1 /* Be.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Be.JPG; sourceTree = "<group>"; };
+		2CCE5E3E1D26572C00D70BA1 /* FilterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterManager.swift; sourceTree = "<group>"; };
 		2CCFD54C1CE49CAC00D58043 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Share.storyboard; sourceTree = "<group>"; };
 		2CCFD54F1CE49CC700D58043 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Share.strings; sourceTree = "<group>"; };
 		2CCFD5511CE49CCC00D58043 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Share.strings"; sourceTree = "<group>"; };
@@ -1001,6 +1011,10 @@
 			isa = PBXGroup;
 			children = (
 				2CDDF5001C5F3B860019FC83 /* CuriosTextApp-Bridging-Header.h */,
+				2CCE5E3C1D26540B00D70BA1 /* Be.JPG */,
+				2C1CB3BA1D26689A00C7A59E /* Ludwig.JPG */,
+				2C1CB3BB1D26689A00C7A59E /* Gingham.JPG */,
+				2C1CB3BC1D26689A00C7A59E /* Clarendon.JPG */,
 				2CB175B71CF8432100819825 /* Templates */,
 				2C81B59E1C58B10600AE16E0 /* Gobal */,
 				2C7AD3A61CF6AFD0009AEDA8 /* Moduler */,
@@ -1559,6 +1573,7 @@
 		2CD4DC161CA4E7FB00790A55 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2CCE5E3E1D26572C00D70BA1 /* FilterManager.swift */,
 				2C655B511D2104F2009E45F2 /* Filter.swift */,
 				2C655B551D21172B009E45F2 /* FIlterItem.swift */,
 				2CC1C9401C58D36800844A33 /* CTABarItemsFactory.swift */,
@@ -1822,14 +1837,17 @@
 				2C610A401C902C0B00DFE315 /* Photo.storyboard in Resources */,
 				2C610A391C902BF100DFE315 /* Camera.storyboard in Resources */,
 				2C32BD561C4CB89100788A97 /* Localizable.strings in Resources */,
+				2CCE5E3D1D26540B00D70BA1 /* Be.JPG in Resources */,
 				2CCFD54B1CE49CAC00D58043 /* Share.storyboard in Resources */,
 				2C9307B51CF2E34600D0E5F6 /* About.storyboard in Resources */,
 				2C7AD3B61CF6BF33009AEDA8 /* Templates.storyboard in Resources */,
+				2C1CB3BE1D26689A00C7A59E /* Gingham.JPG in Resources */,
 				2C567A691C5CBAF200F11369 /* Countries.plist in Resources */,
 				2C1A121F1CE014FD0071BD35 /* WeiboSDK.bundle in Resources */,
 				2C610A2B1C902B0300DFE315 /* Editor.storyboard in Resources */,
 				2CF4B7D11CBBA58F009B12C3 /* Fonts in Resources */,
 				2C2B45B21C5CC077004A4809 /* SupportCountryZone in Resources */,
+				2C1CB3BF1D26689A00C7A59E /* Clarendon.JPG in Resources */,
 				2CE063ED1C857D2F001F7F4E /* ImageCrop.storyboard in Resources */,
 				2C3CAD2C1C21828200D8DE4B /* 2.jpg in Resources */,
 				2C65B6681C4F514D007B4DEA /* Preview.storyboard in Resources */,
@@ -1844,6 +1862,7 @@
 				2C3B33CF1C1176D000738166 /* Main.storyboard in Resources */,
 				2C655B541D2114FD009E45F2 /* Assets.xcassets in Resources */,
 				2CDDE64F1CE18BED00B6E6A9 /* animation.gif in Resources */,
+				2C1CB3BD1D26689A00C7A59E /* Ludwig.JPG in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2271,6 +2290,7 @@
 				2C9706C71C1E6FE100FA2E17 /* CTAUserDomain.swift in Sources */,
 				2CD11AB11CB7547500A79305 /* AniCanvasView.swift in Sources */,
 				2CD11AA01CB7545F00A79305 /* ContainerLayout.swift in Sources */,
+				2CCE5E3F1D26572C00D70BA1 /* FilterManager.swift in Sources */,
 				2C3CAD181C21825900D8DE4B /* CTAImageElement.swift in Sources */,
 				2C6C68031C350B4400CCE81C /* CTAScollBarCell.swift in Sources */,
 				2C7A95191C3A507A005B0EAE /* CTAHomeViewController.swift in Sources */,

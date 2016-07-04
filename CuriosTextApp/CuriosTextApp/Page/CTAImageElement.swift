@@ -12,22 +12,27 @@ final class CTAImgElement: NSObject, NSCoding {
     
     struct ImgElementKey {
         static let imageName = "imageName"
+        static let filterName = "filterName"
     }
     
     private let imageName: String
+    private var filterName: String = ""
     
     init?(coder aDecoder: NSCoder) {
         imageName = aDecoder.decodeObjectForKey(ImgElementKey.imageName) as! String
+        filterName = aDecoder.decodeObjectForKey(ImgElementKey.filterName) as? String ?? ""
 
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(imageName, forKey: ImgElementKey.imageName)
+        aCoder.encodeObject(filterName, forKey: ImgElementKey.filterName)
     }
     
     // TODO: need ImgElement init parameter -- Emiaostein, 15/02/16, 14:31
-    init(imageName: String) {
+    init(imageName: String, filterName: String = "") {
         self.imageName = imageName
+        self.filterName = filterName
         super.init()
     }
 }

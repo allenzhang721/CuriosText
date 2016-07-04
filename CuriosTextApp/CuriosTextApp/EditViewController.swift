@@ -27,6 +27,8 @@ class EditViewController: UIViewController {
     private weak var tabViewController: CTATabViewController!
     private weak var canvasViewController: CTACanvasViewController!
     private weak var selectorViewController: CTASelectorsViewController!
+    private weak var filter: FilterItem?
+    private let filterManager = FilterManager()
     private var selectedIndexPath: NSIndexPath?
     var document: CTADocument!
     var tempValues = TempValues()
@@ -68,6 +70,8 @@ class EditViewController: UIViewController {
         
 //        view.backgroundColor = CTAStyleKit.ediorBackgroundColor
         
+        filterManager.loadDefaultFilters() // load default filters
+        
         let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
         
         let cleanPage = page.cleanEmptyContainers()
@@ -81,9 +85,9 @@ class EditViewController: UIViewController {
 //                dispatch_async(dispatch_get_main_queue(), { 
                 
 //                    strongSelf.selectorViewController.snapImage = image
-                let hex = backgrounColor.toHex().0
-                strongSelf.page.changeBackColor(hex)
-                strongSelf.canvasViewController.changeBackgroundColor(backgrounColor)
+//                let hex = backgrounColor.toHex().0
+//                strongSelf.page.changeBackColor(hex)
+//                strongSelf.canvasViewController.changeBackgroundColor(backgrounColor)
                     let image = strongSelf.insertImage(image, size: image.size)
 //                strongSelf.selectorViewController.snapImage = image
                 
@@ -92,11 +96,11 @@ class EditViewController: UIViewController {
                     switch previewR {
                     case .Success(let img):
                         dispatch_async(dispatch_get_main_queue(), {
-                            strongSelf.selectorViewController.updateSnapshotImage(img)
+                            self?.selectorViewController.updateSnapshotImage(img)
                             
                         })
                     default:
-                        strongSelf.selectorViewController.updateSnapshotImage(image)
+                        self?.selectorViewController.updateSnapshotImage(image)
                     }
                 }
                     cameraVC?.removeFromParentViewController()
@@ -135,6 +139,7 @@ class EditViewController: UIViewController {
             
         case let vc as CTASelectorsViewController:
             selectorViewController = vc
+            selectorViewController.filterManager = filterManager
             selectorViewController.dataSource = self
             selectorViewController.delegate = self
         default:
@@ -154,16 +159,16 @@ class EditViewController: UIViewController {
     
     // MARK: - Gestures
     private func addGestures() {
-        let pan = UIPanGestureRecognizer(target: self, action: "pan:")
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(EditViewController.pan(_:)))
         canvasViewController.view.addGestureRecognizer(pan)
         
-        let rotation = UIRotationGestureRecognizer(target: self, action: "rotation:")
+        let rotation = UIRotationGestureRecognizer(target: self, action: #selector(EditViewController.rotation(_:)))
         canvasViewController.view.addGestureRecognizer(rotation)
         
-        let pinch = UIPinchGestureRecognizer(target: self, action: "pinch:")
+        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(EditViewController.pinch(_:)))
         canvasViewController.view.addGestureRecognizer(pinch)
         
-        let doubleTap = UITapGestureRecognizer(target: self, action: "doubleTap:")
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(EditViewController.doubleTap(_:)))
         doubleTap.numberOfTapsRequired = 2
         canvasViewController.view.addGestureRecognizer(doubleTap)
     }
@@ -245,7 +250,7 @@ extension EditViewController {
         preController.canvas = preCanvas
         let retriver = {[weak self] (name: String,  handler: (String, UIImage?) -> ()) in
             if let sf = self {
-                let data = sf.document.resourceBy(name)
+                let data = sf.document.cacheResourceBy(name)
                 let image = data == nil ? nil : UIImage(data: data!)
                 handler(name, image)
             }
@@ -390,7 +395,7 @@ extension EditViewController {
             }
             
             let tolerant = 5.0 / 180.0 * CGFloat(M_PI)
-            let tolerant180 = CGFloat(2 * M_PI)
+//            let tolerant180 = CGFloat(2 * M_PI)
             let target0 = fabs(nextRotation - 0)
             let target45 = fabs(nextRotation - 45.0 / 180.0 * CGFloat(M_PI))
             let target90 = fabs(nextRotation - 90.0 / 180.0 * CGFloat(M_PI))
@@ -516,34 +521,46 @@ extension EditViewController {
             
             cameraVC.didSelectedImageHandler = {[weak self] (image, backgroundColor) in
                 if let strongSelf = self {
-//                    dispatch_async(dispatch_get_main_queue(), {
+                    dispatch_async(dispatch_get_main_queue(), {
                     let hex = backgroundColor.toHex().0
                     strongSelf.page.changeBackColor(hex)
                     strongSelf.canvasViewController.changeBackgroundColor(backgroundColor)
                     
                         let canvasSize = strongSelf.canvasViewController.view.bounds.size
                         (container as! ImageContainerVMProtocol).updateWithImageSize(image!.size, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
-                        
-                        strongSelf.document.storeResource(compressJPGImage(image!), withName: (container as! ImageContainerVMProtocol).imageElement!.resourceName)
-                        
-                        
-                        strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
+                    
+                    let name = (container as! ImageContainerVMProtocol).imageElement!.resourceName
+                        let data = compressJPGImage(image!)
+                        strongSelf.document.storeResource(data, withName: name)
+                    
+                        if let f = strongSelf.filter {
+                            
+                            f.createImage(from: UIImage(data: data)!, complation: { (filteredImage) in
+                                strongSelf.document.storeCacheResource(UIImageJPEGRepresentation(filteredImage, 1)!, withName: name)
+                                dispatch_async(dispatch_get_main_queue(), { 
+                                    
+                                    strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
+                                })
+                            })
+                        } else {
+                            strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
+                        }
                     
                     draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.imageBy ,local: true) { [weak self] (previewR) in
                         
                         switch previewR {
                         case .Success(let img):
                             dispatch_async(dispatch_get_main_queue(), {
-                                strongSelf.selectorViewController.updateSnapshotImage(img)
+                                self?.selectorViewController.updateSnapshotImage(img)
                             })
                         default:
                             dispatch_async(dispatch_get_main_queue(), { 
-                                strongSelf.selectorViewController.updateSnapshotImage(image)
+                                self?.selectorViewController.updateSnapshotImage(image)
                             })
                         }
                     }
                         
-//                    })
+                    })
                     strongSelf.dismissViewControllerAnimated(false, completion: nil)
                 }
             }
@@ -568,7 +585,7 @@ extension EditViewController {
         publishViewController.publishID = CTADocumentManager.openedDocumentPublishID!
         let retriver = {[weak self] (name: String,  handler: (String, UIImage?) -> ()) in
             if let sf = self {
-                let data = sf.document.resourceBy(name)
+                let data = sf.document.cacheResourceBy(name)
                 let image = data == nil ? nil : UIImage(data: data!)
                 handler(name, image)
             }
@@ -599,6 +616,8 @@ extension EditViewController {
     
     func beganGeneratePublishIconAndPublishWith(aPage: CTAPage) {
         
+        
+        
         draw(aPage, atBegan: true, baseURL: document.imagePath, imageAccess: document.imageBy ,local: true) { [weak self] (r) in
             guard let strongSelf = self else { return }
             
@@ -625,6 +644,8 @@ extension EditViewController {
                     
                     let publishName = CTAIDGenerator.fileID() + ".jpg"
                     sf.document.storeResource(compressJPGImage(image, maxWidth: 640.00, needScale: true), withName: publishName)
+                    
+                    sf.document.replaceOriginResourceIfNeed()
                     
                     CTADocumentManager.saveDoucment {[weak self] (success) -> Void in
                         
@@ -787,7 +808,7 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
     
     // MARK: - Delegate
     func canvasViewController(viewCOntroller: CTACanvasViewController, didSelectedIndexPath indexPath: NSIndexPath) {
-        var hadSelected = selectedContainer != nil ? true : false
+        let hadSelected = selectedContainer != nil ? true : false
         let preType = selectorViewController.currentType
         let preCon = selectedContainer?.type
         selectedIndexPath = indexPath
@@ -995,6 +1016,30 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
 //        selectBottomContainer()
     }
     
+    // MARK: - Filter Changed
+    func filterDidChanged(filterName: String) {
+        if let filter = (filterManager.filters.filter{$0.name == filterName}).first {
+            self.filter = filter
+            guard
+                let selectedIndexPath = selectedIndexPath,
+                let container = selectedContainer as? ImageContainerVMProtocol,
+                let imgElement = container.imageElement,
+            let imageData = document.resourceBy(imgElement.resourceName),
+            let image = UIImage(data:imageData) else {
+                    return
+            }
+            let name = imgElement.resourceName
+            filter.createImage(from: image, complation: {[weak self] (filteredImage) in
+                self?.document.storeCacheResource(UIImageJPEGRepresentation(filteredImage, 1)!, withName: name)
+                dispatch_async(dispatch_get_main_queue(), { 
+                    self?.canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+                })
+            })
+        } else {
+            self.filter = nil
+        }
+    }
+    
     
     // MARK: - Animation Changed
     func animationDurationDidChanged(t: CGFloat) {
@@ -1020,7 +1065,6 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             }
             
             if let animation = strongSelf.animation, let index = (strongSelf.page.animationBinders.indexOf {$0.iD == animation.iD}) {
-                let id = animation.targetiD
                 strongSelf.page.removeAnimationAtIndex(index) {
                     completedBlock?()
                 }

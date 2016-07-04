@@ -11,29 +11,29 @@ import UIKit
 
 private let queue = dispatch_queue_create("com.botai.curiosText.Filter.Queue", DISPATCH_QUEUE_CONCURRENT)
 
-class FilterItem: NSObject, NSCoding {
+class FilterItem: NSObject {
     let name: String
-    let data: NSData
+    var data: NSData?
     private(set) var assetIdentifier: String
     private(set) var image: UIImage?
     
-    init(name: String, data: NSData) {
+    init(name: String, data: NSData?) {
         self.name = name
         self.data = data
         self.assetIdentifier = NSUUID().UUIDString.characters.split("-").map{String($0)}.reduce("", combine:{$0+$1})
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        self.name = aDecoder.decodeObjectForKey("name") as! String
-        self.data = aDecoder.decodeObjectForKey("data") as! NSData
-        self.assetIdentifier = aDecoder.decodeObjectForKey("ID") as! String
-    }
-    
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(name, forKey: "name")
-        aCoder.encodeObject(data, forKey: "data")
-        aCoder.encodeObject(assetIdentifier, forKey: "ID")
-    }
+//    required init?(coder aDecoder: NSCoder) {
+//        self.name = aDecoder.decodeObjectForKey("name") as! String
+//        self.data = aDecoder.decodeObjectForKey("data") as! NSData
+//        self.assetIdentifier = aDecoder.decodeObjectForKey("ID") as! String
+//    }
+//    
+//    func encodeWithCoder(aCoder: NSCoder) {
+//        aCoder.encodeObject(name, forKey: "name")
+//        aCoder.encodeObject(data, forKey: "data")
+//        aCoder.encodeObject(assetIdentifier, forKey: "ID")
+//    }
     
     func cleanImage() {
         image = nil
@@ -42,9 +42,9 @@ class FilterItem: NSObject, NSCoding {
     func createImage(from img: UIImage, complation:(UIImage) -> ()) {
         let ciimage = CIImage(image: img)
         dispatch_async(queue) { [weak self] in
-            guard let sf = self else {return}
+            guard let sf = self, let data = sf.data else {return}
             let img2 = Filter()
-                .colorLUT(colorTableData: sf.data, dimension: 64)
+                .colorLUT(colorTableData: data, dimension: 64)
                 .start(byImage: ciimage!)
                 .tocgImage()
             dispatch_async(dispatch_get_main_queue(), {[weak self] in
@@ -52,6 +52,24 @@ class FilterItem: NSObject, NSCoding {
                 sf.image = UIImage(CGImage: img2)
                 complation(sf.image!)
             })
+        }
+    }
+    
+    func createData(fromColorDirAt url: NSURL, filtering image: UIImage, complation:(UIImage) -> ()) {
+        
+        let cacheURL = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).first!
+        let dataCache = cacheURL.URLByAppendingPathComponent("\(name)")
+        if NSFileManager.defaultManager().fileExistsAtPath(dataCache.path!) {
+            let data = NSData(contentsOfURL: dataCache)
+            self.data = data
+            createImage(from: image, complation: complation)
+        } else {
+            let imgURL = url.URLByAppendingPathComponent("\(name).JPG")
+            if let img = UIImage(contentsOfFile: imgURL.path!)?.CGImage, data = Filter.colorLUTData(byImage: img, dimensiton: 64) {
+                self.data = data
+                data.writeToURL(dataCache, atomically: true)
+                createImage(from: image, complation: complation)
+            }
         }
     }
 }
