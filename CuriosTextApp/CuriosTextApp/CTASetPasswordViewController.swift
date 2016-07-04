@@ -32,7 +32,7 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
     
     var confirmTextinput:UITextField!
     
-    var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
+    var loadingImageView:UIImageView? = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     
     var userModel:CTAUserModel?
     
@@ -40,10 +40,6 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
     var resetAreaCode:String = ""
     
     var setPasswordType:CTASetPasswordType = .register
-    
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,63 +70,62 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         let tap = UITapGestureRecognizer(target: self, action: #selector(CTASetPasswordViewController.bgViewClick(_:)))
         self.view.addGestureRecognizer(tap)
     
-        self.backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
+        self.backButton = UIButton(frame: CGRect(x: 0, y: 22, width: 40, height: 40))
         self.backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         self.backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
         self.backButton.addTarget(self, action: #selector(CTASetPasswordViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(self.backButton)
         
-        self.setPasswordTitle = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 60*self.getVerRate(), width: 100, height: 40))
-        self.setPasswordTitle.font = UIFont.systemFontOfSize(28)
-        self.setPasswordTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        self.setPasswordTitle = UILabel(frame: CGRect(x: 0, y: 60*self.getVerRate(), width: bouns.width, height: 40))
+        self.setPasswordTitle.font = UIFont.boldSystemFontOfSize(28)
+        self.setPasswordTitle.textColor = CTAStyleKit.normalColor
         self.setPasswordTitle.text = NSLocalizedString("SetPasswordTitle", comment: "")
-        self.setPasswordTitle.sizeToFit()
-        self.setPasswordTitle.frame.origin.x = (bouns.width - self.setPasswordTitle.frame.width)/2
+        self.setPasswordTitle.textAlignment = .Center
         self.view.addSubview(self.setPasswordTitle)
         
-        self.passwordTextinput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: 150*self.getVerRate(), width: 190*self.getHorRate(), height: 50))
+        self.passwordTextinput = UITextField(frame: CGRect(x:128*self.getHorRate(), y: 150*self.getVerRate(), width: 190*self.getHorRate(), height: 50))
         self.passwordTextinput.placeholder = NSLocalizedString("SetPasswordPlaceholder", comment: "")
         self.passwordTextinput.secureTextEntry = true
         self.passwordTextinput.clearsOnBeginEditing = true
         self.passwordTextinput.delegate = self
         self.passwordTextinput.returnKeyType = .Done
         self.view.addSubview(self.passwordTextinput)
-        self.passwordVisibleButton = UIButton.init(frame: CGRect.init(x: bouns.width - 27*self.getHorRate() - 20, y: self.passwordTextinput.frame.origin.y + 19, width: 20, height: 13))
+        self.passwordVisibleButton = UIButton(frame: CGRect(x: bouns.width - 27*self.getHorRate() - 20, y: self.passwordTextinput.frame.origin.y + 19, width: 20, height: 13))
         self.passwordVisibleButton.setImage(UIImage(named: "passwordhide-icon"), forState: .Normal)
         self.view.addSubview(self.passwordVisibleButton)
         self.passwordVisibleButton.addTarget(self, action: #selector(CTASetPasswordViewController.passwordVisibleClick(_:)), forControlEvents: .TouchUpInside)
-        let passwordLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.passwordTextinput.frame.origin.y + 12, width: 50, height: 25))
+        let passwordLabel = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: self.passwordTextinput.frame.origin.y + 12, width: 50, height: 25))
         passwordLabel.font = UIFont.systemFontOfSize(16)
-        passwordLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        passwordLabel.textColor = CTAStyleKit.normalColor
         passwordLabel.text = NSLocalizedString("PasswordLabel", comment: "")
         passwordLabel.sizeToFit()
         self.view.addSubview(passwordLabel)
-        var textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.passwordTextinput.frame.origin.y + 49, width: 330*self.getHorRate(), height: 1))
+        var textLine = UIImageView(frame: CGRect(x: 25*self.getHorRate(), y: self.passwordTextinput.frame.origin.y + 49, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "space-line")
         self.view.addSubview(textLine)
     
-        self.confirmTextinput = UITextField.init(frame: CGRect.init(x:128*self.getHorRate(), y: self.passwordTextinput.frame.origin.y + 50, width: 190*self.getHorRate(), height: 50))
+        self.confirmTextinput = UITextField(frame: CGRect(x:128*self.getHorRate(), y: self.passwordTextinput.frame.origin.y + 50, width: 190*self.getHorRate(), height: 50))
         self.confirmTextinput.placeholder = NSLocalizedString("ConfirmPasswordPlaceholder", comment: "")
         self.confirmTextinput.secureTextEntry = true
         self.confirmTextinput.clearsOnBeginEditing = true
         self.confirmTextinput.delegate = self
         self.confirmTextinput.returnKeyType = .Done
         self.view.addSubview(self.confirmTextinput)
-        let confirmLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.confirmTextinput.frame.origin.y + 12, width: 50, height: 25))
+        let confirmLabel = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: self.confirmTextinput.frame.origin.y + 12, width: 50, height: 25))
         confirmLabel.font = UIFont.systemFontOfSize(16)
-        confirmLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        confirmLabel.textColor = CTAStyleKit.normalColor
         confirmLabel.text = NSLocalizedString("ConfirmPasswordLabel", comment: "")
         confirmLabel.sizeToFit()
         self.view.addSubview(confirmLabel)
-        textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.confirmTextinput.frame.origin.y + 49, width: 330*self.getHorRate(), height: 1))
+        textLine = UIImageView(frame: CGRect(x: 25*self.getHorRate(), y: self.confirmTextinput.frame.origin.y + 49, width: 330*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "space-line")
         self.view.addSubview(textLine)
         
         
-        self.submitButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: self.confirmTextinput.frame.origin.y + 70, width: 40, height: 28))
+        self.submitButton = UIButton(frame: CGRect(x: (bouns.width - 40)/2, y: self.confirmTextinput.frame.origin.y + 70, width: 40, height: 28))
         self.submitButton.setTitle(NSLocalizedString("SubmitLabel", comment: ""), forState: .Normal)
-        self.submitButton.setTitleColor(UIColor.init(red: 239/255, green: 51/255, blue: 74/255, alpha: 1.0), forState: .Normal)
-        self.submitButton.setTitleColor(UIColor.init(red: 216/255, green: 216/255, blue: 216/255, alpha: 1.0), forState: .Disabled)
+        self.submitButton.setTitleColor(CTAStyleKit.selectedColor, forState: .Normal)
+        self.submitButton.setTitleColor(CTAStyleKit.disableColor, forState: .Disabled)
         self.submitButton.titleLabel?.font = UIFont.systemFontOfSize(20)
         self.submitButton.sizeToFit()
         self.submitButton.frame.origin.x = (bouns.width - self.submitButton.frame.width)/2

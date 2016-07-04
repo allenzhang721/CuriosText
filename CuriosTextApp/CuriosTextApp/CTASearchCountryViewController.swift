@@ -33,10 +33,6 @@ class CTASearchCountryViewController: UIViewController{
     var searchBar : UISearchBar!
     var selectedIndexPath: NSIndexPath?
     
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -77,24 +73,24 @@ class CTASearchCountryViewController: UIViewController{
     func initView(){
         let bouns = UIScreen.mainScreen().bounds
         self.searchArray = self.allCountryLocale
-        let searchLabel = UILabel.init(frame: CGRect.init(x: 0, y: 8, width: bouns.width, height: 28))
-        searchLabel.font = UIFont.systemFontOfSize(18)
-        searchLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        let searchLabel = UILabel(frame: CGRect(x: 0, y: 28, width: bouns.width, height: 28))
+        searchLabel.font = UIFont.boldSystemFontOfSize(18)
+        searchLabel.textColor = CTAStyleKit.normalColor
         searchLabel.text = NSLocalizedString("SearchLabel", comment: "")
         searchLabel.textAlignment = .Center
         self.view.addSubview(searchLabel)
         
-        let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
+        let backButton = UIButton(frame: CGRect(x: 0, y: 22, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
         backButton.addTarget(self, action: #selector(CTASearchCountryViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(backButton)
         
-        self.searchBar = UISearchBar.init(frame: CGRect.init(x: 0, y: 44, width: bouns.width, height: 50))
+        self.searchBar = UISearchBar(frame: CGRect(x: 0, y: 64, width: bouns.width, height: 50))
         self.searchBar.delegate = self
         self.view.addSubview(self.searchBar)
         
-        self.tableView = UITableView.init(frame: CGRect.init(x: 0, y: 94, width: bouns.width, height: bouns.height - 103))
+        self.tableView = UITableView(frame: CGRect(x: 0, y: 114, width: bouns.width, height: bouns.height - 103))
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.registerClass(CTASearchTabelCell.self, forCellReuseIdentifier: "ctasearchtabelcell")
@@ -116,7 +112,7 @@ class CTASearchCountryViewController: UIViewController{
             self.tableView.reloadData()
             self.searchBar.text = ""
             self.searchBar.showsCancelButton = false
-            self.searchBar.frame.origin.y = 44
+            self.searchBar.frame.origin.y = 64
             self.tableView.frame.origin.y = self.searchBar.frame.origin.y+self.searchBar.frame.height
         }
     }
@@ -250,7 +246,7 @@ extension CTASearchCountryViewController: UISearchBarDelegate{
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar){
         self.searchBar.showsCancelButton = true
-        self.searchBar.frame.origin.y = 0
+        self.searchBar.frame.origin.y = 20
         self.tableView.frame.origin.y = self.searchBar.frame.origin.y+self.searchBar.frame.height
     }
     
@@ -284,18 +280,18 @@ class CTASearchTabelCell: UITableViewCell{
     
     func reloadView(){
         if self.countryNameLabel == nil {
-            self.countryNameLabel = UILabel.init(frame: CGRect.init(x: 10, y: (self.contentView.frame.height - 25 )/2, width: self.contentView.frame.width, height: 25))
+            self.countryNameLabel = UILabel(frame: CGRect(x: 10, y: (self.contentView.frame.height - 25 )/2, width: self.contentView.frame.width, height: 25))
             self.contentView.addSubview(self.countryNameLabel)
             self.countryNameLabel.font = UIFont.systemFontOfSize(16)
-            self.countryNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+            self.countryNameLabel.textColor = CTAStyleKit.normalColor
         }
         self.countryNameLabel.text = self.countryZone!.displayName
         
         if self.countryCodeLabel == nil {
-            self.countryCodeLabel = UILabel.init(frame: CGRect.init(x: 10, y: (self.contentView.frame.height - 25 )/2, width: self.contentView.frame.width, height: 25))
+            self.countryCodeLabel = UILabel(frame: CGRect(x: 10, y: (self.contentView.frame.height - 25 )/2, width: self.contentView.frame.width, height: 25))
             self.contentView.addSubview(self.countryCodeLabel)
             self.countryCodeLabel.font = UIFont.systemFontOfSize(16)
-            self.countryCodeLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+            self.countryCodeLabel.textColor = CTAStyleKit.normalColor
         }
         self.countryCodeLabel.text = "+"+self.countryZone!.zoneCode
         self.countryCodeLabel.sizeToFit()
@@ -306,7 +302,7 @@ class CTASearchTabelCell: UITableViewCell{
 extension CTASearchCountryViewController: UIGestureRecognizerDelegate{
     
     func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if self.searchBar.frame.origin.y == 0 {
+        if self.searchBar.frame.origin.y == 20 {
             return false
         }
         return true

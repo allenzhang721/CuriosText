@@ -18,8 +18,9 @@ public class CTAStyleKit : NSObject {
 
     private struct Cache {
         static let normalColor: UIColor = UIColor(red: 0.29, green: 0.29, blue: 0.29, alpha: 1.000)
+        static let labelShowColor: UIColor = UIColor(red: 0.607, green: 0.607, blue: 0.607, alpha: 1.000)
         static let selectedColor: UIColor = UIColor(red: 0.937, green: 0.200, blue: 0.290, alpha: 1.000)
-        static let disableColor: UIColor = UIColor(red: 0.607, green: 0.607, blue: 0.607, alpha: 1.000)
+        static let disableColor: UIColor = UIColor(red: 0.847, green: 0.847, blue: 0.847, alpha: 1.000)
         static let ediorBackgroundColor: UIColor = UIColor(red: 0.827, green: 0.827, blue: 0.827, alpha: 1.000)
         static let commonBackgroundColor: UIColor = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1.000)
         static let lightGrayBackgroundColor: UIColor = UIColor(red: 0.945, green: 0.945, blue: 0.945, alpha: 1.000)
@@ -141,6 +142,7 @@ public class CTAStyleKit : NSObject {
     //// Colors
 
     public class var normalColor: UIColor { return Cache.normalColor }
+    public class var labelShowColor: UIColor { return Cache.labelShowColor }
     public class var selectedColor: UIColor { return Cache.selectedColor }
     public class var disableColor: UIColor { return Cache.disableColor }
     public class var ediorBackgroundColor: UIColor { return Cache.ediorBackgroundColor }

@@ -37,24 +37,19 @@ class CTAHomePublishesCell: UICollectionViewCell{
     
     var isLoadComplete:Bool = false
     
-    var isPlayed:Bool = false
-    
     var loadViewTask:Task?
     
     var loadCompeteHandler:(() -> Void)?
     
     func initView(){
-        self.previewView = CTAPublishPreviewView(frame: self.getViewSize())
+        self.previewView = CTAPublishPreviewView(frame: self.getViewRect())
         self.contentView.addSubview(self.previewView)
         self.previewView.animationEnable = true
         self.previewView.delegate = self
-        self.controllerView = CTAPublishControllerView(frame: CGRect(x: 0, y: self.getViewSize().height, width: self.getViewSize().width, height: 100))
+        self.controllerView = CTAPublishControllerView(frame: self.bounds)
         self.contentView.addSubview(self.controllerView)
         self.controllerView.delegate = self
         self.backgroundColor = CTAStyleKit.commonBackgroundColor
-        let textLine = UIImageView(frame: CGRect(x: 0, y: frame.size.height-1, width: frame.size.width, height: 1))
-        textLine.image = UIImage(named: "space-line")
-        self.contentView.addSubview(textLine)
     }
     
     func didSetPublishModel(){
@@ -70,6 +65,8 @@ class CTAHomePublishesCell: UICollectionViewCell{
         if !self.isLoadViewTask && !self.isLoadComplete{
             self.isLoadViewTask = true
             self.loadViewTask = delay(1.0){
+                cancel(self.loadViewTask)
+                self.loadViewTask = nil
                 if self.isLoadViewTask{
                     self.loadView()
                 }
@@ -99,34 +96,50 @@ class CTAHomePublishesCell: UICollectionViewCell{
         self.publishModel = nil
         self.isLoadComplete = false
         self.loadCompeteHandler = nil
-        self.isPlayed = false
         self.delegate = nil
     }
     
     func playAnimation(){
         if self.isLoadComplete{
-            if !self.isPlayed{
-                self.previewView.playAnimation()
-                self.isPlayed = true
-            }
+            self.previewView.playAnimation()
         }else {
             self.loadCompeteHandler = self.playAnimation
         }
     }
     
-    func getViewSize() -> CGRect{
-        let rect = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.width)
-        return rect
+    func stopAnimation(){
+        if self.isLoadComplete{
+            self.previewView.stopAnimation();
+        }
+    }
+    
+    func getViewRect() -> CGRect{
+        let rect = CGRect(x: 0, y: 50, width: frame.size.width, height: frame.size.width)
+        return rect;
+    }
+    
+    func changeLikeStatus(){
+        self.controllerView.changeLikeStatus()
+        if let model = self.publishModel{
+            if model.likeStatus == 1{
+                dispatch_async(dispatch_get_main_queue(), {
+                    let heartView = CTAHeartAnimationView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 100, height: 100)))
+                    heartView.center = self.previewView.center
+                    self.contentView.addSubview(heartView)
+                    heartView.playLikeAnimation(nil)
+                })
+            }
+        }
     }
 }
 
 protocol CTAHomePublishesCellDelegate {
-    func userIconTap(publishModel:CTAPublishModel?)
-    func likeListTap(publishModel:CTAPublishModel?)
-    func likeHandler(publishModel:CTAPublishModel?)
-    func commentHandler(publishModel:CTAPublishModel?)
-    func rebuildHandler(publishModel:CTAPublishModel?)
-    func moreHandler(publishModel:CTAPublishModel?)
+    func cellUserIconTap(cell:CTAHomePublishesCell?)
+    func cellLikeListTap(cell:CTAHomePublishesCell?)
+    func cellLikeHandler(cell:CTAHomePublishesCell?, justLike:Bool)
+    func cellCommentHandler(cell:CTAHomePublishesCell?)
+    func cellRebuildHandler(cell:CTAHomePublishesCell?)
+    func cellMoreHandler(cell:CTAHomePublishesCell?)
 }
 
 extension CTAHomePublishesCell: CTAPublishPreviewViewDelegate{
@@ -149,37 +162,37 @@ extension CTAHomePublishesCell: CTAPublishPreviewViewDelegate{
 extension CTAHomePublishesCell: CTAPublishControllerDelegate{
     func userIconTap(){
         if self.delegate != nil{
-            self.delegate?.userIconTap(self.publishModel)
+            self.delegate?.cellUserIconTap(self)
         }
     }
     
     func likeListTap(){
         if self.delegate != nil{
-            self.delegate?.likeListTap(self.publishModel)
+            self.delegate?.cellLikeListTap(self)
         }
     }
     
     func likeHandler(){
         if self.delegate != nil{
-            self.delegate?.likeHandler(self.publishModel)
+            self.delegate?.cellLikeHandler(self, justLike:false)
         }
     }
     
     func commentHandler(){
         if self.delegate != nil{
-            self.delegate?.commentHandler(self.publishModel)
+            self.delegate?.cellCommentHandler(self)
         }
     }
     
     func rebuildHandler(){
         if self.delegate != nil{
-            self.delegate?.rebuildHandler(self.publishModel)
+            self.delegate?.cellRebuildHandler(self)
         }
     }
     
     func moreHandler(){
         if self.delegate != nil{
-            self.delegate?.moreHandler(self.publishModel)
+            self.delegate?.cellMoreHandler(self)
         }
     }
 }

@@ -25,7 +25,7 @@ extension CTAPhoneProtocol where Self: UIViewController{
     func initPhoneView(){
         let bouns = UIScreen.mainScreen().bounds
 
-        self.countryNameLabel.frame = CGRect.init(x: 128*self.getHorRate(), y: 162*self.getVerRate(), width: 230*self.getHorRate(), height: 25)
+        self.countryNameLabel.frame = CGRect.init(x: 128*self.getHorRate(), y: 182*self.getVerRate(), width: 230*self.getHorRate(), height: 25)
         self.countryNameLabel.font = UIFont.systemFontOfSize(16)
         self.countryNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.countryNameLabel.userInteractionEnabled = true

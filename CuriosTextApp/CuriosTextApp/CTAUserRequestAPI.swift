@@ -8,13 +8,6 @@
 
 import Foundation
 
-class CTAUserIDRequest:CTABaseRequest {
-    
-    override func requestUrl() -> String {
-        return CTARequestUrl.GetUserID.description;
-    }
-}
-
 class CTALoginRequest: CTABaseRequest {
     let phone:String;
     let areaCode:String;
