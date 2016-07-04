@@ -1021,12 +1021,37 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
                     return
             }
             let name = imgElement.resourceName
-            filter.createImage(from: image, complation: {[weak self] (filteredImage) in
-                self?.document.storeCacheResource(UIImageJPEGRepresentation(filteredImage, 1)!, withName: name)
-                dispatch_async(dispatch_get_main_queue(), { 
-                    self?.canvasViewController.updateAt(selectedIndexPath, updateContents: true)
-                })
-            })
+//            filter.createImage(from: image, complation: {[weak self] (filteredImage) in
+//                self?.document.storeCacheResource(UIImageJPEGRepresentation(filteredImage, 1)!, withName: name)
+//                dispatch_async(dispatch_get_main_queue(), { 
+//                    self?.canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+//                })
+//            })
+            
+            if let data = filter.data {
+                    filter.createImage(from: image, complation: {[weak self, weak filter] (img) in
+                        
+                        dispatch_async(dispatch_get_main_queue(), {
+                                filter?.data = nil
+                            self?.document.storeCacheResource(UIImageJPEGRepresentation(img, 1)!, withName: name)
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self?.canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+                            })
+                        })
+                        })
+            } else {
+                let bundle = NSBundle.mainBundle().bundleURL
+                    filter.createData(fromColorDirAt: bundle, filtering: image, complation: { [weak self, weak filter] (filteredIamge) in
+                        dispatch_async(dispatch_get_main_queue(), {
+                                filter?.data = nil
+                            self?.document.storeCacheResource(UIImageJPEGRepresentation(filteredIamge, 1)!, withName: name)
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self?.canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+                            })
+                        })
+                        })
+            }
+            
         } else {
             self.filter = nil
         }

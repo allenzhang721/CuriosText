@@ -39,9 +39,6 @@
 		2C1B88A61C5F36A9000403FD /* CTASearchCountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B88A51C5F36A9000403FD /* CTASearchCountryViewController.swift */; };
 		2C1B88AB1C5F371A000403FD /* CTAAlertProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B88AA1C5F371A000403FD /* CTAAlertProtocol.swift */; };
 		2C1B88AD1C5F3741000403FD /* CTASMSVerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B88AC1C5F3741000403FD /* CTASMSVerifyViewController.swift */; };
-		2C1CB3BD1D26689A00C7A59E /* Ludwig.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CB3BA1D26689A00C7A59E /* Ludwig.JPG */; };
-		2C1CB3BE1D26689A00C7A59E /* Gingham.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CB3BB1D26689A00C7A59E /* Gingham.JPG */; };
-		2C1CB3BF1D26689A00C7A59E /* Clarendon.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C1CB3BC1D26689A00C7A59E /* Clarendon.JPG */; };
 		2C1F01581C3BD5960033CED8 /* CTASelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1F01571C3BD5960033CED8 /* CTASelectorCell.swift */; };
 		2C1F015A1C3BD7400033CED8 /* CTASelectorSizeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */; };
 		2C1F015C1C3CE3770033CED8 /* CTACanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1F015B1C3CE3770033CED8 /* CTACanvasCell.swift */; };
@@ -161,6 +158,32 @@
 		2C85C59A1C9FC2470042CD0F /* SVProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C85C5991C9FC2470042CD0F /* SVProgressHUD.framework */; };
 		2C85F81F1CC3273500C7186C /* CurlAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C85F81E1CC3273500C7186C /* CurlAnimation.swift */; };
 		2C85F8211CC3671700C7186C /* FadeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C85F8201CC3671700C7186C /* FadeAnimation.swift */; };
+		2C87AF7C1D2A4FEC00F51129 /* Origin.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AF7B1D2A4FEC00F51129 /* Origin.JPG */; };
+		2C87AFCC1D2A681000F51129 /* Aden.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFB31D2A681000F51129 /* Aden.JPG */; };
+		2C87AFCD1D2A681000F51129 /* Amaro.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFB41D2A681000F51129 /* Amaro.JPG */; };
+		2C87AFCE1D2A681000F51129 /* Brannan.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFB51D2A681000F51129 /* Brannan.JPG */; };
+		2C87AFCF1D2A681000F51129 /* Clarendon.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFB61D2A681000F51129 /* Clarendon.JPG */; };
+		2C87AFD01D2A681000F51129 /* Crema.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFB71D2A681000F51129 /* Crema.JPG */; };
+		2C87AFD11D2A681000F51129 /* Earlybird.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFB81D2A681000F51129 /* Earlybird.JPG */; };
+		2C87AFD21D2A681000F51129 /* Gingham.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFB91D2A681000F51129 /* Gingham.JPG */; };
+		2C87AFD31D2A681000F51129 /* Hefe.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFBA1D2A681000F51129 /* Hefe.JPG */; };
+		2C87AFD41D2A681000F51129 /* Hudson.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFBB1D2A681000F51129 /* Hudson.JPG */; };
+		2C87AFD51D2A681000F51129 /* Inkwell.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFBC1D2A681000F51129 /* Inkwell.JPG */; };
+		2C87AFD61D2A681000F51129 /* Juno.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFBD1D2A681000F51129 /* Juno.JPG */; };
+		2C87AFD71D2A681000F51129 /* Lark.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFBE1D2A681000F51129 /* Lark.JPG */; };
+		2C87AFD81D2A681000F51129 /* Lo-Fi.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFBF1D2A681000F51129 /* Lo-Fi.JPG */; };
+		2C87AFD91D2A681000F51129 /* Ludwig.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFC01D2A681000F51129 /* Ludwig.JPG */; };
+		2C87AFDA1D2A681000F51129 /* Mayfair.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFC11D2A681000F51129 /* Mayfair.JPG */; };
+		2C87AFDB1D2A681000F51129 /* Moon.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFC21D2A681000F51129 /* Moon.JPG */; };
+		2C87AFDC1D2A681000F51129 /* Nashville.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFC31D2A681000F51129 /* Nashville.JPG */; };
+		2C87AFDD1D2A681000F51129 /* Perpetua.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFC41D2A681000F51129 /* Perpetua.JPG */; };
+		2C87AFDE1D2A681000F51129 /* Reyes.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFC51D2A681000F51129 /* Reyes.JPG */; };
+		2C87AFDF1D2A681000F51129 /* Rise.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFC61D2A681000F51129 /* Rise.JPG */; };
+		2C87AFE01D2A681000F51129 /* Sierra.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFC71D2A681000F51129 /* Sierra.JPG */; };
+		2C87AFE11D2A681000F51129 /* Slumber.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFC81D2A681000F51129 /* Slumber.JPG */; };
+		2C87AFE21D2A681000F51129 /* Valencia.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFC91D2A681000F51129 /* Valencia.JPG */; };
+		2C87AFE31D2A681000F51129 /* Willow.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFCA1D2A681000F51129 /* Willow.JPG */; };
+		2C87AFE41D2A681000F51129 /* X-Pro II.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2C87AFCB1D2A681000F51129 /* X-Pro II.JPG */; };
 		2C88A3731C50EBE700C6D687 /* CTAPreviewCanvasController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88A3721C50EBE700C6D687 /* CTAPreviewCanvasController.swift */; };
 		2C88A3751C51F0BA00C6D687 /* CTAAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88A3741C51F0BA00C6D687 /* CTAAnimationController.swift */; };
 		2C8A84C51C7EEC4B0017F81F /* CTACellDisplayProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8A84C41C7EEC4B0017F81F /* CTACellDisplayProtocol.swift */; };
@@ -233,7 +256,6 @@
 		2CC9307F1C7464D000FB02A9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC9307E1C7464D000FB02A9 /* AVFoundation.framework */; };
 		2CCBE4961C870AA4001E1CD8 /* CTAShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCBE4951C870AA4001E1CD8 /* CTAShareView.swift */; };
 		2CCD94DC1C43B4AA001E5D08 /* CTATextSpacingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */; };
-		2CCE5E3D1D26540B00D70BA1 /* Be.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 2CCE5E3C1D26540B00D70BA1 /* Be.JPG */; };
 		2CCE5E3F1D26572C00D70BA1 /* FilterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCE5E3E1D26572C00D70BA1 /* FilterManager.swift */; };
 		2CCFD54B1CE49CAC00D58043 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CCFD54D1CE49CAC00D58043 /* Share.storyboard */; };
 		2CD08F5D1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD08F5C1C55E08C0068FD98 /* CTAAnimationPlayNodeManager.swift */; };
@@ -421,9 +443,6 @@
 		2C1B88A51C5F36A9000403FD /* CTASearchCountryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASearchCountryViewController.swift; sourceTree = "<group>"; };
 		2C1B88AA1C5F371A000403FD /* CTAAlertProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAlertProtocol.swift; sourceTree = "<group>"; };
 		2C1B88AC1C5F3741000403FD /* CTASMSVerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASMSVerifyViewController.swift; sourceTree = "<group>"; };
-		2C1CB3BA1D26689A00C7A59E /* Ludwig.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Ludwig.JPG; sourceTree = "<group>"; };
-		2C1CB3BB1D26689A00C7A59E /* Gingham.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Gingham.JPG; sourceTree = "<group>"; };
-		2C1CB3BC1D26689A00C7A59E /* Clarendon.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Clarendon.JPG; sourceTree = "<group>"; };
 		2C1F01571C3BD5960033CED8 /* CTASelectorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorCell.swift; sourceTree = "<group>"; };
 		2C1F01591C3BD7400033CED8 /* CTASelectorSizeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorSizeCell.swift; sourceTree = "<group>"; };
 		2C1F015B1C3CE3770033CED8 /* CTACanvasCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACanvasCell.swift; sourceTree = "<group>"; };
@@ -557,6 +576,32 @@
 		2C85C5991C9FC2470042CD0F /* SVProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SVProgressHUD.framework; path = "Pods/../build/Debug-iphoneos/SVProgressHUD.framework"; sourceTree = "<group>"; };
 		2C85F81E1CC3273500C7186C /* CurlAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurlAnimation.swift; sourceTree = "<group>"; };
 		2C85F8201CC3671700C7186C /* FadeAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeAnimation.swift; sourceTree = "<group>"; };
+		2C87AF7B1D2A4FEC00F51129 /* Origin.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Origin.JPG; sourceTree = "<group>"; };
+		2C87AFB31D2A681000F51129 /* Aden.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Aden.JPG; sourceTree = "<group>"; };
+		2C87AFB41D2A681000F51129 /* Amaro.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Amaro.JPG; sourceTree = "<group>"; };
+		2C87AFB51D2A681000F51129 /* Brannan.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Brannan.JPG; sourceTree = "<group>"; };
+		2C87AFB61D2A681000F51129 /* Clarendon.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Clarendon.JPG; sourceTree = "<group>"; };
+		2C87AFB71D2A681000F51129 /* Crema.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Crema.JPG; sourceTree = "<group>"; };
+		2C87AFB81D2A681000F51129 /* Earlybird.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Earlybird.JPG; sourceTree = "<group>"; };
+		2C87AFB91D2A681000F51129 /* Gingham.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Gingham.JPG; sourceTree = "<group>"; };
+		2C87AFBA1D2A681000F51129 /* Hefe.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Hefe.JPG; sourceTree = "<group>"; };
+		2C87AFBB1D2A681000F51129 /* Hudson.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Hudson.JPG; sourceTree = "<group>"; };
+		2C87AFBC1D2A681000F51129 /* Inkwell.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Inkwell.JPG; sourceTree = "<group>"; };
+		2C87AFBD1D2A681000F51129 /* Juno.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Juno.JPG; sourceTree = "<group>"; };
+		2C87AFBE1D2A681000F51129 /* Lark.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Lark.JPG; sourceTree = "<group>"; };
+		2C87AFBF1D2A681000F51129 /* Lo-Fi.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Lo-Fi.JPG"; sourceTree = "<group>"; };
+		2C87AFC01D2A681000F51129 /* Ludwig.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Ludwig.JPG; sourceTree = "<group>"; };
+		2C87AFC11D2A681000F51129 /* Mayfair.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Mayfair.JPG; sourceTree = "<group>"; };
+		2C87AFC21D2A681000F51129 /* Moon.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Moon.JPG; sourceTree = "<group>"; };
+		2C87AFC31D2A681000F51129 /* Nashville.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Nashville.JPG; sourceTree = "<group>"; };
+		2C87AFC41D2A681000F51129 /* Perpetua.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Perpetua.JPG; sourceTree = "<group>"; };
+		2C87AFC51D2A681000F51129 /* Reyes.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Reyes.JPG; sourceTree = "<group>"; };
+		2C87AFC61D2A681000F51129 /* Rise.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Rise.JPG; sourceTree = "<group>"; };
+		2C87AFC71D2A681000F51129 /* Sierra.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Sierra.JPG; sourceTree = "<group>"; };
+		2C87AFC81D2A681000F51129 /* Slumber.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Slumber.JPG; sourceTree = "<group>"; };
+		2C87AFC91D2A681000F51129 /* Valencia.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Valencia.JPG; sourceTree = "<group>"; };
+		2C87AFCA1D2A681000F51129 /* Willow.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Willow.JPG; sourceTree = "<group>"; };
+		2C87AFCB1D2A681000F51129 /* X-Pro II.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "X-Pro II.JPG"; sourceTree = "<group>"; };
 		2C88A3721C50EBE700C6D687 /* CTAPreviewCanvasController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPreviewCanvasController.swift; sourceTree = "<group>"; };
 		2C88A3741C51F0BA00C6D687 /* CTAAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAnimationController.swift; sourceTree = "<group>"; };
 		2C8A84C41C7EEC4B0017F81F /* CTACellDisplayProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACellDisplayProtocol.swift; sourceTree = "<group>"; };
@@ -638,7 +683,6 @@
 		2CC9307E1C7464D000FB02A9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		2CCBE4951C870AA4001E1CD8 /* CTAShareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAShareView.swift; sourceTree = "<group>"; };
 		2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATextSpacingView.swift; sourceTree = "<group>"; };
-		2CCE5E3C1D26540B00D70BA1 /* Be.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Be.JPG; sourceTree = "<group>"; };
 		2CCE5E3E1D26572C00D70BA1 /* FilterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterManager.swift; sourceTree = "<group>"; };
 		2CCFD54C1CE49CAC00D58043 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Share.storyboard; sourceTree = "<group>"; };
 		2CCFD54F1CE49CC700D58043 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Share.strings; sourceTree = "<group>"; };
@@ -1011,10 +1055,32 @@
 			isa = PBXGroup;
 			children = (
 				2CDDF5001C5F3B860019FC83 /* CuriosTextApp-Bridging-Header.h */,
-				2CCE5E3C1D26540B00D70BA1 /* Be.JPG */,
-				2C1CB3BA1D26689A00C7A59E /* Ludwig.JPG */,
-				2C1CB3BB1D26689A00C7A59E /* Gingham.JPG */,
-				2C1CB3BC1D26689A00C7A59E /* Clarendon.JPG */,
+				2C87AF7B1D2A4FEC00F51129 /* Origin.JPG */,
+				2C87AFB31D2A681000F51129 /* Aden.JPG */,
+				2C87AFB41D2A681000F51129 /* Amaro.JPG */,
+				2C87AFB51D2A681000F51129 /* Brannan.JPG */,
+				2C87AFB61D2A681000F51129 /* Clarendon.JPG */,
+				2C87AFB71D2A681000F51129 /* Crema.JPG */,
+				2C87AFB81D2A681000F51129 /* Earlybird.JPG */,
+				2C87AFB91D2A681000F51129 /* Gingham.JPG */,
+				2C87AFBA1D2A681000F51129 /* Hefe.JPG */,
+				2C87AFBB1D2A681000F51129 /* Hudson.JPG */,
+				2C87AFBC1D2A681000F51129 /* Inkwell.JPG */,
+				2C87AFBD1D2A681000F51129 /* Juno.JPG */,
+				2C87AFBE1D2A681000F51129 /* Lark.JPG */,
+				2C87AFBF1D2A681000F51129 /* Lo-Fi.JPG */,
+				2C87AFC01D2A681000F51129 /* Ludwig.JPG */,
+				2C87AFC11D2A681000F51129 /* Mayfair.JPG */,
+				2C87AFC21D2A681000F51129 /* Moon.JPG */,
+				2C87AFC31D2A681000F51129 /* Nashville.JPG */,
+				2C87AFC41D2A681000F51129 /* Perpetua.JPG */,
+				2C87AFC51D2A681000F51129 /* Reyes.JPG */,
+				2C87AFC61D2A681000F51129 /* Rise.JPG */,
+				2C87AFC71D2A681000F51129 /* Sierra.JPG */,
+				2C87AFC81D2A681000F51129 /* Slumber.JPG */,
+				2C87AFC91D2A681000F51129 /* Valencia.JPG */,
+				2C87AFCA1D2A681000F51129 /* Willow.JPG */,
+				2C87AFCB1D2A681000F51129 /* X-Pro II.JPG */,
 				2CB175B71CF8432100819825 /* Templates */,
 				2C81B59E1C58B10600AE16E0 /* Gobal */,
 				2C7AD3A61CF6AFD0009AEDA8 /* Moduler */,
@@ -1832,37 +1898,59 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C87AFCD1D2A681000F51129 /* Amaro.JPG in Resources */,
+				2C87AFE41D2A681000F51129 /* X-Pro II.JPG in Resources */,
+				2C87AFD01D2A681000F51129 /* Crema.JPG in Resources */,
 				2C3B33D41C1176D000738166 /* LaunchScreen.storyboard in Resources */,
+				2C87AFCE1D2A681000F51129 /* Brannan.JPG in Resources */,
 				2CE6D21A1C60D00A0064A9B0 /* InfoPlist.strings in Resources */,
 				2C610A401C902C0B00DFE315 /* Photo.storyboard in Resources */,
 				2C610A391C902BF100DFE315 /* Camera.storyboard in Resources */,
+				2C87AFD61D2A681000F51129 /* Juno.JPG in Resources */,
+				2C87AFE21D2A681000F51129 /* Valencia.JPG in Resources */,
 				2C32BD561C4CB89100788A97 /* Localizable.strings in Resources */,
-				2CCE5E3D1D26540B00D70BA1 /* Be.JPG in Resources */,
+				2C87AFD71D2A681000F51129 /* Lark.JPG in Resources */,
+				2C87AFE31D2A681000F51129 /* Willow.JPG in Resources */,
+				2C87AFDF1D2A681000F51129 /* Rise.JPG in Resources */,
+				2C87AFE01D2A681000F51129 /* Sierra.JPG in Resources */,
 				2CCFD54B1CE49CAC00D58043 /* Share.storyboard in Resources */,
 				2C9307B51CF2E34600D0E5F6 /* About.storyboard in Resources */,
 				2C7AD3B61CF6BF33009AEDA8 /* Templates.storyboard in Resources */,
-				2C1CB3BE1D26689A00C7A59E /* Gingham.JPG in Resources */,
+				2C87AFD41D2A681000F51129 /* Hudson.JPG in Resources */,
 				2C567A691C5CBAF200F11369 /* Countries.plist in Resources */,
+				2C87AFD91D2A681000F51129 /* Ludwig.JPG in Resources */,
+				2C87AFDB1D2A681000F51129 /* Moon.JPG in Resources */,
 				2C1A121F1CE014FD0071BD35 /* WeiboSDK.bundle in Resources */,
 				2C610A2B1C902B0300DFE315 /* Editor.storyboard in Resources */,
 				2CF4B7D11CBBA58F009B12C3 /* Fonts in Resources */,
 				2C2B45B21C5CC077004A4809 /* SupportCountryZone in Resources */,
-				2C1CB3BF1D26689A00C7A59E /* Clarendon.JPG in Resources */,
+				2C87AFD81D2A681000F51129 /* Lo-Fi.JPG in Resources */,
 				2CE063ED1C857D2F001F7F4E /* ImageCrop.storyboard in Resources */,
 				2C3CAD2C1C21828200D8DE4B /* 2.jpg in Resources */,
 				2C65B6681C4F514D007B4DEA /* Preview.storyboard in Resources */,
+				2C87AFD51D2A681000F51129 /* Inkwell.JPG in Resources */,
+				2C87AFD31D2A681000F51129 /* Hefe.JPG in Resources */,
+				2C87AFDD1D2A681000F51129 /* Perpetua.JPG in Resources */,
+				2C87AFCF1D2A681000F51129 /* Clarendon.JPG in Resources */,
 				2C160D601CE58C54005B67F8 /* PhotoAlbumList.storyboard in Resources */,
 				2C3AE3F11C59F5E3004D62B4 /* CTASocial.storyboard in Resources */,
 				2C042B761CE3248E00C13FED /* Heart.storyboard in Resources */,
+				2C87AF7C1D2A4FEC00F51129 /* Origin.JPG in Resources */,
 				2CC74C921C5A275C00B536C2 /* SMS_SDKLocalizable.strings in Resources */,
 				2CB66A9E1CD86F6C006B9282 /* read_me.txt in Resources */,
 				2C610A321C902BCA00DFE315 /* ImagePicker.storyboard in Resources */,
 				2CD11AD01CB7A7A400A79305 /* AniPreView.storyboard in Resources */,
 				2CB175B81CF8432100819825 /* Templates in Resources */,
 				2C3B33CF1C1176D000738166 /* Main.storyboard in Resources */,
+				2C87AFDC1D2A681000F51129 /* Nashville.JPG in Resources */,
+				2C87AFD11D2A681000F51129 /* Earlybird.JPG in Resources */,
+				2C87AFCC1D2A681000F51129 /* Aden.JPG in Resources */,
+				2C87AFDA1D2A681000F51129 /* Mayfair.JPG in Resources */,
 				2C655B541D2114FD009E45F2 /* Assets.xcassets in Resources */,
+				2C87AFE11D2A681000F51129 /* Slumber.JPG in Resources */,
 				2CDDE64F1CE18BED00B6E6A9 /* animation.gif in Resources */,
-				2C1CB3BD1D26689A00C7A59E /* Ludwig.JPG in Resources */,
+				2C87AFD21D2A681000F51129 /* Gingham.JPG in Resources */,
+				2C87AFDE1D2A681000F51129 /* Reyes.JPG in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

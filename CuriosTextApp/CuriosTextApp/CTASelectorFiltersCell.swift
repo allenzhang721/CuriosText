@@ -74,14 +74,16 @@ extension CTASelectorFiltersCell: UICollectionViewDataSource {
             let ID = filter.assetIdentifier
             cell.restorationIdentifier = ID
             if let img = filter.image {
+                filter.data = nil
                imgView.image = img
             } else {
                 if let data = filter.data {
                     if let image = image {
                         filter.createImage(from: image, complation: {[weak cell, weak filter] (img) in
-                            filter?.data = nil
-                            dispatch_async(dispatch_get_main_queue(), { 
+                            
+                            dispatch_async(dispatch_get_main_queue(), {
                                 if cell?.restorationIdentifier == ID {
+                                    filter?.data = nil
                                     (cell?.viewWithTag(1000) as! UIImageView).image = img
                                     
                                 }
@@ -93,9 +95,10 @@ extension CTASelectorFiltersCell: UICollectionViewDataSource {
                     if let image = image {
                         let ID = filter.assetIdentifier
                         cell.restorationIdentifier = ID
-                       filter.createData(fromColorDirAt: bundle, filtering: image, complation: { [weak cell] (filteredIamge) in
+                       filter.createData(fromColorDirAt: bundle, filtering: image, complation: { [weak cell, weak filter] (filteredIamge) in
                         dispatch_async(dispatch_get_main_queue(), {
                             if cell?.restorationIdentifier == ID {
+                                filter?.data = nil
                                 (cell?.viewWithTag(1000) as! UIImageView).image = filteredIamge
                             }
                         })
