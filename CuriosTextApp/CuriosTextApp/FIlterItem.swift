@@ -35,6 +35,10 @@ class FilterItem: NSObject {
 //        aCoder.encodeObject(assetIdentifier, forKey: "ID")
 //    }
     
+    deinit {
+        print("\(#file) deinit")
+    }
+    
     func cleanImage() {
         image = nil
     }
@@ -50,7 +54,7 @@ class FilterItem: NSObject {
             dispatch_async(dispatch_get_main_queue(), {[weak self] in
                 guard let sf = self else {return}
                 sf.image = UIImage(CGImage: img2)
-                complation(sf.image!)
+                complation(UIImage(CGImage: img2))
             })
         }
     }

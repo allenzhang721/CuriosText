@@ -12,7 +12,7 @@ class CTASelectorFiltersCell: CTASelectorCell {
     
     var target: AnyObject?
     var action: Selector?
-    var filterManager: FilterManager?
+    weak var filterManager: FilterManager?
     var image: UIImage?
     
     private var collectionView: UICollectionView!
@@ -78,10 +78,12 @@ extension CTASelectorFiltersCell: UICollectionViewDataSource {
             } else {
                 if let data = filter.data {
                     if let image = image {
-                        filter.createImage(from: image, complation: {[weak cell] (img) in
+                        filter.createImage(from: image, complation: {[weak cell, weak filter] (img) in
+                            filter?.data = nil
                             dispatch_async(dispatch_get_main_queue(), { 
                                 if cell?.restorationIdentifier == ID {
                                     (cell?.viewWithTag(1000) as! UIImageView).image = img
+                                    
                                 }
                             })
                         })

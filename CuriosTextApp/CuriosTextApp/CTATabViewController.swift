@@ -45,6 +45,10 @@ class CTATabViewController: UIViewController {
         
         view.backgroundColor = CTAStyleKit.commonBackgroundColor
     }
+    
+    deinit {
+        print("\(#file) deinit")
+    }
 }
 
 extension CTATabViewController: UICollectionViewDataSource {

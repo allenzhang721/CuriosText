@@ -17,4 +17,9 @@ class FilterManager {
     func loadDefaultFilters() {
         filters = defaultFiltersName.map{FilterItem(name: $0, data: nil)}
     }
+    
+    deinit {
+        print("\(#file) deinit")
+    }
+
 }

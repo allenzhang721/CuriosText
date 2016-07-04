@@ -151,14 +151,14 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
         
         animation = true
         
-        collectionview.performBatchUpdates({ () -> Void in
+        collectionview.performBatchUpdates({[weak collectionview] () -> Void in
             
             if nextCount > 0 {
-                collectionview.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
+                collectionview?.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             }
             
             if currentCount > 0 {
-                collectionview.deleteItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
+                collectionview?.deleteItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             }
             }, completion: {[weak self] finished in
                 

@@ -24,6 +24,7 @@ class Filter {
     
     private var filter: FilterProcess = {$0}
     
+    
     func blur(r: Double) -> Filter {
         filter = filter --> {img in
             let parameters = [

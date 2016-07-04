@@ -82,14 +82,7 @@ class EditViewController: UIViewController {
         
         cameraVC.didSelectedImageHandler = {[weak self, weak cameraVC] (image, backgrounColor) in
             if let strongSelf = self, let image = image {
-//                dispatch_async(dispatch_get_main_queue(), { 
-                
-//                    strongSelf.selectorViewController.snapImage = image
-//                let hex = backgrounColor.toHex().0
-//                strongSelf.page.changeBackColor(hex)
-//                strongSelf.canvasViewController.changeBackgroundColor(backgrounColor)
                     let image = strongSelf.insertImage(image, size: image.size)
-//                strongSelf.selectorViewController.snapImage = image
                 
                 draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.imageBy ,local: true) { [weak self] (previewR) in
                     
@@ -105,7 +98,6 @@ class EditViewController: UIViewController {
                 }
                     cameraVC?.removeFromParentViewController()
                     cameraVC?.view.removeFromSuperview()
-//                })
             }
         }
      
