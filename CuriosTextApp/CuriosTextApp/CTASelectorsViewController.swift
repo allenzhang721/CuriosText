@@ -213,7 +213,7 @@ extension CTASelectorsViewController {
             cell.filterManager = filterManager
             cell.image = snapImage
         }
-        
+//
         cell.beganLoad()
         if action.characters.count > 0 {
             cell.addTarget(self, action: Selector(action), forControlEvents: .ValueChanged)

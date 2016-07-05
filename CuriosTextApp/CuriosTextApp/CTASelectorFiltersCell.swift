@@ -10,7 +10,7 @@ import UIKit
 
 class CTASelectorFiltersCell: CTASelectorCell {
     
-    var target: AnyObject?
+    weak var target: AnyObject?
     var action: Selector?
     weak var filterManager: FilterManager?
     var image: UIImage?
@@ -20,6 +20,10 @@ class CTASelectorFiltersCell: CTASelectorCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setup()
+    }
+    
+    deinit {
+        print("\(#file) deinit")
     }
     
     private func setup() {
