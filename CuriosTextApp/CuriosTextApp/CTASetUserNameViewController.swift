@@ -266,10 +266,10 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     }
     
     func userIconClick(sender: UIPanGestureRecognizer){
-        var alertArray:Array<String> = []
-        alertArray.append(LocalStrings.TakePhoto.description)
-        alertArray.append(LocalStrings.ChoosePhoto.description)
-        self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
+        var alertArray:Array<[String : AnyObject]> = []
+        alertArray.append(["title":LocalStrings.TakePhoto.description])
+        alertArray.append(["title":LocalStrings.ChoosePhoto.description])
+        self.showSheetAlert(LocalStrings.PhotoTitle.description, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
             if index == 0{
                 self.imagePicker.allowsEditing = true
                 self.imagePicker.sourceType = .Camera

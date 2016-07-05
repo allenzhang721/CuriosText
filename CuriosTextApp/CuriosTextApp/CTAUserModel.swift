@@ -43,14 +43,6 @@ final class CTAUserModel: CTABaseModel {
         self.weiboID     = weiboID;
     }
     
-    init(userID:String, nickName:String, userDesc:String, userIconURL:String, sex:Int){
-        self.userID      = userID;
-        self.nickName    = nickName;
-        self.userDesc    = userDesc;
-        self.userIconURL = userIconURL;
-        self.sex         = sex;
-    }
-    
     static func generateFrom(json: JSON) -> CTAUserModel {
         
         let userID:String      = json[key(.UserID)].string ?? "";

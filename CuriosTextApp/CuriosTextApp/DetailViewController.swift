@@ -10,10 +10,18 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+    
+    var selectedPublishID:String = ""
+    
+    var publishArray:Array<CTAPublishModel> = []
+    
+    var controllerView:CTAPublishControllerView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.initView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,4 +40,9 @@ class DetailViewController: UIViewController {
     }
     */
 
+    func initView(){
+        
+        self.controllerView = CTAPublishControllerView(frame: self.view.bounds)
+        self.view.addSubview(self.controllerView)
+    }
 }

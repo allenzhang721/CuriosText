@@ -14,15 +14,6 @@ enum CTASetUserInfoType{
 
 class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CTALoadingProtocol, CTAAlertProtocol{
     
-    static var _instance:CTASetUserInfoViewController?;
-    
-    static func getInstance() -> CTASetUserInfoViewController{
-        if _instance == nil{
-            _instance = CTASetUserInfoViewController();
-        }
-        return _instance!
-    }
-    
     var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
     
     var setUser:CTAUserModel?

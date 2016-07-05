@@ -10,15 +10,6 @@ import Foundation
 import SVProgressHUD
 
 class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol, CTAAlertProtocol{
-
-    static var _instance:CTAAccountSettingViewController?;
-    
-    static func getInstance() -> CTAAccountSettingViewController{
-        if _instance == nil{
-            _instance = CTAAccountSettingViewController();
-        }
-        return _instance!
-    }
     
     var loginUser:CTAUserModel?
     var phoneNumberLabel:UILabel!

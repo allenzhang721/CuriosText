@@ -12,7 +12,7 @@ import SwiftyJSON
 final class CTANoticeModel: CTABaseModel {
     
     let noticeID:String;
-    let userModel:CTAUserModel;
+    let userModel:CTAViewUserModel;
     let publishID:String;
     let publishIconURL:String;
     let previewIconURL:String;
@@ -24,7 +24,7 @@ final class CTANoticeModel: CTABaseModel {
     
     init(noticeID:String, userID:String, nikeName:String, userDesc:String, userIconURL:String, sex:Int, noticeDate:String, noticeMessage:String, noticeReaded:Int, noticeType:Int, noticeTypeID:Int, publishID:String, publishIconURL:String, previewIconURL:String){
         self.noticeID       = noticeID;
-        self.userModel      = CTAUserModel(userID: userID, nickName: nikeName, userDesc: userDesc, userIconURL: userIconURL, sex: sex)
+        self.userModel      = CTAViewUserModel(userID: userID, nickName: nikeName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, relationType: 0)
         self.noticeMessage  = noticeMessage
         self.noticeReaded   = noticeReaded;
         self.noticeType     = noticeType;

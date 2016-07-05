@@ -82,7 +82,6 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
     func initView(){
         self.initCollectionView()
         self.initHeader()
-        
     }
     
     func initHeader(){
@@ -102,10 +101,6 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         textLine.image = UIImage(named: "space-line")
         headerView.addSubview(textLine)
         self.view.addSubview(self.headerView)
-        
-        let timeView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: 20))
-        timeView.backgroundColor = CTAStyleKit.commonBackgroundColor
-        self.view.addSubview(timeView)
     }
     
     func initCollectionView(){
@@ -238,7 +233,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
                 self.loadPublishesComplete(info, size:size)
             })
         #else
-            if userID != "-1"{
+            if userID != ""{
                 CTAPublishDomain.getInstance().userFollowPublishList(userID, beUserID: userID, start: start, size: size, compelecationBlock: { (info) in
                     self.loadPublishesComplete(info, size:size)
                 })
@@ -264,7 +259,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
                         if self.publishModelArray.count > 0{
                             for i in 0..<modelArray!.count{
                                 let newmodel = modelArray![i] as! CTAPublishModel
-                                if !self.checkPublishModelIsHave(newmodel.publishID, publishArray: self.publishModelArray){
+                                if !self.checkPublishModelIsHave(newmodel, publishArray: self.publishModelArray){
                                     isChange = true
                                     break
                                 }else {
@@ -279,7 +274,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
                                 for j in 0..<modelArray!.count{
                                     if j < self.publishModelArray.count{
                                         let oldModel = self.publishModelArray[j]
-                                        if !self.checkPublishModelIsHave(oldModel.publishID, publishArray: modelArray as! Array<CTAPublishModel>){
+                                        if !self.checkPublishModelIsHave(oldModel, publishArray: modelArray as! Array<CTAPublishModel>){
                                             isChange = true
                                             break
                                         }
@@ -308,16 +303,16 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
             }
         }
         self.freshComplete();
+        self.collectionView.reloadData()
     }
     
     func loadMoreModelArray(modelArray:Array<AnyObject>){
         for i in 0..<modelArray.count{
             let publishModel = modelArray[i] as! CTAPublishModel
-            if !self.checkPublishModelIsHave(publishModel.publishID, publishArray: self.publishModelArray){
+            if !self.checkPublishModelIsHave(publishModel, publishArray: self.publishModelArray){
                 self.publishModelArray.append(publishModel)
             }
         }
-        self.collectionView.reloadData()
     }
     
     func freshComplete(){
@@ -512,7 +507,8 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
     func cellLikeListTap(cell:CTAHomePublishesCell?){
         if self.loginUser != nil {
             if cell != nil {
-                
+                self.selectedCell = cell
+                self.likersHandelr()
             }
         }else {
             self.showLoginView()
@@ -576,15 +572,7 @@ extension HomeViewController{
     }
     
     var userModel:CTAUserModel?{
-        if self.selectedCell != nil {
-            if let publishModel = self.selectedCell!.publishModel{
-                return publishModel.userModel
-            }else {
-                return nil
-            }
-        }else {
-            return nil
-        }
+        return self.loginUser
     }
     
     var previewView:CTAPublishPreviewView?{

@@ -533,10 +533,10 @@ extension CTAPublishProtocol{
     }
     
     func reportHandler(){
-        var alertArray:Array<String> = []
+        var alertArray:Array<[String: AnyObject]> = []
         
-        alertArray.append(LocalStrings.Porn.description)
-        alertArray.append(LocalStrings.Scam.description)
+        alertArray.append(["title": LocalStrings.Porn.description])
+        alertArray.append(["title": LocalStrings.Scam.description])
         //alertArray.append(LocalStrings.Sensitive.description)
         self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
             if index != -1{
