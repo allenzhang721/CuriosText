@@ -14,7 +14,7 @@ class CTATempateListViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var selectedHandler: ((pageData: NSData?, origin: Bool) -> ())?
-    var originImage: UIImage?
+    weak var originImage: UIImage?
     
     private let queue = dispatch_queue_create("templatesQueue", DISPATCH_QUEUE_CONCURRENT)
     private var localTemplates = [TemplateModel]()

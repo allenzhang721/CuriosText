@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class CTABarItemsFactory {
     
@@ -34,6 +35,13 @@ class CTABarItemsFactory {
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
             title: LocalStrings.Templates.description),
+        
+        CTABarItem(
+            normalImage: UIImage(named: "filters_Normal")!,
+            selectedImage: UIImage(named: "filters_Selected")!,
+            normalColor: CTAStyleKit.normalColor,
+            selectedColor: CTAStyleKit.selectedColor,
+            title: LocalStrings.Filters.description),
         
 //        CTABarItem(
 //            normalImage: CTAStyleKit.imageOfRotationBarItemNormal,

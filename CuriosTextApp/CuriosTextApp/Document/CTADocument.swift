@@ -21,6 +21,8 @@ class CTADocument: UIDocument {
     private var rootWrapper: NSFileWrapper!
     private var resWrapper: NSFileWrapper!
     
+    private var cacheFileName: String?
+    
     var root: NSFileWrapper {
         rootWrapper = rootWrapper ?? NSFileWrapper(directoryWithFileWrappers: [String : NSFileWrapper]())
         return rootWrapper
@@ -101,6 +103,13 @@ class CTADocument: UIDocument {
         return rootWrapper
     }
     
+    func replaceOriginResourceIfNeed() {
+        
+        if let name = cacheFileName, data = cacheResourceBy(name) {
+            storeResource(data, withName: name)
+        }
+    }
+    
     func storeResource(data: NSData, withName name: String) -> String {
         
         if let file = res.fileWrappers?[name] {
@@ -109,6 +118,25 @@ class CTADocument: UIDocument {
         let resWrap = NSFileWrapper(regularFileWithContents: data)
         resWrap.preferredFilename = name
         return res.addFileWrapper(resWrap)
+    }
+    
+    func storeCacheResource(data: NSData, withName name: String) {
+        
+        let fileManager = NSFileManager.defaultManager()
+        let cache = fileManager.URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).first!
+        let cacheFile = cache.URLByAppendingPathComponent(name)
+        if fileManager.fileExistsAtPath(cacheFile.path!) {
+            do {
+                try fileManager.removeItemAtURL(cacheFile)
+                cacheFileName = name
+                data.writeToURL(cacheFile, atomically: false)
+            } catch {
+                print("Store Cache Resource fail")
+            }
+        } else {
+            cacheFileName = name
+            data.writeToURL(cacheFile, atomically: false)
+        }
     }
 
     // get
@@ -119,13 +147,29 @@ class CTADocument: UIDocument {
     
     func imageBy(name: String) -> UIImage? {
         
-        if let data = resourceBy(name) {
+        if let data = cacheResourceBy(name) {
             return UIImage(data: data)
         } else {
             return nil
         }
         
     }
+
+    func cacheResourceBy(name: String) -> NSData? {
+        
+        let fileManager = NSFileManager.defaultManager()
+        let cache = fileManager.URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).first!
+        let cacheFile = cache.URLByAppendingPathComponent(name)
+        if fileManager.fileExistsAtPath(cacheFile.path!) {
+            return NSData(contentsOfURL: cacheFile)
+        } else {
+            return resourceBy(name)
+        }
+    }
+    
+//    func filteredImageWithName(name: String) -> UIImage? {
+//        
+//    }
 }
 
 extension CTADocument {

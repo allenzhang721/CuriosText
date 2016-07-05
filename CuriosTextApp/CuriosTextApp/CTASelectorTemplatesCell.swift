@@ -10,7 +10,7 @@ import UIKit
 
 class CTASelectorTemplatesCell: CTASelectorCell {
     
-    var target: AnyObject?
+    weak var target: AnyObject?
     var action: Selector?
     var templateList: CTATempateListViewController?
     
@@ -20,22 +20,29 @@ class CTASelectorTemplatesCell: CTASelectorCell {
 //        userInteractionEnabled = false
     }
     
+    deinit {
+        print("\(#file) deinit")
+    }
+    
     
     private func setup() {
         
         func selected(data: NSData?, origin: Bool) {
-            guard let target = target, let action = action else {return}
+            
+        }
+        
+        if let templateListVC = Moduler.module_templateListVC({ [weak self] (pageData, origin) in
+            guard let sf = self, let target = sf.target, let action = sf.action else {return}
             let object: [String: AnyObject]
-            if let data = data {
+            if let data = pageData {
                 object = ["data": data, "origin": origin]
             } else {
                 object = ["origin": origin]
             }
             
             target.performSelector(action, withObject: object)
-        }
-        
-        if let templateListVC = Moduler.module_templateListVC(selected) as? CTATempateListViewController {
+            
+        }) as? CTATempateListViewController {
             print("cell bounds = \(self.bounds)")
             templateListVC.view.frame = self.bounds
             contentView.addSubview(templateListVC.view)

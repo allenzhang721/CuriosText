@@ -20,6 +20,7 @@ protocol CTASelectorable: class {
 
 protocol CTASelectorScaleable: CTASelectorable {
     func templateDidChanged(pageData: NSData?, origin: Bool)
+    func filterDidChanged(filterName: String)
     func scaleDidChanged(scale: CGFloat)
     func radianDidChanged(radian: CGFloat)
     func fontDidChanged(fontFamily: String, fontName: String)
@@ -39,7 +40,9 @@ typealias CTASelectorViewControllerDelegate = protocol<CTASelectorScaleable>
 final class CTASelectorsViewController: UIViewController, UICollectionViewDataSource {
     
     var snapImage: UIImage?
+    var preImage: UIImage?
     private var animation: Bool = false
+    weak var filterManager: FilterManager?
     weak var dataSource: CTASelectorsViewControllerDataSource?
     weak var delegate: CTASelectorViewControllerDelegate?
     private(set) var currentType: CTAContainerFeatureType = .Templates
@@ -53,6 +56,7 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
         switch currentType {
             
         case .Templates: return "templateDidChanged:"
+        case .Filters: return "filterDidChanged:"
         case .Size: return "scaleChanged:"
         case .Rotator: return "radianChanged:"
         case .Fonts: return "indexPathOfFontsChanged:"
@@ -84,6 +88,17 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
                 if let cell = sf.collectionview.cellForItemAtIndexPath(index) as? CTASelectorTemplatesCell {
                     cell.templateList?.updateCurrentOriginImage(image)
                 }
+        }
+    }
+    
+    func updatePreImage(image: UIImage?) {
+        preImage = image
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            guard let sf = self else {return}
+            let index = NSIndexPath(forItem: 0, inSection: 0)
+            if let cell = sf.collectionview.cellForItemAtIndexPath(index) as? CTASelectorFiltersCell {
+                cell.update(image)
+            }
         }
     }
     
@@ -136,14 +151,14 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
         
         animation = true
         
-        collectionview.performBatchUpdates({ () -> Void in
+        collectionview.performBatchUpdates({[weak collectionview] () -> Void in
             
             if nextCount > 0 {
-                collectionview.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
+                collectionview?.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             }
             
             if currentCount > 0 {
-                collectionview.deleteItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
+                collectionview?.deleteItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             }
             }, completion: {[weak self] finished in
                 
@@ -194,6 +209,11 @@ extension CTASelectorsViewController {
             cell.templateList?.originImage = snapImage
         }
         
+        if let cell = cell as? CTASelectorFiltersCell {
+            cell.filterManager = filterManager
+            cell.image = snapImage
+        }
+//
         cell.beganLoad()
         if action.characters.count > 0 {
             cell.addTarget(self, action: Selector(action), forControlEvents: .ValueChanged)
@@ -304,6 +324,10 @@ extension CTASelectorsViewController {
 //            
 //        }
         
+    }
+    
+    func filterDidChanged(name: String) {
+        delegate?.filterDidChanged(name)
     }
     
     func scaleChanged(sender: CTASliderView) {

@@ -266,13 +266,14 @@ extension CTACanvasViewController {
         
     }
     
-    func reloadSection() {
+    func reloadSection(completion: (() -> ())? = nil) {
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
             guard let strongSelf = self else { return }
             CATransaction.begin()
             CATransaction.setDisableActions(true)
             strongSelf.collectionView.reloadSections(NSIndexSet(index: 0))
             CATransaction.commit()
+            completion?()
         }
     }
     
@@ -349,7 +350,7 @@ extension CTACanvasViewController {
                     c.textView.attributedText = con.textElement?.attributeString
                     
                 case (let c as CTACanvasImageCell, let con as ImageContainerVMProtocol):
-                    c.imageView.image = UIImage(data: (document?.resourceBy(con.imageElement!.resourceName))!)
+                    c.imageView.image = UIImage(data: (document?.cacheResourceBy(con.imageElement!.resourceName))!)
                     
                 default:
                     ()
@@ -382,9 +383,10 @@ extension CTACanvasViewController: UICollectionViewDelegate, UICollectionViewDat
             
         case let imageContainer as ImageContainerVMProtocol where imageContainer.type == .Image:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ImageCell", forIndexPath: indexPath) as! CTACanvasImageCell
-            if let data = document?.resourceBy(imageContainer.imageElement!.resourceName) {
+            if let data = document?.cacheResourceBy(imageContainer.imageElement!.resourceName) {
                 
                 debug_print(imageContainer.imageElement!.resourceName)
+                
                 cell.imageView.image = UIImage(data: data)
             }
             
