@@ -24,7 +24,7 @@ class CTAUserListCell : UICollectionViewCell, CTAImageControllerProtocol{
     var userIconImage:UIImageView!
     var userNickNameLabel:UILabel!
     var userDescLabel:UILabel!
-    var followButton:UIButton!
+    var followImg:UIImageView!
     
     var delegate:CTAUserListCellDelegate?
     
@@ -43,13 +43,13 @@ class CTAUserListCell : UICollectionViewCell, CTAImageControllerProtocol{
         self.cropImageCircle(self.userIconImage)
         self.userIconImage.image = UIImage(named: "default-usericon")
         iconView.addSubview(self.userIconImage)
-        self.userNickNameLabel = UILabel(frame: CGRect(x: 50, y: 14, width: bounds.width-160, height: 18))
+        self.userNickNameLabel = UILabel(frame: CGRect(x: 50, y: 14, width: bounds.width-100, height: 18))
         self.userNickNameLabel.font = UIFont.boldSystemFontOfSize(13)
         self.userNickNameLabel.textColor = CTAStyleKit.normalColor
         self.userNickNameLabel.textAlignment = .Left
         iconView.addSubview(self.userNickNameLabel)
         
-        self.userDescLabel = UILabel(frame: CGRect(x: 50, y: 30, width: bounds.width-150, height: 18))
+        self.userDescLabel = UILabel(frame: CGRect(x: 50, y: 30, width: bounds.width-100, height: 18))
         self.userDescLabel.font = UIFont.systemFontOfSize(13)
         self.userDescLabel.textColor = CTAStyleKit.labelShowColor
         self.userDescLabel.textAlignment = .Left
@@ -59,14 +59,12 @@ class CTAUserListCell : UICollectionViewCell, CTAImageControllerProtocol{
         iconView.userInteractionEnabled = true
         let iconTap = UITapGestureRecognizer(target: self, action: #selector(userIconClick(_:)))
         iconView.addGestureRecognizer(iconTap)
-
-        self.followButton = UIButton(frame: CGRectMake(bounds.width-100, 15, 90, 30))
-        self.followButton.setBackgroundImage(UIImage(named: "follow_bg"), forState: .Normal)
-        self.followButton.setTitle(NSLocalizedString("FollowButtonLabel", comment: ""), forState: .Normal)
-        self.followButton.setTitleColor(CTAStyleKit.selectedColor, forState: .Normal)
-        self.followButton.titleLabel?.font = UIFont.systemFontOfSize(13)
-        self.followButton.addTarget(self, action: #selector(followButtonClick(_:)), forControlEvents: .TouchUpInside)
-        self.contentView.addSubview(self.followButton)
+        
+        self.followImg = UIImageView(frame: CGRectMake(bounds.width - 40, 17, 30, 30))
+        self.followImg.image = UIImage(named: "liker_follow_btn")
+        let imgTap = UITapGestureRecognizer(target: self, action: #selector(followButtonClick(_:)))
+        self.followImg.addGestureRecognizer(imgTap)
+        self.contentView.addSubview(self.followImg)
         
         let textLine = UIImageView(frame: CGRect(x: 50, y: bounds.height-1, width: bounds.width - 60, height: 1))
         textLine.image = UIImage(named: "space-line")
@@ -90,7 +88,7 @@ class CTAUserListCell : UICollectionViewCell, CTAImageControllerProtocol{
         }
     }
     
-    func followButtonClick(sender: UIButton){
+    func followButtonClick(sender: UIPanGestureRecognizer){
         let relationType:Int = self.viewUser!.relationType
         if relationType == 0 || relationType == 3{
             self.followUser()
@@ -130,13 +128,11 @@ class CTAUserListCell : UICollectionViewCell, CTAImageControllerProtocol{
         self.userIconImage.image = UIImage(named: "default-usericon")
         self.userNickNameLabel.text = ""
         self.userDescLabel.text = ""
-        self.followButton.setBackgroundImage(UIImage(named: "follow_bg"), forState: .Normal)
-        self.followButton.setTitle(NSLocalizedString("FollowButtonLabel", comment: ""), forState: .Normal)
-        self.followButton.setTitleColor(CTAStyleKit.selectedColor, forState: .Normal)
+        self.followImg.image = UIImage(named: "liker_follow_btn")
     }
     
     func followUser(){
-        self.showLoadingViewInView(self.followButton)
+        self.showLoadingViewInView(self.followImg)
         let userID = CTAUserManager.user != nil ? CTAUserManager.user!.userID : ""
         CTAUserRelationDomain.getInstance().followUser(userID, relationUserID: self.viewUser!.userID) { (info) -> Void in
             if info.result {
@@ -145,41 +141,30 @@ class CTAUserListCell : UICollectionViewCell, CTAImageControllerProtocol{
                 self.viewUser!.beFollowCount += 1
                 self.setFollowButton()
             }
-            self.hideLoadingViewInView(self.followButton)
+            self.hideLoadingViewInView(self.followImg)
         }
     }
     
     func setFollowButton(){
         let relationType:Int = self.viewUser!.relationType
         var isHidden = false
-        var buttonLabel:String = ""
-        var buttonBg:UIImage? = UIImage(named: "follow_bg")
-        var buttonLabelColor = CTAStyleKit.selectedColor
+        var buttonBg:UIImage? = UIImage(named: "liker_follow_btn")
         switch  relationType{
         case -1:
             isHidden = true
-            buttonLabel = ""
         case 0, 3:
-            buttonLabel = NSLocalizedString("FollowButtonLabel", comment: "")
-            buttonBg    = UIImage(named: "follow_bg")
-            buttonLabelColor = CTAStyleKit.selectedColor
+            buttonBg    = UIImage(named: "liker_follow_btn")
             isHidden = false
         case 1, 5:
-            buttonLabel = NSLocalizedString("UnFollowButtonLabel", comment: "")
-            buttonBg    = UIImage(named: "following_bg")
-            buttonLabelColor = CTAStyleKit.commonBackgroundColor
+            buttonBg    = UIImage(named: "liker_following_btn")
             isHidden = false
         case 2, 4, 6:
             isHidden = true
-            buttonLabel = ""
         default:
             isHidden = true
-            buttonLabel = ""
         }
-        self.followButton.hidden = isHidden
-        self.followButton.setTitle(buttonLabel, forState: .Normal)
-        self.followButton.setBackgroundImage(buttonBg, forState: .Normal)
-        self.followButton.setTitleColor(buttonLabelColor, forState: .Normal)
+        self.followImg.hidden = isHidden
+        self.followImg.image = buttonBg
     }
     
     func showLoadingViewInView(centerView:UIView){

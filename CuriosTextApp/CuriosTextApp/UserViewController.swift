@@ -259,7 +259,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     
     func initTopView(){
         let bounds = UIScreen.mainScreen().bounds
-        let maxWidth = bounds.width - 100
+        let maxWidth = bounds.width - 80
         
         self.topView = UIView(frame: CGRectMake(0, 0, bounds.width, 30))
         self.topView.backgroundColor = CTAStyleKit.commonBackgroundColor
@@ -397,7 +397,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     func setUIView(){
         self.setNavigateButton()
         let bounds = UIScreen.mainScreen().bounds
-        let maxWidth = bounds.width - 100
+        let maxWidth = bounds.width - 80
         self.userNicknameLabel.text = self.viewUser?.nickName
         self.userDescLabel.text = self.viewUser?.userDesc
         self.userDescLabel.sizeToFit()
@@ -425,7 +425,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     
     func resetView() {
         let bounds = UIScreen.mainScreen().bounds
-        let maxWidth = bounds.width - 100
+        let maxWidth = bounds.width - 80
         self.userNicknameLabel.text = ""
         self.userDescLabel.text = ""
         self.userDescLabel.sizeToFit()
