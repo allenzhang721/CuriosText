@@ -14,8 +14,9 @@ class CTASelectorFiltersCell: CTASelectorCell {
     var action: Selector?
     weak var filterManager: FilterManager?
     var image: UIImage?
+    var first = true
     
-    private var collectionView: UICollectionView!
+    private weak var collectionView: UICollectionView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,6 +29,10 @@ class CTASelectorFiltersCell: CTASelectorCell {
     
     private func setup() {
         let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 84, height: 84)
+        layout.minimumInteritemSpacing = 2
+        layout.minimumLineSpacing = 2
+        layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         layout.scrollDirection = .Horizontal
         let view = UICollectionView(frame: bounds, collectionViewLayout: layout)
         view.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "FilterPreviewCell")
@@ -41,6 +46,14 @@ class CTASelectorFiltersCell: CTASelectorCell {
         
         view.dataSource = self
         view.delegate = self
+        collectionView = view
+    }
+    
+    override func willBeDisplayed() {
+        if first {
+            first = false
+            collectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
+        }
     }
     
     //TODO: Reload Data with preview image -- Emiaostein, 6/30/16, 17:38
@@ -72,6 +85,13 @@ extension CTASelectorFiltersCell: UICollectionViewDataSource {
             let imgView = UIImageView(frame: cell.contentView.bounds)
             imgView.tag = 1000
             cell.contentView.addSubview(imgView)
+        }
+        
+        if cell.selectedBackgroundView == nil {
+            let v = UIView(frame: cell.bounds)
+            v.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
+            cell.selectedBackgroundView = v
+            cell.bringSubviewToFront(cell.selectedBackgroundView!)
         }
         
         if let imgView = cell.contentView.viewWithTag(1000) as? UIImageView, let filter = filterManager?.filters[indexPath.item] {

@@ -41,7 +41,7 @@ class CTABarItemsFactory {
             selectedImage: UIImage(named: "filters_Selected")!,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: LocalStrings.Templates.description),
+            title: LocalStrings.Filters.description),
         
 //        CTABarItem(
 //            normalImage: CTAStyleKit.imageOfRotationBarItemNormal,
