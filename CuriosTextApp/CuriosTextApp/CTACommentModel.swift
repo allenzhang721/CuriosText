@@ -12,7 +12,7 @@ import SwiftyJSON
 final class CTACommentModel: CTABaseModel {
     
     let commentID:String;
-    let userModel:CTAUserModel;
+    let userModel:CTAViewUserModel;
     let beCommentedNickName:String;
     let beCommentedUserID:String;
     let commentData:NSDate;
@@ -21,7 +21,7 @@ final class CTACommentModel: CTABaseModel {
     
     init(commentID:String, userID:String, nikeName:String, userDesc:String, userIconURL:String, sex:Int, beCommentedNickName:String, beCommentedUserID:String, commentData:String, commentMessage:String, publishID:String){
         self.commentID = commentID;
-        self.userModel = CTAUserModel(userID: userID, nickName: nikeName, userDesc: userDesc, userIconURL: userIconURL, sex: sex)
+        self.userModel = CTAViewUserModel(userID: userID, nickName: nikeName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, relationType: 0)
         self.beCommentedUserID = beCommentedUserID;
         self.beCommentedNickName = beCommentedNickName;
         self.commentMessage = commentMessage

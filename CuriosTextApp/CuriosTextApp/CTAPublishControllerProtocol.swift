@@ -15,6 +15,7 @@ protocol CTAPublishControllerProtocol: CTAEditViewControllerDelegate, CTAShareVi
     var userModel:CTAUserModel?{get}
     var previewView:CTAPublishPreviewView?{get}
     
+    func likersHandelr()
     func likeHandler(justLike:Bool)
     func setLikeButtonStyle()
     func moreSelectionHandler(isSelf:Bool)
@@ -23,6 +24,14 @@ protocol CTAPublishControllerProtocol: CTAEditViewControllerDelegate, CTAShareVi
 }
 
 extension CTAPublishControllerProtocol where Self: UIViewController{
+    
+    func likersHandelr(){
+        let publishID = self.publishModel == nil ? "" : self.publishModel!.publishID
+        let vc = Moduler.module_likers(publishID)
+        let navi = UINavigationController(rootViewController: vc)
+        self.presentViewController(navi, animated: true, completion: {
+        })
+    }
     
     func likeHandler(justLike:Bool){
         let userID = self.userModel == nil ? "" : self.userModel!.userID
@@ -370,10 +379,10 @@ extension CTAPublishControllerProtocol{
     }
     
     func reportHandler(){
-        var alertArray:Array<String> = []
+        var alertArray:Array<[String: AnyObject]> = []
         
-        alertArray.append(LocalStrings.Porn.description)
-        alertArray.append(LocalStrings.Scam.description)
+        alertArray.append(["title": LocalStrings.Porn.description])
+        alertArray.append(["title": LocalStrings.Scam.description])
         //alertArray.append(LocalStrings.Sensitive.description)
         self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
             if index != -1{

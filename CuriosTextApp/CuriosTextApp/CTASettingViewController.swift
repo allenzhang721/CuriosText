@@ -424,11 +424,11 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     
     func userIconClick(sender: UIPanGestureRecognizer){
         if self.isLogin{
-            var alertArray:Array<String> = []
+            var alertArray:Array<[String : AnyObject]> = []
             
-            alertArray.append(LocalStrings.TakePhoto.description)
-            alertArray.append(LocalStrings.ChoosePhoto.description)
-            self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
+            alertArray.append(["title":LocalStrings.TakePhoto.description])
+            alertArray.append(["title":LocalStrings.ChoosePhoto.description])
+            self.showSheetAlert(LocalStrings.PhotoTitle.description, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
                 if index == 0{
                     self.imagePicker.allowsEditing = true
                     self.imagePicker.sourceType = .Camera
@@ -444,7 +444,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     
     func userNickNameClick(sender: UIPanGestureRecognizer){
         if isLogin {
-            let setInfo = CTASetUserInfoViewController.getInstance()
+            let setInfo = CTASetUserInfoViewController()
             setInfo.setUser = self.loginUser!
             setInfo.setType = .NickName
             self.navigationController?.pushViewController(setInfo, animated: true)
@@ -453,9 +453,9 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     
     func userSexClick(sender: UIPanGestureRecognizer){
         if isLogin {
-            var alertArray:Array<String> = []
-            alertArray.append(NSLocalizedString("UserMaleLabel", comment: ""))
-            alertArray.append(NSLocalizedString("UserFemaleLabel", comment: ""))
+            var alertArray:Array<[String : AnyObject]> = []
+            alertArray.append(["title":NSLocalizedString("UserMaleLabel", comment: "")])
+            alertArray.append(["title":NSLocalizedString("UserFemaleLabel", comment: "")])
             self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
                 if index != -1{
                     let sexIndex = index + 1
@@ -477,7 +477,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     
     func userDescClick(sender: UIPanGestureRecognizer){
         if isLogin {
-            let setInfo = CTASetUserInfoViewController.getInstance()
+            let setInfo = CTASetUserInfoViewController()
             setInfo.setUser = self.loginUser!
             setInfo.setType = .Desc
             self.navigationController?.pushViewController(setInfo, animated: true)
@@ -486,7 +486,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     
     func bindingAccountClick(sender: UIPanGestureRecognizer){
         if isLogin {
-            let accountSetting = CTAAccountSettingViewController.getInstance()
+            let accountSetting = CTAAccountSettingViewController()
             self.navigationController?.pushViewController(accountSetting, animated: true)
         }
     }
@@ -574,8 +574,8 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
     
     func logoutButtonClick(sender: UIButton){
         if isLogin{
-            var alertArray:Array<String> = []
-            alertArray.append(NSLocalizedString("LogoutButtonLabel", comment: ""))
+            var alertArray:Array<[String: AnyObject]> = []
+            alertArray.append(["title":NSLocalizedString("LogoutButtonLabel", comment: ""), "style": "Destructive"])
             let alertTile = NSLocalizedString("ConfirmLogoutLabel", comment: "")
             self.showSheetAlert(alertTile, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
                 if index != -1{

@@ -9,7 +9,8 @@
 import Foundation
 protocol CTAPublishModelProtocol: CTASystemLanguageProtocol{
     func getPublishIndex(publishID:String, publishArray:Array<CTAPublishModel>) -> Int
-    func checkPublishModelIsHave(publishID:String, publishArray:Array<CTAPublishModel>) -> Bool
+    func checkPublishModelIsHave(publish:CTAPublishModel, publishArray:Array<CTAPublishModel>) -> Bool
+    func resetPublishModel(publish:CTAPublishModel, newPublish:CTAPublishModel) -> CTAPublishModel
     func removePublishModelByID(publishID:String, publishArray:Array<CTAPublishModel>) -> Array<CTAPublishModel>
     func changeCountToString(count:Int) -> String
     func changeCountToAllString(count:Int) -> String
@@ -28,14 +29,23 @@ extension CTAPublishModelProtocol{
         return -1
     }
     
-    func checkPublishModelIsHave(publishID:String, publishArray:Array<CTAPublishModel>) -> Bool{
+    func checkPublishModelIsHave(publish:CTAPublishModel, publishArray:Array<CTAPublishModel>) -> Bool{
         for i in 0..<publishArray.count{
             let oldPublihModel = publishArray[i]
-            if oldPublihModel.publishID == publishID{
+            if oldPublihModel.publishID == publish.publishID {
                 return true
             }
         }
         return false
+    }
+    
+    func resetPublishModel(publish:CTAPublishModel, newPublish:CTAPublishModel) -> CTAPublishModel{
+        publish.commentCount = newPublish.commentCount
+        publish.likeCount = newPublish.likeCount
+        publish.shareCount = newPublish.shareCount
+        publish.rebuildCount = newPublish.rebuildCount
+        publish.likeStatus = newPublish.likeStatus
+        return publish
     }
     
     func removePublishModelByID(publishID:String, publishArray:Array<CTAPublishModel>) -> Array<CTAPublishModel>{

@@ -13,14 +13,14 @@ protocol CTAAlertProtocol{
     func showSelectedAlert(alertTile:String, alertMessage:String, okAlertLabel:String, cancelAlertLabel:String, compelecationBlock: (Bool) -> Void)
     func showTextAlert(alertTile:String, alertMessage:String, okAlertLabel:String, cancelAlertLabel:String, compelecationBlock: (Bool, String) -> Void)
     func showSingleAlert(alertTile:String, alertMessage:String, compelecationBlock: (() -> Void)?)
-    func showSheetAlert(alertTile:String?, okAlertArray:Array<String>, cancelAlertLabel:String, compelecationBlock: (index:Int) -> Void)
+    func showSheetAlert(alertTile:String?, okAlertArray:Array<[String: AnyObject]>, cancelAlertLabel:String, compelecationBlock: (index:Int) -> Void)
 }
 
 extension CTAAlertProtocol where Self: UIViewController{
     
     func showSelectedAlert(alertTile:String, alertMessage:String, okAlertLabel:String, cancelAlertLabel:String, compelecationBlock: (Bool) -> Void){
         let alert = UIAlertController(title: alertTile, message: alertMessage, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: okAlertLabel, style: .Default, handler: { (_) -> Void in
+        alert.addAction(UIAlertAction(title: okAlertLabel, style: .Destructive, handler: { (_) -> Void in
             compelecationBlock(true)
         }))
         alert.addAction(UIAlertAction(title: cancelAlertLabel, style: UIAlertActionStyle.Cancel, handler: { (_) -> Void in
@@ -55,11 +55,26 @@ extension CTAAlertProtocol where Self: UIViewController{
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    func showSheetAlert(alertTile:String?, okAlertArray:Array<String>, cancelAlertLabel:String, compelecationBlock: (index:Int) -> Void){
+    func showSheetAlert(alertTile:String?, okAlertArray:Array<[String: AnyObject]>, cancelAlertLabel:String, compelecationBlock: (index:Int) -> Void){
         let alert = UIAlertController(title: alertTile, message: nil, preferredStyle: .ActionSheet)
         for i in 0..<okAlertArray.count {
             let alertIndex = i
-            alert.addAction(UIAlertAction(title: okAlertArray[i], style: .Default, handler: { (_) -> Void in
+            let alertDic = okAlertArray[i]
+            var alertStyle:UIAlertActionStyle = .Default
+            let title = alertDic["title"] as? String
+            if let style = alertDic["style"] as? String {
+                switch style {
+                case "Default":
+                    alertStyle = .Default
+                case "Cancel":
+                    alertStyle = .Cancel
+                case "Destructive":
+                    alertStyle = .Destructive
+                default:
+                    alertStyle = .Default
+                }
+            }
+            alert.addAction(UIAlertAction(title: title, style: alertStyle, handler: { (_) -> Void in
                 compelecationBlock(index: alertIndex)
             }))
         }

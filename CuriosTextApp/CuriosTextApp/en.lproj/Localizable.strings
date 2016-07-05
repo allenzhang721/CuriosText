@@ -14,9 +14,12 @@
 "BeFollowLabel" = "Followers";
 "FollowButtonLabel" = "Follow";
 "UnFollowButtonLabel" = "Following";
+"UnFollowLabel" = "Unfollow";
+"ConfirmUnFollowLabel" = "Are you sure you want to unfollow ";
 "PostsButtonLabel" = "Posts";
 "LikesButtonLabel" = "Likes";
 "LikesLabel" = "Likes";
+"LikersLabel" = "Likers";
 "LikeDefaultLabel" = "Like me";
 "CommentsLabel" = "Comments";
 "Thousand" = "K";
@@ -82,6 +85,7 @@
 "AlertYesLabel" = "Yes";
 "AlertNoLabel" = "No"; 
 "AlertResendLabel" = "Resend";
+"AlertChangePhotoTitle" = "Change Profile Photo";
 "AlertTakePhotoLabel" = "Take Photo";
 "AlertChoosePhoteLabel" = "Choose from Photos";
 "AlertBackLabel" = "Back";

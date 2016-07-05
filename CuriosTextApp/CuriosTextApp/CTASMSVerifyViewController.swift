@@ -285,10 +285,10 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
                         let userID = user!.userID
                         CTAUserDomain.getInstance().bindingUserPhone(userID, phone: self.phone, areaCode: self.areaZone, compelecationBlock: { (info) in
                             self.changeToUnloadingView()
-                            user!.phone = self.phone
-                            user!.areaCode = self.areaZone
-                            CTAUserManager.save(user!)
                             if info.result{
+                                user!.phone = self.phone
+                                user!.areaCode = self.areaZone
+                                CTAUserManager.save(user!)
                                 if self.smsType == .setMobileNumber{
                                     self.pushSetPasswordView(user, setPasswordType: .setMobileNumber)
                                 }else {
@@ -368,7 +368,7 @@ class CTASMSVerifyViewController: UIViewController, CTAPublishCellProtocol, CTAA
     
     func reSendButtonClick(sender: UIButton){
         self.hideTextInput.resignFirstResponder()
-        self.showSheetAlert(nil, okAlertArray:[LocalStrings.Resend.description], cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result) -> Void in
+        self.showSheetAlert(nil, okAlertArray:[["title":LocalStrings.Resend.description, "style": "Destructive"]], cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result) -> Void in
             if result != -1{
                 self.changeToLoadingView()
                 let delay = dispatch_time(DISPATCH_TIME_NOW,

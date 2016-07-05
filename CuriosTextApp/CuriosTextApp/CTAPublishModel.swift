@@ -18,8 +18,7 @@ final class CTAPublishModel: CTABaseModel{
     let previewIconURL:String;
     let publishURL:String;
     let publishDate:NSDate;
-    let userModel:CTAUserModel;
-    let relationType:Int;
+    let userModel:CTAViewUserModel;
     var shareCount:Int;
     var rebuildCount:Int;
     var likeCount:Int;
@@ -45,8 +44,7 @@ final class CTAPublishModel: CTABaseModel{
             }
         }
         
-        self.userModel      = CTAUserModel.init(userID: userID, nickName: nickName, userDesc: userDesc, userIconURL: userIconURL, sex: sex)
-        self.relationType   = relationType;
+        self.userModel      = CTAViewUserModel(userID: userID, nickName: nickName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, relationType: relationType)
         self.shareCount     = shareCount;
         self.rebuildCount   = rebuildCount;
         self.likeCount      = likeCount;
@@ -97,7 +95,7 @@ final class CTAPublishModel: CTABaseModel{
             key(.UserDesc):self.userModel.userDesc,
             key(.UserIconURL):self.userModel.userIconURL,
             key(.Sex):self.userModel.sex,
-            key(.RelationType):self.relationType,
+            key(.RelationType):self.userModel.relationType,
             key(.ShareCount):self.shareCount,
             key(.RebuildCount):self.rebuildCount,
             key(.LikeCount):self.likeCount,

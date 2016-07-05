@@ -15,10 +15,13 @@
 "FollowLabel" = "关注";
 "BeFollowLabel" = "粉丝";
 "FollowButtonLabel" = "关注";
-"UnFollowButtonLabel" = "关注中";
+"UnFollowButtonLabel" = "已关注";
+"UnFollowLabel" = "取消关注";
+"ConfirmUnFollowLabel" = "你确定不再关注";
 "PostsButtonLabel" = "我的";
 "LikesButtonLabel" = "赞过";
 "LikesLabel" = "赞";
+"LikersLabel" = "赞过";
 "LikeDefaultLabel" = "快来赞我吧";
 "CommentsLabel" = "评论";
 "TenThousand" = "万";
@@ -83,6 +86,7 @@
 "AlertYesLabel" = "是";
 "AlertNoLabel" = "否";
 "AlertResendLabel" = "重发";
+"AlertChangePhotoTitle" = "修改头像";
 "AlertTakePhotoLabel" = "拍照";
 "AlertChoosePhoteLabel" = "从相册中选择";
 "AlertBackLabel" = "返回";

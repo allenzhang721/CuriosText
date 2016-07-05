@@ -48,6 +48,7 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
     
     func initView(){
         let bounds = self.frame
+        let moreW:CGFloat = 50
         
         let iconView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: 50))
         self.addSubview(iconView)
@@ -55,7 +56,7 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
         self.cropImageCircle(self.userIconImage)
         self.userIconImage.image = UIImage(named: "default-usericon")
         iconView.addSubview(self.userIconImage)
-        self.userNickNameLabel = UILabel(frame: CGRect(x: 53, y: 17, width: bounds.width/2, height: 18))
+        self.userNickNameLabel = UILabel(frame: CGRect(x: 53, y: 17, width: bounds.width - 120, height: 18))
         self.userNickNameLabel.font = UIFont.boldSystemFontOfSize(13)
         self.userNickNameLabel.textColor = CTAStyleKit.normalColor
         self.userNickNameLabel.textAlignment = .Left
@@ -64,8 +65,6 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
         iconView.userInteractionEnabled = true
         let iconTap = UITapGestureRecognizer(target: self, action: #selector(userIconClick(_:)))
         iconView.addGestureRecognizer(iconTap)
-        
-        let moreW:CGFloat = 50
         
         self.moreView = UIView(frame: CGRect(x: (bounds.width - moreW), y: 0, width: moreW, height: 50))
         self.addSubview(self.moreView)

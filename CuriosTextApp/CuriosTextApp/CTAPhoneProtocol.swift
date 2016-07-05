@@ -87,7 +87,7 @@ extension CTAPhoneProtocol where Self: UIViewController{
     func getCountryModelByCode(code:String) -> CountryZone?{
         let allCountryLocale = LocaleHelper.allCountriesFromLocalFile()
         for (_, array) in allCountryLocale {
-            for var i=0; i < array.count; i++ {
+            for i in 0..<array.count{
                 if array[i].zoneCode == code {
                     return array[i]
                 }
@@ -159,7 +159,7 @@ protocol CTATextInputProtocol{
 extension CTATextInputProtocol where Self: UIViewController{
     func resignView(){
         let subViews = self.view.subviews
-        for var i=0 ; i<subViews.count; i++ {
+        for i in 0..<subViews.count{
             if subViews[i] is UITextField {
                 (subViews[i] as! UITextField).resignFirstResponder()
             }
@@ -169,7 +169,7 @@ extension CTATextInputProtocol where Self: UIViewController{
     func resignHandler(sender: UIGestureRecognizer){
         var isHave:Bool = false
         let subViews = self.view.subviews
-        for var i=0; i<subViews.count; i++ {
+        for i in 0..<subViews.count{
             let view = subViews[i]
             let pt = sender.locationInView(view)
             if view.pointInside(pt, withEvent: nil){

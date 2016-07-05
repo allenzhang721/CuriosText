@@ -77,7 +77,9 @@ class ViewController: UIViewController{
     
     func popupViewControllerInRoot(noti: NSNotification){
         let popView = noti.object as! UIViewController
+        self.view.userInteractionEnabled = false
         self.presentViewController(popView, animated: true) {
+            self.view.userInteractionEnabled = true
         }
     }
     
@@ -101,6 +103,7 @@ class ViewController: UIViewController{
             cancel(self.loadNoticeTask)
             self.loadNoticeTask = nil
         }
+        self.mainTabBarController.tabBar.items![2].badgeValue = nil
     }
     
     func addPublishFile(noti: NSNotification){
