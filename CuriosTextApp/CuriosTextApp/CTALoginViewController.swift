@@ -82,7 +82,7 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
         let tap = UITapGestureRecognizer(target: self, action: #selector(CTALoginViewController.bgViewClick(_:)))
         self.view.addGestureRecognizer(tap)
         
-        let closeButton = UIButton(frame: CGRect(x: 5, y: 22, width: 40, height: 40))
+        let closeButton = UIButton(frame: CGRect(x: 0, y: 22, width: 40, height: 40))
         closeButton.setImage(UIImage(named: "close-button"), forState: .Normal)
         closeButton.setImage(UIImage(named: "close-selected-button"), forState: .Highlighted)
         closeButton.addTarget(self, action: #selector(CTALoginViewController.closeButtonClick(_:)), forControlEvents: .TouchUpInside)

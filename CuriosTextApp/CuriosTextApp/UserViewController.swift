@@ -803,7 +803,6 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         // Pass the selected object to the new view controller.
     }
     */
-
 }
 
 extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSource{
@@ -831,13 +830,43 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
+        let publishesCell = self.collectionView.cellForItemAtIndexPath(indexPath)
         let index = indexPath.row
         self.selectedPublishID = ""
         if index < self.publishModelArray.count && index > -1{
             self.selectedPublishID = self.publishModelArray[index].publishID
         }
         if self.selectedPublishID != "" {
-            //self.selectCellAnimation()
+            let bounds = UIScreen.mainScreen().bounds
+            var cellFrame:CGRect!
+            if publishesCell != nil {
+                cellFrame = publishesCell!.frame
+                let offY = self.collectionView!.contentOffset.y
+                cellFrame.origin.y = cellFrame.origin.y - offY
+            }else {
+                cellFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
+            }
+            
+            let ani = CTAScaleTransition.getInstance()
+            var transitionView:UIView
+            if publishesCell != nil {
+                transitionView = publishesCell!.snapshotViewAfterScreenUpdates(true)
+            }else {
+                transitionView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+                transitionView.backgroundColor = UIColor.redColor()
+            }
+            ani.alphaView = publishesCell
+            ani.transitionView = transitionView
+            ani.transitionAlpha = 1
+            ani.transitionBgColor = CTAStyleKit.commonBackgroundColor
+            ani.fromRect = cellFrame
+            ani.toRect = CGRect(x: 0, y: (bounds.height - bounds.width )/2 - 15, width: bounds.width, height: bounds.width)
+            let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self)
+            let navi = UINavigationController(rootViewController: vc)
+            navi.transitioningDelegate = ani
+            navi.modalPresentationStyle = .Custom
+            self.presentViewController(navi, animated: true, completion: {
+            })
         }
     }
     
@@ -846,6 +875,7 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if offY > self.collectionLayout.stickyHeight{
             self.collectionLayout.isSticky = true
             self.collectionLayout.isHold = true
+            self.changeHeaderAlpha(self.collectionLayout.stickyHeight, totalH: self.collectionLayout.stickyHeight)
         }else {
             self.collectionLayout.isSticky = false
             self.changeHeaderAlpha(offY, totalH: self.collectionLayout.stickyHeight)
@@ -856,12 +886,13 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let nikeNameYB = self.topNikeNameY + self.userInfoView.frame.origin.y
         let nikeNameYE = totalH + 28
         if offY < 0{
+            self.userInfoView.alpha = 1
+            self.userFollowView.alpha = 1
             self.userNicknameLabel.frame.origin.y = nikeNameYB
         }else {
             let viewAlpha = (totalH - offY)/totalH
             self.userInfoView.alpha = viewAlpha
             self.userFollowView.alpha = viewAlpha
-            
             self.userNicknameLabel.frame.origin.y = (1-viewAlpha) * (nikeNameYE - nikeNameYB) + nikeNameYB
         }
     }
@@ -872,6 +903,66 @@ extension UserViewController: UIGestureRecognizerDelegate{
     func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
+}
+
+extension UserViewController: PublishDetailViewDelegate{
+
+    func changeCellSelected(selectedID:String, publishArray:Array<CTAPublishModel>){
+        self.saveNewPublishArray(selectedID, publishArray: publishArray)
+    }
+    
+    func getPublishCell(selectedID:String, publishArray:Array<CTAPublishModel>) -> (CGRect, UIView)?{
+        self.saveNewPublishArray(selectedID, publishArray: publishArray)
+        let publishCells = self.collectionView.visibleCells()
+        var selectedCell:CTAPublishesCell?
+        for i in 0..<publishCells.count{
+            let publish = publishCells[i] as! CTAPublishesCell
+            if publish.publishModel.publishID == selectedID{
+                selectedCell = publish
+                break
+            }
+        }
+        var cellFrame:CGRect!
+        if selectedCell != nil {
+            cellFrame = selectedCell!.frame
+            let offY = self.collectionView!.contentOffset.y
+            cellFrame.origin.y = cellFrame.origin.y - offY
+            return (cellFrame, selectedCell!);
+        }else {
+            return nil
+        }
+    }
+    
+    func saveNewPublishArray(selectedID:String, publishArray:Array<CTAPublishModel>){
+        var isChange:Bool = false
+        if publishArray.count == self.publishModelArray.count {
+            for i in 0..<publishArray.count{
+                let oldModel = self.publishModelArray[i]
+                let newModel = publishModelArray[i]
+                if oldModel.publishID != newModel.publishID {
+                    isChange = true
+                    break
+                }else {
+                    let index = self.getPublishIndex(newModel.publishID, publishArray: self.publishModelArray)
+                    if index != -1{
+                        self.publishModelArray.insert(newModel, atIndex: index)
+                        self.publishModelArray.removeAtIndex(index+1)
+                    }
+                }
+            }
+        }else {
+            isChange = true
+        }
+        if isChange{
+            self.publishModelArray.removeAll()
+            self.publishModelArray = publishArray
+            self.footerFresh.resetNoMoreData()
+            self.saveArrayToLocal()
+        }
+        self.collectionView.reloadData()
+        self.selectedPublishID = selectedID
+    }
+    
 }
 
 class CTAPublishTransitionCell: UIView{
@@ -886,6 +977,7 @@ class CTAPublishTransitionCell: UIView{
 class CTAPublishHeaderView: UICollectionReusableView{
     
 }
+
 
 class CTACollectionViewStickyFlowLayout: UICollectionViewFlowLayout {
     

@@ -50,4 +50,14 @@ class CTAPublishesCell: UICollectionViewCell, CTAImageControllerProtocol{
             self.cellImageView.image = whiteImg
         }
     }
+    
+    func getCellImage() -> UIView{
+        if publishModel != nil {
+            return UIImageView(image: self.cellImageView.image)
+        }else {
+            let a = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+            a.backgroundColor = UIColor.redColor()
+            return a
+        }
+    }
 }

@@ -185,6 +185,7 @@ class CTAPublishPreviewView: UIView, CTAImageControllerProtocol{
             let previewView = sf.previewView
             previewView.backgroundColor = UIColor(hexString: canvas.canvas.backgroundColor)
             previewView.dataSource = canvas
+            previewView.changeDataSource()
             previewView.aniDataSource = canvas
             previewView.reloadData { [weak self] in
                 if let sf = self {

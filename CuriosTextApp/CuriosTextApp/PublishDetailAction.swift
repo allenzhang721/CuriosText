@@ -8,15 +8,17 @@
 
 import Foundation
 
-class DetailAction: NSObject {
+class PublishDetailAction: NSObject {
     
     class func publishDetailVieController(paras: [String: AnyObject]) -> UIViewController {
         guard let seletedPublishID = paras["selectedPublishID"] as? String else { fatalError() }
         guard let publishArray = paras["publishArray"] as? Array<CTAPublishModel> else { fatalError() }
         
-        let vc = DetailViewController()
+        let vc = PublishDetailViewController()
         vc.selectedPublishID = seletedPublishID
         vc.publishArray = publishArray
+        vc.delegate = paras["delegate"] as? PublishDetailViewDelegate
+        
         return vc
     }
 }

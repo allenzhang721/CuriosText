@@ -8,6 +8,12 @@
 
 import UIKit
 import Kingfisher
+
+enum PublishControllerType:String{
+    case PublishCell   = "PublishCell"
+    case PublishDetail = "PublishDetail"
+}
+
 class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishModelProtocol{
     
     required init?(coder aDecoder: NSCoder) {
@@ -24,6 +30,8 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
             self.reloadView()
         }
     }
+    
+    var type:PublishControllerType = .PublishCell
     
     var userIconImage:UIImageView!
     var userNickNameLabel:UILabel!
@@ -176,6 +184,26 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
     
     func setNikeNameLabel(text:String){
         self.userNickNameLabel.text = text
+        if self.type == .PublishCell{
+            self.userIconImage.frame = CGRect(x: 11, y: 10, width: 32, height: 32);
+            self.userNickNameLabel.frame = CGRect(x: 53, y: 17, width: bounds.width - 120, height: 18)
+        }else if self.type == .PublishDetail{
+            let bounds = self.frame
+            let maxWidth = bounds.width - 100
+            let maxText = maxWidth - 53
+            
+            self.userNickNameLabel.sizeToFit()
+            self.userNickNameLabel.frame.size.height = 18
+            if self.userNickNameLabel.frame.width > maxText {
+                self.userNickNameLabel.frame.size.width = maxText
+            }
+            let iconW = self.userNickNameLabel.frame.width + 53
+            let iconX = (bounds.width - iconW)/2
+            self.userIconImage.frame.origin.x = iconX+11
+            self.userNickNameLabel.frame.origin.x = iconX + 53
+        }
+        
+        
     }
     
     func setTimeLabel(text:String){

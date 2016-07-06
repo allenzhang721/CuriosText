@@ -45,7 +45,6 @@ class UserListViewController: UIViewController{
         // Do any additional setup after loading the view.
         self.initView()
         self.navigationController?.navigationBarHidden = true
-        self.navigationController?.interactivePopGestureRecognizer!.delegate = self
         self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
     }
 
@@ -103,7 +102,7 @@ class UserListViewController: UIViewController{
             self.headerLabel.text = NSLocalizedString("LikersLabel", comment: "")
         }
         
-        let closeButton = UIButton(frame: CGRect(x: 5, y: 22, width: 40, height: 40))
+        let closeButton = UIButton(frame: CGRect(x: 0, y: 22, width: 40, height: 40))
         closeButton.setImage(UIImage(named: "close-button"), forState: .Normal)
         closeButton.setImage(UIImage(named: "close-selected-button"), forState: .Highlighted)
         closeButton.addTarget(self, action: #selector(closeButtonClick(_:)), forControlEvents: .TouchUpInside)
@@ -321,13 +320,6 @@ extension UserListViewController: UICollectionViewDelegateFlowLayout, UICollecti
 extension UserListViewController:CTALoadingProtocol{
     var loadingImageView:UIImageView?{
         return nil
-    }
-}
-
-extension UserListViewController: UIGestureRecognizerDelegate{
-    
-    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
     }
 }
 
