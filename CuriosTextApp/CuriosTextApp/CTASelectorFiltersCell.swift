@@ -32,7 +32,7 @@ class CTASelectorFiltersCell: CTASelectorCell {
         layout.itemSize = CGSize(width: 84, height: 84)
         layout.minimumInteritemSpacing = 2
         layout.minimumLineSpacing = 2
-        layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+        layout.sectionInset = UIEdgeInsets(top: 2, left: 20, bottom: 2, right: 20)
         layout.scrollDirection = .Horizontal
         let view = UICollectionView(frame: bounds, collectionViewLayout: layout)
         view.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "FilterPreviewCell")
