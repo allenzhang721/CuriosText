@@ -82,7 +82,7 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
     
     func updateSnapshotImage(image: UIImage?) {
         snapImage = image
-            dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            dispatch_async(dispatch_get_main_queue()) { [weak self, weak snapImage] in
                 guard let sf = self else {return}
                 let index = NSIndexPath(forItem: 0, inSection: 0)
                 if let cell = sf.collectionview.cellForItemAtIndexPath(index) as? CTASelectorTemplatesCell {
@@ -93,11 +93,11 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
     
     func updatePreImage(image: UIImage?) {
         preImage = image
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+        dispatch_async(dispatch_get_main_queue()) { [weak self, weak preImage] in
             guard let sf = self else {return}
             let index = NSIndexPath(forItem: 0, inSection: 0)
             if let cell = sf.collectionview.cellForItemAtIndexPath(index) as? CTASelectorFiltersCell {
-                cell.update(image)
+                cell.update(preImage)
             }
         }
     }

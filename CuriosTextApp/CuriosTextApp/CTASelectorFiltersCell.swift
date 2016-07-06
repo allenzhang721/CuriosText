@@ -58,7 +58,9 @@ class CTASelectorFiltersCell: CTASelectorCell {
     
     //TODO: Reload Data with preview image -- Emiaostein, 6/30/16, 17:38
     func update(image: UIImage?) {
-        
+        self.image = image
+        filterManager?.filters.forEach{$0.cleanImage()}
+        collectionView.reloadData()
     }
     
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {

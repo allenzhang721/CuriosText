@@ -57,14 +57,16 @@ class CTASelectorTemplatesCell: CTASelectorCell {
         }
     }
     
-    override func willBeDisplayed() {
-        
-        templateList?.defaultSelected()
-    }
+//    override func willBeDisplayed() {
+//        
+//        templateList?.defaultSelected()
+//    }
 //    override func beganLoad() {
 //        
 //        templateList?.defaultSelected()
 //    }
+    
+//    reti
     
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
         

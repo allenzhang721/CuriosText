@@ -145,6 +145,15 @@ class CTADocument: UIDocument {
         return resWrapper.fileWrappers?[name]?.regularFileContents
     }
     
+    func resourceImageBy(name: String) -> UIImage? {
+        if let data = resourceBy(name) {
+            return UIImage(data: data)
+        } else {
+            return nil
+        }
+        
+    }
+    
     func imageBy(name: String) -> UIImage? {
         
         if let data = cacheResourceBy(name) {

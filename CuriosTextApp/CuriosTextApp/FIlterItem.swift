@@ -61,18 +61,21 @@ class FilterItem: NSObject {
     
     func createData(fromColorDirAt url: NSURL, filtering image: UIImage, complation:(UIImage) -> ()) {
         
-        let cacheURL = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).first!
-        let dataCache = cacheURL.URLByAppendingPathComponent("\(name)")
-        if NSFileManager.defaultManager().fileExistsAtPath(dataCache.path!) {
-            let data = NSData(contentsOfURL: dataCache)
-            self.data = data
-            createImage(from: image, complation: complation)
-        } else {
-            let imgURL = url.URLByAppendingPathComponent("\(name).JPG")
-            if let img = UIImage(contentsOfFile: imgURL.path!)?.CGImage, data = Filter.colorLUTData(byImage: img, dimensiton: 64) {
-                self.data = data
-                data.writeToURL(dataCache, atomically: true)
-                createImage(from: image, complation: complation)
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            guard let sf = self else {return}
+            let cacheURL = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).first!
+            let dataCache = cacheURL.URLByAppendingPathComponent("\(sf.name)")
+            if NSFileManager.defaultManager().fileExistsAtPath(dataCache.path!) {
+                let data = NSData(contentsOfURL: dataCache)
+                sf.data = data
+                sf.createImage(from: image, complation: complation)
+            } else {
+                let imgURL = url.URLByAppendingPathComponent("\(sf.name).JPG")
+                if let img = UIImage(contentsOfFile: imgURL.path!)?.CGImage, data = Filter.colorLUTData(byImage: img, dimensiton: 64) {
+                    sf.data = data
+                    data.writeToURL(dataCache, atomically: true)
+                    sf.createImage(from: image, complation: complation)
+                }
             }
         }
     }

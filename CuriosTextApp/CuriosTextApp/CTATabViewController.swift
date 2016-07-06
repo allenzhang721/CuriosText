@@ -49,6 +49,10 @@ class CTATabViewController: UIViewController {
     deinit {
         print("\(#file) deinit")
     }
+    
+    func refreshItemIfNeed() {
+        collectionView.reloadData()
+    }
 }
 
 extension CTATabViewController: UICollectionViewDataSource {

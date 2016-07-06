@@ -524,30 +524,55 @@ extension EditViewController {
                     let name = (container as! ImageContainerVMProtocol).imageElement!.resourceName
                         let data = compressJPGImage(image!)
                         strongSelf.document.storeResource(data, withName: name)
-                    
+                        let image = UIImage(data: data)!
                         if let f = strongSelf.filter {
                             
-                            f.createImage(from: UIImage(data: data)!, complation: { (filteredImage) in
-                                strongSelf.document.storeCacheResource(UIImageJPEGRepresentation(filteredImage, 1)!, withName: name)
-                                dispatch_async(dispatch_get_main_queue(), { 
+//                            f.createImage(from: UIImage(data: data)!, complation: { (filteredImage) in
+//                                strongSelf.document.storeCacheResource(UIImageJPEGRepresentation(filteredImage, 1)!, withName: name)
+//                                dispatch_async(dispatch_get_main_queue(), { 
+//                                    
+//                                    strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
+//                                })
+//                            })
+                            if let data = f.data {
+                                f.createImage(from: image, complation: {[weak self, weak f] (img) in
                                     
-                                    strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
-                                })
-                            })
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        f?.data = nil
+                                        self?.document.storeCacheResource(UIImageJPEGRepresentation(img, 1)!, withName: name)
+                                        dispatch_async(dispatch_get_main_queue(), {
+                                            self?.canvasViewController.updateAt(indexPath, updateContents: true)
+                                        })
+                                    })
+                                    })
+                            } else {
+                                let bundle = NSBundle.mainBundle().bundleURL
+                                f.createData(fromColorDirAt: bundle, filtering: image, complation: { [weak self, weak f] (filteredIamge) in
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        f?.data = nil
+                                        self?.document.storeCacheResource(UIImageJPEGRepresentation(filteredIamge, 1)!, withName: name)
+                                        dispatch_async(dispatch_get_main_queue(), {
+                                            self?.canvasViewController.updateAt(indexPath, updateContents: true)
+                                        })
+                                    })
+                                    })
+                            }
                         } else {
                             strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
                         }
                     
-                    draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.imageBy ,local: true) { [weak self] (previewR) in
+                    draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.resourceImageBy ,local: true) { [weak self] (previewR) in
                         
                         switch previewR {
                         case .Success(let img):
                             dispatch_async(dispatch_get_main_queue(), {
                                 self?.selectorViewController.updateSnapshotImage(img)
+                                self?.selectorViewController.updatePreImage(img)
                             })
                         default:
                             dispatch_async(dispatch_get_main_queue(), { 
                                 self?.selectorViewController.updateSnapshotImage(image)
+                                self?.selectorViewController.updatePreImage(image)
                             })
                         }
                     }
@@ -807,7 +832,7 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
         let nextCon = selectedContainer?.type
         if (preCon != nextCon) { // need update tab
            let nextIndex = selectedContainer?.featureTypes.indexOf(preType) ?? 0
-            tabViewController.collectionView.reloadData()
+            tabViewController.refreshItemIfNeed()
             
             if let attri = self.tabViewController.collectionView.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: nextIndex, inSection: 0)) {
                 let cener = attri.center
@@ -815,6 +840,7 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
                 self.tabViewController.collectionView.setContentOffset(CGPoint(x: cener.x - self.tabViewController.collectionView.bounds.width / 2.0, y: 0), animated: false)
                 dispatch_async(dispatch_get_main_queue(), {[weak self] in
                     self?.tabViewController.changingContainer = false
+                    
                 })
             }
         }
@@ -827,7 +853,7 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
         guard let aselectedIndexPath = selectedIndexPath else { return }
         
         let next = aselectedIndexPath.item > 0 ? aselectedIndexPath.item - 1 : 0
-        selectedIndexPath = NSIndexPath(forItem: next, inSection: 0)
+        selectedIndexPath = nil
         canvasViewController.showOverlayAndSelectedAt(NSIndexPath(forItem: next, inSection: 0))
         page.removeAt(aselectedIndexPath.item)
         canvasViewController.removeAt(aselectedIndexPath)
