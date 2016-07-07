@@ -39,6 +39,10 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
     var previousScrollViewYOffset:CGFloat = 0.0
     
     var selectedCell:CTAHomePublishesCell? = nil
+    
+    var isHideSelectedCell:Bool = false
+    
+    let collectionSpace:CGFloat = 5
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,8 +112,8 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         let rect:CGRect = CGRect(x: 0, y: 46, width: bounds.width, height: bounds.height-46)
         self.collectionLayout = UICollectionViewFlowLayout()
 
-        self.collectionLayout.minimumLineSpacing = 5
-        self.collectionLayout.minimumInteritemSpacing = 5
+        self.collectionLayout.minimumLineSpacing = self.collectionSpace
+        self.collectionLayout.minimumInteritemSpacing = self.collectionSpace
         self.collectionView = UICollectionView(frame: rect, collectionViewLayout: self.collectionLayout)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
@@ -352,19 +356,62 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         if index < self.publishModelArray.count{
             let publihshModel = self.publishModelArray[index]
             publishCell.publishModel = publihshModel
+            if publihshModel.publishID == self.selectedPublishID{
+                if self.isHideSelectedCell {
+                    publishCell.previewView.alpha = 0
+                }
+                self.isHideSelectedCell = false
+            }
         }
         publishCell.delegate = self
         return publishCell
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
+        let publishesCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? CTAHomePublishesCell
         let index = indexPath.row
         self.selectedPublishID = ""
         if index < self.publishModelArray.count && index > -1{
             self.selectedPublishID = self.publishModelArray[index].publishID
         }
         if self.selectedPublishID != "" {
-            //self.selectCellAnimation()
+            let bounds = UIScreen.mainScreen().bounds
+            var cellFrame:CGRect!
+            var transitionView:UIView
+            var preview:CTAPublishPreviewView?
+            if publishesCell != nil {
+                preview = publishesCell!.previewView
+                cellFrame = preview!.frame
+                let offY = self.collectionView!.contentOffset.y
+                cellFrame.origin.y = cellFrame.origin.y + publishesCell!.frame.origin.y - offY + self.collectionView.frame.origin.y
+                cellFrame.origin.x = cellFrame.origin.x + publishesCell!.frame.origin.x
+                transitionView = preview!.snapshotViewAfterScreenUpdates(true)
+            }else {
+                cellFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
+                transitionView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+                transitionView.backgroundColor = CTAStyleKit.commonBackgroundColor
+            }
+            
+            let ani = CTAScaleTransition.getInstance()
+            ani.alphaView = preview
+            ani.transitionView = transitionView
+            ani.transitionAlpha = 1
+            ani.fromRect = cellFrame
+            ani.toRect = CGRect(x: 0, y: (bounds.height - bounds.width )/2 - 15, width: bounds.width, height: bounds.width)
+            
+            var detailType:PublishDetailType = .UserFollow
+            let userID = (self.loginUser == nil) ? "" : self.loginUser!.userID
+            if userID == ""{
+                detailType = .HotPublish
+            }else{
+                detailType = .UserFollow
+            }
+            let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self, type: detailType)
+            let navi = UINavigationController(rootViewController: vc)
+            navi.transitioningDelegate = ani
+            navi.modalPresentationStyle = .Custom
+            self.presentViewController(navi, animated: true, completion: {
+            })
         }
     }
     
@@ -428,36 +475,48 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     }
     
     func animationNavBarTo(y:CGFloat){
-        UIView.animateWithDuration(0.2) { () -> Void in
-            var toolBarViewframe = self.headerView.frame
-            var collectViewFrame = self.collectionView.frame
-            toolBarViewframe.origin.y = y
-            collectViewFrame.origin.y = toolBarViewframe.height + toolBarViewframe.origin.y - 18
-            collectViewFrame.size.height = self.view.frame.height - collectViewFrame.origin.y
-            self.headerView.frame = toolBarViewframe
-            self.collectionView.frame = collectViewFrame
-            let alpha:CGFloat = (y == 20 ? 1.0 : 0.0)
-            self.updateBarButtonsAlpha(alpha)
+        UIView.animateWithDuration(0.1) { () -> Void in
+            self.changeColloetionNavBar(y)
         }
     }
     
+    func changeColloetionNavBar(y:CGFloat){
+        var toolBarViewframe = self.headerView.frame
+        var collectViewFrame = self.collectionView.frame
+        toolBarViewframe.origin.y = y
+        collectViewFrame.origin.y = toolBarViewframe.height + toolBarViewframe.origin.y - 18
+        collectViewFrame.size.height = self.view.frame.height - collectViewFrame.origin.y
+        self.headerView.frame = toolBarViewframe
+        self.collectionView.frame = collectViewFrame
+        let alpha:CGFloat = (y == 20 ? 1.0 : 0.0)
+        self.updateBarButtonsAlpha(alpha)
+    }
+    
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
-        let top:CGFloat = 50
-        var buttom:CGFloat = 100
-        let bounds = UIScreen.mainScreen().bounds
         let index = indexPath.row
         if index < self.publishModelArray.count{
             let publish = self.publishModelArray[index]
-            if publish.likeCount > 0{
+            return self.getCollectionCellSizeByPublish(publish)
+        }else {
+            return CGSize(width: 0, height: 0)
+        }
+    }
+    
+    func getCollectionCellSizeByPublish(publish:CTAPublishModel? = nil) -> CGSize{
+        let top:CGFloat = 50
+        var buttom:CGFloat = 100
+        let bounds = UIScreen.mainScreen().bounds
+        if publish != nil {
+            if publish!.likeCount > 0{
                 buttom = 100
             }else {
                 buttom = 100
             }
+            return CGSize(width: bounds.width, height: bounds.width + top+buttom)
         }else {
             buttom = 100
+            return CGSize(width: bounds.width, height: bounds.width + top+buttom)
         }
-        let size = CGSize(width: bounds.width, height: bounds.width + top+buttom)
-        return size
     }
     
     func playCellAnimation(offY:CGFloat){
@@ -541,7 +600,7 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
         if self.loginUser != nil {
             if cell != nil {
                 self.selectedCell = cell
-                self.rebuildHandler()
+                self.rebuildHandler(false)
             }
         }else {
             self.showLoginView()
@@ -552,7 +611,7 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
         if self.loginUser != nil {
             if cell != nil {
                 self.selectedCell = cell
-                self.moreSelectionHandler(false)
+                self.moreSelectionHandler(false, isPopup: false)
             }
         }else {
             self.showLoginView()
@@ -588,5 +647,87 @@ extension HomeViewController{
         if self.selectedCell != nil {
             self.selectedCell?.changeLikeStatus()
         }
+    }
+}
+
+extension HomeViewController: PublishDetailViewDelegate{
+    
+    func transitionComplete() {
+        let cells = self.collectionView.visibleCells()
+        for i in 0..<cells.count{
+            let cell = cells[i] as! CTAHomePublishesCell
+            if cell.publishModel?.publishID == self.selectedPublishID{
+                cell.previewView.alpha = 1
+                cell.playAnimation()
+            }
+        }
+    }
+    
+    func getPublishCell(selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect?{
+        let cellFrame:CGRect = self.saveNewPublishArray(selectedID, publishArray: publishArray)
+        return cellFrame;
+    }
+    
+    func saveNewPublishArray(selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect{
+        var isChange:Bool = false
+        if publishArray.count == self.publishModelArray.count {
+            for i in 0..<publishArray.count{
+                let oldModel = self.publishModelArray[i]
+                let newModel = publishModelArray[i]
+                if oldModel.publishID != newModel.publishID {
+                    isChange = true
+                    break
+                }else {
+                    let index = self.getPublishIndex(newModel.publishID, publishArray: self.publishModelArray)
+                    if index != -1{
+                        self.publishModelArray.insert(newModel, atIndex: index)
+                        self.publishModelArray.removeAtIndex(index+1)
+                    }
+                }
+            }
+        }else {
+            isChange = true
+        }
+        if isChange{
+            self.publishModelArray.removeAll()
+            self.publishModelArray = publishArray
+            self.footerFresh.resetNoMoreData()
+            self.saveArrayToLocal()
+        }
+        self.selectedPublishID = selectedID
+        
+        var currentIndex:Int = 0
+        for i in 0..<self.publishModelArray.count{
+            let model = self.publishModelArray[i]
+            if model.publishID == self.selectedPublishID {
+                currentIndex = i
+            }
+        }
+        let boundsHeight = self.collectionView.frame.size.height
+        let totalIndex = self.publishModelArray.count - 1
+        let cellRect = self.getCollectionCellSizeByPublish()
+        let space = self.collectionSpace
+        let currentLineIndex = Int(currentIndex / 1)
+        let totalLineIndex   = Int(totalIndex / 1)
+        let currentY = CGFloat(currentLineIndex+1) * (space + cellRect.height) - cellRect.height/2
+        let totalY = CGFloat(totalLineIndex+1) * (space + cellRect.height) + space + 50
+        
+        var scrollOffY:CGFloat = 0
+        if (totalY - currentY) > boundsHeight/2{
+            scrollOffY = currentY - boundsHeight/2
+        }else {
+            scrollOffY = totalY - boundsHeight
+        }
+        if scrollOffY < -20{
+            scrollOffY = -20
+        }
+        self.isHideSelectedCell = true
+        self.collectionView.reloadData()
+        self.collectionView.contentOffset.y = scrollOffY
+        self.changeColloetionNavBar(20)
+        
+        let cellY = CGFloat(currentLineIndex) * (space + cellRect.height) - scrollOffY + self.collectionView.frame.origin.y
+        let currentRect = CGRect(x: 0, y: cellY+50, width: cellRect.width, height: cellRect.height - 150)
+        return currentRect
     }
 }

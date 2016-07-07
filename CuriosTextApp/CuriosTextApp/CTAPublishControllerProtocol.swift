@@ -18,8 +18,8 @@ protocol CTAPublishControllerProtocol: CTAEditViewControllerDelegate, CTAShareVi
     func likersHandelr()
     func likeHandler(justLike:Bool)
     func setLikeButtonStyle()
-    func moreSelectionHandler(isSelf:Bool)
-    func rebuildHandler()
+    func moreSelectionHandler(isSelf:Bool, isPopup:Bool)
+    func rebuildHandler(isPopup:Bool)
     func commentHandler()
 }
 
@@ -60,9 +60,13 @@ extension CTAPublishControllerProtocol where Self: UIViewController{
         
     }
     
-    func moreSelectionHandler(isSelf:Bool){
+    func moreSelectionHandler(isSelf:Bool, isPopup:Bool){
         let shareView = CTAShareView.getInstance()
-        NSNotificationCenter.defaultCenter().postNotificationName("addViewInRoot", object: shareView)
+        if isPopup{
+            self.view.addSubview(shareView)
+        }else {
+            NSNotificationCenter.defaultCenter().postNotificationName("addViewInRoot", object: shareView)
+        }
         shareView.delegate = self
         if isSelf{
             shareView.shareType = .loginUser
@@ -72,14 +76,14 @@ extension CTAPublishControllerProtocol where Self: UIViewController{
         shareView.showViewHandler()
     }
     
-    func rebuildHandler() {
+    func rebuildHandler(isPopup:Bool) {
         if let model = self.publishModel{
-            self.rebuildHandlerWith(model)
+            self.rebuildHandlerWith(model, isPopup: isPopup)
         }
     }
     
-    func rebuildHandlerWith(publishModel: CTAPublishModel? = nil){
-        if let publishModel = publishModel {
+    func rebuildHandlerWith(publishModel: CTAPublishModel? = nil, isPopup:Bool? = nil){
+        if let publishModel = publishModel, let isPopup = isPopup {
             
             let purl = CTAFilePath.publishFilePath
             let url = purl + publishModel.publishURL
@@ -115,7 +119,12 @@ extension CTAPublishControllerProtocol where Self: UIViewController{
                                                 }
                                             })
                                             
-                                            NSNotificationCenter.defaultCenter().postNotificationName("popupViewControllerInRoot", object: editNaviVC)
+                                            if isPopup{
+                                                slf.presentViewController(editNaviVC, animated: true, completion: { () -> Void in
+                                                })
+                                            }else {
+                                                NSNotificationCenter.defaultCenter().postNotificationName("popupViewControllerInRoot", object: editNaviVC)
+                                            }
                                         }
                                     })
                                 }

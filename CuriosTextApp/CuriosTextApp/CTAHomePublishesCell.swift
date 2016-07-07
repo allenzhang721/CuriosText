@@ -42,6 +42,9 @@ class CTAHomePublishesCell: UICollectionViewCell{
     var loadCompeteHandler:(() -> Void)?
     
     func initView(){
+        let bgView = UIView(frame: self.getViewRect())
+        self.contentView.addSubview(bgView)
+        bgView.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
         self.previewView = CTAPublishPreviewView(frame: self.getViewRect())
         self.contentView.addSubview(self.previewView)
         self.previewView.animationEnable = true
@@ -131,6 +134,7 @@ class CTAHomePublishesCell: UICollectionViewCell{
             }
         }
     }
+    
 }
 
 protocol CTAHomePublishesCellDelegate {
@@ -160,39 +164,44 @@ extension CTAHomePublishesCell: CTAPublishPreviewViewDelegate{
 }
 
 extension CTAHomePublishesCell: CTAPublishControllerDelegate{
-    func userIconTap(){
+
+    func controlUserIconTap(){
         if self.delegate != nil{
             self.delegate?.cellUserIconTap(self)
         }
     }
     
-    func likeListTap(){
+    func controlLikeListTap(){
         if self.delegate != nil{
             self.delegate?.cellLikeListTap(self)
         }
     }
     
-    func likeHandler(){
+    func controlLikeHandler(){
         if self.delegate != nil{
             self.delegate?.cellLikeHandler(self, justLike:false)
         }
     }
     
-    func commentHandler(){
+    func controlCommentHandler(){
         if self.delegate != nil{
             self.delegate?.cellCommentHandler(self)
         }
     }
     
-    func rebuildHandler(){
+    func controlRebuildHandler(){
         if self.delegate != nil{
             self.delegate?.cellRebuildHandler(self)
         }
     }
     
-    func moreHandler(){
+    func controlMoreHandler(){
         if self.delegate != nil{
             self.delegate?.cellMoreHandler(self)
         }
+    }
+    
+    func controlCloseHandler(){
+
     }
 }

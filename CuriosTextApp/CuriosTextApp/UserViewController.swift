@@ -69,6 +69,9 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     var loadingImageView:UIImageView? = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
     
     var topNikeNameY:CGFloat = 0.0
+    let cellHorCount = 3
+    
+    var isHideSelectedCell:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -825,6 +828,12 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if index < self.publishModelArray.count{
             let publihshModel = self.publishModelArray[index]
             publishesCell.publishModel = publihshModel
+            if publihshModel.publishID == self.selectedPublishID{
+                if self.isHideSelectedCell {
+                    publishesCell.alpha = 0
+                }
+                self.isHideSelectedCell = false
+            }
         }
         return publishesCell
     }
@@ -839,29 +848,32 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if self.selectedPublishID != "" {
             let bounds = UIScreen.mainScreen().bounds
             var cellFrame:CGRect!
+            var transitionView:UIView!
             if publishesCell != nil {
                 cellFrame = publishesCell!.frame
                 let offY = self.collectionView!.contentOffset.y
-                cellFrame.origin.y = cellFrame.origin.y - offY
+                cellFrame.origin.y = cellFrame.origin.y - offY + self.collectionView.frame.origin.y
+                transitionView = publishesCell!.snapshotViewAfterScreenUpdates(true)
             }else {
                 cellFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
+                transitionView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+                transitionView.backgroundColor = CTAStyleKit.commonBackgroundColor
             }
             
             let ani = CTAScaleTransition.getInstance()
-            var transitionView:UIView
-            if publishesCell != nil {
-                transitionView = publishesCell!.snapshotViewAfterScreenUpdates(true)
-            }else {
-                transitionView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-                transitionView.backgroundColor = UIColor.redColor()
-            }
             ani.alphaView = publishesCell
             ani.transitionView = transitionView
             ani.transitionAlpha = 1
-            ani.transitionBgColor = CTAStyleKit.commonBackgroundColor
             ani.fromRect = cellFrame
             ani.toRect = CGRect(x: 0, y: (bounds.height - bounds.width )/2 - 15, width: bounds.width, height: bounds.width)
-            let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self)
+            
+            var detailType:PublishDetailType = .Posts
+            if self.publishType == .Posts{
+                detailType = .Posts
+            }else if self.publishType == .Likes{
+                detailType = .Likes
+            }
+            let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self, type: detailType, viewUser: self.viewUser)
             let navi = UINavigationController(rootViewController: vc)
             navi.transitioningDelegate = ani
             navi.modalPresentationStyle = .Custom
@@ -907,33 +919,20 @@ extension UserViewController: UIGestureRecognizerDelegate{
 
 extension UserViewController: PublishDetailViewDelegate{
 
-    func changeCellSelected(selectedID:String, publishArray:Array<CTAPublishModel>){
-        self.saveNewPublishArray(selectedID, publishArray: publishArray)
-    }
-    
-    func getPublishCell(selectedID:String, publishArray:Array<CTAPublishModel>) -> (CGRect, UIView)?{
-        self.saveNewPublishArray(selectedID, publishArray: publishArray)
-        let publishCells = self.collectionView.visibleCells()
-        var selectedCell:CTAPublishesCell?
-        for i in 0..<publishCells.count{
-            let publish = publishCells[i] as! CTAPublishesCell
-            if publish.publishModel.publishID == selectedID{
-                selectedCell = publish
-                break
-            }
-        }
-        var cellFrame:CGRect!
-        if selectedCell != nil {
-            cellFrame = selectedCell!.frame
-            let offY = self.collectionView!.contentOffset.y
-            cellFrame.origin.y = cellFrame.origin.y - offY
-            return (cellFrame, selectedCell!);
-        }else {
-            return nil
+    func transitionComplete() {
+        let cells = self.collectionView.visibleCells()
+        for i in 0..<cells.count{
+            let cell = cells[i]
+            cell.alpha = 1
         }
     }
     
-    func saveNewPublishArray(selectedID:String, publishArray:Array<CTAPublishModel>){
+    func getPublishCell(selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect?{
+        let cellFrame:CGRect = self.saveNewPublishArray(selectedID, publishArray: publishArray)
+        return cellFrame;
+    }
+    
+    func saveNewPublishArray(selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect{
         var isChange:Bool = false
         if publishArray.count == self.publishModelArray.count {
             for i in 0..<publishArray.count{
@@ -959,10 +958,42 @@ extension UserViewController: PublishDetailViewDelegate{
             self.footerFresh.resetNoMoreData()
             self.saveArrayToLocal()
         }
-        self.collectionView.reloadData()
         self.selectedPublishID = selectedID
+        
+        var currentIndex:Int = 0
+        for i in 0..<self.publishModelArray.count{
+            let model = self.publishModelArray[i]
+            if model.publishID == self.selectedPublishID {
+                currentIndex = i
+            }
+        }
+        let boundsHeight = self.collectionView.frame.size.height
+        let totalIndex = self.publishModelArray.count - 1
+        let cellRect = self.getCellRect()
+        let space = self.getCellSpace()
+        let currentLineIndex = Int(currentIndex / self.cellHorCount)
+        let currentColumnIndex = Int(currentIndex % self.cellHorCount)
+        let totalLineIndex   = Int(totalIndex / self.cellHorCount)
+        let currentY = CGFloat(currentLineIndex+1) * (space + cellRect.height) - cellRect.height/2 + self.topView.frame.height
+        let totalY = CGFloat(totalLineIndex+1) * (space + cellRect.height) + self.topView.frame.height + space + 50
+        
+        var scrollOffY:CGFloat = 0
+        if (totalY - currentY) > boundsHeight/2{
+            scrollOffY = currentY - boundsHeight/2
+        }else {
+            scrollOffY = totalY - boundsHeight
+        }
+        if scrollOffY < -20{
+            scrollOffY = -20
+        }
+        self.isHideSelectedCell = true
+        self.collectionView.reloadData()
+        self.collectionView.contentOffset.y = scrollOffY
+        
+        let cellY = CGFloat(currentLineIndex) * (space + cellRect.height) + self.topView.frame.height - scrollOffY + self.collectionView.frame.origin.y
+        let currentRect = CGRect(x: CGFloat(currentColumnIndex)*(space + cellRect.width) + space, y: cellY, width: cellRect.width, height: cellRect.height)
+        return currentRect
     }
-    
 }
 
 class CTAPublishTransitionCell: UIView{

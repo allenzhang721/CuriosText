@@ -15,12 +15,14 @@ private enum Actions: String {
 
 extension Moduler {
     
-    static func module_publishDetail(selectedPublishID:String, publishArray:Array<CTAPublishModel>, delegate:PublishDetailViewDelegate) -> UIViewController {
+    static func module_publishDetail(selectedPublishID:String, publishArray:Array<CTAPublishModel>, delegate:PublishDetailViewDelegate, type:PublishDetailType, viewUser:CTAViewUserModel? = nil) -> UIViewController {
         
         var paras: [String: AnyObject] = [:]
         paras["selectedPublishID"] = selectedPublishID
         paras["publishArray"] = publishArray
         paras["delegate"] = delegate
+        paras["type"] = String(type)
+        paras["viewUser"] = viewUser
         
         let vc = Moduler.target(moduleName, performAction: Actions.New.rawValue, paras: paras)?.takeUnretainedValue() as! UIViewController
         return vc

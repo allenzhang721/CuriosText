@@ -72,6 +72,7 @@ class CTAPublishPreviewView: UIView, CTAImageControllerProtocol{
     }
     
     func loadImg() {
+        self.cellImageView.frame = self.bounds
         self.bringSubviewToFront(self.cellImageView)
         if self.publishModel != nil {
             let defaultImg = self.getDefaultIcon(self.bounds)
