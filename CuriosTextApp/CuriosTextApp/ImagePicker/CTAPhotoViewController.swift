@@ -74,7 +74,10 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhoto
         super.awakeFromNib()
         resetCacheSets()
         
-        self.tabBarItem = UITabBarItem(title: LocalStrings.Photo.description, image: ImagePickerResource.imageOfPhotoLibrary, selectedImage: nil)
+        let selectedImage = ImagePickerResource.imageOfPhotoLibrarySelected.imageWithRenderingMode(.AlwaysOriginal)
+        
+        
+        self.tabBarItem = UITabBarItem(title: LocalStrings.Photo.description, image: ImagePickerResource.imageOfPhotoLibrary, selectedImage: selectedImage)
     }
     
     //    private var thumbnailSize
@@ -219,6 +222,7 @@ extension CTAPhotoViewController {
             backgroundColorHex = "FFFFFF"
             backgroundButton.selected = false
         }
+        
         backgroundColor = UIColor(hexString: backgroundColorHex)!
         previewView.backgroundColor = backgroundColor
     }

@@ -30,6 +30,7 @@ extension ContainerVMProtocol {
                 .Rotator,
                 .TextSpacing,
                 .Aligments,
+                .ShadowAndStroke
                 
             ]
             

@@ -25,6 +25,7 @@ protocol CTASelectorScaleable: CTASelectorable {
     func radianDidChanged(radian: CGFloat)
     func fontDidChanged(fontFamily: String, fontName: String)
     func alignmentDidChanged(alignment: NSTextAlignment)
+    func shadowAndStrokeDidChanged(needShadow: Bool, needStroke: Bool)
     func spacingDidChanged(lineSpacing: CGFloat, textSpacing: CGFloat)
     func colorDidChanged(item: CTAColorItem)
     func animationDurationDidChanged(t: CGFloat)
@@ -61,6 +62,7 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
         case .Rotator: return "radianChanged:"
         case .Fonts: return "indexPathOfFontsChanged:"
         case .Aligments: return "aligmentsChanged:"
+        case .ShadowAndStroke: return "shadowAndStrokeChanged:"
         case .TextSpacing: return "textSpacingChanged:"
         case .Colors: return "colorChanged:"
         case .Animation: return "animationChanged:"
@@ -262,6 +264,16 @@ extension CTASelectorsViewController: CTASelectorDataSource {
          return textElement.alignment
     }
     
+    func selectorBeganNeedShadowAndStroke(cell: CTASelectorCell) -> (Bool, Bool) {
+        
+        guard
+            let container = container as? TextContainerVMProtocol,
+            let textElement = container.textElement else {
+                return (false, false)
+        }
+        return (textElement.needShadow, textElement.needStroke)
+    }
+    
     func selectorBeganSpacing(cell: CTASelectorCell) -> (CGFloat, CGFloat) {
         guard
             let container = container as? TextContainerVMProtocol,
@@ -356,6 +368,10 @@ extension CTASelectorsViewController {
     
     func aligmentsChanged(sender: CTASegmentControl) {
         delegate?.alignmentDidChanged(NSTextAlignment(rawValue: sender.selectedIndex)!)
+    }
+    
+    func shadowAndStrokeChanged(result: [Bool]) { // needShadow, needStroke
+        delegate?.shadowAndStrokeDidChanged(result[0] ?? false, needStroke: result[1] ?? false)
     }
     
     func textSpacingChanged(sender: CTATextSpacingView) {

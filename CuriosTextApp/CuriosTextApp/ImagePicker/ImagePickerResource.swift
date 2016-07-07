@@ -18,16 +18,18 @@ public class ImagePickerResource : NSObject {
 
     private struct Cache {
         static var imageOfCamera: UIImage?
+        static var imageOfCameraSelected: UIImage?
         static var cameraTargets: [AnyObject]?
         static var imageOfPhotoLibrary: UIImage?
+        static var imageOfPhotoLibrarySelected: UIImage?
         static var photoLibraryTargets: [AnyObject]?
     }
 
     //// Drawing Methods
 
-    public class func drawCamera() {
+    public class func drawCamera(color: UIColor = UIColor.blackColor()) {
         //// Color Declarations
-        let fillColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)
+        let fillColor = color
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -118,9 +120,9 @@ public class ImagePickerResource : NSObject {
         bezierPath.fill()
     }
 
-    public class func drawPhotoLibrary() {
+    public class func drawPhotoLibrary(color: UIColor = UIColor.blackColor()) {
         //// Color Declarations
-        let fillColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)
+        let fillColor = color
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -210,6 +212,20 @@ public class ImagePickerResource : NSObject {
 
         return Cache.imageOfCamera!
     }
+    
+    public class var imageOfCameraSelected: UIImage {
+        if Cache.imageOfCameraSelected != nil {
+            return Cache.imageOfCameraSelected!
+        }
+        
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(27, 20), false, 0)
+        ImagePickerResource.drawCamera(UIColor.redColor())
+        
+        Cache.imageOfCameraSelected = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return Cache.imageOfCameraSelected!
+    }
 
     public class var imageOfPhotoLibrary: UIImage {
         if Cache.imageOfPhotoLibrary != nil {
@@ -223,6 +239,20 @@ public class ImagePickerResource : NSObject {
         UIGraphicsEndImageContext()
 
         return Cache.imageOfPhotoLibrary!
+    }
+    
+    public class var imageOfPhotoLibrarySelected: UIImage {
+        if Cache.imageOfPhotoLibrarySelected != nil {
+            return Cache.imageOfPhotoLibrarySelected!
+        }
+        
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(20, 20), false, 0)
+        ImagePickerResource.drawPhotoLibrary(UIColor.redColor())
+        
+        Cache.imageOfPhotoLibrarySelected = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return Cache.imageOfPhotoLibrarySelected!
     }
 
     //// Customization Infrastructure

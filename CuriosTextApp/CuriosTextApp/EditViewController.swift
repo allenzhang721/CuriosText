@@ -955,6 +955,19 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         }
         
         container.updateWithTextAlignment(alignment)
+        container.updatewithNeedShadow(true, needStroke: false)
+        canvasViewController.updateAt(selectedIndexPath, updateContents: true)
+    }
+    
+    // MARK: - Shadow and Stroke Changed
+    func shadowAndStrokeDidChanged(needShadow: Bool, needStroke: Bool) {
+        guard
+            let selectedIndexPath = selectedIndexPath,
+            let container = selectedContainer as? TextContainerVMProtocol else {
+                return
+        }
+        
+        container.updatewithNeedShadow(needShadow, needStroke: needStroke)
         canvasViewController.updateAt(selectedIndexPath, updateContents: true)
     }
     

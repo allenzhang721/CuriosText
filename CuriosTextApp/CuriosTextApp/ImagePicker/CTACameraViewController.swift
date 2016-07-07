@@ -67,7 +67,9 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.tabBarItem = UITabBarItem(title: LocalStrings.Camera.description, image: ImagePickerResource.imageOfCamera, selectedImage: nil)
+        let selectedImage = ImagePickerResource.imageOfCameraSelected.imageWithRenderingMode(.AlwaysOriginal)
+        
+        self.tabBarItem = UITabBarItem(title: LocalStrings.Camera.description, image: ImagePickerResource.imageOfCamera, selectedImage: selectedImage)
     }
     
     override func viewDidLoad() {

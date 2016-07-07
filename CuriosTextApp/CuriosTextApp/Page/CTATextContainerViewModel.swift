@@ -17,6 +17,7 @@ protocol TextContainerVMProtocol: ContainerVMProtocol {
     func updateWithTextAlignment(alignment: NSTextAlignment)
     func updateWithTextSpacing(lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize)
     func updateWithColor(hex: String, alpha: CGFloat)
+    func updatewithNeedShadow(needShadow: Bool, needStroke: Bool)
 }
 
 protocol TextRetrievable: class {
@@ -30,6 +31,7 @@ protocol TextRetrievable: class {
     
     func attributeStringWithFontScale(scale: CGFloat) -> NSAttributedString
     func attributeStringWithAlignment(alignment: NSTextAlignment) -> NSAttributedString
+//    func attributeStringWithNeedShadow(needShadow: Bool, needStroke: Bool) -> NSAttributedString
 }
 
 extension TextRetrievable {
@@ -86,6 +88,10 @@ extension TextRetrievable {
     func textResultWithAlignment(alignment: NSTextAlignment) -> NSAttributedString {
         return attributeStringWithAlignment(alignment)
     }
+    
+//    func attributeStringWithNeedShadow(needShadow: Bool, needStroke: Bool) -> NSAttributedString {
+//        return attributeStringWithNeedShadow(needShadow, needStroke: needStroke)
+//    }
 }
 
 protocol TextModifiable: TextRetrievable {
@@ -100,6 +106,8 @@ protocol TextModifiable: TextRetrievable {
     var textSpacing: CGFloat { get set }
     var colorHex: String { get set }
     var colorAlpha: CGFloat { get set }
+    var needShadow: Bool { get set}
+    var needStroke: Bool { get set }
     
     func resultWithText(text: String, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
     
@@ -195,6 +203,15 @@ extension CTAContainer: TextContainerVMProtocol {
         textElement.colorHex = hex
         textElement.colorAlpha = alpha
         
+    }
+    
+    func updatewithNeedShadow(needShadow: Bool, needStroke: Bool) {
+        guard let textElement = textElement else {
+            fatalError("This Contaienr do not contain Text Element")
+        }
+        
+        textElement.needShadow = needShadow
+        textElement.needStroke = needStroke
     }
     
     // TODO: CTAContainer, Calculate the position and origion if occur rotation -- Emiaostein; 2015-12-18-14:49
