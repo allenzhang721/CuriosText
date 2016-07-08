@@ -57,6 +57,10 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
         self.view.backgroundColor = UIColor.clearColor()
         self.loadLocalUserModel()
     }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -460,9 +464,8 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
     }
     
     func viewVerComplete(newLocation:CGPoint){
-        let maxX = UIScreen.mainScreen().bounds.height
         let xRate = newLocation.y - beganLocation.y
-        if abs(xRate) >= maxX/16 {
+        if abs(xRate) >= 10 {
             self.verPanAnimation()
         }else {
             self.verPanResetAnimation(xRate)

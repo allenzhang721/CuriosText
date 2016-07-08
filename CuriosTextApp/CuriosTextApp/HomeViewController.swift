@@ -112,6 +112,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         let rect:CGRect = CGRect(x: 0, y: 46, width: bounds.width, height: bounds.height-46)
         self.collectionLayout = UICollectionViewFlowLayout()
 
+        self.collectionLayout.itemSize = self.getCollectionCellSizeByPublish()
         self.collectionLayout.minimumLineSpacing = self.collectionSpace
         self.collectionLayout.minimumInteritemSpacing = self.collectionSpace
         self.collectionView = UICollectionView(frame: rect, collectionViewLayout: self.collectionLayout)
@@ -491,16 +492,16 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         let alpha:CGFloat = (y == 20 ? 1.0 : 0.0)
         self.updateBarButtonsAlpha(alpha)
     }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
-        let index = indexPath.row
-        if index < self.publishModelArray.count{
-            let publish = self.publishModelArray[index]
-            return self.getCollectionCellSizeByPublish(publish)
-        }else {
-            return CGSize(width: 0, height: 0)
-        }
-    }
+//    
+//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
+//        let index = indexPath.row
+//        if index < self.publishModelArray.count{
+//            let publish = self.publishModelArray[index]
+//            return self.getCollectionCellSizeByPublish(publish)
+//        }else {
+//            return CGSize(width: 0, height: 0)
+//        }
+//    }
     
     func getCollectionCellSizeByPublish(publish:CTAPublishModel? = nil) -> CGSize{
         let top:CGFloat = 50
@@ -709,12 +710,12 @@ extension HomeViewController: PublishDetailViewDelegate{
         let space = self.collectionSpace
         let currentLineIndex = Int(currentIndex / 1)
         let totalLineIndex   = Int(totalIndex / 1)
-        let currentY = CGFloat(currentLineIndex+1) * (space + cellRect.height) - cellRect.height/2
-        let totalY = CGFloat(totalLineIndex+1) * (space + cellRect.height) + space + 50
+        let currentY = CGFloat(currentLineIndex) * (space + cellRect.height) - 20
+        let totalY = CGFloat(totalLineIndex+1) * (space + cellRect.height) + 50
         
         var scrollOffY:CGFloat = 0
-        if (totalY - currentY) > boundsHeight/2{
-            scrollOffY = currentY - boundsHeight/2
+        if (totalY - currentY) > boundsHeight{
+            scrollOffY = currentY
         }else {
             scrollOffY = totalY - boundsHeight
         }

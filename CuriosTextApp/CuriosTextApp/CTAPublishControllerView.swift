@@ -53,6 +53,8 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
     var moreButtonImg:UIImageView!
     var moreView:UIView!
     
+    var likeCountImg:UIImageView!
+    
     var closeButton:UIButton!
     
     var delegate:CTAPublishControllerDelegate?
@@ -149,9 +151,9 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
         let likeCountView = UIView(frame: CGRect(x: 0, y: lastY, width: bounds.width/2, height: 50))
         self.addSubview(likeCountView)
         likeCountView.backgroundColor = UIColor.clearColor()
-        let likeCountImg = UIImageView(frame: CGRect(x: 12, y: 10, width: 30, height: 30))
-        likeCountImg.image = UIImage(named: "like-count");
-        likeCountView.addSubview(likeCountImg)
+        self.likeCountImg = UIImageView(frame: CGRect(x: 12, y: 10, width: 30, height: 30))
+        self.likeCountImg.image = UIImage(named: "like-count");
+        likeCountView.addSubview(self.likeCountImg)
         self.publishLikeCountLabel = UILabel(frame: CGRect(x: 53, y: 16, width: bounds.width/2, height: 18))
         self.publishLikeCountLabel.font = UIFont.systemFontOfSize(13)
         self.publishLikeCountLabel.textColor = CTAStyleKit.normalColor
@@ -164,13 +166,13 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
         
         self.closeButton = UIButton(frame: CGRect(x: 0, y: 2, width: 40, height: 40))
         self.closeButton.setImage(UIImage(named: "close-button"), forState: .Normal)
-        self.closeButton.setImage(UIImage(named: "close-selected-button"), forState: .Highlighted)
         self.closeButton.addTarget(self, action: #selector(closeButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.addSubview(self.closeButton)
     }
     
     func reloadView(){
         if self.publishModel != nil{
+            self.setViewByType()
             let usermodel = self.publishModel!.userModel
             self.setNikeNameLabel(usermodel.nickName)
             self.setTimeLabel(self.getPublishDate(self.publishModel!.publishDate))
@@ -192,6 +194,34 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
         self.commentCountLabel.text = ""
         self.rebuildLabel.text = "Ding"
         self.closeButton.hidden = true
+        self.type = .PublishCell
+        self.setViewByType()
+    }
+    
+    func setViewByType(){
+        if self.type == .PublishCell{
+            self.closeButton.setImage(UIImage(named: "close-button"), forState: .Normal)
+            self.userNickNameLabel.textColor = CTAStyleKit.normalColor
+            self.moreButtonImg.image = UIImage(named: "moreSelection-button")
+            self.likeButtonImg.image = UIImage(named: "like-button")
+            self.commentButtonImg.image = UIImage(named: "comment-button")
+            self.commentCountLabel.textColor = CTAStyleKit.normalColor
+            self.rebuildButtonImg.image = UIImage(named: "rebuild-button");
+            self.rebuildLabel.textColor = CTAStyleKit.normalColor
+            self.likeCountImg.image = UIImage(named: "like-count")
+            self.publishLikeCountLabel.textColor = CTAStyleKit.normalColor
+        }else if self.type == .PublishDetail{
+            self.closeButton.setImage(UIImage(named: "close-white-button"), forState: .Normal)
+            self.userNickNameLabel.textColor = CTAStyleKit.commonBackgroundColor
+            self.moreButtonImg.image = UIImage(named: "moreSelection-white-button")
+            self.likeButtonImg.image = UIImage(named: "like-white-button")
+            self.commentButtonImg.image = UIImage(named: "comment-white-button")
+            self.commentCountLabel.textColor = CTAStyleKit.commonBackgroundColor
+            self.rebuildButtonImg.image = UIImage(named: "rebuild-white-button");
+            self.rebuildLabel.textColor = CTAStyleKit.commonBackgroundColor
+            self.likeCountImg.image = UIImage(named: "like-white-count")
+            self.publishLikeCountLabel.textColor = CTAStyleKit.commonBackgroundColor
+        }
     }
     
     func setNikeNameLabel(text:String){
@@ -209,7 +239,7 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
             if self.userNickNameLabel.frame.width > maxText {
                 self.userNickNameLabel.frame.size.width = maxText
             }
-            let iconW = self.userNickNameLabel.frame.width + 53
+            let iconW = self.userNickNameLabel.frame.width + 64
             let iconX = (bounds.width - iconW)/2
             self.iconView.frame.origin.x = iconX
             self.iconView.frame.size.width = iconW
@@ -275,7 +305,12 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
     func changeLikeStatus(){
         if let model = self.publishModel{
             if model.likeStatus == 0{
-                self.likeButtonImg.image = UIImage.init(named: "like-button")
+                if self.type == .PublishCell {
+                    self.likeButtonImg.image = UIImage.init(named: "like-button")
+                }else if self.type == .PublishDetail{
+                    self.likeButtonImg.image = UIImage(named: "like-white-button")
+                }
+               
             }else {
                 self.likeButtonImg.image = UIImage.init(named: "like-selected-button")
             }

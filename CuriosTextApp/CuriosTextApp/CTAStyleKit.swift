@@ -23,6 +23,7 @@ public class CTAStyleKit : NSObject {
         static let disableColor: UIColor = UIColor(red: 0.847, green: 0.847, blue: 0.847, alpha: 1.000)
         static let ediorBackgroundColor: UIColor = UIColor(red: 0.827, green: 0.827, blue: 0.827, alpha: 1.000)
         static let commonBackgroundColor: UIColor = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1.000)
+        static let detailBackgroundColor: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)
         static let lightGrayBackgroundColor: UIColor = UIColor(red: 0.945, green: 0.945, blue: 0.945, alpha: 1.000)
         static let one0: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)
         static let one1: UIColor = UIColor(red: 0.357, green: 0.271, blue: 0.561, alpha: 1.000)
@@ -147,7 +148,7 @@ public class CTAStyleKit : NSObject {
     public class var disableColor: UIColor { return Cache.disableColor }
     public class var ediorBackgroundColor: UIColor { return Cache.ediorBackgroundColor }
     public class var commonBackgroundColor: UIColor { return Cache.commonBackgroundColor }
-    public class var detailBackgroundColor: UIColor { return Cache.commonBackgroundColor }
+    public class var detailBackgroundColor: UIColor { return Cache.detailBackgroundColor }
     public class var lightGrayBackgroundColor: UIColor { return Cache.lightGrayBackgroundColor }
     public class var one0: UIColor { return Cache.one0 }
     public class var one1: UIColor { return Cache.one1 }
