@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         registerSystemFonts()
         familiesDisplayNames()
         familiesFixRatio()
-        ImageCache.defaultCache.maxMemoryCost = 20 * 1024 * 1024 // Allen: 20 MB
+        ImageCache.defaultCache.maxMemoryCost = 50 * 1024 * 1024 // Allen: 20 MB
         // Override point for customization after application launch.
         #if DEBUG
             CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.Test.description

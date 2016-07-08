@@ -24,6 +24,8 @@ class CTAScaleTransition: NSObject, UIViewControllerTransitioningDelegate {
     
     var transitionAlpha:CGFloat = 1
     
+    var bgView:UIView?
+    
     weak var alphaView:UIView?
     
     static func getInstance() -> CTAScaleTransition{
@@ -59,6 +61,9 @@ extension CTAScaleTransition: UIViewControllerAnimatedTransitioning{
         if isPersent{
             if let toView = transitionContext.viewForKey(UITransitionContextToViewKey){
                 let view = transitionContext.containerView()!
+                if self.bgView != nil {
+                    view.addSubview(self.bgView!)
+                }
                 toView.frame = CGRect.init(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
                 if self.fromRect != nil {
                     if self.toRect != nil {
@@ -177,5 +182,9 @@ extension CTAScaleTransition: UIViewControllerAnimatedTransitioning{
         self.toRect = nil
         self.transitionBackView = nil
         self.transitionAlpha = 1
+        if self.bgView != nil {
+            self.bgView!.removeFromSuperview()
+            self.bgView = nil
+        }
     }
 }

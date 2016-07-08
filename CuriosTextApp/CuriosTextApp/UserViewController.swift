@@ -859,8 +859,10 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 transitionView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
                 transitionView.backgroundColor = CTAStyleKit.commonBackgroundColor
             }
+            let bgView = self.view.snapshotViewAfterScreenUpdates(false)
             
             let ani = CTAScaleTransition.getInstance()
+            ani.bgView = bgView
             ani.alphaView = publishesCell
             ani.transitionView = transitionView
             ani.transitionAlpha = 1

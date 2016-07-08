@@ -47,6 +47,8 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
     var isLoadingFirstData:Bool = false
     var isLoading:Bool = false
     
+    var isHideBar:Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -58,13 +60,15 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
         self.loadLocalUserModel()
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override func prefersStatusBarHidden() -> Bool {
+        return self.isHideBar
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.loadPublishCell(false)
+        self.isHideBar = true
+        self.setNeedsStatusBarAppearanceUpdate()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -198,6 +202,8 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
         var toRect:CGRect!
         let alphaView:UIView? = nil
         if self.delegate != nil {
+            self.isHideBar = false
+            self.setNeedsStatusBarAppearanceUpdate()
             if let paremt = self.delegate?.getPublishCell(self.selectedPublishID, publishArray: self.publishArray){
                 toRect = paremt
             }else {
@@ -273,6 +279,8 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
                     self.viewHorPanHandler(newLocation)
                     self.panDirection = .Hor
                 }else {
+                    self.isHideBar = false
+                    self.setNeedsStatusBarAppearanceUpdate()
                     if self.delegate != nil {
                         self.cellRect = self.delegate!.getPublishCell(self.selectedPublishID, publishArray: self.publishArray)
                     }else {
@@ -436,7 +444,9 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
             self.lastLocation = self.beganLocation
         }
         let yChange = newLocation.y - self.lastLocation!.y
+        //let xChange = newLocation.x - self.lastLocation!.x
         var center = self.currentPreviewCell.center
+        //center.x = center.x + xChange
         center.y = center.y + yChange
         var percent:CGFloat = 1
         if abs(yRate) > maxY {

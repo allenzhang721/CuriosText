@@ -392,8 +392,10 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                 transitionView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
                 transitionView.backgroundColor = CTAStyleKit.commonBackgroundColor
             }
+            let bgView = self.view.snapshotViewAfterScreenUpdates(false)
             
             let ani = CTAScaleTransition.getInstance()
+            ani.bgView = bgView
             ani.alphaView = preview
             ani.transitionView = transitionView
             ani.transitionAlpha = 1
@@ -408,9 +410,11 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                 detailType = .UserFollow
             }
             let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self, type: detailType)
+            
             let navi = UINavigationController(rootViewController: vc)
             navi.transitioningDelegate = ani
             navi.modalPresentationStyle = .Custom
+
             self.presentViewController(navi, animated: true, completion: {
             })
         }
@@ -654,6 +658,8 @@ extension HomeViewController{
 extension HomeViewController: PublishDetailViewDelegate{
     
     func transitionComplete() {
+//        let frame = self.view.frame
+//        self.view.frame.origin.y = frame.origin.y + 20
         let cells = self.collectionView.visibleCells()
         for i in 0..<cells.count{
             let cell = cells[i] as! CTAHomePublishesCell
