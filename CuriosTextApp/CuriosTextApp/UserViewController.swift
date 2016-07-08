@@ -867,7 +867,7 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
             ani.transitionView = transitionView
             ani.transitionAlpha = 1
             ani.fromRect = cellFrame
-            ani.toRect = CGRect(x: 0, y: (bounds.height - bounds.width )/2 - 15, width: bounds.width, height: bounds.width)
+            ani.toRect = CGRect(x: 0, y: (bounds.height - bounds.width )/2 - Detail_Space, width: bounds.width, height: bounds.width)
             
             var detailType:PublishDetailType = .Posts
             if self.publishType == .Posts{

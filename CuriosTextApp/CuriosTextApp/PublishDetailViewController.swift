@@ -16,6 +16,8 @@ enum PublishDetailType: String {
     case Single = "Single"
 }
 
+let Detail_Space:CGFloat = 25
+
 class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
     
     var selectedPublishID:String = ""
@@ -96,11 +98,11 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
         self.backgroundView.backgroundColor = CTAStyleKit.detailBackgroundColor
         self.view.addSubview(self.backgroundView)
         
-        self.currentPreviewCell = CTAPublishPreviewView(frame: CGRect(x: 0, y: (bounds.height - bounds.width)/2 - 15, width: bounds.width, height: bounds.height))
+        self.currentPreviewCell = CTAPublishPreviewView(frame: CGRect(x: 0, y: (bounds.height - bounds.width)/2 - Detail_Space, width: bounds.width, height: bounds.height))
         self.view.addSubview(self.currentPreviewCell)
         self.currentPreviewCell.animationEnable = true
         
-        self.controllerView = CTAPublishControllerView(frame: CGRect(x: 0, y: 20, width: bounds.width, height: bounds.height-20))
+        self.controllerView = CTAPublishControllerView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height))
         self.controllerView.type = .PublishDetail
         self.controllerView.delegate = self
         self.view.addSubview(self.controllerView)
@@ -133,7 +135,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
         let seletedIndex = self.getPublishIndexByID(self.selectedPublishID)
         if selectedPublish != nil {
             let currentSize = self.getViewRect(selectedPublish)
-            self.currentPreviewCell.frame = CGRect(x: 0, y: (bounds.height - currentSize.height )/2 - 15, width: currentSize.width, height: currentSize.height)
+            self.currentPreviewCell.frame = CGRect(x: 0, y: (bounds.height - currentSize.height )/2 - Detail_Space, width: currentSize.width, height: currentSize.height)
             if self.currentPreviewCell.publishModel == nil || self.currentPreviewCell.publishModel!.publishID != selectedPublish!.publishID{
                 self.currentPreviewCell.publishModel = selectedPublish
                 self.currentPreviewCell.loadImg()
@@ -142,11 +144,11 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
                 let nextPublish = self.publishArray[seletedIndex + 1]
                 let nextSize = self.getViewRect(nextPublish)
                 if self.nextPreviewCell == nil {
-                    self.nextPreviewCell = CTAPublishPreviewView(frame: CGRect(x: bounds.width + 5, y: (bounds.height - nextSize.height )/2 - 15, width: nextSize.width, height: nextSize.height))
+                    self.nextPreviewCell = CTAPublishPreviewView(frame: CGRect(x: bounds.width + 5, y: (bounds.height - nextSize.height )/2 - Detail_Space, width: nextSize.width, height: nextSize.height))
                     self.view.addSubview(self.nextPreviewCell!)
                     self.nextPreviewCell?.animationEnable = true
                 }else {
-                    self.nextPreviewCell?.frame = CGRect(x: bounds.width + 5, y: (bounds.height - nextSize.height )/2 - 15, width: nextSize.width, height: nextSize.height)
+                    self.nextPreviewCell?.frame = CGRect(x: bounds.width + 5, y: (bounds.height - nextSize.height )/2 - Detail_Space, width: nextSize.width, height: nextSize.height)
                 }
                 if self.nextPreviewCell!.publishModel == nil || self.nextPreviewCell!.publishModel!.publishID != nextPublish.publishID{
                     self.nextPreviewCell!.publishModel = nextPublish
@@ -164,11 +166,11 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
                 let previousPublish = self.publishArray[seletedIndex - 1]
                 let previousSize = self.getViewRect(previousPublish)
                 if self.previousPreviewCell == nil {
-                    self.previousPreviewCell = CTAPublishPreviewView(frame: CGRect(x: 0-previousSize.width - 5, y: (bounds.height - previousSize.height )/2 - 15, width: previousSize.width, height: previousSize.height))
+                    self.previousPreviewCell = CTAPublishPreviewView(frame: CGRect(x: 0-previousSize.width - 5, y: (bounds.height - previousSize.height )/2 - Detail_Space, width: previousSize.width, height: previousSize.height))
                     self.view.addSubview(self.previousPreviewCell!)
                     self.previousPreviewCell?.animationEnable = true
                 }else {
-                    self.previousPreviewCell?.frame = CGRect(x: 0-previousSize.width - 5, y: (bounds.height - previousSize.height )/2 - 15, width: previousSize.width, height: previousSize.height)
+                    self.previousPreviewCell?.frame = CGRect(x: 0-previousSize.width - 5, y: (bounds.height - previousSize.height )/2 - Detail_Space, width: previousSize.width, height: previousSize.height)
                 }
                 if self.previousPreviewCell?.publishModel == nil || self.previousPreviewCell!.publishModel?.publishID != previousPublish.publishID{
                     self.previousPreviewCell?.publishModel = previousPublish
@@ -492,7 +494,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
                     let bounds = self.view.bounds
                     let selectedPublish = self.getPublishModelByID(self.selectedPublishID)
                     let currentSize = self.getViewRect(selectedPublish)
-                    self.currentPreviewCell.center = CGPoint(x: currentSize.width, y: bounds.height/2 - 15)
+                    self.currentPreviewCell.center = CGPoint(x: currentSize.width, y: bounds.height/2 - Detail_Space)
                 }
                 self.backgroundView.alpha = 1
                 self.controllerView.alpha = 1
