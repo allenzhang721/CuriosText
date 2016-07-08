@@ -147,6 +147,7 @@ public class CTAStyleKit : NSObject {
     public class var disableColor: UIColor { return Cache.disableColor }
     public class var ediorBackgroundColor: UIColor { return Cache.ediorBackgroundColor }
     public class var commonBackgroundColor: UIColor { return Cache.commonBackgroundColor }
+    public class var detailBackgroundColor: UIColor { return Cache.commonBackgroundColor }
     public class var lightGrayBackgroundColor: UIColor { return Cache.lightGrayBackgroundColor }
     public class var one0: UIColor { return Cache.one0 }
     public class var one1: UIColor { return Cache.one1 }

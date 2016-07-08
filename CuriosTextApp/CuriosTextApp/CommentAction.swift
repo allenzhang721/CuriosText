@@ -12,10 +12,10 @@ class CommentAction: NSObject {
     
     class func commentViewController(paras: [String: AnyObject]) -> UIViewController {
         
-        guard let userID = paras["userID"] as? String else { fatalError() }
+        guard let publishID = paras["publishID"] as? String else { fatalError() }
         
         let vc = CommentViewController()
-        vc.userID = userID
+        vc.publishID = publishID
         
         return vc
     }

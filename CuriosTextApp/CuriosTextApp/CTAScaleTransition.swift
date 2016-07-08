@@ -65,7 +65,7 @@ extension CTAScaleTransition: UIViewControllerAnimatedTransitioning{
                         toView.alpha = 1
                         if self.transitionBackView == nil {
                             self.transitionBackView = UIView(frame: toView.frame)
-                            self.transitionBackView!.backgroundColor = CTAStyleKit.commonBackgroundColor
+                            self.transitionBackView!.backgroundColor = CTAStyleKit.detailBackgroundColor
                         }
                         self.transitionBackView!.alpha = 0
                         view.addSubview(self.transitionBackView!)
@@ -124,7 +124,7 @@ extension CTAScaleTransition: UIViewControllerAnimatedTransitioning{
                     if self.fromRect != nil {
                         if self.transitionBackView == nil {
                             self.transitionBackView = UIView(frame: fromView.frame)
-                            self.transitionBackView!.backgroundColor = CTAStyleKit.commonBackgroundColor
+                            self.transitionBackView!.backgroundColor = CTAStyleKit.detailBackgroundColor
                         }
                         self.transitionBackView!.alpha = self.transitionAlpha
                         view.addSubview(self.transitionBackView!)

@@ -85,7 +85,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
     func initView(){
         let bounds = self.view.bounds
         self.backgroundView = UIView(frame: bounds)
-        self.backgroundView.backgroundColor = CTAStyleKit.commonBackgroundColor
+        self.backgroundView.backgroundColor = CTAStyleKit.detailBackgroundColor
         self.view.addSubview(self.backgroundView)
         
         self.currentPreviewCell = CTAPublishPreviewView(frame: CGRect(x: 0, y: (bounds.height - bounds.width)/2 - 15, width: bounds.width, height: bounds.height))
@@ -211,7 +211,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
         let fromRect = self.currentPreviewCell.frame
         let ani = CTAScaleTransition.getInstance()
         ani.transitionView = self.currentPreviewCell.snapshotViewAfterScreenUpdates(false)
-        ani.transitionAlpha = 1
+        ani.transitionAlpha = self.backgroundView.alpha
         ani.transitionBackView = bgView
         ani.fromRect = fromRect
         ani.toRect = toRect
@@ -603,13 +603,14 @@ extension PublishDetailViewController: CTAPublishControllerProtocol{
         return self.currentPreviewCell
     }
     
-    func setLikeButtonStyle(){
-        self.changeLikeStatus()
+    func setLikeButtonStyle(publichModel:CTAPublishModel?){
+        self.changeLikeStatus(publichModel)
     }
     
-    func changeLikeStatus(){
+    func changeLikeStatus(publichModel:CTAPublishModel?){
+        self.controllerView.publishModel = publichModel
         self.controllerView.changeLikeStatus()
-        if let model = self.publishModel{
+        if let model = publichModel{
             if model.likeStatus == 1{
                 dispatch_async(dispatch_get_main_queue(), {
                     let heartView = CTAHeartAnimationView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 100, height: 100)))

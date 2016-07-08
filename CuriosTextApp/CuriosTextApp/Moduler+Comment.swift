@@ -15,10 +15,10 @@ private enum Actions: String {
 
 extension Moduler {
     
-    static func commentViewController(userID: String) -> UIViewController {
+    static func module_comment(publishID: String) -> UIViewController {
         
         var paras: [String: AnyObject] = [:]
-        paras["userID"] = userID
+        paras["publishID"] = publishID
         
         let vc = Moduler.target(moduleName, performAction: Actions.New.rawValue, paras: paras)?.takeUnretainedValue() as! UIViewController
         

@@ -10,14 +10,19 @@ import UIKit
 
 class CommentViewController: UIViewController {
     
-    var userID: String!
+    var publishID: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor.lightGrayColor()
-        title = userID
+        
+        let closeButton = UIButton(frame: CGRect(x: 0, y: 22, width: 40, height: 40))
+        closeButton.setImage(UIImage(named: "close-button"), forState: .Normal)
+        closeButton.setImage(UIImage(named: "close-selected-button"), forState: .Highlighted)
+        closeButton.addTarget(self, action: #selector(closeButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.view.addSubview(closeButton)
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,5 +40,11 @@ class CommentViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func closeButtonClick(sender: UIButton){
+        self.dismissViewControllerAnimated(true) {
+            
+        }
+    }
 
 }

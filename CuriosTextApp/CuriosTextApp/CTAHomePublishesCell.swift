@@ -121,9 +121,10 @@ class CTAHomePublishesCell: UICollectionViewCell{
         return rect;
     }
     
-    func changeLikeStatus(){
+    func changeLikeStatus(publichModel:CTAPublishModel?){
+        self.controllerView.publishModel = publichModel
         self.controllerView.changeLikeStatus()
-        if let model = self.publishModel{
+        if let model = publichModel{
             if model.likeStatus == 1{
                 dispatch_async(dispatch_get_main_queue(), {
                     let heartView = CTAHeartAnimationView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 100, height: 100)))

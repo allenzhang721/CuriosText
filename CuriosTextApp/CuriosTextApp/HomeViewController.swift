@@ -643,9 +643,9 @@ extension HomeViewController{
         }
     }
     
-    func setLikeButtonStyle(){
+    func setLikeButtonStyle(publichModel:CTAPublishModel?){
         if self.selectedCell != nil {
-            self.selectedCell?.changeLikeStatus()
+            self.selectedCell?.changeLikeStatus(publichModel)
         }
     }
 }

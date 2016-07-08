@@ -17,7 +17,7 @@ protocol CTAPublishControllerProtocol: CTAEditViewControllerDelegate, CTAShareVi
     
     func likersHandelr()
     func likeHandler(justLike:Bool)
-    func setLikeButtonStyle()
+    func setLikeButtonStyle(publichModel:CTAPublishModel?)
     func moreSelectionHandler(isSelf:Bool, isPopup:Bool)
     func rebuildHandler(isPopup:Bool)
     func commentHandler()
@@ -41,7 +41,7 @@ extension CTAPublishControllerProtocol where Self: UIViewController{
                     if info.result {
                         self.publishModel!.likeStatus = 1
                         self.publishModel!.likeCount += 1
-                        self.setLikeButtonStyle()
+                        self.setLikeButtonStyle(self.publishModel)
                     }
                 })
             }else if !justLike{
@@ -49,7 +49,7 @@ extension CTAPublishControllerProtocol where Self: UIViewController{
                     if info.result {
                         self.publishModel!.likeStatus = 0
                         self.publishModel!.likeCount -= 1
-                        self.setLikeButtonStyle()
+                        self.setLikeButtonStyle(self.publishModel)
                     }
                 })
             }
@@ -57,7 +57,11 @@ extension CTAPublishControllerProtocol where Self: UIViewController{
     }
     
     func commentHandler(){
-        
+        let publishID = self.publishModel == nil ? "" : self.publishModel!.publishID
+        let vc = Moduler.module_comment(publishID)
+        let navi = UINavigationController(rootViewController: vc)
+        self.presentViewController(navi, animated: true, completion: {
+        })
     }
     
     func moreSelectionHandler(isSelf:Bool, isPopup:Bool){
