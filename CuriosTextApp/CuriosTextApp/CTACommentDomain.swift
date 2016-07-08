@@ -31,8 +31,8 @@ class CTACommentDomain: CTABaseDomain {
                     let listArray = json[key(.List)].array;
                     if listArray != nil{
                         let listJson = listArray![0]
-                        let userModel = CTAViewUserModel.generateFrom(listJson)
-                        compelecationBlock(CTADomainInfo(result: true, baseModel: userModel, successType: resultIndex))
+                        let commentModel = CTACommentModel.generateFrom(listJson)
+                        compelecationBlock(CTADomainInfo(result: true, baseModel: commentModel, successType: resultIndex))
                     }else {
                        compelecationBlock(CTADomainInfo(result: false, errorType: CTAAddCommentError(rawValue: 9)!))
                     }
@@ -76,8 +76,8 @@ class CTACommentDomain: CTABaseDomain {
                     if listArray != nil{
                         for i in 0..<listArray!.count {
                             let listJson = listArray![i];
-                            let userModel = CTACommentModel.generateFrom(listJson)
-                            commentArray.append(userModel);
+                            let commentModel = CTACommentModel.generateFrom(listJson)
+                            commentArray.append(commentModel);
                         }
                     }
                     compelecationBlock(CTADomainListInfo(result: true, modelArray: commentArray, successType: resultIndex))
