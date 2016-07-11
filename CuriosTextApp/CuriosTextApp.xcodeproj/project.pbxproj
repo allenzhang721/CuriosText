@@ -236,6 +236,8 @@
 		2CB66A9E1CD86F6C006B9282 /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2CB66A991CD86F6C006B9282 /* read_me.txt */; };
 		2CB66AA01CD872B3006B9282 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB66A9F1CD872B3006B9282 /* SystemConfiguration.framework */; };
 		2CB66AA21CD872CE006B9282 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB66AA11CD872CE006B9282 /* libsqlite3.0.tbd */; };
+		2CBA82B81D33813C00EBF9F3 /* TouchTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBA82B71D33813C00EBF9F3 /* TouchTextView.swift */; };
+		2CBA82BA1D33960500EBF9F3 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBA82B91D33960500EBF9F3 /* InputViewController.swift */; };
 		2CC1C9411C58D36800844A33 /* CTABarItemsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC1C9401C58D36800844A33 /* CTABarItemsFactory.swift */; };
 		2CC5744B1C89D3F70083DFFF /* CTAPublishCacheProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC5744A1C89D3F70083DFFF /* CTAPublishCacheProtocol.swift */; };
 		2CC5A7CB1C89B82100A773E9 /* AsyncDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC5A7CA1C89B82100A773E9 /* AsyncDrawing.swift */; };
@@ -255,6 +257,7 @@
 		2CC811631C79A6D5003CE8BF /* BlackCatResultExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC8115C1C79A6D5003CE8BF /* BlackCatResultExtension.swift */; };
 		2CC811641C79A6D5003CE8BF /* String + bcMD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC8115D1C79A6D5003CE8BF /* String + bcMD5.swift */; };
 		2CC9307F1C7464D000FB02A9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC9307E1C7464D000FB02A9 /* AVFoundation.framework */; };
+		2CCB13291D336111007E36EE /* Comment.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CCB13281D336111007E36EE /* Comment.storyboard */; };
 		2CCBE4961C870AA4001E1CD8 /* CTAShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCBE4951C870AA4001E1CD8 /* CTAShareView.swift */; };
 		2CCD94DC1C43B4AA001E5D08 /* CTATextSpacingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */; };
 		2CCE5E3F1D26572C00D70BA1 /* FilterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCE5E3E1D26572C00D70BA1 /* FilterManager.swift */; };
@@ -677,6 +680,8 @@
 		2CB66A9C1CD86F6C006B9282 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		2CB66A9F1CD872B3006B9282 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2CB66AA11CD872CE006B9282 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		2CBA82B71D33813C00EBF9F3 /* TouchTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchTextView.swift; sourceTree = "<group>"; };
+		2CBA82B91D33960500EBF9F3 /* InputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
 		2CC1C9401C58D36800844A33 /* CTABarItemsFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTABarItemsFactory.swift; sourceTree = "<group>"; };
 		2CC5744A1C89D3F70083DFFF /* CTAPublishCacheProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishCacheProtocol.swift; sourceTree = "<group>"; };
 		2CC5A7CA1C89B82100A773E9 /* AsyncDrawing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncDrawing.swift; sourceTree = "<group>"; };
@@ -697,6 +702,7 @@
 		2CC8115C1C79A6D5003CE8BF /* BlackCatResultExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackCatResultExtension.swift; sourceTree = "<group>"; };
 		2CC8115D1C79A6D5003CE8BF /* String + bcMD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String + bcMD5.swift"; sourceTree = "<group>"; };
 		2CC9307E1C7464D000FB02A9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		2CCB13281D336111007E36EE /* Comment.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Comment.storyboard; sourceTree = "<group>"; };
 		2CCBE4951C870AA4001E1CD8 /* CTAShareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAShareView.swift; sourceTree = "<group>"; };
 		2CCD94DB1C43B4AA001E5D08 /* CTATextSpacingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATextSpacingView.swift; sourceTree = "<group>"; };
 		2CCE5E3E1D26572C00D70BA1 /* FilterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterManager.swift; sourceTree = "<group>"; };
@@ -1567,6 +1573,9 @@
 			children = (
 				2CD418F41D12A03C00DDAAE4 /* CommentAction.swift */,
 				2CD418EE1D129FEF00DDAAE4 /* CommentViewController.swift */,
+				2CBA82B91D33960500EBF9F3 /* InputViewController.swift */,
+				2CBA82B71D33813C00EBF9F3 /* TouchTextView.swift */,
+				2CCB13281D336111007E36EE /* Comment.storyboard */,
 			);
 			name = m_Comment;
 			sourceTree = "<group>";
@@ -2008,6 +2017,7 @@
 				2C87AF7C1D2A4FEC00F51129 /* Origin.JPG in Resources */,
 				2CC74C921C5A275C00B536C2 /* SMS_SDKLocalizable.strings in Resources */,
 				2CB66A9E1CD86F6C006B9282 /* read_me.txt in Resources */,
+				2CCB13291D336111007E36EE /* Comment.storyboard in Resources */,
 				2C610A321C902BCA00DFE315 /* ImagePicker.storyboard in Resources */,
 				2CD11AD01CB7A7A400A79305 /* AniPreView.storyboard in Resources */,
 				2CB175B81CF8432100819825 /* Templates in Resources */,
@@ -2242,6 +2252,7 @@
 				2CC5A7CD1C89B85100A773E9 /* AsyncDrawing+Container.swift in Sources */,
 				2CC811641C79A6D5003CE8BF /* String + bcMD5.swift in Sources */,
 				669053491D296221005E02E1 /* UserListAction.swift in Sources */,
+				2CBA82BA1D33960500EBF9F3 /* InputViewController.swift in Sources */,
 				6690534D1D2963B8005E02E1 /* Moduler+UserList.swift in Sources */,
 				2C65B6721C4F6F4C007B4DEA /* ValueExtension.swift in Sources */,
 				2C8A84C51C7EEC4B0017F81F /* CTACellDisplayProtocol.swift in Sources */,
@@ -2370,6 +2381,7 @@
 				2C7AD3B21CF6BD0E009AEDA8 /* Templates.swift in Sources */,
 				2C65B66E1C4F690C007B4DEA /* CTAPreviewVIew.swift in Sources */,
 				2C2B45AA1C5CBCC8004A4809 /* CTALoginProtocol.swift in Sources */,
+				2CBA82B81D33813C00EBF9F3 /* TouchTextView.swift in Sources */,
 				2CD418E51D12942D00DDAAE4 /* RecommandViewController.swift in Sources */,
 				2C6C67FF1C350A4800CCE81C /* CTALineFlowLayout.swift in Sources */,
 				66F4D44E1D24EE0F00587A54 /* CTANoticeRequestAPI.swift in Sources */,
