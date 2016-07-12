@@ -9,14 +9,26 @@
 import UIKit
 import KeyboardMan
 
+private struct Comment {
+    let sender: String
+    let reciver: String
+    let message: String
+    let renderedMessage: NSAttributedString
+}
+
 class CommentViewController: UIViewController {
     
+    var publishID: String!
+    
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var inputContainerView: UIView!
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+    
     private weak var inputVC: InputViewController!
+    private var comments = [Comment]()
     private let keyborad = KeyboardMan()
-    var publishID: String!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -24,14 +36,10 @@ class CommentViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         
-//        view.sendSubviewToBack(tableView)
 //        CTACommentDomain.getInstance().addPublishComment(CTAUserManager.user!.userID, beUserID: "", publishID: publishID, commentMessage: "EMiaostein") { (info) in
 //            print(info)
 //        }
-//        
-//        CTACommentDomain.getInstance().publichCommentList(publishID, start: 0, size: 10) { (listInfo) in
-//            print((listInfo.modelArray![0] as! CTACommentModel).commentMessage)
-//        }
+//
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -46,6 +54,7 @@ class CommentViewController: UIViewController {
     private func setup() {
         setupView()
         setupKeyboard()
+        setupData()
     }
     
     private func setupView() {
@@ -59,18 +68,33 @@ class CommentViewController: UIViewController {
         
         tableView.estimatedRowHeight = 60
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.keyboardDismissMode = .OnDrag
+        
+        inputVC.resizeHandler = {[weak inputContainerView , heightConstraint] size in
+            if heightConstraint.constant != size.height {
+                heightConstraint?.constant = size.height
+                inputContainerView?.layoutIfNeeded()
+            }
+        }
     }
     
+    private func setupData() {
+        CTACommentDomain.getInstance().publichCommentList(publishID, start: 0, size: 10) { (listInfo) in
+            print((listInfo.modelArray![0] as! CTACommentModel).commentMessage)
+        }
+    }
+    
+    
+    
     private func setupKeyboard() {
-        keyborad.animateWhenKeyboardAppear = {[weak inputContainerView] (appearPostIndex: Int, keyboardHeight: CGFloat, keyboardHeightIncrement: CGFloat) -> Void in
-            
-            inputContainerView?.transform = CGAffineTransformMakeTranslation(0, -keyboardHeight)
-            
+        
+        keyborad.animateWhenKeyboardAppear = {[weak bottomConstraint, view] (appearPostIndex: Int, keyboardHeight: CGFloat, keyboardHeightIncrement: CGFloat) -> Void in
+            bottomConstraint?.constant = -keyboardHeight
+            view?.layoutIfNeeded()
         }
         
-        keyborad.animateWhenKeyboardDisappear = { [weak inputContainerView] keyboardHeight in
-            inputContainerView?.transform = CGAffineTransformMakeTranslation(0, 0)
+        keyborad.animateWhenKeyboardDisappear = { [weak bottomConstraint, view] keyboardHeight in
+            bottomConstraint?.constant = 0
+            view?.layoutIfNeeded()
         }
         
     }
@@ -84,7 +108,7 @@ class CommentViewController: UIViewController {
 
 extension CommentViewController: UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 100
+        return comments.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -92,6 +116,7 @@ extension CommentViewController: UITableViewDataSource {
         
         if let textView = cell.contentView.viewWithTag(1000) as? TouchTextView {
             textView.contentInset.left = -5
+            textView.textContainerInset.top = 0
             let i = indexPath.item % 3
             let r = demo[i]
             textView.attributedText = r.0
@@ -108,6 +133,49 @@ extension CommentViewController: UITableViewDataSource {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 let demo = [
     comment(withUser: demoString[0].0, message: demoString[0].1),
     comment(withUser: demoString[1].0, message: demoString[1].1),
@@ -119,13 +187,6 @@ let demoString = [
     ("Allen", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."),
     ("Jennifer", "Lorem ipsum dolor sit amet, consectetur adipisicing elit.")
 ]
-
-//let demo = [
-//    (longComment(), ((0, 11), "Emiaostein")),
-//    (middleComment(), ((0, 6), "Allen")),
-//    (shortComment(), ((0, 9), "Jennifer")),
-//    (singleComment(), ((0, 9), "Jennifer"))
-//]
 
 
 func comment(withUser userName: String, message: String) -> (NSAttributedString, NSRange) {

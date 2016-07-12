@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="163" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zYa-oV-GLV">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="163" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zYa-oV-GLV">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -83,6 +83,10 @@
                             </tableView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xSR-39-Kq5">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="xGQ-L6-U4R"/>
+                                </constraints>
                                 <connections>
                                     <segue destination="ZbV-vg-JNM" kind="embed" id="aYc-Py-3wN"/>
                                 </connections>
@@ -90,18 +94,19 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="zYa-oV-GLV" firstAttribute="bottom" secondItem="MKz-cm-MPi" secondAttribute="top" constant="-44" id="Iwc-47-CZY"/>
                             <constraint firstAttribute="trailing" secondItem="zYa-oV-GLV" secondAttribute="trailing" id="Ooh-iM-J6Z"/>
                             <constraint firstItem="zYa-oV-GLV" firstAttribute="top" secondItem="Aqx-My-axO" secondAttribute="top" id="aEG-BM-pr2"/>
-                            <constraint firstItem="xSR-39-Kq5" firstAttribute="bottom" secondItem="MKz-cm-MPi" secondAttribute="top" id="gEv-db-mFt"/>
                             <constraint firstItem="zYa-oV-GLV" firstAttribute="leading" secondItem="Aqx-My-axO" secondAttribute="leading" id="gca-jF-nb0"/>
                             <constraint firstItem="xSR-39-Kq5" firstAttribute="leading" secondItem="zYa-oV-GLV" secondAttribute="leading" id="ggC-3C-YZt"/>
                             <constraint firstItem="xSR-39-Kq5" firstAttribute="trailing" secondItem="zYa-oV-GLV" secondAttribute="trailing" id="pRb-9E-rCD"/>
-                            <constraint firstItem="xSR-39-Kq5" firstAttribute="top" secondItem="zYa-oV-GLV" secondAttribute="bottom" id="qMF-1l-uYQ"/>
+                            <constraint firstItem="MKz-cm-MPi" firstAttribute="top" secondItem="zYa-oV-GLV" secondAttribute="bottom" constant="44" id="pbo-TT-z1D"/>
+                            <constraint firstItem="xSR-39-Kq5" firstAttribute="bottom" secondItem="MKz-cm-MPi" secondAttribute="top" priority="998" id="tAC-MQ-xhD"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="bottomConstraint" destination="tAC-MQ-xhD" id="6iF-Ov-3XJ"/>
+                        <outlet property="heightConstraint" destination="xGQ-L6-U4R" id="QS6-M4-hrd"/>
                         <outlet property="inputContainerView" destination="xSR-39-Kq5" id="ktH-G5-JCD"/>
                         <outlet property="tableView" destination="zYa-oV-GLV" id="mnV-O9-0xd"/>
                     </connections>
@@ -114,58 +119,45 @@
         <scene sceneID="Dej-rC-Gbr">
             <objects>
                 <viewController id="ZbV-vg-JNM" customClass="InputViewController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="U9g-OY-OqL"/>
+                        <viewControllerLayoutGuide type="bottom" id="Snl-wz-clz"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="qqz-pr-toC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="uHk-Wh-IX5">
-                                <rect key="frame" x="20" y="7" width="335" height="30"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8ph-eK-FH0">
-                                        <rect key="frame" x="0.0" y="0.0" width="275" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="send"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uxN-RM-h4v">
-                                        <rect key="frame" x="285" y="0.0" width="50" height="30"/>
-                                        <color key="backgroundColor" red="0.12549019610000001" green="0.47058823529999999" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="j0C-Zo-394"/>
-                                        </constraints>
-                                        <state key="normal" title="Send">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="15"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </button>
-                                </subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wgm-aA-6Wh">
+                                <rect key="frame" x="6" y="5" width="363" height="33"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="Qu6-7B-rc0"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="70" id="rh2-Tn-Zrm"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="33" id="yph-2U-8Kf"/>
                                 </constraints>
-                            </stackView>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="16"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="delegate" destination="ZbV-vg-JNM" id="9jC-Oh-9IK"/>
+                                </connections>
+                            </textView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="uHk-Wh-IX5" firstAttribute="centerX" secondItem="qqz-pr-toC" secondAttribute="centerX" id="5Ll-RC-oOs"/>
-                            <constraint firstItem="uHk-Wh-IX5" firstAttribute="centerY" secondItem="qqz-pr-toC" secondAttribute="centerY" id="DEM-TJ-PrW"/>
-                            <constraint firstItem="uHk-Wh-IX5" firstAttribute="leading" secondItem="qqz-pr-toC" secondAttribute="leading" constant="20" id="gqP-f5-NUf"/>
-                            <constraint firstAttribute="trailing" secondItem="uHk-Wh-IX5" secondAttribute="trailing" constant="20" id="hKJ-x6-wfd"/>
+                            <constraint firstAttribute="trailing" secondItem="wgm-aA-6Wh" secondAttribute="trailing" constant="6" id="enQ-Cy-x5u"/>
+                            <constraint firstItem="wgm-aA-6Wh" firstAttribute="centerY" secondItem="qqz-pr-toC" secondAttribute="centerY" id="uZa-eJ-cLm"/>
+                            <constraint firstItem="wgm-aA-6Wh" firstAttribute="leading" secondItem="qqz-pr-toC" secondAttribute="leading" constant="6" id="y2z-FD-VgP"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                <integer key="value" value="32"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
-                                <integer key="value" value="1"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
-                                <color key="value" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
+                    <connections>
+                        <outlet property="lowBoundConstraint" destination="yph-2U-8Kf" id="m8P-GI-fwb"/>
+                        <outlet property="textView" destination="wgm-aA-6Wh" id="dor-iT-sUc"/>
+                        <outlet property="upBoundConstraint" destination="rh2-Tn-Zrm" id="Gcm-Fk-6hR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JSp-l3-RRk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
