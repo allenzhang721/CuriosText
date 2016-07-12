@@ -41,6 +41,8 @@ class CTAHomePublishesCell: UICollectionViewCell{
     
     var loadCompeteHandler:(() -> Void)?
     
+    var isDoubleClick:Bool = false
+    
     func initView(){
         let bgView = UIView(frame: self.getViewRect())
         self.contentView.addSubview(bgView)
@@ -53,6 +55,13 @@ class CTAHomePublishesCell: UICollectionViewCell{
         self.contentView.addSubview(self.controllerView)
         self.controllerView.delegate = self
         self.backgroundColor = CTAStyleKit.commonBackgroundColor
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(singleTapHandler(_:)))
+        self.addGestureRecognizer(tap)
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(doubleTapHandler(_:)))
+        tap2.numberOfTapsRequired=2
+        tap2.numberOfTouchesRequired=1
+        self.addGestureRecognizer(tap2)
     }
     
     func didSetPublishModel(){
@@ -131,11 +140,29 @@ class CTAHomePublishesCell: UICollectionViewCell{
                     heartView.center = self.previewView.center
                     self.contentView.addSubview(heartView)
                     heartView.playLikeAnimation(nil)
+                    self.controllerView.playLikeAnimation()
                 })
             }
         }
     }
     
+    func singleTapHandler(sender: UIPanGestureRecognizer) {
+        delay(0.2, task: {
+            if !self.isDoubleClick {
+                if self.delegate != nil{
+                    self.delegate?.cellSingleTap(self)
+                }
+            }
+            self.isDoubleClick = false
+        })
+    }
+    
+    func doubleTapHandler(sender: UIPanGestureRecognizer) {
+        if self.delegate != nil{
+            self.isDoubleClick = true
+            self.delegate?.cellDoubleTap(self)
+        }
+    }
 }
 
 protocol CTAHomePublishesCellDelegate {
@@ -145,6 +172,9 @@ protocol CTAHomePublishesCellDelegate {
     func cellCommentHandler(cell:CTAHomePublishesCell?)
     func cellRebuildHandler(cell:CTAHomePublishesCell?)
     func cellMoreHandler(cell:CTAHomePublishesCell?)
+    
+    func cellDoubleTap(cell:CTAHomePublishesCell?)
+    func cellSingleTap(cell:CTAHomePublishesCell?)
 }
 
 extension CTAHomePublishesCell: CTAPublishPreviewViewDelegate{

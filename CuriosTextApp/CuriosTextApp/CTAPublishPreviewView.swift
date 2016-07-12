@@ -261,13 +261,14 @@ class CTAPublishPreviewView: UIView, CTAImageControllerProtocol{
     
     func playComplete(){
         if self.isLoadComplete{
-            self.isPlaying = false
             self.isPause = false
-            let time: NSTimeInterval = NSTimeInterval(1.0)
+            let time: NSTimeInterval = NSTimeInterval(5.0)
             let delay = dispatch_time(DISPATCH_TIME_NOW,
                                       Int64(time * Double(NSEC_PER_SEC)))
             dispatch_after(delay, dispatch_get_main_queue()) { [weak self] in
-                self?.playAnimation()
+                guard let sf = self else {return}
+                sf.isPlaying = false
+                sf.playAnimation()
             }
         }
     }

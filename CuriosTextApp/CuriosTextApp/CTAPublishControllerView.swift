@@ -318,6 +318,13 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
         }
     }
     
+    func playLikeAnimation(){
+        self.likeButtonImg.transform = CGAffineTransformMakeScale(0.6, 0.6)
+        UIView.animateWithDuration(0.2) { 
+            self.likeButtonImg.transform = CGAffineTransformMakeScale(1, 1)
+        }
+    }
+    
     func setCloseButtonStyle(){
         if self.type == .PublishCell{
             self.closeButton.hidden = true

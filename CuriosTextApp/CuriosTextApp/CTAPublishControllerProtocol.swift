@@ -15,7 +15,7 @@ protocol CTAPublishControllerProtocol: CTAEditViewControllerDelegate, CTAShareVi
     var userModel:CTAUserModel?{get}
     var previewView:CTAPublishPreviewView?{get}
     
-    func likersHandelr()
+    func likersHandelr(rect:CGRect)
     func likeHandler(justLike:Bool)
     func setLikeButtonStyle(publichModel:CTAPublishModel?)
     func moreSelectionHandler(isSelf:Bool, isPopup:Bool)
@@ -25,12 +25,37 @@ protocol CTAPublishControllerProtocol: CTAEditViewControllerDelegate, CTAShareVi
 
 extension CTAPublishControllerProtocol where Self: UIViewController{
     
-    func likersHandelr(){
+    func likersHandelr(rect:CGRect){
         let publishID = self.publishModel == nil ? "" : self.publishModel!.publishID
         let vc = Moduler.module_likers(publishID)
         let navi = UINavigationController(rootViewController: vc)
+        
+        let bound = UIScreen.mainScreen().bounds
+        let ani = CTAScaleTransition.getInstance()
+        ani.fromRect = self.getViewFromRect(rect, viewRect: bound)
+        navi.transitioningDelegate = ani
+        navi.modalPresentationStyle = .Custom
         self.presentViewController(navi, animated: true, completion: {
         })
+    }
+    
+    func getViewFromRect(smallRect:CGRect, viewRect:CGRect) -> CGRect{
+        let smallW = smallRect.width
+        let smallH = smallRect.height
+        let viewW = viewRect.width
+        let viewH = viewRect.height
+        
+        var rate:CGFloat
+        let imageRate = smallW / smallH
+        let maxRate = viewW / viewH
+        if maxRate > imageRate{
+            rate = smallW / viewW
+        }else {
+            rate = smallH / viewH
+        }
+        
+        let newRect = CGRect(x: smallRect.origin.x + (smallW-rate*viewW)/2, y: smallRect.origin.y + (smallH-rate*viewH)/2, width: rate*viewW, height: rate*viewH)
+        return newRect
     }
     
     func likeHandler(justLike:Bool){
@@ -44,14 +69,18 @@ extension CTAPublishControllerProtocol where Self: UIViewController{
                         self.setLikeButtonStyle(self.publishModel)
                     }
                 })
-            }else if !justLike{
-                CTAPublishDomain.getInstance().unLikePublish(userID, publishID: self.publishModel!.publishID, compelecationBlock: { (info) -> Void in
-                    if info.result {
-                        self.publishModel!.likeStatus = 0
-                        self.publishModel!.likeCount -= 1
-                        self.setLikeButtonStyle(self.publishModel)
-                    }
-                })
+            }else {
+                if !justLike{
+                    CTAPublishDomain.getInstance().unLikePublish(userID, publishID: self.publishModel!.publishID, compelecationBlock: { (info) -> Void in
+                        if info.result {
+                            self.publishModel!.likeStatus = 0
+                            self.publishModel!.likeCount -= 1
+                            self.setLikeButtonStyle(self.publishModel)
+                        }
+                    })
+                }else {
+                    self.setLikeButtonStyle(self.publishModel)
+                }
             }
         }
     }

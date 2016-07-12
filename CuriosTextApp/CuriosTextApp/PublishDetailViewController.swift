@@ -51,6 +51,8 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
     
     var isHideBar:Bool = false
     
+    var isDoubleClick:Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -111,6 +113,13 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
         pan.maximumNumberOfTouches = 1
         pan.minimumNumberOfTouches = 1
         self.view.addGestureRecognizer(pan)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(viewBackHandler(_:)))
+        self.view.addGestureRecognizer(tap)
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(doubleTapHandler(_:)))
+        tap2.numberOfTapsRequired=2
+        tap2.numberOfTouchesRequired=1
+        self.view.addGestureRecognizer(tap2)
         
         self.resetViewCells(true)
     }
@@ -259,6 +268,29 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
     func getViewRect(publish:CTAPublishModel?) -> CGSize{
         let rect = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.width)
         return rect;
+    }
+    
+    func viewBackHandler(sender: UIPanGestureRecognizer) {
+        if self.panDirection == .None{
+            delay(0.2, task: {
+                if !self.isDoubleClick {
+                    self.closeHandler()
+                }
+                self.isDoubleClick = false
+            })
+        }
+    }
+    
+    func doubleTapHandler(sender: UIPanGestureRecognizer) {
+        if self.panDirection == .None{
+            self.isDoubleClick = true
+            let pt = sender.locationInView(self.currentPreviewCell)
+            if self.currentPreviewCell.pointInside(pt, withEvent: nil){
+                if self.currentPreviewCell.publishModel != nil{
+                    self.likeHandler(true)
+                }
+            }
+        }
     }
     
     func viewPanHandler(sender: UIPanGestureRecognizer) {
@@ -485,6 +517,8 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
     }
     
     func verPanResetAnimation(yRate:CGFloat){
+        self.isHideBar = true
+        self.setNeedsStatusBarAppearanceUpdate()
         if self.currentCenter != nil {
             UIView.animateWithDuration(0.2, animations: { () -> Void in
                 self.currentPreviewCell.transform = CGAffineTransformMakeScale(1, 1)
@@ -632,6 +666,7 @@ extension PublishDetailViewController: CTAPublishControllerProtocol{
                     heartView.center = self.currentPreviewCell.center
                     self.view.addSubview(heartView)
                     heartView.playLikeAnimation(nil)
+                    self.controllerView.playLikeAnimation()
                 })
             }
         }
@@ -656,7 +691,9 @@ extension PublishDetailViewController: CTAPublishControllerDelegate{
     }
     
     func controlLikeListTap(){
-        self.likersHandelr()
+        let bouds = self.view.bounds
+        let rect:CGRect = CGRect(x: bouds.origin.x, y: bouds.origin.y + bouds.height - 50, width: bouds.width/2, height: 50)
+        self.likersHandelr(rect)
     }
     
     func controlLikeHandler(){

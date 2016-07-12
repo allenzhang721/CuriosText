@@ -375,48 +375,9 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         if index < self.publishModelArray.count && index > -1{
             self.selectedPublishID = self.publishModelArray[index].publishID
         }
+        self.selectedCell = publishesCell
         if self.selectedPublishID != "" {
-            let bounds = UIScreen.mainScreen().bounds
-            var cellFrame:CGRect!
-            var transitionView:UIView
-            var preview:CTAPublishPreviewView?
-            if publishesCell != nil {
-                preview = publishesCell!.previewView
-                cellFrame = preview!.frame
-                let offY = self.collectionView!.contentOffset.y
-                cellFrame.origin.y = cellFrame.origin.y + publishesCell!.frame.origin.y - offY + self.collectionView.frame.origin.y
-                cellFrame.origin.x = cellFrame.origin.x + publishesCell!.frame.origin.x
-                transitionView = preview!.snapshotViewAfterScreenUpdates(true)
-            }else {
-                cellFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
-                transitionView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-                transitionView.backgroundColor = CTAStyleKit.commonBackgroundColor
-            }
-            let bgView = self.view.snapshotViewAfterScreenUpdates(false)
-            
-            let ani = CTAScaleTransition.getInstance()
-            ani.bgView = bgView
-            ani.alphaView = preview
-            ani.transitionView = transitionView
-            ani.transitionAlpha = 1
-            ani.fromRect = cellFrame
-            ani.toRect = CGRect(x: 0, y: (bounds.height - bounds.width )/2 - Detail_Space, width: bounds.width, height: bounds.width)
-            
-            var detailType:PublishDetailType = .UserFollow
-            let userID = (self.loginUser == nil) ? "" : self.loginUser!.userID
-            if userID == ""{
-                detailType = .HotPublish
-            }else{
-                detailType = .UserFollow
-            }
-            let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self, type: detailType)
-            
-            let navi = UINavigationController(rootViewController: vc)
-            navi.transitioningDelegate = ani
-            navi.modalPresentationStyle = .Custom
-
-            self.presentViewController(navi, animated: true, completion: {
-            })
+            self.showDetailView();
         }
     }
     
@@ -572,7 +533,11 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
         if self.loginUser != nil {
             if cell != nil {
                 self.selectedCell = cell
-                self.likersHandelr()
+                var cellFrame = cell!.frame
+                let offY = self.collectionView!.contentOffset.y
+                cellFrame.origin.y = cellFrame.origin.y - offY + self.collectionView.frame.origin.y
+                let rect:CGRect = CGRect(x: cellFrame.origin.x, y: cellFrame.origin.y + cellFrame.height - 50, width: cellFrame.width/2, height: 50)
+                self.likersHandelr(rect)
             }
         }else {
             self.showLoginView()
@@ -621,6 +586,67 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
         }else {
             self.showLoginView()
         }
+    }
+    
+    func cellDoubleTap(cell:CTAHomePublishesCell?){
+        if self.loginUser != nil {
+            if cell != nil {
+                self.selectedCell = cell
+                self.likeHandler(true)
+            }
+        }
+    }
+    
+    func cellSingleTap(cell:CTAHomePublishesCell?){
+        if cell != nil {
+            self.selectedCell = cell
+            self.selectedPublishID = self.selectedCell!.publishModel!.publishID
+            self.showDetailView();
+        }
+    }
+    
+    func showDetailView(){
+        let bounds = UIScreen.mainScreen().bounds
+        var cellFrame:CGRect!
+        var transitionView:UIView
+        var preview:CTAPublishPreviewView?
+        if self.selectedCell != nil {
+            preview = self.selectedCell!.previewView
+            cellFrame = preview!.frame
+            let offY = self.collectionView!.contentOffset.y
+            cellFrame.origin.y = cellFrame.origin.y + self.selectedCell!.frame.origin.y - offY + self.collectionView.frame.origin.y
+            cellFrame.origin.x = cellFrame.origin.x + self.selectedCell!.frame.origin.x
+            transitionView = preview!.snapshotViewAfterScreenUpdates(true)
+        }else {
+            cellFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
+            transitionView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+            transitionView.backgroundColor = CTAStyleKit.commonBackgroundColor
+        }
+        let bgView = self.view.snapshotViewAfterScreenUpdates(false)
+        
+        let ani = CTAScaleTransition.getInstance()
+        ani.bgView = bgView
+        ani.alphaView = preview
+        ani.transitionView = transitionView
+        ani.transitionAlpha = 1
+        ani.fromRect = cellFrame
+        ani.toRect = CGRect(x: 0, y: (bounds.height - bounds.width )/2 - Detail_Space, width: bounds.width, height: bounds.width)
+        
+        var detailType:PublishDetailType = .UserFollow
+        let userID = (self.loginUser == nil) ? "" : self.loginUser!.userID
+        if userID == ""{
+            detailType = .HotPublish
+        }else{
+            detailType = .UserFollow
+        }
+        let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self, type: detailType)
+        
+        let navi = UINavigationController(rootViewController: vc)
+        navi.transitioningDelegate = ani
+        navi.modalPresentationStyle = .Custom
+        
+        self.presentViewController(navi, animated: true, completion: {
+        })
     }
 }
 

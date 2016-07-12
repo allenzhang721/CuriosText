@@ -101,10 +101,8 @@ extension CTAScaleTransition: UIViewControllerAnimatedTransitioning{
                         self.toRect = toView.frame
                         view.addSubview(toView)
                         toView.frame = self.fromRect!
-                        toView.alpha = 0
                         UIView.animateWithDuration(0.2, animations: {
                             toView.frame = self.toRect!
-                            toView.alpha = 1
                             }, completion: { (_) in
                                 self.trasitionComplete()
                                 transitionContext.completeTransition(true)

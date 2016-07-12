@@ -112,6 +112,8 @@ class UserListViewController: UIViewController{
         textLine.image = UIImage(named: "space-line")
         headerView.addSubview(textLine)
         
+        self.view.layer.borderColor = CTAStyleKit.disableColor.CGColor
+        self.view.layer.borderWidth = 1
     }
     
     func initCollectionView(){
@@ -149,8 +151,7 @@ class UserListViewController: UIViewController{
     }
     
     func closeButtonClick(sender: UIButton){
-        self.dismissViewControllerAnimated(true) { 
-            
+        self.dismissViewControllerAnimated(true) {
         }
     }
     
