@@ -56,8 +56,7 @@ class CTAPublishPreviewView: UIView, CTAImageControllerProtocol{
     }
     
     func releaseImg(){
-        let whiteImg = self.getDefaultIcon(self.bounds)
-        self.cellImageView.image = whiteImg
+        self.cellImageView.image = nil
     }
     
     func releasePreviewView(){
@@ -75,7 +74,12 @@ class CTAPublishPreviewView: UIView, CTAImageControllerProtocol{
         self.cellImageView.frame = self.bounds
         self.bringSubviewToFront(self.cellImageView)
         if self.publishModel != nil {
-            let defaultImg = self.getDefaultIcon(self.bounds)
+            var defaultImg:UIImage?
+            if self.cellImageView.image != nil {
+                defaultImg = self.cellImageView.image
+            }else {
+                defaultImg = self.getDefaultIcon(self.bounds)
+            }
             self.imgLoaded = false
             var previewIconURL = ""
             if self.animationEnable{

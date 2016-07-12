@@ -338,6 +338,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
             self.followButton.addTarget(self, action: #selector(followButtonClick(_:)), forControlEvents: .TouchUpInside)
         }
         self.topView.addSubview(self.userFollowView)
+    
         
         self.userPostButton = UIButton(frame: CGRectMake(0, 0, (bounds.width-20)/2, 40))
         self.userPostButton.center = CGPoint(x: bounds.width/4, y: 20)
@@ -542,8 +543,17 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     func followViewClickClick(sender: UIPanGestureRecognizer){
         self.loadUserDetail()
         let userID = self.viewUserID
-        let vc = Moduler.module_userList(userID, type: .Followings)
+        let vc = Moduler.module_userList(userID, type: .Followings, delegate: self)
         let navi = UINavigationController(rootViewController: vc)
+        let ani = CTAScaleTransition.getInstance()
+        let bound = UIScreen.mainScreen().bounds
+        
+        let rectPoint = self.followLabel.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+        let labelW = self.followCountLabel.frame.width + self.followLabel.frame.width
+        let rect = CGRect(x: rectPoint.x, y: rectPoint.y, width: labelW, height: self.followCountLabel.frame.height)
+        ani.fromRect = self.getViewFromRect(rect, viewRect: bound)
+        navi.transitioningDelegate = ani
+        navi.modalPresentationStyle = .Custom
         self.presentViewController(navi, animated: true, completion: {
         })
     }
@@ -551,11 +561,38 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     func beFollowViewClick(ender: UIPanGestureRecognizer){
         self.loadUserDetail()
         let userID = self.viewUserID
-        let vc = Moduler.module_userList(userID, type: .Followers)
+        let vc = Moduler.module_userList(userID, type: .Followers, delegate: self)
         let navi = UINavigationController(rootViewController: vc)
+        let ani = CTAScaleTransition.getInstance()
+        let bound = UIScreen.mainScreen().bounds
+        let rectPoint = self.beFollowLabel.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+        let labelW = self.beFollowCountLabel.frame.width + self.beFollowLabel.frame.width
+        let rect = CGRect(x: rectPoint.x, y: rectPoint.y, width: labelW, height: self.beFollowCountLabel.frame.height)
+        ani.fromRect = self.getViewFromRect(rect, viewRect: bound)
+        navi.transitioningDelegate = ani
+        navi.modalPresentationStyle = .Custom
         self.presentViewController(navi, animated: true, completion: {
             
         })
+    }
+    
+    func getViewFromRect(smallRect:CGRect, viewRect:CGRect) -> CGRect{
+        let smallW = smallRect.width
+        let smallH = smallRect.height
+        let viewW = viewRect.width
+        let viewH = viewRect.height
+        
+        var rate:CGFloat
+        let imageRate = smallW / smallH
+        let maxRate = viewW / viewH
+        if maxRate > imageRate{
+            rate = smallW / viewW
+        }else {
+            rate = smallH / viewH
+        }
+        
+        let newRect = CGRect(x: smallRect.origin.x + (smallW-rate*viewW)/2, y: smallRect.origin.y + (smallH-rate*viewH)/2, width: rate*viewW, height: rate*viewH)
+        return newRect
     }
     
     func followButtonClick(sender: UIButton){
@@ -916,6 +953,32 @@ extension UserViewController: UIGestureRecognizerDelegate{
     
     func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
+    }
+}
+
+extension UserViewController: UserListViewDelegate{
+    
+    func getDismisRect(type:UserListType) -> CGRect?{
+        let bound = UIScreen.mainScreen().bounds
+        var rect:CGRect?
+        if type == .Followers{
+            let rectPoint = self.beFollowLabel.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+            let labelW = self.beFollowCountLabel.frame.width + self.beFollowLabel.frame.width
+            rect = CGRect(x: rectPoint.x, y: rectPoint.y, width: labelW, height: self.beFollowCountLabel.frame.height)
+        }else if type == .Followings{
+            let rectPoint = self.followLabel.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+            let labelW = self.followCountLabel.frame.width + self.followLabel.frame.width
+            rect = CGRect(x: rectPoint.x, y: rectPoint.y, width: labelW, height: self.followCountLabel.frame.height)
+        }
+        if rect != nil {
+            return self.getViewFromRect(rect!, viewRect: bound)
+        }else {
+            return nil
+        }
+    }
+    
+    func disMisComplete(type:UserListType){
+        
     }
 }
 

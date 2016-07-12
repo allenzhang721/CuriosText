@@ -10,29 +10,33 @@ import Foundation
 import Kingfisher
 import SVProgressHUD
 
-protocol CTAPublishControllerProtocol: CTAEditViewControllerDelegate, CTAShareViewDelegate, CTAGIFProtocol, CTAAlertProtocol{
+protocol CTAPublishControllerProtocol: CTAEditViewControllerDelegate, CTAShareViewDelegate, CTAGIFProtocol, CTAAlertProtocol, UserListViewDelegate{
     var publishModel:CTAPublishModel?{get}
     var userModel:CTAUserModel?{get}
     var previewView:CTAPublishPreviewView?{get}
     
-    func likersHandelr(rect:CGRect)
+    func getViewFromRect(smallRect:CGRect, viewRect:CGRect) -> CGRect
+    func likersHandelr()
+    func likersRect() -> CGRect?
     func likeHandler(justLike:Bool)
     func setLikeButtonStyle(publichModel:CTAPublishModel?)
     func moreSelectionHandler(isSelf:Bool, isPopup:Bool)
     func rebuildHandler(isPopup:Bool)
     func commentHandler()
+    func commentRect() -> CGRect?
 }
 
 extension CTAPublishControllerProtocol where Self: UIViewController{
     
-    func likersHandelr(rect:CGRect){
+    func likersHandelr(){
         let publishID = self.publishModel == nil ? "" : self.publishModel!.publishID
-        let vc = Moduler.module_likers(publishID)
+        let vc = Moduler.module_likers(publishID, delegate: self)
         let navi = UINavigationController(rootViewController: vc)
-        
-        let bound = UIScreen.mainScreen().bounds
         let ani = CTAScaleTransition.getInstance()
-        ani.fromRect = self.getViewFromRect(rect, viewRect: bound)
+        if let rect = self.likersRect() {
+            let bound = UIScreen.mainScreen().bounds
+            ani.fromRect = self.getViewFromRect(rect, viewRect: bound)
+        }
         navi.transitioningDelegate = ani
         navi.modalPresentationStyle = .Custom
         self.presentViewController(navi, animated: true, completion: {
@@ -479,4 +483,21 @@ extension CTAPublishControllerProtocol{
             }
         }
     }
+}
+
+extension CTAPublishControllerProtocol{
+    
+    func getDismisRect(type:UserListType) -> CGRect?{
+        if let rect = self.likersRect(){
+            let bound = UIScreen.mainScreen().bounds
+            return self.getViewFromRect(rect, viewRect: bound)
+        }else {
+            return nil
+        }
+    }
+    
+    func disMisComplete(type:UserListType){
+        
+    }
+    
 }

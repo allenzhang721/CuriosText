@@ -671,6 +671,20 @@ extension PublishDetailViewController: CTAPublishControllerProtocol{
             }
         }
     }
+    
+    func likersRect() -> CGRect? {
+        let point = self.controllerView.likeCountView.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+        let frame = self.controllerView.likeCountView.frame
+        let rect:CGRect = CGRect(x: point.x, y: point.y, width: frame.width, height: frame.height)
+        return rect
+    }
+    
+    func commentRect() -> CGRect? {
+        let point = self.controllerView.commentView.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+        let frame = self.controllerView.commentView.frame
+        let rect:CGRect = CGRect(x: point.x, y: point.y, width: frame.width, height: frame.height)
+        return rect
+    }
 }
 
 extension PublishDetailViewController: CTAPublishControllerDelegate{
@@ -691,9 +705,7 @@ extension PublishDetailViewController: CTAPublishControllerDelegate{
     }
     
     func controlLikeListTap(){
-        let bouds = self.view.bounds
-        let rect:CGRect = CGRect(x: bouds.origin.x, y: bouds.origin.y + bouds.height - 50, width: bouds.width/2, height: 50)
-        self.likersHandelr(rect)
+        self.likersHandelr()
     }
     
     func controlLikeHandler(){

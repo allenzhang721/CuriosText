@@ -187,7 +187,7 @@ enum CTAParameterKey: CustomStringConvertible {
   case ShareCount, RebuildCount, LikeCount, LikeStatus, CommentCount
   case Openid, Headimgurl, WechatName
   case WeiBoUserID, WeiBoID, Avatarhd, Gender, WeiboName, WeiboDesc
-  case CommentMessage, CommentID, BeCommentedNikeName, BeCommentedUserID, BeCommentUserDesc, BeCommentUserIconURL, BeCommentSex, CommentDate
+  case CommentMessage, CommentID, BeCommentedNickName, BeCommentedUserID, BeCommentUserDesc, BeCommentUserIconURL, BeCommentSex, CommentDate
   case NoticeID, NoticeMessage, NoticeDate, NoticeReaded, NoticeType, NoticeTypeID, NoticeCount
     
   var description: String {
@@ -306,8 +306,8 @@ enum CTAParameterKey: CustomStringConvertible {
         return "commentID"
     case .BeCommentedUserID:
         return "beCommentedUserID"
-    case .BeCommentedNikeName:
-        return "beCommentedNikeName"
+    case .BeCommentedNickName:
+        return "beCommentedNickName"
     case .BeCommentUserDesc:
         return "beCommentedUserDesc"
     case .BeCommentUserIconURL:

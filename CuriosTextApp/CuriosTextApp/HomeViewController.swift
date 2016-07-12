@@ -9,7 +9,7 @@
 import UIKit
 import MJRefresh
 
-class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishModelProtocol, CTALoginProtocol, CTAPublishControllerProtocol{
+class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishModelProtocol, CTALoginProtocol{
     
     var loginUser:CTAUserModel?
     var viewUserID:String = ""
@@ -382,6 +382,8 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     }
     
     func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath){
+        let index = indexPath.row
+        print("did display =\(index)")
         let publishCell:CTAHomePublishesCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("ctahomepublishescell", forIndexPath: indexPath) as! CTAHomePublishesCell
         publishCell.releaseView()
     }
@@ -533,11 +535,7 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
         if self.loginUser != nil {
             if cell != nil {
                 self.selectedCell = cell
-                var cellFrame = cell!.frame
-                let offY = self.collectionView!.contentOffset.y
-                cellFrame.origin.y = cellFrame.origin.y - offY + self.collectionView.frame.origin.y
-                let rect:CGRect = CGRect(x: cellFrame.origin.x, y: cellFrame.origin.y + cellFrame.height - 50, width: cellFrame.width/2, height: 50)
-                self.likersHandelr(rect)
+                self.likersHandelr()
             }
         }else {
             self.showLoginView()
@@ -650,7 +648,7 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
     }
 }
 
-extension HomeViewController{
+extension HomeViewController: CTAPublishControllerProtocol{
     
     var publishModel:CTAPublishModel?{
         if self.selectedCell != nil {
@@ -678,6 +676,26 @@ extension HomeViewController{
         if self.selectedCell != nil {
             self.selectedCell?.changeLikeStatus(publichModel)
         }
+    }
+    
+    func likersRect() -> CGRect? {
+        if self.selectedCell != nil {
+            let cellFrame = self.selectedCell!.controllerView.likeCountView.frame
+            let pt = self.selectedCell!.controllerView.likeCountView.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+            let rect:CGRect = CGRect(x: pt.x, y: pt.y, width: cellFrame.width, height: cellFrame.height)
+            return rect
+        }
+        return nil
+    }
+    
+    func commentRect() -> CGRect? {
+        if self.selectedCell != nil {
+            let cellFrame = self.selectedCell!.controllerView.commentView.frame
+            let pt = self.selectedCell!.controllerView.commentView.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+            let rect:CGRect = CGRect(x: pt.x, y: pt.y, width: cellFrame.width, height: cellFrame.height)
+            return rect
+        }
+        return nil
     }
 }
 

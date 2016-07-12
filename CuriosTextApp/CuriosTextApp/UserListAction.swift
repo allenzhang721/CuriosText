@@ -18,6 +18,7 @@ class UserListAction: NSObject{
         let vc = UserListViewController()
         vc.viewUserID = userID
         vc.type       = UserListType(rawValue: type)!
+        vc.delegate   = paras["delegate"] as? UserListViewDelegate
         
         return vc
     }

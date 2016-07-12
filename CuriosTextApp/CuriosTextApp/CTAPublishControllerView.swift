@@ -53,6 +53,7 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
     var moreButtonImg:UIImageView!
     var moreView:UIView!
     
+    var likeCountView:UIView!
     var likeCountImg:UIImageView!
     
     var closeButton:UIButton!
@@ -148,21 +149,20 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
         self.addSubview(self.publishTimeLabel)
         
         
-        let likeCountView = UIView(frame: CGRect(x: 0, y: lastY, width: bounds.width/2, height: 50))
-        self.addSubview(likeCountView)
-        likeCountView.backgroundColor = UIColor.clearColor()
+        self.likeCountView = UIView(frame: CGRect(x: 0, y: lastY, width: bounds.width/2, height: 50))
+        self.addSubview(self.likeCountView)
+        self.likeCountView.backgroundColor = UIColor.clearColor()
         self.likeCountImg = UIImageView(frame: CGRect(x: 12, y: 10, width: 30, height: 30))
         self.likeCountImg.image = UIImage(named: "like-count");
-        likeCountView.addSubview(self.likeCountImg)
+        self.likeCountView.addSubview(self.likeCountImg)
         self.publishLikeCountLabel = UILabel(frame: CGRect(x: 53, y: 16, width: bounds.width/2, height: 18))
         self.publishLikeCountLabel.font = UIFont.systemFontOfSize(13)
         self.publishLikeCountLabel.textColor = CTAStyleKit.normalColor
         self.publishLikeCountLabel.textAlignment = .Left
-        likeCountView.addSubview(self.publishLikeCountLabel)
-        likeCountView.userInteractionEnabled = true
+        self.likeCountView.addSubview(self.publishLikeCountLabel)
+        self.likeCountView.userInteractionEnabled = true
         let likeCountTap = UITapGestureRecognizer(target: self, action: #selector(likeCountClick(_:)))
-        likeCountView.addGestureRecognizer(likeCountTap)
-        
+        self.likeCountView.addGestureRecognizer(likeCountTap)
         
         self.closeButton = UIButton(frame: CGRect(x: 0, y: 2, width: 40, height: 40))
         self.closeButton.setImage(UIImage(named: "close-button"), forState: .Normal)
@@ -286,6 +286,8 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
             }else {
                 self.publishLikeCountLabel.text = NSLocalizedString("LikeDefaultLabel", comment: "")
             }
+            self.publishLikeCountLabel.sizeToFit()
+            self.likeCountView.frame.size.width = self.publishLikeCountLabel.frame.origin.x + self.publishLikeCountLabel.frame.width
         }) { (_) in
         }
     }

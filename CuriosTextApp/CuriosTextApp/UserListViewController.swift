@@ -39,6 +39,8 @@ class UserListViewController: UIViewController{
     
     var notFresh:Bool = false
     
+    var delegate:UserListViewDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -151,6 +153,12 @@ class UserListViewController: UIViewController{
     }
     
     func closeButtonClick(sender: UIButton){
+        var toRect:CGRect? = nil
+        if self.delegate != nil {
+            toRect = self.delegate!.getDismisRect(self.type)
+        }
+        let ani = CTAScaleTransition.getInstance()
+        ani.toRect = toRect
         self.dismissViewControllerAnimated(true) {
         }
     }
@@ -337,5 +345,10 @@ extension UserListViewController:CTAUserListCellDelegate{
         }
 
     }
+}
+
+protocol UserListViewDelegate: AnyObject {
+    func getDismisRect(type:UserListType) -> CGRect?
+    func disMisComplete(type:UserListType)
 }
 

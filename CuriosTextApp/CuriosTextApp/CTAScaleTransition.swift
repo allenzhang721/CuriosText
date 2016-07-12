@@ -100,9 +100,15 @@ extension CTAScaleTransition: UIViewControllerAnimatedTransitioning{
                     }else {
                         self.toRect = toView.frame
                         view.addSubview(toView)
-                        toView.frame = self.fromRect!
+                        let wChange = self.fromRect!.width / self.toRect!.width
+                        let hChange = self.fromRect!.height / self.toRect!.height
+                        toView.transform = CGAffineTransformMakeScale(wChange, hChange)
+                        toView.center = CGPoint(x: self.fromRect!.origin.x + self.fromRect!.width/2, y: self.fromRect!.origin.y + self.fromRect!.height/2)
+                        toView.alpha = 0
                         UIView.animateWithDuration(0.2, animations: {
-                            toView.frame = self.toRect!
+                            toView.transform = CGAffineTransformMakeScale(1, 1)
+                            toView.center = CGPoint(x: self.toRect!.width/2, y: self.toRect!.height/2)
+                            toView.alpha = 1
                             }, completion: { (_) in
                                 self.trasitionComplete()
                                 transitionContext.completeTransition(true)
@@ -150,8 +156,13 @@ extension CTAScaleTransition: UIViewControllerAnimatedTransitioning{
                                 transitionContext.completeTransition(true)
                         })
                     }else {
+                        self.fromRect = fromView.frame
                         UIView.animateWithDuration(0.2, animations: {
-                            fromView.frame = self.toRect!
+                            
+                            let wChange = self.toRect!.width / self.fromRect!.width
+                            let hChange = self.toRect!.height / self.fromRect!.height
+                            fromView.transform = CGAffineTransformMakeScale(wChange, hChange)
+                            fromView.center = CGPoint(x: self.toRect!.origin.x + self.toRect!.width/2, y: self.toRect!.origin.y + self.toRect!.height/2)
                             fromView.alpha = 0
                             }, completion: { (_) in
                                 fromView.removeFromSuperview()

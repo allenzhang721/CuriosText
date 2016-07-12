@@ -17,7 +17,7 @@ class LikersAction: NSObject {
         let vc = UserListViewController()
         vc.publishID = publishID
         vc.type      = UserListType.Likers
-        
+        vc.delegate  = paras["delegate"] as? UserListViewDelegate
         return vc
     }
 }
