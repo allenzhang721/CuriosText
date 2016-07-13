@@ -9,7 +9,7 @@
 //默认使用方法: NSLocalizedString("Localizable", comment: "")
 "DefaultName" = "奇思";
 "HomeLabel" = "首页";
-"RecommendLabel" = "推荐";
+"RecommendLabel" = "热门";
 "NoticeLabel" = "消息";
 "UserLabel" = "我的";
 "FollowLabel" = "关注";
