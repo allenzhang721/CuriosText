@@ -65,6 +65,7 @@ extension CTAScaleTransition: UIViewControllerAnimatedTransitioning{
                     view.addSubview(self.bgView!)
                 }
                 toView.frame = CGRect.init(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
+                view.addSubview(toView)
                 if self.fromRect != nil {
                     if self.toRect != nil {
                         toView.alpha = 1
@@ -79,7 +80,6 @@ extension CTAScaleTransition: UIViewControllerAnimatedTransitioning{
                         }
                         self.transitionView!.frame = self.fromRect!
                         view.addSubview(self.transitionView!)
-                        view.addSubview(toView)
                         toView.alpha = 0
                         self.alphaView?.alpha = 0
                         UIView.animateWithDuration(0.2, animations: {
@@ -99,17 +99,24 @@ extension CTAScaleTransition: UIViewControllerAnimatedTransitioning{
                         })
                     }else {
                         self.toRect = toView.frame
-                        view.addSubview(toView)
+                        if self.transitionView == nil {
+                            self.transitionView = toView.snapshotViewAfterScreenUpdates(true)
+                        }
+                        view.addSubview(self.transitionView!)
+                        
                         let wChange = self.fromRect!.width / self.toRect!.width
                         let hChange = self.fromRect!.height / self.toRect!.height
-                        toView.transform = CGAffineTransformMakeScale(wChange, hChange)
-                        toView.center = CGPoint(x: self.fromRect!.origin.x + self.fromRect!.width/2, y: self.fromRect!.origin.y + self.fromRect!.height/2)
+                        self.transitionView!.transform = CGAffineTransformMakeScale(wChange, hChange)
+                        self.transitionView!.center = CGPoint(x: self.fromRect!.origin.x + self.fromRect!.width/2, y: self.fromRect!.origin.y + self.fromRect!.height/2)
+                        self.transitionView!.alpha = 0
                         toView.alpha = 0
                         UIView.animateWithDuration(0.2, animations: {
-                            toView.transform = CGAffineTransformMakeScale(1, 1)
-                            toView.center = CGPoint(x: self.toRect!.width/2, y: self.toRect!.height/2)
-                            toView.alpha = 1
+                            self.transitionView!.transform = CGAffineTransformMakeScale(1, 1)
+                            self.transitionView!.center = CGPoint(x: self.toRect!.width/2, y: self.toRect!.height/2)
+                            self.transitionView!.alpha = 1
                             }, completion: { (_) in
+                                toView.alpha = 1
+                                self.transitionView!.removeFromSuperview()
                                 self.trasitionComplete()
                                 transitionContext.completeTransition(true)
                         })
@@ -157,14 +164,27 @@ extension CTAScaleTransition: UIViewControllerAnimatedTransitioning{
                         })
                     }else {
                         self.fromRect = fromView.frame
+                        if self.transitionBackView == nil {
+                            self.transitionBackView = UIView(frame: fromView.frame)
+                            self.transitionBackView!.backgroundColor = CTAStyleKit.detailBackgroundColor
+                        }
+                        view.addSubview(self.transitionBackView!)
+                        self.transitionBackView!.alpha = self.transitionAlpha
+                        if self.transitionView == nil {
+                            self.transitionView = fromView.snapshotViewAfterScreenUpdates(true)
+                        }
+                        view.addSubview(self.transitionView!)
+                        fromView.alpha = 0
                         UIView.animateWithDuration(0.2, animations: {
-                            
                             let wChange = self.toRect!.width / self.fromRect!.width
                             let hChange = self.toRect!.height / self.fromRect!.height
-                            fromView.transform = CGAffineTransformMakeScale(wChange, hChange)
-                            fromView.center = CGPoint(x: self.toRect!.origin.x + self.toRect!.width/2, y: self.toRect!.origin.y + self.toRect!.height/2)
-                            fromView.alpha = 0
+                            self.transitionView!.transform = CGAffineTransformMakeScale(wChange, hChange)
+                            self.transitionView!.center = CGPoint(x: self.toRect!.origin.x + self.toRect!.width/2, y: self.toRect!.origin.y + self.toRect!.height/2)
+                            self.transitionView!.alpha = 0
+                            self.transitionBackView!.alpha = 0
                             }, completion: { (_) in
+                                self.transitionView!.removeFromSuperview()
+                                self.transitionBackView!.removeFromSuperview()
                                 fromView.removeFromSuperview()
                                 self.trasitionComplete()
                                 transitionContext.completeTransition(true)

@@ -91,7 +91,8 @@ extension CTAPublishControllerProtocol where Self: UIViewController{
     
     func commentHandler(){
         let publishID = self.publishModel == nil ? "" : self.publishModel!.publishID
-        let vc = Moduler.module_comment(publishID)
+        let userID = self.userModel == nil ? "" : self.userModel!.userID
+        let vc = Moduler.module_comment(publishID, userID: userID)
         let navi = UINavigationController(rootViewController: vc)
         self.presentViewController(navi, animated: true, completion: {
         })

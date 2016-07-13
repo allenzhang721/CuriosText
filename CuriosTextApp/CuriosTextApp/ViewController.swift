@@ -160,7 +160,7 @@ class ViewController: UIViewController{
                     let count = info.successType
                     if count > 0{
                         var noticeText:String = ""
-                        if count > 9999{
+                        if count > 99{
                             noticeText = "..."
                         }else {
                             noticeText = String(count)
@@ -197,12 +197,28 @@ extension ViewController: CTAEditViewControllerDelegate{
 
 extension ViewController: UITabBarControllerDelegate{
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool{
-        if !(viewController is HomeViewController){
-            if CTAUserManager.isLogin{
-                return true
+        var isSelf:Bool = false
+        if let selectedView = self.mainTabBarController.selectedViewController{
+            if selectedView.isEqual(viewController){
+                isSelf = true
             }else {
-                self.showLoginHandler()
-                return false
+                isSelf = false
+            }
+        }else {
+            isSelf = false
+        }
+        if isSelf{
+            NSNotificationCenter.defaultCenter().postNotificationName("refreshSelf", object: nil)
+            return false
+        }else {
+            let index = self.mainTabBarController.selectedIndex
+            if index == 0{
+                if CTAUserManager.isLogin{
+                    return true
+                }else {
+                    self.showLoginHandler()
+                    return false
+                }
             }
         }
         return true

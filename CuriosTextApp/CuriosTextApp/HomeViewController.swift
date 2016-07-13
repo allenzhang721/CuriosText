@@ -44,6 +44,10 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
     
     let collectionSpace:CGFloat = 5
 
+    var isFreshToTop:Bool = false
+    
+    let scrollTop:CGFloat = -20.00
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBarHidden = true
@@ -52,6 +56,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         if !self.isAddOber{
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reNewView(_:)), name: "publishEditFile", object: nil)
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reNewView(_:)), name: "loginComplete", object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshView(_:)), name: "refreshSelf", object: nil)
             self.isAddOber = true
         }
         // Do any additional setup after loading the view.
@@ -159,7 +164,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         if userID != self.viewUserID {
             self.viewUserID = userID
             self.headerFresh.beginRefreshing()
-            self.previousScrollViewYOffset = -20.00
+            self.previousScrollViewYOffset = self.scrollTop
         }
     }
     
@@ -223,6 +228,15 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
 
     func reNewView(noti: NSNotification){
         self.viewUserID = ""
+    }
+    
+    func refreshView(noti: NSNotification){
+        if self.collectionView.contentOffset.y > self.scrollTop{
+            self.isFreshToTop = true
+            self.collectionView.setContentOffset(CGPoint(x: 0, y: self.scrollTop), animated: true)
+        }else {
+            self.headerFresh.beginRefreshing()
+        }
     }
     
     func loadUserPublishes(start:Int, size:Int = 30){
@@ -431,6 +445,12 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         self.previousScrollViewYOffset = scrollOffset
         let viewY = collectViewFrame.origin.y
         self.playCellAnimation(scrollOffset - viewY)
+        if scrollOffset <= self.scrollTop{
+            if self.isFreshToTop{
+                self.headerFresh.beginRefreshing()
+                self.isFreshToTop = false
+            }
+        }
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
@@ -442,7 +462,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
             self.stoppedScrolling()
         }
     }
-    
+
     func stoppedScrolling(){
         let frame = self.headerView.frame
         if frame.origin.y < 0 {
@@ -638,7 +658,7 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
             transitionView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
             transitionView.backgroundColor = CTAStyleKit.commonBackgroundColor
         }
-        let bgView = self.view.snapshotViewAfterScreenUpdates(false)
+        let bgView = UIScreen.mainScreen().snapshotViewAfterScreenUpdates(false)
         
         let ani = CTAScaleTransition.getInstance()
         ani.bgView = bgView
@@ -787,8 +807,8 @@ extension HomeViewController: PublishDetailViewDelegate{
         }else {
             scrollOffY = totalY - boundsHeight
         }
-        if scrollOffY < -20{
-            scrollOffY = -20
+        if scrollOffY < self.scrollTop{
+            scrollOffY = self.scrollTop
         }
         self.isHideSelectedCell = true
         self.collectionView.reloadData()
