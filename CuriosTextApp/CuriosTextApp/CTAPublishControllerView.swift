@@ -175,7 +175,7 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
             self.setViewByType()
             let usermodel = self.publishModel!.userModel
             self.setNikeNameLabel(usermodel.nickName)
-            self.setTimeLabel(self.getPublishDate(self.publishModel!.publishDate))
+            self.setTimeLabel(DateString(self.publishModel!.publishDate))
             self.setUserIcon(usermodel.userIconURL)
             self.changeLikeStatus()
             self.setCommentButtonCount()

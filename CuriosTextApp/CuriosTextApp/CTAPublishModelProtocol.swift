@@ -7,6 +7,42 @@
 //
 
 import Foundation
+
+func DateString(date:NSDate) -> String{
+    var time = date.timeIntervalSinceNow
+    if time < 0{
+        time = 0-time
+    }
+    var dateString:String = ""
+    if time < 60{
+        dateString = NSLocalizedString("PublishDateJustNow", comment: "")
+    }else if time < 3600{
+        let mins = Int(time / 60)
+        dateString = String(mins)+NSLocalizedString("PublishDateMins", comment: "")
+    }else if time < 3600*2{
+        dateString = NSLocalizedString("PublishDateOneHour", comment: "")
+    }else if time < 86400{
+        let hours = Int(time / 3600)
+        dateString = String(hours)+NSLocalizedString("PublishDateHours", comment: "")
+    }else if time < 86400 * 2{
+        dateString = NSLocalizedString("PublishDateYesterDay", comment: "")
+    }else if time < 86400*30{
+        let days = Int(time / 86400)
+        dateString = String(days)+NSLocalizedString("PublishDateDays", comment: "")
+    }else if time < 86400*30*2{
+        dateString = NSLocalizedString("PublishDateOneMonth", comment: "")
+    }else if time < 86400*365{
+        let months = Int(time / (86400*30))
+        dateString = String(months)+NSLocalizedString("PublishDateMonths", comment: "")
+    }else if time < 86400*365*2{
+        dateString = NSLocalizedString("PublishDateOneYear", comment: "")
+    }else{
+        let years = Int(time / (86400*365))
+        dateString = String(years)+NSLocalizedString("PublishDateYears", comment: "")
+    }
+    return dateString
+}
+
 protocol CTAPublishModelProtocol: CTASystemLanguageProtocol{
     func getPublishIndex(publishID:String, publishArray:Array<CTAPublishModel>) -> Int
     func checkPublishModelIsHave(publish:CTAPublishModel, publishArray:Array<CTAPublishModel>) -> Bool
@@ -14,7 +50,6 @@ protocol CTAPublishModelProtocol: CTASystemLanguageProtocol{
     func removePublishModelByID(publishID:String, publishArray:Array<CTAPublishModel>) -> Array<CTAPublishModel>
     func changeCountToString(count:Int) -> String
     func changeCountToAllString(count:Int) -> String
-    func getPublishDate(publishDate:NSDate) -> String
 }
 
 extension CTAPublishModelProtocol{
@@ -150,40 +185,5 @@ extension CTAPublishModelProtocol{
             countString = String(remainder)
         }
         return countString
-    }
-    
-    func getPublishDate(publishDate:NSDate) -> String{
-        var time = publishDate.timeIntervalSinceNow
-        if time < 0{
-            time = 0-time
-        }
-        var dateString:String = ""
-        if time < 60{
-            dateString = NSLocalizedString("PublishDateJustNow", comment: "")
-        }else if time < 3600{
-            let mins = Int(time / 60)
-            dateString = String(mins)+NSLocalizedString("PublishDateMins", comment: "")
-        }else if time < 3600*2{
-            dateString = NSLocalizedString("PublishDateOneHour", comment: "")
-        }else if time < 86400{
-            let hours = Int(time / 3600)
-            dateString = String(hours)+NSLocalizedString("PublishDateHours", comment: "")
-        }else if time < 86400 * 2{
-            dateString = NSLocalizedString("PublishDateYesterDay", comment: "")
-        }else if time < 86400*30{
-            let days = Int(time / 86400)
-            dateString = String(days)+NSLocalizedString("PublishDateDays", comment: "")
-        }else if time < 86400*30*2{
-            dateString = NSLocalizedString("PublishDateOneMonth", comment: "")
-        }else if time < 86400*365{
-            let months = Int(time / (86400*30))
-            dateString = String(months)+NSLocalizedString("PublishDateMonths", comment: "")
-        }else if time < 86400*365*2{
-            dateString = NSLocalizedString("PublishDateOneYear", comment: "")
-        }else{
-            let years = Int(time / (86400*365))
-            dateString = String(years)+NSLocalizedString("PublishDateYears", comment: "")
-        }
-        return dateString
     }
 }

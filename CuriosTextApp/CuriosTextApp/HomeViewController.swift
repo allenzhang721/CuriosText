@@ -159,7 +159,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         if userID != self.viewUserID {
             self.viewUserID = userID
             self.headerFresh.beginRefreshing()
-            self.previousScrollViewYOffset = 0.0
+            self.previousScrollViewYOffset = -20.00
         }
     }
     
@@ -301,15 +301,35 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
                         self.loadMoreModelArray(modelArray!)
                         self.footerFresh.resetNoMoreData()
                         self.saveArrayToLocal()
+                        self.collectionView.reloadData()
+                    }else {
+                        self.updateCollectionCell()
                     }
                 }else {
                     self.loadMoreModelArray(modelArray!)
+                    self.collectionView.reloadData()
                 }
             }
         }
         self.freshComplete();
-        self.collectionView.reloadData()
     }
+    
+    func updateCollectionCell(){
+        let cells = self.collectionView.visibleCells()
+        for i in 0..<cells.count{
+            let cell = cells[i] as! CTAHomePublishesCell
+            if cell.publishModel != nil {
+                for j in 0..<self.publishModelArray.count{
+                    let newpublish = self.publishModelArray[j]
+                    if newpublish.publishID == cell.publishModel!.publishID{
+                        cell.publishModel = newpublish
+                    }
+                }
+            }
+        }
+    }
+    
+    
     
     func loadMoreModelArray(modelArray:Array<AnyObject>){
         for i in 0..<modelArray.count{
@@ -382,8 +402,6 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     }
     
     func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath){
-        let index = indexPath.row
-        print("did display =\(index)")
         let publishCell:CTAHomePublishesCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("ctahomepublishescell", forIndexPath: indexPath) as! CTAHomePublishesCell
         publishCell.releaseView()
     }
