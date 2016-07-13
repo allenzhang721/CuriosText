@@ -60,7 +60,7 @@ private extension CTACommentModel {
 
 class CommentViewController: UIViewController {
     
-    var myID = "29db92c8e00149c8ad36c4c5e3602fae"
+    var myID: String!
     var publishID: String!
     
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
@@ -75,7 +75,6 @@ class CommentViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        publishID = "AC0DD367334A40D7A00B21731CAAA24E"
         setup()
     }
     
@@ -292,64 +291,7 @@ extension CommentViewController: UITableViewDelegate {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-let demo = [
-    comment(withUser: demoString[0].0, message: demoString[0].1),
-    comment(withUser: demoString[1].0, message: demoString[1].1),
-    comment(withUser: demoString[2].0, message: demoString[2].1),
-]
-
-let demoString = [
-    ("Emiaostein", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
-    ("Allen", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."),
-    ("Jennifer", "Lorem ipsum dolor sit amet, consectetur adipisicing elit.")
-]
-
-
-func comment(withUser userName: String?, message: String) -> (NSAttributedString, NSRange) {
-    
+private func comment(withUser userName: String?, message: String) -> (NSAttributedString, NSRange) {
     let name = userName != nil ? "@" + userName! : ""
     let amessage = userName != nil ? " " + message : message
     let c = NSMutableAttributedString(string: name + amessage)
@@ -359,142 +301,11 @@ func comment(withUser userName: String?, message: String) -> (NSAttributedString
     let messageFont = UIFont.systemFontOfSize(14)
     let nameColor = UIColor(red:0.08, green:0.20, blue:0.37, alpha:1.00)
     let messageColor = UIColor(red:0, green:0, blue:0, alpha:1.00)
-//
+    //
     c.addAttribute(NSFontAttributeName, value: nameFont, range: nameRange)
     c.addAttribute(NSFontAttributeName, value: messageFont, range: messageRange)
     c.addAttribute(NSForegroundColorAttributeName, value:nameColor, range:nameRange)
     c.addAttribute(NSForegroundColorAttributeName, value:messageColor, range:messageRange)
     
     return (c, nameRange)
-}
-
-
-
-
-func longComment() -> NSAttributedString
-{
-    // Create the attributed string
-    let longComment = NSMutableAttributedString(string:"@Emiaostein Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
-    
-    // Declare the fonts
-    let longCommentFont1 = UIFont(name:"Helvetica-Bold", size:14.0)
-    let longCommentFont2 = UIFont(name:"Helvetica-Light", size:14.0)
-    
-    // Declare the colors
-    let longCommentColor1 = UIColor(red: 0.000000, green: 0.266667, blue: 0.996078, alpha: 1.000000)
-    let longCommentColor2 = UIColor(red: 0.000000, green: 0.000000, blue: 0.000000, alpha: 1.000000)
-    
-    // Declare the paragraph styles
-    let longCommentParaStyle1 = NSMutableParagraphStyle()
-    longCommentParaStyle1.defaultTabInterval = 40.8
-    longCommentParaStyle1.tabStops = [NSTextTab(textAlignment: NSTextAlignment.Left, location: 40.800000, options: [:]), ]
-    
-    
-    // Create the attributes and add them to the string
-    longComment.addAttribute(NSLigatureAttributeName, value:0, range:NSMakeRange(0,11))
-    longComment.addAttribute(NSParagraphStyleAttributeName, value:longCommentParaStyle1, range:NSMakeRange(0,11))
-    longComment.addAttribute(NSFontAttributeName, value:longCommentFont1!, range:NSMakeRange(0,11))
-    longComment.addAttribute(NSForegroundColorAttributeName, value:longCommentColor1, range:NSMakeRange(0,11))
-    longComment.addAttribute(NSLigatureAttributeName, value:0, range:NSMakeRange(11,447))
-    longComment.addAttribute(NSParagraphStyleAttributeName, value:longCommentParaStyle1, range:NSMakeRange(11,447))
-    longComment.addAttribute(NSFontAttributeName, value:longCommentFont2!, range:NSMakeRange(11,447))
-    longComment.addAttribute(NSForegroundColorAttributeName, value:longCommentColor2, range:NSMakeRange(11,447))
-    
-    return NSAttributedString(attributedString:longComment)
-}
-
-func middleComment() -> NSAttributedString
-{
-    // Create the attributed string
-    let middleComment = NSMutableAttributedString(string:"@Allen Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
-    
-    // Declare the fonts
-    let middleCommentFont1 = UIFont(name:"Helvetica-Bold", size:14.0)
-    let middleCommentFont2 = UIFont(name:"Helvetica-Light", size:14.0)
-    
-    // Declare the colors
-    let middleCommentColor1 = UIColor(red: 0.000000, green: 0.266667, blue: 0.996078, alpha: 1.000000)
-    let middleCommentColor2 = UIColor(red: 0.000000, green: 0.000000, blue: 0.000000, alpha: 1.000000)
-    
-    // Declare the paragraph styles
-    let middleCommentParaStyle1 = NSMutableParagraphStyle()
-    middleCommentParaStyle1.defaultTabInterval = 40.8
-    middleCommentParaStyle1.tabStops = [NSTextTab(textAlignment: NSTextAlignment.Left, location: 40.800000, options: [:]), ]
-    
-    
-    // Create the attributes and add them to the string
-    middleComment.addAttribute(NSLigatureAttributeName, value:0, range:NSMakeRange(0,6))
-    middleComment.addAttribute(NSParagraphStyleAttributeName, value:middleCommentParaStyle1, range:NSMakeRange(0,6))
-    middleComment.addAttribute(NSFontAttributeName, value:middleCommentFont1!, range:NSMakeRange(0,6))
-    middleComment.addAttribute(NSForegroundColorAttributeName, value:middleCommentColor1, range:NSMakeRange(0,6))
-    middleComment.addAttribute(NSLigatureAttributeName, value:0, range:NSMakeRange(6,233))
-    middleComment.addAttribute(NSParagraphStyleAttributeName, value:middleCommentParaStyle1, range:NSMakeRange(6,233))
-    middleComment.addAttribute(NSFontAttributeName, value:middleCommentFont2!, range:NSMakeRange(6,233))
-    middleComment.addAttribute(NSForegroundColorAttributeName, value:middleCommentColor2, range:NSMakeRange(6,233))
-    
-    return NSAttributedString(attributedString:middleComment)
-}
-
-func shortComment() -> NSAttributedString
-{
-    // Create the attributed string
-    let shortComment = NSMutableAttributedString(string:"@Jennifer Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
-    
-    // Declare the fonts
-    let shortCommentFont1 = UIFont(name:"Helvetica-Bold", size:14.0)
-    let shortCommentFont2 = UIFont(name:"Helvetica-Light", size:14.0)
-    
-    // Declare the colors
-    let shortCommentColor1 = UIColor(red: 0.000000, green: 0.266667, blue: 0.996078, alpha: 1.000000)
-    let shortCommentColor2 = UIColor(red: 0.000000, green: 0.000000, blue: 0.000000, alpha: 1.000000)
-    
-    // Declare the paragraph styles
-    let shortCommentParaStyle1 = NSMutableParagraphStyle()
-    shortCommentParaStyle1.defaultTabInterval = 40.8
-    shortCommentParaStyle1.tabStops = [NSTextTab(textAlignment: NSTextAlignment.Left, location: 40.800000, options: [:]), ]
-    
-    
-    // Create the attributes and add them to the string
-    shortComment.addAttribute(NSLigatureAttributeName, value:0, range:NSMakeRange(0,9))
-    shortComment.addAttribute(NSParagraphStyleAttributeName, value:shortCommentParaStyle1, range:NSMakeRange(0,9))
-    shortComment.addAttribute(NSFontAttributeName, value:shortCommentFont1!, range:NSMakeRange(0,9))
-    shortComment.addAttribute(NSForegroundColorAttributeName, value:shortCommentColor1, range:NSMakeRange(0,9))
-    shortComment.addAttribute(NSLigatureAttributeName, value:0, range:NSMakeRange(9,125))
-    shortComment.addAttribute(NSParagraphStyleAttributeName, value:shortCommentParaStyle1, range:NSMakeRange(9,125))
-    shortComment.addAttribute(NSFontAttributeName, value:shortCommentFont2!, range:NSMakeRange(9,125))
-    shortComment.addAttribute(NSForegroundColorAttributeName, value:shortCommentColor2, range:NSMakeRange(9,125))
-    
-    return NSAttributedString(attributedString:shortComment)
-}
-
-func singleComment() -> NSAttributedString
-{
-    // Create the attributed string
-    let singleComment = NSMutableAttributedString(string:"@Jennifer Lorem ipsum")
-    
-    // Declare the fonts
-    let singleCommentFont1 = UIFont(name:"Helvetica-Bold", size:14.0)
-    let singleCommentFont2 = UIFont(name:"Helvetica-Light", size:14.0)
-    
-    // Declare the colors
-    let singleCommentColor1 = UIColor(red: 0.000000, green: 0.266667, blue: 0.996078, alpha: 1.000000)
-    let singleCommentColor2 = UIColor(red: 0.000000, green: 0.000000, blue: 0.000000, alpha: 1.000000)
-    
-    // Declare the paragraph styles
-    let singleCommentParaStyle1 = NSMutableParagraphStyle()
-    singleCommentParaStyle1.defaultTabInterval = 40.8
-    singleCommentParaStyle1.tabStops = [NSTextTab(textAlignment: NSTextAlignment.Left, location: 40.800000, options: [:]), ]
-    
-    
-    // Create the attributes and add them to the string
-    singleComment.addAttribute(NSLigatureAttributeName, value:0, range:NSMakeRange(0,9))
-    singleComment.addAttribute(NSParagraphStyleAttributeName, value:singleCommentParaStyle1, range:NSMakeRange(0,9))
-    singleComment.addAttribute(NSFontAttributeName, value:singleCommentFont1!, range:NSMakeRange(0,9))
-    singleComment.addAttribute(NSForegroundColorAttributeName, value:singleCommentColor1, range:NSMakeRange(0,9))
-    singleComment.addAttribute(NSLigatureAttributeName, value:0, range:NSMakeRange(9,12))
-    singleComment.addAttribute(NSParagraphStyleAttributeName, value:singleCommentParaStyle1, range:NSMakeRange(9,12))
-    singleComment.addAttribute(NSFontAttributeName, value:singleCommentFont2!, range:NSMakeRange(9,12))
-    singleComment.addAttribute(NSForegroundColorAttributeName, value:singleCommentColor2, range:NSMakeRange(9,12))
-    
-    return NSAttributedString(attributedString:singleComment)
 }

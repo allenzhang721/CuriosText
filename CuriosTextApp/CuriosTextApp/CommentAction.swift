@@ -17,6 +17,7 @@ class CommentAction: NSObject {
         
         let vc = CommentViewController()
         vc.publishID = publishID
+        vc.myID = userID
         
         
         return vc
