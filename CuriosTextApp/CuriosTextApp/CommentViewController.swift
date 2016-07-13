@@ -35,6 +35,10 @@ private class Comment {
         return model.commentID
     }
     
+    var userModel: CTAViewUserModel {
+        return model.userModel
+    }
+    
     private let model: CTACommentModel
     private let iconURL: NSURL
     private let rendedMessage: (NSAttributedString, NSRange)
@@ -191,8 +195,12 @@ extension CommentViewController {
         presentViewController(alert, animated: true, completion: nil)
     }
     
-    private func showUserInfo(by userID: String) {
-        print(userID)
+    private func showUserInfo(by userModel: CTAViewUserModel) {
+        if let navigationController = navigationController {
+            let userPublish = UserViewController()
+            userPublish.viewUser = userModel
+            navigationController.pushViewController(userPublish, animated: true)
+        }
     }
     
     private func comment(to someoneID: String, text: String) {
@@ -231,7 +239,7 @@ extension CommentViewController: UITableViewDataSource {
                         let range = someone.range
                         if (range.location <= index && index < range.location + range.length) {
                             if state == .End {
-                                self?.showUserInfo(by: someone.ID)
+                                self?.showUserInfo(by: comment.userModel)
                             }
                             return TouchTextView.ActiveState.Actived(range)
                         } else {
@@ -269,8 +277,8 @@ extension CommentViewController: UITableViewDataSource {
             }
             imgView.kf_setImageWithURL(com.author.icon, placeholderImage: UIImage(named: "default-usericon"))
             imgView.tapHandler = { [weak self, cell] in
-                guard let i = self?.tableView.indexPathForCell(cell), authorID = self?.comments[i.item].author.ID else {return}
-                self?.showUserInfo(by: authorID)
+                guard let i = self?.tableView.indexPathForCell(cell), comment = self?.comments[i.item] else {return}
+                self?.showUserInfo(by: comment.userModel)
             }
         }
         
