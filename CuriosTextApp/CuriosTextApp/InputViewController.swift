@@ -81,7 +81,7 @@ extension InputViewController: UITextViewDelegate {
     
     func textViewDidEndEditing(textView: UITextView) {
         if textView.text.characters.count <= 0 {
-            placeholderLabel.text = "发表评论"
+            placeholderLabel.text = LocalStrings.PublishComment.description
         }
     }
     
@@ -90,7 +90,7 @@ extension InputViewController: UITextViewDelegate {
             textView.resignFirstResponder()
             sendHandler?(textView.text)
             textView.text = ""
-            placeholderLabel.text = "发表评论"
+            placeholderLabel.text = LocalStrings.PublishComment.description
             placeholderLabel.hidden = false
             return false
         }

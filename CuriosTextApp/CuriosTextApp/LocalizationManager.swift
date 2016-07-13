@@ -16,6 +16,9 @@ enum LocalStrings: CustomStringConvertible {
     // Image Picker
     case Camera, Photo, AllowPhotoTitle, AllowPhotoMessage
     
+    // Comment
+    case PublishComment
+    
     // Editor
     case Publish , EditTextPlaceHolder, EditorDismissMessage
     
@@ -59,6 +62,10 @@ enum LocalStrings: CustomStringConvertible {
             return NSLocalizedString("AllPhotoLibraryTitle", comment: "")
         case .AllowPhotoMessage:
             return NSLocalizedString("AllPhotoLibraryMessage", comment: "")
+            
+            // Comment
+        case .PublishComment:
+            return NSLocalizedString("PublishComment", comment: "")
             
             // Editor
         case .Publish:

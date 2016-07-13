@@ -158,6 +158,9 @@
 "PublishDateOneYear" = "1年前";
 "PublishDateYears" = "年前";
 
+// MARK: - Comment
+"PublishComment" = "发表评论"
+
 // MARK: - Common
 "Cancel" = "取消";
 "Done" = "完成";
