@@ -41,13 +41,24 @@ class UserListViewController: UIViewController{
     
     var delegate:UserListViewDelegate?
     
+    var previousScrollViewYOffset:CGFloat = 0.0
+    
+    var isTopScroll:Bool = false
+    
+    var isBottomScroll:Bool = false
+    
+    var isDragMove:Bool = false
+    
+    let scrollTop:CGFloat = -20.00
+    
+    var bgView:UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         self.initView()
         self.navigationController?.navigationBarHidden = true
-        self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -57,6 +68,7 @@ class UserListViewController: UIViewController{
         }else {
             self.loginUser = nil
         }
+        self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -64,6 +76,7 @@ class UserListViewController: UIViewController{
         if !self.notFresh {
             self.userModelArray = []
             self.headerFresh.beginRefreshing()
+            self.previousScrollViewYOffset = self.scrollTop
         }
         self.notFresh = false
     }
@@ -74,6 +87,11 @@ class UserListViewController: UIViewController{
     }
     
     func initView(){
+        self.bgView = UIView(frame: self.view.frame)
+        self.bgView.backgroundColor = CTAStyleKit.commonBackgroundColor
+        self.view.addSubview(self.bgView)
+        //self.cropImageRound(self.bgView)
+        
         self.initCollectionView()
         self.initHeader()
         
@@ -88,7 +106,7 @@ class UserListViewController: UIViewController{
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: 64))
         headerView.backgroundColor = CTAStyleKit.commonBackgroundColor
-        self.view.addSubview(headerView)
+        self.bgView.addSubview(headerView)
         
         self.headerLabel = UILabel(frame: CGRect(x: 0, y: 28, width: bounds.width, height: 28))
         self.headerLabel.font = UIFont.boldSystemFontOfSize(18)
@@ -108,14 +126,14 @@ class UserListViewController: UIViewController{
         closeButton.setImage(UIImage(named: "close-button"), forState: .Normal)
         closeButton.setImage(UIImage(named: "close-selected-button"), forState: .Highlighted)
         closeButton.addTarget(self, action: #selector(closeButtonClick(_:)), forControlEvents: .TouchUpInside)
-        self.view.addSubview(closeButton)
+        self.bgView.addSubview(closeButton)
         
         let textLine = UIImageView(frame: CGRect(x: 0, y: 63, width: bounds.width, height: 1))
         textLine.image = UIImage(named: "space-line")
         headerView.addSubview(textLine)
         
-        self.view.layer.borderColor = CTAStyleKit.disableColor.CGColor
-        self.view.layer.borderWidth = 1
+        self.bgView.layer.borderColor = CTAStyleKit.disableColor.CGColor
+        self.bgView.layer.borderWidth = 1
     }
     
     func initCollectionView(){
@@ -131,7 +149,7 @@ class UserListViewController: UIViewController{
         self.collectionView.dataSource = self
         self.collectionView.registerClass(CTAUserListCell.self, forCellWithReuseIdentifier: "ctaUserListCell")
         self.collectionView.backgroundColor = CTAStyleKit.commonBackgroundColor
-        self.view.addSubview(self.collectionView!);
+        self.bgView.addSubview(self.collectionView!);
         
         let freshIcon1:UIImage = UIImage(named: "fresh-icon-1")!
         
@@ -153,13 +171,25 @@ class UserListViewController: UIViewController{
     }
     
     func closeButtonClick(sender: UIButton){
+        self.closeHandler()
+    }
+    
+    func closeHandler(){
         var toRect:CGRect? = nil
         if self.delegate != nil {
             toRect = self.delegate!.getDismisRect(self.type)
         }
+        let view = self.bgView.snapshotViewAfterScreenUpdates(false)
+        view.frame.origin.y = self.bgView.frame.origin.y
         let ani = CTAScaleTransition.getInstance()
         ani.toRect = toRect
+        ani.transitionAlpha = 0.4
+        ani.transitionView = view
         self.dismissViewControllerAnimated(true) {
+            if self.delegate != nil {
+                self.delegate!.disMisComplete(self.type)
+                self.delegate = nil
+            }
         }
     }
     
@@ -191,7 +221,7 @@ class UserListViewController: UIViewController{
                 self.loadUsersComplete(info, size: size)
             }
         case .Likers:
-            CTAPublishDomain.getInstance().publishLikeUserList(userID, publishID: self.publishID, start: 0, size: size, compelecationBlock: { (info) in
+            CTAPublishDomain.getInstance().publishLikeUserList(userID, publishID: self.publishID, start: start, size: size, compelecationBlock: { (info) in
                 self.loadUsersComplete(info, size: size)
             })
         }
@@ -237,9 +267,9 @@ class UserListViewController: UIViewController{
                         isChange = true
                     }
                     if isChange{
+                        self.footerFresh.resetNoMoreData()
                         self.userModelArray.removeAll()
                         self.loadMoreModelArray(modelArray!)
-                        self.footerFresh.resetNoMoreData()
                     }
                 }else {
                     self.loadMoreModelArray(modelArray!)
@@ -284,16 +314,47 @@ class UserListViewController: UIViewController{
         }
     }
     
+    var beganLocation:CGPoint?
+    var lastLocation:CGPoint?
+    
     func viewPanHandler(sender: UIPanGestureRecognizer) {
         switch sender.state {
         case .Began:
-            print("viewPanHandler = began")
+            self.beganLocation = sender.locationInView(view)
         case .Changed:
-            print("viewPanHandler = Changed")
+            let newLocation = sender.locationInView(view)
+            self.viewVerPanHandler(newLocation)
         case .Ended, .Cancelled, .Failed:
-            ()
+            let velocity = sender.velocityInView(view)
+            let newLocation = sender.locationInView(view)
+            if velocity.y > 500 || velocity.y < -500{
+                self.closeHandler()
+            }else {
+                self.viewVerComplete(newLocation)
+            }
         default:
             ()
+        }
+    }
+    
+    func viewVerPanHandler(newLocation:CGPoint){
+        if self.lastLocation == nil {
+            self.lastLocation = self.beganLocation
+        }
+        let scrollDiff = newLocation.y - self.lastLocation!.y
+        self.bgView.frame.origin.y = self.bgView.frame.origin.y + scrollDiff/4
+        self.lastLocation = newLocation
+    }
+    
+    func viewVerComplete(newLocation:CGPoint){
+        let xRate = newLocation.y - self.beganLocation!.y
+        if abs(xRate) >= 30 {
+            self.closeHandler()
+        }else {
+            UIView.animateWithDuration(0.2, animations: {
+                self.bgView.frame.origin.y = 0
+                }, completion: { (_) in
+            })
         }
     }
 }
@@ -322,6 +383,72 @@ extension UserListViewController: UICollectionViewDelegateFlowLayout, UICollecti
         }
         if self.selectedUserID != "" {
             
+        }
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let offY = self.collectionView.contentOffset.y
+        let scrollDiff = offY - self.previousScrollViewYOffset
+        if scrollDiff < 0 {
+            self.isBottomScroll = false
+            if self.isTopScroll{
+                self.isDragMove = true
+            }
+        }else {
+            self.isTopScroll = false
+            if self.isBottomScroll{
+                self.isDragMove = true
+            }
+        }
+        if self.isDragMove{
+            self.collectionView.contentOffset.y = self.previousScrollViewYOffset
+            self.bgView.frame.origin.y = self.bgView.frame.origin.y - scrollDiff/4
+        }
+        
+        self.previousScrollViewYOffset = self.collectionView.contentOffset.y
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        self.scrollEnd()
+    }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView){
+        let offY = self.collectionView.contentOffset.y
+        if offY <= self.scrollTop{
+            self.isTopScroll = true
+        }
+        
+        let offSize = self.collectionView.contentSize
+        let maxOffY = offSize.height - self.collectionView.frame.height + self.scrollTop
+        if maxOffY > 0 {
+            if offY > maxOffY && self.isLoadedAll{
+                self.isBottomScroll = true
+            }
+        }else {
+            self.isBottomScroll = true
+        }
+    }
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate{
+            self.scrollEnd()
+        }
+    }
+    
+    func scrollEnd(){
+        if self.isDragMove{
+            self.isBottomScroll = false
+            self.isTopScroll = false
+            self.isDragMove = false
+            let currentY = abs(self.bgView.frame.origin.y - 0)
+            if currentY > 30{
+                self.closeHandler()
+            }else {
+                UIView.animateWithDuration(0.2, animations: {
+                    self.bgView.frame.origin.y = 0
+                    }, completion: { (_) in
+                })
+            }
         }
     }
 }
