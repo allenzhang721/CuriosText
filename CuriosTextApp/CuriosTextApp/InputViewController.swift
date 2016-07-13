@@ -24,6 +24,9 @@ class InputViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         textView.layer.borderColor = CTAStyleKit.labelShowColor.CGColor
+        textView.addObserver(self, forKeyPath: "contentSize", options: .New, context: &contexts)
+        textView.textContainerInset.left = 12
+        textView.textContainerInset.right = 8
     }
     
     deinit {
@@ -40,12 +43,6 @@ class InputViewController: UIViewController {
         } else {
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
         }
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        textView.addObserver(self, forKeyPath: "contentSize", options: .New, context: &contexts)
-        textView.textContainerInset.left = 12
-        textView.textContainerInset.right = 8
     }
     
     override func viewWillLayoutSubviews() {
