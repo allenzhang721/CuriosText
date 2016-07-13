@@ -159,7 +159,7 @@
 "PublishDateYears" = "年前";
 
 // MARK: - Comment
-"PublishComment" = "发表评论";
+"PublishComment" = "添加评论";
 "Comment" = "评论";
 
 // MARK: - Common

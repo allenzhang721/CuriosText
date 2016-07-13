@@ -14,6 +14,8 @@ enum UserListType:String{
     case Followings = "Followings"
 }
 
+let DragDownHeight:CGFloat = 44
+
 class UserListViewController: UIViewController{
     
     var loginUser:CTAUserModel?
@@ -52,6 +54,9 @@ class UserListViewController: UIViewController{
     let scrollTop:CGFloat = -20.00
     
     var bgView:UIView!
+    
+    var beganLocation:CGPoint?
+    var lastLocation:CGPoint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -314,9 +319,6 @@ class UserListViewController: UIViewController{
         }
     }
     
-    var beganLocation:CGPoint?
-    var lastLocation:CGPoint?
-    
     func viewPanHandler(sender: UIPanGestureRecognizer) {
         switch sender.state {
         case .Began:
@@ -348,7 +350,7 @@ class UserListViewController: UIViewController{
     
     func viewVerComplete(newLocation:CGPoint){
         let xRate = newLocation.y - self.beganLocation!.y
-        if abs(xRate) >= 30 {
+        if abs(xRate) >= DragDownHeight {
             self.closeHandler()
         }else {
             UIView.animateWithDuration(0.2, animations: {
@@ -430,9 +432,7 @@ extension UserListViewController: UICollectionViewDelegateFlowLayout, UICollecti
     }
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate{
-            self.scrollEnd()
-        }
+        self.scrollEnd()
     }
     
     func scrollEnd(){
@@ -441,7 +441,7 @@ extension UserListViewController: UICollectionViewDelegateFlowLayout, UICollecti
             self.isTopScroll = false
             self.isDragMove = false
             let currentY = abs(self.bgView.frame.origin.y - 0)
-            if currentY > 30{
+            if currentY > DragDownHeight{
                 self.closeHandler()
             }else {
                 UIView.animateWithDuration(0.2, animations: {

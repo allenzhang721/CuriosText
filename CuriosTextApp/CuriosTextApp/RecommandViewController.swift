@@ -9,14 +9,19 @@
 import UIKit
 import MJRefresh
 
-class RecommandViewController: UIViewController, CTALoadingProtocol {
+class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPublishCacheProtocol, CTAPublishModelProtocol {
 
-    var headerView:UIView
+    var headerView:UIView!
     var collectionView:UICollectionView!
     var collectionLayout:UICollectionViewFlowLayout!
     
     var headerFresh:MJRefreshGifHeader!
     var footerFresh:MJRefreshAutoGifFooter!
+    
+    var publishModelArray:Array<CTAPublishModel> = []
+    
+    var selectedPublishID:String = ""
+    var isHideSelectedCell:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,17 +73,13 @@ class RecommandViewController: UIViewController, CTALoadingProtocol {
     func initCollectionView(){
         let bounds = UIScreen.mainScreen().bounds
         let rect:CGRect = CGRect(x: 0, y: 46, width: bounds.width, height: bounds.height-46)
-        self.collectionLayout = UICollectionViewFlowLayout()
-        
-        let bounds = UIScreen.mainScreen().bounds
         let space:CGFloat = self.getCellSpace()
-        let rect:CGRect = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height)
-        self.collectionLayout = CTACollectionViewStickyFlowLayout()
+        self.collectionLayout = UICollectionViewFlowLayout()
         
         self.collectionLayout.itemSize = self.getCellRect()
         self.collectionLayout.sectionInset = UIEdgeInsets(top: 0, left: space, bottom: 0, right: space)
-        self.collectionLayout.minimumLineSpacing = self.collectionSpace
-        self.collectionLayout.minimumInteritemSpacing = self.collectionSpace
+        self.collectionLayout.minimumLineSpacing = space
+        self.collectionLayout.minimumInteritemSpacing = space
         self.collectionView = UICollectionView(frame: rect, collectionViewLayout: self.collectionLayout)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
@@ -105,5 +106,44 @@ class RecommandViewController: UIViewController, CTALoadingProtocol {
         self.collectionView.mj_footer = footerFresh;
     }
 }
+
+extension RecommandViewController: UICollectionViewDelegate, UICollectionViewDataSource{
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
+        return self.publishModelArray.count;
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
+        let publishesCell:CTAPublishesCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("ctaPublishesCell", forIndexPath: indexPath) as! CTAPublishesCell
+        let index = indexPath.row
+        if index < self.publishModelArray.count{
+            let publihshModel = self.publishModelArray[index]
+            publishesCell.publishModel = publihshModel
+            if publihshModel.publishID == self.selectedPublishID{
+                if self.isHideSelectedCell {
+                    publishesCell.alpha = 0
+                }
+                self.isHideSelectedCell = false
+            }
+        }
+        return publishesCell
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
+        let publishesCell = self.collectionView.cellForItemAtIndexPath(indexPath)
+        let index = indexPath.row
+        self.selectedPublishID = ""
+        if index < self.publishModelArray.count && index > -1{
+            self.selectedPublishID = self.publishModelArray[index].publishID
+        }
+        
+    }
+}
+
+extension RecommandViewController: CTALoadingProtocol{
+    var loadingImageView:UIImageView?{
+        return nil
+    }
+}
+
 
 

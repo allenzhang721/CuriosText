@@ -13,6 +13,7 @@ enum PublishDetailType: String {
     case Likes = "Likes"
     case UserFollow = "UserFollow"
     case HotPublish = "HotPublish"
+    case NewPublish = "NewPublish"
     case Single = "Single"
 }
 
@@ -553,22 +554,29 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
         self.isLoading = true
         self.isLoadedAll = false
         let userID = self.loginUser == nil ? "" : self.loginUser!.userID
-        if self.type == .Posts{
+        switch self.type {
+        case .Posts:
             CTAPublishDomain.getInstance().userPublishList(userID, beUserID: self.viewUser!.userID, start: start, size: size) { (info) -> Void in
                 self.loadPublishesComplete(info, size: size)
             }
-        }else if self.type == .Likes{
+        case .Likes:
             CTAPublishDomain.getInstance().userLikePublishList(userID, beUserID: self.viewUser!.userID, start: start, size: size) { (info) -> Void in
                 self.loadPublishesComplete(info, size: size)
             }
-        }else if self.type == .UserFollow{
+        case .UserFollow:
             CTAPublishDomain.getInstance().userFollowPublishList(userID, beUserID: userID, start: start, size: size, compelecationBlock: { (info) in
                 self.loadPublishesComplete(info, size:size)
             })
-        }else if self.type == .HotPublish{
+        case .HotPublish:
             CTAPublishDomain.getInstance().hotPublishList(userID, start: start, size: size, compelecationBlock: { (info) in
                 self.loadPublishesComplete(info, size:size)
             })
+        case .NewPublish:
+            CTAPublishDomain.getInstance().newPublishList(userID, start: start, size: size, compelecationBlock: { (info) in
+                self.loadPublishesComplete(info, size:size)
+            })
+        default:
+            ()
         }
     }
     

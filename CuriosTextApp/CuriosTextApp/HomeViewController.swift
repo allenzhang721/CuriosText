@@ -670,11 +670,18 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
         
         var detailType:PublishDetailType = .UserFollow
         let userID = (self.loginUser == nil) ? "" : self.loginUser!.userID
-        if userID == ""{
-            detailType = .HotPublish
-        }else{
-            detailType = .UserFollow
-        }
+        
+        #if DEBUG
+            detailType = .NewPublish
+        #else
+            if userID == ""{
+                detailType = .HotPublish
+            }else{
+                detailType = .UserFollow
+            }
+        #endif
+        
+        
         let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self, type: detailType)
         
         let navi = UINavigationController(rootViewController: vc)

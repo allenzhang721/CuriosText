@@ -68,7 +68,6 @@ enum LocalStrings: CustomStringConvertible {
             return NSLocalizedString("PublishComment", comment: "")
         case .Comment:
             return NSLocalizedString("Comment", comment: "")
-            
             // Editor
         case .Publish:
             return NSLocalizedString("Publish", comment: "")

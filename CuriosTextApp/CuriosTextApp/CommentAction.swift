@@ -14,14 +14,12 @@ class CommentAction: NSObject {
         
         guard let publishID = paras["publishID"] as? String else { fatalError() }
         guard let userID = paras["userID"] as? String else { fatalError() }
-        let snapView = paras["snapshotView"] as? UIView
         
         let vc = UIStoryboard(name: "Comment", bundle: nil).instantiateInitialViewController() as! CommentViewController
         vc.title = LocalStrings.Comment.description
         vc.publishID = publishID
         vc.myID = userID
-        vc.snapshotView = snapView
-        
+        vc.delegate   = paras["delegate"] as? CommentViewDelegate
         
         return vc
     }

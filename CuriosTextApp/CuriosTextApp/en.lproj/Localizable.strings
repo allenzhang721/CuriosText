@@ -158,8 +158,8 @@
 "PublishDateYears" = " years ago";
 
 // MARK: - Comment
-"PublishComment" = "Comment";
-"Comment" = "Comment";
+"PublishComment" = "Add your comment";
+"Comment" = "Comments";
 
 // MARK: - Common
 "Cancel" = "Cancel";

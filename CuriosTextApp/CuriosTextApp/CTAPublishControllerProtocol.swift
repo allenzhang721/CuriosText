@@ -10,7 +10,7 @@ import Foundation
 import Kingfisher
 import SVProgressHUD
 
-protocol CTAPublishControllerProtocol: CTAEditViewControllerDelegate, CTAShareViewDelegate, CTAGIFProtocol, CTAAlertProtocol, UserListViewDelegate{
+protocol CTAPublishControllerProtocol: CTAEditViewControllerDelegate, CTAShareViewDelegate, CTAGIFProtocol, CTAAlertProtocol, UserListViewDelegate, CommentViewDelegate{
     var publishModel:CTAPublishModel?{get}
     var userModel:CTAUserModel?{get}
     var previewView:CTAPublishPreviewView?{get}
@@ -92,8 +92,15 @@ extension CTAPublishControllerProtocol where Self: UIViewController{
     func commentHandler(){
         let publishID = self.publishModel == nil ? "" : self.publishModel!.publishID
         let userID = self.userModel == nil ? "" : self.userModel!.userID
-        let vc = Moduler.module_comment(publishID, userID: userID)
+        let vc = Moduler.module_comment(publishID, userID: userID, delegate: self)
         let navi = UINavigationController(rootViewController: vc)
+        let ani = CTAScaleTransition.getInstance()
+        if let rect = self.commentRect() {
+            let bound = UIScreen.mainScreen().bounds
+            ani.fromRect = self.getViewFromRect(rect, viewRect: bound)
+        }
+        navi.transitioningDelegate = ani
+        navi.modalPresentationStyle = .Custom
         self.presentViewController(navi, animated: true, completion: {
         })
     }
@@ -500,5 +507,20 @@ extension CTAPublishControllerProtocol{
     func disMisComplete(type:UserListType){
         
     }
+}
+
+extension CTAPublishControllerProtocol{
     
+    func getDismisRect() -> CGRect?{
+        if let rect = self.commentRect(){
+            let bound = UIScreen.mainScreen().bounds
+            return self.getViewFromRect(rect, viewRect: bound)
+        }else {
+            return nil
+        }
+    }
+    
+    func disMisComplete(){
+        
+    }
 }
