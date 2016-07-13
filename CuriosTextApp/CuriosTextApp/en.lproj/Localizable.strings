@@ -159,6 +159,7 @@
 
 // MARK: - Comment
 "PublishComment" = "Comment";
+"Comment" = "Comment";
 
 // MARK: - Common
 "Cancel" = "Cancel";

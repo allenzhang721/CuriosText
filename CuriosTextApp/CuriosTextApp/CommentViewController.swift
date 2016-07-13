@@ -39,6 +39,10 @@ private class Comment {
         return model.userModel
     }
     
+    var beUserModel: CTAViewUserModel? {
+        return model.beCommentUserModel
+    }
+    
     private let model: CTACommentModel
     private let iconURL: NSURL
     private let rendedMessage: (NSAttributedString, NSRange)
@@ -60,6 +64,7 @@ private extension CTACommentModel {
 
 class CommentViewController: UIViewController {
     
+    var snapshotView: UIView?
     var myID: String!
     var publishID: String!
     
@@ -67,6 +72,7 @@ class CommentViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var inputContainerView: UIView!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var titleLabel: UILabel!
     
     private weak var inputVC: InputViewController!
     private var comments = [Comment]()
@@ -76,14 +82,6 @@ class CommentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        
-//        CTACommentDomain.getInstance().addPublishComment(CTAUserManager.user!.userID, beUserID: "", publishID: publishID, commentMessage: "EMiaostein") { (info) in
-//            print(info)
-//        }
-//
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -102,6 +100,15 @@ class CommentViewController: UIViewController {
     }
     
     private func setupView() {
+        
+        titleLabel.text = title
+        
+        if let snapshotView = snapshotView {
+            view.insertSubview(snapshotView, atIndex: 0)
+        }
+        
+        navigationController?.navigationBarHidden = true
+        
         tableView.estimatedRowHeight = 60
         tableView.rowHeight = UITableViewAutomaticDimension
         inputVC.resizeHandler = {[weak inputContainerView , heightConstraint] size in
@@ -111,6 +118,8 @@ class CommentViewController: UIViewController {
             }
         }
         commentPublisher()
+        
+
     }
     
     private func setupData() {
@@ -146,6 +155,11 @@ class CommentViewController: UIViewController {
             bottomConstraint?.constant = 0
             view?.layoutIfNeeded()
         }
+    }
+    
+    @IBAction func closed(sender: AnyObject) {
+        //FIXME:  正确方法应该是向上丢  -- Emiaostein, 7/13/16, 18:10
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }
 
@@ -238,7 +252,7 @@ extension CommentViewController: UITableViewDataSource {
                         let range = someone.range
                         if (range.location <= index && index < range.location + range.length) {
                             if state == .End {
-                                self?.showUserInfo(by: comment.userModel)
+                                self?.showUserInfo(by: comment.beUserModel!)
                             }
                             return TouchTextView.ActiveState.Actived(range)
                         } else {
