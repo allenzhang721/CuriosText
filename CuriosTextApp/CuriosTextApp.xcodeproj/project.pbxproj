@@ -23,6 +23,7 @@
 		2C042B741CE3226000C13FED /* CTAHeartAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C042B731CE3226000C13FED /* CTAHeartAnimationView.swift */; };
 		2C042B761CE3248E00C13FED /* Heart.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C042B751CE3248E00C13FED /* Heart.storyboard */; };
 		2C05BB861C9FAA7200667A75 /* PhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C05BB851C9FAA7200667A75 /* PhotoHelper.swift */; };
+		2C06BF601D36268E00E5756D /* TouchImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06BF5F1D36268E00E5756D /* TouchImageView.swift */; };
 		2C09F2471C896EED00F6034F /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C09F2461C896EED00F6034F /* PromiseKit.framework */; };
 		2C0C14E61C60D95A0011A31D /* CTASetUserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0C14E51C60D95A0011A31D /* CTASetUserNameViewController.swift */; };
 		2C0C14E91C60D9640011A31D /* CTASetMobileNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0C14E71C60D9640011A31D /* CTASetMobileNumberViewController.swift */; };
@@ -430,6 +431,7 @@
 		2C042B731CE3226000C13FED /* CTAHeartAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CTAHeartAnimationView.swift; path = ../CTAHeartAnimationView.swift; sourceTree = "<group>"; };
 		2C042B751CE3248E00C13FED /* Heart.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Heart.storyboard; path = ../Heart.storyboard; sourceTree = "<group>"; };
 		2C05BB851C9FAA7200667A75 /* PhotoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoHelper.swift; sourceTree = "<group>"; };
+		2C06BF5F1D36268E00E5756D /* TouchImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchImageView.swift; sourceTree = "<group>"; };
 		2C09F2461C896EED00F6034F /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = "Pods/../build/Debug-iphoneos/PromiseKit.framework"; sourceTree = "<group>"; };
 		2C0C14E51C60D95A0011A31D /* CTASetUserNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASetUserNameViewController.swift; sourceTree = "<group>"; };
 		2C0C14E71C60D9640011A31D /* CTASetMobileNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASetMobileNumberViewController.swift; sourceTree = "<group>"; };
@@ -1575,6 +1577,7 @@
 				2CD418EE1D129FEF00DDAAE4 /* CommentViewController.swift */,
 				2CBA82B91D33960500EBF9F3 /* InputViewController.swift */,
 				2CBA82B71D33813C00EBF9F3 /* TouchTextView.swift */,
+				2C06BF5F1D36268E00E5756D /* TouchImageView.swift */,
 				2CCB13281D336111007E36EE /* Comment.storyboard */,
 			);
 			name = m_Comment;
@@ -2401,6 +2404,7 @@
 				2CD11AC51CB75DAC00A79305 /* QCMethod.swift in Sources */,
 				2CD418F71D12A04F00DDAAE4 /* PublishDetailAction.swift in Sources */,
 				2C7A951D1C3A50F6005B0EAE /* CTATemplateViewController.swift in Sources */,
+				2C06BF601D36268E00E5756D /* TouchImageView.swift in Sources */,
 				2CD488131C4E1A4900D11CB7 /* CTAPreviewManager.swift in Sources */,
 				66F236A71D2CE9CA0054294F /* CTAScaleTransition.swift in Sources */,
 				2CC1C9411C58D36800844A33 /* CTABarItemsFactory.swift in Sources */,

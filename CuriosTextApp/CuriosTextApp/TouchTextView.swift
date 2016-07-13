@@ -17,7 +17,7 @@ class TouchTextView: UITextView {
         case Actived(NSRange), Inactive
     }
     
-    var touchHandler: ((TouchTextView, Int) -> ActiveState)?
+    var touchHandler: ((TouchTextView, TouchState ,Int) -> ActiveState)?
     private var overlayView: UIView {
         if let v = viewWithTag(999) {
             return v
@@ -36,7 +36,7 @@ class TouchTextView: UITextView {
         let p = CGPoint(x: point.x - textContainerInset.left, y: point.y - textContainerInset.top)
         let index = layoutManager.characterIndexForPoint(p, inTextContainer: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
         
-        if let state = touchHandler?(self, index) {
+        if let state = touchHandler?(self, .Began,index) {
             if case let .Actived(range) = state {
                 let rect = layoutManager.boundingRectForGlyphRange(range, inTextContainer: textContainer)
                 overlayView.frame = rect
@@ -49,9 +49,21 @@ class TouchTextView: UITextView {
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         UIView.animateWithDuration(0.5){[weak overlayView] in overlayView?.alpha = 0}
+        
+        guard let point = touches.first?.locationInView(self) else {return}
+        let p = CGPoint(x: point.x - textContainerInset.left, y: point.y - textContainerInset.top)
+        let index = layoutManager.characterIndexForPoint(p, inTextContainer: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        
+        touchHandler?(self, .End, index)
     }
     
     override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
         UIView.animateWithDuration(0.5){[weak overlayView] in overlayView?.alpha = 0}
+        
+        guard let point = touches?.first?.locationInView(self) else {return}
+        let p = CGPoint(x: point.x - textContainerInset.left, y: point.y - textContainerInset.top)
+        let index = layoutManager.characterIndexForPoint(p, inTextContainer: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        
+        touchHandler?(self, .Cancel, index)
     }
 }

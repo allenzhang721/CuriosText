@@ -12,15 +12,18 @@ private var contexts = 0
 class InputViewController: UIViewController {
     
     var resizeHandler: ((CGSize) -> ())?
+    var sendHandler:((String) -> ())?
     
     @IBOutlet weak var lowBoundConstraint: NSLayoutConstraint!
     @IBOutlet weak var upBoundConstraint: NSLayoutConstraint!
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var placeholderLabel: UILabel!
     
     private var preCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        textView.layer.borderColor = CTAStyleKit.labelShowColor.CGColor
     }
     
     deinit {
@@ -30,7 +33,6 @@ class InputViewController: UIViewController {
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
         if context == &contexts {
-            
             if  let newvalue = (change?[NSKeyValueChangeNewKey] as? NSValue)?.CGSizeValue() where !textView.dragging {
                 let h = max(min(newvalue.height, 70), 33)
                 resizeHandler?(CGSize(width: view.bounds.width, height: h + 12))
@@ -44,7 +46,6 @@ class InputViewController: UIViewController {
         textView.addObserver(self, forKeyPath: "contentSize", options: .New, context: &contexts)
         textView.textContainerInset.left = 12
         textView.textContainerInset.right = 8
-        textView.becomeFirstResponder()
     }
     
     override func viewWillLayoutSubviews() {
@@ -64,11 +65,35 @@ class InputViewController: UIViewController {
             textView.scrollEnabled = false
         }
     }
+    
+    func beganEdit() {
+        textView.text = ""
+        placeholderLabel.hidden = false
+        textView.becomeFirstResponder()
+    }
+    
+    func changePlaceholder(text: String) {
+        placeholderLabel.text = text
+    }
 }
 
 extension InputViewController: UITextViewDelegate {
     
+    func textViewDidEndEditing(textView: UITextView) {
+        if textView.text.characters.count <= 0 {
+            placeholderLabel.text = "发表评论"
+        }
+    }
+    
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            sendHandler?(textView.text)
+            textView.text = ""
+            placeholderLabel.text = "发表评论"
+            placeholderLabel.hidden = false
+            return false
+        }
         
         if range.length > 1 || text.characters.count > 1 {
             
@@ -102,6 +127,8 @@ extension InputViewController: UITextViewDelegate {
         let up = upBoundConstraint.constant
         let low = lowBoundConstraint.constant
         let minus = count < preCount
+        
+        placeholderLabel.hidden = (count > 0)
         
         if h > up {
             textView.scrollEnabled = true
