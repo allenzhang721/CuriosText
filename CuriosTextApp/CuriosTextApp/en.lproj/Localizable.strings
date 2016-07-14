@@ -160,6 +160,8 @@
 // MARK: - Comment
 "PublishComment" = "Add your comment";
 "Comment" = "Comments";
+"CommentSuccess" = "Comment Success";
+"CommentFail" = "Comment Failure";
 
 // MARK: - Common
 "Cancel" = "Cancel";

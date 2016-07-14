@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 import KeyboardMan
 import MJRefresh
 
@@ -244,6 +245,11 @@ class CommentViewController: UIViewController {
         }
     }
     
+    func commentFeedBack(sucess: Bool) {
+        dispatch_async(dispatch_get_main_queue()) {
+            sucess ? SVProgressHUD.showSuccessWithStatus(LocalStrings.CommentSuccess.description) : SVProgressHUD.showErrorWithStatus(LocalStrings.CommentFail.description)
+        }
+    }
 }
 
 extension CommentViewController {
@@ -308,9 +314,12 @@ extension CommentViewController {
             if let model = (info.baseModel as? CTACommentModel) {
                 dispatch_async(dispatch_get_main_queue(), {
                     let comment = CTACommentModel.toComment(model)
+                    self?.commentFeedBack(true)
                     self?.comments.insert(comment, atIndex: 0)
                     self?.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)], withRowAnimation: .Right)
                 })
+            } else {
+                self?.commentFeedBack(false)
             }
         }
     }

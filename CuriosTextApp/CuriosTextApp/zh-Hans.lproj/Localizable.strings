@@ -161,6 +161,8 @@
 // MARK: - Comment
 "PublishComment" = "添加评论";
 "Comment" = "评论";
+"CommentSuccess" = "评论成功";
+"CommentFail" = "评论失败";
 
 // MARK: - Common
 "Cancel" = "取消";

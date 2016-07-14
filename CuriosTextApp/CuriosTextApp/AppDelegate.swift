@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
         setup()
-        
+        SVProgressHUD.setMinimumDismissTimeInterval(1)
         SVProgressHUD.setDefaultMaskType(.Clear)
         SVProgressHUD.setDefaultStyle(.Custom)
         SVProgressHUD.setForegroundColor(CTAStyleKit.selectedColor)
