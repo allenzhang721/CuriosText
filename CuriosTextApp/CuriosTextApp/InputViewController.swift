@@ -13,6 +13,7 @@ class InputViewController: UIViewController {
     
     var resizeHandler: ((CGSize) -> ())?
     var sendHandler:((String) -> ())?
+    var inputting: Bool {return textView.isFirstResponder()}
     
     @IBOutlet weak var lowBoundConstraint: NSLayoutConstraint!
     @IBOutlet weak var upBoundConstraint: NSLayoutConstraint!
@@ -67,6 +68,10 @@ class InputViewController: UIViewController {
         textView.text = ""
         placeholderLabel.hidden = false
         textView.becomeFirstResponder()
+    }
+    
+    func resign() {
+        textView.resignFirstResponder()
     }
     
     func changePlaceholder(text: String) {

@@ -162,6 +162,7 @@ class CommentViewController: UIViewController {
         
         tableView.estimatedRowHeight = 60
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         inputVC.resizeHandler = {[weak inputContainerView , heightConstraint] size in
             if heightConstraint.constant != size.height {
                 heightConstraint?.constant = size.height
@@ -450,6 +451,7 @@ extension CommentViewController: UITableViewDataSource {
         let com = comments[indexPath.item]
         if let textView = cell.contentView.viewWithTag(1000) as? TouchTextView {
             textView.contentInset.left = -5
+            textView.textContainerInset.bottom = 0
             textView.textContainerInset.top = 0
             textView.attributedText = com.message
             textView.touchHandler = {[weak self, weak cell ,weak textView, weak tableView] (tv, state,index) -> TouchTextView.ActiveState in
@@ -508,7 +510,11 @@ extension CommentViewController: UITableViewDataSource {
 
 extension CommentViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        configComment(at: indexPath.item)
+        if inputVC.inputting {
+            inputVC.resign()
+        } else {
+            configComment(at: indexPath.item)
+        }
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
