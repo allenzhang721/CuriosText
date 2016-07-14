@@ -56,6 +56,10 @@ class ViewController: UIViewController{
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.addViewInRoot(_:)), name: "addViewInRoot", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.popupViewControllerInRoot(_:)), name: "popupViewControllerInRoot", object: nil)
+        
+        
+        let _ = CTASettingViewController()
+        let _ = UIStoryboard(name: "Comment", bundle: nil).instantiateInitialViewController() as! CommentViewController
     }
     
     func repositionBadge(){

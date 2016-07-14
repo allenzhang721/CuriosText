@@ -342,9 +342,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
             }
         }
     }
-    
-    
-    
+
     func loadMoreModelArray(modelArray:Array<AnyObject>){
         for i in 0..<modelArray.count{
             let publishModel = modelArray[i] as! CTAPublishModel
