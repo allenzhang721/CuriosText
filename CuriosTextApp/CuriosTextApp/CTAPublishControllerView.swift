@@ -246,10 +246,10 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
             self.userIconImage.frame.origin.x = 11
             self.userNickNameLabel.frame.origin.x = 53
         }
-        UIView.transitionWithView(self.userNickNameLabel, duration: 0.1, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
-            self.userNickNameLabel.text = text
-        }) { (_) in
-        }
+//        UIView.transitionWithView(self.userNickNameLabel, duration: 0.2, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
+//            self.userNickNameLabel.text = text
+//        }) { (_) in
+//        }
     }
     
     func setTimeLabel(text:String){

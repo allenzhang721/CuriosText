@@ -580,7 +580,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
             self.showSheetAlert(alertTile, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
                 if index != -1{
                     if CTAUserManager.logout() {
-                        self.showLoginView()
+                        self.showLoginView(false)
                         self.backHandler()
                     }
                 }

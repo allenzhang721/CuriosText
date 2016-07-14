@@ -101,7 +101,7 @@ class CTAMainViewController: UIViewController, CTALoginProtocol{
         if CTAUserManager.isLogin {
             //self.showEditView()
         }else {
-            self.showLoginView()
+            self.showLoginView(false)
         }
     }
 }

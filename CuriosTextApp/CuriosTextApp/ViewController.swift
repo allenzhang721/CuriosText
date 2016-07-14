@@ -12,7 +12,7 @@ class ViewController: UIViewController{
 
     var mainTabBarController:UITabBarController!
     
-    let mainDefaultSelected = 0
+    let mainDefaultSelected = 1
     
     var loadNoticeTask:Task?
     
@@ -48,7 +48,12 @@ class ViewController: UIViewController{
         
         addChildViewController(self.mainTabBarController)
         view.addSubview(self.mainTabBarController.view)
-        self.mainTabBarController.selectedIndex = self.mainDefaultSelected
+        if CTAUserManager.isLogin{
+            self.mainTabBarController.selectedIndex = 0
+        }else {
+            self.mainTabBarController.selectedIndex = self.mainDefaultSelected
+        }
+        
         self.getUserNotice()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.showLoginView(_:)), name: "showLoginView", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.loginComplete(_:)), name: "loginComplete", object: nil)
@@ -88,21 +93,28 @@ class ViewController: UIViewController{
     }
     
     func showLoginView(noti: NSNotification){
-        self.showLoginHandler()
+        let loginView = noti.object as? UIViewController
+        self.showLoginHandler(loginView)
     }
     
     func loginComplete(noti: NSNotification){
         self.getUserNotice()
     }
     
-    func showLoginHandler(){
+    func showLoginHandler(rootView:UIViewController?){
         let login = CTALoginViewController.getInstance()
         login.isChangeContry = true
         let navigationController = UINavigationController(rootViewController: login)
         navigationController.navigationBarHidden = true
-        self.presentViewController(navigationController, animated: true, completion: {
-            self.mainTabBarController.selectedIndex = self.mainDefaultSelected
-        })
+        if rootView != nil {
+            rootView?.self.presentViewController(navigationController, animated: true, completion: {
+                self.mainTabBarController.selectedIndex = self.mainDefaultSelected
+            })
+        }else {
+            self.presentViewController(navigationController, animated: true, completion: {
+                self.mainTabBarController.selectedIndex = self.mainDefaultSelected
+            })
+        }
         if self.loadNoticeTask != nil {
             cancel(self.loadNoticeTask)
             self.loadNoticeTask = nil
@@ -114,7 +126,7 @@ class ViewController: UIViewController{
         if CTAUserManager.isLogin{
             self.showEditView()
         }else {
-            self.showLoginHandler()
+            self.showLoginHandler(nil)
         }
     }
     
@@ -216,11 +228,11 @@ extension ViewController: UITabBarControllerDelegate{
             return false
         }else {
             let index = self.mainTabBarController.selectedIndex
-            if index == 0{
+            if index == self.mainDefaultSelected{
                 if CTAUserManager.isLogin{
                     return true
                 }else {
-                    self.showLoginHandler()
+                    self.showLoginHandler(nil)
                     return false
                 }
             }

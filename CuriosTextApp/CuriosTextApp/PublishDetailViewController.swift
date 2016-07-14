@@ -19,7 +19,7 @@ enum PublishDetailType: String {
 
 let Detail_Space:CGFloat = 25
 
-class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
+class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CTALoginProtocol{
     
     var selectedPublishID:String = ""
     var publishArray:Array<CTAPublishModel> = []
@@ -285,11 +285,8 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol{
     func doubleTapHandler(sender: UIPanGestureRecognizer) {
         if self.panDirection == .None{
             self.isDoubleClick = true
-            let pt = sender.locationInView(self.currentPreviewCell)
-            if self.currentPreviewCell.pointInside(pt, withEvent: nil){
-                if self.currentPreviewCell.publishModel != nil{
-                    self.likeHandler(true)
-                }
+            if self.loginUser != nil {
+                self.likeHandler(true)
             }
         }
     }
@@ -713,19 +710,35 @@ extension PublishDetailViewController: CTAPublishControllerDelegate{
     }
     
     func controlLikeListTap(){
-        self.likersHandelr()
+        if self.loginUser != nil {
+            self.likersHandelr()
+        }else {
+            self.showLoginView(true)
+        }
     }
     
     func controlLikeHandler(){
-        self.likeHandler(false)
+        if self.loginUser != nil {
+            self.likeHandler(false)
+        }else {
+            self.showLoginView(true)
+        }
     }
     
     func controlCommentHandler(){
-        self.commentHandler()
+        if self.loginUser != nil {
+            self.commentHandler()
+        }else {
+            self.showLoginView(true)
+        }
     }
     
     func controlRebuildHandler(){
-        self.rebuildHandler(true)
+        if self.loginUser != nil {
+            self.rebuildHandler(true)
+        }else {
+            self.showLoginView(true)
+        }
     }
     
     func controlMoreHandler(){

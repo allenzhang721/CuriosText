@@ -16,7 +16,7 @@ enum UserListType:String{
 
 let DragDownHeight:CGFloat = 44
 
-class UserListViewController: UIViewController{
+class UserListViewController: UIViewController, CTALoginProtocol{
     
     var loginUser:CTAUserModel?
     var viewUserID:String = ""
@@ -58,11 +58,18 @@ class UserListViewController: UIViewController{
     var beganLocation:CGPoint?
     var lastLocation:CGPoint?
     
+    var isAddOber:Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         self.initView()
+        if !self.isAddOber{
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reNewView(_:)), name: "loginComplete", object: nil)
+        }
+        self.isAddOber = true
+        
         self.navigationController?.navigationBarHidden = true
     }
 
@@ -83,7 +90,7 @@ class UserListViewController: UIViewController{
             self.headerFresh.beginRefreshing()
             self.previousScrollViewYOffset = self.scrollTop
         }
-        self.notFresh = false
+        self.notFresh = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -196,6 +203,10 @@ class UserListViewController: UIViewController{
                 self.delegate = nil
             }
         }
+    }
+    
+    func reNewView(noti: NSNotification){
+        self.notFresh = false
     }
     
     func loadFirstData(){
@@ -467,10 +478,50 @@ extension UserListViewController:CTAUserListCellDelegate{
                 let userPublish = UserViewController()
                 userPublish.viewUser = viewUserModel
                 self.navigationController?.pushViewController(userPublish, animated: true)
-                self.notFresh = true
             }
         }
-
+    }
+    
+    func followButtonTap(followView:UIView, cell:CTAUserListCell?){
+        if cell != nil {
+            if self.loginUser != nil {
+                let userID = self.loginUser == nil ? "" : self.loginUser!.userID
+                let viewUser = cell!.viewUser
+                self.showLoadingViewInView(followView)
+                CTAUserRelationDomain.getInstance().followUser(userID, relationUserID: viewUser!.userID) { (info) -> Void in
+                    if info.result {
+                        let relationType:Int = viewUser!.relationType
+                        viewUser!.relationType = (relationType==0 ? 1 : 5)
+                        viewUser!.beFollowCount += 1
+                        cell?.viewUser = viewUser
+                    }
+                    self.hideLoadingViewInView(followView)
+                }
+            }else {
+                self.showLoginView(true)
+            }
+        }
+    }
+    
+    
+    func showLoadingViewInView(centerView:UIView){
+        let viewFrame = centerView.frame
+        let indicaW = viewFrame.width>viewFrame.height ? viewFrame.height : viewFrame.width
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.frame = CGRectMake(0, 0, indicaW, indicaW)
+        activityIndicator.activityIndicatorViewStyle = .Gray
+        activityIndicator.center = CGPointMake(viewFrame.width / 2, viewFrame.height / 2)
+        centerView.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+    }
+    
+    func hideLoadingViewInView(centerView:UIView){
+        let subVies = centerView.subviews
+        let subView = subVies[subVies.count-1]
+        if subView is UIActivityIndicatorView{
+            (subView as! UIActivityIndicatorView).stopAnimating()
+            subView.removeFromSuperview()
+        }
     }
 }
 

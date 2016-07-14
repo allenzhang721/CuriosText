@@ -906,7 +906,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     
     func userButtonClick(sender: UIButton){
         if self.loginUser == nil {
-            self.showLoginView()
+            self.showLoginView(false)
         }else {
            NSNotificationCenter.defaultCenter().postNotificationName("changePageView", object: 1)
         }
@@ -930,7 +930,7 @@ extension CTAHomeViewController: CTAPublishProtocol{
     
     func likeButtonClick(sender: UIButton){
         if self.loginUser == nil {
-            self.showLoginView()
+            self.showLoginView(false)
         }else if self.currentFullCell.publishModel != nil{
             self.likeHandler(false)
         }
@@ -942,7 +942,7 @@ extension CTAHomeViewController: CTAPublishProtocol{
     
     func rebuildButtonClick(sender: UIButton){
         if self.loginUser == nil {
-            self.showLoginView()
+            self.showLoginView(false)
         }else if self.currentFullCell.publishModel != nil{
             self.rebuildHandler()
         }
@@ -950,7 +950,7 @@ extension CTAHomeViewController: CTAPublishProtocol{
     
     func userIconClick(sender: UIPanGestureRecognizer) {
         if self.loginUser == nil {
-            self.showLoginView()
+            self.showLoginView(false)
         }else if let publishModel = self.currentFullCell.publishModel{
 //            let viewUserModel = publishModel.userModel
 //            let userPublish = CTAUserPublishesViewController()

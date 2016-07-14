@@ -95,7 +95,9 @@ class CTAUserListCell : UICollectionViewCell, CTAImageControllerProtocol{
     func followButtonClick(sender: UIPanGestureRecognizer){
         let relationType:Int = self.viewUser!.relationType
         if relationType == 0 || relationType == 3{
-            self.followUser()
+            if self.delegate != nil {
+                self.delegate!.followButtonTap(self.followImg, cell: self)
+            }
         }else {
             if self.delegate != nil {
                 self.delegate!.cellUserIconTap(self)
@@ -135,20 +137,6 @@ class CTAUserListCell : UICollectionViewCell, CTAImageControllerProtocol{
         self.followImg.image = UIImage(named: "liker_follow_btn")
     }
     
-    func followUser(){
-        self.showLoadingViewInView(self.followImg)
-        let userID = CTAUserManager.user != nil ? CTAUserManager.user!.userID : ""
-        CTAUserRelationDomain.getInstance().followUser(userID, relationUserID: self.viewUser!.userID) { (info) -> Void in
-            if info.result {
-                let relationType:Int = self.viewUser!.relationType
-                self.viewUser!.relationType = (relationType==0 ? 1 : 5)
-                self.viewUser!.beFollowCount += 1
-                self.setFollowButton()
-            }
-            self.hideLoadingViewInView(self.followImg)
-        }
-    }
-    
     func setFollowButton(){
         let relationType:Int = self.viewUser!.relationType
         var isHidden = false
@@ -170,30 +158,9 @@ class CTAUserListCell : UICollectionViewCell, CTAImageControllerProtocol{
         self.followImg.hidden = isHidden
         self.followImg.image = buttonBg
     }
-    
-    func showLoadingViewInView(centerView:UIView){
-        let viewFrame = centerView.frame
-        let indicaW = viewFrame.width>viewFrame.height ? viewFrame.height : viewFrame.width
-        let activityIndicator = UIActivityIndicatorView()
-        activityIndicator.frame = CGRectMake(0, 0, indicaW, indicaW)
-        activityIndicator.activityIndicatorViewStyle = .Gray
-        activityIndicator.center = CGPointMake(viewFrame.width / 2, viewFrame.height / 2)
-        centerView.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
-        self.contentView.userInteractionEnabled = false
-    }
-    
-    func hideLoadingViewInView(centerView:UIView){
-        let subVies = centerView.subviews
-        let subView = subVies[subVies.count-1]
-        if subView is UIActivityIndicatorView{
-            (subView as! UIActivityIndicatorView).stopAnimating()
-            subView.removeFromSuperview()
-        }
-        self.contentView.userInteractionEnabled = true
-    }
 }
 
 protocol CTAUserListCellDelegate {
     func cellUserIconTap(cell:CTAUserListCell?)
+    func followButtonTap(followView:UIView, cell:CTAUserListCell?)
 }
