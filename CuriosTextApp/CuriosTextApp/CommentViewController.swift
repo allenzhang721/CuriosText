@@ -484,8 +484,12 @@ extension CommentViewController: UITableViewDataSource {
             }
         }
         
-        if let nameLabel = cell.contentView.viewWithTag(1001) as? UILabel {
+        if let nameLabel = cell.contentView.viewWithTag(1001) as? TouchLabel {
             nameLabel.text = com.author.nickName
+            nameLabel.tapHandler = { [weak self, cell] in
+                guard let i = self?.tableView.indexPathForCell(cell), comment = self?.comments[i.item] else {return}
+                self?.showUserInfo(by: comment.userModel)
+            }
         }
         
         if let dateLabel = cell.contentView.viewWithTag(1002) as? UILabel {
