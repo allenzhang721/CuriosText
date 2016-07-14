@@ -8,6 +8,57 @@
 
 import UIKit
 
+private class MessageGenerator {
+    class func makeMessage(with model: CTANoticeModel) -> Message {// 0 follow   1  like    2 comment
+        switch model.noticeType {
+        case 0:
+            return FollowMessage(model: model)
+        case 1:
+            return LikeMessage(model: model)
+        case 2:
+            return CommentMessage(model: model)
+        default:
+            return Message(model: model)
+        }
+    }
+}
+
+private class Message {
+    var nickName: String {
+        return model.userModel.nickName
+    }
+    var iconURL: String {
+        return model.userModel.userIconURL
+    }
+    var date: String {
+        return DateString(model.noticeDate)
+    }
+    
+    let model: CTANoticeModel
+    init(model: CTANoticeModel) {
+        self.model = model
+    }
+}
+
+private class LikeMessage: Message {
+}
+
+private class CommentMessage: Message {
+    var previewIconURL: String {
+        return model.previewIconURL
+    }
+    var comment: String {
+        return model.noticeMessage
+    }
+}
+private class FollowMessage: Message {
+    var previewIconURL: String {
+        return model.previewIconURL
+    }
+}
+
+
+
 class NotiCenterViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
