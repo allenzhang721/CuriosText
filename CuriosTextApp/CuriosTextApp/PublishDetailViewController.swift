@@ -105,7 +105,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         self.view.addSubview(self.currentPreviewCell)
         self.currentPreviewCell.animationEnable = true
         
-        self.controllerView = CTAPublishControllerView(frame: CGRect(x: 0, y: 5, width: bounds.width, height: bounds.height))
+        self.controllerView = CTAPublishControllerView(frame: CGRect(x: 0, y: 10, width: bounds.width, height: bounds.height))
         self.controllerView.type = .PublishDetail
         self.controllerView.delegate = self
         self.view.addSubview(self.controllerView)

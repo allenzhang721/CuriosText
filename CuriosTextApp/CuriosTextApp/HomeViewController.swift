@@ -802,6 +802,7 @@ extension HomeViewController: PublishDetailViewDelegate{
         self.isHideSelectedCell = true
         self.collectionView.reloadData()
         self.collectionView.contentOffset.y = scrollOffY
+        self.changeColloetionNavBar(20)
         
         let cellY = CGFloat(currentLineIndex) * (space + cellRect.height) - scrollOffY + self.collectionView.frame.origin.y
         let currentRect = CGRect(x: 0, y: cellY+50, width: cellRect.width, height: cellRect.height - 150)
