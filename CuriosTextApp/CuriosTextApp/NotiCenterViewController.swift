@@ -9,7 +9,7 @@
 import UIKit
 
 private class MessageGenerator {
-    class func makeMessage(with model: CTANoticeModel) -> Message {// 0 follow   1  like    2 comment
+    class func makeMessage(by model: CTANoticeModel) -> Message {// 0 follow   1  like    2 comment
         switch model.noticeType {
         case 0:
             return FollowMessage(model: model)
@@ -57,31 +57,72 @@ private class FollowMessage: Message {
     }
 }
 
-
-
 class NotiCenterViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    
+    private var messages = [Message]()
+    private var myID: String {
+        return ""
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if !myID.isEmpty {
+            setup()
+        }
+    }
 
+    private func setup() {
+        setupView()
+        setupData()
+    }
+    
+    private func setupView() {
         tableView.estimatedRowHeight = 70
         tableView.rowHeight = UITableViewAutomaticDimension
+    }
+    
+    private func setupData() {
+        CTANoticeDomain.getInstance().noticeList(myID, start: 0, size: 10) {[weak self] (info) in
+            guard info.modelArray?.count > 0,  let notices = info.modelArray as? [CTANoticeModel] else {return}
+            let ms = notices.map{MessageGenerator.makeMessage(by: $0)}
+            self?.messages = ms
+            dispatch_async(dispatch_get_main_queue(), { 
+                self?.tableView.reloadData()
+            })
+        }
     }
 }
 
 extension NotiCenterViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 100
+        return messages.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("NotiLikeCell")!
         
-        if let textView = cell.contentView.viewWithTag(1000) as? UITextView {
-            textView.text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        let message = messages[indexPath.item]
+        
+        if let like = message as? LikeMessage {
+            let cell = tableView.dequeueReusableCellWithIdentifier("NotiLikeCell")!
+            
+            return cell
+            
+        } else if let follow = message as? FollowMessage {
+            let cell = tableView.dequeueReusableCellWithIdentifier("NotiFollowCell")!
+            
+            return cell
+            
+        } else if let comment = message as? CommentMessage {
+            let cell = tableView.dequeueReusableCellWithIdentifier("NotiCommentCell")!
+            
+            return cell
+            
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("NotiCell")!
+            return cell
         }
-        return cell
     }
 }
