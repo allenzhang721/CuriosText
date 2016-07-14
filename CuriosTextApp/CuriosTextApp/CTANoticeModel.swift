@@ -22,9 +22,9 @@ final class CTANoticeModel: CTABaseModel {
     let noticeType:Int;  // 0 follow   1  like    2 comment
     let noticeTypeID:Int
     
-    init(noticeID:String, userID:String, nikeName:String, userDesc:String, userIconURL:String, sex:Int, noticeDate:String, noticeMessage:String, noticeReaded:Int, noticeType:Int, noticeTypeID:Int, publishID:String, publishIconURL:String, previewIconURL:String){
+    init(noticeID:String, userID:String, nikeName:String, userDesc:String, userIconURL:String, sex:Int, relationType:Int, noticeDate:String, noticeMessage:String, noticeReaded:Int, noticeType:Int, noticeTypeID:Int, publishID:String, publishIconURL:String, previewIconURL:String){
         self.noticeID       = noticeID;
-        self.userModel      = CTAViewUserModel(userID: userID, nickName: nikeName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, relationType: 0)
+        self.userModel      = CTAViewUserModel(userID: userID, nickName: nikeName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, relationType: relationType)
         self.noticeMessage  = noticeMessage
         self.noticeReaded   = noticeReaded;
         self.noticeType     = noticeType;
@@ -53,6 +53,7 @@ final class CTANoticeModel: CTABaseModel {
         let userDesc:String            = json[key(.UserDesc)].string ?? "";
         let userIconURL:String         = json[key(.UserIconURL)].string ?? "";
         let sex:Int                    = json[key(.Sex)].int ?? 0;
+        let relationType:Int           = json[key(.RelationType)].int ?? 0;
         let noticeMessage:String       = json[key(.NoticeMessage)].string ?? "";
         let noticeDate:String          = json[key(.NoticeDate)].string ?? "";
         let noticeReaded:Int           = json[key(.NoticeReaded)].int ?? 0;
@@ -61,7 +62,7 @@ final class CTANoticeModel: CTABaseModel {
         let publishID:String           = json[key(.PublishID)].string ?? "";
         let publishIconURL:String      = json[key(.PublishIconURL)].string ?? "";
         let previewIconURL:String      = json[key(.PreviewIconURL)].string ?? "";
-        return CTANoticeModel(noticeID: noticeID, userID: userID, nikeName: nickName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, noticeDate: noticeDate, noticeMessage: noticeMessage, noticeReaded: noticeReaded, noticeType: noticeType, noticeTypeID: noticeTypeID, publishID: publishID, publishIconURL: publishIconURL, previewIconURL: previewIconURL)
+        return CTANoticeModel(noticeID: noticeID, userID: userID, nikeName: nickName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, relationType: relationType, noticeDate: noticeDate, noticeMessage: noticeMessage, noticeReaded: noticeReaded, noticeType: noticeType, noticeTypeID: noticeTypeID, publishID: publishID, publishIconURL: publishIconURL, previewIconURL: previewIconURL)
     }
     
     func save() throws {

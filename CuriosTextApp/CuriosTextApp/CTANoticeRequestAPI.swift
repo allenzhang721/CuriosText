@@ -72,3 +72,22 @@ class CTADeleteNoticeRequest: CTABaseRequest {
         return self.getParameterString(dic, errorMessage: "CTADeleteNoticeRequest");
     }
 }
+
+class CTAClearNoticesRequest: CTABaseRequest {
+    let userID:String;
+    
+    init(userID:String) {
+        self.userID = userID;
+    }
+    
+    override func requestUrl() -> String {
+        return CTARequestUrl.ClearNotices.description;
+    }
+    
+    override func parameter() -> String {
+        let dic:Dictionary<String, AnyObject> = [
+            key(.UserID)        : userID
+        ];
+        return self.getParameterString(dic, errorMessage: "CTAClearNoticesRequest");
+    }
+}
