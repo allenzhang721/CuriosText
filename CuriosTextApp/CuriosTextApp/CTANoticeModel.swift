@@ -19,7 +19,7 @@ final class CTANoticeModel: CTABaseModel {
     let noticeMessage:String;
     let noticeDate:NSDate;
     let noticeReaded:Int;
-    let noticeType:Int;
+    let noticeType:Int;  // 0 follow   1  like    2 comment
     let noticeTypeID:Int
     
     init(noticeID:String, userID:String, nikeName:String, userDesc:String, userIconURL:String, sex:Int, noticeDate:String, noticeMessage:String, noticeReaded:Int, noticeType:Int, noticeTypeID:Int, publishID:String, publishIconURL:String, previewIconURL:String){
