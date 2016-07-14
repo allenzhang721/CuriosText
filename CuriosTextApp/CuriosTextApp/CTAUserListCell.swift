@@ -37,7 +37,7 @@ class CTAUserListCell : UICollectionViewCell, CTAImageControllerProtocol{
     func initView(){
         let bounds = self.frame
         
-        let iconView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: 60))
+        let iconView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width-60, height: 60))
         self.contentView.addSubview(iconView)
         self.userIconImage = UIImageView(frame: CGRect(x: 10, y: 14, width: 32, height: 32));
         self.cropImageCircle(self.userIconImage)
@@ -60,11 +60,15 @@ class CTAUserListCell : UICollectionViewCell, CTAImageControllerProtocol{
         let iconTap = UITapGestureRecognizer(target: self, action: #selector(userIconClick(_:)))
         iconView.addGestureRecognizer(iconTap)
         
-        self.followImg = UIImageView(frame: CGRectMake(bounds.width - 40, 17, 30, 30))
+        
+        let followView = UIView(frame: CGRectMake(bounds.width - 60, 0, 60, 60))
+        self.contentView.addSubview(followView)
+        self.followImg = UIImageView(frame: CGRectMake(20,17,30,30))
         self.followImg.image = UIImage(named: "liker_follow_btn")
+        followView.addSubview(self.followImg)
+        
         let imgTap = UITapGestureRecognizer(target: self, action: #selector(followButtonClick(_:)))
-        self.followImg.addGestureRecognizer(imgTap)
-        self.contentView.addSubview(self.followImg)
+        followView.addGestureRecognizer(imgTap)
         
         let textLine = UIImageView(frame: CGRect(x: 50, y: bounds.height-1, width: bounds.width - 60, height: 1))
         textLine.image = UIImage(named: "space-line")
