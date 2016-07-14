@@ -100,6 +100,7 @@ extension CTAPublishViewController {
         }
         
         aniCanvasView.dataSource = canvas
+        aniCanvasView.changeDataSource()
         aniCanvasView.aniDataSource = canvas
 //        view.layer.addSublayer(aniCanvasView.layer)
         

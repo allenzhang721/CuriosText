@@ -558,19 +558,21 @@ extension CommentViewController: UITableViewDelegate {
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView){
-        let offY = self.tableView.contentOffset.y
-        if offY <= self.scrollTop{
-            self.isTopScroll = true
-        }
-        
-        let offSize = self.tableView.contentSize
-        let maxOffY = offSize.height - self.tableView.frame.height + self.scrollTop
-        if maxOffY > 0 {
-            if offY > maxOffY && self.isLoadedAll{
+        if !self.inputVC.inputting {
+            let offY = self.tableView.contentOffset.y
+            if offY <= self.scrollTop{
+                self.isTopScroll = true
+            }
+            
+            let offSize = self.tableView.contentSize
+            let maxOffY = offSize.height - self.tableView.frame.height + self.scrollTop
+            if maxOffY > 0 {
+                if offY > maxOffY && self.isLoadedAll{
+                    self.isBottomScroll = true
+                }
+            }else {
                 self.isBottomScroll = true
             }
-        }else {
-            self.isBottomScroll = true
         }
     }
     
