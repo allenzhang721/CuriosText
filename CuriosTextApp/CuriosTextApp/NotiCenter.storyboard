@@ -174,9 +174,9 @@
                                                         <constraint firstAttribute="width" constant="30" id="NFt-8b-Itz"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" tag="1004" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YAt-k4-gyW">
+                                                <imageView userInteractionEnabled="NO" tag="1004" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="liker_follow_btn" translatesAutoresizingMaskIntoConstraints="NO" id="YAt-k4-gyW">
                                                     <rect key="frame" x="312" y="7" width="55" height="55"/>
-                                                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="55" id="5Vd-j2-Z9A"/>
                                                         <constraint firstAttribute="width" constant="55" id="pSC-9X-Svg"/>
@@ -198,6 +198,14 @@
                                                 <constraint firstItem="sTB-QP-Tag" firstAttribute="top" secondItem="hc4-bB-UOI" secondAttribute="topMargin" constant="2" id="sFa-Jc-QRS"/>
                                                 <constraint firstItem="WZP-1O-v3T" firstAttribute="top" secondItem="hc4-bB-UOI" secondAttribute="topMargin" constant="19" id="zWu-dP-C86"/>
                                             </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotiCell" id="Nam-nf-spZ">
+                                        <rect key="frame" x="0.0" y="286" width="375" height="118"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nam-nf-spZ" id="V6u-CC-fth">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="117"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -226,5 +234,6 @@
     </scenes>
     <resources>
         <image name="like-button" width="30" height="30"/>
+        <image name="liker_follow_btn" width="30" height="30"/>
     </resources>
 </document>
