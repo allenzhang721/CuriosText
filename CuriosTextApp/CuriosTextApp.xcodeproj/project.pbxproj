@@ -108,6 +108,7 @@
 		2C4B08F81CD9F63C00A58B0E /* GIFCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4B08F71CD9F63C00A58B0E /* GIFCreateViewController.swift */; };
 		2C5378381C5C71BB004BCF40 /* CTATabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5378371C5C71BB004BCF40 /* CTATabView.swift */; };
 		2C567A691C5CBAF200F11369 /* Countries.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C567A6B1C5CBAF200F11369 /* Countries.plist */; };
+		2C584E421D3737CD0029C07E /* TouchLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C584E411D3737CD0029C07E /* TouchLabel.swift */; };
 		2C5ACC121C439E8100B96CCD /* CTAStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5ACC111C439E8100B96CCD /* CTAStyleKit.swift */; };
 		2C5C248C1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C248B1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift */; };
 		2C5C248E1C44E1C900A70F1B /* CTAVerticalItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C248D1C44E1C900A70F1B /* CTAVerticalItemCollectionViewCell.swift */; };
@@ -541,6 +542,7 @@
 		2C5378371C5C71BB004BCF40 /* CTATabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTATabView.swift; sourceTree = "<group>"; };
 		2C567A6A1C5CBAF200F11369 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/Countries.plist; sourceTree = "<group>"; };
 		2C567A6C1C5CBAF500F11369 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/Countries.plist"; sourceTree = "<group>"; };
+		2C584E411D3737CD0029C07E /* TouchLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchLabel.swift; sourceTree = "<group>"; };
 		2C5ACC111C439E8100B96CCD /* CTAStyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAStyleKit.swift; sourceTree = "<group>"; };
 		2C5C248B1C44DAFA00A70F1B /* CTASelectorVerticalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorVerticalCell.swift; sourceTree = "<group>"; };
 		2C5C248D1C44E1C900A70F1B /* CTAVerticalItemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAVerticalItemCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1578,6 +1580,7 @@
 				2CBA82B91D33960500EBF9F3 /* InputViewController.swift */,
 				2CBA82B71D33813C00EBF9F3 /* TouchTextView.swift */,
 				2C06BF5F1D36268E00E5756D /* TouchImageView.swift */,
+				2C584E411D3737CD0029C07E /* TouchLabel.swift */,
 				2CCB13281D336111007E36EE /* Comment.storyboard */,
 			);
 			name = m_Comment;
@@ -2366,6 +2369,7 @@
 				2C5EA2561C479CE000DCEE7B /* Print.swift in Sources */,
 				2CFC65941C56310800E8ADE7 /* CTAPublishDetaiViewController.swift in Sources */,
 				2CD418ED1D129B7500DDAAE4 /* PlusButton.swift in Sources */,
+				2C584E421D3737CD0029C07E /* TouchLabel.swift in Sources */,
 				2C7AD3A81CF6B003009AEDA8 /* Moduler.swift in Sources */,
 				2C2B45AE1C5CBD16004A4809 /* CTAPublishProtocol.swift in Sources */,
 				2C7EC6121CC07F5C0077E79E /* TextSpliter+Ani+Extension.swift in Sources */,
