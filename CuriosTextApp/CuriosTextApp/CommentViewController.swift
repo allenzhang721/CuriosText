@@ -163,9 +163,10 @@ class CommentViewController: UIViewController {
         tableView.estimatedRowHeight = 60
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        inputVC.resizeHandler = {[weak inputContainerView , heightConstraint] size in
+        inputVC.resizeHandler = {[weak self, inputContainerView , heightConstraint] size in
             if heightConstraint.constant != size.height {
                 heightConstraint?.constant = size.height
+                self?.tableView.contentInset.bottom = (size.height - 44)
                 inputContainerView?.layoutIfNeeded()
             }
         }
@@ -212,8 +213,8 @@ class CommentViewController: UIViewController {
             view?.layoutIfNeeded()
         }
         
-        keyborad.animateWhenKeyboardDisappear = { [weak bottomConstraint, view, tableView] keyboardHeight in
-            tableView.contentInset.bottom = 0
+        keyborad.animateWhenKeyboardDisappear = { [weak bottomConstraint, view, tableView, inputContainerView] keyboardHeight in
+            tableView.contentInset.bottom = inputContainerView!.bounds.height - 44
             bottomConstraint?.constant = 0
             view?.layoutIfNeeded()
         }
