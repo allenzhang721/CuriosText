@@ -314,12 +314,12 @@ extension CommentViewController {
             if let model = (info.baseModel as? CTACommentModel) {
                 dispatch_async(dispatch_get_main_queue(), {
                     let comment = CTACommentModel.toComment(model)
-                    self?.commentFeedBack(true)
+//                    self?.commentFeedBack(true)
                     self?.comments.insert(comment, atIndex: 0)
                     self?.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)], withRowAnimation: .Right)
                 })
             } else {
-                self?.commentFeedBack(false)
+//                self?.commentFeedBack(false)
             }
         }
     }
