@@ -207,7 +207,7 @@ class CommentViewController: UIViewController {
                 tableView?.scrollToRowAtIndexPath(NSIndexPath(forItem: i, inSection: 0), atScrollPosition: .Bottom, animated: true)
             }
             
-            bottomConstraint?.constant = -keyboardHeight
+            bottomConstraint?.constant = keyboardHeight
             view?.layoutIfNeeded()
         }
         
