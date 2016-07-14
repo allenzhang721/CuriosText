@@ -77,8 +77,6 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        self.loginUser = nil
-        self.selectedCell = nil
         self.isDisMis = true
         self.hideLoadingView()
     }

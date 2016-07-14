@@ -351,7 +351,6 @@ extension CTAPublishControllerProtocol{
                                 let userID = s.userModel!.userID
                                 shareURL = shareURL+"&uid="+userID
                             }
-                            let publishID = s.publishModel!.publishID
                             shareURL = shareURL+"&pid="+publishID
                         }
                         
