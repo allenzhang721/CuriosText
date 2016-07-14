@@ -91,7 +91,7 @@ extension InputViewController: UITextViewDelegate {
         if text == "\n" {
             textView.resignFirstResponder()
             sendHandler?(textView.text)
-//            textView.text = ""
+            textView.text = ""
             placeholderLabel.text = LocalStrings.PublishComment.description
             placeholderLabel.hidden = false
             return false
