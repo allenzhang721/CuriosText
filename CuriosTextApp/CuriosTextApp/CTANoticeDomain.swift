@@ -102,4 +102,22 @@ class CTANoticeDomain: CTABaseDomain {
 
         }
     }
+    
+    func setNoticesReaded(userID:String, compelecationBlock: (CTADomainInfo!) -> Void){
+        CTASetNoticesReadedRequest(userID: userID).startWithCompletionBlockWithSuccess { (response) in
+            switch response.result{
+            case .Success(let json):
+                let json:JSON = JSON(json)
+                let resultIndex = json[CTARequestResultKey.resultIndex].int!
+                let result = self.checkJsonResult(json)
+                if result {
+                    compelecationBlock(CTADomainInfo(result: true, successType: resultIndex))
+                }else {
+                    compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
+                }
+            case .Failure( _):
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            }
+        }
+    }
 }

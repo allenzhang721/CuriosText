@@ -91,3 +91,22 @@ class CTAClearNoticesRequest: CTABaseRequest {
         return self.getParameterString(dic, errorMessage: "CTAClearNoticesRequest");
     }
 }
+
+class CTASetNoticesReadedRequest: CTABaseRequest {
+    let userID:String;
+    
+    init(userID:String) {
+        self.userID = userID;
+    }
+    
+    override func requestUrl() -> String {
+        return CTARequestUrl.SetNoticesReaded.description;
+    }
+    
+    override func parameter() -> String {
+        let dic:Dictionary<String, AnyObject> = [
+            key(.UserID)        : userID
+        ];
+        return self.getParameterString(dic, errorMessage: "CTASetNoticesReadedRequest");
+    }
+}
