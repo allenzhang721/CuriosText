@@ -367,7 +367,7 @@ extension RecommandViewController: UICollectionViewDelegate, UICollectionViewDat
             
             let detailType:PublishDetailType = .HotPublish
 
-            let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self, type: detailType, viewUser: nil)
+            let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self, type: detailType)
             let navi = UINavigationController(rootViewController: vc)
             navi.transitioningDelegate = ani
             navi.modalPresentationStyle = .Custom

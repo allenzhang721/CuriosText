@@ -23,7 +23,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
     
     var selectedPublishID:String = ""
     var publishArray:Array<CTAPublishModel> = []
-    var viewUser:CTAViewUserModel?
+    var viewUserID:String = ""
     var loginUser:CTAUserModel?
     
     var backgroundView:UIView!
@@ -553,11 +553,11 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         let userID = self.loginUser == nil ? "" : self.loginUser!.userID
         switch self.type {
         case .Posts:
-            CTAPublishDomain.getInstance().userPublishList(userID, beUserID: self.viewUser!.userID, start: start, size: size) { (info) -> Void in
+            CTAPublishDomain.getInstance().userPublishList(userID, beUserID: self.viewUserID, start: start, size: size) { (info) -> Void in
                 self.loadPublishesComplete(info, size: size)
             }
         case .Likes:
-            CTAPublishDomain.getInstance().userLikePublishList(userID, beUserID: self.viewUser!.userID, start: start, size: size) { (info) -> Void in
+            CTAPublishDomain.getInstance().userLikePublishList(userID, beUserID: self.viewUserID, start: start, size: size) { (info) -> Void in
                 self.loadPublishesComplete(info, size: size)
             }
         case .UserFollow:
@@ -696,9 +696,9 @@ extension PublishDetailViewController: CTAPublishControllerDelegate{
     
     func controlUserIconTap(){
         let publish = self.getPublishModelByID(self.selectedPublishID)
-        if self.viewUser != nil {
+        if self.viewUserID != "" {
             if publish != nil {
-                if publish!.userModel.userID == self.viewUser?.userID {
+                if publish!.userModel.userID == self.viewUserID {
                     self.closeHandler()
                 }else {
                     self.pushUserPublish(publish)
