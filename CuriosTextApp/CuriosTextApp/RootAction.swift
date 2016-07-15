@@ -18,7 +18,7 @@ class RootAction: NSObject {
         
         let home = HomeViewController()
         let recommand = RecommandViewController()
-        let notiCenter = NotiCenterViewController()
+        let notiCenter = UIStoryboard(name: "NotiCenter", bundle: nil).instantiateInitialViewController() as! NotiCenterViewController
         let user = UserViewController()
         let controllers = [home, recommand, notiCenter, user].map { vc -> UINavigationController in
             
