@@ -9,14 +9,18 @@
 import Foundation
 
 protocol CTALoginProtocol{
-    func showLoginView()
+    func showLoginView(isPopupSelf:Bool)
     func loginComplete(userModel:CTAUserModel?)
 }
 
 extension CTALoginProtocol where Self: UIViewController{
     
-    func showLoginView(){
-        NSNotificationCenter.defaultCenter().postNotificationName("showLoginView", object: nil)
+    func showLoginView(isPopupSelf:Bool){
+        if isPopupSelf{
+            NSNotificationCenter.defaultCenter().postNotificationName("showLoginView", object: self)
+        }else {
+            NSNotificationCenter.defaultCenter().postNotificationName("showLoginView", object: nil)
+        }
     }
     
     func loginComplete(userModel:CTAUserModel?){

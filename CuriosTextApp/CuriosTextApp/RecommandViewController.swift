@@ -11,9 +11,6 @@ import MJRefresh
 
 class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPublishCacheProtocol, CTAPublishModelProtocol {
 
-    var loginUser:CTAUserModel?
-    var viewUserID:String = ""
-    
     var headerView:UIView!
     var collectionView:UICollectionView!
     var collectionLayout:UICollectionViewFlowLayout!
@@ -27,7 +24,7 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
     var selectedPublishID:String = ""
     var isHideSelectedCell:Bool = false
     var isAddOber:Bool = false
-    var isDisMis:Bool = false
+    var isDisMis:Bool = true
     var isLoadLocal:Bool = false
     var previousScrollViewYOffset:CGFloat = 0.0
     let scrollTop:CGFloat = -20.00
@@ -35,6 +32,9 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
     
     var isLoading:Bool = false
     var isLoadedAll:Bool = false
+    let cellHorCount = 3
+    
+    var isNoFresh:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,29 +52,32 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.resetViewPosition()
-        self.loadLocalUserModel()
-        let userID = (self.loginUser == nil) ? "-1" : self.loginUser!.userID
-        if userID != self.viewUserID {
-            self.getLoadCellData()
-            if !self.isLoadLocal{
-                self.publishModelArray.removeAll()
+        if !self.isNoFresh{
+            if self.isDisMis {
+                self.resetViewPosition()
+                self.getLoadCellData()
+                if !self.isLoadLocal{
+                    self.publishModelArray.removeAll()
+                }
+                self.collectionView.reloadData()
             }
-            self.collectionView.reloadData()
         }
+        
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        if self.isDisMis {
-            self.loadLocalUserModel()
-            self.viewAppearBegin()
+        if !self.isNoFresh{
+            if self.isDisMis {
+                self.viewAppearBegin()
+            }
+            self.isDisMis = false
         }
+        self.isNoFresh = true
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        self.loginUser = nil
         self.isDisMis = true
         self.hideLoadingView()
     }
@@ -155,16 +158,8 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
         self.collectionView.mj_footer = footerFresh;
     }
     
-    func loadLocalUserModel(){
-        if CTAUserManager.isLogin{
-            self.loginUser = CTAUserManager.user
-        }else {
-            self.loginUser = nil
-        }
-    }
-    
     func getLoadCellData(){
-        let userID = (self.loginUser == nil) ? "" : self.loginUser!.userID
+        let userID = ""
         let request = CTAHotPublishListRequest(userID: userID, start: 0)
         let data = self.getPublishArray(request)
         if data == nil {
@@ -176,7 +171,7 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
     }
     
     func saveArrayToLocal(){
-        let userID = (self.loginUser == nil) ? "" : self.loginUser!.userID
+        let userID = ""
         
         var savePublishModel:Array<CTAPublishModel> = []
         if self.publishModelArray.count < 100 {
@@ -215,12 +210,8 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
     }
     
     func viewAppearBegin(){
-        let userID = (self.loginUser == nil) ? "-1" : self.loginUser!.userID
-        if userID != self.viewUserID {
-            self.viewUserID = userID
-            self.headerFresh.beginRefreshing()
-            self.previousScrollViewYOffset = self.scrollTop
-        }
+        self.headerFresh.beginRefreshing()
+        self.previousScrollViewYOffset = self.scrollTop
     }
     
     func loadUserPublishes(start:Int, size:Int = 30){
@@ -230,7 +221,7 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
         }
         self.isLoading = true
         self.isLoadedAll = false
-        let userID = (self.loginUser == nil) ? "" : self.loginUser!.userID
+        let userID = ""
         CTAPublishDomain.getInstance().hotPublishList(userID, start: start, size: size) { (info) in
             self.loadPublishesComplete(info, size:size)
         }
@@ -348,12 +339,198 @@ extension RecommandViewController: UICollectionViewDelegate, UICollectionViewDat
         if index < self.publishModelArray.count && index > -1{
             self.selectedPublishID = self.publishModelArray[index].publishID
         }
+        if self.selectedPublishID != "" {
+            let bounds = UIScreen.mainScreen().bounds
+            var cellFrame:CGRect!
+            var transitionView:UIView!
+            if publishesCell != nil {
+                cellFrame = publishesCell!.frame
+                let offY = self.collectionView!.contentOffset.y
+                cellFrame.origin.y = cellFrame.origin.y - offY + self.collectionView.frame.origin.y
+                transitionView = publishesCell!.snapshotViewAfterScreenUpdates(true)
+            }else {
+                cellFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
+                transitionView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+                transitionView.backgroundColor = CTAStyleKit.commonBackgroundColor
+            }
+            let bgView = UIScreen.mainScreen().snapshotViewAfterScreenUpdates(false)
+            
+            let ani = CTAScaleTransition.getInstance()
+            ani.bgView = bgView
+            ani.alphaView = publishesCell
+            ani.transitionView = transitionView
+            ani.transitionAlpha = 1
+            ani.fromRect = cellFrame
+            ani.toRect = CGRect(x: 0, y: (bounds.height - bounds.width )/2 - Detail_Space, width: bounds.width, height: bounds.width)
+            
+            let detailType:PublishDetailType = .HotPublish
+
+            let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self, type: detailType, viewUser: nil)
+            let navi = UINavigationController(rootViewController: vc)
+            navi.transitioningDelegate = ani
+            navi.modalPresentationStyle = .Custom
+            self.presentViewController(navi, animated: true, completion: {
+            })
+        }
+    }
+    
+    //scroll view hide tool bar
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let toolBarViewframe = self.headerView.frame
+        let collectViewFrame = self.collectionView.frame
+        let size  = toolBarViewframe.height
+        let scrollOffset = self.collectionView.contentOffset.y
+        let scrollDiff   = scrollOffset - self.previousScrollViewYOffset
+        let scrollHeight = collectViewFrame.size.height
+        let scrollContentSizeHeight = self.collectionView.contentSize.height + self.collectionView.contentInset.bottom
+        var frameY:CGFloat = 0.0
+        if scrollOffset <= -self.collectionView.contentInset.top {
+            frameY = 20
+        }else if (scrollOffset + scrollHeight) >= scrollContentSizeHeight {
+            frameY = -size+20
+        } else {
+            frameY = min(20, max(-size+20, toolBarViewframe.origin.y - scrollDiff));
+        }
+        self.changeColloetionNavBar(frameY)
+        self.previousScrollViewYOffset = scrollOffset
+        if scrollOffset <= self.scrollTop{
+            if self.isFreshToTop{
+                self.headerFresh.beginRefreshing()
+                self.isFreshToTop = false
+            }
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        self.stoppedScrolling()
+    }
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            self.stoppedScrolling()
+        }
+    }
+    
+    func stoppedScrolling(){
+        let frame = self.headerView.frame
+        if frame.origin.y < 0 {
+            self.animationNavBarTo((20-frame.size.height))
+        }else {
+            self.animationNavBarTo(20)
+        }
+    }
+    
+    func updateBarButtonsAlpha(alpha:CGFloat){
+        let subViews = self.headerView.subviews
+        for i in 0..<subViews.count{
+            let subView = subViews[i]
+            subView.alpha = alpha
+        }
+    }
+    
+    func animationNavBarTo(y:CGFloat){
+        UIView.animateWithDuration(0.1) { () -> Void in
+            self.changeColloetionNavBar(y)
+        }
+    }
+    
+    func changeColloetionNavBar(y:CGFloat){
+        var toolBarViewframe = self.headerView.frame
+        var collectViewFrame = self.collectionView.frame
+        toolBarViewframe.origin.y = y
+        collectViewFrame.origin.y = toolBarViewframe.height + toolBarViewframe.origin.y - 18
+        collectViewFrame.size.height = self.view.frame.height - collectViewFrame.origin.y
+        self.headerView.frame = toolBarViewframe
+        self.collectionView.frame = collectViewFrame
+        let alpha:CGFloat = 1 - ((20-y) / toolBarViewframe.height)
+        self.updateBarButtonsAlpha(alpha)
     }
 }
 
 extension RecommandViewController: CTALoadingProtocol{
     var loadingImageView:UIImageView?{
         return nil
+    }
+}
+
+extension RecommandViewController: PublishDetailViewDelegate{
+    
+    func transitionComplete() {
+        let cells = self.collectionView.visibleCells()
+        for i in 0..<cells.count{
+            let cell = cells[i]
+            cell.alpha = 1
+        }
+    }
+    
+    func getPublishCell(selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect?{
+        let cellFrame:CGRect = self.saveNewPublishArray(selectedID, publishArray: publishArray)
+        return cellFrame;
+    }
+    
+    func saveNewPublishArray(selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect{
+        var isChange:Bool = false
+        if publishArray.count == self.publishModelArray.count {
+            for i in 0..<publishArray.count{
+                let oldModel = self.publishModelArray[i]
+                let newModel = publishModelArray[i]
+                if oldModel.publishID != newModel.publishID {
+                    isChange = true
+                    break
+                }else {
+                    let index = self.getPublishIndex(newModel.publishID, publishArray: self.publishModelArray)
+                    if index != -1{
+                        self.publishModelArray.insert(newModel, atIndex: index)
+                        self.publishModelArray.removeAtIndex(index+1)
+                    }
+                }
+            }
+        }else {
+            isChange = true
+        }
+        if isChange{
+            self.publishModelArray.removeAll()
+            self.publishModelArray = publishArray
+            self.footerFresh.resetNoMoreData()
+            self.saveArrayToLocal()
+        }
+        self.selectedPublishID = selectedID
+        
+        var currentIndex:Int = 0
+        for i in 0..<self.publishModelArray.count{
+            let model = self.publishModelArray[i]
+            if model.publishID == self.selectedPublishID {
+                currentIndex = i
+            }
+        }
+        self.changeColloetionNavBar(20)
+        let boundsHeight = self.collectionView.frame.size.height
+        let totalIndex = self.publishModelArray.count - 1
+        let cellRect = self.getCellRect()
+        let space = self.getCellSpace()
+        let currentLineIndex = Int(currentIndex / self.cellHorCount)
+        let currentColumnIndex = Int(currentIndex % self.cellHorCount)
+        let totalLineIndex   = Int(totalIndex / self.cellHorCount)
+        let currentY = CGFloat(currentLineIndex+1) * (space + cellRect.height) - cellRect.height/2
+        let totalY = CGFloat(totalLineIndex+1) * (space + cellRect.height) + 44
+        
+        var scrollOffY:CGFloat = 0
+        if (totalY - currentY) > boundsHeight/2{
+            scrollOffY = currentY - boundsHeight/2
+        }else {
+            scrollOffY = totalY - boundsHeight
+        }
+        if scrollOffY < -20{
+            scrollOffY = -20
+        }
+        self.isHideSelectedCell = true
+        self.collectionView.reloadData()
+        self.collectionView.contentOffset.y = scrollOffY
+        self.changeColloetionNavBar(20)
+        
+        let cellY = CGFloat(currentLineIndex) * (space + cellRect.height) - scrollOffY + self.collectionView.frame.origin.y
+        let currentRect = CGRect(x: CGFloat(currentColumnIndex)*(space + cellRect.width) + space, y: cellY, width: cellRect.width, height: cellRect.height)
+        return currentRect
     }
 }
 

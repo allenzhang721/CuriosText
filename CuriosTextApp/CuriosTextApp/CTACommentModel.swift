@@ -18,9 +18,9 @@ final class CTACommentModel: CTABaseModel {
     let commentMessage:String;
     let publishID:String
     
-    init(commentID:String, userID:String, nickName:String, userDesc:String, userIconURL:String, sex:Int, beCommentedNickName:String, beCommentedUserID:String, beCommentUserIconURL:String, beCommentUserDesc:String, beCommentSex:Int, commentData:String, commentMessage:String, publishID:String){
+    init(commentID:String, userID:String, nickName:String, userDesc:String, userIconURL:String, sex:Int, relationType:Int, beCommentedNickName:String, beCommentedUserID:String, beCommentUserIconURL:String, beCommentUserDesc:String, beCommentSex:Int, commentData:String, commentMessage:String, publishID:String){
         self.commentID = commentID;
-        self.userModel = CTAViewUserModel(userID: userID, nickName: nickName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, relationType: 0)
+        self.userModel = CTAViewUserModel(userID: userID, nickName: nickName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, relationType: relationType)
         if beCommentedUserID != "" {
             self.beCommentUserModel = CTAViewUserModel(userID: beCommentedUserID, nickName: beCommentedNickName, userDesc: beCommentUserDesc, userIconURL: beCommentUserIconURL, sex: beCommentSex, relationType: 0)
         }else {
@@ -49,6 +49,7 @@ final class CTACommentModel: CTABaseModel {
         let userDesc:String            = json[key(.UserDesc)].string ?? "";
         let userIconURL:String         = json[key(.UserIconURL)].string ?? "";
         let sex:Int                    = json[key(.Sex)].int ?? 0;
+        let relationType:Int           = json[key(.RelationType)].int ?? 0;
         let commentMessage:String      = json[key(.CommentMessage)].string ?? "";
         let beCommentedNickName:String = json[key(.BeCommentedNickName)].string ?? "";
         let beCommentedUserID:String   = json[key(.BeCommentedUserID)].string ?? "";
@@ -58,7 +59,7 @@ final class CTACommentModel: CTABaseModel {
         let commentDate:String         = json[key(.CommentDate)].string ?? "";
         let publishID:String           = json[key(.PublishID)].string ?? "";
         
-        return CTACommentModel(commentID: commentID, userID: userID, nickName: nickName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, beCommentedNickName: beCommentedNickName, beCommentedUserID: beCommentedUserID, beCommentUserIconURL: beCommentedUserIconURL, beCommentUserDesc: beCommentedUserDesc, beCommentSex: beCommentedSex, commentData: commentDate, commentMessage: commentMessage, publishID: publishID)
+        return CTACommentModel(commentID: commentID, userID: userID, nickName: nickName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, relationType: relationType, beCommentedNickName: beCommentedNickName, beCommentedUserID: beCommentedUserID, beCommentUserIconURL: beCommentedUserIconURL, beCommentUserDesc: beCommentedUserDesc, beCommentSex: beCommentedSex, commentData: commentDate, commentMessage: commentMessage, publishID: publishID)
     }
     
     func save() throws {

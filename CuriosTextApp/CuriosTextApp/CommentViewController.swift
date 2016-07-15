@@ -190,7 +190,7 @@ class CommentViewController: UIViewController {
     }
     
     private func setupData(start:Int, size:Int = 30) {
-        CTACommentDomain.getInstance().publichCommentList(publishID, start: start, size: size) {[weak self] (listInfo) in
+        CTACommentDomain.getInstance().publichCommentList(publishID, userID: myID, start: start, size: size) {[weak self] (listInfo) in
             let scucess = listInfo.result
             if scucess {
                 if let models = listInfo.modelArray as? [CTACommentModel] {

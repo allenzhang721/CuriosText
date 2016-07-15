@@ -63,8 +63,8 @@ class CTACommentDomain: CTABaseDomain {
         }
     }
     
-    func publichCommentList(publishID:String, start:Int, size:Int, compelecationBlock: (CTADomainListInfo!) -> Void){
-        CTAPublishCommentListRequest(publishID: publishID, start: start, size: size).startWithCompletionBlockWithSuccess { (response) in
+    func publichCommentList(publishID:String, userID:String, start:Int, size:Int, compelecationBlock: (CTADomainListInfo!) -> Void){
+        CTAPublishCommentListRequest(publishID: publishID, userID: userID, start: start, size: size).startWithCompletionBlockWithSuccess { (response) in
             switch response.result{
             case .Success(let json):
                 let json:JSON = JSON(json)

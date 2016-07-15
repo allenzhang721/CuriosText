@@ -53,7 +53,7 @@ extension CTAScaleTransition: UIViewControllerAnimatedTransitioning{
         if isPersent{
             return 0.3
         }else {
-            return 0.2
+            return 0.3
         }
     }
     
@@ -110,7 +110,7 @@ extension CTAScaleTransition: UIViewControllerAnimatedTransitioning{
                         self.transitionView!.center = CGPoint(x: self.fromRect!.origin.x + self.fromRect!.width/2, y: self.fromRect!.origin.y + self.fromRect!.height/2)
                         self.transitionView!.alpha = 0
                         toView.alpha = 0
-                        UIView.animateWithDuration(0.2, animations: {
+                        UIView.animateWithDuration(0.3, animations: {
                             self.transitionView!.transform = CGAffineTransformMakeScale(1, 1)
                             self.transitionView!.center = CGPoint(x: self.toRect!.width/2, y: self.toRect!.height/2)
                             self.transitionView!.alpha = 1
@@ -124,7 +124,7 @@ extension CTAScaleTransition: UIViewControllerAnimatedTransitioning{
                 }else {
                     view.addSubview(toView)
                     toView.alpha = 0
-                    UIView.animateWithDuration(0.2, animations: {
+                    UIView.animateWithDuration(0.3, animations: {
                         toView.alpha = 1
                         }, completion: { (_) in
                             self.trasitionComplete()
@@ -150,7 +150,7 @@ extension CTAScaleTransition: UIViewControllerAnimatedTransitioning{
                         self.transitionView!.frame = self.fromRect!
                         view.addSubview(self.transitionView!)
                         fromView.alpha = 0
-                        alphaView?.alpha = 0
+                        self.alphaView?.alpha = 0
                         UIView.animateWithDuration(0.2, animations: {
                             self.transitionView!.frame = self.toRect!
                             self.transitionBackView!.alpha = 0
@@ -175,7 +175,7 @@ extension CTAScaleTransition: UIViewControllerAnimatedTransitioning{
                         }
                         view.addSubview(self.transitionView!)
                         fromView.alpha = 0
-                        UIView.animateWithDuration(0.2, animations: {
+                        UIView.animateWithDuration(0.3, animations: {
                             let wChange = self.toRect!.width / self.fromRect!.width
                             let hChange = self.toRect!.height / self.fromRect!.height
                             self.transitionView!.transform = CGAffineTransformMakeScale(wChange, hChange)
@@ -193,7 +193,7 @@ extension CTAScaleTransition: UIViewControllerAnimatedTransitioning{
                 }else {
                     fromView.frame = CGRect.init(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
                     fromView.alpha = 1
-                    UIView.animateWithDuration(0.2, animations: {
+                    UIView.animateWithDuration(0.3, animations: {
                         fromView.alpha = 1
                         }, completion: { (_) in
                             fromView.removeFromSuperview()

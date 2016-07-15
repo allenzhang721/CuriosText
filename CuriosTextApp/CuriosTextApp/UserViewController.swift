@@ -14,7 +14,7 @@ enum CTAPublishType: String {
     case Posts, Likes
 }
 
-class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTAPublishCacheProtocol, CTAPublishModelProtocol, CTALoadingProtocol, CTAAlertProtocol{
+class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPublishCellProtocol, CTAPublishCacheProtocol, CTAPublishModelProtocol, CTALoadingProtocol, CTAAlertProtocol, CTALoginProtocol{
 
     var viewUser:CTAViewUserModel?
     var loginUser:CTAUserModel?
@@ -91,9 +91,13 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.navigationController?.navigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer!.delegate = self
         self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
-        if self.isLoginUser && !self.isAddOber{
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadViewHandler(_:)), name: "publishEditFile", object: nil)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshView(_:)), name: "refreshSelf", object: nil)
+        if !self.isAddOber{
+            if self.isLoginUser {
+                NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadViewHandler(_:)), name: "publishEditFile", object: nil)
+                NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshView(_:)), name: "refreshSelf", object: nil)
+            }else {
+                NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reNewView(_:)), name: "loginComplete", object: nil)
+            }
             self.isAddOber = true
         }
     }
@@ -101,27 +105,20 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if self.isDisMis {
-            if self.isLoginUser {
-                self.loadLocalUserModel()
-            }
+            self.loadLocalUserModel()
             if self.loginUser != nil {
                 if self.isLoginUser {
                     self.viewUser = GetViewUserModel(self.loginUser!)
                 }
-                self.setUIView()
-                if self.viewUserID != self.viewUser!.userID{
-                    self.resetButton()
-                    self.publishModelArray.removeAll()
-                    self.loadArrayFromLocal()
-                    self.collectionView.reloadData()
-                    self.loadUserDetailFromLocal()
-                    self.setViewByDetailUser()
-                }
-            }else {
-                self.resetView()
+            }
+            self.setUIView()
+            if self.viewUserID != self.viewUser!.userID{
                 self.resetButton()
                 self.publishModelArray.removeAll()
+                self.loadArrayFromLocal()
                 self.collectionView.reloadData()
+                self.loadUserDetailFromLocal()
+                self.setViewByDetailUser()
             }
         }
     }
@@ -129,7 +126,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         if self.isDisMis {
-            if self.loginUser != nil && self.viewUser != nil {
+            if self.viewUser != nil {
                 if self.viewUserID != self.viewUser!.userID{
                     self.viewUserID = self.viewUser!.userID
                     if !self.isLoginUser {
@@ -161,6 +158,10 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         }
     }
     
+    func reNewView(noti: NSNotification){
+        self.viewUserID = ""
+    }
+    
     func refreshView(noti: NSNotification){
         if self.collectionView.contentOffset.y > self.scrollTop{
             self.isFreshToTop = true
@@ -171,7 +172,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     }
     
     func saveArrayToLocal(){
-        let userID = self.loginUser!.userID
+        let userID = self.loginUser == nil ? "" : self.loginUser!.userID
         let beUserID = self.viewUser!.userID
         var savePublishModel:Array<CTAPublishModel> = []
         if self.publishModelArray.count < 100 {
@@ -192,7 +193,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     }
     
     func loadArrayFromLocal(){
-        let userID = self.loginUser!.userID
+        let userID = self.loginUser == nil ? "" : self.loginUser!.userID
         let beUserID = self.viewUser!.userID
         var request:CTABaseRequest?
         if self.publishType == .Posts{
@@ -210,14 +211,15 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     
     func saveUserDetailToLocal(){
         if self.viewUser != nil {
-            let userID = self.loginUser!.userID
-            let request:CTABaseRequest = CTAUserDetailRequest(userID: userID, beUserID: self.viewUser!.userID)
+            let userID = self.loginUser == nil ? "" : self.loginUser!.userID
+            let beUserID = self.viewUser!.userID
+            let request:CTABaseRequest = CTAUserDetailRequest(userID: userID, beUserID: beUserID)
             self.saveUserDetail(request, userDetail: self.viewUser!)
         }
     }
     
     func loadUserDetailFromLocal(){
-        let userID = self.loginUser!.userID
+        let userID = self.loginUser == nil ? "" : self.loginUser!.userID
         let beUserID = self.viewUser!.userID
         let request:CTABaseRequest = CTAUserDetailRequest(userID: userID, beUserID: beUserID)
         let data = self.getUserDetail(request)
@@ -343,7 +345,9 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.followButton.setTitle(NSLocalizedString("FollowButtonLabel", comment: ""), forState: .Normal)
         self.followButton.setTitleColor(CTAStyleKit.selectedColor, forState: .Normal)
         self.followButton.titleLabel?.font = UIFont.systemFontOfSize(13)
-        if self.isLoginUser || self.viewUser?.userID == self.loginUser?.userID{
+        if self.isLoginUser {
+            self.userFollowView.frame = CGRectMake(0, 0, bounds.width, 35)
+        }else if self.loginUser != nil && self.loginUser?.userID == self.viewUser?.userID {
             self.userFollowView.frame = CGRectMake(0, 0, bounds.width, 35)
         }else {
             self.userFollowView.addSubview(self.followButton)
@@ -608,51 +612,59 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     }
     
     func followButtonClick(sender: UIButton){
-        if self.viewUser != nil && self.loginUser != nil{
-            let relationType:Int = self.viewUser!.relationType
-            switch  relationType{
-            case 0, 3:
-                self.followUser()
-            case 1, 5:
-                var alertArray:Array<[String: AnyObject]> = []
-                alertArray.append(["title":NSLocalizedString("UnFollowLabel", comment: ""), "style": "Destructive"])
-                let alertTile = NSLocalizedString("ConfirmUnFollowLabel", comment: "")+self.viewUser!.nickName+"?"
-                self.showSheetAlert(alertTile, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
-                    if index != -1{
-                        self.unfollowUser()
+        if self.loginUser != nil{
+            if self.viewUser != nil{
+                let relationType:Int = self.viewUser!.relationType
+                switch  relationType{
+                case 0, 3:
+                    self.followUser()
+                case 1, 5:
+                    var alertArray:Array<[String: AnyObject]> = []
+                    alertArray.append(["title":NSLocalizedString("UnFollowLabel", comment: ""), "style": "Destructive"])
+                    let alertTile = NSLocalizedString("ConfirmUnFollowLabel", comment: "")+self.viewUser!.nickName+"?"
+                    self.showSheetAlert(alertTile, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
+                        if index != -1{
+                            self.unfollowUser()
+                        }
                     }
+                default:
+                    break
                 }
-            default:
-                break
             }
+        }else {
+            self.showLoginView(true)
         }
     }
     
     func followUser(){
-        self.showLoadingViewInView(self.followButton)
-        CTAUserRelationDomain.getInstance().followUser(self.loginUser!.userID, relationUserID: self.viewUser!.userID) { (info) -> Void in
-            if info.result {
-                let relationType:Int = self.viewUser!.relationType
-                self.viewUser!.relationType = (relationType==0 ? 1 : 5)
-                self.viewUser!.beFollowCount += 1
-                self.setViewByDetailUser()
-                self.saveUserDetailToLocal()
+        if self.loginUser != nil {
+            self.showLoadingViewInView(self.followButton)
+            CTAUserRelationDomain.getInstance().followUser(self.loginUser!.userID, relationUserID: self.viewUser!.userID) { (info) -> Void in
+                if info.result {
+                    let relationType:Int = self.viewUser!.relationType
+                    self.viewUser!.relationType = (relationType==0 ? 1 : 5)
+                    self.viewUser!.beFollowCount += 1
+                    self.setViewByDetailUser()
+                    self.saveUserDetailToLocal()
+                }
+                self.hideLoadingViewInView(self.followButton)
             }
-            self.hideLoadingViewInView(self.followButton)
         }
     }
     
     func unfollowUser(){
-        self.showLoadingViewInView(self.followButton)
-        CTAUserRelationDomain.getInstance().unFollowUser(self.loginUser!.userID, relationUserID: self.viewUser!.userID) { (info) -> Void in
-            if info.result {
-                let relationType:Int = self.viewUser!.relationType
-                self.viewUser!.relationType = (relationType==1 ? 0 : 3)
-                self.viewUser!.beFollowCount = (self.viewUser!.beFollowCount - 1  > 0 ? self.viewUser!.beFollowCount - 1 : 0)
-                self.setViewByDetailUser()
-                self.saveUserDetailToLocal()
+        if self.loginUser != nil {
+            self.showLoadingViewInView(self.followButton)
+            CTAUserRelationDomain.getInstance().unFollowUser(self.loginUser!.userID, relationUserID: self.viewUser!.userID) { (info) -> Void in
+                if info.result {
+                    let relationType:Int = self.viewUser!.relationType
+                    self.viewUser!.relationType = (relationType==1 ? 0 : 3)
+                    self.viewUser!.beFollowCount = (self.viewUser!.beFollowCount - 1  > 0 ? self.viewUser!.beFollowCount - 1 : 0)
+                    self.setViewByDetailUser()
+                    self.saveUserDetailToLocal()
+                }
+                self.hideLoadingViewInView(self.followButton)
             }
-            self.hideLoadingViewInView(self.followButton)
         }
     }
     
@@ -673,18 +685,19 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     
     
     func loadUserPublishes(start:Int, size:Int = 30){
-        if self.isLoading || self.loginUser == nil{
+        if self.isLoading{
             self.freshComplete();
             return
         }
         self.isLoading = true
         self.isLoadedAll = false
+        let userID = self.loginUser == nil ? "" : self.loginUser!.userID
         if self.publishType == .Posts{
-            CTAPublishDomain.getInstance().userPublishList(self.loginUser!.userID, beUserID: self.viewUser!.userID, start: start, size: size) { (info) -> Void in
+            CTAPublishDomain.getInstance().userPublishList(userID, beUserID: self.viewUser!.userID, start: start, size: size) { (info) -> Void in
                 self.loadPublishesComplete(info, size: size, publishType: .Posts)
             }
         }else if self.publishType == .Likes{
-            CTAPublishDomain.getInstance().userLikePublishList(self.loginUser!.userID, beUserID: self.viewUser!.userID, start: start, size: size, compelecationBlock: { (info) in
+            CTAPublishDomain.getInstance().userLikePublishList(userID, beUserID: self.viewUser!.userID, start: start, size: size, compelecationBlock: { (info) in
                 self.loadPublishesComplete(info, size: size, publishType: .Likes)
             })
         }
@@ -776,17 +789,15 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     }
     
     func loadUserDetail(){
-        if self.loginUser != nil {
-            let userID = self.loginUser!.userID
-            CTAUserDomain.getInstance().userDetail(userID, beUserID: self.viewUser!.userID) { (info) -> Void in
-                if info.result{
-                    self.viewUser = info.baseModel! as? CTAViewUserModel
-                    self.saveUserDetailToLocal()
-                }else {
-                    self.loadUserDetailFromLocal()
-                }
-                self.setViewByDetailUser()
+        let userID = self.loginUser == nil ? "" : self.loginUser!.userID
+        CTAUserDomain.getInstance().userDetail(userID, beUserID: self.viewUser!.userID) { (info) -> Void in
+            if info.result{
+                self.viewUser = info.baseModel! as? CTAViewUserModel
+                self.saveUserDetailToLocal()
+            }else {
+                self.loadUserDetailFromLocal()
             }
+            self.setViewByDetailUser()
         }
     }
     
@@ -996,7 +1007,9 @@ extension UserViewController: UserListViewDelegate{
     }
     
     func disMisComplete(type:UserListType){
-        
+        self.isDisMis = true
+        self.viewWillAppear(true)
+        self.viewDidAppear(true)
     }
 }
 
@@ -1008,6 +1021,9 @@ extension UserViewController: PublishDetailViewDelegate{
             let cell = cells[i]
             cell.alpha = 1
         }
+        self.isDisMis = true
+        self.viewWillAppear(true)
+        self.viewDidAppear(true)
     }
     
     func getPublishCell(selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect?{
@@ -1058,7 +1074,7 @@ extension UserViewController: PublishDetailViewDelegate{
         let currentColumnIndex = Int(currentIndex % self.cellHorCount)
         let totalLineIndex   = Int(totalIndex / self.cellHorCount)
         let currentY = CGFloat(currentLineIndex+1) * (space + cellRect.height) - cellRect.height/2 + self.topView.frame.height
-        let totalY = CGFloat(totalLineIndex+1) * (space + cellRect.height) + self.topView.frame.height + space + 50
+        let totalY = CGFloat(totalLineIndex+1) * (space + cellRect.height) + self.topView.frame.height + 44
         
         var scrollOffY:CGFloat = 0
         if (totalY - currentY) > boundsHeight/2{

@@ -60,11 +60,13 @@ class CTADeletePublishCommentRequest: CTABaseRequest {
 class CTAPublishCommentListRequest: CTABaseRequest {
 
     let publishID:String;
+    let userID:String;
     let start:Int;
     let size:Int;
     
-    init(publishID:String, start:Int, size:Int) {
+    init(publishID:String, userID:String, start:Int, size:Int) {
         self.publishID = publishID;
+        self.userID    = userID;
         self.start     = start;
         self.size      = size;
     }
@@ -76,6 +78,7 @@ class CTAPublishCommentListRequest: CTABaseRequest {
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
             key(.PublishID)    : publishID,
+            key(.UserID)       : userID,
             key(.Start)        : start,
             key(.Size)         : size
         ];

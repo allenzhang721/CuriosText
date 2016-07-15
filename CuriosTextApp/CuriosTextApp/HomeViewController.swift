@@ -55,7 +55,6 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
         if !self.isAddOber{
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reNewView(_:)), name: "publishEditFile", object: nil)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reNewView(_:)), name: "loginComplete", object: nil)
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshView(_:)), name: "refreshSelf", object: nil)
             self.isAddOber = true
         }
@@ -250,15 +249,9 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
                 self.loadPublishesComplete(info, size:size)
             })
         #else
-            if userID != ""{
-                CTAPublishDomain.getInstance().userFollowPublishList(userID, beUserID: userID, start: start, size: size, compelecationBlock: { (info) in
-                    self.loadPublishesComplete(info, size:size)
-                })
-            }else {
-                CTAPublishDomain.getInstance().hotPublishList(userID, start: start, size: size, compelecationBlock: { (info) in
-                    self.loadPublishesComplete(info, size:size)
-                })
-            }
+            CTAPublishDomain.getInstance().userFollowPublishList(userID, beUserID: userID, start: start, size: size, compelecationBlock: { (info) in
+                self.loadPublishesComplete(info, size:size)
+            })
         #endif
     }
     
@@ -551,17 +544,13 @@ extension HomeViewController:CTALoadingProtocol{
 extension HomeViewController:CTAHomePublishesCellDelegate{
     
     func cellUserIconTap(cell:CTAHomePublishesCell?){
-        if self.loginUser != nil {
-            if cell != nil {
-                if let publishModel = cell?.publishModel{
-                    let viewUserModel = publishModel.userModel
-                    let userPublish = UserViewController()
-                    userPublish.viewUser = viewUserModel
-                    self.navigationController?.pushViewController(userPublish, animated: true)
-                }
+        if cell != nil {
+            if let publishModel = cell?.publishModel{
+                let viewUserModel = publishModel.userModel
+                let userPublish = UserViewController()
+                userPublish.viewUser = viewUserModel
+                self.navigationController?.pushViewController(userPublish, animated: true)
             }
-        }else {
-            self.showLoginView()
         }
     }
     
@@ -572,7 +561,7 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
                 self.likersHandelr()
             }
         }else {
-            self.showLoginView()
+            self.showLoginView(false)
         }
     }
     
@@ -583,7 +572,7 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
                 self.likeHandler(justLike)
             }
         }else {
-            self.showLoginView()
+            self.showLoginView(false)
         }
     }
     
@@ -594,7 +583,7 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
                 self.commentHandler()
             }
         }else {
-            self.showLoginView()
+            self.showLoginView(false)
         }
     }
     
@@ -605,18 +594,14 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
                 self.rebuildHandler(false)
             }
         }else {
-            self.showLoginView()
+            self.showLoginView(false)
         }
     }
     
     func cellMoreHandler(cell:CTAHomePublishesCell?){
-        if self.loginUser != nil {
-            if cell != nil {
-                self.selectedCell = cell
-                self.moreSelectionHandler(false, isPopup: false)
-            }
-        }else {
-            self.showLoginView()
+        if cell != nil {
+            self.selectedCell = cell
+            self.moreSelectionHandler(false, isPopup: false)
         }
     }
     
@@ -795,6 +780,7 @@ extension HomeViewController: PublishDetailViewDelegate{
                 currentIndex = i
             }
         }
+        self.changeColloetionNavBar(20)
         let boundsHeight = self.collectionView.frame.size.height
         let totalIndex = self.publishModelArray.count - 1
         let cellRect = self.getCollectionCellSizeByPublish()
@@ -802,7 +788,7 @@ extension HomeViewController: PublishDetailViewDelegate{
         let currentLineIndex = Int(currentIndex / 1)
         let totalLineIndex   = Int(totalIndex / 1)
         let currentY = CGFloat(currentLineIndex) * (space + cellRect.height) - 20
-        let totalY = CGFloat(totalLineIndex+1) * (space + cellRect.height) + 50
+        let totalY = CGFloat(totalLineIndex+1) * (space + cellRect.height) + 44
         
         var scrollOffY:CGFloat = 0
         if (totalY - currentY) > boundsHeight{

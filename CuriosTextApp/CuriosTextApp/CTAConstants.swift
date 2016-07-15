@@ -64,7 +64,7 @@ enum CTARequestUrl: CustomStringConvertible {
   case FollowUser, UnFollowUser, BlockUser, UnBlockUser, UserFollowList, UserBeFollowList
   case UserUpToken, PublishUpToken, UploadFilePath, ResourceUpToken
   case AddPublishComment, DeletePublishComment, PublishCommentList
-  case UnReadNoticeCount, NoticeList, DeleteNotice
+  case UnReadNoticeCount, NoticeList, DeleteNotice, ClearNotices
   
   var description: String {
     switch self {
@@ -172,6 +172,8 @@ enum CTARequestUrl: CustomStringConvertible {
         return "/notice/noticeList"
     case .DeleteNotice:
         return "/notice/deleteNotice"
+    case .ClearNotices:
+        return "/notice/clearUserNotices"
     }
   }
 }
