@@ -135,7 +135,21 @@ class NotiCenterViewController: UIViewController {
         }
     }
     
+    private func showPublishDetail(withPublishID publishID: String) {
+        CTAPublishDomain.getInstance().publishDetai(myID, publishID: publishID) {[weak self] (info) in
+            
+                dispatch_async(dispatch_get_main_queue(), {
+                    if let model = info?.baseModel as? CTAPublishModel {
+                    self?.showDetailView(model)
+                    }
+                })
+        }
+    }
     
+    private func showDetailView(withModel: CTAPublishModel) {
+        //TODO:  -- Emiaostein, 7/15/16, 17:01
+        
+    }
     
     private func showComment(withPublishID publishID: String, beganRect: CGRect) {
         let userID = myID
@@ -281,6 +295,11 @@ extension NotiCenterViewController {
         
         if let previewView = cell.viewWithTag(1004) as? TouchImageView {
             previewView.kf_setImageWithURL(message.previewIconURL)
+            
+            previewView.tapHandler = { [weak self, cell] in
+                guard let i = self?.tableView.indexPathForCell(cell), amessage = self?.messages[i.item] else {return}
+                self?.showPublishDetail(withPublishID: amessage.publishID)
+            }
         }
         
         return cell
