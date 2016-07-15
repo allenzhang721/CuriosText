@@ -171,7 +171,6 @@ class NotiCenterViewController: UIViewController {
     }
     
     @IBAction func clearAll(sender: AnyObject) {
-        
         CTANoticeDomain.getInstance().clearNotices(myID) {[weak self] (info) in
             dispatch_async(dispatch_get_main_queue(), { 
                 self?.messages = []
