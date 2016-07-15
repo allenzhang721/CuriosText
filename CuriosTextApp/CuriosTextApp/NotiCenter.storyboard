@@ -22,6 +22,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="118" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0G1-h9-ej6">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="separatorInset" minX="50" minY="0.0" maxX="10" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NotiCommentCell" rowHeight="118" id="glK-r3-enO">
                                         <rect key="frame" x="0.0" y="28" width="375" height="118"/>
@@ -82,6 +83,7 @@
                                                 <constraint firstItem="cOt-MQ-Oni" firstAttribute="leading" secondItem="CXo-Ro-qc4" secondAttribute="leading" constant="10" id="fH5-Ms-n4L"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NotiLikeCell" rowHeight="70" id="gDv-1F-DB9">
                                         <rect key="frame" x="0.0" y="146" width="375" height="70"/>
@@ -178,7 +180,7 @@
                                                         <constraint firstAttribute="width" constant="30" id="NFt-8b-Itz"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" tag="1005" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YAt-k4-gyW">
+                                                <imageView userInteractionEnabled="NO" tag="1005" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YAt-k4-gyW" customClass="TouchImageView" customModule="CuriosTextApp" customModuleProvider="target">
                                                     <rect key="frame" x="325" y="21" width="30" height="30"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>

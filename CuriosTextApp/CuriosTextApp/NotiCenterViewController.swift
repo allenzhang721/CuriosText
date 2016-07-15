@@ -151,6 +151,10 @@ class NotiCenterViewController: UIViewController {
         
     }
     
+    private func followUser() {
+        //TODO:  -- Emiaostein, 7/15/16, 17:41
+    }
+    
     private func showComment(withPublishID publishID: String, beganRect: CGRect) {
         let userID = myID
         let vc = Moduler.module_comment(publishID, userID: userID, delegate: self)
@@ -199,6 +203,10 @@ extension NotiCenterViewController: UITableViewDelegate {
                 let r = view.convertRect(rect, fromView: tableView)
                 showComment(withPublishID: message.publishID, beganRect: r)
             }
+        } else if message is FollowMessage {
+            showUserInfo(by: message.userModel)
+        } else if message is LikeMessage {
+            showPublishDetail(withPublishID: message.publishID)
         }
     }
     
@@ -243,12 +251,20 @@ extension NotiCenterViewController {
             
         } else if let follow = message as? FollowMessage {
             cell = tableView.dequeueReusableCellWithIdentifier("NotiFollowCell")!
-            if let imgView = cell.viewWithTag(1005) as? UIImageView {
+            if let imgView = cell.viewWithTag(1005) as? TouchImageView {
                 switch follow.relationship {
                 case .CanFollowHe:
                     imgView.image = UIImage(named: "liker_follow_btn")
+                    imgView.tapHandler = { [weak self, cell] in
+                        guard let i = self?.tableView.indexPathForCell(cell), amessage = self?.messages[i.item] else {return}
+                        self?.followUser()
+                    }
                 case .HadFollowHe:
                     imgView.image = UIImage(named: "liker_following_btn")
+                    imgView.tapHandler = { [weak self, cell] in
+                        guard let i = self?.tableView.indexPathForCell(cell), amessage = self?.messages[i.item] else {return}
+                        self?.showUserInfo(by: amessage.userModel)
+                    }
                 case .CanNotFollowHe:
                     imgView.image = nil
                 }
