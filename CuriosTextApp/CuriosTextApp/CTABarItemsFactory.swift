@@ -105,12 +105,12 @@ class CTABarItemsFactory {
             selectedColor: CTAStyleKit.selectedColor,
             title: LocalStrings.Alignment.description),
         
-        CTABarItem(
-            normalImage: UIImage(named: "shadow_Normal")!,
-            selectedImage: UIImage(named: "shadow_Selected")!,
-            normalColor: CTAStyleKit.normalColor,
-            selectedColor: CTAStyleKit.selectedColor,
-            title: LocalStrings.Shadow.description),
+//        CTABarItem(
+//            normalImage: UIImage(named: "shadow_Normal")!,
+//            selectedImage: UIImage(named: "shadow_Selected")!,
+//            normalColor: CTAStyleKit.normalColor,
+//            selectedColor: CTAStyleKit.selectedColor,
+//            title: LocalStrings.Shadow.description),
     
     ]
 }
