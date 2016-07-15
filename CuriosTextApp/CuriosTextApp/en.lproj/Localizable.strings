@@ -169,6 +169,11 @@
 "Delete" = "Delete";
 "Attension" = "Attension";
 
+// MARK: - Notification
+"NotificationTitle" = "Notification";
+"StartedFollowingYou" = "started following you.";
+"Clear" = "Clear";
+
 // MARK: - Image Picker
 "Camera" = "Camera";
 "Photo" = "Photo";

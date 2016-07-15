@@ -13,6 +13,9 @@ enum LocalStrings: CustomStringConvertible {
     // Common
     case Cancel, Done, Delete, Attension
     
+    // Notification
+    case NotificationTitle, Stared, Clear
+    
     // Image Picker
     case Camera, Photo, AllowPhotoTitle, AllowPhotoMessage
     
@@ -52,6 +55,14 @@ enum LocalStrings: CustomStringConvertible {
             return NSLocalizedString("Delete", comment: "")
         case .Attension:
             return NSLocalizedString("Attension", comment: "")
+            
+        // Notification
+        case NotificationTitle:
+            return NSLocalizedString("NotificationTitle", comment: "")
+        case .Stared:
+            return NSLocalizedString("StartedFollowingYou", comment: "")
+        case .Clear:
+            return NSLocalizedString("Clear", comment: "")
             
             // Image Picker
         case .Camera:
