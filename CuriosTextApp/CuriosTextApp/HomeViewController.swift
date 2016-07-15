@@ -640,7 +640,6 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
             transitionView.backgroundColor = CTAStyleKit.commonBackgroundColor
         }
         let bgView = UIScreen.mainScreen().snapshotViewAfterScreenUpdates(false)
-        
         let ani = CTAScaleTransition.getInstance()
         ani.bgView = bgView
         ani.alphaView = preview
@@ -661,7 +660,6 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
                 detailType = .UserFollow
             }
         #endif
-        
         
         let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self, type: detailType)
         

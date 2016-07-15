@@ -36,6 +36,8 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
     
     var isNoFresh:Bool = false
     
+    let headerY:CGFloat  = 20.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -106,17 +108,17 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
     func initHeader(){
         let bounds = UIScreen.mainScreen().bounds
         
-        self.headerView = UIView(frame: CGRect(x: 0, y: 20, width: bounds.width, height: 44))
+        self.headerView = UIView(frame: CGRect(x: 0, y: self.headerY, width: bounds.width, height: 64-self.headerY))
         self.headerView.backgroundColor = CTAStyleKit.commonBackgroundColor
         self.view.addSubview(self.headerView)
         
-        let homeLabel = UILabel(frame: CGRect(x: 0, y: 8, width: bounds.width, height: 28))
+        let homeLabel = UILabel(frame: CGRect(x: 0, y: 28-self.headerY, width: bounds.width, height: 28))
         homeLabel.font = UIFont.boldSystemFontOfSize(18)
         homeLabel.textColor = CTAStyleKit.normalColor
         homeLabel.text = NSLocalizedString("RecommendLabel", comment: "")
         homeLabel.textAlignment = .Center
         self.headerView.addSubview(homeLabel)
-        let textLine = UIImageView(frame: CGRect(x: 0, y: 43, width: bounds.width, height: 1))
+        let textLine = UIImageView(frame: CGRect(x: 0, y: 63-self.headerY, width: bounds.width, height: 1))
         textLine.image = UIImage(named: "space-line")
         headerView.addSubview(textLine)
         self.view.addSubview(self.headerView)
@@ -195,7 +197,7 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
     }
     
     func resetViewPosition(){
-        self.headerView.frame.origin.y = 20
+        self.headerView.frame.origin.y = self.headerY
         self.headerView.alpha = 1
         self.collectionView.frame.origin.y = 46
     }
@@ -365,7 +367,7 @@ extension RecommandViewController: UICollectionViewDelegate, UICollectionViewDat
             
             let detailType:PublishDetailType = .HotPublish
 
-            let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self, type: detailType, viewUser: nil)
+            let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self, type: detailType)
             let navi = UINavigationController(rootViewController: vc)
             navi.transitioningDelegate = ani
             navi.modalPresentationStyle = .Custom
@@ -385,11 +387,11 @@ extension RecommandViewController: UICollectionViewDelegate, UICollectionViewDat
         let scrollContentSizeHeight = self.collectionView.contentSize.height + self.collectionView.contentInset.bottom
         var frameY:CGFloat = 0.0
         if scrollOffset <= -self.collectionView.contentInset.top {
-            frameY = 20
+            frameY = self.headerY
         }else if (scrollOffset + scrollHeight) >= scrollContentSizeHeight {
-            frameY = -size+20
+            frameY = -size+self.headerY
         } else {
-            frameY = min(20, max(-size+20, toolBarViewframe.origin.y - scrollDiff));
+            frameY = min(self.headerY, max(-size+self.headerY, toolBarViewframe.origin.y - scrollDiff));
         }
         self.changeColloetionNavBar(frameY)
         self.previousScrollViewYOffset = scrollOffset
@@ -414,9 +416,9 @@ extension RecommandViewController: UICollectionViewDelegate, UICollectionViewDat
     func stoppedScrolling(){
         let frame = self.headerView.frame
         if frame.origin.y < 0 {
-            self.animationNavBarTo((20-frame.size.height))
+            self.animationNavBarTo((self.headerY-frame.size.height))
         }else {
-            self.animationNavBarTo(20)
+            self.animationNavBarTo(self.headerY)
         }
     }
     
@@ -442,8 +444,15 @@ extension RecommandViewController: UICollectionViewDelegate, UICollectionViewDat
         collectViewFrame.size.height = self.view.frame.height - collectViewFrame.origin.y
         self.headerView.frame = toolBarViewframe
         self.collectionView.frame = collectViewFrame
-        let alpha:CGFloat = 1 - ((20-y) / toolBarViewframe.height)
+        let alpha:CGFloat = 1 - ((self.headerY-y) / toolBarViewframe.height)
         self.updateBarButtonsAlpha(alpha)
+//        var s = "stat"
+//        s += "usBar"
+//        s += "Window"
+//        
+//        let statusBarWindow = UIApplication.sharedApplication().valueForKey(s) as! UIWindow
+//        statusBarWindow.frame = CGRectMake(0, y, statusBarWindow.frame.size.width, statusBarWindow.frame.size.height)
+//        
     }
 }
 
@@ -503,7 +512,7 @@ extension RecommandViewController: PublishDetailViewDelegate{
                 currentIndex = i
             }
         }
-        self.changeColloetionNavBar(20)
+        self.changeColloetionNavBar(self.headerY)
         let boundsHeight = self.collectionView.frame.size.height
         let totalIndex = self.publishModelArray.count - 1
         let cellRect = self.getCellRect()
@@ -520,13 +529,13 @@ extension RecommandViewController: PublishDetailViewDelegate{
         }else {
             scrollOffY = totalY - boundsHeight
         }
-        if scrollOffY < -20{
-            scrollOffY = -20
+        if scrollOffY < 0-self.headerY{
+            scrollOffY = 0-self.headerY
         }
         self.isHideSelectedCell = true
         self.collectionView.reloadData()
         self.collectionView.contentOffset.y = scrollOffY
-        self.changeColloetionNavBar(20)
+        self.changeColloetionNavBar(self.headerY)
         
         let cellY = CGFloat(currentLineIndex) * (space + cellRect.height) - scrollOffY + self.collectionView.frame.origin.y
         let currentRect = CGRect(x: CGFloat(currentColumnIndex)*(space + cellRect.width) + space, y: cellY, width: cellRect.width, height: cellRect.height)

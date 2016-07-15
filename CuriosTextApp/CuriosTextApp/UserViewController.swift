@@ -935,7 +935,7 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }else if self.publishType == .Likes{
                 detailType = .Likes
             }
-            let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self, type: detailType, viewUser: self.viewUser)
+            let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self, type: detailType, viewUserID: self.viewUser!.userID)
             let navi = UINavigationController(rootViewController: vc)
             navi.transitioningDelegate = ani
             navi.modalPresentationStyle = .Custom
