@@ -116,7 +116,7 @@ class CommentViewController: UIViewController {
             self.headerFresh.beginRefreshing()
             self.previousScrollViewYOffset = self.scrollTop
         }
-        self.notFresh = false
+        self.notFresh = true
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -190,13 +190,24 @@ class CommentViewController: UIViewController {
     }
     
     private func setupData(start:Int, size:Int = 30) {
+        if self.isLoading{
+            self.freshComplete();
+            return
+        }
+        self.isLoading = true
+        self.isLoadedAll = false
         CTACommentDomain.getInstance().publichCommentList(publishID, userID: myID, start: start, size: size) {[weak self] (listInfo) in
+            self?.isLoading = false
             let scucess = listInfo.result
             if scucess {
                 if let models = listInfo.modelArray as? [CTACommentModel] {
                     let fetchedComments = models.map{CTACommentModel.toComment($0)}
-                    self?.loadUsersComplete(fetchedComments, size: size)
+                    self?.loadCommentsComplete(fetchedComments, size: size)
+                }else {
+                    self?.freshComplete()
                 }
+            }else {
+                self?.freshComplete()
             }
         }
     }
@@ -229,7 +240,7 @@ class CommentViewController: UIViewController {
     func closeHandler(){
         var toRect:CGRect? = nil
         if self.delegate != nil {
-            toRect = self.delegate!.getDismisRect()
+            toRect = self.delegate!.getCommentDismisRect(self.publishID)
         }
         let view = self.bgView.snapshotViewAfterScreenUpdates(false)
         view.frame.origin.y = self.bgView.frame.origin.y
@@ -239,7 +250,7 @@ class CommentViewController: UIViewController {
         ani.transitionView = view
         self.dismissViewControllerAnimated(true) {
             if self.delegate != nil {
-                self.delegate!.disMisComplete()
+                self.delegate!.disCommentMisComplete(self.publishID)
                 self.delegate = nil
             }
         }
@@ -302,7 +313,6 @@ extension CommentViewController {
             let userPublish = UserViewController()
             userPublish.viewUser = userModel
             navigationController.pushViewController(userPublish, animated: true)
-            self.notFresh = true
         }
     }
     
@@ -324,8 +334,7 @@ extension CommentViewController {
         }
     }
     
-    private func loadUsersComplete(loadComments: [Comment], size:Int){
-        self.isLoading = false
+    private func loadCommentsComplete(loadComments: [Comment], size:Int){
         if loadComments.count < size {
             self.isLoadedAll = true
         }
@@ -624,6 +633,6 @@ private func comment(withUser userName: String?, message: String) -> (NSAttribut
 }
 
 protocol CommentViewDelegate: AnyObject {
-    func getDismisRect() -> CGRect?
-    func disMisComplete()
+    func getCommentDismisRect(publishID:String) -> CGRect?
+    func disCommentMisComplete(publishID:String)
 }

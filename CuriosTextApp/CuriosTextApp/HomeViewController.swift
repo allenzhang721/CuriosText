@@ -55,7 +55,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
         if !self.isAddOber{
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reNewView(_:)), name: "publishEditFile", object: nil)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshView(_:)), name: "refreshSelf", object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reNewView(_:)), name: "loginComplete", object: nil)
             self.isAddOber = true
         }
         // Do any additional setup after loading the view.
@@ -64,6 +64,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.reloadView()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshView(_:)), name: "refreshSelf", object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -78,6 +79,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         super.viewDidDisappear(animated)
         self.isDisMis = true
         self.hideLoadingView()
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "refreshSelf", object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -721,6 +723,26 @@ extension HomeViewController: CTAPublishControllerProtocol{
         }
         return nil
     }
+    
+    func disCommentMisComplete(publishID: String) {
+        self.updatePublishByID(publishID)
+    }
+    
+    func updatePublishByID(publishID:String){
+        let userID = self.loginUser == nil ? "" : self.loginUser!.userID
+        CTAPublishDomain.getInstance().publishDetai(userID, publishID: publishID) { (info) in
+            if info.result {
+                if let publishModel = info.baseModel as? CTAPublishModel {
+                    let index = self.getPublishIndex(publishModel.publishID, publishArray: self.publishModelArray)
+                    if index != -1{
+                        self.publishModelArray.insert(publishModel, atIndex: index)
+                        self.publishModelArray.removeAtIndex(index+1)
+                        self.updateCollectionCell()
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension HomeViewController: PublishDetailViewDelegate{
@@ -748,7 +770,7 @@ extension HomeViewController: PublishDetailViewDelegate{
         if publishArray.count == self.publishModelArray.count {
             for i in 0..<publishArray.count{
                 let oldModel = self.publishModelArray[i]
-                let newModel = publishModelArray[i]
+                let newModel = publishArray[i]
                 if oldModel.publishID != newModel.publishID {
                     isChange = true
                     break

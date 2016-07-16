@@ -494,7 +494,7 @@ extension CTAPublishControllerProtocol{
 
 extension CTAPublishControllerProtocol{
     
-    func getDismisRect(type:UserListType) -> CGRect?{
+    func getUserListDismisRect(type:UserListType) -> CGRect?{
         if let rect = self.likersRect(){
             let bound = UIScreen.mainScreen().bounds
             return self.getViewFromRect(rect, viewRect: bound)
@@ -503,14 +503,14 @@ extension CTAPublishControllerProtocol{
         }
     }
     
-    func disMisComplete(type:UserListType){
+    func disUserListMisComplete(type:UserListType){
         
     }
 }
 
 extension CTAPublishControllerProtocol{
     
-    func getDismisRect() -> CGRect?{
+    func getCommentDismisRect(publishID:String) -> CGRect?{
         if let rect = self.commentRect(){
             let bound = UIScreen.mainScreen().bounds
             return self.getViewFromRect(rect, viewRect: bound)
@@ -519,7 +519,7 @@ extension CTAPublishControllerProtocol{
         }
     }
     
-    func disMisComplete(){
+    func disCommentMisComplete(publishID:String){
         
     }
 }

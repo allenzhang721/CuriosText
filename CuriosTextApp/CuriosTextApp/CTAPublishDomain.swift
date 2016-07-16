@@ -277,7 +277,7 @@ class CTAPublishDomain: CTABaseDomain {
         }
     }
     
-    func sharePublish(userID:String, publishID:String, sharePlatform:Int,compelecationBlock: (CTADomainInfo?) -> Void){
+    func sharePublish(userID:String, publishID:String, sharePlatform:Int,compelecationBlock: (CTADomainInfo!) -> Void){
         
         CTASharePublishRequest(userID: userID, publishID: publishID, sharePlatform:sharePlatform).startWithCompletionBlockWithSuccess { (response) -> Void in
             
@@ -297,7 +297,7 @@ class CTAPublishDomain: CTABaseDomain {
         }
     }
     
-    func reportPublish(userID:String, publishID:String, reportType:Int, reportMessage:String, compelecationBlock: (CTADomainInfo?) -> Void){
+    func reportPublish(userID:String, publishID:String, reportType:Int, reportMessage:String, compelecationBlock: (CTADomainInfo!) -> Void){
         CTAReportPublishRequest(userID: userID, publishID: publishID, reportType: reportType, reportMessage: reportMessage).startWithCompletionBlockWithSuccess { (response) -> Void in
             switch response.result{
             case .Success(let json):
@@ -315,7 +315,7 @@ class CTAPublishDomain: CTABaseDomain {
         }
     }
     
-    func publishDetai(userID:String, publishID:String, compelecationBlock:(CTADomainInfo?) -> Void){
+    func publishDetai(userID:String, publishID:String, compelecationBlock:(CTADomainInfo!) -> Void){
         CTAPublishDetailRequest(userID: userID, publishID: publishID).startWithCompletionBlockWithSuccess { (response) in
             switch response.result{
             case .Success(let json):

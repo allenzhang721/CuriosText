@@ -189,7 +189,7 @@ class UserListViewController: UIViewController, CTALoginProtocol{
     func closeHandler(){
         var toRect:CGRect? = nil
         if self.delegate != nil {
-            toRect = self.delegate!.getDismisRect(self.type)
+            toRect = self.delegate!.getUserListDismisRect(self.type)
         }
         let view = self.bgView.snapshotViewAfterScreenUpdates(false)
         view.frame.origin.y = self.bgView.frame.origin.y
@@ -199,7 +199,7 @@ class UserListViewController: UIViewController, CTALoginProtocol{
         ani.transitionView = view
         self.dismissViewControllerAnimated(true) {
             if self.delegate != nil {
-                self.delegate!.disMisComplete(self.type)
+                self.delegate!.disUserListMisComplete(self.type)
                 self.delegate = nil
             }
         }
@@ -502,31 +502,10 @@ extension UserListViewController:CTAUserListCellDelegate{
             }
         }
     }
-    
-    
-    func showLoadingViewInView(centerView:UIView){
-        let viewFrame = centerView.frame
-        let indicaW = viewFrame.width>viewFrame.height ? viewFrame.height : viewFrame.width
-        let activityIndicator = UIActivityIndicatorView()
-        activityIndicator.frame = CGRectMake(0, 0, indicaW, indicaW)
-        activityIndicator.activityIndicatorViewStyle = .Gray
-        activityIndicator.center = CGPointMake(viewFrame.width / 2, viewFrame.height / 2)
-        centerView.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
-    }
-    
-    func hideLoadingViewInView(centerView:UIView){
-        let subVies = centerView.subviews
-        let subView = subVies[subVies.count-1]
-        if subView is UIActivityIndicatorView{
-            (subView as! UIActivityIndicatorView).stopAnimating()
-            subView.removeFromSuperview()
-        }
-    }
 }
 
 protocol UserListViewDelegate: AnyObject {
-    func getDismisRect(type:UserListType) -> CGRect?
-    func disMisComplete(type:UserListType)
+    func getUserListDismisRect(type:UserListType) -> CGRect?
+    func disUserListMisComplete(type:UserListType)
 }
 

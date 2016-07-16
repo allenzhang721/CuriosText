@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="81Q-xm-oxs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="81Q-xm-oxs">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="118" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0G1-h9-ej6">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="46" width="375" height="621"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="50" minY="0.0" maxX="10" maxY="0.0"/>
                                 <prototypes>
@@ -36,7 +36,7 @@
                                                     <subviews>
                                                         <imageView tag="1000" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yuV-uL-dvc" customClass="TouchImageView" customModule="CuriosTextApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
-                                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="8tp-AE-IfU"/>
                                                                 <constraint firstAttribute="width" constant="30" id="J8l-Xq-hBk"/>
@@ -48,7 +48,7 @@
                                                                 <label opaque="NO" tag="1001" contentMode="left" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e5Q-6p-EX0" customClass="TouchLabel" customModule="CuriosTextApp" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="250" height="16"/>
                                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <textView clipsSubviews="YES" userInteractionEnabled="NO" tag="1002" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WMM-H9-FEh">
@@ -67,7 +67,7 @@
                                                         </stackView>
                                                         <imageView userInteractionEnabled="NO" tag="1004" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jZy-Rt-8M0" customClass="TouchImageView" customModule="CuriosTextApp" customModuleProvider="target">
                                                             <rect key="frame" x="300" y="0.0" width="55" height="55"/>
-                                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="55" id="G2M-2Z-soR"/>
                                                                 <constraint firstAttribute="height" constant="55" id="S5W-y5-VgU"/>
@@ -92,17 +92,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="69"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView tag="1000" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oMX-ky-0Gs" customClass="TouchImageView" customModule="CuriosTextApp" customModuleProvider="target">
-                                                    <rect key="frame" x="10" y="10" width="30" height="30"/>
-                                                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="30" id="IKG-gY-rwG"/>
-                                                        <constraint firstAttribute="height" constant="30" id="Osc-dV-sYX"/>
-                                                    </constraints>
-                                                </imageView>
                                                 <imageView userInteractionEnabled="NO" tag="1004" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bd8-0T-TjG" customClass="TouchImageView" customModule="CuriosTextApp" customModuleProvider="target">
                                                     <rect key="frame" x="312" y="8" width="55" height="55"/>
-                                                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="55" id="6oj-OV-djp"/>
                                                         <constraint firstAttribute="height" constant="55" id="bBk-lh-GkV"/>
@@ -118,7 +110,7 @@
                                                 <label opaque="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jSe-kH-fn0" customClass="TouchLabel" customModule="CuriosTextApp" customModuleProvider="target">
                                                     <rect key="frame" x="48" y="10" width="254" height="17"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1003" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016/7/14" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k7Z-Os-lG8">
@@ -127,6 +119,14 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView tag="1000" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oMX-ky-0Gs" customClass="TouchImageView" customModule="CuriosTextApp" customModuleProvider="target">
+                                                    <rect key="frame" x="10" y="10" width="30" height="30"/>
+                                                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="IKG-gY-rwG"/>
+                                                        <constraint firstAttribute="height" constant="30" id="Osc-dV-sYX"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="oMX-ky-0Gs" firstAttribute="leading" secondItem="le9-AD-Olh" secondAttribute="leadingMargin" constant="2" id="4TG-Rt-zUE"/>
@@ -157,13 +157,13 @@
                                                 <label opaque="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sTB-QP-Tag" customClass="TouchLabel" customModule="CuriosTextApp" customModuleProvider="target">
                                                     <rect key="frame" x="48" y="10" width="254" height="17"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="started following you." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WZP-1O-v3T">
                                                     <rect key="frame" x="48" y="27" width="139" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1003" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016/7/14" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Dd-eV-vLS">
@@ -174,7 +174,7 @@
                                                 </label>
                                                 <imageView tag="1000" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ckh-R9-qfv" customClass="TouchImageView" customModule="CuriosTextApp" customModuleProvider="target">
                                                     <rect key="frame" x="10" y="10" width="30" height="30"/>
-                                                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="H9f-ps-P5O"/>
                                                         <constraint firstAttribute="width" constant="30" id="NFt-8b-Itz"/>
@@ -254,15 +254,21 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="0G1-h9-ej6" secondAttribute="bottom" id="0gN-pO-Ajj"/>
                             <constraint firstAttribute="trailing" secondItem="0G1-h9-ej6" secondAttribute="trailing" id="1PA-Is-Dgd"/>
-                            <constraint firstItem="0G1-h9-ej6" firstAttribute="top" secondItem="dv7-7c-bJw" secondAttribute="bottom" id="6VH-MV-bPu"/>
-                            <constraint firstItem="0G1-h9-ej6" firstAttribute="top" secondItem="Tes-cj-Ja4" secondAttribute="top" constant="64" id="807-MB-NrN"/>
+                            <constraint firstItem="0G1-h9-ej6" firstAttribute="top" secondItem="dv7-7c-bJw" secondAttribute="bottom" constant="-18" id="6VH-MV-bPu"/>
+                            <constraint firstItem="0G1-h9-ej6" firstAttribute="top" secondItem="Tes-cj-Ja4" secondAttribute="top" constant="46" id="807-MB-NrN"/>
                             <constraint firstItem="0G1-h9-ej6" firstAttribute="bottom" secondItem="27Z-TP-j6O" secondAttribute="top" id="BV0-WT-dUs"/>
                             <constraint firstItem="0G1-h9-ej6" firstAttribute="leading" secondItem="Tes-cj-Ja4" secondAttribute="leading" id="Y0D-D7-Gt2"/>
                             <constraint firstItem="dv7-7c-bJw" firstAttribute="trailing" secondItem="0G1-h9-ej6" secondAttribute="trailing" id="bjn-LV-5v2"/>
                             <constraint firstItem="dv7-7c-bJw" firstAttribute="leading" secondItem="0G1-h9-ej6" secondAttribute="leading" id="lwu-6J-G83"/>
                             <constraint firstItem="dv7-7c-bJw" firstAttribute="top" secondItem="Tes-cj-Ja4" secondAttribute="top" id="uxd-Yg-39p"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="BV0-WT-dUs"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>

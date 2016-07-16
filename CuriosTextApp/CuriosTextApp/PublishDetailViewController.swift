@@ -690,6 +690,31 @@ extension PublishDetailViewController: CTAPublishControllerProtocol{
         let rect:CGRect = CGRect(x: point.x, y: point.y, width: frame.width, height: frame.height)
         return rect
     }
+    
+    func disCommentMisComplete(publishID: String) {
+        self.updatePublishByID(publishID)
+    }
+    
+    func updatePublishByID(publishID:String){
+        let userID = self.loginUser == nil ? "" : self.loginUser!.userID
+        CTAPublishDomain.getInstance().publishDetai(userID, publishID: publishID) { (info) in
+            if info.result {
+                if let publishModel = info.baseModel as? CTAPublishModel {
+                    let index = self.getPublishIndex(publishModel.publishID, publishArray: self.publishArray)
+                    if index != -1{
+                        self.publishArray.insert(publishModel, atIndex: index)
+                        self.publishArray.removeAtIndex(index+1)
+                        if let currentPublishID = self.currentPreviewCell.publishModel?.publishID{
+                            if publishModel.publishID == currentPublishID{
+                                self.controllerView.publishModel = publishModel
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension PublishDetailViewController: CTAPublishControllerDelegate{

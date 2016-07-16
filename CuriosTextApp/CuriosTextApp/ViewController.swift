@@ -62,6 +62,7 @@ class ViewController: UIViewController{
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.addViewInRoot(_:)), name: "addViewInRoot", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.popupViewControllerInRoot(_:)), name: "popupViewControllerInRoot", object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.setNoticeReaded(_:)), name: "setNoticeReaded", object: nil)
         
         let _ = CTASettingViewController()
         let _ = UIStoryboard(name: "Comment", bundle: nil).instantiateInitialViewController() as! CommentViewController
@@ -168,6 +169,10 @@ class ViewController: UIViewController{
         }
     }
     
+    func setNoticeReaded(noti: NSNotification){
+        self.mainTabBarController.tabBar.items![2].badgeValue = nil
+    }
+    
     func getUserNoticeHandler(){
         if CTAUserManager.isLogin{
             let userID = CTAUserManager.user!.userID
@@ -183,6 +188,7 @@ class ViewController: UIViewController{
                         }
                         self.mainTabBarController.tabBar.items![2].badgeValue = noticeText
                         self.repositionBadge()
+                        NSNotificationCenter.defaultCenter().postNotificationName("haveNewNotice", object: nil)
                     }else {
                         self.mainTabBarController.tabBar.items![2].badgeValue = nil
                     }

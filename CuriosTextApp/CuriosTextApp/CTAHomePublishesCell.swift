@@ -20,6 +20,8 @@ class CTAHomePublishesCell: UICollectionViewCell{
         self.initView()
     }
     
+    var prePublishID:String = ""
+    
     var publishModel:CTAPublishModel?{
         didSet{
             self.didSetPublishModel()
@@ -65,11 +67,12 @@ class CTAHomePublishesCell: UICollectionViewCell{
     }
     
     func didSetPublishModel(){
-        if self.publishModel != nil{
+        if self.publishModel != nil && self.prePublishID != self.publishModel!.publishID{
             self.previewView.publishModel = self.publishModel
             self.previewView.loadImg()
             self.isLoadComplete = false
             self.beginLoadView()
+            self.prePublishID = self.publishModel!.publishID
         }
     }
     
@@ -106,6 +109,7 @@ class CTAHomePublishesCell: UICollectionViewCell{
         self.previewView.releasePreviewView()
         self.previewView.releaseImg()
         self.publishModel = nil
+        self.prePublishID = ""
         self.isLoadComplete = false
         self.loadCompeteHandler = nil
         self.delegate = nil

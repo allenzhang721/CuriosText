@@ -23,7 +23,6 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
     
     var selectedPublishID:String = ""
     var isHideSelectedCell:Bool = false
-    var isAddOber:Bool = false
     var isDisMis:Bool = true
     var isLoadLocal:Bool = false
     var previousScrollViewYOffset:CGFloat = 0.0
@@ -45,11 +44,6 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
         
         self.navigationController?.navigationBarHidden = true
         self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
-        if !self.isAddOber{
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshView(_:)), name: "refreshSelf", object: nil)
-            self.isAddOber = true
-        }
-
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -64,7 +58,7 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
                 self.collectionView.reloadData()
             }
         }
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshView(_:)), name: "refreshSelf", object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -82,6 +76,7 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
         super.viewDidDisappear(animated)
         self.isDisMis = true
         self.hideLoadingView()
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "refreshSelf", object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -482,7 +477,7 @@ extension RecommandViewController: PublishDetailViewDelegate{
         if publishArray.count == self.publishModelArray.count {
             for i in 0..<publishArray.count{
                 let oldModel = self.publishModelArray[i]
-                let newModel = publishModelArray[i]
+                let newModel = publishArray[i]
                 if oldModel.publishID != newModel.publishID {
                     isChange = true
                     break

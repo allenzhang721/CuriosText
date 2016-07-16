@@ -94,10 +94,8 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         if !self.isAddOber{
             if self.isLoginUser {
                 NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadViewHandler(_:)), name: "publishEditFile", object: nil)
-                NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshView(_:)), name: "refreshSelf", object: nil)
-            }else {
-                NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reNewView(_:)), name: "loginComplete", object: nil)
             }
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reNewView(_:)), name: "loginComplete", object: nil)
             self.isAddOber = true
         }
     }
@@ -120,6 +118,9 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
                 self.loadUserDetailFromLocal()
                 self.setViewByDetailUser()
             }
+        }
+        if self.isLoginUser {
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshView(_:)), name: "refreshSelf", object: nil)
         }
     }
 
@@ -144,6 +145,9 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
+        if self.isLoginUser {
+            NSNotificationCenter.defaultCenter().removeObserver(self, name: "refreshSelf", object: nil)
+        }
         self.isDisMis = true
     }
     
@@ -987,7 +991,7 @@ extension UserViewController: UIGestureRecognizerDelegate{
 
 extension UserViewController: UserListViewDelegate{
     
-    func getDismisRect(type:UserListType) -> CGRect?{
+    func getUserListDismisRect(type:UserListType) -> CGRect?{
         let bound = UIScreen.mainScreen().bounds
         var rect:CGRect?
         if type == .Followers{
@@ -1006,7 +1010,7 @@ extension UserViewController: UserListViewDelegate{
         }
     }
     
-    func disMisComplete(type:UserListType){
+    func disUserListMisComplete(type:UserListType){
         self.isDisMis = true
         self.viewWillAppear(true)
         self.viewDidAppear(true)
@@ -1036,7 +1040,7 @@ extension UserViewController: PublishDetailViewDelegate{
         if publishArray.count == self.publishModelArray.count {
             for i in 0..<publishArray.count{
                 let oldModel = self.publishModelArray[i]
-                let newModel = publishModelArray[i]
+                let newModel = publishArray[i]
                 if oldModel.publishID != newModel.publishID {
                     isChange = true
                     break
