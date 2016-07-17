@@ -468,7 +468,6 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     
     func setViewsPosition(){
         self.userInfoView.frame.origin.y = 20
-        self.userNicknameLabel.frame.origin.y = self.topNikeNameY + self.userInfoView.frame.origin.y
         self.userInfoView.frame.size.height = self.userDescLabel.frame.origin.y + self.userDescLabel.frame.height+5
         self.userFollowView.frame.origin.y = self.userInfoView.frame.origin.y+self.userInfoView.frame.height
         self.collectionControllerView.frame.origin.y = self.userFollowView.frame.origin.y+self.userFollowView.frame.height
@@ -480,6 +479,16 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.collectionView.collectionViewLayout = self.collectionLayout
         let headerHMin = self.collectionControllerView.frame.origin.y-64
         self.collectionLayout.stickyHeight = headerHMin
+        
+        let offY = self.collectionView.contentOffset.y
+        if offY > headerHMin{
+            self.collectionLayout.isSticky = true
+            self.collectionLayout.isHold = true
+            self.changeHeaderAlpha(headerHMin, totalH: headerHMin)
+        }else {
+            self.collectionLayout.isSticky = false
+            self.changeHeaderAlpha(offY, totalH: headerHMin)
+        }
     }
     
     func setFollowLabelPosition(){

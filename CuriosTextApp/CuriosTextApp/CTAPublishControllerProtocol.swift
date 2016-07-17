@@ -163,12 +163,10 @@ extension CTAPublishControllerProtocol where Self: UIViewController{
                                                     oldPublish.rebuildCount += 1
                                                 }
                                             })
-                                            
                                             if isPopup{
-                                                slf.presentViewController(editNaviVC, animated: true, completion: { () -> Void in
-                                                })
+                                                NSNotificationCenter.defaultCenter().postNotificationName("popupViewControllerInRoot", object: [editNaviVC, slf])
                                             }else {
-                                                NSNotificationCenter.defaultCenter().postNotificationName("popupViewControllerInRoot", object: editNaviVC)
+                                                NSNotificationCenter.defaultCenter().postNotificationName("popupViewControllerInRoot", object: [editNaviVC])
                                             }
                                         }
                                     })

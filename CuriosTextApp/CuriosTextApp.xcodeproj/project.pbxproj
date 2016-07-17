@@ -361,6 +361,7 @@
 		2CFC65921C5630EA00E8ADE7 /* CTASystemLanguageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFC65911C5630EA00E8ADE7 /* CTASystemLanguageProtocol.swift */; };
 		2CFC65941C56310800E8ADE7 /* CTAPublishDetaiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFC65931C56310800E8ADE7 /* CTAPublishDetaiViewController.swift */; };
 		660065E01D2A3CA5005389D4 /* CTAUserListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660065DF1D2A3CA5005389D4 /* CTAUserListCell.swift */; };
+		661B75661D3BC42F008E6706 /* CTAEditorTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661B75651D3BC42F008E6706 /* CTAEditorTransition.swift */; };
 		661D29F11C2A8FC30073FC0E /* CTAUploadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D29F01C2A8FC30073FC0E /* CTAUploadModel.swift */; };
 		661D29F41C2A97060073FC0E /* CTAUploadProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D29F31C2A97060073FC0E /* CTAUploadProtocol.swift */; };
 		661D29F61C2AD5E60073FC0E /* CTAUploadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D29F51C2AD5E60073FC0E /* CTAUploadController.swift */; };
@@ -819,6 +820,7 @@
 		3147C32D2124C223C0A10204 /* Pods_CuriosTextAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CuriosTextAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59DF6B495CEFED1A13913332 /* Pods-CuriosTextApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CuriosTextApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-CuriosTextApp/Pods-CuriosTextApp.release.xcconfig"; sourceTree = "<group>"; };
 		660065DF1D2A3CA5005389D4 /* CTAUserListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUserListCell.swift; sourceTree = "<group>"; };
+		661B75651D3BC42F008E6706 /* CTAEditorTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAEditorTransition.swift; sourceTree = "<group>"; };
 		661D29F01C2A8FC30073FC0E /* CTAUploadModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUploadModel.swift; sourceTree = "<group>"; };
 		661D29F31C2A97060073FC0E /* CTAUploadProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUploadProtocol.swift; sourceTree = "<group>"; };
 		661D29F51C2AD5E60073FC0E /* CTAUploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAUploadController.swift; sourceTree = "<group>"; };
@@ -1627,6 +1629,7 @@
 				2C0404631C3EC35D00A5B017 /* Tools.playground */,
 				2C610A2D1C902B0300DFE315 /* Editor.storyboard */,
 				2CAEAC8E1C323F2600C9F9AC /* EditorFactory.swift */,
+				661B75651D3BC42F008E6706 /* CTAEditorTransition.swift */,
 			);
 			name = m_Editor;
 			sourceTree = "<group>";
@@ -2211,6 +2214,7 @@
 				2C5FF8181C72C85A00649FD7 /* CTATextModifyViewController.swift in Sources */,
 				2CB380B71C4D0D1F009A681A /* CTAPreviewLayout.swift in Sources */,
 				2CE063E71C857D2F001F7F4E /* CTAImageCropAttributes.swift in Sources */,
+				661B75661D3BC42F008E6706 /* CTAEditorTransition.swift in Sources */,
 				2CD11AC81CB7632D00A79305 /* AniPage.swift in Sources */,
 				2CB175B21CF831C800819825 /* CTASelectorTemplatesCell.swift in Sources */,
 				2C3CAD171C21825900D8DE4B /* CTAElement.swift in Sources */,

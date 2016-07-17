@@ -67,6 +67,8 @@ class CTAUserListCell : UICollectionViewCell, CTAImageControllerProtocol{
         self.followImg.image = UIImage(named: "liker_follow_btn")
         followView.addSubview(self.followImg)
         
+        followView.backgroundColor = UIColor.clearColor()
+        followView.userInteractionEnabled = true
         let imgTap = UITapGestureRecognizer(target: self, action: #selector(followButtonClick(_:)))
         followView.addGestureRecognizer(imgTap)
         

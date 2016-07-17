@@ -48,6 +48,7 @@ class EditViewController: UIViewController {
     
     private var useTemplate: Bool = false
     private var originPage: CTAPage?
+    private var isHideBar:Bool = false
     
     private var selectedContainer: ContainerVMProtocol? {
         guard let selectedIndexPath = selectedIndexPath else { return nil }
@@ -105,15 +106,21 @@ class EditViewController: UIViewController {
         view.addSubview(cameraVC.view)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.isHideBar = true
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+    
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         if isFirstAppear {
             isFirstAppear = false
- 
         }
     }
     
     override func prefersStatusBarHidden() -> Bool {
-        return true
+        return self.isHideBar
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

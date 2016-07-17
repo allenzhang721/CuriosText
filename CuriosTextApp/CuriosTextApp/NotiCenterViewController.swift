@@ -52,6 +52,10 @@ private class Message {
         return model.publishID
     }
     
+    var noticeTypeID:Int{
+        return model.noticeTypeID
+    }
+    
     let model: CTANoticeModel
     init(model: CTANoticeModel) {
         self.model = model
@@ -298,9 +302,15 @@ extension NotiCenterViewController: UITableViewDelegate {
         let message = messages[indexPath.item]
         
         if message is CommentMessage {
-            if let rect = tableView.cellForRowAtIndexPath(indexPath)?.frame {
-                let r = view.convertRect(rect, fromView: tableView)
-                showComment(withPublishID: message.publishID, beganRect: r)
+            if message.noticeTypeID == 0 {
+                if let cell = tableView.cellForRowAtIndexPath(indexPath) {
+                    showPublishDetail(withPublishID: message.publishID, cell: cell)
+                }
+            }else {
+                if let rect = tableView.cellForRowAtIndexPath(indexPath)?.frame {
+                    let r = view.convertRect(rect, fromView: tableView)
+                    showComment(withPublishID: message.publishID, beganRect: r)
+                }
             }
         } else if message is FollowMessage {
             showUserInfo(by: message.userModel)
@@ -383,6 +393,7 @@ extension NotiCenterViewController {
         } else if let follow = message as? FollowMessage {
             cell = tableView.dequeueReusableCellWithIdentifier("NotiFollowCell")!
             if let imgView = cell.viewWithTag(1005) as? TouchImageView {
+                imgView.userInteractionEnabled = true
                 switch follow.relationship {
                 case .CanFollowHe:
                     imgView.image = UIImage(named: "liker_follow_btn")
@@ -407,7 +418,13 @@ extension NotiCenterViewController {
                 textView.contentInset.left = -5
 //                textView.textContainerInset.bottom = 0
 //                textView.textContainerInset.top = 0
-                textView.text = comment.text
+                if comment.noticeTypeID == 0{
+                    textView.textColor = CTAStyleKit.disableColor
+                    textView.text = LocalStrings.DeleteComment.description
+                }else {
+                    textView.textColor = CTAStyleKit.normalColor
+                    textView.text = comment.text
+                }
             }
         } else {
             cell = tableView.dequeueReusableCellWithIdentifier("NotiCell")!
@@ -442,7 +459,7 @@ extension NotiCenterViewController {
         
         if let previewView = cell.viewWithTag(1004) as? TouchImageView {
             previewView.kf_setImageWithURL(message.previewIconURL)
-            
+            previewView.userInteractionEnabled = true
             previewView.tapHandler = { [weak self, cell] in
                 guard let i = self?.tableView.indexPathForCell(cell), amessage = self?.messages[i.item] else {return}
                 self?.showPublishDetail(withPublishID: amessage.publishID, cell: cell)

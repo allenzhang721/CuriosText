@@ -172,6 +172,7 @@
 // MARK: - Notification
 "NotificationTitle" = "Notification";
 "StartedFollowingYou" = "started following you.";
+"DeleteComment" = "Comment deleted";
 "Clear" = "Clear";
 
 // MARK: - Image Picker

@@ -86,11 +86,18 @@ class ViewController: UIViewController{
     }
     
     func popupViewControllerInRoot(noti: NSNotification){
-        let popView = noti.object as! UIViewController
-        self.view.userInteractionEnabled = false
-        self.presentViewController(popView, animated: true) {
-            self.view.userInteractionEnabled = true
+        
+//        slf.presentViewController(editNaviVC, animated: true, completion: { () -> Void in
+//        })
+        let viewArray = noti.object as! Array<UIViewController>
+        let popView = viewArray[0]
+        var rootVIew:UIViewController
+        if viewArray.count > 1{
+            rootVIew = viewArray[1]
+        }else {
+            rootVIew = self
         }
+        self.popupEditView(popView, rootView: rootVIew)
     }
     
     func showLoginView(noti: NSNotification){
@@ -149,12 +156,22 @@ class ViewController: UIViewController{
                         
                         editVC.document = openDocument
                         editVC.delegate = self
-                        self.presentViewController(editNaviVC, animated: true, completion: { () -> Void in
-                            self.view.userInteractionEnabled = true
-                        })
+                        self.popupEditView(editNaviVC, rootView: self)
                     }
                 })
             }
+        }
+    }
+    
+    func popupEditView(editeView:UIViewController, rootView:UIViewController){
+        rootView.view.userInteractionEnabled = false
+        let ani = CTAEditorTransition.getInstance()
+        let bgView = UIScreen.mainScreen().snapshotViewAfterScreenUpdates(false)
+        ani.rootView = bgView
+        editeView.transitioningDelegate = ani
+        editeView.modalPresentationStyle = .Custom
+        rootView.presentViewController(editeView, animated: true) {
+            rootView.view.userInteractionEnabled = true
         }
     }
     
