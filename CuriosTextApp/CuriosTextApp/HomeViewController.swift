@@ -632,18 +632,16 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
         if self.selectedCell != nil {
             preview = self.selectedCell!.previewView
             cellFrame = preview!.frame
-            let offY = self.collectionView!.contentOffset.y
-            cellFrame.origin.y = cellFrame.origin.y + self.selectedCell!.frame.origin.y - offY + self.collectionView.frame.origin.y
-            cellFrame.origin.x = cellFrame.origin.x + self.selectedCell!.frame.origin.x
-            transitionView = preview!.snapshotViewAfterScreenUpdates(true)
+            let zorePt = preview!.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+            cellFrame.origin.y = zorePt.y
+            cellFrame.origin.x = zorePt.x
+            transitionView = preview!.snapshotViewAfterScreenUpdates(false)
         }else {
             cellFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
             transitionView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
             transitionView.backgroundColor = CTAStyleKit.commonBackgroundColor
         }
-        let bgView = UIScreen.mainScreen().snapshotViewAfterScreenUpdates(false)
         let ani = CTAScaleTransition.getInstance()
-        ani.bgView = bgView
         ani.alphaView = preview
         ani.transitionView = transitionView
         ani.transitionAlpha = 1
