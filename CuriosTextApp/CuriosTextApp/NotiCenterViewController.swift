@@ -310,7 +310,6 @@ extension NotiCenterViewController: UITableViewDataSource {
                 self?.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
             }
         }
-        
     }
 }
 

@@ -1019,14 +1019,14 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         if origin == false {
             if useTemplate == false {
                 originPage = CTAPage(containers: page.containers, anis: page.animatoins)
-                originPage?.changeBackColor(page.backgroundColor)
+//                originPage?.changeBackColor(page.backgroundColor)
                 useTemplate = true
             }
             if let data = pageData, let apage = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
                 apage.removeLastImageContainer()
                 
                 page.replaceBy(template: apage)
-                canvasViewController.changeBackgroundColor(UIColor(hexString: apage.backgroundColor)!)
+//                canvasViewController.changeBackgroundColor(UIColor(hexString: apage.backgroundColor)!)
                 
                 canvasViewController.reloadSection()
                 
@@ -1038,9 +1038,9 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             if useTemplate == true {
                 useTemplate = false
                 if let apage = originPage {
-                    page.changeBackColor(apage.backgroundColor)
+//                    page.changeBackColor(apage.backgroundColor)
                     page.replaceBy(containers: apage.containers, animations: apage.animatoins)
-                    canvasViewController.changeBackgroundColor(UIColor(hexString: apage.backgroundColor)!)
+//                    canvasViewController.changeBackgroundColor(UIColor(hexString: apage.backgroundColor)!)
                     canvasViewController.reloadSection()
                     
                     dispatch_async(dispatch_get_main_queue(), { 
