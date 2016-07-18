@@ -183,13 +183,13 @@ class NotiCenterViewController: UIViewController {
     }
     
     private func showAlert() {
-        let clean = UIAlertAction(title: LocalStrings.Done.description, style: .Destructive) {[weak self] (action) in
+        let clean = UIAlertAction(title: LocalStrings.NeedClearAll.description, style: .Destructive) {[weak self] (action) in
             self?.clearAll(1)
         }
         
         let cancel = UIAlertAction(title: LocalStrings.Cancel.description, style: .Cancel, handler: nil)
         
-        let alert = UIAlertController(title: LocalStrings.Attension.description, message: LocalStrings.NeedClearAll.description, preferredStyle: .Alert)
+        let alert = UIAlertController(title: LocalStrings.Attension.description, message: nil, preferredStyle: .ActionSheet)
         alert.addAction(clean)
         alert.addAction(cancel)
         presentViewController(alert, animated: true, completion: nil)

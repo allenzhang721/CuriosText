@@ -12,7 +12,20 @@ class TouchLabel: UILabel {
 
     var tapHandler: (() -> ())?
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    private func setupGesture() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(TouchLabel.tap(_:)))
+        addGestureRecognizer(tap)
+    }
+    
+    func tap(sender: UITapGestureRecognizer) {
         tapHandler?()
     }
 }

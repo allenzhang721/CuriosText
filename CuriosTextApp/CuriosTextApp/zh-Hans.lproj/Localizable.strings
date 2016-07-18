@@ -175,7 +175,7 @@
 "StartedFollowingYou" = "关注了你";
 "DeleteComment" = "评论被删除了";
 "Clear" = "清空";
-"NeedClearAll" = "确认清空吗？";
+"ClearAll" = "清空全部通知";
 
 // MARK: - Image Picker
 "Camera" = "相机";

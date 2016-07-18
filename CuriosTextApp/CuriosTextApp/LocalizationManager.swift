@@ -66,7 +66,7 @@ enum LocalStrings: CustomStringConvertible {
         case .Clear:
             return NSLocalizedString("Clear", comment: "")
         case .NeedClearAll:
-            return NSLocalizedString("NeedClearAll", comment: "")
+            return NSLocalizedString("ClearAll", comment: "")
             
             // Image Picker
         case .Camera:

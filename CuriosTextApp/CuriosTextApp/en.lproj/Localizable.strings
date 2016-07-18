@@ -174,7 +174,7 @@
 "StartedFollowingYou" = "started following you.";
 "DeleteComment" = "Comment deleted";
 "Clear" = "Clear";
-"NeedClearAll" = "Do you want clean all?";
+"ClearAll" = "Clean All Notifications";
 
 // MARK: - Image Picker
 "Camera" = "Camera";
