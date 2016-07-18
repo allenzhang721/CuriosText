@@ -53,13 +53,15 @@ class CTASelectorFiltersCell: CTASelectorCell {
         if first {
             first = false
             collectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
+        } else {
+            collectionView.reloadData()
         }
     }
     
     //TODO: Reload Data with preview image -- Emiaostein, 6/30/16, 17:38
     func update(image: UIImage?) {
         self.image = image
-        filterManager?.filters.forEach{$0.cleanImage()}
+        filterManager?.cleanImage()
         collectionView.reloadData()
     }
     

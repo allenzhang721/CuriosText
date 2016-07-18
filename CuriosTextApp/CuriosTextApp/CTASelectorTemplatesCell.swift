@@ -57,12 +57,14 @@ class CTASelectorTemplatesCell: CTASelectorCell {
         }
     }
     
-//    override func willBeDisplayed() {
-//        
+    override func willBeDisplayed() {
+        templateList?.updateFirst()
+//
 //        templateList?.defaultSelected()
-//    }
+    }
 //    override func beganLoad() {
-//        
+        
+//        templateList?.updateCurrentOriginImage(<#T##image: UIImage?##UIImage?#>)
 //        templateList?.defaultSelected()
 //    }
     

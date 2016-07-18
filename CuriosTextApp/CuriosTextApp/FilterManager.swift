@@ -18,6 +18,12 @@ class FilterManager {
         filters = defaultFiltersName.map{FilterItem(name: $0, data: nil)}
     }
     
+    func cleanImage() {
+        for i in filters {
+            i.cleanImage()
+        }
+    }
+    
     deinit {
         print("\(#file) deinit")
     }

@@ -96,7 +96,7 @@ final class CTAPage:NSObject, NSCoding {
             containers.removeRange(1..<containers.count)
         }
         
-        backgroundColor = temp.backgroundColor
+//        backgroundColor = temp.backgroundColor
         containers.appendContentsOf(temp.containers)
         animatoins = temp.animatoins
     }

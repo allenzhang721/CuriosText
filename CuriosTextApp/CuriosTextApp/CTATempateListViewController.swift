@@ -59,6 +59,12 @@ class CTATempateListViewController: UIViewController {
         }
     }
     
+    func updateFirst() {
+        if collectionView.dataSource?.collectionView(collectionView, numberOfItemsInSection: 0) > 0 {
+            collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
+        }
+    }
+    
     private func setup() {
         
         dispatch_async(queue) {[weak self] in

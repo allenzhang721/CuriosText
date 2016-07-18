@@ -100,6 +100,8 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
             let index = NSIndexPath(forItem: 0, inSection: 0)
             if let cell = sf.collectionview.cellForItemAtIndexPath(index) as? CTASelectorFiltersCell {
                 cell.update(preImage)
+            } else {
+                sf.filterManager?.cleanImage()
             }
         }
     }
@@ -213,7 +215,7 @@ extension CTASelectorsViewController {
         
         if let cell = cell as? CTASelectorFiltersCell {
             cell.filterManager = filterManager
-            cell.image = snapImage
+            cell.image = preImage
         }
 //
         cell.beganLoad()

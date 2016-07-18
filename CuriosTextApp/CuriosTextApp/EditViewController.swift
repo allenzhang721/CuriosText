@@ -83,20 +83,24 @@ class EditViewController: UIViewController {
         
         cameraVC.didSelectedImageHandler = {[weak self, weak cameraVC] (image, backgrounColor) in
             if let strongSelf = self, let image = image {
-                    let image = strongSelf.insertImage(image, size: image.size)
+                let hex = backgrounColor.toHex().0
+                strongSelf.page.changeBackColor(hex)
+                    strongSelf.insertImage(image, size: image.size)
+                self?.selectorViewController.updatePreImage(image)
+                self?.filterManager.filters[0..<5].forEach{$0.createData(fromColorDirAt: NSBundle.mainBundle().bundleURL, filtering: image, complation: nil)}
                 
-                draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.imageBy ,local: true) { [weak self] (previewR) in
+                draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.resourceImageBy ,local: true) { [weak self] (previewR) in
                     
                     switch previewR {
                     case .Success(let img):
                         dispatch_async(dispatch_get_main_queue(), {
                             self?.selectorViewController.updateSnapshotImage(img)
-                            dispatch_async(dispatch_get_main_queue(), { 
-                                self?.filterManager.filters[0..<5].forEach{$0.createData(fromColorDirAt: NSBundle.mainBundle().bundleURL, filtering: img, complation: nil)}
-                            })
                         })
                     default:
-                        self?.selectorViewController.updateSnapshotImage(image)
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self?.selectorViewController.updateSnapshotImage(image)
+                            self?.selectorViewController.updatePreImage(image)
+                        })
                     }
                 }
                     cameraVC?.removeFromParentViewController()
@@ -534,15 +538,9 @@ extension EditViewController {
                         let data = compressJPGImage(image!)
                         strongSelf.document.storeResource(data, withName: name)
                         let image = UIImage(data: data)!
+                        self?.selectorViewController.updatePreImage(image)
+                        
                         if let f = strongSelf.filter {
-                            
-//                            f.createImage(from: UIImage(data: data)!, complation: { (filteredImage) in
-//                                strongSelf.document.storeCacheResource(UIImageJPEGRepresentation(filteredImage, 1)!, withName: name)
-//                                dispatch_async(dispatch_get_main_queue(), { 
-//                                    
-//                                    strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
-//                                })
-//                            })
                             if let data = f.data {
                                 f.createImage(from: image, complation: {[weak self, weak f] (img) in
                                     
@@ -576,7 +574,6 @@ extension EditViewController {
                         case .Success(let img):
                             dispatch_async(dispatch_get_main_queue(), {
                                 self?.selectorViewController.updateSnapshotImage(img)
-                                self?.selectorViewController.updatePreImage(img)
                             })
                         default:
                             dispatch_async(dispatch_get_main_queue(), { 
@@ -1019,7 +1016,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         if origin == false {
             if useTemplate == false {
                 originPage = CTAPage(containers: page.containers, anis: page.animatoins)
-//                originPage?.changeBackColor(page.backgroundColor)
+                originPage?.changeBackColor(page.backgroundColor)
                 useTemplate = true
             }
             if let data = pageData, let apage = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
@@ -1038,9 +1035,9 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             if useTemplate == true {
                 useTemplate = false
                 if let apage = originPage {
-//                    page.changeBackColor(apage.backgroundColor)
+                    page.changeBackColor(apage.backgroundColor)
                     page.replaceBy(containers: apage.containers, animations: apage.animatoins)
-//                    canvasViewController.changeBackgroundColor(UIColor(hexString: apage.backgroundColor)!)
+                    canvasViewController.changeBackgroundColor(UIColor(hexString: apage.backgroundColor)!)
                     canvasViewController.reloadSection()
                     
                     dispatch_async(dispatch_get_main_queue(), { 
