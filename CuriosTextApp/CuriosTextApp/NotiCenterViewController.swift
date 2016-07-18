@@ -303,8 +303,14 @@ extension NotiCenterViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        messages.removeAtIndex(indexPath.item)
-        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+        let message = messages[indexPath.item]
+        CTANoticeDomain.getInstance().deleteNotice(message.ID) {[weak self] (info) in
+            if info.result {
+                self?.messages.removeAtIndex(indexPath.item)
+                self?.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+            }
+        }
+        
     }
 }
 
