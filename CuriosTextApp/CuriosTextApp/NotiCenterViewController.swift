@@ -144,7 +144,6 @@ class NotiCenterViewController: UIViewController {
         super.viewDidDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "refreshSelf", object: nil)
     }
-    
 
     private func setup() {
         setupView()
@@ -181,6 +180,19 @@ class NotiCenterViewController: UIViewController {
         self.footerFresh.setTitle("", forState: .NoMoreData)
         self.footerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Refreshing)
         self.tableView.mj_footer = footerFresh;
+    }
+    
+    private func showAlert() {
+        let clean = UIAlertAction(title: LocalStrings.Done.description, style: .Destructive) {[weak self] (action) in
+            self?.clearAll(1)
+        }
+        
+        let cancel = UIAlertAction(title: LocalStrings.Cancel.description, style: .Cancel, handler: nil)
+        
+        let alert = UIAlertController(title: LocalStrings.Attension.description, message: LocalStrings.NeedClearAll.description, preferredStyle: .Alert)
+        alert.addAction(clean)
+        alert.addAction(cancel)
+        presentViewController(alert, animated: true, completion: nil)
     }
     
     private func showUserInfo(by userModel: CTAViewUserModel) {
@@ -275,12 +287,7 @@ class NotiCenterViewController: UIViewController {
     }
     
     @IBAction func clearAll(sender: AnyObject) {
-        CTANoticeDomain.getInstance().clearNotices(myID) {[weak self] (info) in
-            dispatch_async(dispatch_get_main_queue(), { 
-                self?.messages = []
-                self?.tableView.reloadData()
-            })
-        }
+        showAlert()
     }
 }
 
@@ -293,6 +300,11 @@ extension NotiCenterViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         return cell(for: tableView, at: indexPath)
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        messages.removeAtIndex(indexPath.item)
+        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
     }
 }
 
