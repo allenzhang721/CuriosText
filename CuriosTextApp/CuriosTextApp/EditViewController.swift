@@ -91,7 +91,9 @@ class EditViewController: UIViewController {
                     case .Success(let img):
                         dispatch_async(dispatch_get_main_queue(), {
                             self?.selectorViewController.updateSnapshotImage(img)
-                            
+                            dispatch_async(dispatch_get_main_queue(), { 
+                                self?.filterManager.filters[0..<5].forEach{$0.createData(fromColorDirAt: NSBundle.mainBundle().bundleURL, filtering: img, complation: nil)}
+                            })
                         })
                     default:
                         self?.selectorViewController.updateSnapshotImage(image)

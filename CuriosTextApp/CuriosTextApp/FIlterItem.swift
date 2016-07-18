@@ -43,7 +43,7 @@ class FilterItem: NSObject {
         image = nil
     }
     
-    func createImage(from img: UIImage, complation:(UIImage) -> ()) {
+    func createImage(from img: UIImage, complation:((UIImage) -> ())?) {
         let ciimage = CIImage(image: img)
         dispatch_async(queue) { [weak self] in
             guard let sf = self, let data = sf.data else {return}
@@ -54,12 +54,12 @@ class FilterItem: NSObject {
             dispatch_async(dispatch_get_main_queue(), {[weak self] in
                 guard let sf = self else {return}
                 sf.image = UIImage(CGImage: img2)
-                complation(sf.image!)
+                complation?(sf.image!)
             })
         }
     }
     
-    func createData(fromColorDirAt url: NSURL, filtering image: UIImage, complation:(UIImage) -> ()) {
+    func createData(fromColorDirAt url: NSURL, filtering image: UIImage, complation:((UIImage) -> ())?) {
         
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
             guard let sf = self else {return}
