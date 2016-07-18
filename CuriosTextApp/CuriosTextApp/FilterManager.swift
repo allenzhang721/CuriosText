@@ -8,7 +8,7 @@
 
 import Foundation
 // "-Amaro", "-Mayfair", "-Rise", "-Hudson", "-X-Pro II", "-Sierra", "-Willow" "-Lo-Fi", "-Earlybird"  "-Hefe", "Brannan"
-let defaultFiltersName = ["Origin","Clarendon", "Gingham", "Moon", "Lark", "Reyes", "Juno", "Slumber", "Crema", "Ludwig", "Aden", "Perpetua", "Valencia", "Inkwell", "Nashville"]
+let defaultFiltersName = ["Origin","Clarendon","Lark","Juno","Ludwig","Valencia","Crema","Moon","Gingham","Aden","Slumber","Reyes","Perpetua","Inkwell","Nashville"]
 
 class FilterManager {
     
