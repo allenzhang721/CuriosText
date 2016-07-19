@@ -33,6 +33,10 @@ class CTAPhotoPreviewView: UIView {
     private let scrollView = UIScrollView()
     private var tap: UITapGestureRecognizer!
     
+    deinit {
+        print("\(#file) deinit")
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()

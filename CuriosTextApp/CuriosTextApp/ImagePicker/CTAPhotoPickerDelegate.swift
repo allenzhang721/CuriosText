@@ -17,6 +17,7 @@ protocol CTAPhotoPickerDelegate: class {
 protocol CTAPhotoPickerProtocol: class {
     
     func pickerDidSelectedImage(image: UIImage, backgroundColor: UIColor)
+    
 }
 
 protocol CTAPhotoPickerTemplateable: class {

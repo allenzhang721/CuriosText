@@ -207,8 +207,10 @@ class EditViewController: UIViewController {
 extension EditViewController {
     
     @IBAction func cancelAction(sender: AnyObject) {
-        let alert = alert_EditorDismiss{[weak self] in self?.dismissViewControllerAnimated(true, completion: nil)}
-        presentViewController(alert, animated: true, completion: nil)
+//        let alert = alert_EditorDismiss{[weak self] in self?.dismissViewControllerAnimated(true, completion: nil)}
+//        presentViewController(alert, animated: true, completion: nil)
+        
+        showPhotos()
     }
     
     @IBAction func publish(sender: AnyObject) {
@@ -638,9 +640,6 @@ extension EditViewController {
     }
     
     func beganGeneratePublishIconAndPublishWith(aPage: CTAPage) {
-        
-        
-        
         draw(aPage, atBegan: true, baseURL: document.imagePath, imageAccess: document.imageBy ,local: true) { [weak self] (r) in
             guard let strongSelf = self else { return }
             
@@ -708,6 +707,116 @@ extension EditViewController {
             default:
                 debug_print("Fail", context: defaultContext)
             }
+        }
+    }
+    
+    func showPhotos() {
+        
+        let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
+        
+        let indexPath = NSIndexPath(forItem: 0, inSection: 0)
+        let container = canvasViewController.containerAt(indexPath)
+        
+        let cleanPage = page.cleanEmptyContainers()
+        let image = drawPageWithNoImage(cleanPage)
+        cameraVC.templateImage = image
+        cameraVC.backgroundColor = UIColor(hexString: page.backgroundColor)!
+        cameraVC.backgroundHex = page.backgroundColor
+        
+        cameraVC.didSelectedImageHandler = {[weak self, weak container, weak cameraVC] (image, backgroundColor) in
+            if let strongSelf = self {
+                dispatch_async(dispatch_get_main_queue(), {[weak cameraVC] in
+                    let hex = backgroundColor.toHex().0
+                    strongSelf.page.changeBackColor(hex)
+                    strongSelf.canvasViewController.changeBackgroundColor(backgroundColor)
+                    
+                    let canvasSize = strongSelf.canvasViewController.view.bounds.size
+                    (container as! ImageContainerVMProtocol).updateWithImageSize(image!.size, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
+                    
+                    let name = (container as! ImageContainerVMProtocol).imageElement!.resourceName
+                    let data = compressJPGImage(image!)
+                    strongSelf.document.storeResource(data, withName: name)
+                    let image = UIImage(data: data)!
+                    self?.selectorViewController.updatePreImage(image)
+                    
+                    if let f = strongSelf.filter {
+                        if let data = f.data {
+                            f.createImage(from: image, complation: {[weak self, weak f] (img) in
+                                
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    f?.data = nil
+                                    self?.document.storeCacheResource(UIImageJPEGRepresentation(img, 1)!, withName: name)
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        self?.canvasViewController.updateAt(indexPath, updateContents: true)
+                                    })
+                                })
+                                })
+                        } else {
+                            let bundle = NSBundle.mainBundle().bundleURL
+                            f.createData(fromColorDirAt: bundle, filtering: image, complation: { [weak self, weak f] (filteredIamge) in
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    f?.data = nil
+                                    self?.document.storeCacheResource(UIImageJPEGRepresentation(filteredIamge, 1)!, withName: name)
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        self?.canvasViewController.updateAt(indexPath, updateContents: true)
+                                    })
+                                })
+                                })
+                        }
+                    } else {
+                        strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
+                    }
+                    
+                    draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.resourceImageBy ,local: true) { [weak self, cameraVC] (previewR) in
+                        
+                        switch previewR {
+                        case .Success(let img):
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self?.selectorViewController.updateSnapshotImage(img)
+                                UIView.animateWithDuration(0.3, animations: {[weak cameraVC] in
+                                    cameraVC?.view.alpha = 0
+                                    }, completion: {[weak cameraVC] (success) in
+                                        cameraVC?.view.removeFromSuperview()
+                                        cameraVC?.removeFromParentViewController()
+                                        
+                                    })
+                            })
+                        default:
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self?.selectorViewController.updateSnapshotImage(image)
+                                self?.selectorViewController.updatePreImage(image)
+                                
+                                
+                                UIView.animateWithDuration(0.3, animations: {[weak cameraVC] in
+                                    cameraVC?.view.alpha = 0
+                                    }, completion: {[weak cameraVC] (success) in
+                                        cameraVC?.view.removeFromSuperview()
+                                        cameraVC?.removeFromParentViewController()
+                                        
+                                    })
+                            })
+                        }
+                    }
+                    
+                })
+            
+//                UIView.animateWithDuration(0.3, animations: {[weak cameraVC] in
+//                    cameraVC?.view.alpha = 0
+//                    }, completion: {[weak cameraVC] (success) in
+//                        cameraVC?.view.removeFromSuperview()
+//                        cameraVC?.removeFromParentViewController()
+//                    })
+//                self?.dismissViewControllerAnimated(false, completion: nil)
+            }
+        }
+        
+//        presentViewController(cameraVC, animated: true, completion: nil)
+        
+        addChildViewController(cameraVC)
+        view.addSubview(cameraVC.view)
+        cameraVC.view.alpha = 0
+        UIView.animateWithDuration(0.3) {[weak cameraVC] in
+            cameraVC?.view.alpha = 1
         }
     }
 }

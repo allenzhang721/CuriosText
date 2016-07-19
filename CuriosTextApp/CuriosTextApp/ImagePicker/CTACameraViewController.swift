@@ -72,6 +72,10 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
         self.tabBarItem = UITabBarItem(title: LocalStrings.Camera.description, image: ImagePickerResource.imageOfCamera, selectedImage: selectedImage)
     }
     
+    deinit {
+        print("\(#file) deinit")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         accessView.hidden = true

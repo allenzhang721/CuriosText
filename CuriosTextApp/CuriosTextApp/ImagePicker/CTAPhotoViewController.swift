@@ -80,6 +80,11 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhoto
         self.tabBarItem = UITabBarItem(title: LocalStrings.Photo.description, image: ImagePickerResource.imageOfPhotoLibrary, selectedImage: selectedImage)
     }
     
+    deinit {
+        print("\(#file) deinit")
+        resetCacheSets()
+    }
+    
     //    private var thumbnailSize
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,10 +118,6 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhoto
         updateCacheSets()
         
 //        previewView.templateImage = templateImage
-    }
-    
-    deinit {
-        resetCacheSets()
     }
     
     func changePhotoAlbum(fetchResult: PHFetchResult) {
@@ -327,7 +328,6 @@ extension CTAPhotoViewController {
         } else {
             dismissViewControllerAnimated(true, completion: nil)
         }
-        
     }
     
     @IBAction func confirm(sender: AnyObject) {
@@ -356,7 +356,7 @@ extension CTAPhotoViewController {
                         
                         dispatch_async(dispatch_get_main_queue(), {
                             strongSelf.pickerDelegate?.pickerDidSelectedImage(aimage, backgroundColor: strongSelf.backgroundColor)
-                            strongSelf.dismiss(nil)
+//                            strongSelf.dismiss(nil)
                         })
                     }
                     //                    strongSelf.dismiss(nil)
