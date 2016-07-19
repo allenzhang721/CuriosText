@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 enum PublishDetailType: String {
     case Posts = "Posts"
@@ -39,8 +40,6 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
     
     var beganLocation: CGPoint! = CGPoint(x: 0, y: 0)
     var panDirection:CTAPanDirection = .None
-    var nextCenter:CGPoint?
-    var preCenter:CGPoint?
     var currentCenter:CGPoint?
     var cellRect:CGRect?
     var currentRect:CGRect?
@@ -72,12 +71,12 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.loadPublishCell(false)
-        self.isHideBar = true
-        self.setNeedsStatusBarAppearanceUpdate()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        self.isHideBar = true
+        self.setNeedsStatusBarAppearanceUpdate()
     }
     
     override func didReceiveMemoryWarning() {
@@ -150,6 +149,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
                 self.currentPreviewCell.publishModel = selectedPublish
                 self.currentPreviewCell.loadImg()
             }
+            self.currentPreviewCell.alpha = 1
             if seletedIndex < self.publishArray.count - 1{
                 let nextPublish = self.publishArray[seletedIndex + 1]
                 let nextSize = self.getViewRect(nextPublish)
@@ -164,6 +164,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
                     self.nextPreviewCell!.publishModel = nextPublish
                     self.nextPreviewCell!.loadImg()
                 }
+                self.nextPreviewCell!.alpha = 1
             }else {
                 if self.nextPreviewCell != nil {
                     self.nextPreviewCell?.removeFromSuperview()
@@ -186,6 +187,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
                     self.previousPreviewCell?.publishModel = previousPublish
                     self.previousPreviewCell?.loadImg()
                 }
+                self.previousPreviewCell!.alpha = 1
             }else {
                 if self.previousPreviewCell != nil {
                     self.previousPreviewCell?.removeFromSuperview()
@@ -302,12 +304,6 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
                 if abs(newLocation.x - self.beganLocation!.x)*5 > abs(newLocation.y - self.beganLocation!.y){
                     self.currentRect = self.currentPreviewCell.frame
                     self.currentCenter = self.currentPreviewCell.center
-                    if self.previousPreviewCell != nil{
-                        self.preCenter = self.previousPreviewCell!.center
-                    }
-                    if self.nextPreviewCell != nil{
-                        self.nextCenter = self.nextPreviewCell!.center
-                    }
                     self.viewHorPanHandler(newLocation)
                     self.panDirection = .Hor
                 }else {
@@ -445,8 +441,6 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
     
     func horPanComplete(dir:CTAPanHorDirection, isChange:Bool){
         self.lastLocation = nil
-        self.preCenter = nil
-        self.nextCenter = nil
         self.currentCenter = nil
         if isChange {
             self.currentPreviewCell.stopAnimation()
@@ -715,6 +709,42 @@ extension PublishDetailViewController: CTAPublishControllerProtocol{
             }
         }
     }
+    
+    func deleteHandler(){
+        if let publish = self.currentPreviewCell.publishModel{
+            self.showSelectedAlert(NSLocalizedString("AlertTitleDeleteFile", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.DeleteFile.description, cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result) -> Void in
+                if result{
+                    SVProgressHUD.setDefaultMaskType(.Clear)
+                    SVProgressHUD.showWithStatus(NSLocalizedString("DeleteProgressLabel", comment: ""))
+                    let userID = self.loginUser == nil ? "" : self.loginUser!.userID
+                    CTAPublishDomain.getInstance().deletePublishFile(publish.publishID, userID: userID, compelecationBlock: { (info) -> Void in
+                        SVProgressHUD.dismiss()
+                        if info.result{
+                            let selectedIndex = self.getPublishIndexByID(self.selectedPublishID)
+                            self.currentPreviewCell.alpha = 1
+                            UIView.animateWithDuration(0.2, animations: { () -> Void in
+                                self.currentPreviewCell.alpha = 0
+                                }, completion: { (_) -> Void in
+                                    if self.publishArray.count > 1{
+                                        self.currentRect = self.currentPreviewCell.frame
+                                        self.currentCenter = self.currentPreviewCell.center
+                                        if selectedIndex < self.publishArray.count-1 {
+                                            self.horPanAnimation(-1)
+                                        }else {
+                                            self.horPanAnimation(1)
+                                        }
+                                        self.publishArray.removeAtIndex(selectedIndex)
+                                    }else {
+                                        self.publishArray.removeAtIndex(selectedIndex)
+                                        self.closeHandler()
+                                    }
+                            })
+                        }
+                    })
+                }
+            })
+        }
+    }
 }
 
 extension PublishDetailViewController: CTAPublishControllerDelegate{
@@ -767,7 +797,15 @@ extension PublishDetailViewController: CTAPublishControllerDelegate{
     }
     
     func controlMoreHandler(){
-        self.moreSelectionHandler(false, isPopup: true)
+        if self.type == .Posts{
+            if self.loginUser != nil && self.viewUserID == self.loginUser?.userID {
+                self.moreSelectionHandler(true, isPopup: true)
+            }else {
+                self.moreSelectionHandler(false, isPopup: true)
+            }
+        }else {
+            self.moreSelectionHandler(false, isPopup: true)
+        }
     }
     
     func controlCloseHandler(){

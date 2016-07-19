@@ -224,18 +224,16 @@ class NotiCenterViewController: UIViewController {
         if let previewView = cell.viewWithTag(1004) as? TouchImageView {
             preview = previewView
             cellFrame = previewView.frame
-            let offY = self.tableView!.contentOffset.y
-            cellFrame.origin.y = cellFrame.origin.y + cell.frame.origin.y - offY + self.tableView.frame.origin.y
-            cellFrame.origin.x = cellFrame.origin.x + cell.frame.origin.x
-            transitionView = previewView.snapshotViewAfterScreenUpdates(true)
+            let zorePt = previewView.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+            cellFrame.origin.y = zorePt.y
+            cellFrame.origin.x = zorePt.x
+            transitionView = previewView.snapshotViewAfterScreenUpdates(false)
         }else {
             cellFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
             transitionView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
             transitionView.backgroundColor = CTAStyleKit.commonBackgroundColor
         }
-        let bgView = UIScreen.mainScreen().snapshotViewAfterScreenUpdates(false)
         let ani = CTAScaleTransition.getInstance()
-        ani.bgView = bgView
         ani.alphaView = preview
         ani.transitionView = transitionView
         ani.transitionAlpha = 1

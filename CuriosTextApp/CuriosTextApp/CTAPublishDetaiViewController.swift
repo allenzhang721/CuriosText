@@ -1100,7 +1100,7 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
     }
     
     func deleteHandler(){
-        if let publish = self.currentFullCell.publishModel{LocalStrings.Delete.description
+        if let publish = self.currentFullCell.publishModel{
             self.showSelectedAlert(NSLocalizedString("AlertTitleDeleteFile", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.DeleteFile.description, cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result) -> Void in
                 if result{
                     SVProgressHUD.setDefaultMaskType(.Clear)

@@ -924,18 +924,17 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
             var transitionView:UIView!
             if publishesCell != nil {
                 cellFrame = publishesCell!.frame
-                let offY = self.collectionView!.contentOffset.y
-                cellFrame.origin.y = cellFrame.origin.y - offY + self.collectionView.frame.origin.y
-                transitionView = publishesCell!.snapshotViewAfterScreenUpdates(true)
+                let zorePt = publishesCell!.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+                cellFrame.origin.y = zorePt.y
+                cellFrame.origin.x = zorePt.x
+                transitionView = publishesCell!.snapshotViewAfterScreenUpdates(false)
             }else {
                 cellFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
                 transitionView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
                 transitionView.backgroundColor = CTAStyleKit.commonBackgroundColor
             }
-            let bgView = UIScreen.mainScreen().snapshotViewAfterScreenUpdates(false)
             
             let ani = CTAScaleTransition.getInstance()
-            ani.bgView = bgView
             ani.alphaView = publishesCell
             ani.transitionView = transitionView
             ani.transitionAlpha = 1
