@@ -73,11 +73,17 @@ extension CTAImgElement: CTAElement {
     
     func resultWithImgSize(originSize: CGSize, scale: CGFloat, containerSize: CGSize, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize) {
         
-        
-        let s = max(
-            containerSize.width / originSize.width,
-            containerSize.height / originSize.height)
-        
+        let s: CGFloat
+        if containerSize.width >= constraintSize.width && containerSize.height >= constraintSize.height {
+            s = min(
+                containerSize.width / originSize.width,
+                containerSize.height / originSize.height)
+        } else {
+             s = max(
+                containerSize.width / originSize.width,
+                containerSize.height / originSize.height)
+        }
+
         let nextWidth = originSize.width * s
         let nextHeight = originSize.height * s
         
