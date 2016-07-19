@@ -711,7 +711,6 @@ extension EditViewController {
     }
     
     func showPhotos() {
-        
         let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
         
         let indexPath = NSIndexPath(forItem: 0, inSection: 0)
@@ -778,7 +777,6 @@ extension EditViewController {
                                     }, completion: {[weak cameraVC] (success) in
                                         cameraVC?.view.removeFromSuperview()
                                         cameraVC?.removeFromParentViewController()
-                                        
                                     })
                             })
                         default:
@@ -792,25 +790,14 @@ extension EditViewController {
                                     }, completion: {[weak cameraVC] (success) in
                                         cameraVC?.view.removeFromSuperview()
                                         cameraVC?.removeFromParentViewController()
-                                        
                                     })
                             })
                         }
                     }
                     
                 })
-            
-//                UIView.animateWithDuration(0.3, animations: {[weak cameraVC] in
-//                    cameraVC?.view.alpha = 0
-//                    }, completion: {[weak cameraVC] (success) in
-//                        cameraVC?.view.removeFromSuperview()
-//                        cameraVC?.removeFromParentViewController()
-//                    })
-//                self?.dismissViewControllerAnimated(false, completion: nil)
             }
         }
-        
-//        presentViewController(cameraVC, animated: true, completion: nil)
         
         addChildViewController(cameraVC)
         view.addSubview(cameraVC.view)
@@ -1120,8 +1107,6 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     
     // MARK: - template Changed
     func templateDidChanged(pageData: NSData?, origin: Bool) {
-        
-        
         if origin == false {
             if useTemplate == false {
                 originPage = CTAPage(containers: page.containers, anis: page.animatoins)
@@ -1130,14 +1115,15 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             }
             if let data = pageData, let apage = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
                 apage.removeLastImageContainer()
-                
                 page.replaceBy(template: apage)
 //                canvasViewController.changeBackgroundColor(UIColor(hexString: apage.backgroundColor)!)
-                
-                canvasViewController.reloadSection()
-                
-            dispatch_async(dispatch_get_main_queue(), {
-                self.canvasViewController.setSelectedItemAt(indexPath: NSIndexPath(forItem: 0, inSection: 0))
+
+            dispatch_async(dispatch_get_main_queue(), {[weak self] in
+                self?.beganPreviewForAll(true)
+                dispatch_async(dispatch_get_main_queue(), {
+                    self?.canvasViewController.reloadSection()
+                    self?.canvasViewController.setSelectedItemAt(indexPath: NSIndexPath(forItem: 0, inSection: 0))
+                })
             })
             }
         } else {
@@ -1156,10 +1142,6 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             }
             print("Origin")
         }
-        
-        
-        
-//        selectBottomContainer()
     }
     
     // MARK: - Filter Changed

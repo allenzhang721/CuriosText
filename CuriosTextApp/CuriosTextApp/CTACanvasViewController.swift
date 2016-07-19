@@ -118,7 +118,7 @@ extension CTACanvasViewController {
     }
     
     func setupRegisterNotifiction() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "menuWillHidden:", name:
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CTACanvasViewController.menuWillHidden(_:)), name:
             UIMenuControllerWillHideMenuNotification, object: nil)
     }
     
@@ -131,7 +131,6 @@ extension CTACanvasViewController {
     }
     
     func setSelectedItemAt(indexPath i: NSIndexPath) {
-        debug_print("")
         collectionView.selectItemAtIndexPath(i, animated: false, scrollPosition: .None)
     }
 }
