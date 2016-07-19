@@ -60,8 +60,12 @@ class CTATempateListViewController: UIViewController {
     }
     
     func updateFirst() {
+        let selected = collectionView.indexPathsForSelectedItems()?.first?.item
         if collectionView.dataSource?.collectionView(collectionView, numberOfItemsInSection: 0) > 0 {
             collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
+            if selected == 0 {
+                collectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
+            }
         }
     }
     
