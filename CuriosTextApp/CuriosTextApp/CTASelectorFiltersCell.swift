@@ -54,7 +54,7 @@ class CTASelectorFiltersCell: CTASelectorCell {
             first = false
             collectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
         } else {
-            collectionView.reloadData()
+            reloadData()
         }
     }
     
@@ -62,7 +62,15 @@ class CTASelectorFiltersCell: CTASelectorCell {
     func update(image: UIImage?) {
         self.image = image
         filterManager?.cleanImage()
+        reloadData()
+    }
+    
+    private func reloadData() {
+        let selected = collectionView.indexPathsForSelectedItems()?.first?.item
         collectionView.reloadData()
+        if let s = selected {
+            collectionView.selectItemAtIndexPath(NSIndexPath(forItem: s, inSection: 0), animated: false, scrollPosition: .None)
+        }
     }
     
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
