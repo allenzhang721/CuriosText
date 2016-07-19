@@ -518,81 +518,82 @@ extension EditViewController {
             presentViewController(textmodifyVC, animated: true, completion: {})
             
         case .Image:
-            let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
-            
-            let cleanPage = page.cleanEmptyContainers()
-            let image = drawPageWithNoImage(cleanPage)
-            cameraVC.templateImage = image
-            cameraVC.backgroundColor = UIColor(hexString: page.backgroundColor)!
-            cameraVC.backgroundHex = page.backgroundColor
-            
-            cameraVC.didSelectedImageHandler = {[weak self] (image, backgroundColor) in
-                if let strongSelf = self {
-                    dispatch_async(dispatch_get_main_queue(), {
-                    let hex = backgroundColor.toHex().0
-                    strongSelf.page.changeBackColor(hex)
-                    strongSelf.canvasViewController.changeBackgroundColor(backgroundColor)
-                    
-                        let canvasSize = strongSelf.canvasViewController.view.bounds.size
-                        (container as! ImageContainerVMProtocol).updateWithImageSize(image!.size, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
-                    
-                    let name = (container as! ImageContainerVMProtocol).imageElement!.resourceName
-                        let data = compressJPGImage(image!)
-                        strongSelf.document.storeResource(data, withName: name)
-                        let image = UIImage(data: data)!
-                        self?.selectorViewController.updatePreImage(image)
-                        
-                        if let f = strongSelf.filter {
-                            if let data = f.data {
-                                f.createImage(from: image, complation: {[weak self, weak f] (img) in
-                                    
-                                    dispatch_async(dispatch_get_main_queue(), {
-                                        f?.data = nil
-                                        self?.document.storeCacheResource(UIImageJPEGRepresentation(img, 1)!, withName: name)
-                                        dispatch_async(dispatch_get_main_queue(), {
-                                            self?.canvasViewController.updateAt(indexPath, updateContents: true)
-                                        })
-                                    })
-                                    })
-                            } else {
-                                let bundle = NSBundle.mainBundle().bundleURL
-                                f.createData(fromColorDirAt: bundle, filtering: image, complation: { [weak self, weak f] (filteredIamge) in
-                                    dispatch_async(dispatch_get_main_queue(), {
-                                        f?.data = nil
-                                        self?.document.storeCacheResource(UIImageJPEGRepresentation(filteredIamge, 1)!, withName: name)
-                                        dispatch_async(dispatch_get_main_queue(), {
-                                            self?.canvasViewController.updateAt(indexPath, updateContents: true)
-                                        })
-                                    })
-                                    })
-                            }
-                        } else {
-                            strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
-                        }
-                    
-                    draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.resourceImageBy ,local: true) { [weak self] (previewR) in
-                        
-                        switch previewR {
-                        case .Success(let img):
-                            dispatch_async(dispatch_get_main_queue(), {
-                                self?.selectorViewController.updateSnapshotImage(img)
-                            })
-                        default:
-                            dispatch_async(dispatch_get_main_queue(), { 
-                                self?.selectorViewController.updateSnapshotImage(image)
-                                self?.selectorViewController.updatePreImage(image)
-                            })
-                        }
-                    }
-                        
-                    })
-                    strongSelf.dismissViewControllerAnimated(false, completion: nil)
-                }
-            }
-            
-            presentViewController(cameraVC, animated: true, completion: {
-                
-            })
+            ()
+//            let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
+//            
+//            let cleanPage = page.cleanEmptyContainers()
+//            let image = drawPageWithNoImage(cleanPage)
+//            cameraVC.templateImage = image
+//            cameraVC.backgroundColor = UIColor(hexString: page.backgroundColor)!
+//            cameraVC.backgroundHex = page.backgroundColor
+//            
+//            cameraVC.didSelectedImageHandler = {[weak self] (image, backgroundColor) in
+//                if let strongSelf = self {
+//                    dispatch_async(dispatch_get_main_queue(), {
+//                    let hex = backgroundColor.toHex().0
+//                    strongSelf.page.changeBackColor(hex)
+//                    strongSelf.canvasViewController.changeBackgroundColor(backgroundColor)
+//                    
+//                        let canvasSize = strongSelf.canvasViewController.view.bounds.size
+//                        (container as! ImageContainerVMProtocol).updateWithImageSize(image!.size, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
+//                    
+//                    let name = (container as! ImageContainerVMProtocol).imageElement!.resourceName
+//                        let data = compressJPGImage(image!)
+//                        strongSelf.document.storeResource(data, withName: name)
+//                        let image = UIImage(data: data)!
+//                        self?.selectorViewController.updatePreImage(image)
+//                        
+//                        if let f = strongSelf.filter {
+//                            if let data = f.data {
+//                                f.createImage(from: image, complation: {[weak self, weak f] (img) in
+//                                    
+//                                    dispatch_async(dispatch_get_main_queue(), {
+//                                        f?.data = nil
+//                                        self?.document.storeCacheResource(UIImageJPEGRepresentation(img, 1)!, withName: name)
+//                                        dispatch_async(dispatch_get_main_queue(), {
+//                                            self?.canvasViewController.updateAt(indexPath, updateContents: true)
+//                                        })
+//                                    })
+//                                    })
+//                            } else {
+//                                let bundle = NSBundle.mainBundle().bundleURL
+//                                f.createData(fromColorDirAt: bundle, filtering: image, complation: { [weak self, weak f] (filteredIamge) in
+//                                    dispatch_async(dispatch_get_main_queue(), {
+//                                        f?.data = nil
+//                                        self?.document.storeCacheResource(UIImageJPEGRepresentation(filteredIamge, 1)!, withName: name)
+//                                        dispatch_async(dispatch_get_main_queue(), {
+//                                            self?.canvasViewController.updateAt(indexPath, updateContents: true)
+//                                        })
+//                                    })
+//                                    })
+//                            }
+//                        } else {
+//                            strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
+//                        }
+//                    
+//                    draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.resourceImageBy ,local: true) { [weak self] (previewR) in
+//                        
+//                        switch previewR {
+//                        case .Success(let img):
+//                            dispatch_async(dispatch_get_main_queue(), {
+//                                self?.selectorViewController.updateSnapshotImage(img)
+//                            })
+//                        default:
+//                            dispatch_async(dispatch_get_main_queue(), { 
+//                                self?.selectorViewController.updateSnapshotImage(image)
+//                                self?.selectorViewController.updatePreImage(image)
+//                            })
+//                        }
+//                    }
+//                        
+//                    })
+//                    strongSelf.dismissViewControllerAnimated(false, completion: nil)
+//                }
+//            }
+//            
+//            presentViewController(cameraVC, animated: true, completion: {
+//                
+//            })
             
         default:
             ()
@@ -729,8 +730,9 @@ extension EditViewController {
                     strongSelf.page.changeBackColor(hex)
                     strongSelf.canvasViewController.changeBackgroundColor(backgroundColor)
                     
-                    let canvasSize = strongSelf.canvasViewController.view.bounds.size
-                    (container as! ImageContainerVMProtocol).updateWithImageSize(image!.size, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
+                    let canvasSize = strongSelf.page.size //strongSelf.canvasViewController.view.bounds.size
+//                    (container as! ImageContainerVMProtocol).updateWithImageSize(image!.size, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height * 2))
+                    (container as! ImageContainerVMProtocol).updateWithImageSize(image!.size, constraintSize: CGSize(width: canvasSize.width, height: canvasSize.height))
                     
                     let name = (container as! ImageContainerVMProtocol).imageElement!.resourceName
                     let data = compressJPGImage(image!)
