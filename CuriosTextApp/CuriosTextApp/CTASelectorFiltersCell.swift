@@ -96,6 +96,8 @@ extension CTASelectorFiltersCell: UICollectionViewDataSource {
         if (cell.contentView.viewWithTag(1000) as? UIImageView) == nil {
             let imgView = UIImageView(frame: cell.contentView.bounds)
             imgView.tag = 1000
+            imgView.clipsToBounds = true
+            imgView.contentMode = .ScaleAspectFill
             cell.contentView.addSubview(imgView)
         }
         
