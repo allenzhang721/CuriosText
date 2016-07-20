@@ -616,9 +616,11 @@ extension CommentViewController:CTALoadingProtocol{
 private func comment(withUser userName: String?, message: String) -> (NSAttributedString, NSRange) {
     let name = userName != nil ? "@" + userName! : ""
     let amessage = userName != nil ? " " + message : message
+    let n = NSAttributedString(string: name)
+    let m = NSAttributedString(string: amessage)
     let c = NSMutableAttributedString(string: name + amessage)
-    let nameRange = NSMakeRange(0, name.characters.count)
-    let messageRange = NSMakeRange(name.characters.count, amessage.characters.count)
+    let nameRange = NSMakeRange(0, n.length)
+    let messageRange = NSMakeRange(n.length, m.length)
     let nameFont = UIFont.boldSystemFontOfSize(14)
     let messageFont = UIFont.systemFontOfSize(14)
     let nameColor = UIColor(red:0.08, green:0.20, blue:0.37, alpha:1.00)

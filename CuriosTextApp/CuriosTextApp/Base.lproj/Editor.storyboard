@@ -92,7 +92,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="rXw-uA-p5p"/>
-                                    <barButtonItem title="下一步" id="AZ3-Xf-rl7">
+                                    <barButtonItem title="下一步" style="done" id="AZ3-Xf-rl7">
                                         <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="publish:" destination="qRf-5N-mQJ" id="1St-gW-9rg"/>
