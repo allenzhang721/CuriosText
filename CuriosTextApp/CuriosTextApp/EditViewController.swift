@@ -49,6 +49,7 @@ class EditViewController: UIViewController {
     private var useTemplate: Bool = false
     private var originPage: CTAPage?
     private var isHideBar:Bool = false
+    private var selectedImageIdentifier: String?
     
     private var selectedContainer: ContainerVMProtocol? {
         guard let selectedIndexPath = selectedIndexPath else { return nil }
@@ -81,8 +82,9 @@ class EditViewController: UIViewController {
         let image = drawPageWithNoImage(cleanPage, containImage: false)
         cameraVC.templateImage = image
         
-        cameraVC.didSelectedImageHandler = {[weak self, weak cameraVC] (image, backgrounColor) in
+        cameraVC.didSelectedImageHandler = {[weak self, weak cameraVC] (image, backgrounColor, identifier) in
             if let strongSelf = self, let image = image {
+                self?.selectedImageIdentifier = identifier
                 let hex = backgrounColor.toHex().0
                 strongSelf.page.changeBackColor(hex)
                     strongSelf.insertImage(image, size: image.size)
@@ -722,9 +724,10 @@ extension EditViewController {
         cameraVC.templateImage = image
         cameraVC.backgroundColor = UIColor(hexString: page.backgroundColor)!
         cameraVC.backgroundHex = page.backgroundColor
-        
-        cameraVC.didSelectedImageHandler = {[weak self, weak container, weak cameraVC] (image, backgroundColor) in
+        cameraVC.selectedImageIdentifier = selectedImageIdentifier
+        cameraVC.didSelectedImageHandler = {[weak self, weak container, weak cameraVC] (image, backgroundColor, identifier) in
             if let strongSelf = self {
+                self?.selectedImageIdentifier = identifier
                 dispatch_async(dispatch_get_main_queue(), {[weak cameraVC] in
                     let hex = backgroundColor.toHex().0
                     strongSelf.page.changeBackColor(hex)

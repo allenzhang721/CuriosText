@@ -15,7 +15,8 @@ class ImagePickerViewController: UIViewController {
     var templateImage: UIImage?
     var backgroundColor: UIColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
     var backgroundHex: String = "FFFFFF"
-    var didSelectedImageHandler: ((UIImage?, UIColor) -> ())?
+    var selectedImageIdentifier: String?
+    var didSelectedImageHandler: ((UIImage?, UIColor, String?) -> ())?
     
     deinit {
         print("\(#file) deinit")
@@ -34,6 +35,7 @@ class ImagePickerViewController: UIViewController {
                     }
                     
                     if let vc = vc as? CTAPhotoPickerTemplateable {
+                        vc.selectedImageIdentifier = selectedImageIdentifier
                         vc.templateImage = templateImage
                         vc.backgroundColor = backgroundColor
                         vc.backgroundColorHex = backgroundHex
@@ -55,8 +57,8 @@ class ImagePickerViewController: UIViewController {
 
 extension ImagePickerViewController: CTAPhotoPickerProtocol {
     
-    func pickerDidSelectedImage(image: UIImage, backgroundColor: UIColor) {
-        didSelectedImageHandler?(image, backgroundColor)
+    func pickerDidSelectedImage(image: UIImage, backgroundColor: UIColor, identifier: String?) {
+        didSelectedImageHandler?(image, backgroundColor, identifier)
     }
 }
 
