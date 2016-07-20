@@ -116,8 +116,13 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhoto
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         caculateLayoutAttributes()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
         updateCacheSets()
         
 //        previewView.templateImage = templateImage
@@ -554,7 +559,7 @@ extension CTAPhotoViewController {
     // MARK: - LayoutAttributes
     private func caculateLayoutAttributes() {
         
-        let w = thumbCollectionView.bounds.width
+        let w = UIScreen.mainScreen().bounds.width
         let columCount: CGFloat = 4
         let edgeInsets = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
         let itemSpacing: CGFloat = 0

@@ -47,6 +47,7 @@
 		2C22FAC21C7C299C00667295 /* CTAGradientButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C22FAC11C7C299C00667295 /* CTAGradientButtonView.swift */; };
 		2C247FE91C5CA10E0069CFFC /* CTASelectorAnimationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C247FE81C5CA10E0069CFFC /* CTASelectorAnimationCell.swift */; };
 		2C247FEB1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C247FEA1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift */; };
+		2C2AA34D1D3F81AF004006EA /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2AA34C1D3F81AF004006EA /* PromiseKit.framework */; };
 		2C2B45AA1C5CBCC8004A4809 /* CTALoginProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B45A91C5CBCC8004A4809 /* CTALoginProtocol.swift */; };
 		2C2B45AE1C5CBD16004A4809 /* CTAPublishProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B45AD1C5CBD16004A4809 /* CTAPublishProtocol.swift */; };
 		2C2B45B01C5CBED1004A4809 /* LocaleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B45AF1C5CBED1004A4809 /* LocaleHelper.swift */; };
@@ -473,6 +474,7 @@
 		2C22FAC11C7C299C00667295 /* CTAGradientButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAGradientButtonView.swift; sourceTree = "<group>"; };
 		2C247FE81C5CA10E0069CFFC /* CTASelectorAnimationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorAnimationCell.swift; sourceTree = "<group>"; };
 		2C247FEA1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTALabelCollectionViewCell.swift; sourceTree = "<group>"; };
+		2C2AA34C1D3F81AF004006EA /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PromiseKit.framework; sourceTree = "<group>"; };
 		2C2B45A91C5CBCC8004A4809 /* CTALoginProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTALoginProtocol.swift; sourceTree = "<group>"; };
 		2C2B45AD1C5CBD16004A4809 /* CTAPublishProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishProtocol.swift; sourceTree = "<group>"; };
 		2C2B45AF1C5CBED1004A4809 /* LocaleHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleHelper.swift; sourceTree = "<group>"; };
@@ -884,6 +886,7 @@
 				2C1A121E1CE014FD0071BD35 /* libWeiboSDK.a in Frameworks */,
 				2CC74C981C5A27F800B536C2 /* MessageUI.framework in Frameworks */,
 				2CC74C931C5A275C00B536C2 /* MOBFoundation.framework in Frameworks */,
+				2C2AA34D1D3F81AF004006EA /* PromiseKit.framework in Frameworks */,
 				2CC74C941C5A275C00B536C2 /* SMS_SDK.framework in Frameworks */,
 				2C6017BD1C59D84C00EEB804 /* MonkeyKing.framework in Frameworks */,
 				2CD488171C4E53E500D11CB7 /* pop.framework in Frameworks */,
@@ -1112,6 +1115,7 @@
 				2C3B33DD1C1176D000738166 /* CuriosTextAppTests */,
 				2C3B33E81C1176D000738166 /* CuriosTextAppUITests */,
 				2C3B33C71C1176D000738166 /* Products */,
+				2CE35BDC1D3F708800E4D5DE /* PromiseKit3.2.1 */,
 				2CB66A971CD86F6C006B9282 /* WechatSDK1.7 */,
 				2C1A12101CE014FD0071BD35 /* libWeiboSDK */,
 				2CC74C8C1C5A275C00B536C2 /* SMS_SDK */,
@@ -1778,6 +1782,15 @@
 			path = ImagePicker;
 			sourceTree = "<group>";
 		};
+		2CE35BDC1D3F708800E4D5DE /* PromiseKit3.2.1 */ = {
+			isa = PBXGroup;
+			children = (
+				2C2AA34C1D3F81AF004006EA /* PromiseKit.framework */,
+			);
+			name = PromiseKit3.2.1;
+			path = WechatSDK1.6.2;
+			sourceTree = "<group>";
+		};
 		2CF4D4181CBE38B0001DC7C4 /* FontManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -1882,12 +1895,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2C3B33EE1C1176D000738166 /* Build configuration list for PBXNativeTarget "CuriosTextApp" */;
 			buildPhases = (
-				93B4E5C1D76AA627CEB1C445 /* 📦 Check Pods Manifest.lock */,
+				93B4E5C1D76AA627CEB1C445 /* [CP] Check Pods Manifest.lock */,
 				2C3B33C21C1176D000738166 /* Sources */,
 				2C3B33C31C1176D000738166 /* Frameworks */,
 				2C3B33C41C1176D000738166 /* Resources */,
-				9B8B30873A46A71EA891A701 /* 📦 Embed Pods Frameworks */,
-				1A21D77B586C96414BA3E67D /* 📦 Copy Pods Resources */,
+				9B8B30873A46A71EA891A701 /* [CP] Embed Pods Frameworks */,
+				1A21D77B586C96414BA3E67D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1902,12 +1915,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2C3B33F11C1176D000738166 /* Build configuration list for PBXNativeTarget "CuriosTextAppTests" */;
 			buildPhases = (
-				FFC774A287FC7C580F982970 /* 📦 Check Pods Manifest.lock */,
+				FFC774A287FC7C580F982970 /* [CP] Check Pods Manifest.lock */,
 				2C3B33D61C1176D000738166 /* Sources */,
 				2C3B33D71C1176D000738166 /* Frameworks */,
 				2C3B33D81C1176D000738166 /* Resources */,
-				E2D77D5AB7C577C3755C96EC /* 📦 Embed Pods Frameworks */,
-				94B73E30BCE983AF01B0050E /* 📦 Copy Pods Resources */,
+				E2D77D5AB7C577C3755C96EC /* [CP] Embed Pods Frameworks */,
+				94B73E30BCE983AF01B0050E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1923,11 +1936,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2C3B33F41C1176D000738166 /* Build configuration list for PBXNativeTarget "CuriosTextAppUITests" */;
 			buildPhases = (
-				A446B69C281697FA5D2B1B19 /* 📦 Check Pods Manifest.lock */,
+				A446B69C281697FA5D2B1B19 /* [CP] Check Pods Manifest.lock */,
 				2C3B33E11C1176D000738166 /* Sources */,
 				2C3B33E21C1176D000738166 /* Frameworks */,
 				2C3B33E31C1176D000738166 /* Resources */,
-				67C1590EF3D765AA98B027EB /* 📦 Copy Pods Resources */,
+				67C1590EF3D765AA98B027EB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2065,14 +2078,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1A21D77B586C96414BA3E67D /* 📦 Copy Pods Resources */ = {
+		1A21D77B586C96414BA3E67D /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2080,14 +2093,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CuriosTextApp/Pods-CuriosTextApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		67C1590EF3D765AA98B027EB /* 📦 Copy Pods Resources */ = {
+		67C1590EF3D765AA98B027EB /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2095,14 +2108,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CuriosTextAppUITests/Pods-CuriosTextAppUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		93B4E5C1D76AA627CEB1C445 /* 📦 Check Pods Manifest.lock */ = {
+		93B4E5C1D76AA627CEB1C445 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2110,14 +2123,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		94B73E30BCE983AF01B0050E /* 📦 Copy Pods Resources */ = {
+		94B73E30BCE983AF01B0050E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2125,14 +2138,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CuriosTextAppTests/Pods-CuriosTextAppTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9B8B30873A46A71EA891A701 /* 📦 Embed Pods Frameworks */ = {
+		9B8B30873A46A71EA891A701 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2140,14 +2153,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CuriosTextApp/Pods-CuriosTextApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A446B69C281697FA5D2B1B19 /* 📦 Check Pods Manifest.lock */ = {
+		A446B69C281697FA5D2B1B19 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2155,14 +2168,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		E2D77D5AB7C577C3755C96EC /* 📦 Embed Pods Frameworks */ = {
+		E2D77D5AB7C577C3755C96EC /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2170,14 +2183,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CuriosTextAppTests/Pods-CuriosTextAppTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FFC774A287FC7C580F982970 /* 📦 Check Pods Manifest.lock */ = {
+		FFC774A287FC7C580F982970 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2747,6 +2760,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 					"$(PROJECT_DIR)/SMS_SDK",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/CYLTabBarController",
+					"$(PROJECT_DIR)/WechatSDK1.6.2",
 				);
 				INFOPLIST_FILE = CuriosTextApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -2770,13 +2784,14 @@
 			baseConfigurationReference = 59DF6B495CEFED1A13913332 /* Pods-CuriosTextApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 					"$(PROJECT_DIR)/SMS_SDK",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/CYLTabBarController",
+					"$(PROJECT_DIR)/WechatSDK1.6.2",
 				);
 				INFOPLIST_FILE = CuriosTextApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
