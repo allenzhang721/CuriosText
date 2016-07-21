@@ -9,6 +9,10 @@
 import Foundation
 import SwiftyJSON
 
+func GetViewUserModel(user:CTAUserModel) -> CTAViewUserModel{
+    return CTAViewUserModel(userID: user.userID, nickName: user.nickName, userDesc: user.userDesc, userIconURL: user.userIconURL, sex: user.sex, relationType: 0)
+}
+
 final class CTAViewUserModel: CTABaseModel {
     
     let userID:String;
@@ -16,12 +20,12 @@ final class CTAViewUserModel: CTABaseModel {
     let userDesc:String;
     let userIconURL:String;
     let sex:Int;
-    let country:String;
-    let province:String;
-    let city:String;
-    let followCount:Int;
+    var country:String = "";
+    var province:String = "";
+    var city:String = "";
+    var followCount:Int = 0;
     var beFollowCount:Int = 0;
-    let publishCount:Int;
+    var publishCount:Int = 0;
     var relationType:Int = 0;
     
     init(userID:String, nickName:String, userDesc:String, userIconURL:String, sex:Int, country:String, province:String, city:String, followCount:Int, beFollowCount:Int, publishCount:Int, relationType:Int){
@@ -37,6 +41,15 @@ final class CTAViewUserModel: CTABaseModel {
         self.beFollowCount = beFollowCount;
         self.publishCount  = publishCount;
         self.relationType  = relationType;
+    }
+    
+    init(userID:String, nickName:String, userDesc:String, userIconURL:String, sex:Int, relationType:Int){
+        self.userID      = userID;
+        self.nickName    = nickName;
+        self.userDesc    = userDesc;
+        self.userIconURL = userIconURL;
+        self.sex         = sex;
+        self.relationType = relationType;
     }
     
     static func generateFrom(json: JSON) -> CTAViewUserModel {

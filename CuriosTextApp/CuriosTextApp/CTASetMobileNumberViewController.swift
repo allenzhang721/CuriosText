@@ -26,7 +26,7 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
     var phoneTextinput:UITextField = UITextField()
     var countryNameLabel:UILabel = UILabel()
     var areaCodeLabel:UILabel = UILabel()
-    var loadingImageView:UIImageView? = UIImageView(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
+    var loadingImageView:UIImageView? = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     var registerButton:UIButton!
     var backButton:UIButton!
     
@@ -34,17 +34,13 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
     var isChangeContry:Bool = false
     var setMobileNumberType:CTASetMobileNumberType = .register
     
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         self.initView()
         self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-        self.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
+        self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -62,27 +58,26 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
         let tap = UITapGestureRecognizer(target: self, action: #selector(CTASetMobileNumberViewController.bgViewClick(_:)))
         self.view.addGestureRecognizer(tap)
         
-        self.backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
+        self.backButton = UIButton(frame: CGRect(x: 0, y: 22, width: 40, height: 40))
         self.backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         self.backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
         self.backButton.addTarget(self, action: #selector(CTASetMobileNumberViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(self.backButton)
 
-        let enterMobileLabel = UILabel.init(frame: CGRect.init(x: (bouns.width - 50)/2, y: 60*self.getVerRate(), width: 100, height: 40))
-        enterMobileLabel.font = UIFont.systemFontOfSize(28)
-        enterMobileLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        let enterMobileLabel = UILabel(frame: CGRect(x: 0, y: 60*self.getVerRate(), width: bouns.width, height: 40))
+        enterMobileLabel.font = UIFont.boldSystemFontOfSize(28)
+        enterMobileLabel.textColor = CTAStyleKit.normalColor
         enterMobileLabel.text = NSLocalizedString("EnterMobileLabel", comment: "")
-        enterMobileLabel.sizeToFit()
-        enterMobileLabel.frame.origin.x = (bouns.width - enterMobileLabel.frame.width)/2
+        enterMobileLabel.textAlignment = .Center
         self.view.addSubview(enterMobileLabel)
         
         self.initPhoneView()
         self.phoneTextinput.delegate = self
         
-        self.registerButton = UIButton.init(frame: CGRect.init(x: (bouns.width - 40)/2, y: self.phoneTextinput.frame.origin.y+70, width: 40, height: 28))
+        self.registerButton = UIButton(frame: CGRect(x: (bouns.width - 40)/2, y: self.phoneTextinput.frame.origin.y+70, width: 40, height: 28))
         self.registerButton.setTitle(NSLocalizedString("NextButtonLabel", comment: ""), forState: .Normal)
-        self.registerButton.setTitleColor(UIColor.init(red: 239/255, green: 51/255, blue: 74/255, alpha: 1.0), forState: .Normal)
-        self.registerButton.setTitleColor(UIColor.init(red: 216/255, green: 216/255, blue: 216/255, alpha: 1.0), forState: .Disabled)
+        self.registerButton.setTitleColor(CTAStyleKit.selectedColor, forState: .Normal)
+        self.registerButton.setTitleColor(CTAStyleKit.disableColor, forState: .Disabled)
         self.registerButton.titleLabel?.font = UIFont.systemFontOfSize(20)
         self.registerButton.addTarget(self, action: #selector(CTASetMobileNumberViewController.registerButtonClick(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(self.registerButton)
@@ -231,9 +226,6 @@ extension CTASetMobileNumberViewController: UITextFieldDelegate{
 extension CTASetMobileNumberViewController: UIGestureRecognizerDelegate{
     
     func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if self.phoneTextinput.isFirstResponder() {
-            return false
-        }
         return true
     }
     

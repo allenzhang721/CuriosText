@@ -17,11 +17,14 @@ public class CTAStyleKit : NSObject {
     //// Cache
 
     private struct Cache {
-        static let normalColor: UIColor = UIColor(red: 0.633, green: 0.633, blue: 0.633, alpha: 1.000)
+        static let normalColor: UIColor = UIColor(red: 0.29, green: 0.29, blue: 0.29, alpha: 1.000)
+        static let labelShowColor: UIColor = UIColor(red: 0.607, green: 0.607, blue: 0.607, alpha: 1.000)
         static let selectedColor: UIColor = UIColor(red: 0.937, green: 0.200, blue: 0.290, alpha: 1.000)
+        static let disableColor: UIColor = UIColor(red: 0.847, green: 0.847, blue: 0.847, alpha: 1.000)
         static let ediorBackgroundColor: UIColor = UIColor(red: 0.827, green: 0.827, blue: 0.827, alpha: 1.000)
         static let commonBackgroundColor: UIColor = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1.000)
-        static let lightGrayBackgroundColor: UIColor = UIColor(red: 0.949, green: 0.949, blue: 0.965, alpha: 1.000)
+        static let detailBackgroundColor: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)
+        static let lightGrayBackgroundColor: UIColor = UIColor(red: 0.945, green: 0.945, blue: 0.945, alpha: 1.000)
         static let one0: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)
         static let one1: UIColor = UIColor(red: 0.357, green: 0.271, blue: 0.561, alpha: 1.000)
         static let one2: UIColor = UIColor(red: 0.749, green: 0.573, blue: 0.686, alpha: 1.000)
@@ -140,9 +143,12 @@ public class CTAStyleKit : NSObject {
     //// Colors
 
     public class var normalColor: UIColor { return Cache.normalColor }
+    public class var labelShowColor: UIColor { return Cache.labelShowColor }
     public class var selectedColor: UIColor { return Cache.selectedColor }
+    public class var disableColor: UIColor { return Cache.disableColor }
     public class var ediorBackgroundColor: UIColor { return Cache.ediorBackgroundColor }
     public class var commonBackgroundColor: UIColor { return Cache.commonBackgroundColor }
+    public class var detailBackgroundColor: UIColor { return Cache.detailBackgroundColor }
     public class var lightGrayBackgroundColor: UIColor { return Cache.lightGrayBackgroundColor }
     public class var one0: UIColor { return Cache.one0 }
     public class var one1: UIColor { return Cache.one1 }

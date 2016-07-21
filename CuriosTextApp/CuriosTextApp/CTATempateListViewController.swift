@@ -14,7 +14,7 @@ class CTATempateListViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var selectedHandler: ((pageData: NSData?, origin: Bool) -> ())?
-    var originImage: UIImage?
+    weak var originImage: UIImage?
     
     private let queue = dispatch_queue_create("templatesQueue", DISPATCH_QUEUE_CONCURRENT)
     private var localTemplates = [TemplateModel]()
@@ -55,6 +55,17 @@ class CTATempateListViewController: UIViewController {
                         sf.collectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
                     }
                 })
+            }
+        }
+    }
+    
+    func updateFirst() {
+        let selected = collectionView.indexPathsForSelectedItems()?.first?.item
+        if collectionView.dataSource?.collectionView(collectionView, numberOfItemsInSection: 0) > 0 {
+            collectionView.reloadData()
+//            collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
+            if selected == 0 {
+                collectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
             }
         }
     }

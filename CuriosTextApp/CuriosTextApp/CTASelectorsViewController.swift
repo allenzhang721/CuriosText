@@ -20,10 +20,12 @@ protocol CTASelectorable: class {
 
 protocol CTASelectorScaleable: CTASelectorable {
     func templateDidChanged(pageData: NSData?, origin: Bool)
+    func filterDidChanged(filterName: String)
     func scaleDidChanged(scale: CGFloat)
     func radianDidChanged(radian: CGFloat)
     func fontDidChanged(fontFamily: String, fontName: String)
     func alignmentDidChanged(alignment: NSTextAlignment)
+    func shadowAndStrokeDidChanged(needShadow: Bool, needStroke: Bool)
     func spacingDidChanged(lineSpacing: CGFloat, textSpacing: CGFloat)
     func colorDidChanged(item: CTAColorItem)
     func animationDurationDidChanged(t: CGFloat)
@@ -39,7 +41,9 @@ typealias CTASelectorViewControllerDelegate = protocol<CTASelectorScaleable>
 final class CTASelectorsViewController: UIViewController, UICollectionViewDataSource {
     
     var snapImage: UIImage?
+    var preImage: UIImage?
     private var animation: Bool = false
+    weak var filterManager: FilterManager?
     weak var dataSource: CTASelectorsViewControllerDataSource?
     weak var delegate: CTASelectorViewControllerDelegate?
     private(set) var currentType: CTAContainerFeatureType = .Templates
@@ -53,10 +57,12 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
         switch currentType {
             
         case .Templates: return "templateDidChanged:"
+        case .Filters: return "filterDidChanged:"
         case .Size: return "scaleChanged:"
         case .Rotator: return "radianChanged:"
         case .Fonts: return "indexPathOfFontsChanged:"
         case .Aligments: return "aligmentsChanged:"
+        case .ShadowAndStroke: return "shadowAndStrokeChanged:"
         case .TextSpacing: return "textSpacingChanged:"
         case .Colors: return "colorChanged:"
         case .Animation: return "animationChanged:"
@@ -78,12 +84,25 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
     
     func updateSnapshotImage(image: UIImage?) {
         snapImage = image
-            dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            dispatch_async(dispatch_get_main_queue()) { [weak self, weak snapImage] in
                 guard let sf = self else {return}
                 let index = NSIndexPath(forItem: 0, inSection: 0)
                 if let cell = sf.collectionview.cellForItemAtIndexPath(index) as? CTASelectorTemplatesCell {
                     cell.templateList?.updateCurrentOriginImage(image)
                 }
+        }
+    }
+    
+    func updatePreImage(image: UIImage?) {
+        preImage = image
+        dispatch_async(dispatch_get_main_queue()) { [weak self, weak preImage] in
+            guard let sf = self else {return}
+            let index = NSIndexPath(forItem: 0, inSection: 0)
+            if let cell = sf.collectionview.cellForItemAtIndexPath(index) as? CTASelectorFiltersCell {
+                cell.update(preImage)
+            } else {
+                sf.filterManager?.cleanImage()
+            }
         }
     }
     
@@ -136,14 +155,14 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
         
         animation = true
         
-        collectionview.performBatchUpdates({ () -> Void in
+        collectionview.performBatchUpdates({[weak collectionview] () -> Void in
             
             if nextCount > 0 {
-                collectionview.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
+                collectionview?.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             }
             
             if currentCount > 0 {
-                collectionview.deleteItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
+                collectionview?.deleteItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             }
             }, completion: {[weak self] finished in
                 
@@ -194,6 +213,11 @@ extension CTASelectorsViewController {
             cell.templateList?.originImage = snapImage
         }
         
+        if let cell = cell as? CTASelectorFiltersCell {
+            cell.filterManager = filterManager
+            cell.image = preImage
+        }
+//
         cell.beganLoad()
         if action.characters.count > 0 {
             cell.addTarget(self, action: Selector(action), forControlEvents: .ValueChanged)
@@ -240,6 +264,16 @@ extension CTASelectorsViewController: CTASelectorDataSource {
             return .Left
         }
          return textElement.alignment
+    }
+    
+    func selectorBeganNeedShadowAndStroke(cell: CTASelectorCell) -> (Bool, Bool) {
+        
+        guard
+            let container = container as? TextContainerVMProtocol,
+            let textElement = container.textElement else {
+                return (false, false)
+        }
+        return (textElement.needShadow, textElement.needStroke)
     }
     
     func selectorBeganSpacing(cell: CTASelectorCell) -> (CGFloat, CGFloat) {
@@ -306,6 +340,10 @@ extension CTASelectorsViewController {
         
     }
     
+    func filterDidChanged(name: String) {
+        delegate?.filterDidChanged(name)
+    }
+    
     func scaleChanged(sender: CTASliderView) {
         let v = CGFloat(Int(sender.value * 100.0)) / 100.0
         delegate?.scaleDidChanged(v)
@@ -332,6 +370,10 @@ extension CTASelectorsViewController {
     
     func aligmentsChanged(sender: CTASegmentControl) {
         delegate?.alignmentDidChanged(NSTextAlignment(rawValue: sender.selectedIndex)!)
+    }
+    
+    func shadowAndStrokeChanged(result: [Bool]) { // needShadow, needStroke
+        delegate?.shadowAndStrokeDidChanged(result[0] ?? false, needStroke: result[1] ?? false)
     }
     
     func textSpacingChanged(sender: CTATextSpacingView) {

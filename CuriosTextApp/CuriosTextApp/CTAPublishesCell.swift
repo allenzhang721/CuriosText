@@ -22,7 +22,6 @@ class CTAPublishesCell: UICollectionViewCell, CTAImageControllerProtocol{
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.cellImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
-        self.cropImageRound(self.cellImageView)
         self.contentView.addSubview(self.cellImageView)
     }
 
@@ -49,6 +48,16 @@ class CTAPublishesCell: UICollectionViewCell, CTAImageControllerProtocol{
         }else {
             let whiteImg = self.getWhiteBg(self.bounds)
             self.cellImageView.image = whiteImg
+        }
+    }
+    
+    func getCellImage() -> UIView{
+        if publishModel != nil {
+            return UIImageView(image: self.cellImageView.image)
+        }else {
+            let a = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+            a.backgroundColor = UIColor.redColor()
+            return a
         }
     }
 }

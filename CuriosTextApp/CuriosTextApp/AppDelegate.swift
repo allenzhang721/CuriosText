@@ -14,21 +14,27 @@ import SVProgressHUD
 class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     
     var window: UIWindow?
-    
-    
+
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
+
+        setup()
+        SVProgressHUD.setMinimumDismissTimeInterval(1)
         SVProgressHUD.setDefaultMaskType(.Clear)
         SVProgressHUD.setDefaultStyle(.Custom)
         SVProgressHUD.setForegroundColor(CTAStyleKit.selectedColor)
         SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
-
+        
+        return true
+    }
+    
+    func setup() {
+        
         cleanFontCache()
         registerLocalFonts()
         registerSystemFonts()
         familiesDisplayNames()
         familiesFixRatio()
-        ImageCache.defaultCache.maxMemoryCost = 20 * 1024 * 1024 // Allen: 20 MB
+        ImageCache.defaultCache.maxMemoryCost = 100 * 1024 * 1024 // Allen: 80 MB
         // Override point for customization after application launch.
         #if DEBUG
             CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.Test.description
@@ -41,8 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         CTASocialManager.register(.WeChat, appID: CTAConfigs.weChat.appID, appKey: CTAConfigs.weChat.appKey)
         CTASocialManager.register(.Weibo, appID: CTAConfigs.weibo.appID, appKey: CTAConfigs.weibo.appKey)
         CTASocialManager.register(.SMS, appID: CTAConfigs.SMS.appID, appKey: CTAConfigs.SMS.appKey) // http://dashboard.mob.com/#/sms/index
-        
-        return true
     }
     
     func cleanFontCache() {
@@ -101,8 +105,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         
         CTAFontsManager.reloadData()
     }
-    
-    
     
     func familiesDisplayNames() {
         

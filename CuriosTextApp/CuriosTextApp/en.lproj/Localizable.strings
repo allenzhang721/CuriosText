@@ -6,12 +6,22 @@
 
 */
 "DefaultName" = "Curios";
-"FollowLabel" = "following";
-"BeFollowLabel" = "followers";
+"HomeLabel" = "Home";
+"RecommendLabel" = "Hot";
+"NoticeLabel" = "Notification";
+"UserLabel" = "User";
+"FollowLabel"   = "Following";
+"BeFollowLabel" = "Followers";
 "FollowButtonLabel" = "Follow";
-"UnFollowButtonLabel" = "Unfollow";
+"UnFollowButtonLabel" = "Following";
+"UnFollowLabel" = "Unfollow";
+"ConfirmUnFollowLabel" = "Are you sure you want to unfollow ";
 "PostsButtonLabel" = "Posts";
 "LikesButtonLabel" = "Likes";
+"LikesLabel" = "Likes";
+"LikersLabel" = "Likers";
+"LikeDefaultLabel" = "Like me";
+"CommentsLabel" = "Comments";
 "Thousand" = "K";
 "Million" = "M";
 "Billion" = "B";
@@ -75,6 +85,7 @@
 "AlertYesLabel" = "Yes";
 "AlertNoLabel" = "No"; 
 "AlertResendLabel" = "Resend";
+"AlertChangePhotoTitle" = "Change Profile Photo";
 "AlertTakePhotoLabel" = "Take Photo";
 "AlertChoosePhoteLabel" = "Choose from Photos";
 "AlertBackLabel" = "Back";
@@ -146,11 +157,24 @@
 "PublishDateOneYear" = "1 year ago";
 "PublishDateYears" = " years ago";
 
+// MARK: - Comment
+"PublishComment" = "Add your comment";
+"Comment" = "Comments";
+"CommentSuccess" = "Comment Success";
+"CommentFail" = "Comment Failure";
+
 // MARK: - Common
 "Cancel" = "Cancel";
 "Done" = "Done";
 "Delete" = "Delete";
 "Attension" = "Attension";
+
+// MARK: - Notification
+"NotificationTitle" = "Notification";
+"StartedFollowingYou" = "started following you.";
+"DeleteComment" = "Comment deleted";
+"Clear" = "Clear";
+"ClearAll" = "Clean All Notifications";
 
 // MARK: - Image Picker
 "Camera" = "Camera";
@@ -161,6 +185,9 @@
 "EditTextPlaceHolder" = "Double Click to Edit";
 "Publish" = "Publish";
 "Templates" = "Templates";
+"Filters" = "Filters";
+"Shadow" = "Shadow";
+"Outline" = "Outline";
 
 "Size" = "Size";
 "Rotation" = "Rotation";

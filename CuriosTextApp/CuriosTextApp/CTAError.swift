@@ -356,3 +356,76 @@ enum CTAPublishHotError:Int, ErrorType{
  9:数据为空
  
  */
+
+enum CTAPublishError:Int, ErrorType{
+    
+    case PublishIDEmpty = 1
+    case PublishIDNotExist = 2
+    case NeedContactWithService = 8
+    case DataIsEmpty = 9
+    
+}
+
+/*
+ 
+ 1:publishID为空
+ 8:请联系客服
+ 9:数据为空
+ 
+ */
+
+
+enum CTAAddCommentError:Int, ErrorType{
+    
+    case PublishIDEmpty = 1
+    case UserIDNotExist = 2
+    case PublishIDNotExist = 3
+    case NeedContactWithService = 8
+    case DataIsEmpty = 9
+    
+}
+
+/*
+ 
+ 1:publishID为空
+ 8:请联系客服
+ 9:数据为空
+ 
+ */
+
+enum CTADeleteCommentError:Int, ErrorType{
+    
+    case CommentIDEmpty = 1
+    case CommentIDNotExist = 2
+    case PublishIDNotExist = 3
+    case NeedContactWithService = 8
+    case DataIsEmpty = 9
+    
+}
+
+/*
+ 
+ 1:publishID为空
+ 8:请联系客服
+ 9:数据为空
+ 
+ */
+
+enum CTARequestNoticeError:Int, ErrorType{
+    
+    case NoticeIDIsEmpty = 1
+    case NoticeIDNotExist = 2
+    case NeedContactWithService = 8
+    case DataIsEmpty = 9
+    
+}
+
+/*
+ 
+ 1:userid为空
+ 2:userid不存在
+ 8:请联系客服
+ 9:数据为空
+ 
+ */
+

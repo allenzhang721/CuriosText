@@ -66,6 +66,8 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhoto
     var templateImage: UIImage?
     var backgroundColor: UIColor = UIColor.whiteColor()
     var backgroundColorHex: String = "FFFFFF"
+    var selectedImageIdentifier: String? = nil
+    var beganIndex: Int?
     
     weak var pickerDelegate: CTAPhotoPickerProtocol?
     private var inner = Inner()
@@ -74,7 +76,15 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhoto
         super.awakeFromNib()
         resetCacheSets()
         
-        self.tabBarItem = UITabBarItem(title: LocalStrings.Photo.description, image: ImagePickerResource.imageOfPhotoLibrary, selectedImage: nil)
+        let selectedImage = ImagePickerResource.imageOfPhotoLibrarySelected.imageWithRenderingMode(.AlwaysOriginal)
+        
+        
+        self.tabBarItem = UITabBarItem(title: LocalStrings.Photo.description, image: ImagePickerResource.imageOfPhotoLibrary, selectedImage: selectedImage)
+    }
+    
+    deinit {
+        print("\(#file) deinit")
+        resetCacheSets()
     }
     
     //    private var thumbnailSize
@@ -103,17 +113,41 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhoto
     override func viewWillAppear(animated: Bool) {
         
         previewView.templateImageView.image = templateImage
+        
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        caculateLayoutAttributes()
     }
     
     override func viewDidAppear(animated: Bool) {
-        caculateLayoutAttributes()
+        
         updateCacheSets()
         
 //        previewView.templateImage = templateImage
     }
     
-    deinit {
-        resetCacheSets()
+    private func fetchBeganPhoto() {
+        if let beganIndex = beganIndex {
+            thumbCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: beganIndex, inSection: 0), animated: false, scrollPosition: .Top)
+            
+            if let assetFetchResults = inner.assetFetchResults where assetFetchResults.count > 0, let asset = assetFetchResults[beganIndex] as? PHAsset {
+                
+                let options = PHImageRequestOptions()
+                options.synchronous = true
+                inner.imageManager.requestImageForAsset(asset, targetSize: previewView.bounds.size, contentMode: .AspectFill, options: options) {[weak self] (image, info) in
+                    
+                    if let strongSelf = self, let image = image {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            strongSelf.previewView.image = image
+                        })
+                    }
+                }
+            }
+        } else {
+            fetchPreviewPhoto()
+        }
     }
     
     func changePhotoAlbum(fetchResult: PHFetchResult) {
@@ -141,7 +175,7 @@ extension CTAPhotoViewController {
         
         setupDelegateAndDataSource()
         fetchAllPhotos()
-        fetchPreviewPhoto()
+        fetchBeganPhoto()
     }
     
     private func setupDelegateAndDataSource() {
@@ -162,6 +196,15 @@ extension CTAPhotoViewController {
         let collection = result[0] as? PHAssetCollection
         inner.assetFetchResults = result
         inner.assetCollection = collection
+        
+        if let ID = selectedImageIdentifier {
+            result.enumerateObjectsUsingBlock({[weak self] (asset, i, stop) in
+                if let asset = asset as? PHAsset where asset.localIdentifier == ID {
+                    self?.beganIndex = i
+                    stop.memory = true
+                }
+            })
+        }
     }
     
     private func fetchPreviewPhoto() {
@@ -219,6 +262,7 @@ extension CTAPhotoViewController {
             backgroundColorHex = "FFFFFF"
             backgroundButton.selected = false
         }
+        
         backgroundColor = UIColor(hexString: backgroundColorHex)!
         previewView.backgroundColor = backgroundColor
     }
@@ -323,13 +367,13 @@ extension CTAPhotoViewController {
         } else {
             dismissViewControllerAnimated(true, completion: nil)
         }
-        
     }
     
     @IBAction func confirm(sender: AnyObject) {
         
         if let items = thumbCollectionView.indexPathsForSelectedItems() where items.count > 0, let asset = inner.assetFetchResults?[items.first!.item] as? PHAsset {
             
+            let localIdentifier = asset.localIdentifier
             let option = PHImageRequestOptions()
             option.synchronous = true
             let imageDisplayRect = previewView.imgDisplayRect
@@ -351,8 +395,8 @@ extension CTAPhotoViewController {
                         UIGraphicsEndImageContext()
                         
                         dispatch_async(dispatch_get_main_queue(), {
-                            strongSelf.pickerDelegate?.pickerDidSelectedImage(aimage, backgroundColor: strongSelf.backgroundColor)
-                            strongSelf.dismiss(nil)
+                            strongSelf.pickerDelegate?.pickerDidSelectedImage(aimage, backgroundColor: strongSelf.backgroundColor, identifier: localIdentifier)
+//                            strongSelf.dismiss(nil)
                         })
                     }
                     //                    strongSelf.dismiss(nil)
@@ -515,7 +559,7 @@ extension CTAPhotoViewController {
     // MARK: - LayoutAttributes
     private func caculateLayoutAttributes() {
         
-        let w = thumbCollectionView.bounds.width
+        let w = UIScreen.mainScreen().bounds.width
         let columCount: CGFloat = 4
         let edgeInsets = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
         let itemSpacing: CGFloat = 0

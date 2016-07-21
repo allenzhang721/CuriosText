@@ -11,9 +11,9 @@ import UIKit
 
 enum CTAContainerFeatureType: String {
 
-    case Templates
+    case Templates, Filters
     case Size, Rotator
-    case Fonts, Aligments, TextSpacing, Colors, Animation //Text
+    case Fonts, Aligments, TextSpacing, Colors, Animation, ShadowAndStroke //Text
     case Empty
 }
 

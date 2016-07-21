@@ -13,8 +13,14 @@ enum LocalStrings: CustomStringConvertible {
     // Common
     case Cancel, Done, Delete, Attension
     
+    // Notification
+    case NotificationTitle, Stared, Clear, DeleteComment, NeedClearAll
+    
     // Image Picker
     case Camera, Photo, AllowPhotoTitle, AllowPhotoMessage
+    
+    // Comment
+    case PublishComment, Comment, CommentSuccess, CommentFail
     
     // Editor
     case Publish , EditTextPlaceHolder, EditorDismissMessage
@@ -23,13 +29,13 @@ enum LocalStrings: CustomStringConvertible {
     case PublishFailure
     
     // Edior Tab
-    case Size, Rotation, Font, Spacing, Alignment, Color, Animation, AnimationType, AnimationDuration, AnimationDelay, Templates
+    case Size, Rotation, Font, Spacing, Alignment, Color, Animation, AnimationType, AnimationDuration, AnimationDelay, Templates, Filters, Shadow, Outline
     
     //Animations
     case AniType(CTAAnimationType)
     
     //Alert 
-    case OK, Yes, No, Resend, TakePhoto, ChoosePhoto, Back, Wait, Setting
+    case OK, Yes, No, Resend, TakePhoto, ChoosePhoto, Back, Wait, Setting, PhotoTitle
     
     //Report
     case Porn, Scam, Sensitive
@@ -50,6 +56,18 @@ enum LocalStrings: CustomStringConvertible {
         case .Attension:
             return NSLocalizedString("Attension", comment: "")
             
+        // Notification
+        case NotificationTitle:
+            return NSLocalizedString("NotificationTitle", comment: "")
+        case .Stared:
+            return NSLocalizedString("StartedFollowingYou", comment: "")
+        case .DeleteComment:
+            return NSLocalizedString("DeleteComment", comment: "")
+        case .Clear:
+            return NSLocalizedString("Clear", comment: "")
+        case .NeedClearAll:
+            return NSLocalizedString("ClearAll", comment: "")
+            
             // Image Picker
         case .Camera:
             return NSLocalizedString("Camera", comment: "")
@@ -60,6 +78,16 @@ enum LocalStrings: CustomStringConvertible {
         case .AllowPhotoMessage:
             return NSLocalizedString("AllPhotoLibraryMessage", comment: "")
             
+            // Comment
+        case .PublishComment:
+            return NSLocalizedString("PublishComment", comment: "")
+        case .Comment:
+            return NSLocalizedString("Comment", comment: "")
+        case .CommentSuccess:
+            return NSLocalizedString("CommentSuccess", comment: "")
+        case .CommentFail:
+            return NSLocalizedString("CommentFail", comment: "")
+            
             // Editor
         case .Publish:
             return NSLocalizedString("Publish", comment: "")
@@ -69,6 +97,12 @@ enum LocalStrings: CustomStringConvertible {
             return NSLocalizedString("EditorDismissMessage", comment: "")
         case .Templates:
             return NSLocalizedString("Templates", comment: "")
+        case .Filters:
+            return NSLocalizedString("Filters", comment: "")
+        case .Shadow:
+            return NSLocalizedString("Shadow", comment: "")
+        case .Outline:
+            return NSLocalizedString("Outline", comment: "")
             
             // Publish
         case .PublishFailure:
@@ -128,6 +162,8 @@ enum LocalStrings: CustomStringConvertible {
             return NSLocalizedString("AlertWaitLabel", comment: "")
         case .Setting:
             return NSLocalizedString("AlertSettingLabel", comment: "")
+        case .PhotoTitle:
+            return NSLocalizedString("AlertChangePhotoTitle", comment: "")
             //Report
         case .Porn:
             return NSLocalizedString("ReportPornLabel", comment: "")

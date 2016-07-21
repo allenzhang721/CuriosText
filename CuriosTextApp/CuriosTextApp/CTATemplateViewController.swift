@@ -40,6 +40,7 @@ class CTATemplateViewController: UIViewController {
             previewView.completedBlock = {[weak self] in
             }
             previewView.dataSource = canvas
+            previewView.changeDataSource()
             previewView.aniDataSource = canvas
             view.addSubview(previewView)
             self.previewView = previewView

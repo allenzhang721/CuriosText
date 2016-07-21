@@ -59,7 +59,7 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
         
         // Do any additional setup after loading the view.
         self.initView();
-        self.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
+        self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -302,12 +302,13 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
     
     func getCurrentPublishIndex(selectedIndex:Int) -> Int{
         let selectedPo = selectedIndex % self.cellHorCount
-        let verCount = self.getCellCount()/self.cellHorCount
+        let cellAll = self.getCellCount()
+        let verCount = cellAll/self.cellHorCount
         let midVerCount = verCount % 2 == 0 ? (verCount/2)-1 : (verCount/2)
         var midCount = midVerCount*self.cellHorCount+selectedPo
-
+        let leastCell = cellAll - midCount
         let publishCount = self.publishModelArray.count - 1
-        if publishCount - selectedIndex > midCount {
+        if publishCount - selectedIndex > leastCell {
             
         }else {
             let allCount = publishCount % self.cellHorCount + (verCount - 1)*self.cellHorCount
@@ -385,15 +386,15 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
                             }
                             if !isChange{
                                 for j in 0..<modelArray!.count{
-                                    if j > self.publishModelArray.count{
-                                        isChange = true
-                                        break
-                                    }else {
+                                    if j < self.publishModelArray.count{
                                         let oldModel = self.publishModelArray[j]
                                         if !self.checkPublishModelIsHave(oldModel.publishID, publishArray: modelArray as! Array<CTAPublishModel>){
                                             isChange = true
                                             break
                                         }
+                                    }else {
+                                        isChange = true
+                                        break
                                     }
                                 }
                             }
@@ -977,13 +978,14 @@ class CTAPublishDetailViewController: UIViewController, CTAPublishCellProtocol{
             if verCount == 0 {
                 let rateCount = Int(currentIndex / self.cellHorCount)
                 headerTop = self.headerHeight - CGFloat(rateCount)*(space + cellRect.height)
-                if headerTop < topSpace && hSpace > 0{
+                if headerTop < hSpace{
                     headerTop = hSpace
                 }
             }else{
                 headerTop = topSpace
             }
         }
+        
         return headerTop
     }
     
@@ -1087,9 +1089,9 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
                     canGo = true
                 }
                 if canGo{
-                    let userPublish = CTAUserPublishesViewController()
-                    userPublish.viewUser = viewUserModel
-                    self.navigationController?.pushViewController(userPublish, animated: true)
+//                    let userPublish = CTAUserPublishesViewController()
+//                    userPublish.viewUser = viewUserModel
+//                    self.navigationController?.pushViewController(userPublish, animated: true)
                 }else {
                     self.viewBackHandler()
                 }
@@ -1098,7 +1100,7 @@ extension CTAPublishDetailViewController: CTAPublishProtocol{
     }
     
     func deleteHandler(){
-        if let publish = self.currentFullCell.publishModel{LocalStrings.Delete.description
+        if let publish = self.currentFullCell.publishModel{
             self.showSelectedAlert(NSLocalizedString("AlertTitleDeleteFile", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.DeleteFile.description, cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result) -> Void in
                 if result{
                     SVProgressHUD.setDefaultMaskType(.Clear)

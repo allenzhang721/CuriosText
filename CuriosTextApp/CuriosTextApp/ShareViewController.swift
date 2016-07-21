@@ -68,10 +68,6 @@ class ShareViewController: UIViewController {
         textView.becomeFirstResponder()
     }
     
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
-    
     func setup() {
 //        let url = NSBundle.mainBundle().URLForResource("animation", withExtension: "gif")
 //        imageURL = url

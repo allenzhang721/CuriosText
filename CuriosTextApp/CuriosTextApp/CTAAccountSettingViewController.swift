@@ -10,15 +10,6 @@ import Foundation
 import SVProgressHUD
 
 class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol, CTAAlertProtocol{
-
-    static var _instance:CTAAccountSettingViewController?;
-    
-    static func getInstance() -> CTAAccountSettingViewController{
-        if _instance == nil{
-            _instance = CTAAccountSettingViewController();
-        }
-        return _instance!
-    }
     
     var loginUser:CTAUserModel?
     var phoneNumberLabel:UILabel!
@@ -35,7 +26,7 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
         super.viewDidLoad()
         self.initView()
         self.navigationController!.interactivePopGestureRecognizer!.delegate = self
-        self.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
+        self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -54,39 +45,44 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
     
     func initView(){
         
-        let bouns = UIScreen.mainScreen().bounds
-        let settingLabel = UILabel.init(frame: CGRect.init(x: 0, y: 8, width: bouns.width, height: 28))
-        settingLabel.font = UIFont.systemFontOfSize(18)
-        settingLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        settingLabel.text = NSLocalizedString("AccountLabel", comment: "")
-        settingLabel.textAlignment = .Center
-        self.view.addSubview(settingLabel)
+        let bounds = UIScreen.mainScreen().bounds
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: 64))
+        headerView.backgroundColor = CTAStyleKit.commonBackgroundColor
+        self.view.addSubview(headerView)
         
-        let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 2, width: 40, height: 40))
+        let accountLabel = UILabel.init(frame: CGRect.init(x: 0, y: 28, width: bounds.width, height: 28))
+        accountLabel.font = UIFont.boldSystemFontOfSize(18)
+        accountLabel.textColor = CTAStyleKit.normalColor
+        accountLabel.text = NSLocalizedString("AccountLabel", comment: "")
+        accountLabel.textAlignment = .Center
+        headerView.addSubview(accountLabel)
+        
+        let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 22, width: 40, height: 40))
         backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
         backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
         backButton.addTarget(self, action: #selector(CTAAccountSettingViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
-        self.view.addSubview(backButton)
+        headerView.addSubview(backButton)
         
-        let phoneView = UIView(frame: CGRect(x: 0, y: 64, width: bouns.width, height: 40))
+        var textLine = UIImageView.init(frame: CGRect.init(x: 0, y: 63, width: bounds.width, height: 1))
+        textLine.image = UIImage(named: "space-line")
+        headerView.addSubview(textLine)
+        
+        let phoneView = UIView(frame: CGRect(x: 0, y: 80, width: bounds.width, height: 40))
         let phoneTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: 9, width: 50, height: 22))
         phoneTitle.font = UIFont.systemFontOfSize(16)
-        phoneTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        phoneTitle.textColor = CTAStyleKit.normalColor
         phoneTitle.text = NSLocalizedString("PhoneLabel", comment: "")
         phoneTitle.sizeToFit()
         phoneView.addSubview(phoneTitle)
-        var nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
+        var nextImage = UIImageView.init(frame: CGRect.init(x: bounds.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         phoneView.addSubview(nextImage)
-        var textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 0, width: 330*self.getHorRate(), height: 1))
-        textLine.image = UIImage(named: "textinput-line")
-        phoneView.addSubview(textLine)
         textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
-        textLine.image = UIImage(named: "textinput-line")
+        textLine.image = UIImage(named: "space-line")
         phoneView.addSubview(textLine)
-        self.phoneNumberLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 9, width: bouns.width - 153*self.getHorRate() - 15, height: 22))
+        self.phoneNumberLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 9, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
         self.phoneNumberLabel.font = UIFont.systemFontOfSize(16)
-        self.phoneNumberLabel.textColor = UIColor.init(red: 108/255, green: 108/255, blue: 108/255, alpha: 1.0)
+        self.phoneNumberLabel.textColor = CTAStyleKit.labelShowColor
         self.phoneNumberLabel.textAlignment = .Right
         phoneView.addSubview(self.phoneNumberLabel)
         phoneView.userInteractionEnabled = true
@@ -94,22 +90,22 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
         phoneView.addGestureRecognizer(phoneTap)
         self.view.addSubview(phoneView)
         
-        let weChatView = UIView(frame: CGRect(x: 0, y: 104, width: bouns.width, height: 40))
+        let weChatView = UIView(frame: CGRect(x: 0, y: 120, width: bounds.width, height: 40))
         let weChatTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: 9, width: 50, height: 22))
         weChatTitle.font = UIFont.systemFontOfSize(16)
-        weChatTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        weChatTitle.textColor = CTAStyleKit.normalColor
         weChatTitle.text = NSLocalizedString("WechatLabel", comment: "")
         weChatTitle.sizeToFit()
         weChatView.addSubview(weChatTitle)
-        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
+        nextImage = UIImageView.init(frame: CGRect.init(x: bounds.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         weChatView.addSubview(nextImage)
         textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
-        textLine.image = UIImage(named: "textinput-line")
+        textLine.image = UIImage(named: "space-line")
         weChatView.addSubview(textLine)
-        self.wechatLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 9, width: bouns.width - 153*self.getHorRate() - 15, height: 22))
+        self.wechatLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 9, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
         self.wechatLabel.font = UIFont.systemFontOfSize(16)
-        self.wechatLabel.textColor = UIColor.init(red: 108/255, green: 108/255, blue: 108/255, alpha: 1.0)
+        self.wechatLabel.textColor = CTAStyleKit.labelShowColor
         self.wechatLabel.textAlignment = .Right
         weChatView.addSubview(self.wechatLabel)
         weChatView.userInteractionEnabled = true
@@ -117,22 +113,22 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
         weChatView.addGestureRecognizer(wechatTap)
         self.view.addSubview(weChatView)
         
-        let weiboView = UIView(frame: CGRect(x: 0, y: 144, width: bouns.width, height: 40))
+        let weiboView = UIView(frame: CGRect(x: 0, y: 160, width: bounds.width, height: 40))
         let weiboTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: 9, width: 50, height: 22))
         weiboTitle.font = UIFont.systemFontOfSize(16)
-        weiboTitle.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        weiboTitle.textColor = CTAStyleKit.normalColor
         weiboTitle.text = NSLocalizedString("WeiboLabel", comment: "")
         weiboTitle.sizeToFit()
         weiboView.addSubview(weiboTitle)
-        nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
+        nextImage = UIImageView.init(frame: CGRect.init(x: bounds.width - 25*self.getHorRate() - 5, y: 15, width: 6, height: 10))
         nextImage.image = UIImage(named: "next-icon")
         weiboView.addSubview(nextImage)
         textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: 39, width: 330*self.getHorRate(), height: 1))
-        textLine.image = UIImage(named: "textinput-line")
+        textLine.image = UIImage(named: "space-line")
         weiboView.addSubview(textLine)
-        self.weiboLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 9, width: bouns.width - 153*self.getHorRate() - 15, height: 22))
+        self.weiboLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 9, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
         self.weiboLabel.font = UIFont.systemFontOfSize(16)
-        self.weiboLabel.textColor = UIColor.init(red: 108/255, green: 108/255, blue: 108/255, alpha: 1.0)
+        self.weiboLabel.textColor = CTAStyleKit.labelShowColor
         self.weiboLabel.textAlignment = .Right
         weiboView.addSubview(self.weiboLabel)
         weiboView.userInteractionEnabled = true

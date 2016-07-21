@@ -36,6 +36,8 @@ struct TextAttributeName {
     static let shadowColorB = prefix + "shadowColorB"
     static let shadowColorA = prefix + "shadowColorA"
     static let shadowBlurRadius = "CTATextAttributeshadowBlurRadius"
+    static let needShadow = prefix + "needShadow"
+    static let needStroke = prefix + "needStroke"
 }
 
 //let defaultTextAttributes: [String: AnyObject] = [
@@ -84,6 +86,10 @@ final class CTATextAttributes:NSObject, NSCoding {
     var textShadowBlurRadius = 0.0
     var textShadowColorHex = "#000000"
     var textShadowColorAplha = 1.0
+    var textStrokeColorHex = "#000000" //TODO: Stroke Color  -- Emiaostein, 7/7/16, 14:52
+    var textStrokeWidth = -3.0 // 0.0 is no stroke, postion value is stroke only, negative is stroke and fill, typic value is -3.0
+    var needStroke = false
+    var needShadow = false
     
     var font: UIFont {
         
@@ -113,13 +119,30 @@ final class CTATextAttributes:NSObject, NSCoding {
         }()
         
         let textColor = UIColor(hexString: textColorHex, alpha: Float(textColorAlpha)) ?? UIColor.blackColor()
-        
-        return [
+
+        var attribe = [
             NSFontAttributeName: font,
             NSParagraphStyleAttributeName: paragraphStyle,
             NSForegroundColorAttributeName: textColor,
-            NSKernAttributeName: NSNumber(double: textKern)
+            NSKernAttributeName: NSNumber(double: textKern),
         ]
+        
+        if needStroke {
+            let strokeColor = UIColor(hexString: textStrokeColorHex) ?? UIColor.redColor()
+            attribe[NSStrokeWidthAttributeName] = textStrokeWidth
+            attribe[NSStrokeColorAttributeName] = strokeColor
+        }
+        
+        if needShadow {
+            let shadow = NSShadow()
+            let shadowColor = UIColor(hexString: textShadowColorHex) ?? UIColor.blueColor()
+            shadow.shadowBlurRadius = 0.0
+            shadow.shadowColor = shadowColor
+            shadow.shadowOffset = CGSize(width: 1, height: 2)
+            attribe[NSShadowAttributeName] = shadow
+        }
+        
+        return attribe
     }
     
     func fontWithFontFamily(family: String, fontName name: String) -> UIFont {
@@ -230,6 +253,10 @@ final class CTATextAttributes:NSObject, NSCoding {
         
     }
     
+//    func textAttributesWithNeedShadow(needShadow: Bool, needStroke:) -> [String: AnyObject] {
+//        
+//    }
+    
     func textAttributesWithLineSpacing(lineSpacing: CGFloat, textSpacing: CGFloat) -> [String: AnyObject] {
         
         let afont = font
@@ -292,6 +319,8 @@ final class CTATextAttributes:NSObject, NSCoding {
         aCoder.encodeDouble(textShadowBlurRadius, forKey: TextAttributeName.shadowBlurRadius)
         aCoder.encodeObject(textShadowColorHex, forKey: TextAttributeName.shadowColor)
         aCoder.encodeDouble(textShadowColorAplha, forKey: TextAttributeName.shadowColorA)
+        aCoder.encodeBool(needShadow, forKey: TextAttributeName.needShadow)
+        aCoder.encodeBool(needStroke, forKey: TextAttributeName.needStroke)
     }
     
     init?(coder aDecoder: NSCoder) {
@@ -309,6 +338,8 @@ final class CTATextAttributes:NSObject, NSCoding {
         textShadowBlurRadius = aDecoder.decodeDoubleForKey(TextAttributeName.shadowBlurRadius)
         textShadowColorHex = aDecoder.decodeObjectForKey(TextAttributeName.shadowColor) as! String
         textShadowColorAplha = aDecoder.decodeDoubleForKey(TextAttributeName.shadowColorA)
+        needShadow = aDecoder.decodeBoolForKey(TextAttributeName.needShadow) ?? false
+        needStroke = aDecoder.decodeBoolForKey(TextAttributeName.needStroke) ?? false
     }
     
     override init() {
@@ -593,6 +624,27 @@ extension CTATextElement: TextModifiable {
         return CGFloat(attributes.textShadowBlurRadius)
     }
     
+    var needShadow: Bool {
+        get {
+            return attributes.needShadow
+        }
+        
+        set {
+            attributes.needShadow = newValue
+        }
+    }
+    var needStroke: Bool {
+        get {
+            return attributes.needStroke
+        }
+        
+        set {
+            attributes.needStroke = newValue
+        }
+    }
+    
+    
+    
     func attributeStringWithText(atext: String) -> NSAttributedString {
         
         return NSAttributedString(string: atext, attributes: attributes.textAttributes)
@@ -617,5 +669,10 @@ extension CTATextElement: TextModifiable {
         
         return NSAttributedString(string: texts, attributes: attributes.textAttributesWithLineSpacing(lineSpacing, textSpacing: textSpacing))
     }
+    
+//    func attributeStringWithNeedShadow(needShadow: Bool, needStroke: Bool) -> NSAttributedString {
+//        
+//        return NSAttributedString(string: texts, attributes: attributes)
+//    }
     
 }

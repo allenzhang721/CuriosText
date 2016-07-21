@@ -12,22 +12,27 @@ final class CTAImgElement: NSObject, NSCoding {
     
     struct ImgElementKey {
         static let imageName = "imageName"
+        static let filterName = "filterName"
     }
     
     private let imageName: String
+    private var filterName: String = ""
     
     init?(coder aDecoder: NSCoder) {
         imageName = aDecoder.decodeObjectForKey(ImgElementKey.imageName) as! String
+        filterName = aDecoder.decodeObjectForKey(ImgElementKey.filterName) as? String ?? ""
 
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(imageName, forKey: ImgElementKey.imageName)
+        aCoder.encodeObject(filterName, forKey: ImgElementKey.filterName)
     }
     
     // TODO: need ImgElement init parameter -- Emiaostein, 15/02/16, 14:31
-    init(imageName: String) {
+    init(imageName: String, filterName: String = "") {
         self.imageName = imageName
+        self.filterName = filterName
         super.init()
     }
 }
@@ -68,11 +73,17 @@ extension CTAImgElement: CTAElement {
     
     func resultWithImgSize(originSize: CGSize, scale: CGFloat, containerSize: CGSize, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize) {
         
-        
-        let s = max(
-            containerSize.width / originSize.width,
-            containerSize.height / originSize.height)
-        
+        let s: CGFloat
+        if containerSize.width >= constraintSize.width && containerSize.height >= constraintSize.height {
+            s = min(
+                containerSize.width / originSize.width,
+                containerSize.height / originSize.height)
+        } else {
+             s = max(
+                containerSize.width / originSize.width,
+                containerSize.height / originSize.height)
+        }
+
         let nextWidth = originSize.width * s
         let nextHeight = originSize.height * s
         

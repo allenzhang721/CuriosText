@@ -13,10 +13,13 @@ pod 'MJRefresh', '~> 3.0.7'
 pod 'pop', '~> 1.0.8'
 pod 'MonkeyKing', '~> 0.9.2'
 pod 'KeyboardMan', '~> 0.5.2'
-pod 'PromiseKit', '~> 3.1.1’
-pod 'SVProgressHUD', '~> 2.0-beta8'
-pod "WeiboSDK", :git => "https://github.com/sinaweibosdk/weibo_ios_sdk.git"
+pod 'SVProgressHUD', '~> 2.0.3'
+pod 'PromiseKit', '~> 3.2.1'
+# pod 'WeiboSDK', :git => 'https://github.com/sinaweibosdk/weibo_ios_sdk.git'
+pod 'WeiboSDK', :podspec => 'https://raw.githubusercontent.com/liu3399shuai/weibo_podspec/master/WeiboSDK.podspec'
 pod 'FLAnimatedImage', '~> 1.0.12'
+pod 'CYLTabBarController'
+pod 'Zip', '~> 0.4.1'
 end
 
 target 'CuriosTextAppTests' do
@@ -25,5 +28,9 @@ end
 
 target 'CuriosTextAppUITests' do
 
+end
+
+post_install do |installer|
+`find Pods -regex 'Pods/pop.*\\.h' -print0 | xargs -0 sed -i '' 's/\\(<\\)pop\\/\\(.*\\)\\(>\\)/\\"\\2\\"/'`
 end
 

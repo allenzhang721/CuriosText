@@ -12,9 +12,11 @@ protocol CTALoadingProtocol{
     var loadingImageView:UIImageView?{get}
     func showLoadingView()
     func showLoadingViewByView(centerView:UIView)
+    func showLoadingViewInView(centerView:UIView)
     func showLoadingViewByRect(rect:CGRect)
     func hideLoadingView()
     func hideLoadingViewByView(centerView:UIView)
+    func hideLoadingViewInView(centerView:UIView)
     func getLoadingImages() -> [UIImage]
 }
 
@@ -41,6 +43,18 @@ extension CTALoadingProtocol where Self: UIViewController{
         }
     }
     
+    func showLoadingViewInView(centerView:UIView){
+        let viewFrame = centerView.frame
+        let indicaW = viewFrame.width>viewFrame.height ? viewFrame.height : viewFrame.width
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.frame = CGRectMake(0, 0, indicaW, indicaW)
+        activityIndicator.activityIndicatorViewStyle = .Gray
+        activityIndicator.center = CGPointMake(viewFrame.width / 2, viewFrame.height / 2)
+        centerView.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        self.view.userInteractionEnabled = false
+    }
+    
     func showLoadingViewByRect(rect:CGRect){
         if self.loadingImageView != nil {
             self.loadingImageView!.center = CGPoint(x: (rect.origin.x + rect.width/2), y: (rect.origin.y + rect.height/2))
@@ -63,6 +77,16 @@ extension CTALoadingProtocol where Self: UIViewController{
             centerView.hidden = false
             self.hideLoadingView()
         }
+    }
+    
+    func hideLoadingViewInView(centerView:UIView){
+        let subVies = centerView.subviews
+        let subView = subVies[subVies.count-1]
+        if subView is UIActivityIndicatorView{
+            (subView as! UIActivityIndicatorView).stopAnimating()
+            subView.removeFromSuperview()
+        }
+        self.view.userInteractionEnabled = true
     }
     
     func getLoadingImages() -> [UIImage]{

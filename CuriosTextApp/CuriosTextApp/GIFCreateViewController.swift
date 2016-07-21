@@ -206,6 +206,7 @@ extension GIFCreateViewController {
     func setupViews() {
         aniCanvasView = AniPlayCanvasView(frame: CGRect(origin: CGPoint(x: 0, y: 44), size: canvas.size))
         aniCanvasView.dataSource = canvas
+        aniCanvasView.changeDataSource()
         aniCanvasView.aniDataSource = canvas
         view.addSubview(aniCanvasView) // debug
         if let fakeView = fakeView {

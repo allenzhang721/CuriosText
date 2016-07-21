@@ -25,7 +25,7 @@ extension CTAPhoneProtocol where Self: UIViewController{
     func initPhoneView(){
         let bouns = UIScreen.mainScreen().bounds
 
-        self.countryNameLabel.frame = CGRect.init(x: 128*self.getHorRate(), y: 162*self.getVerRate(), width: 230*self.getHorRate(), height: 25)
+        self.countryNameLabel.frame = CGRect.init(x: 128*self.getHorRate(), y: 182*self.getVerRate(), width: 230*self.getHorRate(), height: 25)
         self.countryNameLabel.font = UIFont.systemFontOfSize(16)
         self.countryNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.countryNameLabel.userInteractionEnabled = true
@@ -41,7 +41,7 @@ extension CTAPhoneProtocol where Self: UIViewController{
         nextImage.image = UIImage(named: "next-icon")
         self.view.addSubview(nextImage)
         var textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.countryNameLabel.frame.origin.y+37, width: 330*self.getHorRate(), height: 1))
-        textLine.image = UIImage(named: "textinput-line")
+        textLine.image = UIImage(named: "space-line")
         self.view.addSubview(textLine)
         
         
@@ -51,7 +51,7 @@ extension CTAPhoneProtocol where Self: UIViewController{
         self.phoneTextinput.keyboardType = .NumberPad
         self.phoneTextinput.clearButtonMode = .WhileEditing
         textLine = UIImageView.init(frame: CGRect.init(x: 125*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+49, width: 230*self.getHorRate(), height: 1))
-        textLine.image = UIImage(named: "textinput-line")
+        textLine.image = UIImage(named: "space-line")
         self.view.addSubview(textLine)
         
         self.areaCodeLabel.frame = CGRect.init(x: 27*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+12, width: 50, height: 25)
@@ -59,7 +59,7 @@ extension CTAPhoneProtocol where Self: UIViewController{
         self.areaCodeLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.areaCodeLabel)
         textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+49, width: 90*self.getHorRate(), height: 1))
-        textLine.image = UIImage(named: "textinput-line")
+        textLine.image = UIImage(named: "space-line")
         self.view.addSubview(textLine)
     }
     
@@ -87,7 +87,7 @@ extension CTAPhoneProtocol where Self: UIViewController{
     func getCountryModelByCode(code:String) -> CountryZone?{
         let allCountryLocale = LocaleHelper.allCountriesFromLocalFile()
         for (_, array) in allCountryLocale {
-            for var i=0; i < array.count; i++ {
+            for i in 0..<array.count{
                 if array[i].zoneCode == code {
                     return array[i]
                 }
@@ -159,7 +159,7 @@ protocol CTATextInputProtocol{
 extension CTATextInputProtocol where Self: UIViewController{
     func resignView(){
         let subViews = self.view.subviews
-        for var i=0 ; i<subViews.count; i++ {
+        for i in 0..<subViews.count{
             if subViews[i] is UITextField {
                 (subViews[i] as! UITextField).resignFirstResponder()
             }
@@ -169,7 +169,7 @@ extension CTATextInputProtocol where Self: UIViewController{
     func resignHandler(sender: UIGestureRecognizer){
         var isHave:Bool = false
         let subViews = self.view.subviews
-        for var i=0; i<subViews.count; i++ {
+        for i in 0..<subViews.count{
             let view = subViews[i]
             let pt = sender.locationInView(view)
             if view.pointInside(pt, withEvent: nil){

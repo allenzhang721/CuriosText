@@ -14,8 +14,11 @@
 #import "AESCrypt.h"
 #import "WXApi.h"
 #import "WXApiObject.h"
-#import "ANGifEncoder.h"
-#import "ANGifBitmap.h"
+//#import "ANGifEncoder.h"
+//#import "ANGifBitmap.h"
 #import "WeiboSDK.h"
+#import <CYLTabBarController/CYLTabBarController.h>
+#import <CYLTabBarController/CYLTabBar.h>
+#import <CYLTabBarController/CYLPlusButton.h>
 
 #endif /* CuriosTextApp_Bridging_Header_h */

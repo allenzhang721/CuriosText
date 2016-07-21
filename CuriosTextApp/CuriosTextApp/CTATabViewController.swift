@@ -45,6 +45,14 @@ class CTATabViewController: UIViewController {
         
         view.backgroundColor = CTAStyleKit.commonBackgroundColor
     }
+    
+    deinit {
+        print("\(#file) deinit")
+    }
+    
+    func refreshItemIfNeed() {
+        collectionView.reloadData()
+    }
 }
 
 extension CTATabViewController: UICollectionViewDataSource {

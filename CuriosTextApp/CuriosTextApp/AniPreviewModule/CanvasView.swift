@@ -11,18 +11,18 @@ import UIKit
 let canvasItemIdentifier = "com.emiaostein.containerIdentifier"
 class CanvasView: UIView {
     
-    weak var dataSource: protocol<UICollectionViewDataSource, CanvasLayoutDataSource>? {
-        didSet {
-            layout.dataSource = dataSource
-            collectionView.dataSource = dataSource
-        }
-    }
+    weak var dataSource: protocol<UICollectionViewDataSource, CanvasLayoutDataSource>?
     weak var delegate: UICollectionViewDelegate? {
         didSet { collectionView.delegate = delegate }
     }
     private let collectionView: UICollectionView
     private var layout: CanvasLayout {
         return collectionView.collectionViewLayout as! CanvasLayout
+    }
+    
+    func changeDataSource() {
+        layout.dataSource = dataSource
+        collectionView.dataSource = dataSource
     }
     
     override init(frame: CGRect) {
@@ -60,10 +60,11 @@ extension CanvasView {
     
     func reloadData(completed:(() -> ())?) {
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
-            guard let sf = self else {return}
+            guard let sf = self where sf.collectionView.dataSource?.collectionView(sf.collectionView, numberOfItemsInSection: 0) > 0 else {return}
             CATransaction.begin()
             CATransaction.setDisableActions(true)
 //            sf.collectionView.reloadData()
+            
             sf.collectionView.reloadSections(NSIndexSet(index: 0))
             CATransaction.commit()
         
