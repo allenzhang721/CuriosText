@@ -47,7 +47,6 @@
 		2C22FAC21C7C299C00667295 /* CTAGradientButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C22FAC11C7C299C00667295 /* CTAGradientButtonView.swift */; };
 		2C247FE91C5CA10E0069CFFC /* CTASelectorAnimationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C247FE81C5CA10E0069CFFC /* CTASelectorAnimationCell.swift */; };
 		2C247FEB1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C247FEA1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift */; };
-		2C2AA34D1D3F81AF004006EA /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2AA34C1D3F81AF004006EA /* PromiseKit.framework */; };
 		2C2B45AA1C5CBCC8004A4809 /* CTALoginProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B45A91C5CBCC8004A4809 /* CTALoginProtocol.swift */; };
 		2C2B45AE1C5CBD16004A4809 /* CTAPublishProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B45AD1C5CBD16004A4809 /* CTAPublishProtocol.swift */; };
 		2C2B45B01C5CBED1004A4809 /* LocaleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B45AF1C5CBED1004A4809 /* LocaleHelper.swift */; };
@@ -474,7 +473,6 @@
 		2C22FAC11C7C299C00667295 /* CTAGradientButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAGradientButtonView.swift; sourceTree = "<group>"; };
 		2C247FE81C5CA10E0069CFFC /* CTASelectorAnimationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTASelectorAnimationCell.swift; sourceTree = "<group>"; };
 		2C247FEA1C5CA5550069CFFC /* CTALabelCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTALabelCollectionViewCell.swift; sourceTree = "<group>"; };
-		2C2AA34C1D3F81AF004006EA /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PromiseKit.framework; sourceTree = "<group>"; };
 		2C2B45A91C5CBCC8004A4809 /* CTALoginProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTALoginProtocol.swift; sourceTree = "<group>"; };
 		2C2B45AD1C5CBD16004A4809 /* CTAPublishProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAPublishProtocol.swift; sourceTree = "<group>"; };
 		2C2B45AF1C5CBED1004A4809 /* LocaleHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleHelper.swift; sourceTree = "<group>"; };
@@ -886,7 +884,6 @@
 				2C1A121E1CE014FD0071BD35 /* libWeiboSDK.a in Frameworks */,
 				2CC74C981C5A27F800B536C2 /* MessageUI.framework in Frameworks */,
 				2CC74C931C5A275C00B536C2 /* MOBFoundation.framework in Frameworks */,
-				2C2AA34D1D3F81AF004006EA /* PromiseKit.framework in Frameworks */,
 				2CC74C941C5A275C00B536C2 /* SMS_SDK.framework in Frameworks */,
 				2C6017BD1C59D84C00EEB804 /* MonkeyKing.framework in Frameworks */,
 				2CD488171C4E53E500D11CB7 /* pop.framework in Frameworks */,
@@ -1115,7 +1112,6 @@
 				2C3B33DD1C1176D000738166 /* CuriosTextAppTests */,
 				2C3B33E81C1176D000738166 /* CuriosTextAppUITests */,
 				2C3B33C71C1176D000738166 /* Products */,
-				2CE35BDC1D3F708800E4D5DE /* PromiseKit3.2.1 */,
 				2CB66A971CD86F6C006B9282 /* WechatSDK1.7 */,
 				2C1A12101CE014FD0071BD35 /* libWeiboSDK */,
 				2CC74C8C1C5A275C00B536C2 /* SMS_SDK */,
@@ -1780,15 +1776,6 @@
 			);
 			name = m_ImagePicker;
 			path = ImagePicker;
-			sourceTree = "<group>";
-		};
-		2CE35BDC1D3F708800E4D5DE /* PromiseKit3.2.1 */ = {
-			isa = PBXGroup;
-			children = (
-				2C2AA34C1D3F81AF004006EA /* PromiseKit.framework */,
-			);
-			name = PromiseKit3.2.1;
-			path = WechatSDK1.6.2;
 			sourceTree = "<group>";
 		};
 		2CF4D4181CBE38B0001DC7C4 /* FontManager */ = {

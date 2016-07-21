@@ -29,7 +29,26 @@ PODS:
   - Locksmith (2.0.2)
   - MJRefresh (3.0.8)
   - MonkeyKing (0.9.2)
+  - OMGHTTPURLRQ (3.1.2):
+    - OMGHTTPURLRQ/RQ (= 3.1.2)
+  - OMGHTTPURLRQ/FormURLEncode (3.1.2)
+  - OMGHTTPURLRQ/RQ (3.1.2):
+    - OMGHTTPURLRQ/FormURLEncode
+    - OMGHTTPURLRQ/UserAgent
+  - OMGHTTPURLRQ/UserAgent (3.1.2)
   - pop (1.0.8)
+  - PromiseKit (3.2.1):
+    - PromiseKit/Foundation (= 3.2.1)
+    - PromiseKit/QuartzCore (= 3.2.1)
+    - PromiseKit/UIKit (= 3.2.1)
+  - PromiseKit/CorePromise (3.2.1)
+  - PromiseKit/Foundation (3.2.1):
+    - OMGHTTPURLRQ (~> 3.1.0)
+    - PromiseKit/CorePromise
+  - PromiseKit/QuartzCore (3.2.1):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (3.2.1):
+    - PromiseKit/CorePromise
   - Qiniu (7.0.16):
     - AFNetworking (~> 2.0)
     - HappyDNS (~> 0.2)
@@ -48,6 +67,7 @@ DEPENDENCIES:
   - MJRefresh (~> 3.0.7)
   - MonkeyKing (~> 0.9.2)
   - pop (~> 1.0.8)
+  - PromiseKit (~> 3.2.1)
   - Qiniu (~> 7.0)
   - SVProgressHUD (~> 2.0.3)
   - SwiftyJSON (~> 2.3.2)
@@ -74,13 +94,15 @@ SPEC CHECKSUMS:
   Locksmith: 7f2b68448449a7712348f9a4ed60604c1cc8dfa6
   MJRefresh: fafde8f18f4afd66b434331a9beb67a6c0264056
   MonkeyKing: 2cf420f9202a51714734374c97d96cf496e7ae2b
+  OMGHTTPURLRQ: 38316b56d88125c600bcdb16df8329147da2b0ee
   pop: bb773ae2c791ca2629de13b347e7a8b450fa6a57
+  PromiseKit: ef54f61501541bf18a87b25115c372184d180cea
   Qiniu: 51a8702cddc02b50867e10cef99291b9a8a006b1
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   WeiboSDK: d4a15a3a1ab74d578fd7cb5da91bad36ba602ad2
   Zip: 5bbe261a6c2c41b7b4e8e55c4a0a03be68ab4c4c
 
-PODFILE CHECKSUM: e7e6039b1186bce332027e12b2971e6b60ec425f
+PODFILE CHECKSUM: 66b28e235d058f4f502df8e087f48e5e8136f3ab
 
 COCOAPODS: 1.0.1
