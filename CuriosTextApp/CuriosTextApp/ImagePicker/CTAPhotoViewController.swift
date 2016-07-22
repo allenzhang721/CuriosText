@@ -714,6 +714,7 @@ extension CTAPhotoViewController: UICollectionViewDelegate {
             } else {
                 let trigdistance = inner.triggScrollDistance
                 previewScroll(.End(translation: trigdistance))
+                
             }
             inner.beganScrollPanPosition = nil
         }
