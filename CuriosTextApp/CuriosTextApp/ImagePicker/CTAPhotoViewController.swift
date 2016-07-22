@@ -662,13 +662,20 @@ extension CTAPhotoViewController: UICollectionViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
         if scrollView.contentOffset.y <= 0 && scrollView.tracking {
-            previewScroll(.Scroll(deltaY: 6))
+            if scrollView.dragging {
+                previewScroll(.Scroll(deltaY: 6))
+            }
         } else {
             if let position = inner.beganScrollPanPosition {
-                let nextLocation = scrollView.panGestureRecognizer.locationInView(view)
-                let translation = position.y - nextLocation.y
-                previewScroll(.Scroll(deltaY: -translation))
-                inner.beganScrollPanPosition = nextLocation
+                if scrollView.contentOffset.y + scrollView.bounds.height < scrollView.contentSize.height {
+                    let nextLocation = scrollView.panGestureRecognizer.locationInView(view)
+                    let translation = position.y - nextLocation.y
+                    previewScroll(.Scroll(deltaY: -translation))
+                    inner.beganScrollPanPosition = nextLocation
+                } else {
+                    
+                }
+                
             } else {
                 let location = scrollView.panGestureRecognizer.locationInView(previewView)
                 let ignoreRect = previewView.ignoreRect
@@ -699,9 +706,15 @@ extension CTAPhotoViewController: UICollectionViewDelegate {
         
         if let p = inner.beganScrollPanPosition {
             
-            let position = scrollView.panGestureRecognizer.locationInView(view)
-            let offset = position.y - p.y
-            previewScroll(.End(translation: offset))
+            
+            if scrollView.contentOffset.y + scrollView.bounds.height < scrollView.contentSize.height {
+                let position = scrollView.panGestureRecognizer.locationInView(view)
+                let offset = position.y - p.y
+                previewScroll(.End(translation: offset))
+            } else {
+                let trigdistance = inner.triggScrollDistance
+                previewScroll(.End(translation: trigdistance))
+            }
             inner.beganScrollPanPosition = nil
         }
     }
