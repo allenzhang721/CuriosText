@@ -16,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        loadFilters()
 
         setup()
         SVProgressHUD.setMinimumDismissTimeInterval(1)
@@ -25,6 +27,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
         
         return true
+    }
+    
+    func loadFilters() {
+        
+        let bundle = NSBundle.mainBundle().bundleURL
+        let manager = FilterManager()
+        manager.loadDefaultFilters()
+        manager.filters.forEach{$0.createData(fromColorDirAt: bundle, complation: nil)}
+        
+        
     }
     
     func setup() {

@@ -52,7 +52,10 @@ class CTASelectorFiltersCell: CTASelectorCell {
     override func willBeDisplayed() {
         if first {
             first = false
-            collectionView.selectItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: .None)
+            let index = dataSource?.selectorBeganFilter(self) ?? 0
+            dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                self?.collectionView.selectItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
+            })
         } else {
             reloadData()
         }

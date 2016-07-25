@@ -47,7 +47,7 @@ class CTATempateListViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
             guard let sf = self else {return}
             if sf.collectionView.dataSource?.collectionView(sf.collectionView, numberOfItemsInSection: 0) > 0 {
-                sf.collectionView.reloadItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
+                sf.collectionView.reloadData()
                 dispatch_async(dispatch_get_main_queue(), {
                     if let selectedItem = sf.collectionView.indexPathsForSelectedItems()?.first {
                         sf.collectionView.selectItemAtIndexPath(selectedItem, animated: false, scrollPosition: .None)

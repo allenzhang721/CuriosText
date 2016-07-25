@@ -52,6 +52,12 @@ class CTADocument: UIDocument {
         return ""
     }
     
+    var cacheImagePath: NSURL {
+        let fileManager = NSFileManager.defaultManager()
+        let cache = fileManager.URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).first!
+        return cache
+    }
+    
     var imagePath: NSURL {
         return fileURL.URLByAppendingPathComponent(WrapperKey.resource)
     }

@@ -12,6 +12,7 @@ protocol CTASelectorsViewControllerDataSource: class {
     func selectorsViewControllerContainer(viewcontroller: CTASelectorsViewController) -> ContainerVMProtocol?
     func selectorsViewControllerAnimation(ViewController: CTASelectorsViewController) -> CTAAnimationBinder?
     func selectorsViewController(viewController: CTASelectorsViewController, needChangedFromSelectorType type: CTAContainerFeatureType) -> CTAContainerFeatureType
+    func selectorsViewControllerFilter(ViewController: CTASelectorsViewController) -> Int
 }
 
 protocol CTASelectorable: class {
@@ -318,6 +319,10 @@ extension CTASelectorsViewController: CTASelectorDataSource {
     func selectorBeganAnimation(cell: CTASelectorCell) -> CTAAnimationBinder? {
         
         return dataSource?.selectorsViewControllerAnimation(self)
+    }
+    
+    func selectorBeganFilter(cell: CTASelectorCell) -> Int {
+        return dataSource?.selectorsViewControllerFilter(self) ?? 0
     }
 }
 
