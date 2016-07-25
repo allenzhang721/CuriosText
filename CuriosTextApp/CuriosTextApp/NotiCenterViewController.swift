@@ -434,11 +434,11 @@ extension NotiCenterViewController {
 //                textView.textContainerInset.bottom = 0
 //                textView.textContainerInset.top = 0
                 if comment.noticeTypeID == 0{
-                    textView.textColor = CTAStyleKit.disableColor
                     textView.text = LocalStrings.DeleteComment.description
+                    textView.textColor = CTAStyleKit.disableColor
                 }else {
-                    textView.textColor = CTAStyleKit.normalColor
                     textView.text = comment.text
+                    textView.textColor = CTAStyleKit.normalColor
                 }
             }
         } else {
