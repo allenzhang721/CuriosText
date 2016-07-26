@@ -127,6 +127,8 @@ class NotiCenterViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NotiCenterViewController.refreshView(_:)), name: "refreshSelf", object: nil)
+        
+        tableView.tableFooterView = UIView()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -135,8 +137,6 @@ class NotiCenterViewController: UIViewController {
             self.headerFresh.beginRefreshing()
         }
         self.notFresh = true
-        
-        footViewIfNeed()
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -178,16 +178,6 @@ class NotiCenterViewController: UIViewController {
         self.footerFresh.setTitle("", forState: .NoMoreData)
         self.footerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Refreshing)
         self.tableView.mj_footer = footerFresh;
-    }
-    
-    private func footViewIfNeed() {
-        if messages.count <= 0 {
-            let v = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-            v.alpha = 0
-            tableView.tableFooterView = v
-        } else {
-            tableView.tableFooterView = nil
-        }
     }
     
     private func showAlert() {
@@ -314,10 +304,6 @@ extension NotiCenterViewController: UITableViewDataSource {
             if info.result {
                 self?.messages.removeAtIndex(indexPath.item)
                 self?.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
-                
-                dispatch_async(dispatch_get_main_queue(), { 
-                    self?.footViewIfNeed()
-                })
             }
         }
     }
@@ -636,9 +622,6 @@ extension NotiCenterViewController {
                 self.footerFresh.endRefreshing()
             }
         }
-        
-        footViewIfNeed()
-        
     }
 
 }
