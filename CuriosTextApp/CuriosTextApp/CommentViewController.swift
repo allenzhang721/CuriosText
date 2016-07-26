@@ -107,6 +107,10 @@ class CommentViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
+//        if tableView.tableFooterView == nil {
+            tableView.tableFooterView = UIView()
+//        }
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -172,6 +176,8 @@ class CommentViewController: UIViewController {
             }
         }
         commentPublisher()
+        
+        
         
         let pan = UIPanGestureRecognizer(target: self, action: #selector(viewPanHandler(_:)))
         pan.maximumNumberOfTouches = 1
@@ -327,6 +333,7 @@ extension CommentViewController {
 //                    self?.commentFeedBack(true)
                     self?.comments.insert(comment, atIndex: 0)
                     self?.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)], withRowAnimation: .Right)
+                    
                 })
             } else {
 //                self?.commentFeedBack(false)
@@ -387,8 +394,8 @@ extension CommentViewController {
                 self.comments.append(model)
             }
         }
-        dispatch_async(dispatch_get_main_queue(), {
-            self.tableView.reloadData()
+        dispatch_async(dispatch_get_main_queue(), {[weak self] in
+            self?.tableView.reloadData()
         })
     }
     
@@ -415,6 +422,8 @@ extension CommentViewController {
                 self.footerFresh.endRefreshing()
             }
         }
+        
+        
     }
     
     func viewPanHandler(sender: UIPanGestureRecognizer) {
