@@ -43,10 +43,10 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
     var isHideSelectedCell:Bool = false
     
     let collectionSpace:CGFloat = 5
-
-    var isFreshToTop:Bool = false
     
     let scrollTop:CGFloat = -20.00
+    
+    let headerY:CGFloat  = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,20 +95,24 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
     func initHeader(){
         let bounds = UIScreen.mainScreen().bounds
         
-        self.headerView = UIView(frame: CGRect(x: 0, y: 20, width: bounds.width, height: 44))
+        self.headerView = UIView(frame: CGRect(x: 0, y: self.headerY, width: bounds.width, height: 64-self.headerY))
         self.headerView.backgroundColor = CTAStyleKit.commonBackgroundColor
         self.view.addSubview(self.headerView)
         
-        let homeLabel = UILabel(frame: CGRect(x: 0, y: 8, width: bounds.width, height: 28))
+        let homeLabel = UILabel(frame: CGRect(x: 0, y: 28-self.headerY, width: bounds.width, height: 28))
         homeLabel.font = UIFont.boldSystemFontOfSize(18)
         homeLabel.textColor = CTAStyleKit.normalColor
         homeLabel.text = NSLocalizedString("DefaultName", comment: "")
         homeLabel.textAlignment = .Center
         self.headerView.addSubview(homeLabel)
-        let textLine = UIImageView(frame: CGRect(x: 0, y: 43, width: bounds.width, height: 1))
+        let textLine = UIImageView(frame: CGRect(x: 0, y: 63-self.headerY, width: bounds.width, height: 1))
         textLine.image = UIImage(named: "space-line")
         headerView.addSubview(textLine)
         self.view.addSubview(self.headerView)
+        
+        self.headerView.userInteractionEnabled = true
+        let headerTap = UITapGestureRecognizer(target: self, action: #selector(headerViewClickClick(_:)))
+        self.headerView.addGestureRecognizer(headerTap)
     }
     
     func initCollectionView(){
@@ -178,7 +182,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
     }
     
     func resetViewPosition(){
-        self.headerView.frame.origin.y = 20
+        self.headerView.frame.origin.y = self.headerY
         self.headerView.alpha = 1
         self.collectionView.frame.origin.y = 46
     }
@@ -189,6 +193,10 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         }else {
             self.loginUser = nil
         }
+    }
+    
+    func headerViewClickClick(sender: UIPanGestureRecognizer){
+        
     }
     
     func getLoadCellData(){
@@ -231,7 +239,6 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
     
     func refreshView(noti: NSNotification){
         if self.collectionView.contentOffset.y > self.scrollTop{
-            self.isFreshToTop = true
             self.collectionView.setContentOffset(CGPoint(x: 0, y: self.scrollTop), animated: true)
         }else {
             self.headerFresh.beginRefreshing()
@@ -413,35 +420,25 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     
     //scroll view hide tool bar
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        var toolBarViewframe = self.headerView.frame
-        var collectViewFrame = self.collectionView.frame
-        let size  = toolBarViewframe.height
-        let framePercentageHidden = ( (20-toolBarViewframe.origin.y) / size)
+        let toolBarViewframe = self.headerView.frame
+        let collectViewFrame = self.collectionView.frame
+        let size  = toolBarViewframe.height - 20
         let scrollOffset = self.collectionView.contentOffset.y
         let scrollDiff   = scrollOffset - self.previousScrollViewYOffset
         let scrollHeight = collectViewFrame.size.height
         let scrollContentSizeHeight = self.collectionView.contentSize.height + self.collectionView.contentInset.bottom
+        var frameY:CGFloat = 0.0
         if scrollOffset <= -self.collectionView.contentInset.top {
-            toolBarViewframe.origin.y = 20
+            frameY = self.headerY
         }else if (scrollOffset + scrollHeight) >= scrollContentSizeHeight {
-            toolBarViewframe.origin.y = -size+20
+            frameY = -size+self.headerY
         } else {
-            toolBarViewframe.origin.y = min(20, max(-size+20, toolBarViewframe.origin.y - scrollDiff));
+            frameY = min(self.headerY, max(-size+self.headerY, toolBarViewframe.origin.y - scrollDiff));
         }
-        collectViewFrame.origin.y = size + toolBarViewframe.origin.y - 18
-        collectViewFrame.size.height = UIScreen.mainScreen().bounds.height - collectViewFrame.origin.y
-        self.headerView.frame = toolBarViewframe
-        self.collectionView.frame = collectViewFrame
-        self.updateBarButtonsAlpha(1-framePercentageHidden)
+        self.changeColloetionNavBar(frameY)
         self.previousScrollViewYOffset = scrollOffset
         let viewY = collectViewFrame.origin.y
         self.playCellAnimation(scrollOffset - viewY)
-        if scrollOffset <= self.scrollTop{
-            if self.isFreshToTop{
-                self.headerFresh.beginRefreshing()
-                self.isFreshToTop = false
-            }
-        }
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
@@ -457,9 +454,10 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     func stoppedScrolling(){
         let frame = self.headerView.frame
         if frame.origin.y < 0 {
-            self.animationNavBarTo((20-frame.size.height))
+            let size  = frame.height - 20
+            self.animationNavBarTo((self.headerY-size))
         }else {
-            self.animationNavBarTo(20)
+            self.animationNavBarTo(self.headerY)
         }
     }
     
@@ -485,9 +483,11 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         collectViewFrame.size.height = self.view.frame.height - collectViewFrame.origin.y
         self.headerView.frame = toolBarViewframe
         self.collectionView.frame = collectViewFrame
-        let alpha:CGFloat = (y == 20 ? 1.0 : 0.0)
+        let size  = toolBarViewframe.height - 20
+        let alpha:CGFloat = 1 - ((self.headerY-y) / size)
         self.updateBarButtonsAlpha(alpha)
     }
+
 //    
 //    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
 //        let index = indexPath.row
@@ -798,7 +798,7 @@ extension HomeViewController: PublishDetailViewDelegate{
                 currentIndex = i
             }
         }
-        self.changeColloetionNavBar(20)
+        self.changeColloetionNavBar(self.headerY)
         let boundsHeight = self.collectionView.frame.size.height
         let totalIndex = self.publishModelArray.count - 1
         let cellRect = self.getCollectionCellSizeByPublish()
@@ -820,7 +820,7 @@ extension HomeViewController: PublishDetailViewDelegate{
         self.isHideSelectedCell = true
         self.collectionView.reloadData()
         self.collectionView.contentOffset.y = scrollOffY
-        self.changeColloetionNavBar(20)
+        self.changeColloetionNavBar(self.headerY)
         
         let cellY = CGFloat(currentLineIndex) * (space + cellRect.height) - scrollOffY + self.collectionView.frame.origin.y
         let currentRect = CGRect(x: 0, y: cellY+50, width: cellRect.width, height: cellRect.height - 150)

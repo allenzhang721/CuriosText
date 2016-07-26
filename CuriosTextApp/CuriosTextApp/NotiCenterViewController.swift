@@ -101,7 +101,6 @@ class NotiCenterViewController: UIViewController {
     var notFresh:Bool = false
     
     let scrollTop:CGFloat = -20.00
-    var isFreshToTop:Bool = false
     
     var isLoadedAll:Bool = false
     var isLoading:Bool = false
@@ -133,9 +132,7 @@ class NotiCenterViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         if !self.notFresh {
-            self.messages = []
             self.headerFresh.beginRefreshing()
-            self.setNoticeReaded()
         }
         self.notFresh = true
         
@@ -370,15 +367,15 @@ extension NotiCenterViewController: UITableViewDelegate {
         return newRect
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        let scrollOffset = self.tableView.contentOffset.y
-        if scrollOffset <= self.scrollTop{
-            if self.isFreshToTop{
-                self.headerFresh.beginRefreshing()
-                self.isFreshToTop = false
-            }
-        }
-    }
+//    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        let scrollOffset = self.tableView.contentOffset.y
+//        if scrollOffset <= self.scrollTop{
+//            if self.isFreshToTop{
+//                self.headerFresh.beginRefreshing()
+//                self.isFreshToTop = false
+//            }
+//        }
+//    }
 }
 
 extension NotiCenterViewController: CommentViewDelegate {
@@ -519,7 +516,6 @@ extension NotiCenterViewController {
     
     func refreshView(noti: NSNotification){
         if self.tableView.contentOffset.y > self.scrollTop{
-            self.isFreshToTop = true
             self.tableView.setContentOffset(CGPoint(x: 0, y: self.scrollTop), animated: true)
         }else {
             self.headerFresh.beginRefreshing()
@@ -544,6 +540,12 @@ extension NotiCenterViewController {
                 if let notices = info.modelArray as? [CTANoticeModel] {
                     let ms = notices.map{MessageGenerator.makeMessage(by: $0)}
                     self?.loadMessagesComplete(ms, size: size)
+                    if notices.count > 0{
+                        let firstN = notices[0]
+                        if firstN.noticeReaded == 0{
+                            self?.setNoticeReaded()
+                        }
+                    }
                 }else {
                     self?.freshComplete()
                 }

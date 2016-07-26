@@ -266,8 +266,10 @@ class CTAPublishPreviewView: UIView, CTAImageControllerProtocol{
                                       Int64(time * Double(NSEC_PER_SEC)))
             dispatch_after(delay, dispatch_get_main_queue()) { [weak self] in
                 guard let sf = self else {return}
-                sf.isPlaying = false
-                sf.playAnimation()
+                if sf.isPlaying {
+                    sf.isPlaying = false
+                    sf.playAnimation()
+                }
             }
         }
     }
