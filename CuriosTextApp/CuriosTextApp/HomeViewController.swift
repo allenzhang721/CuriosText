@@ -54,7 +54,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         self.initView()
         self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
         if !self.isAddOber{
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reNewView(_:)), name: "publishEditFile", object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(newPublishHandler(_:)), name: "publishEditFile", object: nil)
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reNewView(_:)), name: "loginComplete", object: nil)
             self.isAddOber = true
         }
@@ -235,6 +235,14 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
 
     func reNewView(noti: NSNotification){
         self.viewUserID = ""
+    }
+    
+    func newPublishHandler(noti: NSNotification){
+        if self.isDisMis{
+            self.viewUserID = ""
+        }else {
+            self.loadFirstData()
+        }
     }
     
     func refreshView(noti: NSNotification){

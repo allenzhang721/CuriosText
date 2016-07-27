@@ -92,7 +92,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
         if !self.isAddOber{
             if self.isLoginUser {
-                NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadViewHandler(_:)), name: "publishEditFile", object: nil)
+                NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(newPublishHandler(_:)), name: "publishEditFile", object: nil)
             }
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reNewView(_:)), name: "loginComplete", object: nil)
             self.isAddOber = true
@@ -155,9 +155,15 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         // Dispose of any resources that can be recreated.
     }
     
-    func reloadViewHandler(noti: NSNotification){
+    func newPublishHandler(noti: NSNotification){
         if self.isLoginUser{
-            self.viewUserID = ""
+            if self.isDisMis{
+                self.viewUserID = ""
+            }else {
+                if self.publishType == .Posts{
+                    self.loadFirstData()
+                }
+            }
         }
     }
     
