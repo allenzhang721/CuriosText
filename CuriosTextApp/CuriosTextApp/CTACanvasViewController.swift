@@ -307,25 +307,29 @@ extension CTACanvasViewController {
     
     func showOverlayAndSelectedAt(index: NSIndexPath) {
         
-        if index.item > 0 {
-            
-            let attributes = collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(index)!
-            let size = attributes.size
-            let position = collectionView.convertPoint(attributes.center, toView: view)
-            let transform = attributes.transform
-            
-            let attr = OverlayAttributes(postioin: position, size: size, transform: transform)
-            
-            menuShowAt(index)
-            overlayShowWith(attr)
-        }
         
         if let selectedIndexPath = collectionView.indexPathsForSelectedItems()?.first {
-            debug_print("has selected")
-            guard index.compare(selectedIndexPath) != .OrderedSame else { return }
+            if index.compare(selectedIndexPath) != .OrderedSame {
+                debug_print("has selected")
+                selectAt(index)
+            }
         }
-        
-        selectAt(index)
+
+        dispatch_async(dispatch_get_main_queue()) {[weak self] in
+            if index.item > 0 {
+                guard let sf = self else {return}
+                
+                let attributes = sf.collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(index)!
+                let size = attributes.size
+                let position = sf.collectionView.convertPoint(attributes.center, toView: sf.view)
+                let transform = attributes.transform
+                
+                let attr = OverlayAttributes(postioin: position, size: size, transform: transform)
+                
+                sf.menuShowAt(index)
+                sf.overlayShowWith(attr)
+            }
+        }
     }
     
     func selectAt(indexPath: NSIndexPath) {

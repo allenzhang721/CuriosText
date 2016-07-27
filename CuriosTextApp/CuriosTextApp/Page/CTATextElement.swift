@@ -139,7 +139,7 @@ final class CTATextAttributes:NSObject, NSCoding {
             let shadowColor = UIColor(hexString: textShadowColorHex) ?? UIColor.blueColor()
             shadow.shadowBlurRadius = 0.0
             shadow.shadowColor = shadowColor
-            shadow.shadowOffset = CGSize(width: 1, height: 2)
+            shadow.shadowOffset = CGSize(width: 1, height: 1)
             attribe[NSShadowAttributeName] = shadow
         }
         
@@ -310,7 +310,7 @@ final class CTATextAttributes:NSObject, NSCoding {
             let shadowColor = UIColor(hexString: textShadowColorHex) ?? UIColor.blueColor()
             shadow.shadowBlurRadius = 0.0
             shadow.shadowColor = shadowColor
-            shadow.shadowOffset = CGSize(width: 1, height: 2)
+            shadow.shadowOffset = CGSize(width: 1, height: 1)
             attribte[NSShadowAttributeName] = shadow
         }
         

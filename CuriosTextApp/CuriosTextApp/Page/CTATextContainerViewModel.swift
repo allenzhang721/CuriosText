@@ -122,8 +122,8 @@ extension CTAContainer: TextContainerVMProtocol {
     
     var textElement: protocol<CTAElement, TextModifiable>? {
         guard let te = element as? CTATextElement else {
-            fatalError("This Contaienr do not contain Text Element")
-//            return nil
+//            fatalError("This Contaienr do not contain Text Element")
+            return nil
         }
         
         return te
