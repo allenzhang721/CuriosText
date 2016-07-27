@@ -87,7 +87,7 @@ final class CTATextAttributes:NSObject, NSCoding {
     var textShadowColorHex = "#000000"
     var textShadowColorAplha = 1.0
     var textStrokeColorHex = "#000000" //TODO: Stroke Color  -- Emiaostein, 7/7/16, 14:52
-    var textStrokeWidth = -3.0 // 0.0 is no stroke, postion value is stroke only, negative is stroke and fill, typic value is -3.0
+    var textStrokeWidth = -2.0 // 0.0 is no stroke, postion value is stroke only, negative is stroke and fill, typic value is -3.0
     var needStroke = false
     var needShadow = false
     
@@ -128,7 +128,8 @@ final class CTATextAttributes:NSObject, NSCoding {
         ]
         
         if needStroke {
-            let strokeColor = UIColor(hexString: textStrokeColorHex) ?? UIColor.redColor()
+            let strokeColorHex = textColorHex == "#000000" ? "#FFFFFF" : "#000000"
+            let strokeColor = UIColor(hexString: strokeColorHex) ?? UIColor.redColor()
             attribe[NSStrokeWidthAttributeName] = textStrokeWidth
             attribe[NSStrokeColorAttributeName] = strokeColor
         }
@@ -290,17 +291,30 @@ final class CTATextAttributes:NSObject, NSCoding {
             return p
         }()
         
-//        let textColor: UIColor = {
-//            
-//            return UIColor.whiteColor()
-//        }()
-        
-        return [
+        var attribte = [
             NSFontAttributeName: afont,
             NSParagraphStyleAttributeName: paragraphStyle,
             NSForegroundColorAttributeName: color,
             NSKernAttributeName: NSNumber(float: Float(textKern))
         ]
+        
+        if needStroke {
+            let strokeColorHex = textColorHex == "#000000" ? "#FFFFFF" : "#000000"
+            let strokeColor = UIColor(hexString: strokeColorHex) ?? UIColor.redColor()
+            attribte[NSStrokeWidthAttributeName] = textStrokeWidth
+            attribte[NSStrokeColorAttributeName] = strokeColor
+        }
+        
+        if needShadow {
+            let shadow = NSShadow()
+            let shadowColor = UIColor(hexString: textShadowColorHex) ?? UIColor.blueColor()
+            shadow.shadowBlurRadius = 0.0
+            shadow.shadowColor = shadowColor
+            shadow.shadowOffset = CGSize(width: 1, height: 2)
+            attribte[NSShadowAttributeName] = shadow
+        }
+        
+        return attribte
     }
     
     

@@ -989,6 +989,19 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
         page.removeAt(aselectedIndexPath.item)
         canvasViewController.removeAt(aselectedIndexPath)
     }
+    
+    func canvasViewControllerWillShowNeedShadowAndNeedStroke(viewController: CTACanvasViewController) -> (shadow: Bool, stroke: Bool)? {
+        guard
+            let container = selectedContainer as? TextContainerVMProtocol,
+            let textElement = container.textElement else {
+                return nil
+        }
+        return (textElement.needShadow, textElement.needStroke)
+    }
+    
+    func canvasViewControllerWillChanged(needShadow: Bool, needStroke: Bool) {
+        shadowAndStrokeDidChanged(needShadow, needStroke: needStroke)
+    }
 }
 
 // MARK: - CTASelectorsViewController

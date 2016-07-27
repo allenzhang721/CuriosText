@@ -29,6 +29,11 @@ protocol CanvasViewControllerDelegate: class {
     func canvasViewController(viewCOntroller: CTACanvasViewController, didSelectedIndexPath indexPath: NSIndexPath)
     
     func canvasViewControllerWillDeleted(viewController: CTACanvasViewController)
+//    func canvasViewController
+    
+    func canvasViewControllerWillShowNeedShadowAndNeedStroke(viewController: CTACanvasViewController) -> (shadow: Bool, stroke: Bool)?
+    
+    func canvasViewControllerWillChanged(needShadow: Bool, needStroke: Bool)
 }
 
 protocol CanvasViewControllerDataSource: class {
@@ -153,9 +158,21 @@ extension CTACanvasViewController {
     
     func menuShowAt(indexPath: NSIndexPath) {
         self.becomeFirstResponder()
+        
         let atrributes = collectionView.layoutAttributesForItemAtIndexPath(indexPath)!
-        let deleteMenu = UIMenuItem(title: LocalStrings.Delete.description, action: "deleteItem:")
-        UIMenuController.sharedMenuController().menuItems = [deleteMenu]
+        let needShadowAndStroke = delegate?.canvasViewControllerWillShowNeedShadowAndNeedStroke(self)
+        
+        var menus = [UIMenuItem]()
+        
+        let deleteMenu = UIMenuItem(title: LocalStrings.Delete.description, action: #selector(CTACanvasViewController.deleteItem(_:)))
+        menus += [deleteMenu]
+        if let needShadowAndStroke = needShadowAndStroke {
+            let shadowMenu = UIMenuItem(title: needShadowAndStroke.shadow ? LocalStrings.CloseShadow.description : LocalStrings.OpenShadow.description, action: #selector(CTACanvasViewController.changeShadow(_:)))
+            let strokeMenu = UIMenuItem(title: needShadowAndStroke.stroke ? LocalStrings.CloseOutline.description : LocalStrings.OpenOutline.description, action: #selector(CTACanvasViewController.changeStroke(_:)))
+            menus += [shadowMenu, strokeMenu]
+        }
+        
+        UIMenuController.sharedMenuController().menuItems = menus
         let point = CGPoint(x: atrributes.center.x, y: atrributes.center.y - atrributes.bounds.height / 2.0)
         UIMenuController.sharedMenuController().setTargetRect(CGRect(origin: point, size: CGSize.zero), inView: collectionView)
         UIMenuController.sharedMenuController().setMenuVisible(true, animated: true)
@@ -247,7 +264,19 @@ extension CTACanvasViewController {
             guard let strongSelf = self else { return }
             strongSelf.delegate?.canvasViewControllerWillDeleted(strongSelf)
         }
+    }
+    
+    func changeShadow(sender: AnyObject) {
+        if let needShadowAndStroke = delegate?.canvasViewControllerWillShowNeedShadowAndNeedStroke(self) {
+            delegate?.canvasViewControllerWillChanged(!needShadowAndStroke.shadow, needStroke: needShadowAndStroke.stroke)
+        }
         
+    }
+    
+    func changeStroke(sender: AnyObject) {
+        if let needShadowAndStroke = delegate?.canvasViewControllerWillShowNeedShadowAndNeedStroke(self) {
+            delegate?.canvasViewControllerWillChanged(needShadowAndStroke.shadow, needStroke: !needShadowAndStroke.stroke)
+        }
     }
     
     func insertAt(indexPath: NSIndexPath) {
