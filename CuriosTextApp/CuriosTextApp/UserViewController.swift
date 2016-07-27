@@ -72,7 +72,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     let cellHorCount = 3
     
     var isHideSelectedCell:Bool = false
-    let scrollTop:CGFloat = 00.00
+    let scrollTop:CGFloat = -20.00
     
     override func viewDidLoad() {
         super.viewDidLoad()
