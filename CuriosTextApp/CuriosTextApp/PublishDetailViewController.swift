@@ -163,6 +163,8 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
                 if self.nextPreviewCell!.publishModel == nil || self.nextPreviewCell!.publishModel!.publishID != nextPublish.publishID{
                     self.nextPreviewCell!.publishModel = nextPublish
                     self.nextPreviewCell!.loadImg()
+                }else {
+                    self.nextPreviewCell!.stopAnimation()
                 }
                 self.nextPreviewCell!.alpha = 1
             }else {
@@ -186,6 +188,8 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
                 if self.previousPreviewCell?.publishModel == nil || self.previousPreviewCell!.publishModel?.publishID != previousPublish.publishID{
                     self.previousPreviewCell?.publishModel = previousPublish
                     self.previousPreviewCell?.loadImg()
+                }else {
+                    self.previousPreviewCell!.stopAnimation()
                 }
                 self.previousPreviewCell!.alpha = 1
             }else {

@@ -34,6 +34,8 @@ class CTAPublishPreviewView: UIView, CTAImageControllerProtocol{
     
     var isLoading:Bool = false
     
+    var isLoadingCancel:Bool = false
+    
     var loadErrorCount:Int = 0
     
     var loadCompeteHandler:(() -> Void)?
@@ -57,6 +59,7 @@ class CTAPublishPreviewView: UIView, CTAImageControllerProtocol{
     
     func releaseImg(){
         self.cellImageView.image = nil
+        self.imgLoaded = false
     }
     
     func releasePreviewView(){
@@ -66,8 +69,12 @@ class CTAPublishPreviewView: UIView, CTAImageControllerProtocol{
             self.previewView.reloadData({
             })
             self.isLoadComplete = false
+        }else if self.isLoading{
+            self.isLoadingCancel = true
         }
         self.publishModel = nil
+        self.isPlaying = false
+        self.isPause = false
     }
     
     func loadImg() {
@@ -125,38 +132,45 @@ class CTAPublishPreviewView: UIView, CTAImageControllerProtocol{
                 self.loadAgainHandler = nil
                 self.bringSubviewToFront(self.cellImageView)
                 BlackCatManager.sharedManager.retrieveDataWithURL(NSURL(string: url)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self](data, error, cacheType, URL) -> () in
-                    if let strongSelf = self {
-                        if let data = data,
-                            let page = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                if let publishModel = strongSelf.publishModel {
-                                    strongSelf.page = page
-                                    let acanvas = page.toAniCanvas()
-                                    strongSelf.canvas = acanvas
-                                    // get Image
-                                    let url = NSURL(string: CTAFilePath.publishFilePath + publishModel.publishID)!
-                                    for c in acanvas.containers {
-                                        if let content = c.contents.first where content.type == .Image {
-                                            let imageName = content.content.source.ImageName
-                                            let imageURL = url.URLByAppendingPathComponent(imageName)
-                                            KingfisherManager.sharedManager.retrieveImageWithURL(imageURL, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self] (image, error, cacheType, imageURL) in
-                                                guard let sf = self else { return }
-                                                if error != nil {
-                                                    sf.readyFailed()
-                                                }else {
-                                                    let retriver = { (name: String,  handler: (String, UIImage?) -> ()) in
-                                                        handler(name, image)
+                    if let strongSelf = self{
+                        if !strongSelf.isLoadingCancel{
+                            if let data = data,
+                                let page = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    if let publishModel = strongSelf.publishModel {
+                                        strongSelf.page = page
+                                        let acanvas = page.toAniCanvas()
+                                        strongSelf.canvas = acanvas
+                                        // get Image
+                                        let url = NSURL(string: CTAFilePath.publishFilePath + publishModel.publishID)!
+                                        for c in acanvas.containers {
+                                            if let content = c.contents.first where content.type == .Image {
+                                                let imageName = content.content.source.ImageName
+                                                let imageURL = url.URLByAppendingPathComponent(imageName)
+                                                KingfisherManager.sharedManager.retrieveImageWithURL(imageURL, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self] (image, error, cacheType, imageURL) in
+                                                    guard let sf = self else { return }
+                                                    if sf.isLoadingCancel{
+                                                        sf.isLoadingCancel = false
+                                                        return
                                                     }
-                                                    c.imageRetriver = retriver
-                                                    sf.readyPreView(acanvas, publishModel: publishModel, completed: sf.readyCompleted)
-                                                }
-                                                
-                                                })
-                                            break
+                                                    if error != nil {
+                                                        sf.readyFailed()
+                                                    }else {
+                                                        let retriver = { (name: String,  handler: (String, UIImage?) -> ()) in
+                                                            handler(name, image)
+                                                        }
+                                                        c.imageRetriver = retriver
+                                                        sf.readyPreView(acanvas, publishModel: publishModel, completed: sf.readyCompleted)
+                                                    }
+                                                    })
+                                                break
+                                            }
                                         }
                                     }
-                                }
-                            })
+                                })
+                            }
+                        }else {
+                            strongSelf.isLoadingCancel = false
                         }
                     }
                 })
@@ -266,8 +280,10 @@ class CTAPublishPreviewView: UIView, CTAImageControllerProtocol{
                                       Int64(time * Double(NSEC_PER_SEC)))
             dispatch_after(delay, dispatch_get_main_queue()) { [weak self] in
                 guard let sf = self else {return}
-                sf.isPlaying = false
-                sf.playAnimation()
+                if sf.isPlaying {
+                    sf.isPlaying = false
+                    sf.playAnimation()
+                }
             }
         }
     }

@@ -72,8 +72,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     let cellHorCount = 3
     
     var isHideSelectedCell:Bool = false
-    let scrollTop:CGFloat = 00.00
-    var isFreshToTop:Bool = false
+    let scrollTop:CGFloat = -20.00
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -168,7 +167,6 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     
     func refreshView(noti: NSNotification){
         if self.collectionView.contentOffset.y > self.scrollTop{
-            self.isFreshToTop = true
             self.collectionView.setContentOffset(CGPoint(x: 0, y: self.scrollTop), animated: true)
         }else {
             self.headerFresh.beginRefreshing()
@@ -965,12 +963,6 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }else {
             self.collectionLayout.isSticky = false
             self.changeHeaderAlpha(offY, totalH: self.collectionLayout.stickyHeight)
-        }
-        if offY <= self.scrollTop{
-            if self.isFreshToTop{
-                self.headerFresh.beginRefreshing()
-                self.isFreshToTop = false
-            }
         }
     }
     

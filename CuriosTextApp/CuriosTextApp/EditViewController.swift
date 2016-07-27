@@ -92,7 +92,7 @@ class EditViewController: UIViewController {
                 
                 sf.applyCurrentFilter(toImage: image, completion: { (filteredImg) in
                     sf.insertImage(image, filteredImage: filteredImg, size: image.size)
-                    self?.selectorViewController.updatePreImage(filteredImg)
+                    self?.selectorViewController.updatePreImage(image)
                     self?.filterManager.filters[0..<5].forEach{$0.createData(fromColorDirAt: NSBundle.mainBundle().bundleURL, filtering: image, complation: nil)}
                     
                     draw(sf.page, atBegan: false, baseURL: sf.document.cacheImagePath, imageAccess: sf.document.imageBy ,local: true) { [weak self] (previewR) in
