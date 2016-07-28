@@ -307,12 +307,13 @@ extension CTACanvasViewController {
     
     func showOverlayAndSelectedAt(index: NSIndexPath) {
         
-        
         if let selectedIndexPath = collectionView.indexPathsForSelectedItems()?.first {
             if index.compare(selectedIndexPath) != .OrderedSame {
                 debug_print("has selected")
                 selectAt(index)
             }
+        } else {
+            selectAt(index)
         }
 
         dispatch_async(dispatch_get_main_queue()) {[weak self] in
