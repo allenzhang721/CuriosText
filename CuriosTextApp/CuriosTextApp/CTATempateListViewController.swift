@@ -22,7 +22,7 @@ class CTATempateListViewController: UIViewController {
     private var selectedTask: RetrieveDataTask?
     
     deinit {
-        print("\(#file) deinit")
+        debug_print("\(#file) deinit", context: deinitContext)
     }
     
     override func viewDidLoad() {

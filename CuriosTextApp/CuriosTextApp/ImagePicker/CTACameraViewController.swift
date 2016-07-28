@@ -74,7 +74,7 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
     }
     
     deinit {
-        print("\(#file) deinit")
+        debug_print("\(#file) deinit", context: deinitContext)
     }
     
     override func viewDidLoad() {

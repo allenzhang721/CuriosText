@@ -19,7 +19,7 @@ class ImagePickerViewController: UIViewController {
     var didSelectedImageHandler: ((UIImage?, UIColor, String?) -> ())?
     
     deinit {
-        print("\(#file) deinit")
+        debug_print("\(#file) deinit", context: deinitContext)
     }
 
     override func viewDidLoad() {

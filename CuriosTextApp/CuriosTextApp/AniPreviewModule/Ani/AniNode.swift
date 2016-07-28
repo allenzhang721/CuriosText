@@ -110,22 +110,6 @@ class AniNode {
         } else {
             width += 100
         }
-//
-//            print(font.fontDescriptor())
-//            
-//        } else {
-//            
-//            let constraintSize = CGSize(width: 414, height: 414)
-//            let storage = NSTextStorage(attributedString: NSAttributedString(string: source.texts,attributes: source.attribute))
-//            let container = NSTextContainer(size: constraintSize)
-//            let manager = NSLayoutManager()
-//            manager.addTextContainer(container)
-//            storage.addLayoutManager(manager)
-//            container.lineFragmentPadding = 0
-//            let textSize = manager.usedRectForTextContainer(container).size
-//            
-//            width = textSize.width
-//        }
         
         let r = TextSpliter.spliteText(source.texts, withAttributes: source.attribute, inConstraintSize: CGSize(width: CGFloat(width), height: CGFloat.max), bySpliteType:type)
         let units = r.0

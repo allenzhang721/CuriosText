@@ -24,7 +24,7 @@ class CTASelectorFiltersCell: CTASelectorCell {
     }
     
     deinit {
-        print("\(#file) deinit")
+        debug_print("\(#file) deinit", context: deinitContext)
     }
     
     private func setup() {

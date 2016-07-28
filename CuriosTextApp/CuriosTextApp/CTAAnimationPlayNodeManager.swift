@@ -156,7 +156,6 @@ final class CTAAnimationPlayNodeManager {
         
         
         for n in nodes.values {
-//            debug_print(n.paused, context: aniContext)
             if n.paused {
                 
                 return true
@@ -174,7 +173,6 @@ final class CTAAnimationPlayNodeManager {
         
         // 3. if did end or if first play not began
         if stoped {
-            
             debug_print("Manager is stop and will play", context: aniContext)
             // need first play or play again
             if nodes.count > 0 {

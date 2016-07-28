@@ -23,14 +23,12 @@ func asyncImage(imagePicker: ((UIImage) -> ()) -> (), position: CGPoint, rotatio
 func retriveImageBy(imgeID: String, baseURL: NSURL, imageAccess:((String) -> UIImage?)? = nil ,local: Bool) -> ((UIImage) -> ()) -> () {
     
     func finished(f: (UIImage) -> ()) {
-//        debug_print(baseURL.URLByAppendingPathComponent(imgeID).path!, context: defaultContext)
         if local {
             if let imageAccess = imageAccess, let image = imageAccess(imgeID) {
                 f(image)
             } else {
                 f(UIImage())
             }
-//            let image = UIImage(contentsOfFile: baseURL.URLByAppendingPathComponent(imgeID).path!)!
             
         } else {
             let imageURL = baseURL.URLByAppendingPathComponent(imgeID)

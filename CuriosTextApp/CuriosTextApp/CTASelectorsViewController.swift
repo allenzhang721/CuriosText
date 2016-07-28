@@ -74,7 +74,7 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
     @IBOutlet weak var collectionview: UICollectionView!
     
     deinit {
-        print("\(#file) deinit")
+        debug_print("\(#file) deinit", context: deinitContext)
     }
     
     override func viewDidLoad() {
