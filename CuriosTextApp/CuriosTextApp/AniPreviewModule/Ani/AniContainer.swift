@@ -30,6 +30,7 @@ extension AniContainer: Layerable {
     var position: CGPoint { return CGPoint(x: container.positionX, y: container.positionY) }
     var size: CGSize { return CGSize(width: container.width, height: container.height) }
     var transform: CATransform3D { return CATransform3DMakeRotation(CGFloat(container.rotation) / 180.0 * CGFloat(M_PI), 0, 0, 1) }
+    var alpha: CGFloat {return container.alpha}
 }
 
 extension AniContainer: UICollectionViewDataSource {

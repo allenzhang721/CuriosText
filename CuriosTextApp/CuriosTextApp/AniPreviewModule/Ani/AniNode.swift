@@ -126,7 +126,7 @@ class AniNode {
             contents.append(content)
         }
 
-        let c = Container(cx: container.positionX, cy: container.positionY, width: size.width, height: size.height, rotation: container.rotation, identifier: container.identifier, contents: contents)
+        let c = Container(cx: container.positionX, cy: container.positionY, width: size.width, height: size.height, rotation: container.rotation, alpha: container.alpha,identifier: container.identifier, contents: contents)
         
         return (c, indexPaths)
     }

@@ -69,9 +69,12 @@ class EditCanvasLayout: UICollectionViewFlowLayout {
                 continue
             }
             
+//            a = layoutAttributesForItemAtIndexPath(index)
+            
             a.center = layoutDelegate.collectionView(collectionView!, layout: self, positionForItemAtIndexPath: indexPath)
             a.size = layoutDelegate.collectionView!(collectionView!, layout: self, sizeForItemAtIndexPath: indexPath)
-//            a.zIndex = indexPath.item
+            a.zIndex = indexPath.item
+            a.alpha = layoutDelegate.collectionView(collectionView!, layout: self, alphaForItemAtIndexPath: indexPath)
             a.transform = CGAffineTransformMakeRotation(layoutDelegate.collectionView(collectionView!, layout: self, rotationForItemAtIndexPath: indexPath))
         }
         return attributes
@@ -88,6 +91,7 @@ class EditCanvasLayout: UICollectionViewFlowLayout {
         attribute?.center = layoutDelegate.collectionView(collectionView!, layout: self, positionForItemAtIndexPath: indexPath)
         attribute?.size = layoutDelegate.collectionView!(collectionView!, layout: self, sizeForItemAtIndexPath: indexPath)
         attribute?.zIndex = indexPath.item
+        attribute?.alpha = layoutDelegate.collectionView(collectionView!, layout: self, alphaForItemAtIndexPath: indexPath)
          attribute?.transform = CGAffineTransformMakeRotation(layoutDelegate.collectionView(collectionView!, layout: self, rotationForItemAtIndexPath: indexPath))
         
         if let containerAttr = attribute as? ContainerLayoutAttributes {

@@ -23,6 +23,7 @@ protocol CTASelectorScaleable: CTASelectorable {
     func templateDidChanged(pageData: NSData?, origin: Bool)
     func filterDidChanged(filterName: String)
     func scaleDidChanged(scale: CGFloat)
+    func alphaDidChanged(alpha: CGFloat)
     func radianDidChanged(radian: CGFloat)
     func fontDidChanged(fontFamily: String, fontName: String)
     func alignmentDidChanged(alignment: NSTextAlignment)
@@ -67,6 +68,7 @@ final class CTASelectorsViewController: UIViewController, UICollectionViewDataSo
         case .TextSpacing: return "textSpacingChanged:"
         case .Colors: return "colorChanged:"
         case .Animation: return "animationChanged:"
+        case .Alpha: return "alphaChanged:"
         case .Empty: return ""
         }
     }
@@ -249,6 +251,10 @@ extension CTASelectorsViewController: UICollectionViewDelegate {
 // MARK: - SelectorDataSource
 extension CTASelectorsViewController: CTASelectorDataSource {
     
+    func selectorBeganAlpha(cell: CTASelectorCell) -> CGFloat {
+        return container?.alphaValue ?? 1.0
+    }
+    
     // TODO: Scale began value need fix -- EMIAOSTEIN; 2016-01-13-18:52
     func selectorBeganScale(cell: CTASelectorCell) -> CGFloat {
         return container?.scale ?? 1.0
@@ -328,6 +334,11 @@ extension CTASelectorsViewController: CTASelectorDataSource {
 
 // MARK: - Actions
 extension CTASelectorsViewController {
+    
+    func alphaChanged(sender: CTASliderView) {
+        let v = CGFloat(Int(sender.value * 100.0)) / 100.0
+        delegate?.alphaDidChanged(v)
+    }
     
     func templateDidChanged(info: [String: AnyObject]) {
         if let origin = info["origin"] as? Bool {

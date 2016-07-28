@@ -66,7 +66,7 @@ public class CTASliderView: UIControl, ValueTuneable {
         }
         
         set {
-            let nextMaxValue = max(leftValue, max(rightValue, newValue))
+            let nextMaxValue = max(leftValue, min(rightValue, newValue))
             if rightValue != nextMaxValue {
                 rightValue = nextMaxValue
             }

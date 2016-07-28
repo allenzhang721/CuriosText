@@ -193,6 +193,7 @@
 "OpenOutline" = "添加描边";
 "CloseShadow" = "移除阴影";
 "CloseOutline" = "移除描边";
+"Alpha" = "透明度";
 
 "Size" = "大小";
 "Rotation" = "旋转";

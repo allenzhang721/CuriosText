@@ -13,4 +13,5 @@ protocol Layerable {
     var position: CGPoint { get }
     var size: CGSize { get }
     var transform: CATransform3D { get }
+    var alpha: CGFloat { get }
 }

@@ -456,7 +456,8 @@ extension CTACanvasViewController: CanvasDelegateLayout {
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, alphaForItemAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 0
+        let c = containerAt(indexPath).alphaValue
+        return c
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, contentInsetForItemAtIndexPath indexPath: NSIndexPath) -> CGPoint {

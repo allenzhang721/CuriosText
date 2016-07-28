@@ -1039,6 +1039,19 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     }
     
     // MARK: - Delegate
+    
+    // MARK: - AlphaChanged
+    func alphaDidChanged(alpha: CGFloat) {
+        guard
+            let selectedIndexPath = selectedIndexPath,
+            let container = selectedContainer else {
+                return
+        }
+        
+        container.alphaValue = alpha
+        canvasViewController.updateAt(selectedIndexPath, updateContents: false)
+    }
+    
     // MARK: - ScaleChanged
     func scaleDidChanged(scale: CGFloat) {
         guard

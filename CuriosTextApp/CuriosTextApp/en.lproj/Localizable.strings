@@ -192,6 +192,7 @@
 "OpenOutline" = "Outline";
 "CloseShadow" = "Remove Shoadow";
 "CloseOutline" = "Remove Outline";
+"Alpha" = "Alpha";
 
 "Size" = "Size";
 "Rotation" = "Rotation";
