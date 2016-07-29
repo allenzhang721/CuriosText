@@ -77,9 +77,10 @@ class CTAPhotoViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhoto
         resetCacheSets()
         
         let selectedImage = ImagePickerResource.imageOfPhotoLibrarySelected.imageWithRenderingMode(.AlwaysOriginal)
+        let normalImage = ImagePickerResource.imageOfPhotoLibrary.imageWithRenderingMode(.AlwaysOriginal)
         
         
-        self.tabBarItem = UITabBarItem(title: LocalStrings.Photo.description, image: ImagePickerResource.imageOfPhotoLibrary, selectedImage: selectedImage)
+        self.tabBarItem = UITabBarItem(title: LocalStrings.Photo.description, image: normalImage, selectedImage: selectedImage)
     }
     
     deinit {

@@ -69,8 +69,9 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
         super.awakeFromNib()
         
         let selectedImage = ImagePickerResource.imageOfCameraSelected.imageWithRenderingMode(.AlwaysOriginal)
+        let normalImage = ImagePickerResource.imageOfCamera.imageWithRenderingMode(.AlwaysOriginal)
         
-        self.tabBarItem = UITabBarItem(title: LocalStrings.Camera.description, image: ImagePickerResource.imageOfCamera, selectedImage: selectedImage)
+        self.tabBarItem = UITabBarItem(title: LocalStrings.Camera.description, image: normalImage, selectedImage: selectedImage)
     }
     
     deinit {

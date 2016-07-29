@@ -27,7 +27,7 @@ public class ImagePickerResource : NSObject {
 
     //// Drawing Methods
 
-    public class func drawCamera(color: UIColor = UIColor.blackColor()) {
+    public class func drawCamera(color: UIColor = UIColor(red: 74.0 / 255.0, green: 74.0 / 255.0, blue: 74.0 / 255.0, alpha: 1)) {
         //// Color Declarations
         let fillColor = color
 
@@ -120,7 +120,7 @@ public class ImagePickerResource : NSObject {
         bezierPath.fill()
     }
 
-    public class func drawPhotoLibrary(color: UIColor = UIColor.blackColor()) {
+    public class func drawPhotoLibrary(color: UIColor = UIColor(red: 74.0 / 255.0, green: 74.0 / 255.0, blue: 74.0 / 255.0, alpha: 1)) {
         //// Color Declarations
         let fillColor = color
 
