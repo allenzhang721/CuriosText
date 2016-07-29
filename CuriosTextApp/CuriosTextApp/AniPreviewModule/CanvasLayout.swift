@@ -45,7 +45,7 @@ class CanvasLayout: UICollectionViewFlowLayout {
         a.size = layerAttr.size
         a.center = layerAttr.position
         a.transform3D = layerAttr.transform
-        a.alpha = layerAttr.alphaValue
+        a.alpha = layerAttr.alpha
         a.zIndex = a.indexPath.item
         
         return a
