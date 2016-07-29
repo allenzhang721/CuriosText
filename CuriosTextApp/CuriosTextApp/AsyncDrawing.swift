@@ -14,6 +14,7 @@ protocol Drawable {
     var position: CGPoint { get }
     var size: CGSize { get }
     var rotation: CGFloat { get }
+    var alpha: CGFloat{ get }
 }
 
 protocol TextDrawable: Drawable {
@@ -33,6 +34,7 @@ struct TextDrawing: TextDrawable {
     let position: CGPoint
     let size: CGSize
     let rotation: CGFloat
+    let alpha: CGFloat
     let attributeString: NSAttributedString
 }
 
@@ -40,6 +42,7 @@ struct ImageDrawing: ImageDrawable {
     let position: CGPoint
     let size: CGSize
     let rotation: CGFloat
+    let alpha: CGFloat
     let image: UIImage
 }
 
@@ -74,7 +77,7 @@ func drawing(promises: [Promise<Drawable>], size: CGSize, backgroundColor: UICol
 }
 
 // MARK: - Generate Promise for Text and Image
-func text(textPicker: ((NSAttributedString) -> ()) -> (), position: CGPoint, rotation: CGFloat) -> Promise<Drawable> {
+func text(textPicker: ((NSAttributedString) -> ()) -> (), position: CGPoint, rotation: CGFloat, alpha: CGFloat) -> Promise<Drawable> {
     
     return Promise { fullfill, reject in
         textPicker { attributeText in
@@ -92,18 +95,18 @@ func text(textPicker: ((NSAttributedString) -> ()) -> (), position: CGPoint, rot
             
 //            let size = s.boundingRectWithSize(CGSize(width: CGFloat.max, height: CGFloat.max), options: .UsesLineFragmentOrigin, context: nil).size
             
-            let drawUnit = TextDrawing(position: position, size: textSize, rotation: rotation, attributeString: s)
+            let drawUnit = TextDrawing(position: position, size: textSize, rotation: rotation, alpha: alpha, attributeString: s)
             fullfill(drawUnit)
         }
     }
 }
 
-func onlineImage(imagePicker: ((UIImage) -> ()) -> (), position: CGPoint, rotation: CGFloat) -> Promise<Drawable> {
+func onlineImage(imagePicker: ((UIImage) -> ()) -> (), position: CGPoint, rotation: CGFloat, alpha: CGFloat) -> Promise<Drawable> {
     
     return Promise { fullfill, reject in
         imagePicker { image in
             let size = image.size
-            let drawable = ImageDrawing(position: position, size: size, rotation: rotation, image: image)
+            let drawable = ImageDrawing(position: position, size: size, rotation: rotation, alpha: alpha,image: image)
             fullfill(drawable)
         }
     }
@@ -114,10 +117,12 @@ func onlineImage(imagePicker: ((UIImage) -> ()) -> (), position: CGPoint, rotati
 func drawingText(t: TextDrawable) {
     let context = UIGraphicsGetCurrentContext()
     CGContextSaveGState(context)
+    CGContextSetAlpha(context, t.alpha)
     CGContextTranslateCTM(context, t.position.x, t.position.y)
     CGContextRotateCTM(context, t.rotation)
     let rect = CGRect(x: -t.size.width / 2.0, y: -t.size.height / 2.0, width: t.size.width, height: t.size.height)
     let s = t.attributeString
+    
     s.drawInRect(rect)
     CGContextRestoreGState(context)
 }

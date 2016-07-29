@@ -64,10 +64,7 @@ class CTASelectorAlphaCell: CTASelectorCell {
         }
         let scale = dataSource.selectorBeganAlpha(self)
         sliderView.value = scale
-        
-        text = "\(Int(Int(max(0, min(1, scale))) * 100))%"
-        
-        //        sizeView.updateValue(dataSource.selectorBeganScale(self))
+        text = "\(Int(max(0, min(1, scale)) * 100))%"
     }
     
     override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
