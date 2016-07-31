@@ -13,6 +13,7 @@ import SwiftyJSON
 final class CTAUserModel: CTABaseModel {
     
     let userID:String;
+    let userType:Int;
     var nickName: String = "";
     var userDesc:String = "";
     var userIconURL:String = "";
@@ -27,8 +28,9 @@ final class CTAUserModel: CTABaseModel {
     var weiboID:String = "";
 
     
-    init(userID:String, nickName:String, userDesc:String, userIconURL:String, sex:Int, email:String, phone:String, areaCode:String, country:String, province:String, city:String, weixinID:String, weiboID:String){
+    init(userID:String, userType:Int, nickName:String, userDesc:String, userIconURL:String, sex:Int, email:String, phone:String, areaCode:String, country:String, province:String, city:String, weixinID:String, weiboID:String){
         self.userID      = userID;
+        self.userType    = userType;
         self.nickName    = nickName;
         self.userDesc    = userDesc;
         self.userIconURL = userIconURL;
@@ -46,6 +48,7 @@ final class CTAUserModel: CTABaseModel {
     static func generateFrom(json: JSON) -> CTAUserModel {
         
         let userID:String      = json[key(.UserID)].string ?? "";
+        let userType:Int       = json[key(.UserType)].int ?? 1;
         let nickName:String    = json[key(.NickName)].string ?? "";
         let userDesc:String    = json[key(.UserDesc)].string ?? "";
         let userIconURL:String = json[key(.UserIconURL)].string ?? "";
@@ -59,7 +62,7 @@ final class CTAUserModel: CTABaseModel {
         let weixinID:String    = json[key(.WeixinID)].string ?? "";
         let weiboID:String     = json[key(.WeiboID)].string ?? "";
 
-        return CTAUserModel.init(userID: userID, nickName: nickName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, email: email, phone: phone, areaCode: areaCode, country: country, province: province, city: city, weixinID: weixinID, weiboID: weiboID)
+        return CTAUserModel.init(userID: userID, userType: userType, nickName: nickName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, email: email, phone: phone, areaCode: areaCode, country: country, province: province, city: city, weixinID: weixinID, weiboID: weiboID)
     }
     
     func save() throws {
@@ -90,7 +93,8 @@ extension CTAUserModel: CreateableSecureStorable, GenericPasswordSecureStorable 
     
     var data: [String: AnyObject] {
         return [
-            key(.UserID)  :self.userID,
+            key(.UserID):self.userID,
+            key(.UserType):self.userType,
             key(.NickName):self.nickName,
             key(.UserDesc):self.userDesc,
             key(.UserIconURL):self.userIconURL,

@@ -182,7 +182,7 @@ enum CTARequestUrl: CustomStringConvertible {
 
 enum CTAParameterKey: CustomStringConvertible {
   case Data
-  case UserID, NickName, UserDesc, UserIconURL, Sex, Email, Phone, AreaCode, Password, WeixinID, WeiboID, Country, Province, City, NewPassword
+  case UserID, UserType, NickName, UserDesc, UserIconURL, Sex, Email, Phone, AreaCode, Password, WeixinID, WeiboID, Country, Province, City, NewPassword
   case BeUserID, Start, Size, SharePlatform, List, ReportType, ReportMessage
   case PublishID, Title, PublishDesc, PublishIconURL, PreviewIconURL, PublishURL, PublishDate
   case RelationType, RelationUserID, FollowCount, BeFollowCount, PublishCount
@@ -200,6 +200,8 @@ enum CTAParameterKey: CustomStringConvertible {
       return "data"
     case .UserID:
         return "userID"
+    case .UserType:
+        return "userType"
     case .NickName:
         return "nickName"
     case .UserDesc:

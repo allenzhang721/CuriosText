@@ -201,11 +201,13 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
     
     func getLoadCellData(){
         let userID = (self.loginUser == nil) ? "" : self.loginUser!.userID
-        #if DEBUG
-            let request = CTANewPublishListRequest(userID: userID, start: 0)
-        #else
-            let request = CTAUserFollowPublishListRequest(userID: userID, beUserID: userID, start: 0)
-        #endif
+        let userType = (self.loginUser == nil) ? 1 : self.loginUser!.userType
+        var request:CTABaseRequest;
+        if userType == 0 {
+            request = CTANewPublishListRequest(userID: userID, start: 0)
+        }else {
+            request = CTAUserFollowPublishListRequest(userID: userID, beUserID: userID, start: 0)
+        }
         let data = self.getPublishArray(request)
         if data == nil {
             self.isLoadLocal = false
@@ -217,6 +219,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
     
     func saveArrayToLocal(){
         let userID = (self.loginUser == nil) ? "" : self.loginUser!.userID
+        let userType = (self.loginUser == nil) ? 1 : self.loginUser!.userType
         
         var savePublishModel:Array<CTAPublishModel> = []
         if self.publishModelArray.count < 100 {
@@ -225,11 +228,12 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
             let slice = self.publishModelArray[0...100]
             savePublishModel = Array(slice)
         }
-        #if DEBUG
-            let request = CTANewPublishListRequest(userID: userID, start: 0)
-        #else
-            let request = CTAUserFollowPublishListRequest(userID: userID, beUserID: userID, start: 0)
-        #endif
+        var request:CTABaseRequest;
+        if userType == 0 {
+            request = CTANewPublishListRequest(userID: userID, start: 0)
+        }else {
+            request = CTAUserFollowPublishListRequest(userID: userID, beUserID: userID, start: 0)
+        }
         self.savePublishArray(request, modelArray: savePublishModel)
     }
 
@@ -261,15 +265,16 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         self.isLoading = true
         self.isLoadedAll = false
         let userID = (self.loginUser == nil) ? "" : self.loginUser!.userID
-        #if DEBUG
+        let userType = (self.loginUser == nil) ? 1 : self.loginUser!.userType
+        if userType == 0 {
             CTAPublishDomain.getInstance().newPublishList(userID, start: start, size: size, compelecationBlock: { (info) in
                 self.loadPublishesComplete(info, size:size)
             })
-        #else
+        }else {
             CTAPublishDomain.getInstance().userFollowPublishList(userID, beUserID: userID, start: start, size: size, compelecationBlock: { (info) in
                 self.loadPublishesComplete(info, size:size)
             })
-        #endif
+        }
     }
     
     func loadPublishesComplete(info: CTADomainListInfo, size:Int){
@@ -658,16 +663,16 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
         
         var detailType:PublishDetailType = .UserFollow
         let userID = (self.loginUser == nil) ? "" : self.loginUser!.userID
-        
-        #if DEBUG
+        let userType = (self.loginUser == nil) ? 1 : self.loginUser!.userType
+        if userType == 0{
             detailType = .NewPublish
-        #else
+        }else {
             if userID == ""{
                 detailType = .HotPublish
             }else{
                 detailType = .UserFollow
             }
-        #endif
+        }
         
         let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self, type: detailType)
         

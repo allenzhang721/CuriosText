@@ -249,13 +249,13 @@ class CTAShareView: UIView{
         self.deleteView.hidden = false
         self.saveLocolView.hidden = false
         self.reportView.hidden = false
-        #if DEBUG
+        if self.isAdminUser() {
             self.uploadResourceView.hidden = false
             self.addToHotView.hidden = false
-        #else
+        }else {
             self.uploadResourceView.hidden = true
             self.addToHotView.hidden = true
-        #endif
+        }
         let rate =  UIScreen.mainScreen().bounds.width / 375
         self.space = 15.00 * rate
         self.wechatShareView.frame.origin.x = space
@@ -272,13 +272,13 @@ class CTAShareView: UIView{
         self.deleteView.hidden = true
         self.saveLocolView.hidden = false
         self.reportView.hidden = false
-        #if DEBUG
+        if self.isAdminUser() {
             self.uploadResourceView.hidden = false
             self.addToHotView.hidden = false
-        #else
+        }else {
             self.uploadResourceView.hidden = true
             self.addToHotView.hidden = true
-        #endif
+        }
         let rate =  UIScreen.mainScreen().bounds.width / 375
         self.space = 15.00 * rate
         self.wechatShareView.frame.origin.x = space
@@ -310,14 +310,26 @@ class CTAShareView: UIView{
     }
     
     func resetScrollView(){
-        #if DEBUG
-            let maxWidth = self.uploadResourceView.frame.origin.x + self.uploadResourceView.frame.width + space
-        #else
-            let maxWidth = self.reportView.frame.origin.x + self.reportView.frame.width + space
-        #endif
-        
+        var maxWidth:CGFloat = 0.0
+        if self.isAdminUser() {
+            maxWidth = self.uploadResourceView.frame.origin.x + self.uploadResourceView.frame.width + space
+        }else {
+            maxWidth = self.reportView.frame.origin.x + self.reportView.frame.width + space
+        }
         self.scrollView.contentSize = CGSize(width: maxWidth, height: 170)
         self.scrollView.contentOffset.x = 0
+    }
+    
+    func isAdminUser() -> Bool {
+        if let loginUser = CTAUserManager.user{
+            if loginUser.userType == 0 {
+                return true
+            }else {
+                return false
+            }
+        }else {
+            return false
+        }
     }
     
     func cancelHandler(complete: (() -> ())?){
