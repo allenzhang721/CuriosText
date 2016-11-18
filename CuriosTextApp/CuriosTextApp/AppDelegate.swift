@@ -16,8 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-
-        setup()
+        
+        self.loadFilters()
+        
+        self.setup()
         SVProgressHUD.setMinimumDismissTimeInterval(1)
         SVProgressHUD.setDefaultMaskType(.Clear)
         SVProgressHUD.setDefaultStyle(.Custom)
@@ -27,13 +29,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         return true
     }
     
+    func loadFilters() {
+        let bundle = NSBundle.mainBundle().bundleURL
+        let manager = FilterManager()
+        manager.loadDefaultFilters()
+        manager.filters.forEach{$0.createData(fromColorDirAt: bundle, complation: nil)}
+    }
+    
     func setup() {
-        
-        cleanFontCache()
-        registerLocalFonts()
-        registerSystemFonts()
-        familiesDisplayNames()
-        familiesFixRatio()
+        self.cleanFontCache()
+        self.registerLocalFonts()
+        self.registerSystemFonts()
+        self.familiesDisplayNames()
+        self.familiesFixRatio()
         ImageCache.defaultCache.maxMemoryCost = 100 * 1024 * 1024 // Allen: 80 MB
         // Override point for customization after application launch.
         #if DEBUG
@@ -55,7 +63,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     }
     
     func registerLocalFonts() {
-        
         let fontsName = "Fonts"
         let path = NSBundle.mainBundle().bundleURL
         let fontsDirUrl = path.URLByAppendingPathComponent(fontsName)
@@ -63,12 +70,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         let jsonFileURL = fontsDirUrl.URLByAppendingPathComponent(jsonName)
         let data = NSData(contentsOfURL: jsonFileURL)!
         let fileNames = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)) as! [String]
-        
         for name in fileNames {
             let fontFileUrl = fontsDirUrl.URLByAppendingPathComponent(name)
             CTAFontsManager.registerFontAt(fontFileUrl)
         }
-        
         CTAFontsManager.reloadData()
     }
     
@@ -97,12 +102,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
                     let version = CTFontCopyName(font, kCTFontVersionNameKey)?.toString() ?? ""
                     
                     CTAFontsManager.registerFontWith(fa, fullName: fullName, postscriptName: postName, copyRight: copyRight, style: style, size: "", version: version)
-                    
                 }
-                
             }
         }
-        
         CTAFontsManager.reloadData()
     }
     
@@ -130,17 +132,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         let fixRatio = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)) as! [String: [String: CGFloat]]
         
         CTAFontsManager.familiyFixRectRatio = fixRatio
-        
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         
-//       return WXApi.handleOpenURL(url, delegate: self)
-        debug_print(url)
         if CTASocialManager.handleOpenURL(url) {
             return true
         }
-        
         return false
     }
     
@@ -172,7 +170,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
 }
 
 private extension CFString {
-    
     func toString() -> String {
         return self as String
     }

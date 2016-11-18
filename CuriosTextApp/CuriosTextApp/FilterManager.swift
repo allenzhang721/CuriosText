@@ -24,8 +24,32 @@ class FilterManager {
         }
     }
     
+    func filter(ByName name: String) -> FilterItem? {
+        if filters.count > 0 {
+            if name.isEmpty {
+                return nil
+            } else {
+                if let index = defaultFiltersName.indexOf(name) {
+                    return filters[index]
+                } else {
+                    return nil
+                }
+            }
+        } else {
+            return nil
+        }
+    }
+    
+    func filterIndex(byName name: String) -> Int {
+        if filters.count <= 0 {
+            return 0
+        } else {
+            return defaultFiltersName.indexOf(name) ?? 0
+        }
+    }
+    
     deinit {
-        print("\(#file) deinit")
+        debug_print("\(#file) deinit", context: deinitContext)
     }
 
 }

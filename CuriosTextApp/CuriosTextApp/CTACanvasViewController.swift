@@ -29,6 +29,11 @@ protocol CanvasViewControllerDelegate: class {
     func canvasViewController(viewCOntroller: CTACanvasViewController, didSelectedIndexPath indexPath: NSIndexPath)
     
     func canvasViewControllerWillDeleted(viewController: CTACanvasViewController)
+//    func canvasViewController
+    
+    func canvasViewControllerWillShowNeedShadowAndNeedStroke(viewController: CTACanvasViewController) -> (shadow: Bool, stroke: Bool)?
+    
+    func canvasViewControllerWillChanged(needShadow: Bool, needStroke: Bool)
 }
 
 protocol CanvasViewControllerDataSource: class {
@@ -79,7 +84,7 @@ final class CTACanvasViewController: UIViewController {
     }
     
     deinit {
-        print("\(#file) deinit")
+        debug_print("\(#file) deinit", context: deinitContext)
         removeNotification()
     }
 }
@@ -153,9 +158,21 @@ extension CTACanvasViewController {
     
     func menuShowAt(indexPath: NSIndexPath) {
         self.becomeFirstResponder()
+        
         let atrributes = collectionView.layoutAttributesForItemAtIndexPath(indexPath)!
-        let deleteMenu = UIMenuItem(title: LocalStrings.Delete.description, action: "deleteItem:")
-        UIMenuController.sharedMenuController().menuItems = [deleteMenu]
+        let needShadowAndStroke = delegate?.canvasViewControllerWillShowNeedShadowAndNeedStroke(self)
+        
+        var menus = [UIMenuItem]()
+        
+        let deleteMenu = UIMenuItem(title: LocalStrings.Delete.description, action: #selector(CTACanvasViewController.deleteItem(_:)))
+        menus += [deleteMenu]
+        if let needShadowAndStroke = needShadowAndStroke {
+            let shadowMenu = UIMenuItem(title: needShadowAndStroke.shadow ? LocalStrings.CloseShadow.description : LocalStrings.OpenShadow.description, action: #selector(CTACanvasViewController.changeShadow(_:)))
+            let strokeMenu = UIMenuItem(title: needShadowAndStroke.stroke ? LocalStrings.CloseOutline.description : LocalStrings.OpenOutline.description, action: #selector(CTACanvasViewController.changeStroke(_:)))
+            menus += [shadowMenu, strokeMenu]
+        }
+        
+        UIMenuController.sharedMenuController().menuItems = menus
         let point = CGPoint(x: atrributes.center.x, y: atrributes.center.y - atrributes.bounds.height / 2.0)
         UIMenuController.sharedMenuController().setTargetRect(CGRect(origin: point, size: CGSize.zero), inView: collectionView)
         UIMenuController.sharedMenuController().setMenuVisible(true, animated: true)
@@ -247,7 +264,19 @@ extension CTACanvasViewController {
             guard let strongSelf = self else { return }
             strongSelf.delegate?.canvasViewControllerWillDeleted(strongSelf)
         }
+    }
+    
+    func changeShadow(sender: AnyObject) {
+        if let needShadowAndStroke = delegate?.canvasViewControllerWillShowNeedShadowAndNeedStroke(self) {
+            delegate?.canvasViewControllerWillChanged(!needShadowAndStroke.shadow, needStroke: needShadowAndStroke.stroke)
+        }
         
+    }
+    
+    func changeStroke(sender: AnyObject) {
+        if let needShadowAndStroke = delegate?.canvasViewControllerWillShowNeedShadowAndNeedStroke(self) {
+            delegate?.canvasViewControllerWillChanged(needShadowAndStroke.shadow, needStroke: !needShadowAndStroke.stroke)
+        }
     }
     
     func insertAt(indexPath: NSIndexPath) {
@@ -278,25 +307,30 @@ extension CTACanvasViewController {
     
     func showOverlayAndSelectedAt(index: NSIndexPath) {
         
-        if index.item > 0 {
-            
-            let attributes = collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(index)!
-            let size = attributes.size
-            let position = collectionView.convertPoint(attributes.center, toView: view)
-            let transform = attributes.transform
-            
-            let attr = OverlayAttributes(postioin: position, size: size, transform: transform)
-            
-            menuShowAt(index)
-            overlayShowWith(attr)
-        }
-        
         if let selectedIndexPath = collectionView.indexPathsForSelectedItems()?.first {
-            debug_print("has selected")
-            guard index.compare(selectedIndexPath) != .OrderedSame else { return }
+            if index.compare(selectedIndexPath) != .OrderedSame {
+                debug_print("has selected")
+                selectAt(index)
+            }
+        } else {
+            selectAt(index)
         }
-        
-        selectAt(index)
+
+        dispatch_async(dispatch_get_main_queue()) {[weak self] in
+            if index.item > 0 {
+                guard let sf = self else {return}
+                
+                let attributes = sf.collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(index)!
+                let size = attributes.size
+                let position = sf.collectionView.convertPoint(attributes.center, toView: sf.view)
+                let transform = attributes.transform
+                
+                let attr = OverlayAttributes(postioin: position, size: size, transform: transform)
+                
+                sf.menuShowAt(index)
+                sf.overlayShowWith(attr)
+            }
+        }
     }
     
     func selectAt(indexPath: NSIndexPath) {
@@ -422,7 +456,8 @@ extension CTACanvasViewController: CanvasDelegateLayout {
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, alphaForItemAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 0
+        let c = containerAt(indexPath).alphaValue
+        return c
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, contentInsetForItemAtIndexPath indexPath: NSIndexPath) -> CGPoint {

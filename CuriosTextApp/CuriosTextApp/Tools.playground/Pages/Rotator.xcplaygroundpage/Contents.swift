@@ -35,7 +35,6 @@ func rotatorPath(size: CGSize, count: Int = 48, maxNoder: CGFloat = 8, largeNode
     let path = UIBezierPath()
     
     func drawNode(frame: CGRect, ovalPath: UIBezierPath) {
-        print(frame)
         //// Oval Drawing
         ovalPath.moveToPoint(CGPointMake(frame.minX + 1.00000 * frame.width, frame.minY + 0.50000 * frame.height))
         ovalPath.addCurveToPoint(CGPointMake(frame.minX + 0.50000 * frame.width, frame.minY + 0.00000 * frame.height), controlPoint1: CGPointMake(frame.minX + 1.00000 * frame.width, frame.minY + 0.22386 * frame.height), controlPoint2: CGPointMake(frame.minX + 0.77614 * frame.width, frame.minY + 0.00000 * frame.height))

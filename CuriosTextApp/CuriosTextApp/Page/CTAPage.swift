@@ -18,6 +18,7 @@ final class CTAPage:NSObject, NSCoding {
         static let backgroundColor = "backgroundColor"
         static let containers = "containers"
         static let animations = "animations"
+        static let filterName = "filterName"
     }
     
     private(set) var backgroundColor = "FFFFFF"
@@ -25,6 +26,7 @@ final class CTAPage:NSObject, NSCoding {
     private(set) var height = 414.0
     private(set) var containers = [CTAContainer]()
     private(set) var animatoins = [CTAAnimation]()
+    private(set) var filterName = ""
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -33,6 +35,7 @@ final class CTAPage:NSObject, NSCoding {
         containers = aDecoder.decodeObjectForKey(SerialKeys.containers) as! [CTAContainer]
         animatoins = aDecoder.decodeObjectForKey(SerialKeys.animations) as! [CTAAnimation]
         backgroundColor = aDecoder.decodeObjectForKey(SerialKeys.backgroundColor) as? String ?? "FFFFFF"
+        filterName = aDecoder.decodeObjectForKey(SerialKeys.filterName) as? String ?? ""
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
@@ -41,12 +44,14 @@ final class CTAPage:NSObject, NSCoding {
         aCoder.encodeObject(backgroundColor, forKey: SerialKeys.backgroundColor)
         aCoder.encodeObject(containers, forKey: SerialKeys.containers)
         aCoder.encodeObject(animatoins, forKey: SerialKeys.animations)
+        aCoder.encodeObject(filterName, forKey: SerialKeys.filterName)
     }
     
-    init(containers: [CTAContainer], anis: [CTAAnimation] = [], background: String = "FFFFFF") {
+    init(containers: [CTAContainer], anis: [CTAAnimation] = [], background: String = "FFFFFF", filterName: String = "") {
         self.containers = containers
         self.animatoins = anis
         self.backgroundColor = background
+        self.filterName = filterName
         super.init()
     }
     
@@ -58,6 +63,10 @@ final class CTAPage:NSObject, NSCoding {
 //        }
         
         return container
+    }
+    
+    func changeFilterName(s: String) {
+        filterName = s
     }
     
     func changeBackColor(hex: String) {
@@ -146,6 +155,6 @@ extension CTAPage {
 //        containers = c
 //        animatoins = a
         
-        return CTAPage(containers: c, anis: a, background: backgroundColor)
+        return CTAPage(containers: c, anis: a, background: backgroundColor, filterName: filterName)
     }
 }

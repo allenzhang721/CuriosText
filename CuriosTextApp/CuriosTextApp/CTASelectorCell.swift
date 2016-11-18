@@ -19,6 +19,8 @@ protocol CTASelectorDataSource: class {
     func selectorBeganFontIndexPath(cell: CTASelectorCell) -> NSIndexPath?
     func selectorBeganColor(cell: CTASelectorCell) -> UIColor?
     func selectorBeganAnimation(cell: CTASelectorCell) -> CTAAnimationBinder?
+    func selectorBeganAlpha(cell: CTASelectorCell) -> CGFloat
+    func selectorBeganFilter(cell: CTASelectorCell) -> Int
 }
 
 protocol CTASelectorControl: class {

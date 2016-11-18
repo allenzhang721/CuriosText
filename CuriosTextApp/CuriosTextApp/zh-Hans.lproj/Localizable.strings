@@ -189,6 +189,11 @@
 "Filters" = "滤镜";
 "Shadow" = "阴影";
 "Outline" = "描边";
+"OpenShadow" = "添加阴影";
+"OpenOutline" = "添加描边";
+"CloseShadow" = "移除阴影";
+"CloseOutline" = "移除描边";
+"Alpha" = "透明度";
 
 "Size" = "大小";
 "Rotation" = "旋转";

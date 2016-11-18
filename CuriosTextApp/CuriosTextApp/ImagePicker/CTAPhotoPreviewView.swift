@@ -34,7 +34,7 @@ class CTAPhotoPreviewView: UIView {
     private var tap: UITapGestureRecognizer!
     
     deinit {
-        print("\(#file) deinit")
+        debug_print("\(#file) deinit", context: deinitContext)
     }
     
     override init(frame: CGRect) {

@@ -21,7 +21,7 @@ class CTASelectorTemplatesCell: CTASelectorCell {
     }
     
     deinit {
-        print("\(#file) deinit")
+        debug_print("\(#file) deinit", context: deinitContext)
     }
     
     

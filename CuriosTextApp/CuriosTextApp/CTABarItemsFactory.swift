@@ -78,6 +78,13 @@ class CTABarItemsFactory {
             title: LocalStrings.Color.description),
         
         CTABarItem(
+            normalImage: UIImage(named:"alpha_Normal")!,
+            selectedImage: UIImage(named:"alpha_Selected")!,
+            normalColor: CTAStyleKit.normalColor,
+            selectedColor: CTAStyleKit.selectedColor,
+            title: LocalStrings.Alpha.description),
+        
+        CTABarItem(
             normalImage: CTAStyleKit.imageOfSizeBarItemNormal,
             selectedImage: CTAStyleKit.imageOfSizeBarItemSelected,
             normalColor: CTAStyleKit.normalColor,

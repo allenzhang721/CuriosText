@@ -36,7 +36,7 @@ class FilterItem: NSObject {
 //    }
     
     deinit {
-        print("\(#file) deinit")
+        debug_print("\(#file) deinit", context: deinitContext)
     }
     
     func cleanImage() {
@@ -53,28 +53,35 @@ class FilterItem: NSObject {
                 .tocgImage()
             dispatch_async(dispatch_get_main_queue(), {[weak self] in
                 guard let sf = self else {return}
+                
                 sf.image = UIImage(CGImage: img2)
                 complation?(sf.image!)
+                sf.data = nil
             })
         }
     }
     
-    func createData(fromColorDirAt url: NSURL, filtering image: UIImage, complation:((UIImage) -> ())?) {
+    func createData(fromColorDirAt url: NSURL, filtering image: UIImage? = nil, complation:((UIImage) -> ())?) {
         
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+        dispatch_async(queue) { [weak self] in
             guard let sf = self else {return}
             let cacheURL = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).first!
             let dataCache = cacheURL.URLByAppendingPathComponent("\(sf.name)")
             if NSFileManager.defaultManager().fileExistsAtPath(dataCache.path!) {
-                let data = NSData(contentsOfURL: dataCache)
-                sf.data = data
-                sf.createImage(from: image, complation: complation)
+                if let image = image {
+                    let data = NSData(contentsOfURL: dataCache)
+                    sf.data = data
+                    sf.createImage(from: image, complation: complation)
+                }
+                
             } else {
                 let imgURL = url.URLByAppendingPathComponent("\(sf.name).JPG")
                 if let img = UIImage(contentsOfFile: imgURL.path!)?.CGImage, data = Filter.colorLUTData(byImage: img, dimensiton: 64) {
-                    sf.data = data
                     data.writeToURL(dataCache, atomically: true)
-                    sf.createImage(from: image, complation: complation)
+                    if let image = image {
+                        sf.data = data
+                        sf.createImage(from: image, complation: complation)
+                    }
                 }
             }
         }

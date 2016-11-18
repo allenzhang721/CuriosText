@@ -124,7 +124,6 @@ private class ColorPickerLayout: UICollectionViewFlowLayout {
             switch scrollDirection {
             case .Horizontal:
                 
-                print(velocity)
                 var adjustOffset = CGFloat.max
                 let visualCenter = CGPoint(
                     x: proposedContentOffset.x + CGRectGetWidth(collectionView.bounds) / 2.0,

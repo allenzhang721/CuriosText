@@ -13,7 +13,7 @@ enum CTAContainerFeatureType: String {
 
     case Templates, Filters
     case Size, Rotator
-    case Fonts, Aligments, TextSpacing, Colors, Animation, ShadowAndStroke //Text
+    case Fonts, Aligments, TextSpacing, Colors, Animation, Alpha, ShadowAndStroke //Text
     case Empty
 }
 

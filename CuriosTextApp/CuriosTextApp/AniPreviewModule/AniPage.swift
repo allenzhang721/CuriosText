@@ -114,7 +114,7 @@ extension TextContainerVMProtocol {
         let positionY = self.center.y
         let radian = self.radius / CGFloat(M_PI) * 180.0
         
-        let container = Container.init(cx: positionX, cy: positionY, width: width, height: height, rotation: radian, identifier: ID, contents: [content])
+        let container = Container.init(cx: positionX, cy: positionY, width: width, height: height, rotation: radian, alpha: alphaValue, identifier: ID, contents: [content])
         
         return container
     }
@@ -145,7 +145,7 @@ extension ImageContainerVMProtocol {
         let positionY = self.center.y
         let radian = self.radius / CGFloat(M_PI) * 180.0
         
-        let container = Container.init(cx: positionX, cy: positionY, width: width, height: height, rotation: radian, identifier: ID, contents: [content])
+        let container = Container.init(cx: positionX, cy: positionY, width: width, height: height, rotation: radian, alpha: alphaValue, identifier: ID, contents: [content])
         
         return container
     }

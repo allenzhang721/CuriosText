@@ -62,7 +62,7 @@ class EditViewController: UIViewController {
     }
     
     deinit {
-        print("\(#file) deinit")
+        debug_print("\(#file) deinit", context: deinitContext)
     }
     
     override func viewDidLoad() {
@@ -74,6 +74,8 @@ class EditViewController: UIViewController {
         
         filterManager.loadDefaultFilters() // load default filters
         
+        filter = filterManager.filter(ByName: page.filterName)
+        
         let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
         
         let cleanPage = page.cleanEmptyContainers()
@@ -83,30 +85,53 @@ class EditViewController: UIViewController {
         cameraVC.templateImage = image
         
         cameraVC.didSelectedImageHandler = {[weak self, weak cameraVC] (image, backgrounColor, identifier) in
-            if let strongSelf = self, let image = image {
-                self?.selectedImageIdentifier = identifier
+            if let sf = self, let image = image {
+                sf.selectedImageIdentifier = identifier
                 let hex = backgrounColor.toHex().0
-                strongSelf.page.changeBackColor(hex)
-                    strongSelf.insertImage(image, size: image.size)
-                self?.selectorViewController.updatePreImage(image)
-                self?.filterManager.filters[0..<5].forEach{$0.createData(fromColorDirAt: NSBundle.mainBundle().bundleURL, filtering: image, complation: nil)}
+                sf.page.changeBackColor(hex)
                 
-                draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.resourceImageBy ,local: true) { [weak self] (previewR) in
+                sf.applyCurrentFilter(toImage: image, completion: { (filteredImg) in
+                    sf.insertImage(image, filteredImage: filteredImg, size: image.size)
+                    self?.selectorViewController.updatePreImage(image)
+                    self?.filterManager.filters[0..<5].forEach{$0.createData(fromColorDirAt: NSBundle.mainBundle().bundleURL, filtering: image, complation: nil)}
                     
-                    switch previewR {
-                    case .Success(let img):
-                        dispatch_async(dispatch_get_main_queue(), {
-                            self?.selectorViewController.updateSnapshotImage(img)
-                        })
-                    default:
-                        dispatch_async(dispatch_get_main_queue(), {
-                            self?.selectorViewController.updateSnapshotImage(image)
-                            self?.selectorViewController.updatePreImage(image)
+                    draw(sf.page, atBegan: false, baseURL: sf.document.cacheImagePath, imageAccess: sf.document.imageBy ,local: true) { [weak self] (previewR) in
+                       dispatch_async(dispatch_get_main_queue(), {
+                            switch previewR {
+                            case .Success(let img):
+                                
+                                    self?.selectorViewController.updateSnapshotImage(img)
+                            default:
+                                    self?.selectorViewController.updateSnapshotImage(image)
+                                    self?.selectorViewController.updatePreImage(image)
+                            }
+                            cameraVC?.view.removeFromSuperview()
+                            cameraVC?.removeFromParentViewController()
                         })
                     }
-                }
-                    cameraVC?.removeFromParentViewController()
-                    cameraVC?.view.removeFromSuperview()
+                    
+                    }, fail: { (originImg) in
+                        
+                        sf.insertImage(image, filteredImage: nil, size: image.size)
+                        self?.selectorViewController.updatePreImage(originImg)
+                        self?.filterManager.filters[0..<5].forEach{$0.createData(fromColorDirAt: NSBundle.mainBundle().bundleURL, filtering: originImg, complation: nil)}
+                        draw(sf.page, atBegan: false, baseURL: sf.document.imagePath, imageAccess: sf.document.resourceImageBy ,local: true) { [weak self] (previewR) in
+                            dispatch_async(dispatch_get_main_queue(), {
+                                switch previewR {
+                                case .Success(let img):
+                                    
+                                    self?.selectorViewController.updateSnapshotImage(img)
+                                default:
+                                    self?.selectorViewController.updateSnapshotImage(image)
+                                    self?.selectorViewController.updatePreImage(image)
+                                }
+                                cameraVC?.view.removeFromSuperview()
+                                cameraVC?.removeFromParentViewController()
+                            })
+                        }
+                })
+                
+                
             }
         }
      
@@ -288,7 +313,7 @@ extension EditViewController {
         }
     }
     
-    func insertImage(s: UIImage, size: CGSize) -> UIImage {
+    func insertImage(s: UIImage, filteredImage: UIImage?, size: CGSize) -> UIImage {
         
         let ID = CTAIDGenerator.fileID()
         let imageName = document.resourcePath + ID + ".jpg"
@@ -297,6 +322,10 @@ extension EditViewController {
         let imgContainer = EditorFactory.generateImageContainer(page.width, pageHeigh: page.height, imageSize: size, imgName: name)
         
         page.insert(imgContainer, atIndex: 0)
+        
+        if let filteredImage = filteredImage {
+            document.storeCacheResource(UIImageJPEGRepresentation(filteredImage, 1)!, withName: name)
+        }
         
         
 //        CATransaction.begin()
@@ -743,34 +772,17 @@ extension EditViewController {
                     let image = UIImage(data: data)!
                     self?.selectorViewController.updatePreImage(image)
                     
-                    if let f = strongSelf.filter {
-                        if let data = f.data {
-                            f.createImage(from: image, complation: {[weak self, weak f] (img) in
-                                
-                                dispatch_async(dispatch_get_main_queue(), {
-                                    f?.data = nil
-                                    self?.document.storeCacheResource(UIImageJPEGRepresentation(img, 1)!, withName: name)
-                                    dispatch_async(dispatch_get_main_queue(), {
-                                        self?.canvasViewController.updateAt(indexPath, updateContents: true)
-                                    })
-                                })
-                                })
-                        } else {
-                            let bundle = NSBundle.mainBundle().bundleURL
-                            f.createData(fromColorDirAt: bundle, filtering: image, complation: { [weak self, weak f] (filteredIamge) in
-                                dispatch_async(dispatch_get_main_queue(), {
-                                    f?.data = nil
-                                    self?.document.storeCacheResource(UIImageJPEGRepresentation(filteredIamge, 1)!, withName: name)
-                                    dispatch_async(dispatch_get_main_queue(), {
-                                        self?.canvasViewController.updateAt(indexPath, updateContents: true)
-                                    })
-                                })
-                                })
-                        }
-                    } else {
-                        strongSelf.canvasViewController.updateAt(indexPath, updateContents: true)
-                    }
-                    
+                    self?.applyCurrentFilter(toImage: image, completion: { (filteredImg) in
+                        self?.document.storeCacheResource(UIImageJPEGRepresentation(filteredImg, 1)!, withName: name)
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self?.canvasViewController.updateAt(indexPath, updateContents: true)
+                        })
+                        }, fail: { (originImg) in
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self?.canvasViewController.updateAt(indexPath, updateContents: true)
+                            })
+                    })
+
                     draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.resourceImageBy ,local: true) { [weak self, cameraVC] (previewR) in
                         
                         switch previewR {
@@ -799,7 +811,6 @@ extension EditViewController {
                             })
                         }
                     }
-                    
                 })
             }
         }
@@ -809,6 +820,19 @@ extension EditViewController {
         cameraVC.view.alpha = 0
         UIView.animateWithDuration(0.3) {[weak cameraVC] in
             cameraVC?.view.alpha = 1
+        }
+    }
+    
+    private func applyCurrentFilter(toImage image: UIImage, completion:((UIImage)->())?, fail:((UIImage) -> ())?) {
+        if let f = filter {
+            if f.data != nil {
+                f.createImage(from: image){completion?($0)}
+            } else {
+                let bundle = NSBundle.mainBundle().bundleURL
+                f.createData(fromColorDirAt: bundle, filtering: image){completion?($0)}
+            }
+        } else {
+            fail?(image)
         }
     }
 }
@@ -965,6 +989,19 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
         page.removeAt(aselectedIndexPath.item)
         canvasViewController.removeAt(aselectedIndexPath)
     }
+    
+    func canvasViewControllerWillShowNeedShadowAndNeedStroke(viewController: CTACanvasViewController) -> (shadow: Bool, stroke: Bool)? {
+        guard
+            let container = selectedContainer as? TextContainerVMProtocol,
+            let textElement = container.textElement else {
+                return nil
+        }
+        return (textElement.needShadow, textElement.needStroke)
+    }
+    
+    func canvasViewControllerWillChanged(needShadow: Bool, needStroke: Bool) {
+        shadowAndStrokeDidChanged(needShadow, needStroke: needStroke)
+    }
 }
 
 // MARK: - CTASelectorsViewController
@@ -997,7 +1034,24 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         }
     }
     
+    func selectorsViewControllerFilter(ViewController: CTASelectorsViewController) -> Int {
+        return filterManager.filterIndex(byName: page.filterName)
+    }
+    
     // MARK: - Delegate
+    
+    // MARK: - AlphaChanged
+    func alphaDidChanged(alpha: CGFloat) {
+        guard
+            let selectedIndexPath = selectedIndexPath,
+            let container = selectedContainer else {
+                return
+        }
+        
+        container.alphaValue = alpha
+        canvasViewController.updateAt(selectedIndexPath, updateContents: false)
+    }
+    
     // MARK: - ScaleChanged
     func scaleDidChanged(scale: CGFloat) {
         guard
@@ -1114,7 +1168,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     func templateDidChanged(pageData: NSData?, origin: Bool) {
         if origin == false {
             if useTemplate == false {
-                originPage = CTAPage(containers: page.containers, anis: page.animatoins)
+                originPage = CTAPage(containers: page.containers, anis: page.animatoins, filterName: page.filterName)
                 originPage?.changeBackColor(page.backgroundColor)
                 useTemplate = true
             }
@@ -1153,6 +1207,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     func filterDidChanged(filterName: String) {
         if let filter = (filterManager.filters.filter{$0.name == filterName}).first {
             self.filter = filter
+            self.page.changeFilterName(filter.name)
             guard
                 let selectedIndexPath = selectedIndexPath,
                 let container = selectedContainer as? ImageContainerVMProtocol,

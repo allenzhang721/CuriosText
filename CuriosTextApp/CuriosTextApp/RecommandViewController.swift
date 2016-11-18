@@ -27,7 +27,6 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
     var isLoadLocal:Bool = false
     var previousScrollViewYOffset:CGFloat = 0.0
     let scrollTop:CGFloat = -20.00
-    var isFreshToTop:Bool = false
     
     var isLoading:Bool = false
     var isLoadedAll:Bool = false
@@ -35,7 +34,7 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
     
     var isNoFresh:Bool = false
     
-    let headerY:CGFloat  = 20.0
+    let headerY:CGFloat  = 00.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -199,7 +198,6 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
     
     func refreshView(noti: NSNotification){
         if self.collectionView.contentOffset.y > self.scrollTop{
-            self.isFreshToTop = true
             self.collectionView.setContentOffset(CGPoint(x: 0, y: self.scrollTop), animated: true)
         }else {
             self.headerFresh.beginRefreshing()
@@ -389,12 +387,6 @@ extension RecommandViewController: UICollectionViewDelegate, UICollectionViewDat
         }
         self.changeColloetionNavBar(frameY)
         self.previousScrollViewYOffset = scrollOffset
-        if scrollOffset <= self.scrollTop{
-            if self.isFreshToTop{
-                self.headerFresh.beginRefreshing()
-                self.isFreshToTop = false
-            }
-        }
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
@@ -410,7 +402,8 @@ extension RecommandViewController: UICollectionViewDelegate, UICollectionViewDat
     func stoppedScrolling(){
         let frame = self.headerView.frame
         if frame.origin.y < 0 {
-            self.animationNavBarTo((self.headerY-frame.size.height))
+            let size  = frame.height
+            self.animationNavBarTo((self.headerY-size))
         }else {
             self.animationNavBarTo(self.headerY)
         }
@@ -438,7 +431,8 @@ extension RecommandViewController: UICollectionViewDelegate, UICollectionViewDat
         collectViewFrame.size.height = self.view.frame.height - collectViewFrame.origin.y
         self.headerView.frame = toolBarViewframe
         self.collectionView.frame = collectViewFrame
-        let alpha:CGFloat = 1 - ((self.headerY-y) / toolBarViewframe.height)
+        let size  = toolBarViewframe.height
+        let alpha:CGFloat = 1 - ((self.headerY-y) / size)
         self.updateBarButtonsAlpha(alpha)
 //        var s = "stat"
 //        s += "usBar"

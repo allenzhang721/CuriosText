@@ -101,7 +101,6 @@ class NotiCenterViewController: UIViewController {
     var notFresh:Bool = false
     
     let scrollTop:CGFloat = -20.00
-    var isFreshToTop:Bool = false
     
     var isLoadedAll:Bool = false
     var isLoading:Bool = false
@@ -128,14 +127,14 @@ class NotiCenterViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NotiCenterViewController.refreshView(_:)), name: "refreshSelf", object: nil)
+        
+        tableView.tableFooterView = UIView()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         if !self.notFresh {
-            self.messages = []
             self.headerFresh.beginRefreshing()
-            self.setNoticeReaded()
         }
         self.notFresh = true
     }
@@ -158,7 +157,6 @@ class NotiCenterViewController: UIViewController {
         
         tableView.estimatedRowHeight = 70
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
     }
     
     private func setupTableView(){
@@ -355,15 +353,15 @@ extension NotiCenterViewController: UITableViewDelegate {
         return newRect
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        let scrollOffset = self.tableView.contentOffset.y
-        if scrollOffset <= self.scrollTop{
-            if self.isFreshToTop{
-                self.headerFresh.beginRefreshing()
-                self.isFreshToTop = false
-            }
-        }
-    }
+//    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        let scrollOffset = self.tableView.contentOffset.y
+//        if scrollOffset <= self.scrollTop{
+//            if self.isFreshToTop{
+//                self.headerFresh.beginRefreshing()
+//                self.isFreshToTop = false
+//            }
+//        }
+//    }
 }
 
 extension NotiCenterViewController: CommentViewDelegate {
@@ -434,11 +432,11 @@ extension NotiCenterViewController {
 //                textView.textContainerInset.bottom = 0
 //                textView.textContainerInset.top = 0
                 if comment.noticeTypeID == 0{
-                    textView.textColor = CTAStyleKit.disableColor
                     textView.text = LocalStrings.DeleteComment.description
+                    textView.textColor = CTAStyleKit.disableColor
                 }else {
-                    textView.textColor = CTAStyleKit.normalColor
                     textView.text = comment.text
+                    textView.textColor = CTAStyleKit.normalColor
                 }
             }
         } else {
@@ -504,7 +502,6 @@ extension NotiCenterViewController {
     
     func refreshView(noti: NSNotification){
         if self.tableView.contentOffset.y > self.scrollTop{
-            self.isFreshToTop = true
             self.tableView.setContentOffset(CGPoint(x: 0, y: self.scrollTop), animated: true)
         }else {
             self.headerFresh.beginRefreshing()
@@ -529,6 +526,12 @@ extension NotiCenterViewController {
                 if let notices = info.modelArray as? [CTANoticeModel] {
                     let ms = notices.map{MessageGenerator.makeMessage(by: $0)}
                     self?.loadMessagesComplete(ms, size: size)
+                    if notices.count > 0{
+                        let firstN = notices[0]
+                        if firstN.noticeReaded == 0{
+                            self?.setNoticeReaded()
+                        }
+                    }
                 }else {
                     self?.freshComplete()
                 }

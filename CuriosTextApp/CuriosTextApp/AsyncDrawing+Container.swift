@@ -10,11 +10,11 @@ import Foundation
 import PromiseKit
 import Kingfisher
 
-func asyncImage(imagePicker: ((UIImage) -> ()) -> (), position: CGPoint, rotation: CGFloat, size: CGSize) -> Promise<Drawable> {
+func asyncImage(imagePicker: ((UIImage) -> ()) -> (), position: CGPoint, rotation: CGFloat, size: CGSize, alpha: CGFloat) -> Promise<Drawable> {
     
     return Promise { fullfill, reject in
         imagePicker { image in
-            let drawable = ImageDrawing(position: position, size: size, rotation: rotation, image: image)
+            let drawable = ImageDrawing(position: position, size: size, rotation: rotation, alpha: alpha, image: image)
             fullfill(drawable)
         }
     }
@@ -23,14 +23,12 @@ func asyncImage(imagePicker: ((UIImage) -> ()) -> (), position: CGPoint, rotatio
 func retriveImageBy(imgeID: String, baseURL: NSURL, imageAccess:((String) -> UIImage?)? = nil ,local: Bool) -> ((UIImage) -> ()) -> () {
     
     func finished(f: (UIImage) -> ()) {
-//        debug_print(baseURL.URLByAppendingPathComponent(imgeID).path!, context: defaultContext)
         if local {
             if let imageAccess = imageAccess, let image = imageAccess(imgeID) {
                 f(image)
             } else {
                 f(UIImage())
             }
-//            let image = UIImage(contentsOfFile: baseURL.URLByAppendingPathComponent(imgeID).path!)!
             
         } else {
             let imageURL = baseURL.URLByAppendingPathComponent(imgeID)
@@ -61,10 +59,11 @@ func drawPageWithNoImage(page: CTAPage, containImage: Bool = true) -> UIImage? {
                 let position = container.center
                 let rotation = container.radius
                 let size = container.size
+                let alpha = container.alphaValue
                 
                 let attributeText = textContainer.textElement!.attributeString
                 
-                return TextDrawing(position: position, size: size, rotation: rotation, attributeString: attributeText)
+                return TextDrawing(position: position, size: size, rotation: rotation, alpha: alpha, attributeString: attributeText)
     }
     
     UIGraphicsBeginImageContextWithOptions(page.size, false, UIScreen.mainScreen().scale)
@@ -97,7 +96,7 @@ func drawPageWithNoImage(page: CTAPage, containImage: Bool = true) -> UIImage? {
             
             let attributeText = textContainer.textElement!.attributeString
             
-            return TextDrawing(position: position, size: size, rotation: rotation, attributeString: attributeText)
+            return TextDrawing(position: position, size: size, rotation: rotation, alpha: textContainer.alphaValue, attributeString: attributeText)
         }
         
         UIGraphicsBeginImageContextWithOptions(page.size, false, UIScreen.mainScreen().scale)
@@ -139,18 +138,19 @@ func draw(page: CTAPage, atBegan: Bool, filterWithVisible: Bool = true, baseURL:
         let position = container.center
         let rotation = container.radius
         let size = container.size
+        let alpha = container.alphaValue
         
         if let textContainer = container as? TextContainerVMProtocol where container.type == .Text {
             let attributeText = textContainer.textElement!.attributeString
             
             return Promise { fullfill, reject in
-                let textDraw = TextDrawing(position: position, size: size, rotation: rotation, attributeString: attributeText)
+                let textDraw = TextDrawing(position: position, size: size, rotation: rotation, alpha: alpha, attributeString: attributeText)
                 fullfill(textDraw)
             }
         } else if let imageContainer = container as? ImageContainerVMProtocol where container.type == .Image {
             let imageName = imageContainer.imageElement!.resourceName
-            
-            return asyncImage(retriveImageBy(imageName, baseURL: baseURL, imageAccess: imageAccess ,local: local), position: position, rotation: rotation, size: size)
+            let alpha = container.alphaValue
+            return asyncImage(retriveImageBy(imageName, baseURL: baseURL, imageAccess: imageAccess ,local: local), position: position, rotation: rotation, size: size, alpha: alpha)
         }
         
         fatalError("Container can not map to Promise<Drawable>")

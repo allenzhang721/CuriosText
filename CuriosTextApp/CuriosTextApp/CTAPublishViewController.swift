@@ -59,7 +59,7 @@ class CTAPublishViewController: UIViewController {
     var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
     
     deinit {
-        print("\(#file) deinit")
+        debug_print("\(#file) deinit", context: deinitContext)
     }
 
     override func viewDidLoad() {

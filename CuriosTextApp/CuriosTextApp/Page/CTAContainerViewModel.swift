@@ -26,6 +26,7 @@ extension ContainerVMProtocol {
                 .Animation,
                 .Fonts,
                 .Colors,
+                .Alpha,
                 .Size,
                 .Rotator,
                 .TextSpacing,
@@ -66,6 +67,7 @@ protocol ViewPropertiesRetrivevale:class {
     var scale: CGFloat { get }
     var radius: CGFloat { get }
     var inset: CGPoint { get }
+    var alphaValue: CGFloat {get}
     
     func updateWithScale(ascale: CGFloat, constraintSzie: CGSize)
 }
@@ -77,6 +79,7 @@ protocol viewPropertiesModifiable: ViewPropertiesRetrivevale {
     var size: CGSize { get set }
     var scale: CGFloat { get set }
     var radius: CGFloat { get set }
+    var alphaValue: CGFloat { get set }
 }
 
 protocol contentsTypeRetrivevable {
@@ -150,6 +153,17 @@ extension CTAContainer: ContainerVMProtocol {
         set {
             
             contentScale = Double(newValue)
+        }
+    }
+    
+    var alphaValue: CGFloat {
+        get {
+            return CGFloat(alpha)
+        }
+        
+        set {
+            
+            alpha = Double(newValue)
         }
     }
     

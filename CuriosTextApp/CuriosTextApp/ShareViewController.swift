@@ -142,7 +142,6 @@ extension ShareViewController: UITextViewDelegate {
         let multAttriText = NSMutableAttributedString(attributedString: attributeText)
         multAttriText.setAttributes(normalAttributes, range: NSMakeRange(0, 140))
         multAttriText.setAttributes(exceedAttributes, range: NSMakeRange(140, length - 140))
-        print(textView.selectedRange)
         textView.attributedText = multAttriText
     }
 }

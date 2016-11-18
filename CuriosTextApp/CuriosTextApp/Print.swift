@@ -18,12 +18,13 @@ public struct PrintContext {
 
 let disablePrint: [PrintContext] = [defaultContext]
 
-let defaultContext = PrintContext(shouldPrint: true, context: "default Print")
+let defaultContext = PrintContext(shouldPrint: false, context: "default Print")
 let fdContext = PrintContext(shouldPrint: false, context: "First Dispaly Font Name")
 let colorContext = PrintContext(shouldPrint: false, context: "First Dispaly Color")
 let aniContext = PrintContext(shouldPrint: false, context: "animation")
 let previewConttext = PrintContext(shouldPrint: false, context: "Preview")
-let animationChangedContext = PrintContext(shouldPrint: true, context: "animation Changed")
+let animationChangedContext = PrintContext(shouldPrint: false, context: "animation Changed")
+let deinitContext = PrintContext(shouldPrint: true, context: "deinit")
 
 // other swift flags : -D DEBUG
 public func debug_print<T>(value: T,file: String = #file, line: Int = #line ,function: String = #function, context: PrintContext = defaultContext) {
