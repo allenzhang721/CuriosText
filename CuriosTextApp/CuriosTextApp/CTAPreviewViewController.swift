@@ -10,7 +10,7 @@ import UIKit
 
 class CTAPreviewViewController: UIViewController {
 
-    private let page = EditorFactory.generateRandomPage()
+    fileprivate let page = EditorFactory.generateRandomPage()
     @IBOutlet weak var previewView: CTAPreviewCanvasView!
     
     override func viewDidLoad() {
@@ -19,25 +19,25 @@ class CTAPreviewViewController: UIViewController {
         previewView.datasource = self
     }
     
-    @IBAction func play(sender: AnyObject) {
+    @IBAction func play(_ sender: AnyObject) {
         
         previewView.play()
     }
     
-    @IBAction func pause(sender: AnyObject) {
+    @IBAction func pause(_ sender: AnyObject) {
         
         previewView.pause()
     }
     
     
-    @IBAction func reload(sender: AnyObject) {
+    @IBAction func reload(_ sender: AnyObject) {
         previewView.stop()
     }
 }
 
 extension CTAPreviewViewController: CTAPreviewCanvasViewDataSource {
     
-    func canvasViewWithPage(view: CTAPreviewCanvasView) -> PageVMProtocol? {
+    func canvasViewWithPage(_ view: CTAPreviewCanvasView) -> PageVMProtocol? {
         return page
     }
 }

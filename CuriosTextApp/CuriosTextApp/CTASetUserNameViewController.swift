@@ -49,7 +49,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if !self.isChange {
             self.viewWillLoad()
@@ -57,7 +57,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         self.isChange = false
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if !self.isChange {
             self.resetView()
@@ -65,28 +65,28 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
     }
     
     func initView(){
-        let bouns = UIScreen.mainScreen().bounds
+        let bouns = UIScreen.main.bounds
         let tap = UITapGestureRecognizer(target: self, action: #selector(CTASetUserNameViewController.bgViewClick(_:)))
         self.view.addGestureRecognizer(tap)
         
         let backButton = UIButton(frame: CGRect(x: 0, y: 22, width: 40, height: 40))
-        backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
-        backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
-        backButton.addTarget(self, action: #selector(CTASetUserNameViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
+        backButton.setImage(UIImage(named: "back-button"), for: UIControlState())
+        backButton.setImage(UIImage(named: "back-selected-button"), for: .highlighted)
+        backButton.addTarget(self, action: #selector(CTASetUserNameViewController.backButtonClick(_:)), for: .touchUpInside)
         self.view.addSubview(backButton)
         
         let userInfoLabel = UILabel(frame: CGRect(x: 0, y: 60*self.getVerRate(), width: bouns.width, height: 40))
-        userInfoLabel.font = UIFont.boldSystemFontOfSize(28)
+        userInfoLabel.font = UIFont.boldSystemFont(ofSize: 28)
         userInfoLabel.textColor = CTAStyleKit.normalColor
         userInfoLabel.text = NSLocalizedString("UserInfoLabel", comment: "")
-        userInfoLabel.textAlignment = .Center
+        userInfoLabel.textAlignment = .center
         self.view.addSubview(userInfoLabel)
         
         self.userIconImage = UIImageView(frame: CGRect(x: (bouns.width - 60)/2, y: 140*self.getVerRate(), width: 60, height: 60))
         self.userIconImage.image = UIImage(named: "default-usericon")
         self.cropImageCircle(self.userIconImage)
         self.view.addSubview(self.userIconImage)
-        self.userIconImage.userInteractionEnabled = true
+        self.userIconImage.isUserInteractionEnabled = true
         let iconTap = UITapGestureRecognizer(target: self, action: #selector(CTASetUserNameViewController.userIconClick(_:)))
         self.userIconImage.addGestureRecognizer(iconTap)
     
@@ -101,8 +101,8 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         self.userNickNameTextInput.center = CGPoint(x: bouns.width/2, y: 150*self.getVerRate()+75)
         self.userNickNameTextInput.placeholder = NSLocalizedString("UserNickNameLabel", comment: "") + ":  "+NSLocalizedString("UserNamePlaceholder", comment: "")
         self.userNickNameTextInput.delegate = self
-        self.userNickNameTextInput.clearButtonMode = .WhileEditing
-        self.userNickNameTextInput.returnKeyType = .Done
+        self.userNickNameTextInput.clearButtonMode = .whileEditing
+        self.userNickNameTextInput.returnKeyType = .done
         self.view.addSubview(self.userNickNameTextInput)
         
         
@@ -112,13 +112,13 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         self.view.addSubview(textLine)
         
         self.completeButton = UIButton(frame: CGRect(x: (bouns.width - 40)/2, y: self.userNickNameTextInput.frame.origin.y + 70, width: 40, height: 28))
-        self.completeButton.setTitle(NSLocalizedString("CompleteButtonLabel", comment: ""), forState: .Normal)
-        self.completeButton.setTitleColor(CTAStyleKit.selectedColor, forState: .Normal)
-        self.completeButton.setTitleColor(CTAStyleKit.disableColor, forState: .Disabled)
-        self.completeButton.titleLabel?.font = UIFont.systemFontOfSize(20)
+        self.completeButton.setTitle(NSLocalizedString("CompleteButtonLabel", comment: ""), for: UIControlState())
+        self.completeButton.setTitleColor(CTAStyleKit.selectedColor, for: UIControlState())
+        self.completeButton.setTitleColor(CTAStyleKit.disableColor, for: .disabled)
+        self.completeButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         self.completeButton.sizeToFit()
         self.completeButton.frame.origin.x = (bouns.width - self.completeButton.frame.width)/2
-        self.completeButton.addTarget(self, action: #selector(CTASetUserNameViewController.completeButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.completeButton.addTarget(self, action: #selector(CTASetUserNameViewController.completeButtonClick(_:)), for: .touchUpInside)
         self.view.addSubview(self.completeButton)
     }
     
@@ -143,7 +143,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
             self.userNickNameTextInput.text = ""
         }
         self.setCompleteButtonStyle()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CTASetUserNameViewController.textFieldEditChange(_:)), name: "UITextFieldTextDidChangeNotification", object: self.userNickNameTextInput)
+        NotificationCenter.default.addObserver(self, selector: #selector(CTASetUserNameViewController.textFieldEditChange(_:)), name: NSNotification.Name(rawValue: "UITextFieldTextDidChangeNotification"), object: self.userNickNameTextInput)
     }
     
     func resetView(){
@@ -151,14 +151,15 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         self.userIconPath = ""
         self.selectedImage = nil
         self.isChangeImage = false
-        self.completeButton.enabled = false
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "UITextFieldTextDidChangeNotification", object: self.userNickNameTextInput)
+        self.completeButton.isEnabled = false
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "UITextFieldTextDidChangeNotification"), object: self.userNickNameTextInput)
     }
     
-    func loadUserIcon(iconPath:String){
-        let imageURL = NSURL(string: iconPath)!
-        self.userIconImage.kf_showIndicatorWhenLoading = true
-        self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: UIImage(named: "default-usericon"), optionsInfo: nil) { (image, error, cacheType, imageURL) -> () in
+    func loadUserIcon(_ iconPath:String){
+        let imageURL = URL(string: iconPath)!
+//        self.userIconImage.kf_showIndicatorWhenLoading = true
+//      self.userIconImage.kf.indicator = Kingfisher.
+        self.userIconImage.kf.setImage(with: imageURL, placeholder: UIImage(named: "default-usericon"), options: nil) { (image, error, cacheType, imageURL) -> () in
             if error == nil {
                 self.selectedImage = self.userIconImage.image
                 self.setCompleteButtonStyle()
@@ -168,7 +169,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
             }else {
                 self.userIconImage.image = UIImage(named: "default-usericon")
             }
-            self.userIconImage.kf_showIndicatorWhenLoading = false
+//            self.userIconImage.kf_showIndicatorWhenLoading = false
         }
     }
     
@@ -176,14 +177,14 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         let newText = self.userNickNameTextInput.text
         let newStr = NSString(string: newText!)
         if newStr.length > 0{
-            self.completeButton.enabled = true
+            self.completeButton.isEnabled = true
         }else {
-            self.completeButton.enabled = false
+            self.completeButton.isEnabled = false
         }
     }
     
-    func backButtonClick(sender: UIButton){
-        self.showSelectedAlert(NSLocalizedString("AlertTitleUserNameBack", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.OK.description, cancelAlertLabel: LocalStrings.Cancel.description) { (result) -> Void in
+    func backButtonClick(_ sender: UIButton){
+        self.showSelectedAlert(NSLocalizedString("AlertTitleUserNameBack", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.ok.description, cancelAlertLabel: LocalStrings.cancel.description) { (result) -> Void in
             if result {
                 switch self.userNameType{
                 case .register:
@@ -208,7 +209,7 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         self.hideLoadingViewByView(self.completeButton)
     }
     
-    func completeButtonClick(sender: UIButton){
+    func completeButtonClick(_ sender: UIButton){
         self.completeHandler()
     }
     
@@ -232,11 +233,11 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
                 })
             }
         }else {
-            self.completeButton.enabled = false
+            self.completeButton.isEnabled = false
         }
     }
     
-    func uploadUserInfo(userIconURL:String = ""){
+    func uploadUserInfo(_ userIconURL:String = ""){
         if self.userModel != nil {
             if userIconURL != "" {
                 self.userModel!.userIconURL = userIconURL
@@ -265,41 +266,41 @@ class CTASetUserNameViewController: UIViewController, CTAPublishCellProtocol, CT
         self.loginComplete(self.userModel!)
     }
     
-    func userIconClick(sender: UIPanGestureRecognizer){
+    func userIconClick(_ sender: UIPanGestureRecognizer){
         var alertArray:Array<[String : AnyObject]> = []
-        alertArray.append(["title":LocalStrings.TakePhoto.description])
-        alertArray.append(["title":LocalStrings.ChoosePhoto.description])
-        self.showSheetAlert(LocalStrings.PhotoTitle.description, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
+        alertArray.append(["title":LocalStrings.takePhoto.description as AnyObject])
+        alertArray.append(["title":LocalStrings.choosePhoto.description as AnyObject])
+        self.showSheetAlert(LocalStrings.photoTitle.description, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.cancel.description) { (index) -> Void in
             if index == 0{
                 self.imagePicker.allowsEditing = true
-                self.imagePicker.sourceType = .Camera
+                self.imagePicker.sourceType = .camera
                 self.isChange = true
-                self.presentViewController(self.imagePicker, animated: true, completion: nil)
+                self.present(self.imagePicker, animated: true, completion: nil)
             }else if index == 1{
                 self.imagePicker.allowsEditing = true
-                self.imagePicker.sourceType = .PhotoLibrary
+                self.imagePicker.sourceType = .photoLibrary
                 self.isChange = true
-                self.presentViewController(self.imagePicker, animated: true, completion: nil)
+                self.present(self.imagePicker, animated: true, completion: nil)
             }
         }
     }
     
-    func bgViewClick(sender: UIPanGestureRecognizer){
+    func bgViewClick(_ sender: UIPanGestureRecognizer){
         self.resignHandler(sender)
     }
 }
 
 extension CTASetUserNameViewController: UITextFieldDelegate{
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool{
         textField.resignFirstResponder()
-        if self.completeButton.enabled {
+        if self.completeButton.isEnabled {
             self.completeHandler()
         }
         return true
     }
     
-    func textFieldEditChange(noti: NSNotification) {
+    func textFieldEditChange(_ noti: Notification) {
         let textField = noti.object as! UITextField
         self.checkTextField(textField)
         textField.sizeToFit()
@@ -308,7 +309,7 @@ extension CTASetUserNameViewController: UITextFieldDelegate{
         self.setCompleteButtonStyle()
     }
     
-    func checkTextField(textField: UITextField) -> Bool{
+    func checkTextField(_ textField: UITextField) -> Bool{
         textField.sizeToFit()
         let viewText = textField.text
         let textStr = NSString(string: viewText!)
@@ -327,10 +328,10 @@ extension CTASetUserNameViewController: UITextFieldDelegate{
         }
         if needReset {
             let range = textField.selectedTextRange
-            let newText = textStr.substringToIndex(textStr.length - 1)
+            let newText = textStr.substring(to: textStr.length - 1)
             let newStr = NSString(string: newText)
             textField.text = newText
-            let rageLength = textField.offsetFromPosition(textField.beginningOfDocument, toPosition: range!.start)
+            let rageLength = textField.offset(from: textField.beginningOfDocument, to: range!.start)
             if rageLength < newStr.length{
                 textField.selectedTextRange = range
             }
@@ -342,18 +343,18 @@ extension CTASetUserNameViewController: UITextFieldDelegate{
 }
 
 extension CTASetUserNameViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]){
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
         if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
             self.userIconImage.image = compressIconImage(pickedImage)
             self.selectedImage = pickedImage
             self.setCompleteButtonStyle()
             self.isChangeImage = true
         }
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController){
-        dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController){
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -362,7 +363,7 @@ extension CTASetUserNameViewController: CTAUploadIconProtocol{
         self.changeToLoadingView()
     }
     
-    func uploadComplete(result:Bool, iconPath:String, icon:UIImage?){
+    func uploadComplete(_ result:Bool, iconPath:String, icon:UIImage?){
         if result{
             self.uploadUserInfo(iconPath)
         }else {
@@ -373,7 +374,7 @@ extension CTASetUserNameViewController: CTAUploadIconProtocol{
 
 extension CTASetUserNameViewController: UIGestureRecognizerDelegate{
     
-    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return false
     }
     

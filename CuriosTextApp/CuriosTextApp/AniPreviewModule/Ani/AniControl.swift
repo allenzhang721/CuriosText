@@ -12,12 +12,12 @@ import UIKit
 class AniControl: NSObject {
     
     enum AniControlState {
-        case Start
-        case Playing(Float, Float) // progress, duration
-        case Paused
-        case Continued
-        case Stoped
-        case Completed
+        case start
+        case playing(Float, Float) // progress, duration
+        case paused
+        case continued
+        case stoped
+        case completed
     }
     
     typealias AniControlHander = (AniControlState) -> ()
@@ -41,29 +41,29 @@ class AniControl: NSObject {
     }
     
     var inner = AniControlInner()
-    private lazy var displayLink: CADisplayLink = {
+    fileprivate lazy var displayLink: CADisplayLink = {
         let adisplayLink = CADisplayLink(target: self,selector: #selector(AniControl.displayFrameTick))
-        adisplayLink.addToRunLoop(NSRunLoop.currentRunLoop(),forMode: NSRunLoopCommonModes)
-        adisplayLink.paused = true
+        adisplayLink.add(to: RunLoop.current,forMode: RunLoopMode.commonModes)
+        adisplayLink.isPaused = true
         return adisplayLink
     }()
-    private var paused: Bool {
-        get { return displayLink.paused }
-        set { displayLink.paused = newValue }
+    fileprivate var paused: Bool {
+        get { return displayLink.isPaused }
+        set { displayLink.isPaused = newValue }
     }
     
-    private var playing: Bool {
+    fileprivate var playing: Bool {
         get { return inner.playing }
         set { inner.playing = newValue }
     }
     
-    private var handler: AniControlHander?
+    fileprivate var handler: AniControlHander?
     
-    @objc private func displayFrameTick() {
+    @objc fileprivate func displayFrameTick() {
         tick()
     }
     
-    func start(duration: Float) {
+    func start(_ duration: Float) {
         p_start(duration)
     }
     
@@ -75,13 +75,13 @@ class AniControl: NSObject {
         p_stop()
     }
     
-    func callBack(handler: AniControlHander?) {
+    func callBack(_ handler: AniControlHander?) {
         self.handler = handler
     }
 }
 
 extension AniControl {
-    private func tick() {
+    fileprivate func tick() {
         if displayLink.duration > 0 && inner.totalFrames <= 0 {
             let frameRate = Float(displayLink.duration) / Float(displayLink.frameInterval)
             inner.totalFrames = Int(ceil(inner.duration / frameRate))
@@ -93,19 +93,19 @@ extension AniControl {
                 inner.playing = true
             }
             inner.progress += 1.0 / Float(inner.totalFrames)
-            handler?(.Playing(inner.progress, inner.duration))
+            handler?(.playing(inner.progress, inner.duration))
         } else {
             
             inner.reset()
-            displayLink.paused = true
-            handler?(.Completed)
+            displayLink.isPaused = true
+            handler?(.completed)
         }
     }
     
-    private func p_start(duration: Float) {
+    fileprivate func p_start(_ duration: Float) {
         switch (playing, paused) {
         case (true, true): // paused
-            paused = false; handler?(.Continued)
+            paused = false; handler?(.continued)
         case (true, false): // playing
             ()
         case (false, true): // stop or not start
@@ -113,24 +113,24 @@ extension AniControl {
             inner.duration = duration
             playing = true
             paused = false
-            handler?(.Start)
+            handler?(.start)
         case (false, false):
             playing = true
         }
     }
     
-    private func p_pause() {
+    fileprivate func p_pause() {
         if !paused {
             paused = true
-            handler?(.Paused)
+            handler?(.paused)
         }
     }
     
-    private func p_stop() {
+    fileprivate func p_stop() {
         if inner.playing {
             paused = true
             inner.reset()
-            handler?(.Stoped)
+            handler?(.stoped)
         }
     }
 }

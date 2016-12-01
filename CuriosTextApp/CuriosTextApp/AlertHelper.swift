@@ -10,31 +10,31 @@ import Foundation
 
 private struct AlertText {
     // MARK: - Common
-    static let attenstion = LocalStrings.Attension.description
-    static let cancel = LocalStrings.Cancel.description
-    static let done = LocalStrings.Done.description
+    static let attenstion = LocalStrings.attension.description
+    static let cancel = LocalStrings.cancel.description
+    static let done = LocalStrings.done.description
     
     struct Editor {
-        static let EditorDismissMessage = LocalStrings.EditorDismissMessage.description
+        static let EditorDismissMessage = LocalStrings.editorDismissMessage.description
     }
 }
 
-func alert_EditorDismiss(Done:() -> ()) -> UIAlertController {
+func alert_EditorDismiss(_ Done: @escaping () -> ()) -> UIAlertController {
     let message = AlertText.Editor.EditorDismissMessage
     return alert_Dismiss(message, Done: Done)
 }
 
-private func alert_Dismiss(message: String, Done:() -> ()) -> UIAlertController {
+private func alert_Dismiss(_ message: String, Done: @escaping () -> ()) -> UIAlertController {
     
     let cancelTitle = AlertText.cancel
-    let cancelAction = UIAlertAction(title: cancelTitle, style: .Cancel, handler: nil)
+    let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel, handler: nil)
     
     let doneTitle = AlertText.done
-    let doneAction = UIAlertAction(title: doneTitle, style: .Default) {_ in Done()}
+    let doneAction = UIAlertAction(title: doneTitle, style: .default) {_ in Done()}
     
     let alertTitle = AlertText.attenstion
     let alertMessage = message
-    let alertStyle: UIAlertControllerStyle = .Alert
+    let alertStyle: UIAlertControllerStyle = .alert
     let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: alertStyle)
     
     alert.addAction(cancelAction)

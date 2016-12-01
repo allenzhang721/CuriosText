@@ -13,7 +13,7 @@ import Kingfisher
 
 protocol CTAPreviewCanvasViewDataSource: class {
     
-    func canvasViewWithPage(view: CTAPreviewCanvasView) -> PageVMProtocol?
+    func canvasViewWithPage(_ view: CTAPreviewCanvasView) -> PageVMProtocol?
 }
 
 class CTAPreviewCanvasView: UIView {
@@ -32,8 +32,8 @@ class CTAPreviewCanvasView: UIView {
     }
     
 //    var isLocal: Bool = false
-    var imageAccessBaseURL: NSURL? // documentImage + publishID or serverURL + publishID
-    var imageAccess: ((NSURL, String) -> Promise<Result<CTAImageCache>>)?
+    var imageAccessBaseURL: URL? // documentImage + publishID or serverURL + publishID
+    var imageAccess: ((URL, String) -> Promise<AResult<CTAImageCache>>)?
     
     var didCachedCompletedHandler: ((Bool) -> ())? {
         
@@ -68,7 +68,7 @@ class CTAPreviewCanvasView: UIView {
                         continue
                     }
                     
-                    let cell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0))
+                    let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0))
 
                     let preView = (cell as? CTAPreviewCell)?.previewView
                     
@@ -101,13 +101,13 @@ class CTAPreviewCanvasView: UIView {
         setup()
     }
     
-    private func setup() {
+    fileprivate func setup() {
         let layout = CTAPreviewLayout()
         
         let defaultSide: CGFloat = 414.0
         collectionView = UICollectionView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: defaultSide, height: defaultSide)), collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor.clearColor()
-        collectionView.registerClass(CTAPreviewCell.self, forCellWithReuseIdentifier: "ContainerCell")
+        collectionView.backgroundColor = UIColor.clear
+        collectionView.register(CTAPreviewCell.self, forCellWithReuseIdentifier: "ContainerCell")
 
         addSubview(collectionView)
     }
@@ -124,7 +124,7 @@ class CTAPreviewCanvasView: UIView {
         }
         
         let imageNames = page.containerVMs.filter { container in
-            if container.type == .Image {
+            if container.type == .image {
                 return true
             } else {
                 return false
@@ -164,7 +164,7 @@ class CTAPreviewCanvasView: UIView {
         super.layoutSubviews()
         let defaultSide: CGFloat = 414.0
         let scale = min(bounds.width / defaultSide , bounds.height / defaultSide)
-        collectionView.transform = CGAffineTransformMakeScale(scale, scale)
+        collectionView.transform = CGAffineTransform(scaleX: scale, y: scale)
         collectionView.center = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0)
     }
     
@@ -172,24 +172,24 @@ class CTAPreviewCanvasView: UIView {
      clear all the views on the cell
      
      */
-    func reloadData(needReloadAnimation: Bool = true, compeletedHander:(() -> ())?) {
+    func reloadData(_ needReloadAnimation: Bool = true, compeletedHander:(() -> ())?) {
         
         cleanViewAndCache()
         
         didCachedCompletedHandler = {[weak self] success in
-            if let strongSelf = self where success {
-                dispatch_async(dispatch_get_main_queue(), {
+            if let strongSelf = self, success {
+                DispatchQueue.main.async(execute: {
                     
-                    print(strongSelf.collectionView.visibleCells().count)
+                    print(strongSelf.collectionView.visibleCells.count)
                     strongSelf.load()
                     
-                    print(strongSelf.collectionView.visibleCells().count)
+                    print(strongSelf.collectionView.visibleCells.count)
                     CATransaction.begin()
                     CATransaction.setDisableActions(true)
-                    strongSelf.collectionView.reloadSections(NSIndexSet(index: 0))
+                    strongSelf.collectionView.reloadSections(IndexSet(integer: 0))
                     CATransaction.commit()
                     
-                    print(strongSelf.collectionView.visibleCells().count)
+                    print(strongSelf.collectionView.visibleCells.count)
                     
                     if needReloadAnimation {
                         strongSelf.splitedControllers = nil
@@ -207,7 +207,7 @@ class CTAPreviewCanvasView: UIView {
 
     // Clear all the views on the cell
     func cleanViews() {
-        let visualCells = collectionView.visibleCells() as! [CTAPreviewCell]
+        let visualCells = collectionView.visibleCells as! [CTAPreviewCell]
         
         for cell in visualCells {
             cell.previewView.clearViews()
@@ -223,7 +223,7 @@ extension CTAPreviewCanvasView: CTAPreviewControl {
         }
         
         if animationNodeManager.stoped {
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.animationNodeManager.play()
             }
 //            reloadData() {
@@ -231,7 +231,7 @@ extension CTAPreviewCanvasView: CTAPreviewControl {
 //            }
             
         } else if animationNodeManager.paused {
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.animationNodeManager.play()
             }
         }
@@ -245,7 +245,7 @@ extension CTAPreviewCanvasView: CTAPreviewControl {
         
         if animationNodeManager.playing {
             reloadData(false) {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self.animationNodeManager.stop()
                 }
             }
@@ -255,7 +255,7 @@ extension CTAPreviewCanvasView: CTAPreviewControl {
     
     func clear() {
         
-        let visualCells = collectionView.visibleCells() as! [CTAPreviewCell]
+        let visualCells = collectionView.visibleCells as! [CTAPreviewCell]
         
         for cell in visualCells {
             cell.previewView.clearViews()
@@ -265,7 +265,7 @@ extension CTAPreviewCanvasView: CTAPreviewControl {
 
 extension CTAPreviewCanvasView: UICollectionViewDataSource {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         guard let page = page else {
             return 0
@@ -274,9 +274,9 @@ extension CTAPreviewCanvasView: UICollectionViewDataSource {
         return page.containerVMs.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ContainerCell", forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ContainerCell", for: indexPath)
 
         return cell
     }
@@ -284,14 +284,14 @@ extension CTAPreviewCanvasView: UICollectionViewDataSource {
 
 extension CTAPreviewCanvasView: UICollectionViewDelegate {
     
-    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         let acell = cell as! CTAPreviewCell
         
         let container = page!.containerVMs[indexPath.item]
         
         let id = container.iD
-        let isImageContainer = (container.type == .Image)
+        let isImageContainer = (container.type == .image)
         let needLoadContents = page!.containerShouldLoadBeforeAnimationBeganByID(id)
         debug_print(" \(needLoadContents) load \(acell.previewView)", context: aniContext)
         
@@ -307,7 +307,7 @@ extension CTAPreviewCanvasView: UICollectionViewDelegate {
 
 extension CTAPreviewCanvasView: CTAPreviewLayoutDataSource {
     
-    func layout(layout: CTAPreviewLayout, layoutAttributesAtIndexPath indexPath: NSIndexPath) -> ContainerVMProtocol? {
+    func layout(_ layout: CTAPreviewLayout, layoutAttributesAtIndexPath indexPath: IndexPath) -> ContainerVMProtocol? {
         
         guard let page = page else {
             return nil
@@ -319,12 +319,12 @@ extension CTAPreviewCanvasView: CTAPreviewLayoutDataSource {
 
 extension CTAPreviewCanvasView: CTAAnimationPlayNodeManagerDataSource {
     
-    func numberOfNodesForNodeManager(manager: CTAAnimationPlayNodeManager) -> Int {
+    func numberOfNodesForNodeManager(_ manager: CTAAnimationPlayNodeManager) -> Int {
         
         return nodeCount
     }
     
-    func nodeManager(manager: CTAAnimationPlayNodeManager, animationControllersForNodeAtIndex index: Int) -> [CTAAnimationController] {
+    func nodeManager(_ manager: CTAAnimationPlayNodeManager, animationControllersForNodeAtIndex index: Int) -> [CTAAnimationController] {
         
         return controllers[index]
     }

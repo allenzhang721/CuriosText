@@ -39,14 +39,14 @@ class CTAVerticalItemColorCollectionViewCell: CTAVerticalItemCollectionViewCell 
         
         colorView = UIView(frame: bounds)
         colorView.layer.cornerRadius = 18
-        colorView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        colorView.layer.borderColor = UIColor.lightGray.cgColor
         colorView.layer.borderWidth = 0.5
         contentView.addSubview(colorView)
         colorView.translatesAutoresizingMaskIntoConstraints = false
-        colorView.centerXAnchor.constraintEqualToAnchor(centerXAnchor).active = true
-        colorView.centerYAnchor.constraintEqualToAnchor(centerYAnchor).active = true
-        colorView.widthAnchor.constraintEqualToConstant(36).active = true
-        colorView.heightAnchor.constraintEqualToConstant(36).active = true
+        colorView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        colorView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        colorView.widthAnchor.constraint(equalToConstant: 36).isActive = true
+        colorView.heightAnchor.constraint(equalToConstant: 36).isActive = true
     }
     
     override func update() {
@@ -75,9 +75,9 @@ class CTAVerticalItemColorCollectionViewCell: CTAVerticalItemCollectionViewCell 
         
     }
     
-    override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         
-        super.applyLayoutAttributes(layoutAttributes)
+        super.apply(layoutAttributes)
         
         guard let layoutAttributes = layoutAttributes as? CollectionViewAttributes else {
             return
@@ -88,7 +88,7 @@ class CTAVerticalItemColorCollectionViewCell: CTAVerticalItemCollectionViewCell 
         if actived != layoutAttributes.actived {
             
             actived = layoutAttributes.actived
-            UIView.transitionWithView(self, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {[weak self] () -> Void in
+            UIView.transition(with: self, duration: 0.3, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {[weak self] () -> Void in
                 
                                 if let sr = self {
                                     sr.update()

@@ -7,14 +7,16 @@
 //
 
 import Foundation
+//import Alamofire
+//import Alamofire
 import Alamofire
 
 extension CTARequestMethod {
   
-  private func toAlamofireMethod() -> Alamofire.Method {
+  fileprivate func toAlamofireMethod() -> Alamofire.HTTPMethod {
     switch self {
-    case .POST:
-      return .POST
+    case .post:
+      return .post
     }
   }
 }
@@ -22,12 +24,12 @@ extension CTARequestMethod {
 final class CTANetworkAgent {
   
   static let shareInstance = CTANetworkAgent()
-  private let config = CTANetworkConfig.shareInstance
-  private var requestRecords = [Int: CTABaseRequest]()
+  fileprivate let config = CTANetworkConfig.shareInstance
+  fileprivate var requestRecords = [Int: CTABaseRequest]()
   
-  func addRequest(request: CTABaseRequest) {
+  func addRequest(_ request: CTABaseRequest) {
     let method = request.requestMethod()
-    let url = buildRequestUrl(request)
+    let urlstr = buildRequestUrl(request)
     let parameters = request.requestParameters()
     let serialType = request.requestSerializerType()
     
@@ -45,21 +47,40 @@ final class CTANetworkAgent {
     
     // TODO: api build custom request -- Emiaostein; 2015-12-04-16:46
     
-
-    let urlRequest = Alamofire.request(method.toAlamofireMethod(), url, parameters: parameters)
+//   let urlRequest = Alamofire.request(url, method: .post, parameters: parameters, encoding: ParameterEncoding, headers: nil)
+    
+    let urlRequest = Alamofire.request(urlstr, method: .post, parameters: parameters, encoding: URLEncoding.default)
+    
+//    let urlRequest = Alamofire.request(method.toAlamofireMethod(), url, parameters: parameters)
     request.dependenceRequest = urlRequest
     switch serialType {
       
-    case .JSON:
-      urlRequest.validate().responseJSON {response -> Void in
-        self.handleResponse(response)
-      }
+    case .json:
+//      urlRequest.validate().responseJSON {response -> Void in
+//        self.handleResponse(response)
+//      }
+      urlRequest.validate().responseJSON(completionHandler: {[weak self] (response: DataResponse<Any>) in
+        guard let sf = self else { return }
+        switch response.result {
+        case .success(let v):
+          let res = CTARequestResponse(request: response.request, response: response.response, data: response.data, result: CTARequestResult<AnyObject, NSError>.success(v as AnyObject))
+          sf.handleResponse(res)
+          
+        case .failure(let error):
+          let res = CTARequestResponse(request: response.request, response: response.response, data: response.data, result: CTARequestResult<AnyObject, NSError>.failure(error as NSError))
+          sf.handleResponse(res)
+        }
+        
+        
+//        let res = CTARequestResponse(request: response.request, response: response.response, data: response.data, result: CTARequestResult<Value, AError>)
+//        sf.handleResponse(CTARequestResponse<AnyObject, NSError>)
+      })
     }
     
     appendRequest(request)
   }
   
-  func cancelRequest(request: CTABaseRequest) {
+  func cancelRequest(_ request: CTABaseRequest) {
     request.dependenceRequest?.cancel()
     removeRequest(request)
     request.cleanCompletionBlock()
@@ -77,7 +98,7 @@ final class CTANetworkAgent {
 
 extension CTANetworkAgent {
   
-  private func appendRequest(request: CTABaseRequest) {
+  fileprivate func appendRequest(_ request: CTABaseRequest) {
     guard let dependenceRequest = request.dependenceRequest, let urlrequest = dependenceRequest.request else {
       return
     }
@@ -85,7 +106,7 @@ extension CTANetworkAgent {
     requestRecords[hashValue] = request
   }
   
-  private func removeRequest(request: CTABaseRequest) {
+  fileprivate func removeRequest(_ request: CTABaseRequest) {
     guard let dependenceRequest = request.dependenceRequest, let urlrequest = dependenceRequest.request else {
       return
     }
@@ -95,7 +116,7 @@ extension CTANetworkAgent {
     
   }
   
-  private func buildRequestUrl(request: CTABaseRequest) -> String {
+  fileprivate func buildRequestUrl(_ request: CTABaseRequest) -> String {
     let requestUrl = request.requestUrl()
     
     guard !requestUrl.hasPrefix("http") else {
@@ -106,7 +127,7 @@ extension CTANetworkAgent {
     return "\(baseUrl)\(requestUrl)"
   }
   
-  private func handleResponse(response: Response<AnyObject, NSError>) {
+  fileprivate func handleResponse(_ response: CTARequestResponse<AnyObject, NSError>) {
     
     guard let urlRequest = response.request else {
       return
@@ -119,14 +140,14 @@ extension CTANetworkAgent {
     }
     
     switch response.result {
-    case .Success(let value):
-      let aresult = CTARequestResult<AnyObject, NSError>.Success(value)
+    case .success(let value):
+      let aresult = CTARequestResult<AnyObject, NSError>.success(value)
       let aresponse = CTARequestResponse(request: response.request, response: response.response, data: response.data, result: aresult)
       if let completionBlock = request.completionBlock {
         completionBlock(aresponse)
       }
-    case .Failure(let error):
-      let aresult = CTARequestResult<AnyObject, NSError>.Failure(error)
+    case .failure(let error):
+      let aresult = CTARequestResult<AnyObject, NSError>.failure(error)
       let aresponse = CTARequestResponse(request: response.request, response: response.response, data: response.data, result: aresult)
       if let completionBlock = request.completionBlock {
         completionBlock(aresponse)

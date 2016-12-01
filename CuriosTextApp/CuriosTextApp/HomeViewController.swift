@@ -50,24 +50,24 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
         self.initView()
         self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
         if !self.isAddOber{
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(newPublishHandler(_:)), name: "publishEditFile", object: nil)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reNewView(_:)), name: "loginComplete", object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(newPublishHandler(_:)), name: NSNotification.Name(rawValue: "publishEditFile"), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(reNewView(_:)), name: NSNotification.Name(rawValue: "loginComplete"), object: nil)
             self.isAddOber = true
         }
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.reloadView()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshView(_:)), name: "refreshSelf", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshView(_:)), name: NSNotification.Name(rawValue: "refreshSelf"), object: nil)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         if self.isDisMis{
             self.viewAppearBegin()
@@ -75,11 +75,11 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         self.isDisMis = false
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.isDisMis = true
         self.hideLoadingView()
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "refreshSelf", object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "refreshSelf"), object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -93,30 +93,30 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
     }
     
     func initHeader(){
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         
         self.headerView = UIView(frame: CGRect(x: 0, y: self.headerY, width: bounds.width, height: 64-self.headerY))
         self.headerView.backgroundColor = CTAStyleKit.commonBackgroundColor
         self.view.addSubview(self.headerView)
         
         let homeLabel = UILabel(frame: CGRect(x: 0, y: 28-self.headerY, width: bounds.width, height: 28))
-        homeLabel.font = UIFont.boldSystemFontOfSize(18)
+        homeLabel.font = UIFont.boldSystemFont(ofSize: 18)
         homeLabel.textColor = CTAStyleKit.normalColor
         homeLabel.text = NSLocalizedString("DefaultName", comment: "")
-        homeLabel.textAlignment = .Center
+        homeLabel.textAlignment = .center
         self.headerView.addSubview(homeLabel)
         let textLine = UIImageView(frame: CGRect(x: 0, y: 63-self.headerY, width: bounds.width, height: 1))
         textLine.image = UIImage(named: "space-line")
         headerView.addSubview(textLine)
         self.view.addSubview(self.headerView)
         
-        self.headerView.userInteractionEnabled = true
+        self.headerView.isUserInteractionEnabled = true
         let headerTap = UITapGestureRecognizer(target: self, action: #selector(headerViewClickClick(_:)))
         self.headerView.addGestureRecognizer(headerTap)
     }
     
     func initCollectionView(){
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         let rect:CGRect = CGRect(x: 0, y: 46, width: bounds.width, height: bounds.height-46)
         self.collectionLayout = UICollectionViewFlowLayout()
 
@@ -126,26 +126,26 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         self.collectionView = UICollectionView(frame: rect, collectionViewLayout: self.collectionLayout)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        self.collectionView.registerClass(CTAHomePublishesCell.self, forCellWithReuseIdentifier: "ctahomepublishescell")
+        self.collectionView.register(CTAHomePublishesCell.self, forCellWithReuseIdentifier: "ctahomepublishescell")
         self.collectionView.backgroundColor = CTAStyleKit.commonBackgroundColor
         self.view.addSubview(self.collectionView!);
         
         let freshIcon1:UIImage = UIImage(named: "fresh-icon-1")!
         
         self.headerFresh = MJRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(HomeViewController.loadFirstData))
-        self.headerFresh.setImages([freshIcon1], forState: .Idle)
-        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Pulling)
-        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Refreshing)
+        self.headerFresh.setImages([freshIcon1], for: .idle)
+        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, for: .pulling)
+        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, for: .refreshing)
         
-        self.headerFresh.lastUpdatedTimeLabel?.hidden = true
-        self.headerFresh.stateLabel?.hidden = true
+        self.headerFresh.lastUpdatedTimeLabel?.isHidden = true
+        self.headerFresh.stateLabel?.isHidden = true
         self.collectionView.mj_header = self.headerFresh
         
         self.footerFresh = MJRefreshAutoGifFooter(refreshingTarget: self, refreshingAction: #selector(HomeViewController.loadLastData))
-        self.footerFresh.refreshingTitleHidden = true
-        self.footerFresh.setTitle("", forState: .Idle)
-        self.footerFresh.setTitle("", forState: .NoMoreData)
-        self.footerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Refreshing)
+        self.footerFresh.isRefreshingTitleHidden = true
+        self.footerFresh.setTitle("", for: .idle)
+        self.footerFresh.setTitle("", for: .noMoreData)
+        self.footerFresh.setImages(self.getLoadingImages(), duration:1.0, for: .refreshing)
         self.collectionView.mj_footer = footerFresh;
     }
     
@@ -195,7 +195,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         }
     }
     
-    func headerViewClickClick(sender: UIPanGestureRecognizer){
+    func headerViewClickClick(_ sender: UIPanGestureRecognizer){
         
     }
     
@@ -237,11 +237,11 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         self.savePublishArray(request, modelArray: savePublishModel)
     }
 
-    func reNewView(noti: NSNotification){
+    func reNewView(_ noti: Notification){
         self.viewUserID = ""
     }
     
-    func newPublishHandler(noti: NSNotification){
+    func newPublishHandler(_ noti: Notification){
         if self.isDisMis{
             self.viewUserID = ""
         }else {
@@ -249,7 +249,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         }
     }
     
-    func refreshView(noti: NSNotification){
+    func refreshView(_ noti: Notification){
         if self.collectionView.contentOffset.y > self.scrollTop{
             self.collectionView.setContentOffset(CGPoint(x: 0, y: self.scrollTop), animated: true)
         }else {
@@ -257,7 +257,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         }
     }
     
-    func loadUserPublishes(start:Int, size:Int = 30){
+    func loadUserPublishes(_ start:Int, size:Int = 30){
         if self.isLoading{
             self.freshComplete();
             return
@@ -277,7 +277,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         }
     }
     
-    func loadPublishesComplete(info: CTADomainListInfo, size:Int){
+    func loadPublishesComplete(_ info: CTADomainListInfo, size:Int){
         self.isLoading = false
         if info.result{
             let modelArray = info.modelArray;
@@ -297,8 +297,8 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
                                 }else {
                                     let index = self.getPublishIndex(newmodel.publishID, publishArray: self.publishModelArray)
                                     if index != -1{
-                                        self.publishModelArray.insert(newmodel, atIndex: index)
-                                        self.publishModelArray.removeAtIndex(index+1)
+                                        self.publishModelArray.insert(newmodel, at: index)
+                                        self.publishModelArray.remove(at: index+1)
                                     }
                                 }
                             }
@@ -342,7 +342,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
     }
     
     func updateCollectionCell(){
-        let cells = self.collectionView.visibleCells()
+        let cells = self.collectionView.visibleCells
         for i in 0..<cells.count{
             let cell = cells[i] as! CTAHomePublishesCell
             if cell.publishModel != nil {
@@ -356,7 +356,7 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
         }
     }
 
-    func loadMoreModelArray(modelArray:Array<AnyObject>){
+    func loadMoreModelArray(_ modelArray:Array<AnyObject>){
         for i in 0..<modelArray.count{
             let publishModel = modelArray[i] as! CTAPublishModel
             if !self.checkPublishModelIsHave(publishModel, publishArray: self.publishModelArray){
@@ -392,12 +392,12 @@ class HomeViewController: UIViewController, CTAPublishCacheProtocol, CTAPublishM
 extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
     
     //collection view delegate
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return  self.publishModelArray.count;
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
-        let publishCell:CTAHomePublishesCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("ctahomepublishescell", forIndexPath: indexPath) as! CTAHomePublishesCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
+        let publishCell:CTAHomePublishesCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "ctahomepublishescell", for: indexPath) as! CTAHomePublishesCell
         let index = indexPath.row
         if index < self.publishModelArray.count{
             let publihshModel = self.publishModelArray[index]
@@ -413,8 +413,8 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         return publishCell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
-        let publishesCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? CTAHomePublishesCell
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+        let publishesCell = self.collectionView.cellForItem(at: indexPath) as? CTAHomePublishesCell
         let index = indexPath.row
         self.selectedPublishID = ""
         if index < self.publishModelArray.count && index > -1{
@@ -426,13 +426,13 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         }
     }
     
-    func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath){
-        let publishCell:CTAHomePublishesCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("ctahomepublishescell", forIndexPath: indexPath) as! CTAHomePublishesCell
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath){
+        let publishCell:CTAHomePublishesCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "ctahomepublishescell", for: indexPath) as! CTAHomePublishesCell
         publishCell.releaseView()
     }
     
     //scroll view hide tool bar
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let toolBarViewframe = self.headerView.frame
         let collectViewFrame = self.collectionView.frame
         let size  = toolBarViewframe.height - 20
@@ -454,11 +454,11 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         self.playCellAnimation(scrollOffset - viewY)
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         self.stoppedScrolling()
     }
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             self.stoppedScrolling()
         }
@@ -474,7 +474,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         }
     }
     
-    func updateBarButtonsAlpha(alpha:CGFloat){
+    func updateBarButtonsAlpha(_ alpha:CGFloat){
         let subViews = self.headerView.subviews
         for i in 0..<subViews.count{
             let subView = subViews[i]
@@ -482,13 +482,13 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         }
     }
     
-    func animationNavBarTo(y:CGFloat){
-        UIView.animateWithDuration(0.1) { () -> Void in
+    func animationNavBarTo(_ y:CGFloat){
+        UIView.animate(withDuration: 0.1, animations: { () -> Void in
             self.changeColloetionNavBar(y)
-        }
+        }) 
     }
     
-    func changeColloetionNavBar(y:CGFloat){
+    func changeColloetionNavBar(_ y:CGFloat){
         var toolBarViewframe = self.headerView.frame
         var collectViewFrame = self.collectionView.frame
         toolBarViewframe.origin.y = y
@@ -512,10 +512,10 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
 //        }
 //    }
     
-    func getCollectionCellSizeByPublish(publish:CTAPublishModel? = nil) -> CGSize{
+    func getCollectionCellSizeByPublish(_ publish:CTAPublishModel? = nil) -> CGSize{
         let top:CGFloat = 50
         var buttom:CGFloat = 100
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         if publish != nil {
             if publish!.likeCount > 0{
                 buttom = 100
@@ -529,9 +529,9 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         }
     }
     
-    func playCellAnimation(offY:CGFloat){
-        let bounds = UIScreen.mainScreen().bounds
-        let cells = self.collectionView.visibleCells()
+    func playCellAnimation(_ offY:CGFloat){
+        let bounds = UIScreen.main.bounds
+        let cells = self.collectionView.visibleCells
         for i in 0..<cells.count{
             let cell = cells[i]
             let cellFrame = cell.frame
@@ -558,7 +558,7 @@ extension HomeViewController:CTALoadingProtocol{
 
 extension HomeViewController:CTAHomePublishesCellDelegate{
     
-    func cellUserIconTap(cell:CTAHomePublishesCell?){
+    func cellUserIconTap(_ cell:CTAHomePublishesCell?){
         if cell != nil {
             if let publishModel = cell?.publishModel{
                 let viewUserModel = publishModel.userModel
@@ -569,7 +569,7 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
         }
     }
     
-    func cellLikeListTap(cell:CTAHomePublishesCell?){
+    func cellLikeListTap(_ cell:CTAHomePublishesCell?){
         if self.loginUser != nil {
             if cell != nil {
                 self.selectedCell = cell
@@ -580,7 +580,7 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
         }
     }
     
-    func cellLikeHandler(cell:CTAHomePublishesCell?, justLike:Bool){
+    func cellLikeHandler(_ cell:CTAHomePublishesCell?, justLike:Bool){
         if self.loginUser != nil {
             if cell != nil {
                 self.selectedCell = cell
@@ -591,7 +591,7 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
         }
     }
     
-    func cellCommentHandler(cell:CTAHomePublishesCell?){
+    func cellCommentHandler(_ cell:CTAHomePublishesCell?){
         if self.loginUser != nil {
             if cell != nil {
                 self.selectedCell = cell
@@ -602,7 +602,7 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
         }
     }
     
-    func cellRebuildHandler(cell:CTAHomePublishesCell?){
+    func cellRebuildHandler(_ cell:CTAHomePublishesCell?){
         if self.loginUser != nil {
             if cell != nil {
                 self.selectedCell = cell
@@ -613,14 +613,14 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
         }
     }
     
-    func cellMoreHandler(cell:CTAHomePublishesCell?){
+    func cellMoreHandler(_ cell:CTAHomePublishesCell?){
         if cell != nil {
             self.selectedCell = cell
             self.moreSelectionHandler(false, isPopup: false)
         }
     }
     
-    func cellDoubleTap(cell:CTAHomePublishesCell?){
+    func cellDoubleTap(_ cell:CTAHomePublishesCell?){
         if self.loginUser != nil {
             if cell != nil {
                 self.selectedCell = cell
@@ -629,7 +629,7 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
         }
     }
     
-    func cellSingleTap(cell:CTAHomePublishesCell?){
+    func cellSingleTap(_ cell:CTAHomePublishesCell?){
         if cell != nil {
             self.selectedCell = cell
             self.selectedPublishID = self.selectedCell!.publishModel!.publishID
@@ -638,17 +638,17 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
     }
     
     func showDetailView(){
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         var cellFrame:CGRect!
         var transitionView:UIView
         var preview:CTAPublishPreviewView?
         if self.selectedCell != nil {
             preview = self.selectedCell!.previewView
             cellFrame = preview!.frame
-            let zorePt = preview!.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+            let zorePt = preview!.convert(CGPoint(x: 0, y: 0), to: self.view)
             cellFrame.origin.y = zorePt.y
             cellFrame.origin.x = zorePt.x
-            transitionView = preview!.snapshotViewAfterScreenUpdates(false)
+            transitionView = preview!.snapshotView(afterScreenUpdates: false)!
         }else {
             cellFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
             transitionView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
@@ -678,9 +678,9 @@ extension HomeViewController:CTAHomePublishesCellDelegate{
         
         let navi = UINavigationController(rootViewController: vc)
         navi.transitioningDelegate = ani
-        navi.modalPresentationStyle = .Custom
+        navi.modalPresentationStyle = .custom
         
-        self.presentViewController(navi, animated: true, completion: {
+        self.present(navi, animated: true, completion: {
         })
     }
 }
@@ -709,7 +709,7 @@ extension HomeViewController: CTAPublishControllerProtocol{
         }
     }
     
-    func setLikeButtonStyle(publichModel:CTAPublishModel?){
+    func setLikeButtonStyle(_ publichModel:CTAPublishModel?){
         if self.selectedCell != nil {
             self.selectedCell?.changeLikeStatus(publichModel)
         }
@@ -718,7 +718,7 @@ extension HomeViewController: CTAPublishControllerProtocol{
     func likersRect() -> CGRect? {
         if self.selectedCell != nil {
             let cellFrame = self.selectedCell!.controllerView.likeCountView.frame
-            let pt = self.selectedCell!.controllerView.likeCountView.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+            let pt = self.selectedCell!.controllerView.likeCountView.convert(CGPoint(x: 0, y: 0), to: self.view)
             let rect:CGRect = CGRect(x: pt.x, y: pt.y, width: cellFrame.width, height: cellFrame.height)
             return rect
         }
@@ -728,26 +728,26 @@ extension HomeViewController: CTAPublishControllerProtocol{
     func commentRect() -> CGRect? {
         if self.selectedCell != nil {
             let cellFrame = self.selectedCell!.controllerView.commentView.frame
-            let pt = self.selectedCell!.controllerView.commentView.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+            let pt = self.selectedCell!.controllerView.commentView.convert(CGPoint(x: 0, y: 0), to: self.view)
             let rect:CGRect = CGRect(x: pt.x, y: pt.y, width: cellFrame.width, height: cellFrame.height)
             return rect
         }
         return nil
     }
     
-    func disCommentMisComplete(publishID: String) {
+    func disCommentMisComplete(_ publishID: String) {
         self.updatePublishByID(publishID)
     }
     
-    func updatePublishByID(publishID:String){
+    func updatePublishByID(_ publishID:String){
         let userID = self.loginUser == nil ? "" : self.loginUser!.userID
         CTAPublishDomain.getInstance().publishDetai(userID, publishID: publishID) { (info) in
             if info.result {
                 if let publishModel = info.baseModel as? CTAPublishModel {
                     let index = self.getPublishIndex(publishModel.publishID, publishArray: self.publishModelArray)
                     if index != -1{
-                        self.publishModelArray.insert(publishModel, atIndex: index)
-                        self.publishModelArray.removeAtIndex(index+1)
+                        self.publishModelArray.insert(publishModel, at: index)
+                        self.publishModelArray.remove(at: index+1)
                         self.updateCollectionCell()
                     }
                 }
@@ -761,7 +761,7 @@ extension HomeViewController: PublishDetailViewDelegate{
     func transitionComplete() {
 //        let frame = self.view.frame
 //        self.view.frame.origin.y = frame.origin.y + 20
-        let cells = self.collectionView.visibleCells()
+        let cells = self.collectionView.visibleCells
         for i in 0..<cells.count{
             let cell = cells[i] as! CTAHomePublishesCell
             if cell.publishModel?.publishID == self.selectedPublishID{
@@ -771,12 +771,12 @@ extension HomeViewController: PublishDetailViewDelegate{
         }
     }
     
-    func getPublishCell(selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect?{
+    func getPublishCell(_ selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect?{
         let cellFrame:CGRect = self.saveNewPublishArray(selectedID, publishArray: publishArray)
         return cellFrame;
     }
     
-    func saveNewPublishArray(selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect{
+    func saveNewPublishArray(_ selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect{
         var isChange:Bool = false
         if publishArray.count == self.publishModelArray.count {
             for i in 0..<publishArray.count{
@@ -788,8 +788,8 @@ extension HomeViewController: PublishDetailViewDelegate{
                 }else {
                     let index = self.getPublishIndex(newModel.publishID, publishArray: self.publishModelArray)
                     if index != -1{
-                        self.publishModelArray.insert(newModel, atIndex: index)
-                        self.publishModelArray.removeAtIndex(index+1)
+                        self.publishModelArray.insert(newModel, at: index)
+                        self.publishModelArray.remove(at: index+1)
                     }
                 }
             }

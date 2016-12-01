@@ -47,14 +47,14 @@ class CTAShareView: UIView{
     
     static func getInstance() -> CTAShareView{
         if _instance == nil{
-            let bounds = UIScreen.mainScreen().bounds
+            let bounds = UIScreen.main.bounds
             _instance = CTAShareView(frame: bounds)
         }
         return _instance!
     }
     
     func initView(){
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
         let tap = UITapGestureRecognizer(target: self, action: #selector(CTAShareView.backButtonClikc(_:)))
         self.addGestureRecognizer(tap)
@@ -68,25 +68,25 @@ class CTAShareView: UIView{
         self.buttonView.addSubview(self.scrollView)
         
         let cancelView = UIView.init(frame: CGRect.init(x: 0, y: self.buttonView.frame.height - 50, width: bounds.width, height: 50))
-        cancelView.backgroundColor = UIColor.whiteColor()
+        cancelView.backgroundColor = UIColor.white
         let cancelButton:UIButton = UIButton.init()
         cancelButton.frame.size = cancelView.frame.size
-        let cancelLabel = LocalStrings.Cancel.description
-        cancelButton.setTitle(cancelLabel, forState: .Normal)
-        cancelButton.setTitleColor(UIColor.init(red: 0/255, green: 122/255, blue: 255/255, alpha: 1.0), forState: .Normal)
-        cancelButton.addTarget(self, action: #selector(CTAShareView.cancelButtonClick(_:)), forControlEvents: .TouchUpInside)
+        let cancelLabel = LocalStrings.cancel.description
+        cancelButton.setTitle(cancelLabel, for: UIControlState())
+        cancelButton.setTitleColor(UIColor.init(red: 0/255, green: 122/255, blue: 255/255, alpha: 1.0), for: UIControlState())
+        cancelButton.addTarget(self, action: #selector(CTAShareView.cancelButtonClick(_:)), for: .touchUpInside)
         cancelView.addSubview(cancelButton)
         self.buttonView.addSubview(cancelView)
         
         self.wechatShareView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
         let wechatButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
-        wechatButton.setImage(UIImage.init(named: "wechat-share-button"), forState: .Normal)
-        wechatButton.addTarget(self, action: #selector(CTAShareView.weChatButtonClick(_:)), forControlEvents: .TouchUpInside)
+        wechatButton.setImage(UIImage.init(named: "wechat-share-button"), for: UIControlState())
+        wechatButton.addTarget(self, action: #selector(CTAShareView.weChatButtonClick(_:)), for: .touchUpInside)
         self.wechatShareView.addSubview(wechatButton)
         let wechatLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
-        wechatLabel.font = UIFont.systemFontOfSize(8)
+        wechatLabel.font = UIFont.systemFont(ofSize: 8)
         wechatLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        wechatLabel.text = LocalStrings.Wechat.description
+        wechatLabel.text = LocalStrings.wechat.description
         wechatLabel.sizeToFit()
         wechatLabel.center = CGPoint.init(x: wechatButton.center.x, y: buttonW+20)
         self.wechatShareView.addSubview(wechatLabel)
@@ -96,13 +96,13 @@ class CTAShareView: UIView{
         
         self.momentsShareView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
         let momentsButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
-        momentsButton.setImage(UIImage.init(named: "moments-share-button"), forState: .Normal)
-        momentsButton.addTarget(self, action: #selector(CTAShareView.momentsButtonClick(_:)), forControlEvents: .TouchUpInside)
+        momentsButton.setImage(UIImage.init(named: "moments-share-button"), for: UIControlState())
+        momentsButton.addTarget(self, action: #selector(CTAShareView.momentsButtonClick(_:)), for: .touchUpInside)
         self.momentsShareView.addSubview(momentsButton)
         let momentsLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
-        momentsLabel.font = UIFont.systemFontOfSize(8)
+        momentsLabel.font = UIFont.systemFont(ofSize: 8)
         momentsLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        momentsLabel.text = LocalStrings.Moments.description
+        momentsLabel.text = LocalStrings.moments.description
         momentsLabel.sizeToFit()
         momentsLabel.center = CGPoint.init(x: momentsButton.center.x, y: buttonW+20)
         self.momentsShareView.addSubview(momentsLabel)
@@ -114,13 +114,13 @@ class CTAShareView: UIView{
         
         self.weiboShareView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
         let weiboButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
-        weiboButton.setImage(UIImage.init(named: "weibo-share-button"), forState: .Normal)
-        weiboButton.addTarget(self, action: #selector(CTAShareView.weiboButtonClick(_:)), forControlEvents: .TouchUpInside)
+        weiboButton.setImage(UIImage.init(named: "weibo-share-button"), for: UIControlState())
+        weiboButton.addTarget(self, action: #selector(CTAShareView.weiboButtonClick(_:)), for: .touchUpInside)
         self.weiboShareView.addSubview(weiboButton)
         let weiboLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
-        weiboLabel.font = UIFont.systemFontOfSize(8)
+        weiboLabel.font = UIFont.systemFont(ofSize: 8)
         weiboLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        weiboLabel.text = LocalStrings.Weibo.description
+        weiboLabel.text = LocalStrings.weibo.description
         weiboLabel.sizeToFit()
         weiboLabel.center = CGPoint.init(x: weiboButton.center.x, y: buttonW+20)
         self.weiboShareView.addSubview(weiboLabel)
@@ -132,13 +132,13 @@ class CTAShareView: UIView{
         
         self.deleteView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
         let deleteButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
-        deleteButton.setImage(UIImage.init(named: "delete-file-button"), forState: .Normal)
-        deleteButton.addTarget(self, action: #selector(CTAShareView.deleteButtonClick(_:)), forControlEvents: .TouchUpInside)
+        deleteButton.setImage(UIImage.init(named: "delete-file-button"), for: UIControlState())
+        deleteButton.addTarget(self, action: #selector(CTAShareView.deleteButtonClick(_:)), for: .touchUpInside)
         self.deleteView.addSubview(deleteButton)
         let deleteLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
-        deleteLabel.font = UIFont.systemFontOfSize(8)
+        deleteLabel.font = UIFont.systemFont(ofSize: 8)
         deleteLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        deleteLabel.text = LocalStrings.DeleteFile.description
+        deleteLabel.text = LocalStrings.deleteFile.description
         deleteLabel.sizeToFit()
         deleteLabel.center = CGPoint.init(x: deleteButton.center.x, y: buttonW+20)
         self.deleteView.addSubview(deleteLabel)
@@ -148,13 +148,13 @@ class CTAShareView: UIView{
         
         self.saveLocolView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
         let saveLocalButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
-        saveLocalButton.setImage(UIImage.init(named: "save-file-button"), forState: .Normal)
-        saveLocalButton.addTarget(self, action: #selector(CTAShareView.saveLocalButtonClick(_:)), forControlEvents: .TouchUpInside)
+        saveLocalButton.setImage(UIImage.init(named: "save-file-button"), for: UIControlState())
+        saveLocalButton.addTarget(self, action: #selector(CTAShareView.saveLocalButtonClick(_:)), for: .touchUpInside)
         self.saveLocolView.addSubview(saveLocalButton)
         let saveLocalLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
-        saveLocalLabel.font = UIFont.systemFontOfSize(8)
+        saveLocalLabel.font = UIFont.systemFont(ofSize: 8)
         saveLocalLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        saveLocalLabel.text = LocalStrings.SaveLocal.description
+        saveLocalLabel.text = LocalStrings.saveLocal.description
         saveLocalLabel.sizeToFit()
         saveLocalLabel.center = CGPoint.init(x: deleteButton.center.x, y: buttonW+20)
         self.saveLocolView.addSubview(saveLocalLabel)
@@ -164,13 +164,13 @@ class CTAShareView: UIView{
         
         self.reportView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
         let reportButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
-        reportButton.setImage(UIImage.init(named: "report-file-button"), forState: .Normal)
-        reportButton.addTarget(self, action: #selector(CTAShareView.reportButtonClick(_:)), forControlEvents: .TouchUpInside)
+        reportButton.setImage(UIImage.init(named: "report-file-button"), for: UIControlState())
+        reportButton.addTarget(self, action: #selector(CTAShareView.reportButtonClick(_:)), for: .touchUpInside)
         self.reportView.addSubview(reportButton)
         let reportLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
-        reportLabel.font = UIFont.systemFontOfSize(8)
+        reportLabel.font = UIFont.systemFont(ofSize: 8)
         reportLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        reportLabel.text = LocalStrings.Report.description
+        reportLabel.text = LocalStrings.report.description
         reportLabel.sizeToFit()
         reportLabel.center = CGPoint.init(x: reportButton.center.x, y: buttonW+20)
         self.reportView.addSubview(reportLabel)
@@ -180,13 +180,13 @@ class CTAShareView: UIView{
         
         self.uploadResourceView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
         let uploadButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
-        uploadButton.setImage(UIImage.init(named: "copy-link-button"), forState: .Normal)
-        uploadButton.addTarget(self, action: #selector(CTAShareView.uploadResourceButtonClick(_:)), forControlEvents: .TouchUpInside)
+        uploadButton.setImage(UIImage.init(named: "copy-link-button"), for: UIControlState())
+        uploadButton.addTarget(self, action: #selector(CTAShareView.uploadResourceButtonClick(_:)), for: .touchUpInside)
         self.uploadResourceView.addSubview(uploadButton)
         let uploadLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
-        uploadLabel.font = UIFont.systemFontOfSize(8)
+        uploadLabel.font = UIFont.systemFont(ofSize: 8)
         uploadLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        uploadLabel.text = LocalStrings.UploadFile.description
+        uploadLabel.text = LocalStrings.uploadFile.description
         uploadLabel.sizeToFit()
         uploadLabel.center = CGPoint.init(x: uploadButton.center.x, y: buttonW+20)
         self.uploadResourceView.addSubview(uploadLabel)
@@ -196,13 +196,13 @@ class CTAShareView: UIView{
         
         self.addToHotView = UIView.init(frame: CGRect.init(x: 0, y: 15, width: buttonW, height: buttonW))
         let addToHotButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: buttonW, height: buttonW))
-        addToHotButton.setImage(UIImage.init(named: "copy-link-button"), forState: .Normal)
-        addToHotButton.addTarget(self, action: #selector(CTAShareView.addToHotButtonClick(_:)), forControlEvents: .TouchUpInside)
+        addToHotButton.setImage(UIImage.init(named: "copy-link-button"), for: UIControlState())
+        addToHotButton.addTarget(self, action: #selector(CTAShareView.addToHotButtonClick(_:)), for: .touchUpInside)
         self.addToHotView.addSubview(addToHotButton)
         let addToHotLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
-        addToHotLabel.font = UIFont.systemFontOfSize(8)
+        addToHotLabel.font = UIFont.systemFont(ofSize: 8)
         addToHotLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        addToHotLabel.text = LocalStrings.AddToHot.description
+        addToHotLabel.text = LocalStrings.addToHot.description
         addToHotLabel.sizeToFit()
         addToHotLabel.center = CGPoint.init(x: uploadButton.center.x, y: buttonW+20)
         self.addToHotView.addSubview(addToHotLabel)
@@ -228,7 +228,7 @@ class CTAShareView: UIView{
     }
     
     func showViewHandler(){
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
         switch self.shareType {
         case .normal:
@@ -239,24 +239,24 @@ class CTAShareView: UIView{
             self.settingShareView()
         }
         self.resetScrollView()
-        UIView.animateWithDuration(0.3) { () -> Void in
+        UIView.animate(withDuration: 0.3, animations: { () -> Void in
             self.buttonView.frame.origin.y = bounds.height - 170
             self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.4)
-        }
+        }) 
     }
     
     func selfShareView(){
-        self.deleteView.hidden = false
-        self.saveLocolView.hidden = false
-        self.reportView.hidden = false
+        self.deleteView.isHidden = false
+        self.saveLocolView.isHidden = false
+        self.reportView.isHidden = false
         if self.isAdminUser() {
-            self.uploadResourceView.hidden = false
-            self.addToHotView.hidden = false
+            self.uploadResourceView.isHidden = false
+            self.addToHotView.isHidden = false
         }else {
-            self.uploadResourceView.hidden = true
-            self.addToHotView.hidden = true
+            self.uploadResourceView.isHidden = true
+            self.addToHotView.isHidden = true
         }
-        let rate =  UIScreen.mainScreen().bounds.width / 375
+        let rate =  UIScreen.main.bounds.width / 375
         self.space = 15.00 * rate
         self.wechatShareView.frame.origin.x = space
         self.momentsShareView.frame.origin.x = space+(space+buttonW)*1
@@ -269,17 +269,17 @@ class CTAShareView: UIView{
     }
     
     func unSelfShareView(){
-        self.deleteView.hidden = true
-        self.saveLocolView.hidden = false
-        self.reportView.hidden = false
+        self.deleteView.isHidden = true
+        self.saveLocolView.isHidden = false
+        self.reportView.isHidden = false
         if self.isAdminUser() {
-            self.uploadResourceView.hidden = false
-            self.addToHotView.hidden = false
+            self.uploadResourceView.isHidden = false
+            self.addToHotView.isHidden = false
         }else {
-            self.uploadResourceView.hidden = true
-            self.addToHotView.hidden = true
+            self.uploadResourceView.isHidden = true
+            self.addToHotView.isHidden = true
         }
-        let rate =  UIScreen.mainScreen().bounds.width / 375
+        let rate =  UIScreen.main.bounds.width / 375
         self.space = 15.00 * rate
         self.wechatShareView.frame.origin.x = space
         self.momentsShareView.frame.origin.x = space+(space+buttonW)*1
@@ -292,12 +292,12 @@ class CTAShareView: UIView{
     }
     
     func settingShareView(){
-        self.deleteView.hidden = true
-        self.saveLocolView.hidden = true
-        self.reportView.hidden = true
-        self.uploadResourceView.hidden = true
-        self.addToHotView.hidden = true
-        let maxWidth =  UIScreen.mainScreen().bounds.width
+        self.deleteView.isHidden = true
+        self.saveLocolView.isHidden = true
+        self.reportView.isHidden = true
+        self.uploadResourceView.isHidden = true
+        self.addToHotView.isHidden = true
+        let maxWidth =  UIScreen.main.bounds.width
         let space = (maxWidth - 3*buttonW)/4
         self.wechatShareView.frame.origin.x = space
         self.momentsShareView.frame.origin.x = space+(space+buttonW)*1
@@ -332,33 +332,33 @@ class CTAShareView: UIView{
         }
     }
     
-    func cancelHandler(complete: (() -> ())?){
-        let bounds = UIScreen.mainScreen().bounds
+    func cancelHandler(_ complete: (() -> ())?){
+        let bounds = UIScreen.main.bounds
         self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.4)
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
+        UIView.animate(withDuration: 0.3, animations: { () -> Void in
             self.buttonView.frame.origin.y = bounds.height
             self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
-        }) { (_) -> Void in
+        }, completion: { (_) -> Void in
             self.removeFromSuperview()
             complete?()
             self.delegate = nil
-        }
+        }) 
     }
     
-    func cancelButtonClick(sender: UIButton){
+    func cancelButtonClick(_ sender: UIButton){
         self.cancelHandler({
         })
     }
     
-    func backButtonClikc(sender: UITapGestureRecognizer){
-        let pt = sender.locationInView(self.buttonView)
-        if !self.buttonView.pointInside(pt, withEvent: nil){
+    func backButtonClikc(_ sender: UITapGestureRecognizer){
+        let pt = sender.location(in: self.buttonView)
+        if !self.buttonView.point(inside: pt, with: nil){
             self.cancelHandler({
             })
         }
     }
     
-    func weChatButtonClick(sender: UIButton){
+    func weChatButtonClick(_ sender: UIButton){
         self.cancelHandler({
             if self.delegate != nil {
                 self.delegate!.weChatShareHandler()
@@ -366,7 +366,7 @@ class CTAShareView: UIView{
         })
     }
     
-    func momentsButtonClick(sender: UIButton){
+    func momentsButtonClick(_ sender: UIButton){
         self.cancelHandler({
             if self.delegate != nil {
                 self.delegate!.momentsShareHandler()
@@ -374,7 +374,7 @@ class CTAShareView: UIView{
         })
     }
     
-    func weiboButtonClick(sender: UIButton){
+    func weiboButtonClick(_ sender: UIButton){
         self.cancelHandler({
             if self.delegate != nil {
                 self.delegate!.weiBoShareHandler()
@@ -382,7 +382,7 @@ class CTAShareView: UIView{
         })
     }
     
-    func deleteButtonClick(sender: UIButton){
+    func deleteButtonClick(_ sender: UIButton){
         self.cancelHandler({
             if self.delegate != nil {
                 self.delegate!.deleteHandler()
@@ -390,7 +390,7 @@ class CTAShareView: UIView{
         })
     }
     
-    func saveLocalButtonClick(sender: UIButton){
+    func saveLocalButtonClick(_ sender: UIButton){
         self.cancelHandler({
             if self.delegate != nil {
                 self.delegate!.saveLocalHandler()
@@ -398,7 +398,7 @@ class CTAShareView: UIView{
         })
     }
     
-    func reportButtonClick(sender: UIButton){
+    func reportButtonClick(_ sender: UIButton){
         self.cancelHandler({
             if self.delegate != nil {
                 self.delegate!.reportHandler()
@@ -406,7 +406,7 @@ class CTAShareView: UIView{
         })
     }
     
-    func uploadResourceButtonClick(sender: UIButton){
+    func uploadResourceButtonClick(_ sender: UIButton){
         self.cancelHandler({
             if self.delegate != nil {
                 self.delegate!.uploadResourceHandler()
@@ -414,7 +414,7 @@ class CTAShareView: UIView{
         })
     }
     
-    func addToHotButtonClick(sender: UIButton){
+    func addToHotButtonClick(_ sender: UIButton){
         self.cancelHandler({
             if self.delegate != nil {
                 self.delegate!.addToHotHandler()
@@ -422,7 +422,7 @@ class CTAShareView: UIView{
         })
     }
     
-    func copyLinkButtonClick(sender: UIButton){
+    func copyLinkButtonClick(_ sender: UIButton){
         self.cancelHandler({
             if self.delegate != nil {
                 self.delegate!.copyLinkHandler()

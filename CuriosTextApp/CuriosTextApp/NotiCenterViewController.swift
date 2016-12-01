@@ -31,18 +31,18 @@ private class Message {
     var nickName: String {
         return model.userModel.nickName
     }
-    var iconURL: NSURL {
-        return NSURL(string: CTAFilePath.userFilePath + model.userModel.userIconURL)!
+    var iconURL: URL {
+        return URL(string: CTAFilePath.userFilePath + model.userModel.userIconURL)!
     }
     var date: String {
         return DateString(model.noticeDate)
     }
-    var previewIconURL: NSURL {
+    var previewIconURL: URL {
         var previewURL = model.previewIconURL
         if previewURL == "" {
             previewURL = model.publishIconURL
         }
-        return NSURL(string: CTAFilePath.publishFilePath + previewURL)!
+        return URL(string: CTAFilePath.publishFilePath + previewURL)!
     }
     var userModel: CTAViewUserModel {
         return model.userModel
@@ -72,23 +72,23 @@ private class CommentMessage: Message {
 }
 private class FollowMessage: Message {
     enum Relationship {
-        case CanFollowHe
-        case HadFollowHe
-        case CanNotFollowHe
+        case canFollowHe
+        case hadFollowHe
+        case canNotFollowHe
     }
 
     var relationship: Relationship {
         switch  model.userModel.relationType{
         case -1:
-            return .CanNotFollowHe
+            return .canNotFollowHe
         case 0, 3:
-            return .CanFollowHe
+            return .canFollowHe
         case 1, 5:
-            return .HadFollowHe
+            return .hadFollowHe
         case 2, 4, 6:
-            return .CanNotFollowHe
+            return .canNotFollowHe
         default:
-            return .CanNotFollowHe
+            return .canNotFollowHe
         }
     }
 }
@@ -109,29 +109,29 @@ class NotiCenterViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var clearButton: UIButton!
     
-    private var messages = [Message]()
-    private var tempRect: CGRect?
-    private var tempView: TouchImageView?
+    fileprivate var messages = [Message]()
+    fileprivate var tempRect: CGRect?
+    fileprivate var tempView: TouchImageView?
     
-    private var myID: String {
+    fileprivate var myID: String {
         return CTAUserManager.user?.userID ?? ""
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reNewView(_:)), name: "haveNewNotice", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reNewView(_:)), name: "loginComplete", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reNewView(_:)), name: NSNotification.Name(rawValue: "haveNewNotice"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reNewView(_:)), name: NSNotification.Name(rawValue: "loginComplete"), object: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NotiCenterViewController.refreshView(_:)), name: "refreshSelf", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(NotiCenterViewController.refreshView(_:)), name: NSNotification.Name(rawValue: "refreshSelf"), object: nil)
         
         tableView.tableFooterView = UIView()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if !self.notFresh {
             self.headerFresh.beginRefreshing()
@@ -139,61 +139,61 @@ class NotiCenterViewController: UIViewController {
         self.notFresh = true
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "refreshSelf", object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "refreshSelf"), object: nil)
     }
 
-    private func setup() {
+    fileprivate func setup() {
         setupView()
         setupTableView()
     }
     
-    private func setupView() {
-        navigationController?.navigationBarHidden = true
+    fileprivate func setupView() {
+        navigationController?.isNavigationBarHidden = true
         
-        titleLabel.text = LocalStrings.NotificationTitle.description
-        clearButton.setTitle(LocalStrings.Clear.description, forState: .Normal)
+        titleLabel.text = LocalStrings.notificationTitle.description
+        clearButton.setTitle(LocalStrings.clear.description, for: UIControlState())
         
         tableView.estimatedRowHeight = 70
         tableView.rowHeight = UITableViewAutomaticDimension
     }
     
-    private func setupTableView(){
+    fileprivate func setupTableView(){
         
         self.headerFresh = MJRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(NotiCenterViewController.loadFirstData))
         
         let freshIcon1:UIImage = UIImage(named: "fresh-icon-1")!
-        self.headerFresh.setImages([freshIcon1], forState: .Idle)
-        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Pulling)
-        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Refreshing)
+        self.headerFresh.setImages([freshIcon1], for: .idle)
+        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, for: .pulling)
+        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, for: .refreshing)
         
-        self.headerFresh.lastUpdatedTimeLabel?.hidden = true
-        self.headerFresh.stateLabel?.hidden = true
+        self.headerFresh.lastUpdatedTimeLabel?.isHidden = true
+        self.headerFresh.stateLabel?.isHidden = true
         self.tableView.mj_header = self.headerFresh
         
         self.footerFresh = MJRefreshAutoGifFooter(refreshingTarget: self, refreshingAction: #selector(NotiCenterViewController.loadLastData))
-        self.footerFresh.refreshingTitleHidden = true
-        self.footerFresh.setTitle("", forState: .Idle)
-        self.footerFresh.setTitle("", forState: .NoMoreData)
-        self.footerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Refreshing)
+        self.footerFresh.isRefreshingTitleHidden = true
+        self.footerFresh.setTitle("", for: .idle)
+        self.footerFresh.setTitle("", for: .noMoreData)
+        self.footerFresh.setImages(self.getLoadingImages(), duration:1.0, for: .refreshing)
         self.tableView.mj_footer = footerFresh;
     }
     
-    private func showAlert() {
-        let clean = UIAlertAction(title: LocalStrings.NeedClearAll.description, style: .Destructive) {[weak self] (action) in
-            self?.clearAll(1)
+    fileprivate func showAlert() {
+        let clean = UIAlertAction(title: LocalStrings.needClearAll.description, style: .destructive) {[weak self] (action) in
+            self?.clearAll(1 as AnyObject)
         }
         
-        let cancel = UIAlertAction(title: LocalStrings.Cancel.description, style: .Cancel, handler: nil)
+        let cancel = UIAlertAction(title: LocalStrings.cancel.description, style: .cancel, handler: nil)
         
-        let alert = UIAlertController(title: LocalStrings.Attension.description, message: nil, preferredStyle: .ActionSheet)
+        let alert = UIAlertController(title: LocalStrings.attension.description, message: nil, preferredStyle: .actionSheet)
         alert.addAction(clean)
         alert.addAction(cancel)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
-    private func showUserInfo(by userModel: CTAViewUserModel) {
+    fileprivate func showUserInfo(by userModel: CTAViewUserModel) {
         if let navigationController = navigationController {
             let userPublish = UserViewController()
             userPublish.viewUser = userModel
@@ -201,10 +201,10 @@ class NotiCenterViewController: UIViewController {
         }
     }
     
-    private func showPublishDetail(withPublishID publishID: String, cell:UITableViewCell) {
+    fileprivate func showPublishDetail(withPublishID publishID: String, cell:UITableViewCell) {
         CTAPublishDomain.getInstance().publishDetai(myID, publishID: publishID) {[weak self] (info) in
             if info.result{
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     if let model = info?.baseModel as? CTAPublishModel {
                         self?.showDetailView(model, cell: cell)
                     }
@@ -213,19 +213,19 @@ class NotiCenterViewController: UIViewController {
         }
     }
     
-    private func showDetailView(withModel: CTAPublishModel, cell:UITableViewCell) {
+    fileprivate func showDetailView(_ withModel: CTAPublishModel, cell:UITableViewCell) {
         //TODO:  -- Emiaostein, 7/15/16, 17:01
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         var cellFrame:CGRect!
         var transitionView:UIView
         var preview:TouchImageView?
         if let previewView = cell.viewWithTag(1004) as? TouchImageView {
             preview = previewView
             cellFrame = previewView.frame
-            let zorePt = previewView.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+            let zorePt = previewView.convert(CGPoint(x: 0, y: 0), to: self.view)
             cellFrame.origin.y = zorePt.y
             cellFrame.origin.x = zorePt.x
-            transitionView = previewView.snapshotViewAfterScreenUpdates(false)
+            transitionView = previewView.snapshotView(afterScreenUpdates: false)!
         }else {
             cellFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
             transitionView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
@@ -242,12 +242,12 @@ class NotiCenterViewController: UIViewController {
         let vc = Moduler.module_publishDetail(withModel.publishID, publishArray: [withModel], delegate: self, type: .Single)
         let navi = UINavigationController(rootViewController: vc)
         navi.transitioningDelegate = ani
-        navi.modalPresentationStyle = .Custom
-        self.presentViewController(navi, animated: true, completion: {
+        navi.modalPresentationStyle = .custom
+        self.present(navi, animated: true, completion: {
         })
     }
     
-    private func followUser(by userModel: CTAViewUserModel, cell:UITableViewCell) {
+    fileprivate func followUser(by userModel: CTAViewUserModel, cell:UITableViewCell) {
         //TODO:  -- Emiaostein, 7/15/16, 17:41
         if let imgView = cell.viewWithTag(1005) as? TouchImageView {
             self.showLoadingViewInView(imgView)
@@ -258,7 +258,7 @@ class NotiCenterViewController: UIViewController {
                     userModel.beFollowCount += 1
                     imgView.image = UIImage(named: "liker_following_btn")
                     imgView.tapHandler = { [weak self, cell] in
-                        guard let i = self?.tableView.indexPathForCell(cell), amessage = self?.messages[i.item] else {return}
+                        guard let i = self?.tableView.indexPath(for: cell), let amessage = self?.messages[i.item] else {return}
                         self?.showUserInfo(by: amessage.userModel)
                     }
                 }
@@ -267,22 +267,22 @@ class NotiCenterViewController: UIViewController {
         }
     }
     
-    private func showComment(withPublishID publishID: String, beganRect: CGRect) {
+    fileprivate func showComment(withPublishID publishID: String, beganRect: CGRect) {
         let userID = myID
         let vc = Moduler.module_comment(publishID, userID: userID, delegate: self)
         let navi = UINavigationController(rootViewController: vc)
         let ani = CTAScaleTransition.getInstance()
 
-        let bound = UIScreen.mainScreen().bounds
+        let bound = UIScreen.main.bounds
         ani.fromRect = self.getViewFromRect(beganRect, viewRect: bound)
         tempRect = ani.fromRect
         navi.transitioningDelegate = ani
-        navi.modalPresentationStyle = .Custom
-        self.presentViewController(navi, animated: true, completion: {
+        navi.modalPresentationStyle = .custom
+        self.present(navi, animated: true, completion: {
         })
     }
     
-    @IBAction func clearAll(sender: AnyObject) {
+    @IBAction func clearAll(_ sender: AnyObject) {
         showAlert()
     }
 }
@@ -290,20 +290,20 @@ class NotiCenterViewController: UIViewController {
 
 extension NotiCenterViewController: UITableViewDataSource {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return cell(for: tableView, at: indexPath)
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         let message = messages[indexPath.item]
         CTANoticeDomain.getInstance().deleteNotice(message.ID) {[weak self] (info) in
             if info.result {
-                self?.messages.removeAtIndex(indexPath.item)
-                self?.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+                self?.messages.remove(at: indexPath.item)
+                self?.tableView.deleteRows(at: [indexPath], with: .left)
             }
         }
     }
@@ -311,30 +311,30 @@ extension NotiCenterViewController: UITableViewDataSource {
 
 extension NotiCenterViewController: UITableViewDelegate {
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let message = messages[indexPath.item]
         
         if message is CommentMessage {
             if message.noticeTypeID == 0 {
-                if let cell = tableView.cellForRowAtIndexPath(indexPath) {
+                if let cell = tableView.cellForRow(at: indexPath) {
                     showPublishDetail(withPublishID: message.publishID, cell: cell)
                 }
             }else {
-                if let rect = tableView.cellForRowAtIndexPath(indexPath)?.frame {
-                    let r = view.convertRect(rect, fromView: tableView)
+                if let rect = tableView.cellForRow(at: indexPath)?.frame {
+                    let r = view.convert(rect, from: tableView)
                     showComment(withPublishID: message.publishID, beganRect: r)
                 }
             }
         } else if message is FollowMessage {
             showUserInfo(by: message.userModel)
         } else if message is LikeMessage {
-            if let cell = tableView.cellForRowAtIndexPath(indexPath) {
+            if let cell = tableView.cellForRow(at: indexPath) {
                 showPublishDetail(withPublishID: message.publishID, cell: cell)
             }
         }
     }
     
-    private func getViewFromRect(smallRect:CGRect, viewRect:CGRect) -> CGRect{
+    fileprivate func getViewFromRect(_ smallRect:CGRect, viewRect:CGRect) -> CGRect{
         let smallW = smallRect.width
         let smallH = smallRect.height
         let viewW = viewRect.width
@@ -365,10 +365,10 @@ extension NotiCenterViewController: UITableViewDelegate {
 }
 
 extension NotiCenterViewController: CommentViewDelegate {
-    func getCommentDismisRect(publishID:String) -> CGRect? {
+    func getCommentDismisRect(_ publishID:String) -> CGRect? {
         return tempRect
     }
-    func disCommentMisComplete(publishID:String) {
+    func disCommentMisComplete(_ publishID:String) {
         
     }
 }
@@ -381,7 +381,7 @@ extension NotiCenterViewController: CTALoadingProtocol{
 
 extension NotiCenterViewController: PublishDetailViewDelegate{
     
-    func getPublishCell(selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect?{
+    func getPublishCell(_ selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect?{
         self.tempView?.alpha = 0
         return tempRect
     }
@@ -394,45 +394,45 @@ extension NotiCenterViewController: PublishDetailViewDelegate{
 }
 
 extension NotiCenterViewController {
-    func cell(for tableView: UITableView, at indexPath: NSIndexPath) -> UITableViewCell {
+    func cell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         let message = messages[indexPath.item]
         let cell: UITableViewCell
         if message is LikeMessage {
-            cell = tableView.dequeueReusableCellWithIdentifier("NotiLikeCell")!
+            cell = tableView.dequeueReusableCell(withIdentifier: "NotiLikeCell")!
             if let label = cell.viewWithTag(1002) as? UILabel {
-                label.text = LocalStrings.Stared.description
+                label.text = LocalStrings.stared.description
             }
             
         } else if let follow = message as? FollowMessage {
-            cell = tableView.dequeueReusableCellWithIdentifier("NotiFollowCell")!
+            cell = tableView.dequeueReusableCell(withIdentifier: "NotiFollowCell")!
             if let imgView = cell.viewWithTag(1005) as? TouchImageView {
-                imgView.userInteractionEnabled = true
+                imgView.isUserInteractionEnabled = true
                 switch follow.relationship {
-                case .CanFollowHe:
+                case .canFollowHe:
                     imgView.image = UIImage(named: "liker_follow_btn")
                     imgView.tapHandler = { [weak self, cell] in
-                        guard let i = self?.tableView.indexPathForCell(cell), amessage = self?.messages[i.item] else {return}
+                        guard let i = self?.tableView.indexPath(for: cell), let amessage = self?.messages[i.item] else {return}
                         self?.followUser(by: amessage.userModel, cell: cell)
                     }
-                case .HadFollowHe:
+                case .hadFollowHe:
                     imgView.image = UIImage(named: "liker_following_btn")
                     imgView.tapHandler = { [weak self, cell] in
-                        guard let i = self?.tableView.indexPathForCell(cell), amessage = self?.messages[i.item] else {return}
+                        guard let i = self?.tableView.indexPath(for: cell), let amessage = self?.messages[i.item] else {return}
                         self?.showUserInfo(by: amessage.userModel)
                     }
-                case .CanNotFollowHe:
+                case .canNotFollowHe:
                     imgView.image = nil
                 }
             }
             
         } else if let comment = message as? CommentMessage {
-            cell = tableView.dequeueReusableCellWithIdentifier("NotiCommentCell")!
+            cell = tableView.dequeueReusableCell(withIdentifier: "NotiCommentCell")!
             if let textView = cell.viewWithTag(1002) as? UITextView {
                 textView.contentInset.left = -5
 //                textView.textContainerInset.bottom = 0
 //                textView.textContainerInset.top = 0
                 if comment.noticeTypeID == 0{
-                    textView.text = LocalStrings.DeleteComment.description
+                    textView.text = LocalStrings.deleteComment.description
                     textView.textColor = CTAStyleKit.disableColor
                 }else {
                     textView.text = comment.text
@@ -440,20 +440,20 @@ extension NotiCenterViewController {
                 }
             }
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("NotiCell")!
+            cell = tableView.dequeueReusableCell(withIdentifier: "NotiCell")!
         }
         
         // Common Cell UI
         if let imgView = cell.viewWithTag(1000) as? TouchImageView {
             if imgView.layer.mask == nil {
                 let shapeLayer = CAShapeLayer()
-                shapeLayer.path = UIBezierPath(ovalInRect: imgView.bounds).CGPath
+                shapeLayer.path = UIBezierPath(ovalIn: imgView.bounds).cgPath
                 imgView.layer.mask = shapeLayer
             }
-            imgView.kf_setImageWithURL(message.iconURL, placeholderImage: UIImage(named: "default-usericon"))
+            imgView.kf.setImage(with: message.iconURL, placeholder: UIImage(named: "default-usericon"))
             
             imgView.tapHandler = { [weak self, cell] in
-                guard let i = self?.tableView.indexPathForCell(cell), amessage = self?.messages[i.item] else {return}
+                guard let i = self?.tableView.indexPath(for: cell), let amessage = self?.messages[i.item] else {return}
                 self?.showUserInfo(by: amessage.userModel)
             }
         }
@@ -461,7 +461,7 @@ extension NotiCenterViewController {
         if let nameLabel = cell.viewWithTag(1001) as? TouchLabel {
             nameLabel.text = message.nickName
             nameLabel.tapHandler = { [weak self, cell] in
-                guard let i = self?.tableView.indexPathForCell(cell), amessage = self?.messages[i.item] else {return}
+                guard let i = self?.tableView.indexPath(for: cell), let amessage = self?.messages[i.item] else {return}
                 self?.showUserInfo(by: amessage.userModel)
             }
         }
@@ -471,10 +471,10 @@ extension NotiCenterViewController {
         }
         
         if let previewView = cell.viewWithTag(1004) as? TouchImageView {
-            previewView.kf_setImageWithURL(message.previewIconURL)
-            previewView.userInteractionEnabled = true
+            previewView.kf.setImage(with: message.previewIconURL)
+            previewView.isUserInteractionEnabled = true
             previewView.tapHandler = { [weak self, cell] in
-                guard let i = self?.tableView.indexPathForCell(cell), amessage = self?.messages[i.item] else {return}
+                guard let i = self?.tableView.indexPath(for: cell), let amessage = self?.messages[i.item] else {return}
                 self?.showPublishDetail(withPublishID: amessage.publishID, cell: cell)
             }
         }
@@ -485,7 +485,7 @@ extension NotiCenterViewController {
     func setNoticeReaded(){
         CTANoticeDomain.getInstance().setNoticesReaded(myID) { (info) in
             if info.result{
-                NSNotificationCenter.defaultCenter().postNotificationName("setNoticeReaded", object: nil)
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "setNoticeReaded"), object: nil)
             }
         }
     }
@@ -500,7 +500,7 @@ extension NotiCenterViewController {
         self.setupData(self.messages.count)
     }
     
-    func refreshView(noti: NSNotification){
+    func refreshView(_ noti: Notification){
         if self.tableView.contentOffset.y > self.scrollTop{
             self.tableView.setContentOffset(CGPoint(x: 0, y: self.scrollTop), animated: true)
         }else {
@@ -508,11 +508,11 @@ extension NotiCenterViewController {
         }
     }
     
-    func reNewView(noti: NSNotification){
+    func reNewView(_ noti: Notification){
         self.notFresh = false
     }
     
-    private func setupData(start:Int, size:Int = 30) {
+    fileprivate func setupData(_ start:Int, size:Int = 30) {
         if self.isLoading{
             self.freshComplete();
             return
@@ -541,7 +541,7 @@ extension NotiCenterViewController {
         }
     }
     
-    private func loadMessagesComplete(loadMessages: [Message], size:Int){
+    fileprivate func loadMessagesComplete(_ loadMessages: [Message], size:Int){
         if loadMessages.count < size {
             self.isLoadedAll = true
         }
@@ -587,19 +587,19 @@ extension NotiCenterViewController {
         self.freshComplete()
     }
     
-    private func loadMoreModelArray(modelArray:[Message]){
+    fileprivate func loadMoreModelArray(_ modelArray:[Message]){
         for i in 0..<modelArray.count{
             let model = modelArray[i]
             if !self.checkModelIsHave(model, array: self.messages){
                 self.messages.append(model)
             }
         }
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             self.tableView.reloadData()
         })
     }
     
-    private func checkModelIsHave(model:Message, array:Array<Message>) -> Bool{
+    fileprivate func checkModelIsHave(_ model:Message, array:Array<Message>) -> Bool{
         for i in 0..<array.count{
             let oldModel = array[i]
             if oldModel.ID == model.ID {

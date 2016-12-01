@@ -10,17 +10,17 @@ import UIKit
 
 protocol CTAPickerViewDataSource: class {
     
-    func pickViewRegisterItemCellClass(view: CTAPickerView) -> (AnyClass?, String)
-    func numberOfSectionsInCollectionView(view: CTAPickerView) -> Int
-    func pickView(view: CTAPickerView, numberOfItemsAtSection section: Int) -> Int
-    func pickView(view: CTAPickerView, configItemCell itemCell: CTAVerticalItemCollectionViewCell, itemAtSection section: Int, ItemAtIndex index: Int)
-    func pickView(view: CTAPickerView, indexAtSection section: Int) -> Int
+    func pickViewRegisterItemCellClass(_ view: CTAPickerView) -> (AnyClass?, String)
+    func numberOfSectionsInCollectionView(_ view: CTAPickerView) -> Int
+    func pickView(_ view: CTAPickerView, numberOfItemsAtSection section: Int) -> Int
+    func pickView(_ view: CTAPickerView, configItemCell itemCell: CTAVerticalItemCollectionViewCell, itemAtSection section: Int, ItemAtIndex index: Int)
+    func pickView(_ view: CTAPickerView, indexAtSection section: Int) -> Int
 }
 
 protocol CTAPickerViewDelegate: class {
     
-    func pickView(view: CTAPickerView, itemDidChangedToIndexPath indexPath: NSIndexPath)
-    func pickView(view: CTAPickerView, sectionDidChangedToIndexPath indexPath: NSIndexPath)
+    func pickView(_ view: CTAPickerView, itemDidChangedToIndexPath indexPath: IndexPath)
+    func pickView(_ view: CTAPickerView, sectionDidChangedToIndexPath indexPath: IndexPath)
     
 }
 
@@ -29,15 +29,15 @@ final class CTAPickerView: UIControl {
     weak var dataSource: CTAPickerViewDataSource?
     weak var delegate: CTAPickerViewDelegate?
 
-    private var currentIndexPath: NSIndexPath?
-    private let showCount: Int
-    private var section = 0
-    private var item = 0
+    fileprivate var currentIndexPath: IndexPath?
+    fileprivate let showCount: Int
+    fileprivate var section = 0
+    fileprivate var item = 0
     var collectionView: UICollectionView!
     
-    var selectedIndexPath: NSIndexPath? {
+    var selectedIndexPath: IndexPath? {
         get {
-            return NSIndexPath(forItem: item, inSection: section)
+            return IndexPath(item: item, section: section)
         }
         
         set {
@@ -60,20 +60,20 @@ final class CTAPickerView: UIControl {
     func setup() {
         let layout = CTALineFlowLayout()
         layout.showCount = showCount
-        layout.scrollDirection = .Horizontal
+        layout.scrollDirection = .horizontal
         collectionView = UICollectionView(frame: bounds, collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor.whiteColor()
+        collectionView.backgroundColor = UIColor.white
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         addSubview(collectionView)
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
-        collectionView.topAnchor.constraintEqualToAnchor(topAnchor).active = true
-        collectionView.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
-        collectionView.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
+        collectionView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        collectionView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         
-        collectionView.registerClass(CTASelectorVerticalCell.self, forCellWithReuseIdentifier: "CTAVerticalCell")
+        collectionView.register(CTASelectorVerticalCell.self, forCellWithReuseIdentifier: "CTAVerticalCell")
         
         layout.delegate = self
         collectionView.dataSource = self
@@ -83,10 +83,10 @@ final class CTAPickerView: UIControl {
         addGestureRecognizer(tap)
     }
     
-    func tap(sender: UITapGestureRecognizer) {
-        let location = sender.locationInView(collectionView)
-        if let indexPath = collectionView.indexPathForItemAtPoint(location) {
-            collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredHorizontally, animated: true)
+    func tap(_ sender: UITapGestureRecognizer) {
+        let location = sender.location(in: collectionView)
+        if let indexPath = collectionView.indexPathForItem(at: location) {
+            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         }
     }
     
@@ -96,9 +96,9 @@ final class CTAPickerView: UIControl {
     
     func didEndDisplay() {
         
-        if collectionView.visibleCells().count > 0 {
+        if collectionView.visibleCells.count > 0 {
             
-            for cell in collectionView.visibleCells() {
+            for cell in collectionView.visibleCells {
                 if let c = cell as? CTASelectorVerticalCell {
                     c.didEndDiplayed()
                 }
@@ -108,19 +108,19 @@ final class CTAPickerView: UIControl {
         
     }
 
-    func updateTo(indexPath: NSIndexPath) {
+    func updateTo(_ indexPath: IndexPath) {
         
         currentIndexPath = indexPath
-        let section = NSIndexPath(forItem: 0, inSection: indexPath.section)
+        let section = IndexPath(item: 0, section: indexPath.section)
         
-        if let att = collectionView.layoutAttributesForItemAtIndexPath(section) {
+        if let att = collectionView.layoutAttributesForItem(at: section) {
             let center = att.center
             let offset = CGPoint(x: center.x - collectionView.bounds.width / 2.0, y: 0)
             collectionView.setContentOffset(offset, animated: false)
 
-            dispatch_async(dispatch_get_main_queue(), { [weak self] in
+            DispatchQueue.main.async(execute: { [weak self] in
                 guard let sf = self else { return}
-                if let visualCells = sf.collectionView.visibleCells() as? [CTASelectorVerticalCell] where visualCells.count > 0 {
+                if let visualCells = sf.collectionView.visibleCells as? [CTASelectorVerticalCell], visualCells.count > 0 {
                     
                     for cell in visualCells  {
                         
@@ -135,7 +135,7 @@ final class CTAPickerView: UIControl {
 extension CTAPickerView: UICollectionViewDataSource {
     
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         
         guard let dataSource = dataSource else {
             return 5
@@ -144,16 +144,16 @@ extension CTAPickerView: UICollectionViewDataSource {
         return dataSource.numberOfSectionsInCollectionView(self)
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CTAVerticalCell", forIndexPath: indexPath) as! CTASelectorVerticalCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CTAVerticalCell", for: indexPath) as! CTASelectorVerticalCell
         
-        cell.backgroundColor = UIColor.whiteColor()
+        cell.backgroundColor = UIColor.white
         cell.verticalDataSource = self
         cell.verticalDelegate = self
         cell.section = indexPath.section
@@ -165,7 +165,7 @@ extension CTAPickerView: UICollectionViewDataSource {
 
 extension CTAPickerView: UICollectionViewDelegate {
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         
     }
@@ -174,11 +174,11 @@ extension CTAPickerView: UICollectionViewDelegate {
 // MARK: - Section Cell
 extension CTAPickerView: LineFlowLayoutDelegate {
     
-    func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
+    func didChangeTo(_ collectionView: UICollectionView, itemAtIndexPath indexPath: IndexPath, oldIndexPath: IndexPath?) {
 
         section = indexPath.section
         
-        if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? CTASelectorVerticalCell {
+        if let cell = collectionView.cellForItem(at: indexPath) as? CTASelectorVerticalCell {
             item = cell.item
         }
         
@@ -189,19 +189,19 @@ extension CTAPickerView: LineFlowLayoutDelegate {
         if let oldIndexPath = oldIndexPath {
              debug_print("picker view did changed from \(oldIndexPath.section) to \(indexPath.section)", context: fdContext)
             
-            sendActionsForControlEvents(.ValueChanged)
+            sendActions(for: .valueChanged)
         }
     }
 }
 
 extension CTAPickerView: CTASelectorVerticalCellDataSource {
     
-    func verticalCellRegisterItemCellClass(cell: CTASelectorVerticalCell) -> (AnyClass?, String) {
+    func verticalCellRegisterItemCellClass(_ cell: CTASelectorVerticalCell) -> (AnyClass?, String) {
         
         return dataSource!.pickViewRegisterItemCellClass(self)
     }
     
-    func verticalCell(cell: CTASelectorVerticalCell, numberOfItemsInSection section: Int) -> Int {
+    func verticalCell(_ cell: CTASelectorVerticalCell, numberOfItemsInSection section: Int) -> Int {
         
         guard let dataSource = dataSource else {
             return 5
@@ -210,7 +210,7 @@ extension CTAPickerView: CTASelectorVerticalCellDataSource {
         return dataSource.pickView(self, numberOfItemsAtSection: section)
     }
     
-    func verticalCellBeganIndex(cell: CTASelectorVerticalCell) -> Int {
+    func verticalCellBeganIndex(_ cell: CTASelectorVerticalCell) -> Int {
         
         
         guard let dataSource = dataSource else {
@@ -227,12 +227,12 @@ extension CTAPickerView: CTASelectorVerticalCellDataSource {
 // MARK: - vertical cell
 extension CTAPickerView: CTASelectorVerticalCellDelegate {
     
-    func verticalCell(cell: CTASelectorVerticalCell, configItemCell itemCell: CTAVerticalItemCollectionViewCell, itemCellForItemAtIndexPath indexPath: NSIndexPath) {
+    func verticalCell(_ cell: CTASelectorVerticalCell, configItemCell itemCell: CTAVerticalItemCollectionViewCell, itemCellForItemAtIndexPath indexPath: IndexPath) {
         
         dataSource?.pickView(self, configItemCell: itemCell, itemAtSection: cell.section, ItemAtIndex: indexPath.item)
     }
     
-    func verticalCell(cell: CTASelectorVerticalCell, didChangetoItemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
+    func verticalCell(_ cell: CTASelectorVerticalCell, didChangetoItemAtIndexPath indexPath: IndexPath, oldIndexPath: IndexPath?) {
         
         section = cell.section
         item = indexPath.item
@@ -243,7 +243,7 @@ extension CTAPickerView: CTASelectorVerticalCellDelegate {
         if let oldIndexPath = oldIndexPath {
             debug_print("vertical at Section \(cell.section) did changed from \(oldIndexPath.item) to \(indexPath.item)", context: colorContext)
             
-            sendActionsForControlEvents(.ValueChanged)
+            sendActions(for: .valueChanged)
         }
     }
 }

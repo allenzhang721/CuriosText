@@ -21,18 +21,18 @@ class CTALoginRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.Login.description;
+        return CTARequestUrl.login.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.Phone)   : phone,
-            key(.AreaCode): areaCode,
-            key(.Password): password
+            key(.phone)   : phone as AnyObject,
+            key(.areaCode): areaCode as AnyObject,
+            key(.password): password as AnyObject
         ];
         
-        return self.getParameterString(dic, errorMessage: "CTALoginAP");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTALoginAP");
     }
 }
 
@@ -49,18 +49,18 @@ class CTAPhoneRegisterRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.PhoneRegister.description;
+        return CTARequestUrl.phoneRegister.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.Phone)   : phone,
-            key(.AreaCode): areaCode,
-            key(.Password): password
+            key(.phone)   : phone as AnyObject,
+            key(.areaCode): areaCode as AnyObject,
+            key(.password): password as AnyObject
         ];
         
-        return self.getParameterString(dic, errorMessage: "CTAPhoneRegister");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAPhoneRegister");
     }
     
 }
@@ -83,21 +83,21 @@ class CTAWeixinRegisterRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.WeixinRegister.description;
+        return CTARequestUrl.weixinRegister.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.WeixinID)   : weixinID,
-            key(.NickName)   : nickName,
-            key(.Sex): sex,
-            key(.Country): country,
-            key(.Province): province,
-            key(.City): city
+            key(.weixinID)   : weixinID as AnyObject,
+            key(.nickName)   : nickName as AnyObject,
+            key(.sex): sex as AnyObject,
+            key(.country): country as AnyObject as AnyObject,
+            key(.province): province as AnyObject,
+            key(.city): city as AnyObject
         ];
         
-        return self.getParameterString(dic, errorMessage: "CTAWeixinRegister");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAWeixinRegister");
     }
 }
 
@@ -115,19 +115,19 @@ class CTAWeiboRegisterRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.WeiboRegister.description;
+        return CTARequestUrl.weiboRegister.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.WeiboID)    : weiboID,
-            key(.NickName)   : nickName,
-            key(.UserDesc)   : userDesc,
-            key(.Sex)        : sex
+            key(.weiboID)    : weiboID as AnyObject,
+            key(.nickName)   : nickName as AnyObject,
+            key(.userDesc)   : userDesc as AnyObject as AnyObject,
+            key(.sex)        : sex as AnyObject
         ];
         
-        return self.getParameterString(dic, errorMessage: "CTAWeiboRegister");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAWeiboRegister");
     }
 }
 
@@ -153,23 +153,23 @@ class CTAUpdateUserInfoRequest: CTABaseRequest{
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UpdateUserInfo.description;
+        return CTARequestUrl.updateUserInfo.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID): userID,
-            key(.NickName): nickName,
-            key(.UserDesc): userDesc,
-            key(.UserIconURL): userIconURL,
-            key(.Sex): sex,
-            key(.Country): country,
-            key(.Province): province,
-            key(.City): city
+            key(.userID): userID as AnyObject,
+            key(.nickName): nickName as AnyObject,
+            key(.userDesc): userDesc as AnyObject,
+            key(.userIconURL): userIconURL as AnyObject,
+            key(.sex): sex as AnyObject,
+            key(.country): country as AnyObject,
+            key(.province): province as AnyObject,
+            key(.city): city as AnyObject
         ];
         
-        return self.getParameterString(dic, errorMessage: "CTAUpdateUserInfoRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUpdateUserInfoRequest");
     }
 }
 
@@ -183,16 +183,16 @@ class CTAUpdateUserNicknameRequest: CTABaseRequest{
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UpdateUserNickname.description;
+        return CTARequestUrl.updateUserNickname.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)  : userID,
-            key(.NickName): nickName
+            key(.userID)  : userID as AnyObject,
+            key(.nickName): nickName as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAUpdateUserNicknameRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUpdateUserNicknameRequest");
     }
 }
 
@@ -206,16 +206,16 @@ class CTAUpdateUserDescRequest: CTABaseRequest{
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UpdateUserDesc.description;
+        return CTARequestUrl.updateUserDesc.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)  : userID,
-            key(.UserDesc): userDesc
+            key(.userID)  : userID as AnyObject,
+            key(.userDesc): userDesc as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAUpdateUserDescRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUpdateUserDescRequest");
     }
 }
 
@@ -229,16 +229,16 @@ class CTAUpdateUserIconURLRequest: CTABaseRequest{
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UpdateUserIconURL.description;
+        return CTARequestUrl.updateUserIconURL.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)     : userID,
-            key(.UserIconURL): userIconURL
+            key(.userID)     : userID as AnyObject,
+            key(.userIconURL): userIconURL as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAUpdateUserIconURLRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUpdateUserIconURLRequest");
     }
 }
 
@@ -256,25 +256,25 @@ class CTAUpdateUserAddressRequest: CTABaseRequest{
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UpdateUserAddress.description;
+        return CTARequestUrl.updateUserAddress.description;
     }
     
     override func parameter() -> String {
         
         var dic:Dictionary<String, AnyObject> = [
-            key(.UserID): userID
+            key(.userID): userID as AnyObject
         ];
         
         if self.country != ""{
-            dic[key(.Country)] = self.country;
+            dic[key(.country)] = self.country as AnyObject?;
         }
         if self.province != ""{
-            dic[key(.Province)] = self.province;
+            dic[key(.province)] = self.province as AnyObject?;
         }
         if self.city != ""{
-            dic[key(.City)] = self.city;
+            dic[key(.city)] = self.city as AnyObject?;
         }
-        return self.getParameterString(dic, errorMessage: "CTAUpdateUserAddressRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUpdateUserAddressRequest");
     }
 }
 
@@ -288,19 +288,19 @@ class CTAUpdateUserSexRequest: CTABaseRequest{
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UpdateUserSex.description;
+        return CTARequestUrl.updateUserSex.description;
     }
     
     override func parameter() -> String {
         
         var dic:Dictionary<String, AnyObject> = [
-            key(.UserID): userID
+            key(.userID): userID as AnyObject
         ];
         
         if self.sex != -1{
-            dic[key(.Sex)] = self.sex;
+            dic[key(.sex)] = self.sex as AnyObject?;
         }
-        return self.getParameterString(dic, errorMessage: "CTAUpdateUserSexRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUpdateUserSexRequest");
     }
 }
 
@@ -314,17 +314,17 @@ class CTACheckUserExistRequest: CTABaseRequest{
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.CheckUserExist.description;
+        return CTARequestUrl.checkUserExist.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.Phone)   : phone,
-            key(.AreaCode): areaCode
+            key(.phone)   : phone as AnyObject,
+            key(.areaCode): areaCode as AnyObject
         ];
         
-        return self.getParameterString(dic, errorMessage: "CTACheckUserExistRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTACheckUserExistRequest");
     }
 }
 
@@ -340,18 +340,18 @@ class CTABindingPhoneRequest: CTABaseRequest{
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.BindingPhone.description;
+        return CTARequestUrl.bindingPhone.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)  : userID,
-            key(.Phone)   : phone,
-            key(.AreaCode): areaCode
+            key(.userID)  : userID as AnyObject,
+            key(.phone)   : phone as AnyObject,
+            key(.areaCode): areaCode as AnyObject
         ];
         
-        return self.getParameterString(dic, errorMessage: "CTABindingPhoneRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTABindingPhoneRequest");
     }
 }
 
@@ -365,17 +365,17 @@ class CTABindingWeixinIDRequest: CTABaseRequest{
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.BindingWeixinID.description;
+        return CTARequestUrl.bindingWeixinID.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)  : userID,
-            key(.WeixinID): weixinID
+            key(.userID)  : userID as AnyObject,
+            key(.weixinID): weixinID as AnyObject
         ];
         
-        return self.getParameterString(dic, errorMessage: "CTABindingWeixinIDRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTABindingWeixinIDRequest");
     }
 }
 
@@ -387,16 +387,16 @@ class CTAUnBindingWeixinIDRequest: CTABaseRequest{
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UnbindingWeixinID.description;
+        return CTARequestUrl.unbindingWeixinID.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID): userID
+            key(.userID): userID as AnyObject
         ];
         
-        return self.getParameterString(dic, errorMessage: "CTAUnBindingWeixinIDRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUnBindingWeixinIDRequest");
     }
 }
 
@@ -410,17 +410,17 @@ class CTABindingWeiboIDRequest: CTABaseRequest{
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.BingingWeiboID.description;
+        return CTARequestUrl.bingingWeiboID.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID) : userID,
-            key(.WeiboID): weiboID
+            key(.userID) : userID as AnyObject,
+            key(.weiboID): weiboID as AnyObject
         ];
         
-        return self.getParameterString(dic, errorMessage: "CTABindingWeiboIDRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTABindingWeiboIDRequest");
     }
 }
 
@@ -432,16 +432,16 @@ class CTAUnBindingWeiboIDRequest: CTABaseRequest{
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UnbindingWeiboID.description;
+        return CTARequestUrl.unbindingWeiboID.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID): userID
+            key(.userID): userID as AnyObject
         ];
         
-        return self.getParameterString(dic, errorMessage: "CTAUnBindingWeiboIDRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUnBindingWeiboIDRequest");
     }
 }
 
@@ -455,17 +455,17 @@ class CTACheckPasswordRequest: CTABaseRequest{
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.CheckPassword.description;
+        return CTARequestUrl.checkPassword.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)  : userID,
-            key(.Password): password
+            key(.userID)  : userID as AnyObject,
+            key(.password): password as AnyObject
         ];
         
-        return self.getParameterString(dic, errorMessage: "CTACheckPasswordRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTACheckPasswordRequest");
     }
 }
 
@@ -479,17 +479,17 @@ class CTAUpdatePasswordRequest: CTABaseRequest{
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UpdatePassword.description;
+        return CTARequestUrl.updatePassword.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)     : userID,
-            key(.NewPassword): newPassword
+            key(.userID)     : userID as AnyObject,
+            key(.newPassword): newPassword as AnyObject
         ];
         
-        return self.getParameterString(dic, errorMessage: "CTAUpdatePasswordRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUpdatePasswordRequest");
     }
 }
 
@@ -505,17 +505,17 @@ class CTAResetPasswordRequest: CTABaseRequest{
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.ResetPassword.description;
+        return CTARequestUrl.resetPassword.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.Phone)      : phone,
-            key(.AreaCode)   : areaCode,
-            key(.NewPassword): newPassword
+            key(.phone)      : phone as AnyObject,
+            key(.areaCode)   : areaCode as AnyObject,
+            key(.newPassword): newPassword as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAResetPasswordRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAResetPasswordRequest");
     }
 }
 
@@ -529,15 +529,15 @@ class CTAUserDetailRequest: CTABaseRequest{
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UserDetail.description;
+        return CTARequestUrl.userDetail.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)  : userID,
-            key(.BeUserID): beUserID
+            key(.userID)  : userID as AnyObject,
+            key(.beUserID): beUserID as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAUserDetailRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUserDetailRequest");
     }
 }

@@ -26,7 +26,7 @@ class RootAction: NSObject {
             return navi
         }
         
-        let attributes: [[NSObject: AnyObject]] = [
+        let attributes: [[AnyHashable: Any]] = [
             [
                 CYLTabBarItemImage : "home_button",
                 CYLTabBarItemSelectedImage : "home_button_selected",],
@@ -45,7 +45,7 @@ class RootAction: NSObject {
         return tabVC
     }
     
-    class func customizeTabBarAppearance(tabVC:CYLTabBarController){
+    class func customizeTabBarAppearance(_ tabVC:CYLTabBarController){
         let normalAttrs:[String:AnyObject] = [
             NSForegroundColorAttributeName:CTAStyleKit.normalColor
         ]
@@ -55,20 +55,20 @@ class RootAction: NSObject {
         ]
         
         let tabBarItem = UITabBarItem.appearance();
-        tabBarItem.setTitleTextAttributes(normalAttrs, forState: .Normal)
-        tabBarItem.setTitleTextAttributes(selectedAttrs, forState: .Selected)
+        tabBarItem.setTitleTextAttributes(normalAttrs, for: UIControlState())
+        tabBarItem.setTitleTextAttributes(selectedAttrs, for: .selected)
 
         let tabBar = UITabBar.appearance()
         tabBar.barTintColor = CTAStyleKit.commonBackgroundColor
         
         let navigation = UINavigationBar.appearance();
         let navAttrs:[String:AnyObject] = [
-            NSFontAttributeName:UIFont.boldSystemFontOfSize(18),
+            NSFontAttributeName:UIFont.boldSystemFont(ofSize: 18),
             NSForegroundColorAttributeName:CTAStyleKit.normalColor
         ]
 
         navigation.tintColor = CTAStyleKit.commonBackgroundColor
-        navigation.translucent = false
+        navigation.isTranslucent = false
         navigation.titleTextAttributes = navAttrs
     }
 }

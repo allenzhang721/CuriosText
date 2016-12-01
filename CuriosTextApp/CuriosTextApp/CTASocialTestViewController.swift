@@ -21,45 +21,45 @@ class CTASocialTestViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func weChatOAuth(sender: AnyObject) {
+    @IBAction func weChatOAuth(_ sender: AnyObject) {
         
-        CTASocialManager.OAuth(.WeChat) { (resultDic, urlResponse, error) -> Void in
+        CTASocialManager.oauth(.weChat) { (resultDic, urlResponse, error) -> Void in
             
             debug_print(resultDic)
         }
     }
     
-    @IBAction func weiboOAuth(sender: AnyObject) {
+    @IBAction func weiboOAuth(_ sender: AnyObject) {
         
-        CTASocialManager.OAuth(.Weibo) { (resultDic, urlResponse, error) -> Void in
+        CTASocialManager.oauth(.weibo) { (resultDic, urlResponse, error) -> Void in
             
             debug_print(resultDic)
         }
     }
 
-    @IBAction func shareMessage(sender: AnyObject) {
+    @IBAction func shareMessage(_ sender: AnyObject) {
         
-        let url = NSURL(string: "")
+        let url = URL(string: "")
         
         let a = CTASocialManager.Message
-            .WeChat(.Timeline(info: (
+            .weChat(.timeline(info: (
                     title: "title",
                     description: "description",
                     thumbnail: nil,
-                    media: .URL(url!)
+                    media: .url(url!)
                 )
             )
         )
         
         
         let message = CTASocialManager.Message
-            .WeChat(
-                .Session(
+            .weChat(
+                .session(
                     info: (
                         title: "title",
                         description: "description",
                         thumbnail: nil,
-                        media: .URL(url!)
+                        media: .url(url!)
                     )
                 )
         )
@@ -70,7 +70,7 @@ class CTASocialTestViewController: UIViewController {
         }
     }
 
-    @IBAction func sms(sender: AnyObject) {
+    @IBAction func sms(_ sender: AnyObject) {
         
         let number = "15501005475"
         let zone = "86"
@@ -81,14 +81,14 @@ class CTASocialTestViewController: UIViewController {
     }
     
     
-    @IBAction func verifySMS(sender: AnyObject) {
+    @IBAction func verifySMS(_ sender: AnyObject) {
         
         let number = "15501005475"
         let zone = "86"
         
-        let alertController = UIAlertController(title: "短信验证", message: "输入短信验证码", preferredStyle: .Alert)
-        alertController.addTextFieldWithConfigurationHandler(nil)
-        let confirmAction = UIAlertAction(title: "确定", style: .Default) { (action) -> Void in
+        let alertController = UIAlertController(title: "短信验证", message: "输入短信验证码", preferredStyle: .alert)
+        alertController.addTextField(configurationHandler: nil)
+        let confirmAction = UIAlertAction(title: "确定", style: .default) { (action) -> Void in
             let textfield = alertController.textFields!.first!
             let code = textfield.text!
             CTASocialManager.commitVerificationCode(code, phoneNumber: number, zone: zone, completionHandler: { (result) -> Void in
@@ -98,6 +98,6 @@ class CTASocialTestViewController: UIViewController {
         }
         
         alertController.addAction(confirmAction)
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 }

@@ -10,12 +10,12 @@ import Foundation
 import SwiftyJSON
 
 protocol CTABaseDomain{
-    func checkJsonResult(json: JSON) -> Bool;
+    func checkJsonResult(_ json: JSON) -> Bool;
 }
 
 extension CTABaseDomain {
     
-   func checkJsonResult(json: JSON) -> Bool{
+   func checkJsonResult(_ json: JSON) -> Bool{
         let reslut = json[CTARequestResultKey.result].string
         if reslut == CTARequestResultKey.success {
             return true;

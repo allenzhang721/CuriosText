@@ -11,27 +11,27 @@ import Kingfisher
 
 protocol CTAGIFProtocol {
     
-    func exportGIF(publishID: String, page: CTAPage, gifType:CTAGIFCreateType, viewController: UIViewController, completedHandler:((fileURL: NSURL, thumbImg: UIImage) -> ())?)
+    func exportGIF(_ publishID: String, page: CTAPage, gifType:CTAGIFCreateType, viewController: UIViewController, completedHandler:((_ fileURL: URL, _ thumbImg: UIImage) -> ())?)
 }
 
 extension CTAGIFProtocol {
     
-    func exportGIF(publishID: String, page: CTAPage, gifType:CTAGIFCreateType, viewController: UIViewController, completedHandler:((fileURL: NSURL, thumbImg: UIImage) -> ())?) {
+    func exportGIF(_ publishID: String, page: CTAPage, gifType:CTAGIFCreateType, viewController: UIViewController, completedHandler:((_ fileURL: URL, _ thumbImg: UIImage) -> ())?) {
         
-        let fakeView = UIScreen.mainScreen().snapshotViewAfterScreenUpdates(true)
+        let fakeView = UIScreen.main.snapshotView(afterScreenUpdates: true)
         
         let canvas = page.toAniCanvas()
         
         // get Image
         
-        let url = NSURL(string: CTAFilePath.publishFilePath + publishID)!
+        let url = URL(string: CTAFilePath.publishFilePath + publishID)!
         
         for c in canvas.containers {
-            if let content = c.contents.first where content.type == .Image {
+            if let content = c.contents.first, content.type == .Image {
                 let imageName = content.content.source.ImageName
-                let imageURL = url.URLByAppendingPathComponent(imageName)
+                let imageURL = url.appendingPathComponent(imageName)
                 debug_print("imageURL = \(imageURL)")
-                KingfisherManager.sharedManager.retrieveImageWithURL(imageURL, optionsInfo: nil, progressBlock: nil, completionHandler: { (image, error, cacheType, imageURL) in
+                KingfisherManager.shared.retrieveImage(with: imageURL, options: nil, progressBlock: nil, completionHandler: { (image, error, cacheType, imageURL) in
                     let retriver = { (name: String,  handler: (String, UIImage?) -> ()) in
                         
                         debug_print("name = \(name), image = \(name)")
@@ -42,7 +42,7 @@ extension CTAGIFProtocol {
                     c.imageRetriver = retriver
                     //                        sf.readyPreView(canvas, publishModel: publishModel, completed: sf.readyCompleted)
                     
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
 //                        guard let sf = self else {return}
                         
                         let gifCreatorVC = GIFCreateViewController()
@@ -58,19 +58,16 @@ extension CTAGIFProtocol {
                         
                         gifCreatorVC.fakeView = fakeView
                         gifCreatorVC.completed = { (url, imageurl) in
-                            dispatch_async(dispatch_get_main_queue(), {
-                                gifCreatorVC.dismissViewControllerAnimated(true, completion: {
-                                    let data = NSData(contentsOfURL: imageurl)
-                                    completedHandler?(fileURL: url, thumbImg: UIImage(data: data!, scale: 0.1)!)
-                                })
-//                                dispatch_async(dispatch_get_main_queue(), {
-//                                    
-//                                })
+                          DispatchQueue.main.async { [weak gifCreatorVC] in
+                            gifCreatorVC?.dismiss(animated: true, completion: {
+                              let data = NSData(contentsOf: imageurl)
+                              completedHandler?(url, UIImage(data: data! as Data, scale: 0.1)!)
                             })
+                          }
                         }
                         gifCreatorVC.transitioningDelegate = CTAFadeTransition.getInstance()
-                        gifCreatorVC.modalPresentationStyle = .Custom
-                        viewController.presentViewController(gifCreatorVC, animated: true, completion: {
+                        gifCreatorVC.modalPresentationStyle = .custom
+                        viewController.present(gifCreatorVC, animated: true, completion: {
                             debug_print(" did complated")
                             gifCreatorVC.began()
                         })
@@ -97,13 +94,13 @@ class CTAFadeTransition: NSObject, UIViewControllerTransitioningDelegate{
         return _instance!
     }
     
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning?
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning?
     {
         isPersent = true
         return self
     }
     
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         isPersent = false
         return self
     }
@@ -112,7 +109,7 @@ class CTAFadeTransition: NSObject, UIViewControllerTransitioningDelegate{
 
 extension CTAFadeTransition: UIViewControllerAnimatedTransitioning{
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval{
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval{
         if isPersent{
             return 0.1
         }else {
@@ -121,13 +118,13 @@ extension CTAFadeTransition: UIViewControllerAnimatedTransitioning{
         
     }
     
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning){
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning){
         if isPersent{
-            if let toView = transitionContext.viewForKey(UITransitionContextToViewKey){
-                transitionContext.containerView()!.addSubview(toView)
-                toView.frame = CGRect.init(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
+            if let toView = transitionContext.view(forKey: UITransitionContextViewKey.to){
+                transitionContext.containerView.addSubview(toView)
+                toView.frame = CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                 toView.alpha = 1
-                UIView.animateWithDuration(0.1, animations: { 
+                UIView.animate(withDuration: 0.1, animations: { 
                     toView.alpha = 1
                     }, completion: { (_) in
                         transitionContext.completeTransition(true)
@@ -135,10 +132,10 @@ extension CTAFadeTransition: UIViewControllerAnimatedTransitioning{
             }
         }
         if !isPersent{
-            if let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey){
+            if let fromView = transitionContext.view(forKey: UITransitionContextViewKey.from){
                 fromView.alpha = 1
-                UIView.animateWithDuration(0.1, animations: {
-                    fromView.frame = CGRect.init(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
+                UIView.animate(withDuration: 0.1, animations: {
+                    fromView.frame = CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                     fromView.alpha = 1
                     }, completion: { (_) in
                         fromView.removeFromSuperview()

@@ -8,22 +8,22 @@
 
 import Foundation
 
-enum CTAUploadError:Int, ErrorType{
-    case ConnectFail = 10
+enum CTAUploadError:Int, Error{
+    case connectFail = 10
 }
 
-enum CTAInternetError:Int, ErrorType{
-    case ConnectFail = 10
+enum CTAInternetError:Int, Error{
+    case connectFail = 10
 }
 
-enum CTAUserLoginError: Int, ErrorType{
+enum CTAUserLoginError: Int, Error{
     
-    case UserNameOrPasswordWrong = 1
-    case PhoneIsEmpty = 2
-    case PhoneNotExist = 3
-    case UserDeleted = 4
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case userNameOrPasswordWrong = 1
+    case phoneIsEmpty = 2
+    case phoneNotExist = 3
+    case userDeleted = 4
+    case needContactWithService = 8
+    case dataIsEmpty = 9
 }
 
 /*
@@ -37,13 +37,13 @@ enum CTAUserLoginError: Int, ErrorType{
 
 */
 
-enum CTAPhoneRegisterError:Int, ErrorType{
+enum CTAPhoneRegisterError:Int, Error{
     
-    case PhoneIsEmpty = 1
-    case PhoneExist = 2
-    case UserIsDelete = 4
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case phoneIsEmpty = 1
+    case phoneExist = 2
+    case userIsDelete = 4
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 
@@ -56,12 +56,12 @@ enum CTAPhoneRegisterError:Int, ErrorType{
 
 */
 
-enum CTAWeixinRegisterError:Int, ErrorType{
+enum CTAWeixinRegisterError:Int, Error{
     
-    case WeixinIDIsEmpty = 1
-    case WeixinIDExist = 2
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case weixinIDIsEmpty = 1
+    case weixinIDExist = 2
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 
@@ -74,12 +74,12 @@ enum CTAWeixinRegisterError:Int, ErrorType{
 
 */
 
-enum CTAWeiboRegisterError:Int, ErrorType{
+enum CTAWeiboRegisterError:Int, Error{
     
-    case WeiboIDIsEmpty = 1
-    case WeiboIDExist = 2
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case weiboIDIsEmpty = 1
+    case weiboIDExist = 2
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 
@@ -92,12 +92,12 @@ enum CTAWeiboRegisterError:Int, ErrorType{
 
 */
 
-enum CTARequestUserError:Int, ErrorType{
+enum CTARequestUserError:Int, Error{
     
-    case UserIDIsEmpty = 1
-    case UserIDNotExist = 2
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case userIDIsEmpty = 1
+    case userIDNotExist = 2
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 
@@ -110,14 +110,14 @@ enum CTARequestUserError:Int, ErrorType{
 
 */
 
-enum CTABindingUserPhoneError:Int, ErrorType{
+enum CTABindingUserPhoneError:Int, Error{
     
-    case UserIDIsEmpty  = 1
-    case UserIDNotExist = 2
-    case PhoneIsEmpty   = 3
-    case PhoneExist     = 4
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case userIDIsEmpty  = 1
+    case userIDNotExist = 2
+    case phoneIsEmpty   = 3
+    case phoneExist     = 4
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 
@@ -133,15 +133,15 @@ enum CTABindingUserPhoneError:Int, ErrorType{
 
 */
 
-enum CTABindingUserWeixinError:Int, ErrorType{
+enum CTABindingUserWeixinError:Int, Error{
     
-    case UserIDIsEmpty  = 1
-    case UserIDNotExist = 2
-    case WeixinIsEmpty   = 3
-    case UserHaveWeixin  = 4
-    case WeixinExist     = 5
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case userIDIsEmpty  = 1
+    case userIDNotExist = 2
+    case weixinIsEmpty   = 3
+    case userHaveWeixin  = 4
+    case weixinExist     = 5
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 
@@ -157,15 +157,15 @@ enum CTABindingUserWeixinError:Int, ErrorType{
 
 */
 
-enum CTABindingUserWeiboError:Int, ErrorType{
+enum CTABindingUserWeiboError:Int, Error{
     
-    case UserIDIsEmpty  = 1
-    case UserIDNotExist = 2
-    case WeiboIsEmpty   = 3
-    case UserHaveWeibo  = 4
-    case WeiboExist     = 5
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case userIDIsEmpty  = 1
+    case userIDNotExist = 2
+    case weiboIsEmpty   = 3
+    case userHaveWeibo  = 4
+    case weiboExist     = 5
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 
@@ -181,13 +181,13 @@ enum CTABindingUserWeiboError:Int, ErrorType{
 
 */
 
-enum CTACheckPasswordError:Int, ErrorType{
+enum CTACheckPasswordError:Int, Error{
     
-    case PasswordIncorrect  = 1
-    case UserIDIsEmpty  = 2
-    case UserIDNotExist = 3
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case passwordIncorrect  = 1
+    case userIDIsEmpty  = 2
+    case userIDNotExist = 3
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 
@@ -201,12 +201,12 @@ enum CTACheckPasswordError:Int, ErrorType{
 */
 
 
-enum CTAResetPasswordError:Int, ErrorType{
+enum CTAResetPasswordError:Int, Error{
     
-    case PhoneIsEmpty = 1
-    case PhoneNotExist = 2
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case phoneIsEmpty = 1
+    case phoneNotExist = 2
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 
@@ -219,12 +219,12 @@ enum CTAResetPasswordError:Int, ErrorType{
 
 */
 
-enum CTAUserDetailError:Int, ErrorType{
+enum CTAUserDetailError:Int, Error{
     
-    case BeUserIDEmpty = 1
-    case BeUserIDNotExist = 2
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case beUserIDEmpty = 1
+    case beUserIDNotExist = 2
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 
@@ -237,14 +237,14 @@ enum CTAUserDetailError:Int, ErrorType{
 
 */
 
-enum CTAPublishDeleteError:Int, ErrorType{
+enum CTAPublishDeleteError:Int, Error{
     
-    case PublishIDEmpty = 1
-    case PublishIDNotExist = 2
-    case UserIDEmpty = 3
-    case UserNotCompare = 4
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case publishIDEmpty = 1
+    case publishIDNotExist = 2
+    case userIDEmpty = 3
+    case userNotCompare = 4
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 
@@ -259,14 +259,14 @@ enum CTAPublishDeleteError:Int, ErrorType{
 
 */
 
-enum CTAPublishListError:Int, ErrorType{
+enum CTAPublishListError:Int, Error{
     
-    case UserIDEmpty = 1
-    case UserIDNotExist = 2
-    case BeUserIDEmpty = 3
-    case BeUserIDNotExist = 4
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case userIDEmpty = 1
+    case userIDNotExist = 2
+    case beUserIDEmpty = 3
+    case beUserIDNotExist = 4
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 
@@ -281,13 +281,13 @@ enum CTAPublishListError:Int, ErrorType{
 
 */
 
-enum CTAUserPublishError:Int, ErrorType{
+enum CTAUserPublishError:Int, Error{
     
-    case UserIDEmpty = 1
-    case UserIDNotExist = 2
-    case PublishIDNotExist = 3
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case userIDEmpty = 1
+    case userIDNotExist = 2
+    case publishIDNotExist = 3
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 
@@ -301,14 +301,14 @@ enum CTAUserPublishError:Int, ErrorType{
 
 */
 
-enum CTAUserRelationError:Int, ErrorType{
+enum CTAUserRelationError:Int, Error{
     
-    case RelationUserIDEmpty = 1
-    case UserIDNotExist = 2
-    case RelationUserIDNotExist = 3
-    case UserIDSame = 4
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case relationUserIDEmpty = 1
+    case userIDNotExist = 2
+    case relationUserIDNotExist = 3
+    case userIDSame = 4
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 
@@ -323,12 +323,12 @@ enum CTAUserRelationError:Int, ErrorType{
 
 */
 
-enum CTAUserRelationListError:Int, ErrorType{
+enum CTAUserRelationListError:Int, Error{
     
-    case BeUserIDEmpty = 1
-    case BeUserNotExist = 2
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case beUserIDEmpty = 1
+    case beUserNotExist = 2
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 
@@ -341,28 +341,11 @@ enum CTAUserRelationListError:Int, ErrorType{
 
 */
 
-enum CTAPublishHotError:Int, ErrorType{
+enum CTAPublishHotError:Int, Error{
     
-    case PublishIDNotExist = 1
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
-    
-}
-
-/*
- 
- 1:publishID为空
- 8:请联系客服
- 9:数据为空
- 
- */
-
-enum CTAPublishError:Int, ErrorType{
-    
-    case PublishIDEmpty = 1
-    case PublishIDNotExist = 2
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case publishIDNotExist = 1
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 
@@ -374,14 +357,12 @@ enum CTAPublishError:Int, ErrorType{
  
  */
 
-
-enum CTAAddCommentError:Int, ErrorType{
+enum CTAPublishError:Int, Error{
     
-    case PublishIDEmpty = 1
-    case UserIDNotExist = 2
-    case PublishIDNotExist = 3
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case publishIDEmpty = 1
+    case publishIDNotExist = 2
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 
@@ -393,13 +374,14 @@ enum CTAAddCommentError:Int, ErrorType{
  
  */
 
-enum CTADeleteCommentError:Int, ErrorType{
+
+enum CTAAddCommentError:Int, Error{
     
-    case CommentIDEmpty = 1
-    case CommentIDNotExist = 2
-    case PublishIDNotExist = 3
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case publishIDEmpty = 1
+    case userIDNotExist = 2
+    case publishIDNotExist = 3
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 
@@ -411,12 +393,30 @@ enum CTADeleteCommentError:Int, ErrorType{
  
  */
 
-enum CTARequestNoticeError:Int, ErrorType{
+enum CTADeleteCommentError:Int, Error{
     
-    case NoticeIDIsEmpty = 1
-    case NoticeIDNotExist = 2
-    case NeedContactWithService = 8
-    case DataIsEmpty = 9
+    case commentIDEmpty = 1
+    case commentIDNotExist = 2
+    case publishIDNotExist = 3
+    case needContactWithService = 8
+    case dataIsEmpty = 9
+    
+}
+
+/*
+ 
+ 1:publishID为空
+ 8:请联系客服
+ 9:数据为空
+ 
+ */
+
+enum CTARequestNoticeError:Int, Error{
+    
+    case noticeIDIsEmpty = 1
+    case noticeIDNotExist = 2
+    case needContactWithService = 8
+    case dataIsEmpty = 9
     
 }
 

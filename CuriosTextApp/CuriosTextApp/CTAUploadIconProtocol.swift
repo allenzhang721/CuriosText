@@ -10,12 +10,12 @@ import Foundation
 
 protocol CTAUploadIconProtocol: CTAAlertProtocol{
     func uploadBegin()
-    func uploadUserIcon(user:CTAUserModel, icon:UIImage)
-    func uploadComplete(result:Bool, iconPath:String, icon:UIImage?)
+    func uploadUserIcon(_ user:CTAUserModel, icon:UIImage)
+    func uploadComplete(_ result:Bool, iconPath:String, icon:UIImage?)
 }
 
 extension CTAUploadIconProtocol{
-    func uploadUserIcon(user:CTAUserModel, icon:UIImage){
+    func uploadUserIcon(_ user:CTAUserModel, icon:UIImage){
         let userID = user.userID
         let imageName = CTAIDGenerator.fileID()
         let userIconKey = userID+"/"+imageName+".jpg"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0810"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0A4D86D4159F8AFEA83594370F711DF9"
+               BlueprintIdentifier = "218A79B8829AEF252DF0BC8F0AF46BCA"
                BuildableName = "Pods_CuriosTextApp.framework"
                BlueprintName = "Pods-CuriosTextApp"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0A4D86D4159F8AFEA83594370F711DF9"
+            BlueprintIdentifier = "218A79B8829AEF252DF0BC8F0AF46BCA"
             BuildableName = "Pods_CuriosTextApp.framework"
             BlueprintName = "Pods-CuriosTextApp"
             ReferencedContainer = "container:Pods.xcodeproj">

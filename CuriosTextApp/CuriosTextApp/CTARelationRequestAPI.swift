@@ -19,15 +19,15 @@ class CTAFollowUserRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.FollowUser.description;
+        return CTARequestUrl.followUser.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)       : userID,
-            key(.RelationUserID)    : relationUserID
+            key(.userID)       : userID as AnyObject,
+            key(.relationUserID)    : relationUserID as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAFollowUserRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAFollowUserRequest");
     }
 }
 
@@ -42,15 +42,15 @@ class CTAUnFollowUserRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UnFollowUser.description;
+        return CTARequestUrl.unFollowUser.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)       : userID,
-            key(.RelationUserID)    : relationUserID
+            key(.userID)       : userID as AnyObject,
+            key(.relationUserID)    : relationUserID as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAUnFollowUserRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUnFollowUserRequest");
     }
 }
 
@@ -66,15 +66,15 @@ class CTABlockUserRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.BlockUser.description;
+        return CTARequestUrl.blockUser.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)       : userID,
-            key(.RelationUserID)    : relationUserID
+            key(.userID)       : userID as AnyObject,
+            key(.relationUserID)    : relationUserID as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTABlockUserRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTABlockUserRequest");
     }
 }
 
@@ -89,15 +89,15 @@ class CTAUnBlockUserRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UnBlockUser.description;
+        return CTARequestUrl.unBlockUser.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)       : userID,
-            key(.RelationUserID)    : relationUserID
+            key(.userID)       : userID as AnyObject,
+            key(.relationUserID)    : relationUserID as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAUnBlockUserRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUnBlockUserRequest");
     }
 }
 
@@ -116,17 +116,17 @@ class CTAUserFollowListRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UserFollowList.description;
+        return CTARequestUrl.userFollowList.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)  : userID,
-            key(.BeUserID): beUserID,
-            key(.Start): start,
-            key(.Size): size
+            key(.userID)  : userID as AnyObject,
+            key(.beUserID): beUserID as AnyObject,
+            key(.start): start as AnyObject,
+            key(.size): size as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAUserFollowListRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUserFollowListRequest");
     }
 }
 
@@ -145,17 +145,17 @@ class CTAUserBeFollowListRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UserBeFollowList.description;
+        return CTARequestUrl.userBeFollowList.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)  : userID,
-            key(.BeUserID): beUserID,
-            key(.Start): start,
-            key(.Size): size
+            key(.userID)  : userID as AnyObject,
+            key(.beUserID): beUserID as AnyObject,
+            key(.start): start as AnyObject,
+            key(.size): size as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAUserBeFollowListRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUserBeFollowListRequest");
     }
 }
 

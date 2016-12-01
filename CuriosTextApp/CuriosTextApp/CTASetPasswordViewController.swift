@@ -49,16 +49,16 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.viewWillLoad()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.resetAreaCode = ""
         self.resetPhone = ""
@@ -66,36 +66,36 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
     }
     
     func initView(){
-        let bouns = UIScreen.mainScreen().bounds
+        let bouns = UIScreen.main.bounds
         let tap = UITapGestureRecognizer(target: self, action: #selector(CTASetPasswordViewController.bgViewClick(_:)))
         self.view.addGestureRecognizer(tap)
     
         self.backButton = UIButton(frame: CGRect(x: 0, y: 22, width: 40, height: 40))
-        self.backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
-        self.backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
-        self.backButton.addTarget(self, action: #selector(CTASetPasswordViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.backButton.setImage(UIImage(named: "back-button"), for: UIControlState())
+        self.backButton.setImage(UIImage(named: "back-selected-button"), for: .highlighted)
+        self.backButton.addTarget(self, action: #selector(CTASetPasswordViewController.backButtonClick(_:)), for: .touchUpInside)
         self.view.addSubview(self.backButton)
         
         self.setPasswordTitle = UILabel(frame: CGRect(x: 0, y: 60*self.getVerRate(), width: bouns.width, height: 40))
-        self.setPasswordTitle.font = UIFont.boldSystemFontOfSize(28)
+        self.setPasswordTitle.font = UIFont.boldSystemFont(ofSize: 28)
         self.setPasswordTitle.textColor = CTAStyleKit.normalColor
         self.setPasswordTitle.text = NSLocalizedString("SetPasswordTitle", comment: "")
-        self.setPasswordTitle.textAlignment = .Center
+        self.setPasswordTitle.textAlignment = .center
         self.view.addSubview(self.setPasswordTitle)
         
         self.passwordTextinput = UITextField(frame: CGRect(x:128*self.getHorRate(), y: 150*self.getVerRate(), width: 190*self.getHorRate(), height: 50))
         self.passwordTextinput.placeholder = NSLocalizedString("SetPasswordPlaceholder", comment: "")
-        self.passwordTextinput.secureTextEntry = true
+        self.passwordTextinput.isSecureTextEntry = true
         self.passwordTextinput.clearsOnBeginEditing = true
         self.passwordTextinput.delegate = self
-        self.passwordTextinput.returnKeyType = .Done
+        self.passwordTextinput.returnKeyType = .done
         self.view.addSubview(self.passwordTextinput)
         self.passwordVisibleButton = UIButton(frame: CGRect(x: bouns.width - 27*self.getHorRate() - 20, y: self.passwordTextinput.frame.origin.y + 19, width: 20, height: 13))
-        self.passwordVisibleButton.setImage(UIImage(named: "passwordhide-icon"), forState: .Normal)
+        self.passwordVisibleButton.setImage(UIImage(named: "passwordhide-icon"), for: UIControlState())
         self.view.addSubview(self.passwordVisibleButton)
-        self.passwordVisibleButton.addTarget(self, action: #selector(CTASetPasswordViewController.passwordVisibleClick(_:)), forControlEvents: .TouchUpInside)
+        self.passwordVisibleButton.addTarget(self, action: #selector(CTASetPasswordViewController.passwordVisibleClick(_:)), for: .touchUpInside)
         let passwordLabel = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: self.passwordTextinput.frame.origin.y + 12, width: 50, height: 25))
-        passwordLabel.font = UIFont.systemFontOfSize(16)
+        passwordLabel.font = UIFont.systemFont(ofSize: 16)
         passwordLabel.textColor = CTAStyleKit.normalColor
         passwordLabel.text = NSLocalizedString("PasswordLabel", comment: "")
         passwordLabel.sizeToFit()
@@ -106,13 +106,13 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
     
         self.confirmTextinput = UITextField(frame: CGRect(x:128*self.getHorRate(), y: self.passwordTextinput.frame.origin.y + 50, width: 190*self.getHorRate(), height: 50))
         self.confirmTextinput.placeholder = NSLocalizedString("ConfirmPasswordPlaceholder", comment: "")
-        self.confirmTextinput.secureTextEntry = true
+        self.confirmTextinput.isSecureTextEntry = true
         self.confirmTextinput.clearsOnBeginEditing = true
         self.confirmTextinput.delegate = self
-        self.confirmTextinput.returnKeyType = .Done
+        self.confirmTextinput.returnKeyType = .done
         self.view.addSubview(self.confirmTextinput)
         let confirmLabel = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: self.confirmTextinput.frame.origin.y + 12, width: 50, height: 25))
-        confirmLabel.font = UIFont.systemFontOfSize(16)
+        confirmLabel.font = UIFont.systemFont(ofSize: 16)
         confirmLabel.textColor = CTAStyleKit.normalColor
         confirmLabel.text = NSLocalizedString("ConfirmPasswordLabel", comment: "")
         confirmLabel.sizeToFit()
@@ -123,13 +123,13 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         
         
         self.submitButton = UIButton(frame: CGRect(x: (bouns.width - 40)/2, y: self.confirmTextinput.frame.origin.y + 70, width: 40, height: 28))
-        self.submitButton.setTitle(NSLocalizedString("SubmitLabel", comment: ""), forState: .Normal)
-        self.submitButton.setTitleColor(CTAStyleKit.selectedColor, forState: .Normal)
-        self.submitButton.setTitleColor(CTAStyleKit.disableColor, forState: .Disabled)
-        self.submitButton.titleLabel?.font = UIFont.systemFontOfSize(20)
+        self.submitButton.setTitle(NSLocalizedString("SubmitLabel", comment: ""), for: UIControlState())
+        self.submitButton.setTitleColor(CTAStyleKit.selectedColor, for: UIControlState())
+        self.submitButton.setTitleColor(CTAStyleKit.disableColor, for: .disabled)
+        self.submitButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         self.submitButton.sizeToFit()
         self.submitButton.frame.origin.x = (bouns.width - self.submitButton.frame.width)/2
-        self.submitButton.addTarget(self, action: #selector(CTASetPasswordViewController.submitButtonClikc(_:)), forControlEvents: .TouchUpInside)
+        self.submitButton.addTarget(self, action: #selector(CTASetPasswordViewController.submitButtonClikc(_:)), for: .touchUpInside)
         self.view.addSubview(self.submitButton)
         
     }
@@ -137,9 +137,9 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
     func viewWillLoad(){
         self.passwordTextinput.text = ""
         self.confirmTextinput.text = ""
-        self.passwordTextinput.secureTextEntry = true
-        self.passwordVisibleButton.setImage(UIImage(named: "passwordhide-icon"), forState: .Normal)
-        self.submitButton.enabled = false
+        self.passwordTextinput.isSecureTextEntry = true
+        self.passwordVisibleButton.setImage(UIImage(named: "passwordhide-icon"), for: UIControlState())
+        self.submitButton.isEnabled = false
         
         if self.userModel != nil {
             if self.resetPhone == "" {
@@ -147,16 +147,16 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
                 self.resetAreaCode = self.userModel!.areaCode
             }
         }
-        let bouns = UIScreen.mainScreen().bounds
+        let bouns = UIScreen.main.bounds
         if self.setPasswordType == .changePassword{
-            self.backButton.setImage(UIImage(named: "close-button"), forState: .Normal)
-            self.backButton.setImage(UIImage(named: "close-selected-button"), forState: .Highlighted)
+            self.backButton.setImage(UIImage(named: "close-button"), for: UIControlState())
+            self.backButton.setImage(UIImage(named: "close-selected-button"), for: .highlighted)
             self.setPasswordTitle.text = NSLocalizedString("ChangePasswordTitle", comment: "")
             self.setPasswordTitle.sizeToFit()
             self.setPasswordTitle.frame.origin.x = (bouns.width - self.setPasswordTitle.frame.width)/2
         }else {
-            self.backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
-            self.backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
+            self.backButton.setImage(UIImage(named: "back-button"), for: UIControlState())
+            self.backButton.setImage(UIImage(named: "back-selected-button"), for: .highlighted)
             self.setPasswordTitle.text = NSLocalizedString("SetPasswordTitle", comment: "")
             self.setPasswordTitle.sizeToFit()
             self.setPasswordTitle.frame.origin.x = (bouns.width - self.setPasswordTitle.frame.width)/2
@@ -175,7 +175,7 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         self.hideLoadingViewByView(self.submitButton)
     }
     
-    func submitButtonClikc(send: UIButton){
+    func submitButtonClikc(_ send: UIButton){
         self.submitHandler()
     }
     
@@ -220,16 +220,16 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
                                 })
                             }else {
                                 let error = info.errorType as! CTAResetPasswordError
-                                if error == .PhoneIsEmpty {
+                                if error == .phoneIsEmpty {
                                     self.showSingleAlert(NSLocalizedString("AlertTitlePhoneNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                     })
-                                }else if error == .PhoneNotExist {
+                                }else if error == .phoneNotExist {
                                     self.showSingleAlert(NSLocalizedString("AlertTitlePhoneNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                     })
-                                }else if error == .NeedContactWithService{
+                                }else if error == .needContactWithService{
                                     self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                     })
-                                }else if error == .DataIsEmpty{
+                                }else if error == .dataIsEmpty{
                                     self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                     })
                                 }
@@ -243,12 +243,12 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
                             self.changeToUnloadingView()
                             if info.result{
                                 if self.setPasswordType == .changePassword{
-                                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("AlertPasswordset", comment: ""))
+                                    SVProgressHUD.showSuccess(withStatus: NSLocalizedString("AlertPasswordset", comment: ""))
                                 }else if self.setPasswordType == .setMobileNumber{
-                                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("AlertPhoneSet", comment: ""))
+                                    SVProgressHUD.showSuccess(withStatus: NSLocalizedString("AlertPhoneSet", comment: ""))
                                 }
                                 
-                                self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                                self.dismiss(animated: true, completion: { () -> Void in
                                 })
                             }else {
                                 if info.errorType is CTAInternetError {
@@ -268,17 +268,17 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
                 })
             }
         }else {
-            self.submitButton.enabled = false
+            self.submitButton.isEnabled = false
         }
     }
     
-    func backButtonClick(send: UIButton){
+    func backButtonClick(_ send: UIButton){
         self.resignView()
         if self.setPasswordType == .changePassword{
-            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.dismiss(animated: true, completion: { () -> Void in
             })
         }else {
-            self.showSelectedAlert(NSLocalizedString("AlertTitlePasswordBack", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.OK.description, cancelAlertLabel: LocalStrings.Cancel.description) { (result) -> Void in
+            self.showSelectedAlert(NSLocalizedString("AlertTitlePasswordBack", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.ok.description, cancelAlertLabel: LocalStrings.cancel.description) { (result) -> Void in
                 if result {
                     self.backHandler()
                 }
@@ -293,16 +293,16 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
         self.navigationController?.popToViewController(mobile, animated: true)
     }
     
-    func passwordVisibleClick(send: UIButton){
-        self.passwordTextinput.secureTextEntry = !self.passwordTextinput.secureTextEntry
-        if self.passwordTextinput.secureTextEntry{
-            self.passwordVisibleButton.setImage(UIImage(named: "passwordhide-icon"), forState: .Normal)
+    func passwordVisibleClick(_ send: UIButton){
+        self.passwordTextinput.isSecureTextEntry = !self.passwordTextinput.isSecureTextEntry
+        if self.passwordTextinput.isSecureTextEntry{
+            self.passwordVisibleButton.setImage(UIImage(named: "passwordhide-icon"), for: UIControlState())
         }else {
-            self.passwordVisibleButton.setImage(UIImage(named: "passwordshow-icon"), forState: .Normal)
+            self.passwordVisibleButton.setImage(UIImage(named: "passwordshow-icon"), for: UIControlState())
         }
     }
     
-    func bgViewClick(sender: UIPanGestureRecognizer){
+    func bgViewClick(_ sender: UIPanGestureRecognizer){
         self.resignHandler(sender)
     }
     
@@ -310,7 +310,7 @@ class CTASetPasswordViewController: UIViewController, CTAPublishCellProtocol, CT
 
 extension CTASetPasswordViewController: UITextFieldDelegate{
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool{
         let newText = textField.text
         let newStr = NSString(string: newText!)
         let isDelete = string == "" ? true : false
@@ -322,11 +322,11 @@ extension CTASetPasswordViewController: UITextFieldDelegate{
             let confirmStr = NSString(string: confirmText!)
             
             if passwordStr.length >= 5 && confirmStr.length >= 5 {
-                self.submitButton.enabled = true
+                self.submitButton.isEnabled = true
             }
         }else {
             if newStr.length <= 6 {
-                self.submitButton.enabled = false
+                self.submitButton.isEnabled = false
             }
         }
         
@@ -337,10 +337,10 @@ extension CTASetPasswordViewController: UITextFieldDelegate{
         }
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool{
         if textField == self.confirmTextinput {
             textField.resignFirstResponder()
-            if self.submitButton.enabled {
+            if self.submitButton.isEnabled {
                 self.submitHandler()
             }
         }else if textField == self.passwordTextinput {
@@ -352,7 +352,7 @@ extension CTASetPasswordViewController: UITextFieldDelegate{
 
 extension CTASetPasswordViewController: UIGestureRecognizerDelegate{
     
-    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return false
     }
     

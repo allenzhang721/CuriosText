@@ -10,12 +10,12 @@ import UIKit
 
 protocol CTAConfigANimationCellDataSource: class {
     
-    func configAnimationCellBeganIndexPath(cell: CTAConfigAnimationCell) -> NSIndexPath
+    func configAnimationCellBeganIndexPath(_ cell: CTAConfigAnimationCell) -> IndexPath
 }
 
 protocol CTAConfigAnimationCellDelegate: class {
     
-    func configAnimationCell(cell: CTAConfigAnimationCell, DidSelectedIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?)
+    func configAnimationCell(_ cell: CTAConfigAnimationCell, DidSelectedIndexPath indexPath: IndexPath, oldIndexPath: IndexPath?)
 }
 
 class CTAConfigAnimationCell: CTAConfigCell {
@@ -23,7 +23,7 @@ class CTAConfigAnimationCell: CTAConfigCell {
     var collectionView: UICollectionView!
     weak var dataSource: CTAConfigANimationCellDataSource?
     weak var delegate: CTAConfigAnimationCellDelegate?
-    private var selectedTaping = false
+    fileprivate var selectedTaping = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,41 +35,41 @@ class CTAConfigAnimationCell: CTAConfigCell {
         setup()
     }
     
-    private func setup() {
+    fileprivate func setup() {
         
         let lineLayout = CTALineFlowLayout()
         lineLayout.delegate = self
         lineLayout.showCount = 4
-        lineLayout.scrollDirection = .Horizontal
+        lineLayout.scrollDirection = .horizontal
         collectionView = UICollectionView(frame: bounds, collectionViewLayout: lineLayout)
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.registerClass(CTAAnimationNameCell.self, forCellWithReuseIdentifier: "AnimatoinCell")
+        collectionView.register(CTAAnimationNameCell.self, forCellWithReuseIdentifier: "AnimatoinCell")
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
-        collectionView.backgroundColor = UIColor.whiteColor()
+        collectionView.backgroundColor = UIColor.white
         contentView.addSubview(collectionView)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.topAnchor.constraintEqualToAnchor(topAnchor).active = true
-        collectionView.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
-        collectionView.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
-        collectionView.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
+        collectionView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        collectionView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
 //        collectionView.reloadData()
     }
 }
 
 extension CTAConfigAnimationCell: UICollectionViewDataSource {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return CTAAnimationName.names.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("AnimatoinCell", forIndexPath: indexPath) as! CTAAnimationNameCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AnimatoinCell", for: indexPath) as! CTAAnimationNameCell
         
         cell.text = CTAAnimationName.names[indexPath.item].description
         
@@ -79,9 +79,9 @@ extension CTAConfigAnimationCell: UICollectionViewDataSource {
 
 extension CTAConfigAnimationCell: UICollectionViewDelegate {
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if let att = collectionView.layoutAttributesForItemAtIndexPath(indexPath) {
+        if let att = collectionView.layoutAttributesForItem(at: indexPath) {
             selectedTaping = true
             let center = att.center
             let offset = CGPoint(x: center.x - collectionView.bounds.width / 2.0, y: 0)
@@ -93,9 +93,9 @@ extension CTAConfigAnimationCell: UICollectionViewDelegate {
 
 extension CTAConfigAnimationCell: LineFlowLayoutDelegate {
     
-    func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
+    func didChangeTo(_ collectionView: UICollectionView, itemAtIndexPath indexPath: IndexPath, oldIndexPath: IndexPath?) {
 
-        if collectionView.dragging || collectionView.decelerating || collectionView.tracking || selectedTaping {
+        if collectionView.isDragging || collectionView.isDecelerating || collectionView.isTracking || selectedTaping {
             selectedTaping = false
             delegate?.configAnimationCell(self, DidSelectedIndexPath: indexPath, oldIndexPath: oldIndexPath)
         }
@@ -106,12 +106,12 @@ extension CTAConfigAnimationCell: LineFlowLayoutDelegate {
 extension CTAConfigAnimationCell: CTACellDisplayProtocol {
     
     func willBeDisplayed() {
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+        DispatchQueue.main.async { [weak self] in
             
             if let strongSelf = self {
-                let beganIndexPath = strongSelf.dataSource?.configAnimationCellBeganIndexPath(strongSelf) ?? NSIndexPath(forItem: 2, inSection: 0)
+                let beganIndexPath = strongSelf.dataSource?.configAnimationCellBeganIndexPath(strongSelf) ?? IndexPath(item: 2, section: 0)
                 
-                if let acenter = strongSelf.collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(beganIndexPath)?.center {
+                if let acenter = strongSelf.collectionView.collectionViewLayout.layoutAttributesForItem(at: beganIndexPath)?.center {
                     strongSelf.collectionView.setContentOffset(CGPoint(x: acenter.x - strongSelf.bounds.width / 2.0, y: 0), animated: false)
                 }
             }

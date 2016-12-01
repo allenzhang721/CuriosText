@@ -54,7 +54,7 @@ class AniFactory {
 //        }
 //    }
     
-    class func animationWith(name: String, canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, inSection section: Int, rowAtSection row: Int, sectionCount: Int, rowCountAtSection: Int, descriptor: Descriptor, addBeganTime: Float, randomIndexs: [Int]? = nil) -> AniDescriptor? {
+    class func animationWith(_ name: String, canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, inSection section: Int, rowAtSection row: Int, sectionCount: Int, rowCountAtSection: Int, descriptor: Descriptor, addBeganTime: Float, randomIndexs: [Int]? = nil) -> AniDescriptor? {
         
         guard let type = CTAAnimationType(rawValue: name) else {
             print("Not Support \(name) Animation Type!")
@@ -92,28 +92,28 @@ class AniFactory {
             return curl(false, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
             
         case .FadeIn:
-            if let randomIndexs = randomIndexs where index < randomIndexs.count {
+            if let randomIndexs = randomIndexs, index < randomIndexs.count {
                 return fade(true, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
             } else {
                 return fade(true, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
             }
             
         case .FadeOut:
-            if let randomIndexs = randomIndexs where index < randomIndexs.count {
+            if let randomIndexs = randomIndexs, index < randomIndexs.count {
                 return fade(false, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
             } else {
                 return fade(false, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
             }
             
         case .FadeInOrder:
-            if let randomIndexs = randomIndexs where index < randomIndexs.count {
+            if let randomIndexs = randomIndexs, index < randomIndexs.count {
                 return fade(true, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime, isRandom: false)
             } else {
                 return fade(true, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)
             }
             
         case .FadeOutOrder:
-            if let randomIndexs = randomIndexs where index < randomIndexs.count {
+            if let randomIndexs = randomIndexs, index < randomIndexs.count {
                 return fade(false, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime, isRandom: false)
             } else {
                 return fade(false, canvasSize: canvasSize, container: container, content: content, contentsCount: contentsCount, index: index, descriptor: descriptor, beganTime: addBeganTime)

@@ -18,17 +18,17 @@ protocol PageVMProtocol {
 
 extension PageVMProtocol {
     
-    func containerByID(id: String) -> ContainerVMProtocol? {
+    func containerByID(_ id: String) -> ContainerVMProtocol? {
         
-        guard let index = (containerVMs.indexOf{$0.iD == id}) else {
+        guard let index = (containerVMs.index{$0.iD == id}) else {
             return nil
         }
         return containerVMs[index]
     }
     
-    func indexByID(id: String) -> Int? {
+    func indexByID(_ id: String) -> Int? {
         
-        guard let index = (containerVMs.indexOf{$0.iD == id}) else {
+        guard let index = (containerVMs.index{$0.iD == id}) else {
             return nil
         }
         return index
@@ -37,9 +37,9 @@ extension PageVMProtocol {
 
 extension PageVMProtocol {
     
-    func containerShouldLoadBeforeAnimationBeganByID(iD: String) -> Bool {
+    func containerShouldLoadBeforeAnimationBeganByID(_ iD: String) -> Bool {
         
-        guard let aniFirstIndex = (animationBinders.indexOf{$0.targetiD == iD}) else {
+        guard let aniFirstIndex = (animationBinders.index{$0.targetiD == iD}) else {
             return true
         }
         

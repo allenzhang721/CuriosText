@@ -43,7 +43,7 @@ class CTASelectorSizeCell: CTASelectorCell {
         sizeView.minumValue = 0.2
         sizeView.maxiumValue = 2.0
         addSubview(sizeView)
-        hudLabel.textAlignment = .Center
+        hudLabel.textAlignment = .center
         hudLabel.textColor = CTAStyleKit.selectedColor
         addSubview(hudLabel)
     }
@@ -69,27 +69,27 @@ class CTASelectorSizeCell: CTASelectorCell {
 //        sizeView.updateValue(dataSource.selectorBeganScale(self))
     }
     
-    override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
+    override func addTarget(_ target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
         
-        sizeView.addTarget(target, action: action, forControlEvents: controlEvents)
-        sizeView.addTarget(self, action: #selector(CTASelectorSizeCell.valueChanged(_:)), forControlEvents: controlEvents)
+        sizeView.addTarget(target, action: action, for: controlEvents)
+        sizeView.addTarget(self, action: #selector(CTASelectorSizeCell.valueChanged(_:)), for: controlEvents)
     }
     
     override func removeAllTarget() {
         
-        for target in sizeView.allTargets() {
+        for target in sizeView.allTargets {
             
-            guard let actions = sizeView.actionsForTarget(target, forControlEvent: sizeView.allControlEvents()) else {
+            guard let actions = sizeView.actions(forTarget: target, forControlEvent: sizeView.allControlEvents) else {
                 continue
             }
             
             for action in actions {
-                sizeView.removeTarget(target, action: Selector(action), forControlEvents: sizeView.allControlEvents())
+                sizeView.removeTarget(target, action: Selector(action), for: sizeView.allControlEvents)
             }
         }
     }
     
-    func valueChanged(sender: AnyObject) {
+    func valueChanged(_ sender: AnyObject) {
         
         text = "\(Int(sizeView.value * 100))%"
     }

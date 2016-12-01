@@ -10,7 +10,7 @@ import Foundation
 
 class UserListAction: NSObject{
     
-    class func userListViewController(paras: [String: AnyObject]) -> UIViewController {
+    class func userListViewController(_ paras: [String: AnyObject]) -> UIViewController {
         
         guard let userID = paras["userID"] as? String else { fatalError() }
         guard let type = paras["type"] as? String else { fatalError() }

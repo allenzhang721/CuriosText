@@ -10,7 +10,7 @@ import Foundation
 
 class AboutUs: NSObject {
     
-    class func aboutVC(paras: [String: AnyObject]?) -> UIViewController? {
+    class func aboutVC(_ paras: [String: AnyObject]?) -> UIViewController? {
         
         let a = UIStoryboard(name: "About", bundle: nil).instantiateInitialViewController() as? AboutViewController
         

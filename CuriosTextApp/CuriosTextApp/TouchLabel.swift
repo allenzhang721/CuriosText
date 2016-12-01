@@ -20,12 +20,12 @@ class TouchLabel: UILabel {
         super.init(coder: aDecoder)
     }
     
-    private func setupGesture() {
+    fileprivate func setupGesture() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(TouchLabel.tap(_:)))
         addGestureRecognizer(tap)
     }
     
-    func tap(sender: UITapGestureRecognizer) {
+    func tap(_ sender: UITapGestureRecognizer) {
         tapHandler?()
     }
 }

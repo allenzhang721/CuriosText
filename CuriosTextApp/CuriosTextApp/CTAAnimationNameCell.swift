@@ -10,7 +10,7 @@ import UIKit
 
 class CTAAnimationNameCell: CTAActivableCollectionViewCell {
 
-    private var label: UILabel!
+    fileprivate var label: UILabel!
     var text: String? {
         get {
             return label.text
@@ -31,24 +31,24 @@ class CTAAnimationNameCell: CTAActivableCollectionViewCell {
         setup()
     }
     
-    private func setup() {
+    fileprivate func setup() {
         
         label = UILabel(frame: bounds)
-        label.textAlignment = .Center
+        label.textAlignment = .center
         label.text = "^_^"
         label.textColor = CTAStyleKit.normalColor
         label.adjustsFontSizeToFitWidth = true
-        label.font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize())
+        label.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
         contentView.addSubview(label)
         
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.topAnchor.constraintEqualToAnchor(contentView.topAnchor).active = true
-        label.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor).active = true
-        label.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor).active = true
-        label.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor).active = true
+        label.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
     }
     
-    override func didActived(actived: Bool) {
+    override func didActived(_ actived: Bool) {
         
         label.textColor = actived ? CTAStyleKit.selectedColor : CTAStyleKit.normalColor
     }

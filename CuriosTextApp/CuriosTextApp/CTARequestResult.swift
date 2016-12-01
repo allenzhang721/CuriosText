@@ -16,16 +16,16 @@ import Foundation
  - Failure: The request encountered an error resulting in a failure. The associated values are the original data
  provided by the server as well as the error that caused the failure.
  */
-public enum CTARequestResult<Value, Error: ErrorType> {
-    case Success(Value)
-    case Failure(Error)
+public enum CTARequestResult<Value, AError: Error> {
+    case success(Value)
+    case failure(AError)
     
     /// Returns `true` if the result is a success, `false` otherwise.
     public var isSuccess: Bool {
         switch self {
-        case .Success:
+        case .success:
             return true
-        case .Failure:
+        case .failure:
             return false
         }
     }
@@ -38,9 +38,9 @@ public enum CTARequestResult<Value, Error: ErrorType> {
     /// Returns the associated value if the result is a success, `nil` otherwise.
     public var value: Value? {
         switch self {
-        case .Success(let value):
+        case .success(let value):
             return value
-        case .Failure:
+        case .failure:
             return nil
         }
     }
@@ -48,9 +48,9 @@ public enum CTARequestResult<Value, Error: ErrorType> {
     /// Returns the associated error value if the result is a failure, `nil` otherwise.
     public var error: Error? {
         switch self {
-        case .Success:
+        case .success:
             return nil
-        case .Failure(let error):
+        case .failure(let error):
             return error
         }
     }
@@ -63,9 +63,9 @@ extension CTARequestResult: CustomStringConvertible {
     /// success or failure.
     public var description: String {
         switch self {
-        case .Success:
+        case .success:
             return "SUCCESS"
-        case .Failure:
+        case .failure:
             return "FAILURE"
         }
     }
@@ -78,9 +78,9 @@ extension CTARequestResult: CustomDebugStringConvertible {
     /// success or failure in addition to the value or error.
     public var debugDescription: String {
         switch self {
-        case .Success(let value):
+        case .success(let value):
             return "SUCCESS: \(value)"
-        case .Failure(let error):
+        case .failure(let error):
             return "FAILURE: \(error)"
         }
     }

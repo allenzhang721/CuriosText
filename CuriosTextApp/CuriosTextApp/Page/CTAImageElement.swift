@@ -15,18 +15,18 @@ final class CTAImgElement: NSObject, NSCoding {
         static let filterName = "filterName"
     }
     
-    private let imageName: String
-    private var filterName: String = ""
+    fileprivate let imageName: String
+    fileprivate var filterName: String = ""
     
     init?(coder aDecoder: NSCoder) {
-        imageName = aDecoder.decodeObjectForKey(ImgElementKey.imageName) as! String
-        filterName = aDecoder.decodeObjectForKey(ImgElementKey.filterName) as? String ?? ""
+        imageName = aDecoder.decodeObject(forKey: ImgElementKey.imageName) as! String
+        filterName = aDecoder.decodeObject(forKey: ImgElementKey.filterName) as? String ?? ""
 
     }
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(imageName, forKey: ImgElementKey.imageName)
-        aCoder.encodeObject(filterName, forKey: ImgElementKey.filterName)
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(imageName, forKey: ImgElementKey.imageName)
+        aCoder.encode(filterName, forKey: ImgElementKey.filterName)
     }
     
     // TODO: need ImgElement init parameter -- Emiaostein, 15/02/16, 14:31
@@ -57,7 +57,7 @@ extension CTAImgElement: CTAElement {
     //    var height: Double { get }
     
     func resultWithScale(
-        scale: CGFloat,
+        _ scale: CGFloat,
         preScale: CGFloat,
         containerSize: CGSize,
         constraintSzie: CGSize) -> (inset: CGPoint, size: CGSize) {
@@ -71,7 +71,7 @@ extension CTAImgElement: CTAElement {
         return (inset, nextSize)
     }
     
-    func resultWithImgSize(originSize: CGSize, scale: CGFloat, containerSize: CGSize, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize) {
+    func resultWithImgSize(_ originSize: CGSize, scale: CGFloat, containerSize: CGSize, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize) {
         
         let s: CGFloat
         if containerSize.width >= constraintSize.width && containerSize.height >= constraintSize.height {

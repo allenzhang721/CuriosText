@@ -43,43 +43,43 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
         self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.viewWillLoad()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
     
     
     func initView(){
-        let bouns = UIScreen.mainScreen().bounds
+        let bouns = UIScreen.main.bounds
         let tap = UITapGestureRecognizer(target: self, action: #selector(CTASetMobileNumberViewController.bgViewClick(_:)))
         self.view.addGestureRecognizer(tap)
         
         self.backButton = UIButton(frame: CGRect(x: 0, y: 22, width: 40, height: 40))
-        self.backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
-        self.backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
-        self.backButton.addTarget(self, action: #selector(CTASetMobileNumberViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.backButton.setImage(UIImage(named: "back-button"), for: UIControlState())
+        self.backButton.setImage(UIImage(named: "back-selected-button"), for: .highlighted)
+        self.backButton.addTarget(self, action: #selector(CTASetMobileNumberViewController.backButtonClick(_:)), for: .touchUpInside)
         self.view.addSubview(self.backButton)
 
         let enterMobileLabel = UILabel(frame: CGRect(x: 0, y: 60*self.getVerRate(), width: bouns.width, height: 40))
-        enterMobileLabel.font = UIFont.boldSystemFontOfSize(28)
+        enterMobileLabel.font = UIFont.boldSystemFont(ofSize: 28)
         enterMobileLabel.textColor = CTAStyleKit.normalColor
         enterMobileLabel.text = NSLocalizedString("EnterMobileLabel", comment: "")
-        enterMobileLabel.textAlignment = .Center
+        enterMobileLabel.textAlignment = .center
         self.view.addSubview(enterMobileLabel)
         
         self.initPhoneView()
         self.phoneTextinput.delegate = self
         
         self.registerButton = UIButton(frame: CGRect(x: (bouns.width - 40)/2, y: self.phoneTextinput.frame.origin.y+70, width: 40, height: 28))
-        self.registerButton.setTitle(NSLocalizedString("NextButtonLabel", comment: ""), forState: .Normal)
-        self.registerButton.setTitleColor(CTAStyleKit.selectedColor, forState: .Normal)
-        self.registerButton.setTitleColor(CTAStyleKit.disableColor, forState: .Disabled)
-        self.registerButton.titleLabel?.font = UIFont.systemFontOfSize(20)
-        self.registerButton.addTarget(self, action: #selector(CTASetMobileNumberViewController.registerButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.registerButton.setTitle(NSLocalizedString("NextButtonLabel", comment: ""), for: UIControlState())
+        self.registerButton.setTitleColor(CTAStyleKit.selectedColor, for: UIControlState())
+        self.registerButton.setTitleColor(CTAStyleKit.disableColor, for: .disabled)
+        self.registerButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        self.registerButton.addTarget(self, action: #selector(CTASetMobileNumberViewController.registerButtonClick(_:)), for: .touchUpInside)
         self.view.addSubview(self.registerButton)
     }
     
@@ -90,51 +90,51 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
             self.changeCountryLabelByModel(self.selectedModel)
         }
         if self.phoneTextinput.text == "" {
-            self.registerButton.enabled = false
+            self.registerButton.isEnabled = false
         }
         if self.setMobileNumberType == .setMobileNumber || self.setMobileNumberType == .changeMobileNumber{
-            self.registerButton.setTitle(NSLocalizedString("NextButtonLabel", comment: ""), forState: .Normal)
-            self.backButton.setImage(UIImage(named: "close-button"), forState: .Normal)
-            self.backButton.setImage(UIImage(named: "close-selected-button"), forState: .Highlighted)
+            self.registerButton.setTitle(NSLocalizedString("NextButtonLabel", comment: ""), for: UIControlState())
+            self.backButton.setImage(UIImage(named: "close-button"), for: UIControlState())
+            self.backButton.setImage(UIImage(named: "close-selected-button"), for: .highlighted)
         }else {
-            self.backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
-            self.backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
+            self.backButton.setImage(UIImage(named: "back-button"), for: UIControlState())
+            self.backButton.setImage(UIImage(named: "back-selected-button"), for: .highlighted)
             if self.setMobileNumberType == .register{
-                self.registerButton.setTitle(NSLocalizedString("RegisterLabel", comment: ""), forState: .Normal)
+                self.registerButton.setTitle(NSLocalizedString("RegisterLabel", comment: ""), for: UIControlState())
                 
             }else if self.setMobileNumberType == .resetPassword{
-                self.registerButton.setTitle(NSLocalizedString("NextButtonLabel", comment: ""), forState: .Normal)
+                self.registerButton.setTitle(NSLocalizedString("NextButtonLabel", comment: ""), for: UIControlState())
             }
         }
         
         self.registerButton.sizeToFit()
-        self.registerButton.frame.origin.x = (UIScreen.mainScreen().bounds.width - self.registerButton.frame.width)/2
+        self.registerButton.frame.origin.x = (UIScreen.main.bounds.width - self.registerButton.frame.width)/2
         self.isChangeContry = false
     }
     
-    func backButtonClick(sender: UIButton){
+    func backButtonClick(_ sender: UIButton){
         self.backHandler()
     }
     
     func backHandler(){
         self.resignView()
         if self.setMobileNumberType == .setMobileNumber || self.setMobileNumberType == .changeMobileNumber{
-            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.dismiss(animated: true, completion: { () -> Void in
             })
         }else {
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
-    func registerButtonClick(sender: UIButton){
+    func registerButtonClick(_ sender: UIButton){
         let phoneLabel = self.phoneTextinput.text!
         if self.selectedModel != nil && phoneLabel != ""{
             var message = NSLocalizedString("AlertMessageNumberConfirm", comment: "")
-            let phoneNumber = phoneLabel.stringByReplacingOccurrencesOfString("\\s", withString: "", options: .RegularExpressionSearch, range: nil)
+            let phoneNumber = phoneLabel.replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: nil)
             let zone = self.selectedModel!.zoneCode
             message = message + "\n" + "+"+zone+" "+phoneLabel
             self.resignView()
-            self.showSelectedAlert(NSLocalizedString("AlertTitleNumberConfirm", comment: ""), alertMessage: message, okAlertLabel: LocalStrings.OK.description, cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result) -> Void in
+            self.showSelectedAlert(NSLocalizedString("AlertTitleNumberConfirm", comment: ""), alertMessage: message, okAlertLabel: LocalStrings.ok.description, cancelAlertLabel: LocalStrings.cancel.description, compelecationBlock: { (result) -> Void in
                 if result {
                     if self.setMobileNumberType == .setMobileNumber || self.setMobileNumberType == .changeMobileNumber{
                         if CTAUserManager.isLogin{
@@ -176,15 +176,15 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
                 }
             })
         }else {
-            self.registerButton.enabled = false
+            self.registerButton.isEnabled = false
         }
     }
     
-    func bgViewClick(sender: UIPanGestureRecognizer){
+    func bgViewClick(_ sender: UIPanGestureRecognizer){
         self.resignHandler(sender)
     }
     
-    func countryNameClick(sender: UIPanGestureRecognizer){
+    func countryNameClick(_ sender: UIPanGestureRecognizer){
         self.resignView()
         let searchCountry = CTASearchCountryViewController.getInstance()
         searchCountry.selectedDelegate = self
@@ -193,7 +193,7 @@ class CTASetMobileNumberViewController: UIViewController, CTAPhoneProtocol, CTAA
 }
 
 extension CTASetMobileNumberViewController: CTACountryDelegate{
-    func setCountryCode(model:CountryZone){
+    func setCountryCode(_ model:CountryZone){
         self.selectedModel = model
         self.changeCountryLabelByModel(selectedModel)
     }
@@ -201,7 +201,7 @@ extension CTASetMobileNumberViewController: CTACountryDelegate{
 
 extension CTASetMobileNumberViewController: UITextFieldDelegate{
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool{
         let newText = self.phoneTextinput.text
         let newStr = NSString(string: newText!)
         let isDelete = string == "" ? true : false
@@ -210,10 +210,10 @@ extension CTASetMobileNumberViewController: UITextFieldDelegate{
         }
         if isDelete {
             if newStr.length <= 1{
-                self.registerButton.enabled = false
+                self.registerButton.isEnabled = false
             }
         }else{
-            self.registerButton.enabled = true
+            self.registerButton.isEnabled = true
         }
         if newStr.length < 20 || isDelete{
             return true
@@ -225,7 +225,7 @@ extension CTASetMobileNumberViewController: UITextFieldDelegate{
 
 extension CTASetMobileNumberViewController: UIGestureRecognizerDelegate{
     
-    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
     

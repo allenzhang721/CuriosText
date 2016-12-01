@@ -11,7 +11,7 @@ import SVProgressHUD
 
 protocol CTAEditViewControllerDelegate: class {
     
-    func EditControllerDidPublished(viewController: EditViewController)
+    func EditControllerDidPublished(_ viewController: EditViewController)
 }
 
 class EditViewController: UIViewController {
@@ -24,19 +24,19 @@ class EditViewController: UIViewController {
     }
     
     @IBOutlet weak var addView: CTAGradientButtonView!
-    private weak var tabViewController: CTATabViewController!
-    private weak var canvasViewController: CTACanvasViewController!
-    private weak var selectorViewController: CTASelectorsViewController!
-    private weak var filter: FilterItem?
-    private let filterManager = FilterManager()
-    private var selectedIndexPath: NSIndexPath?
+    fileprivate weak var tabViewController: CTATabViewController!
+    fileprivate weak var canvasViewController: CTACanvasViewController!
+    fileprivate weak var selectorViewController: CTASelectorsViewController!
+    fileprivate weak var filter: FilterItem?
+    fileprivate let filterManager = FilterManager()
+    fileprivate var selectedIndexPath: IndexPath?
     var document: CTADocument!
     var tempValues = TempValues()
     var isFirstAppear: Bool = true
     
     weak var delegate: CTAEditViewControllerDelegate?
     
-    private var page: CTAPage {
+    fileprivate var page: CTAPage {
         get {
             return document.page!
         }
@@ -46,16 +46,16 @@ class EditViewController: UIViewController {
         }
     }
     
-    private var useTemplate: Bool = false
-    private var originPage: CTAPage?
-    private var isHideBar:Bool = false
-    private var selectedImageIdentifier: String?
+    fileprivate var useTemplate: Bool = false
+    fileprivate var originPage: CTAPage?
+    fileprivate var isHideBar:Bool = false
+    fileprivate var selectedImageIdentifier: String?
     
-    private var selectedContainer: ContainerVMProtocol? {
+    fileprivate var selectedContainer: ContainerVMProtocol? {
         guard let selectedIndexPath = selectedIndexPath else { return nil }
         return page.containerVMs[selectedIndexPath.item]
     }
-    private var animation: CTAAnimationBinder? {
+    fileprivate var animation: CTAAnimationBinder? {
         guard let container = selectedContainer else {return nil}
         let anis = page.animationBinders.filter{$0.targetiD == container.iD}
         return anis.count > 0 ? anis.first : nil
@@ -76,7 +76,7 @@ class EditViewController: UIViewController {
         
         filter = filterManager.filter(ByName: page.filterName)
         
-        let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
+        let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewController(withIdentifier: "ImagePickerViewController") as! ImagePickerViewController
         
         let cleanPage = page.cleanEmptyContainers()
         cameraVC.backgroundHex = cleanPage.backgroundColor
@@ -93,12 +93,12 @@ class EditViewController: UIViewController {
                 sf.applyCurrentFilter(toImage: image, completion: { (filteredImg) in
                     sf.insertImage(image, filteredImage: filteredImg, size: image.size)
                     self?.selectorViewController.updatePreImage(image)
-                    self?.filterManager.filters[0..<5].forEach{$0.createData(fromColorDirAt: NSBundle.mainBundle().bundleURL, filtering: image, complation: nil)}
+                    self?.filterManager.filters[0..<5].forEach{$0.createData(fromColorDirAt: Bundle.main.bundleURL, filtering: image, complation: nil)}
                     
-                    draw(sf.page, atBegan: false, baseURL: sf.document.cacheImagePath, imageAccess: sf.document.imageBy ,local: true) { [weak self] (previewR) in
-                       dispatch_async(dispatch_get_main_queue(), {
+                    draws(sf.page, atBegan: false, baseURL: sf.document.cacheImagePath, imageAccess: sf.document.imageBy ,local: true) { [weak self] (previewR) in
+                       DispatchQueue.main.async(execute: {
                             switch previewR {
-                            case .Success(let img):
+                            case .success(let img):
                                 
                                     self?.selectorViewController.updateSnapshotImage(img)
                             default:
@@ -114,11 +114,11 @@ class EditViewController: UIViewController {
                         
                         sf.insertImage(image, filteredImage: nil, size: image.size)
                         self?.selectorViewController.updatePreImage(originImg)
-                        self?.filterManager.filters[0..<5].forEach{$0.createData(fromColorDirAt: NSBundle.mainBundle().bundleURL, filtering: originImg, complation: nil)}
-                        draw(sf.page, atBegan: false, baseURL: sf.document.imagePath, imageAccess: sf.document.resourceImageBy ,local: true) { [weak self] (previewR) in
-                            dispatch_async(dispatch_get_main_queue(), {
+                        self?.filterManager.filters[0..<5].forEach{$0.createData(fromColorDirAt: Bundle.main.bundleURL, filtering: originImg, complation: nil)}
+                        draws(sf.page, atBegan: false, baseURL: sf.document.imagePath, imageAccess: sf.document.resourceImageBy ,local: true) { [weak self] (previewR) in
+                            DispatchQueue.main.async(execute: {
                                 switch previewR {
-                                case .Success(let img):
+                                case .success(let img):
                                     
                                     self?.selectorViewController.updateSnapshotImage(img)
                                 default:
@@ -139,25 +139,25 @@ class EditViewController: UIViewController {
         view.addSubview(cameraVC.view)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.isHideBar = true
         self.setNeedsStatusBarAppearanceUpdate()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if isFirstAppear {
             isFirstAppear = false
         }
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return self.isHideBar
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        switch segue.destinationViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.destination {
         case let vc as CTATabViewController:
             tabViewController = vc
             tabViewController.dataSource = self
@@ -190,7 +190,7 @@ class EditViewController: UIViewController {
     }
     
     // MARK: - Gestures
-    private func addGestures() {
+    fileprivate func addGestures() {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(EditViewController.pan(_:)))
         canvasViewController.view.addGestureRecognizer(pan)
         
@@ -205,25 +205,25 @@ class EditViewController: UIViewController {
         canvasViewController.view.addGestureRecognizer(doubleTap)
     }
     
-    func pan(sender: UIPanGestureRecognizer) {
+    func pan(_ sender: UIPanGestureRecognizer) {
         guard let selectedIndexPath = selectedIndexPath, let container = selectedContainer else { return }
         
         move(container, atIndexPath: selectedIndexPath, by: sender)
     }
     
-    func rotation(sender: UIRotationGestureRecognizer) {
+    func rotation(_ sender: UIRotationGestureRecognizer) {
         guard let selectedIndexPath = selectedIndexPath, let container = selectedContainer else { return }
         
         rotate(container, atIndexPath: selectedIndexPath, by: sender)
     }
     
-    func pinch(sender: UIPinchGestureRecognizer) {
+    func pinch(_ sender: UIPinchGestureRecognizer) {
         guard let selectedIndexPath = selectedIndexPath, let container = selectedContainer else { return }
         
         resize(container, atIndexPath: selectedIndexPath, by: sender)
     }
     
-    func doubleTap(sender: UITapGestureRecognizer) {
+    func doubleTap(_ sender: UITapGestureRecognizer) {
         guard let selectedIndexPath = selectedIndexPath, let container = selectedContainer else { return }
         
         showModifyViewControllerWith(container, atIndexPath: selectedIndexPath)
@@ -233,23 +233,23 @@ class EditViewController: UIViewController {
 // MARK: - Actions 
 extension EditViewController {
     
-    @IBAction func cancelAction(sender: AnyObject) {
+    @IBAction func cancelAction(_ sender: AnyObject) {
 //        let alert = alert_EditorDismiss{[weak self] in self?.dismissViewControllerAnimated(true, completion: nil)}
 //        presentViewController(alert, animated: true, completion: nil)
         
         showPhotos()
     }
     
-    @IBAction func publish(sender: AnyObject) {
+    @IBAction func publish(_ sender: AnyObject) {
         showPublishViewController()
     }
-    @IBAction func previewAll(sender: AnyObject) {
+    @IBAction func previewAll(_ sender: AnyObject) {
         
         beganPreviewForAll(true)
         
     }
     
-    @IBAction func preview(sender: AnyObject?) {
+    @IBAction func preview(_ sender: AnyObject?) {
         
         beganPreviewForAll(false)
         
@@ -259,7 +259,7 @@ extension EditViewController {
 // MARK: - Logics
 extension EditViewController {
     
-    func beganPreviewForAll(playAll: Bool) {
+    func beganPreviewForAll(_ playAll: Bool) {
         
         let animationID: String?
         
@@ -290,30 +290,30 @@ extension EditViewController {
             }
         }
         preController.imageRetriver = retriver
-        let v = view.snapshotViewAfterScreenUpdates(true)
-        preController.view.insertSubview(v, atIndex: 0)
+        let v = view.snapshotView(afterScreenUpdates: true)
+        preController.view.insertSubview(v!, at: 0)
         
-        let center = canvasViewController.view.convertPoint(canvasViewController.view.center, toView: view)
+        let center = canvasViewController.view.convert(canvasViewController.view.center, to: view)
         preController.targetCenter = center
         
-        presentViewController(preController, animated: false) {
+        present(preController, animated: false) {
         }
     }
     
     func selectBottomContainer() {
         if page.containers.count > 0 {
-            canvasViewController.selectAt(NSIndexPath(forItem: 0, inSection: 0))
+            canvasViewController.selectAt(IndexPath(item: 0, section: 0))
         }
     }
     
     func selectTopContainer() {
         let count = page.containers.count
         if count > 0 {
-            canvasViewController.selectAt(NSIndexPath(forItem: count - 1, inSection: 0))
+            canvasViewController.selectAt(IndexPath(item: count - 1, section: 0))
         }
     }
     
-    func insertImage(s: UIImage, filteredImage: UIImage?, size: CGSize) -> UIImage {
+    func insertImage(_ s: UIImage, filteredImage: UIImage?, size: CGSize) -> UIImage {
         
         let ID = CTAIDGenerator.fileID()
         let imageName = document.resourcePath + ID + ".jpg"
@@ -330,7 +330,7 @@ extension EditViewController {
         
 //        CATransaction.begin()
 //        CATransaction.setDisableActions(true)
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+        DispatchQueue.main.async { [weak self] in
             if let strongSelf = self {
                 strongSelf.canvasViewController.reloadSection()
                 strongSelf.selectBottomContainer()
@@ -344,7 +344,7 @@ extension EditViewController {
 //        CATransaction.commit()
     }
     
-    func addImage(s: UIImage, size: CGSize) {
+    func addImage(_ s: UIImage, size: CGSize) {
         
         let ID = CTAIDGenerator.fileID()
         let imageName = document.resourcePath + ID + ".jpg"
@@ -354,35 +354,35 @@ extension EditViewController {
         
         page.append(imgContainer)
         let count = page.containers.count
-        dispatch_async(dispatch_get_main_queue()) {
-            self.canvasViewController.insertAt(NSIndexPath(forItem: count - 1, inSection: 0))
+        DispatchQueue.main.async {
+            self.canvasViewController.insertAt(IndexPath(item: count - 1, section: 0))
         }
     }
     
-    func addText(s: String = "") {
+    func addText(_ s: String = "") {
         
         let textContainer = EditorFactory.generateTextContainer(page.width, pageHeigh: page.height, text:s)
         
         page.append(textContainer)
         let count = page.containers.count
         
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+        DispatchQueue.main.async { [weak self] in
             if let strongSelf = self {
-                strongSelf.canvasViewController.insertAt(NSIndexPath(forItem: count - 1, inSection: 0))
+                strongSelf.canvasViewController.insertAt(IndexPath(item: count - 1, section: 0))
                 strongSelf.selectTopContainer()
 //                strongSelf.showTopContainerModifyViewController()
             }
         }
     }
     
-    func move(container: ContainerVMProtocol, atIndexPath indexPath: NSIndexPath, by sender: UIPanGestureRecognizer) {
+    func move(_ container: ContainerVMProtocol, atIndexPath indexPath: IndexPath, by sender: UIPanGestureRecognizer) {
         
-        let translation = sender.translationInView(sender.view)
+        let translation = sender.translation(in: sender.view)
         
         switch sender.state {
-        case .Began:
+        case .began:
             tempValues.beganPosition = container.center
-        case .Changed:
+        case .changed:
             let beganPosition = tempValues.beganPosition
             let nextPosition = CGPoint(x: beganPosition.x + translation.x, y: beganPosition.y + translation.y)
             
@@ -409,21 +409,21 @@ extension EditViewController {
             container.center = targetPosition
             canvasViewController.updateAt(indexPath)
             
-        case .Ended:
+        case .ended:
             ()
         default:
             ()
         }
     }
     
-    func rotate(container: ContainerVMProtocol, atIndexPath indexPath: NSIndexPath, by sender: UIRotationGestureRecognizer) {
+    func rotate(_ container: ContainerVMProtocol, atIndexPath indexPath: IndexPath, by sender: UIRotationGestureRecognizer) {
         let rotRadian = sender.rotation
         
         switch sender.state {
-        case .Began:
+        case .began:
             tempValues.beganRadian = CGFloat(container.radius)
             
-        case .Changed:
+        case .changed:
             
             let nextRotation: CGFloat
             if tempValues.beganRadian + rotRadian < 0 {
@@ -472,7 +472,7 @@ extension EditViewController {
             canvasViewController.updateAt(indexPath)
             selectorViewController.updateIfNeed()
             
-        case .Ended:
+        case .ended:
             ()
             
         default:
@@ -480,16 +480,16 @@ extension EditViewController {
         }
     }
     
-    func resize(container: ContainerVMProtocol, atIndexPath indexPath: NSIndexPath, by sender: UIPinchGestureRecognizer) {
+    func resize(_ container: ContainerVMProtocol, atIndexPath indexPath: IndexPath, by sender: UIPinchGestureRecognizer) {
         
         let scale = sender.scale
         
         switch sender.state {
-        case .Began:
+        case .began:
             tempValues.beganScale = container.scale
             tempValues.oldScale = container.scale
             
-        case .Changed:
+        case .changed:
 //            let nextScale = scale * tempValues.beganScale
             let nextScale = max(scale * tempValues.beganScale, 0.2)
             
@@ -511,7 +511,7 @@ extension EditViewController {
                 selectorViewController.updateIfNeed()
             }
             
-        case .Ended:
+        case .ended:
             ()
         default:
             ()
@@ -523,16 +523,16 @@ extension EditViewController {
             return
         }
         
-        let indexPath = NSIndexPath(forItem: page.containerVMs.count - 1, inSection: 0)
+        let indexPath = IndexPath(item: page.containerVMs.count - 1, section: 0)
         showModifyViewControllerWith(topContainer, atIndexPath: indexPath)
     }
     
-    func showModifyViewControllerWith(container: ContainerVMProtocol, atIndexPath indexPath: NSIndexPath) {
+    func showModifyViewControllerWith(_ container: ContainerVMProtocol, atIndexPath indexPath: IndexPath) {
         
         switch container.type {
             
-        case .Text:
-            let textmodifyVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("TextModifyViewController") as! CTATextModifyViewController
+        case .text:
+            let textmodifyVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewController(withIdentifier: "TextModifyViewController") as! CTATextModifyViewController
             let textElement = (container as! TextContainerVMProtocol).textElement!
             textmodifyVC.beganWith(textElement.isEmpty ? "" : textElement.texts, attributes: textElement.textAttributes)
             
@@ -546,9 +546,9 @@ extension EditViewController {
                 }
             }
             
-            presentViewController(textmodifyVC, animated: true, completion: {})
+            present(textmodifyVC, animated: true, completion: {})
             
-        case .Image:
+        case .image:
             ()
 //            let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
 //            
@@ -633,7 +633,7 @@ extension EditViewController {
     
     func showPublishViewController() {
         
-        let publishViewController = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("PublishViewController") as! CTAPublishViewController
+        let publishViewController = UIStoryboard(name: "Editor", bundle: nil).instantiateViewController(withIdentifier: "PublishViewController") as! CTAPublishViewController
         
         
         let cleanPage = page.cleanEmptyContainers()
@@ -654,7 +654,7 @@ extension EditViewController {
                 return
             }
             
-            strongSelf.navigationController?.popViewControllerAnimated(true)
+            strongSelf.navigationController?.popViewController(animated: true)
         }
         
         
@@ -671,23 +671,23 @@ extension EditViewController {
 
     }
     
-    func beganGeneratePublishIconAndPublishWith(aPage: CTAPage) {
-        draw(aPage, atBegan: true, baseURL: document.imagePath, imageAccess: document.imageBy ,local: true) { [weak self] (r) in
+    func beganGeneratePublishIconAndPublishWith(_ aPage: CTAPage) {
+        draws(aPage, atBegan: true, baseURL: document.imagePath, imageAccess: document.imageBy ,local: true) { [weak self] (r) in
             guard let strongSelf = self else { return }
             
             switch r {
-            case .Success(let image):
+            case .success(let image):
                 
-                draw(aPage, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.imageBy ,local: true) { [weak self] (previewR) in
+                draws(aPage, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.imageBy ,local: true) { [weak self] (previewR) in
                     guard let sf = self else { return }
                     
                     var previewImage: UIImage?
                     var previewName = ""
                     
                     switch previewR {
-                    case .Success(let apreviewImage):
+                    case .success(let apreviewImage):
                         previewImage = apreviewImage
-                    case .Failure():
+                    case .failure():
                         ()
                     }
                     
@@ -703,14 +703,14 @@ extension EditViewController {
                     
                     CTADocumentManager.saveDoucment {[weak self] (success) -> Void in
                         
-                        if let strongSelf = self where success {
+                        if let strongSelf = self, success {
                             
                             CTADocumentManager.uploadFiles({ (publishID, progress) in
                                 SVProgressHUD.showProgress(progress, status: "\(Int(progress * 100.0))%")
                                 }, completedBlock: { (success, publishID, publishURL) in
                                     if !success {
-                                        dispatch_async(dispatch_get_main_queue(), {
-                                            SVProgressHUD.showErrorWithStatus(LocalStrings.PublishFailure.description)
+                                        DispatchQueue.main.async(execute: {
+                                            SVProgressHUD.showError(withStatus: LocalStrings.publishFailure.description)
                                         })
                                         
                                         return
@@ -721,10 +721,10 @@ extension EditViewController {
                                     
                                     CTAPublishDomain().createPublishFile(publishID, userID: CTAUserManager.user!.userID, title: "", publishDesc: "", publishIconURL: publishIconURL, previewIconURL: previewURL, publishURL: publishURL, compelecationBlock: { (domainInfo) -> Void in
                                         
-                                        dispatch_async(dispatch_get_main_queue(), {
+                                        DispatchQueue.main.async(execute: {
                                             SVProgressHUD.dismiss()
                                             strongSelf.delegate?.EditControllerDidPublished(strongSelf)
-                                            strongSelf.dismissViewControllerAnimated(true, completion: {
+                                            strongSelf.dismiss(animated: true, completion: {
                                                 
                                             })
                                         })
@@ -743,9 +743,9 @@ extension EditViewController {
     }
     
     func showPhotos() {
-        let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewControllerWithIdentifier("ImagePickerViewController") as! ImagePickerViewController
+        let cameraVC = UIStoryboard(name: "ImagePicker", bundle: nil).instantiateViewController(withIdentifier: "ImagePickerViewController") as! ImagePickerViewController
         
-        let indexPath = NSIndexPath(forItem: 0, inSection: 0)
+        let indexPath = IndexPath(item: 0, section: 0)
         let container = canvasViewController.containerAt(indexPath)
         
         let cleanPage = page.cleanEmptyContainers()
@@ -757,7 +757,7 @@ extension EditViewController {
         cameraVC.didSelectedImageHandler = {[weak self, weak container, weak cameraVC] (image, backgroundColor, identifier) in
             if let strongSelf = self {
                 self?.selectedImageIdentifier = identifier
-                dispatch_async(dispatch_get_main_queue(), {[weak cameraVC] in
+                DispatchQueue.main.async(execute: {[weak cameraVC] in
                     let hex = backgroundColor.toHex().0
                     strongSelf.page.changeBackColor(hex)
                     strongSelf.canvasViewController.changeBackgroundColor(backgroundColor)
@@ -774,22 +774,22 @@ extension EditViewController {
                     
                     self?.applyCurrentFilter(toImage: image, completion: { (filteredImg) in
                         self?.document.storeCacheResource(UIImageJPEGRepresentation(filteredImg, 1)!, withName: name)
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                             self?.canvasViewController.updateAt(indexPath, updateContents: true)
                         })
                         }, fail: { (originImg) in
-                            dispatch_async(dispatch_get_main_queue(), {
+                            DispatchQueue.main.async(execute: {
                                 self?.canvasViewController.updateAt(indexPath, updateContents: true)
                             })
                     })
 
-                    draw(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.resourceImageBy ,local: true) { [weak self, cameraVC] (previewR) in
+                    draws(strongSelf.page, atBegan: false, baseURL: strongSelf.document.imagePath, imageAccess: strongSelf.document.resourceImageBy ,local: true) { [weak self, cameraVC] (previewR) in
                         
                         switch previewR {
-                        case .Success(let img):
-                            dispatch_async(dispatch_get_main_queue(), {
+                        case .success(let img):
+                            DispatchQueue.main.async(execute: {
                                 self?.selectorViewController.updateSnapshotImage(img)
-                                UIView.animateWithDuration(0.3, animations: {[weak cameraVC] in
+                                UIView.animate(withDuration: 0.3, animations: {[weak cameraVC] in
                                     cameraVC?.view.alpha = 0
                                     }, completion: {[weak cameraVC] (success) in
                                         cameraVC?.view.removeFromSuperview()
@@ -797,12 +797,12 @@ extension EditViewController {
                                     })
                             })
                         default:
-                            dispatch_async(dispatch_get_main_queue(), {
+                            DispatchQueue.main.async(execute: {
                                 self?.selectorViewController.updateSnapshotImage(image)
                                 self?.selectorViewController.updatePreImage(image)
                                 
                                 
-                                UIView.animateWithDuration(0.3, animations: {[weak cameraVC] in
+                                UIView.animate(withDuration: 0.3, animations: {[weak cameraVC] in
                                     cameraVC?.view.alpha = 0
                                     }, completion: {[weak cameraVC] (success) in
                                         cameraVC?.view.removeFromSuperview()
@@ -818,17 +818,17 @@ extension EditViewController {
         addChildViewController(cameraVC)
         view.addSubview(cameraVC.view)
         cameraVC.view.alpha = 0
-        UIView.animateWithDuration(0.3) {[weak cameraVC] in
+        UIView.animate(withDuration: 0.3, animations: {[weak cameraVC] in
             cameraVC?.view.alpha = 1
-        }
+        }) 
     }
     
-    private func applyCurrentFilter(toImage image: UIImage, completion:((UIImage)->())?, fail:((UIImage) -> ())?) {
+    fileprivate func applyCurrentFilter(toImage image: UIImage, completion:((UIImage)->())?, fail:((UIImage) -> ())?) {
         if let f = filter {
             if f.data != nil {
                 f.createImage(from: image){completion?($0)}
             } else {
-                let bundle = NSBundle.mainBundle().bundleURL
+                let bundle = Bundle.main.bundleURL
                 f.createData(fromColorDirAt: bundle, filtering: image){completion?($0)}
             }
         } else {
@@ -861,7 +861,7 @@ extension EditViewController: CTATabViewControllerDataSource, CTATabViewControll
     // MARK: - DataSource
     
     func tabViewControllerNumberOfItems(
-        viewController: CTATabViewController)
+        _ viewController: CTATabViewController)
         -> Int {
             guard let selectedContainer = selectedContainer else {
                 return 0
@@ -869,10 +869,10 @@ extension EditViewController: CTATabViewControllerDataSource, CTATabViewControll
             
             switch selectedContainer {
                 
-                case let s where s.type == .Text:
+                case let s where s.type == .text:
                 return CTABarItemsFactory.textSelectorItems.count
                 
-            case let s where s.type == .Image:
+            case let s where s.type == .image:
                 return CTABarItemsFactory.imgSelectorItems.count
                 
             default:
@@ -881,16 +881,16 @@ extension EditViewController: CTATabViewControllerDataSource, CTATabViewControll
     }
     
     func tabViewController(
-        viewController: CTATabViewController,
-        tabItemAtIndexPath indexPath: NSIndexPath)
+        _ viewController: CTATabViewController,
+        tabItemAtIndexPath indexPath: IndexPath)
         -> CTABarItem {
             
             switch selectedContainer! {
                 
-            case let s where s.type == .Text:
+            case let s where s.type == .text:
                 return CTABarItemsFactory.textSelectorItems[indexPath.item]
                 
-            case let s where s.type == .Image:
+            case let s where s.type == .image:
                 return CTABarItemsFactory.imgSelectorItems[indexPath.item]
                 
             default:
@@ -902,9 +902,9 @@ extension EditViewController: CTATabViewControllerDataSource, CTATabViewControll
     
     // MARK: - Delegate
     
-    func tabViewController(ViewController: CTATabViewController, didChangedToIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
+    func tabViewController(_ ViewController: CTATabViewController, didChangedToIndexPath indexPath: IndexPath, oldIndexPath: IndexPath?) {
         
-        guard let container = selectedContainer where container.featureTypes.count > 0 else {
+        guard let container = selectedContainer, container.featureTypes.count > 0 else {
             return
         }
         
@@ -946,30 +946,30 @@ extension EditViewController: CTATabViewControllerDataSource, CTATabViewControll
 extension EditViewController: CanvasViewControllerDataSource, CanvasViewControllerDelegate {
     
     // MARK: - DataSource
-    func canvasViewControllerNumberOfContainers(viewcontroller: CTACanvasViewController) -> Int {
+    func canvasViewControllerNumberOfContainers(_ viewcontroller: CTACanvasViewController) -> Int {
         return page.containers.count
     }
     
-    func canvasViewControllerContainerAtIndexPath(indexPath: NSIndexPath) -> ContainerVMProtocol {
+    func canvasViewControllerContainerAtIndexPath(_ indexPath: IndexPath) -> ContainerVMProtocol {
         return page.containerVMs[indexPath.item]
     }
     
     // MARK: - Delegate
-    func canvasViewController(viewCOntroller: CTACanvasViewController, didSelectedIndexPath indexPath: NSIndexPath) {
+    func canvasViewController(_ viewCOntroller: CTACanvasViewController, didSelectedIndexPath indexPath: IndexPath) {
         let hadSelected = selectedContainer != nil ? true : false
         let preType = selectorViewController.currentType
         let preCon = selectedContainer?.type
         selectedIndexPath = indexPath
         let nextCon = selectedContainer?.type
         if (preCon != nextCon) { // need update tab
-           let nextIndex = selectedContainer?.featureTypes.indexOf(preType) ?? 0
+           let nextIndex = selectedContainer?.featureTypes.index(of: preType) ?? 0
             tabViewController.refreshItemIfNeed()
             
-            if let attri = self.tabViewController.collectionView.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: nextIndex, inSection: 0)) {
+            if let attri = self.tabViewController.collectionView.layoutAttributesForItem(at: IndexPath(item: nextIndex, section: 0)) {
                 let cener = attri.center
                 tabViewController.changingContainer = hadSelected ? true : false
                 self.tabViewController.collectionView.setContentOffset(CGPoint(x: cener.x - self.tabViewController.collectionView.bounds.width / 2.0, y: 0), animated: false)
-                dispatch_async(dispatch_get_main_queue(), {[weak self] in
+                DispatchQueue.main.async(execute: {[weak self] in
                     self?.tabViewController.changingContainer = false
                     
                 })
@@ -979,18 +979,18 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
         selectorViewController.updateSelector()
     }
     
-    func canvasViewControllerWillDeleted(viewController: CTACanvasViewController) {
+    func canvasViewControllerWillDeleted(_ viewController: CTACanvasViewController) {
         
         guard let aselectedIndexPath = selectedIndexPath else { return }
         
         let next = aselectedIndexPath.item > 0 ? aselectedIndexPath.item - 1 : 0
         selectedIndexPath = nil
-        canvasViewController.showOverlayAndSelectedAt(NSIndexPath(forItem: next, inSection: 0))
+        canvasViewController.showOverlayAndSelectedAt(IndexPath(item: next, section: 0))
         page.removeAt(aselectedIndexPath.item)
         canvasViewController.removeAt(aselectedIndexPath)
     }
     
-    func canvasViewControllerWillShowNeedShadowAndNeedStroke(viewController: CTACanvasViewController) -> (shadow: Bool, stroke: Bool)? {
+    func canvasViewControllerWillShowNeedShadowAndNeedStroke(_ viewController: CTACanvasViewController) -> (shadow: Bool, stroke: Bool)? {
         guard
             let container = selectedContainer as? TextContainerVMProtocol,
             let textElement = container.textElement else {
@@ -999,7 +999,7 @@ extension EditViewController: CanvasViewControllerDataSource, CanvasViewControll
         return (textElement.needShadow, textElement.needStroke)
     }
     
-    func canvasViewControllerWillChanged(needShadow: Bool, needStroke: Bool) {
+    func canvasViewControllerWillChanged(_ needShadow: Bool, needStroke: Bool) {
         shadowAndStrokeDidChanged(needShadow, needStroke: needStroke)
     }
 }
@@ -1012,18 +1012,18 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     }
     
     // MARK: - DataSource
-    func selectorsViewControllerContainer(viewcontroller: CTASelectorsViewController) -> ContainerVMProtocol? {
+    func selectorsViewControllerContainer(_ viewcontroller: CTASelectorsViewController) -> ContainerVMProtocol? {
         return selectedContainer
     }
     
-    func selectorsViewControllerAnimation(ViewController: CTASelectorsViewController) -> CTAAnimationBinder? {
+    func selectorsViewControllerAnimation(_ ViewController: CTASelectorsViewController) -> CTAAnimationBinder? {
         
         return animation
     }
     
-    func selectorsViewController(viewController: CTASelectorsViewController, needChangedFromSelectorType type: CTAContainerFeatureType) -> CTAContainerFeatureType {
+    func selectorsViewController(_ viewController: CTASelectorsViewController, needChangedFromSelectorType type: CTAContainerFeatureType) -> CTAContainerFeatureType {
         
-        guard let container = selectedContainer where container.featureTypes.count > 0 else {
+        guard let container = selectedContainer, container.featureTypes.count > 0 else {
             return type
         }
         
@@ -1034,14 +1034,14 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         }
     }
     
-    func selectorsViewControllerFilter(ViewController: CTASelectorsViewController) -> Int {
+    func selectorsViewControllerFilter(_ ViewController: CTASelectorsViewController) -> Int {
         return filterManager.filterIndex(byName: page.filterName)
     }
     
     // MARK: - Delegate
     
     // MARK: - AlphaChanged
-    func alphaDidChanged(alpha: CGFloat) {
+    func alphaDidChanged(_ alpha: CGFloat) {
         guard
             let selectedIndexPath = selectedIndexPath,
             let container = selectedContainer else {
@@ -1053,7 +1053,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     }
     
     // MARK: - ScaleChanged
-    func scaleDidChanged(scale: CGFloat) {
+    func scaleDidChanged(_ scale: CGFloat) {
         guard
             let selectedIndexPath = selectedIndexPath,
             let container = selectedContainer else {
@@ -1069,7 +1069,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     }
     
     // MARK: - RadianChanged
-    func radianDidChanged(radian: CGFloat) {
+    func radianDidChanged(_ radian: CGFloat) {
         guard
             let selectedIndexPath = selectedIndexPath,
             let container = selectedContainer else {
@@ -1079,7 +1079,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         
         
         if radian <= 0 {
-            aradian = CGFloat(2 * M_PI) - fabs(radian) % CGFloat(2 * M_PI)
+            aradian = CGFloat(2 * M_PI) - fabs(radian).truncatingRemainder(dividingBy: CGFloat(2 * M_PI))
         } else if radian >= CGFloat(2 * M_PI) {
             aradian = radian - CGFloat(2 * M_PI)
         }else {
@@ -1091,7 +1091,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     }
     
     // MARK: - Font Changed
-    func fontDidChanged(fontFamily: String, fontName: String) {
+    func fontDidChanged(_ fontFamily: String, fontName: String) {
         guard
             let selectedIndexPath = selectedIndexPath,
             let container = selectedContainer as? TextContainerVMProtocol else {
@@ -1108,7 +1108,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     }
     
     // MARK: - Alignment Changed
-    func alignmentDidChanged(alignment: NSTextAlignment) {
+    func alignmentDidChanged(_ alignment: NSTextAlignment) {
         guard
             let selectedIndexPath = selectedIndexPath,
             let container = selectedContainer as? TextContainerVMProtocol else {
@@ -1121,7 +1121,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     }
     
     // MARK: - Shadow and Stroke Changed
-    func shadowAndStrokeDidChanged(needShadow: Bool, needStroke: Bool) {
+    func shadowAndStrokeDidChanged(_ needShadow: Bool, needStroke: Bool) {
         guard
             let selectedIndexPath = selectedIndexPath,
             let container = selectedContainer as? TextContainerVMProtocol else {
@@ -1133,7 +1133,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     }
     
     // MARK: - Spacing Changed
-    func spacingDidChanged(lineSpacing: CGFloat, textSpacing: CGFloat) {
+    func spacingDidChanged(_ lineSpacing: CGFloat, textSpacing: CGFloat) {
         guard
             let selectedIndexPath = selectedIndexPath,
             let container = selectedContainer as? TextContainerVMProtocol else {
@@ -1150,7 +1150,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     }
     
     // MARK: - Color Changed
-    func colorDidChanged(item: CTAColorItem) {
+    func colorDidChanged(_ item: CTAColorItem) {
         guard
             let selectedIndexPath = selectedIndexPath,
             let container = selectedContainer as? TextContainerVMProtocol else {
@@ -1165,23 +1165,23 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     }
     
     // MARK: - template Changed
-    func templateDidChanged(pageData: NSData?, origin: Bool) {
+    func templateDidChanged(_ pageData: Data?, origin: Bool) {
         if origin == false {
             if useTemplate == false {
                 originPage = CTAPage(containers: page.containers, anis: page.animatoins, filterName: page.filterName)
                 originPage?.changeBackColor(page.backgroundColor)
                 useTemplate = true
             }
-            if let data = pageData, let apage = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
+            if let data = pageData, let apage = NSKeyedUnarchiver.unarchiveObject(with: data) as? CTAPage {
                 apage.removeLastImageContainer()
                 page.replaceBy(template: apage)
 //                canvasViewController.changeBackgroundColor(UIColor(hexString: apage.backgroundColor)!)
 
-            dispatch_async(dispatch_get_main_queue(), {[weak self] in
+            DispatchQueue.main.async(execute: {[weak self] in
                 self?.beganPreviewForAll(true)
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self?.canvasViewController.reloadSection()
-                    self?.canvasViewController.setSelectedItemAt(indexPath: NSIndexPath(forItem: 0, inSection: 0))
+                    self?.canvasViewController.setSelectedItemAt(indexPath: IndexPath(item: 0, section: 0))
                 })
             })
             }
@@ -1194,8 +1194,8 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
                     canvasViewController.changeBackgroundColor(UIColor(hexString: apage.backgroundColor)!)
                     canvasViewController.reloadSection()
                     
-                    dispatch_async(dispatch_get_main_queue(), { 
-                        self.canvasViewController.setSelectedItemAt(indexPath: NSIndexPath(forItem: 0, inSection: 0))
+                    DispatchQueue.main.async(execute: { 
+                        self.canvasViewController.setSelectedItemAt(indexPath: IndexPath(item: 0, section: 0))
                     })
                 }
             }
@@ -1204,7 +1204,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     }
     
     // MARK: - Filter Changed
-    func filterDidChanged(filterName: String) {
+    func filterDidChanged(_ filterName: String) {
         if let filter = (filterManager.filters.filter{$0.name == filterName}).first {
             self.filter = filter
             self.page.changeFilterName(filter.name)
@@ -1227,21 +1227,21 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
             if let data = filter.data {
                     filter.createImage(from: image, complation: {[weak self, weak filter] (img) in
                         
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                                 filter?.data = nil
                             self?.document.storeCacheResource(UIImageJPEGRepresentation(img, 1)!, withName: name)
-                            dispatch_async(dispatch_get_main_queue(), {
+                            DispatchQueue.main.async(execute: {
                                 self?.canvasViewController.updateAt(selectedIndexPath, updateContents: true)
                             })
                         })
                         })
             } else {
-                let bundle = NSBundle.mainBundle().bundleURL
+                let bundle = Bundle.main.bundleURL
                     filter.createData(fromColorDirAt: bundle, filtering: image, complation: { [weak self, weak filter] (filteredIamge) in
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                                 filter?.data = nil
                             self?.document.storeCacheResource(UIImageJPEGRepresentation(filteredIamge, 1)!, withName: name)
-                            dispatch_async(dispatch_get_main_queue(), {
+                            DispatchQueue.main.async(execute: {
                                 self?.canvasViewController.updateAt(selectedIndexPath, updateContents: true)
                             })
                         })
@@ -1255,38 +1255,38 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
     
     
     // MARK: - Animation Changed
-    func animationDurationDidChanged(t: CGFloat) {
+    func animationDurationDidChanged(_ t: CGFloat) {
         guard var animation = animation else {
             return
         }
         animation.duration = Float(t)
     }
     
-    func animationDelayDidChanged(t: CGFloat) {
+    func animationDelayDidChanged(_ t: CGFloat) {
         guard var animation = animation else {
             return
         }
         animation.delay = Float(t)
     }
     
-    func animationWillBeDeleted(completedBlock:(() -> ())?) {
+    func animationWillBeDeleted(_ completedBlock:(() -> ())?) {
         
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+        DispatchQueue.main.async { [weak self] in
             
             guard let strongSelf = self else {
                 return
             }
             
-            if let animation = strongSelf.animation, let index = (strongSelf.page.animationBinders.indexOf {$0.iD == animation.iD}) {
+            if let animation = strongSelf.animation, let index = (strongSelf.page.animationBinders.index {$0.iD == animation.iD}) {
                 strongSelf.page.removeAnimationAtIndex(index) {
                     completedBlock?()
                 }
             }
         }
     }
-    func animationWillBeInserted(a: CTAAnimationName, completedBlock:(() -> ())?) {
+    func animationWillBeInserted(_ a: CTAAnimationName, completedBlock:(() -> ())?) {
         
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+        DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else {
                 return
             }
@@ -1302,7 +1302,7 @@ extension EditViewController: CTASelectorsViewControllerDataSource, CTASelectorV
         }
     }
     
-    func animationWillChanged(a: CTAAnimationName) {
+    func animationWillChanged(_ a: CTAAnimationName) {
         
         if var animation = animation {
             animation.updateAnimationName(a)

@@ -12,7 +12,7 @@ class CTADomainListInfo {
     let result:Bool
     var modelArray:Array<AnyObject>?
     var modelDic:Dictionary<String, String>?
-    var errorType:ErrorType?
+    var errorType:Error?
     var successType:Int?
     
     init(result:Bool, modelArray:Array<AnyObject>, successType:Int){
@@ -32,7 +32,7 @@ class CTADomainListInfo {
         self.successType = successType
     }
     
-    init(result:Bool, errorType:ErrorType){
+    init(result:Bool, errorType:Error){
         self.result    = result
         self.errorType = errorType
     }

@@ -16,7 +16,7 @@ final class CTAPreviewPlay {
         self.animations = animations
     }
     
-    func playAt(time: CFTimeInterval) {
+    func playAt(_ time: CFTimeInterval) {
         
     }
 }

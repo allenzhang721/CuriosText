@@ -29,8 +29,8 @@ class ContentImageCell: ContentCell {
         setup()
     }
     
-    private func setup() {
-        backgroundColor = UIColor.clearColor()
+    fileprivate func setup() {
+        backgroundColor = UIColor.clear
         contentView.addSubview(imageView)
     }
     

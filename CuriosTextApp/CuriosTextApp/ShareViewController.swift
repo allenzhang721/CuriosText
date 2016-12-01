@@ -11,8 +11,8 @@ import FLAnimatedImage
 
 class ShareViewController: UIViewController {
     
-    var imageURL: NSURL?
-    var completedHandler: ((imageData: NSData?, text: String) -> ())?
+    var imageURL: URL?
+    var completedHandler: ((_ imageData: Data?, _ text: String) -> ())?
     var dismissHandler:(() -> ())?
     
     var sending = false
@@ -20,13 +20,13 @@ class ShareViewController: UIViewController {
     let normalAttributes: [String: AnyObject] = {
        
         var a = [String: AnyObject]()
-        a[NSFontAttributeName] = UIFont.systemFontOfSize(14)
+        a[NSFontAttributeName] = UIFont.systemFont(ofSize: 14)
         
         let para = NSMutableParagraphStyle()
         para.lineSpacing = 3
         
         a[NSParagraphStyleAttributeName] = para
-        a[NSForegroundColorAttributeName] = UIColor.blackColor()
+        a[NSForegroundColorAttributeName] = UIColor.black
         
         return a
     }()
@@ -34,13 +34,13 @@ class ShareViewController: UIViewController {
     let selectedAttributes: [String: AnyObject] = {
         
         var a = [String: AnyObject]()
-        a[NSFontAttributeName] = UIFont.systemFontOfSize(14)
+        a[NSFontAttributeName] = UIFont.systemFont(ofSize: 14)
         
         let para = NSMutableParagraphStyle()
         para.lineSpacing = 3
         
         a[NSParagraphStyleAttributeName] = para
-        a[NSForegroundColorAttributeName] = UIColor.redColor()
+        a[NSForegroundColorAttributeName] = UIColor.red
         
         return a
     }()
@@ -50,7 +50,7 @@ class ShareViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var lengthLabel: UILabel!
     
-    class func viewControllerWith(imageURL: NSURL?, completedHandler: ((imageData: NSData?, text: String) -> ())?, dismissHandler:(() -> ())?) -> ShareViewController {
+    class func viewControllerWith(_ imageURL: URL?, completedHandler: ((_ imageData: Data?, _ text: String) -> ())?, dismissHandler:(() -> ())?) -> ShareViewController {
         
         let v = UIStoryboard(name: "Share", bundle: nil).instantiateInitialViewController() as! ShareViewController
         v.imageURL = imageURL
@@ -64,7 +64,7 @@ class ShareViewController: UIViewController {
         setup()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         textView.becomeFirstResponder()
     }
     
@@ -73,14 +73,14 @@ class ShareViewController: UIViewController {
 //        imageURL = url
         
         if let imageURL = imageURL {
-            let image = FLAnimatedImage(animatedGIFData: NSData(contentsOfURL: imageURL))
+            let image = FLAnimatedImage(animatedGIFData: try? Data(contentsOf: imageURL))
             imageView.animatedImage = image
         }
         
         textView.delegate = self
         textView.text = "#Curios奇思#"
         let alength = textView.attributedText.length
-        let attr = [NSForegroundColorAttributeName: alength > 140 ? UIColor.redColor() : UIColor.lightGrayColor()]
+        let attr = [NSForegroundColorAttributeName: alength > 140 ? UIColor.red : UIColor.lightGray]
         lengthLabel.attributedText = NSAttributedString(string: "0", attributes: attr)
     }
 }
@@ -88,7 +88,7 @@ class ShareViewController: UIViewController {
 // MARK: - Actions
 extension ShareViewController {
     
-    @IBAction func doneAction(sender: AnyObject) {
+    @IBAction func doneAction(_ sender: AnyObject) {
         
         guard sending == false else { return }
         sending = true
@@ -96,42 +96,42 @@ extension ShareViewController {
         textView.resignFirstResponder()
         
         let length = textView.attributedText.length
-        let subString = textView.attributedText.attributedSubstringFromRange(NSMakeRange(0, length > 140 ? 140 : length)).string
-        let data: NSData?
+        let subString = textView.attributedText.attributedSubstring(from: NSMakeRange(0, length > 140 ? 140 : length)).string
+        let data: Data?
         if let url = imageURL {
-            data = NSData(contentsOfURL: url)
+            data = try? Data(contentsOf: url)
         } else {
             data = nil
         }
         
-        completedHandler?(imageData: data, text: subString)
+        completedHandler?(data, subString)
     }
     
     
-    @IBAction func cancelAction(sender: AnyObject) {
+    @IBAction func cancelAction(_ sender: AnyObject) {
         if let d = dismissHandler {
             d()
         } else {
-            dismissViewControllerAnimated(true, completion: nil)
+            dismiss(animated: true, completion: nil)
         }
     }
 }
 
 extension ShareViewController: UITextViewDelegate {
     
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
 
         if textView.markedTextRange == nil {
         let alength = textView.attributedText.length
-        let attr = [NSForegroundColorAttributeName: alength > 140 ? UIColor.redColor() : UIColor.lightGrayColor()]
+        let attr = [NSForegroundColorAttributeName: alength > 140 ? UIColor.red : UIColor.lightGray]
         lengthLabel.attributedText = NSAttributedString(string: "\(alength)", attributes: attr)
             
-            shareButton.enabled = true
+            shareButton.isEnabled = true
         }
         
-        guard let attributeText = textView.attributedText where attributeText.length > 140 && textView.markedTextRange == nil else { return }
+        guard let attributeText = textView.attributedText, attributeText.length > 140 && textView.markedTextRange == nil else { return }
         
-        shareButton.enabled = false
+        shareButton.isEnabled = false
         
 //        let attributes = [NSFontAttributeName]
         

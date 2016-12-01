@@ -12,8 +12,8 @@ import SwiftyJSON
 
 protocol CTABaseModel {
     
-    static func generateFrom(json: JSON) throws -> Self
+    static func generateFrom(_ json: JSON) throws -> Self
     func save() throws
-    func getData() -> [String: AnyObject]
+    func getData() -> [String: Any]
 }
     

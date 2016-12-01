@@ -5,7 +5,15 @@ A powerful, protocol-oriented library for working with the keychain in Swift.
 - [x] 📱 iOS 8.0+
 - [x] 💻 Mac OS X 10.10+
 - [x] ⌚️ watchOS 2
-- [ ] 📺 tvOS (*coming soon?*)
+- [x] 📺 tvOS
+
+> &nbsp;
+>
+> 🚀 I make [Rocket](http://matthewpalmer.net/rocket?utm_source=locksmith&utm_medium=readme&utm_campaign=open_source), an app that gives you Slack-style emoji everywhere on your Mac.
+>
+> &nbsp;
+
+## Details
 
 How is Locksmith different to other keychain wrappers?
 
@@ -22,11 +30,19 @@ How is Locksmith different to other keychain wrappers?
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Build Status](https://travis-ci.org/matthewpalmer/Locksmith.svg?branch=master)](https://travis-ci.org/matthewpalmer/Locksmith)
 
+* Locksmith 3.0 and greater is Swift 3 compatible. See the `swift-2.3` branch for compatibility with older versions of Swift.
+
 ### CocoaPods
 
 Locksmith is available through [CocoaPods](http://cocoapods.org).
 
     pod 'Locksmith'
+
+### Carthage
+
+Locksmith is available through [Carthage](https://github.com/Carthage/Carthage).
+
+    github "matthewpalmer/Locksmith"
 
 ## Quick start
 

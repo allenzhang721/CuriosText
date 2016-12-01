@@ -19,9 +19,9 @@ final class CTAUpTokenModel: CTABaseModel {
         self.upToken    = upToken;
     }
     
-    static func generateFrom(json: JSON) -> CTAUpTokenModel {
-        let upTokenKey:String = json[key(.UpTokenKey)].string ?? "";
-        let upToken:String    = json[key(.UpToken)].string ?? "";
+    static func generateFrom(_ json: JSON) -> CTAUpTokenModel {
+        let upTokenKey:String = json[key(.upTokenKey)].string ?? "";
+        let upToken:String    = json[key(.upToken)].string ?? "";
         
         return CTAUpTokenModel.init(upTokenKey: upTokenKey, upToken:upToken)
     }
@@ -30,10 +30,10 @@ final class CTAUpTokenModel: CTABaseModel {
         
     }
     
-    func getData() -> [String: AnyObject]{
+    func getData() -> [String : Any] {
         return [
-            key(.UpTokenKey):self.upTokenKey,
-            key(.UpToken):self.upToken
+            key(.upTokenKey):self.upTokenKey as AnyObject,
+            key(.upToken):self.upToken as AnyObject
         ]
     }
 }
@@ -44,7 +44,7 @@ extension CTAUpTokenModel {
     
     var data: [String: AnyObject] {
         return [
-            key(.UpTokenKey)  :self.upTokenKey,
+            key(.upTokenKey)  :self.upTokenKey as AnyObject,
         ]
     }
 }

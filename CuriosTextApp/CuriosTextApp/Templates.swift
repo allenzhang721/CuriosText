@@ -10,9 +10,9 @@ import UIKit
 
 class Templates: NSObject {
     
-    class func templateVC(paras: [String: AnyObject]) -> UIViewController? {
+    class func templateVC(_ paras: [String: AnyObject]) -> UIViewController? {
         
-        let templateVC = UIStoryboard(name: "Templates", bundle: nil).instantiateViewControllerWithIdentifier("TemplateVC") as? CTATemplateViewController
+        let templateVC = UIStoryboard(name: "Templates", bundle: nil).instantiateViewController(withIdentifier: "TemplateVC") as? CTATemplateViewController
         
         if let handler = paras["didChangedHandler"] as? FunctionWrapper<() -> ()> {
             templateVC?.didChangedHandler = handler.method
@@ -33,11 +33,11 @@ class Templates: NSObject {
         return templateVC
     }
     
-    class func templateListVC(paras: [String: AnyObject]) -> UIViewController? {
+    class func templateListVC(_ paras: [String: AnyObject]) -> UIViewController? {
         
-        let listVC = UIStoryboard(name: "Templates", bundle: nil).instantiateViewControllerWithIdentifier("TemplateList") as? CTATempateListViewController
+        let listVC = UIStoryboard(name: "Templates", bundle: nil).instantiateViewController(withIdentifier: "TemplateList") as? CTATempateListViewController
         
-        if let selectedHandler = paras["selectedHandler"] as? FunctionWrapper<(pageData: NSData?, origin: Bool) -> ()> {
+        if let selectedHandler = paras["selectedHandler"] as? FunctionWrapper<(_ pageData: Data?, _ origin: Bool) -> ()> {
             listVC?.selectedHandler = selectedHandler.method
         }
         

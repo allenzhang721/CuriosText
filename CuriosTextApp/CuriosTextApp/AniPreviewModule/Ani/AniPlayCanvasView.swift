@@ -10,8 +10,8 @@ import UIKit
 
 protocol AniPlayCanvasViewDataSource: class {
     
-    func animationsForAniPlayCanvasView(view: AniPlayCanvasView) -> [Animation]?
-    func containerItemForAniPlayCanvasView(view: AniPlayCanvasView, containerID: String) -> AniCanvasAccessResult
+    func animationsForAniPlayCanvasView(_ view: AniPlayCanvasView) -> [Animation]?
+    func containerItemForAniPlayCanvasView(_ view: AniPlayCanvasView, containerID: String) -> AniCanvasAccessResult
 }
 
 class AniPlayCanvasView: CanvasView {
@@ -52,8 +52,8 @@ class AniPlayCanvasView: CanvasView {
 extension AniPlayCanvasView {
     
     enum PlayNextResult {
-        case Next(duration: CGFloat)
-        case Failture
+        case next(duration: CGFloat)
+        case failture
     }
     
     var progress: CGFloat {
@@ -70,9 +70,9 @@ extension AniPlayCanvasView {
     
     func progressBegan() -> PlayNextResult {
         if let currentNode = currentNode {
-            return .Next(duration: CGFloat(currentNode.duration))
+            return .next(duration: CGFloat(currentNode.duration))
         } else {
-            return .Failture
+            return .failture
         }
     }
     
@@ -81,16 +81,16 @@ extension AniPlayCanvasView {
         currentNode = currentNode?.nextNode
         if let aniNode = currentNode {
             readyWith(aniNode)
-            return .Next(duration: CGFloat(aniNode.duration))
+            return .next(duration: CGFloat(aniNode.duration))
         } else {
-            return .Failture
+            return .failture
         }
     } 
 }
 
 extension AniPlayCanvasView {
     
-    private func reset() {
+    fileprivate func reset() {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         removeAllAnimations()
@@ -98,7 +98,7 @@ extension AniPlayCanvasView {
         CATransaction.commit()
     }
     
-    private func setupAniNodes() {
+    fileprivate func setupAniNodes() {
         guard let aniDataSource = aniDataSource, let animations = aniDataSource.animationsForAniPlayCanvasView(self) else {
             beganNode = nil
             currentNode = nil
@@ -109,34 +109,34 @@ extension AniPlayCanvasView {
         beganNode = node
     }
     
-    private func readyWith(node: AniNode) -> Float {
+    fileprivate func readyWith(_ node: AniNode) -> Float {
         guard let aniDataSource = aniDataSource else { return 0 }
         let result = node.startWith(bounds.size) {[weak self] (containerID) -> AniNodeFinderResult in
             if let sf = self {
                 switch aniDataSource.containerItemForAniPlayCanvasView(sf, containerID: containerID) {
-                case .Success(let i , let container):
-                    return AniNodeFinderResult.Success(i, container)
+                case .success(let i , let container):
+                    return AniNodeFinderResult.success(i, container)
                     
-                case .Failture:
-                    return AniNodeFinderResult.NotFound
+                case .failture:
+                    return AniNodeFinderResult.notFound
                 }
             } else {
-                return AniNodeFinderResult.NotFound
+                return AniNodeFinderResult.notFound
             }
         }
         beganAnimationAt(result.containers)
         return result.duration
     }
     
-    private func setupControl() {
+    fileprivate func setupControl() {
         control.callBack {[weak self] (state) in
             guard let sf = self else {
                 return
             }
             switch state {
-            case .Playing(let p, let d):
+            case .playing(let p, let d):
                 sf.layer.timeOffset = CFTimeInterval(d) * CFTimeInterval(p)
-            case .Completed:
+            case .completed:
 //                sf.reset()
                 sf.currentNode = sf.currentNode?.nextNode
                 guard let aniNode = sf.currentNode else {

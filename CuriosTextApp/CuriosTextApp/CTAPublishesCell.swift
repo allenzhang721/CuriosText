@@ -37,13 +37,13 @@ class CTAPublishesCell: UICollectionViewCell, CTAImageControllerProtocol{
                 previewIconURL = self.publishModel!.publishIconURL
             }
             let imagePath = CTAFilePath.publishFilePath+previewIconURL
-            let imageURL = NSURL(string: imagePath)!
-            self.cellImageView.kf_showIndicatorWhenLoading = true
-            self.cellImageView.kf_setImageWithURL(imageURL, placeholderImage: defaultImg, optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in
+            let imageURL = URL(string: imagePath)!
+//            self.cellImageView.kf_showIndicatorWhenLoading = true
+            self.cellImageView.kf.setImage(with: imageURL, placeholder: defaultImg, options: [.transition(ImageTransition.fade(1))]) { (image, error, cacheType, imageURL) -> () in
                 if error != nil {
                     self.cellImageView.image = defaultImg
                 }
-                self.cellImageView.kf_showIndicatorWhenLoading = false
+//                self.cellImageView.kf_showIndicatorWhenLoading = false
             }
         }else {
             let whiteImg = self.getWhiteBg(self.bounds)
@@ -56,7 +56,7 @@ class CTAPublishesCell: UICollectionViewCell, CTAImageControllerProtocol{
             return UIImageView(image: self.cellImageView.image)
         }else {
             let a = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-            a.backgroundColor = UIColor.redColor()
+            a.backgroundColor = UIColor.red
             return a
         }
     }

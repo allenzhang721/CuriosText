@@ -38,11 +38,11 @@ class EditorFactory {
 //        }
 //    }
     
-    class func canvasBy(page: CTAPage) -> EditCanvasView {
+    class func canvasBy(_ page: CTAPage) -> EditCanvasView {
         
         let canvasView = EditCanvasView(frame: CGRect(x: 0, y: 0, width: page.width, height: page.height))
         let mask = CAShapeLayer()
-        mask.path = UIBezierPath(rect: canvasView.bounds).CGPath
+        mask.path = UIBezierPath(rect: canvasView.bounds).cgPath
         canvasView.layer.mask = mask
         return canvasView
         
@@ -50,8 +50,8 @@ class EditorFactory {
     
     class func generateRandomPage() -> CTAPage {
         
-        var containers = [CTAContainer]()
-        var animations = [CTAAnimation]()
+        let containers = [CTAContainer]()
+        let animations = [CTAAnimation]()
         
         let page = CTAPage(containers: containers, anis: animations)
         return page
@@ -60,7 +60,7 @@ class EditorFactory {
 
 extension EditorFactory {
     
-    private class func containerWithEmptyBy(viewPro: protocol<ViewPropertiesRetrivevale, ContainerIdentifiable>) -> ContainerView {
+    fileprivate class func containerWithEmptyBy(_ viewPro: ViewPropertiesRetrivevale & ContainerIdentifiable) -> ContainerView {
         
         let containerView = ContainerView(frame: CGRect(x: 0, y: 0, width: viewPro.size.width, height: viewPro.size.height))
         containerView.layer.position = viewPro.center
@@ -69,7 +69,7 @@ extension EditorFactory {
         return containerView
     }
     
-    private class func containerWithTextBy(containerVM: TextContainerVMProtocol) -> ContainerView {
+    fileprivate class func containerWithTextBy(_ containerVM: TextContainerVMProtocol) -> ContainerView {
         
         // TODO: Finish The Cal process -- Emiaostein; 2015-12-27-01:13
         //        func aStr(text: String, attributes: [String: AnyObject]) -> (containerSize: CGSize, contentsRect: CGRect, contentsInset: CGPoint, contents: NSAttributedString) {
@@ -228,7 +228,7 @@ extension EditorFactory {
         textView.attributedText = str
         textView.numberOfLines = 0
         containerView.textView = textView
-        containerView.transform = CGAffineTransformMakeRotation(CGFloat(containerVM.radius))
+        containerView.transform = CGAffineTransform(rotationAngle: CGFloat(containerVM.radius))
         containerView.addSubview(textView)
         return containerView
     }
@@ -244,7 +244,7 @@ extension EditorFactory {
 extension EditorFactory {
     
     class func generateTextContainer(
-        pageWidth: Double,
+        _ pageWidth: Double,
         pageHeigh: Double,
         text: String,
         attributes: CTATextAttributes = CTATextAttributes()
@@ -272,7 +272,7 @@ extension EditorFactory {
     }
     
     class func generateImageContainer(
-        pageWidth: Double,
+        _ pageWidth: Double,
         pageHeigh: Double,
         imageSize: CGSize,
         imgName: String
@@ -296,7 +296,7 @@ extension EditorFactory {
     }
     
     class func generateAnimationFor (
-        targetID: String,
+        _ targetID: String,
         animationName: CTAAnimationName) -> CTAAnimation {
         
         let ani = CTAAnimation(targetID: targetID, animationName: animationName.rawValue, animationConfig: CTAAnimationConfig.defaultConfigWithDuration(animationName.defaultDuration))
@@ -306,7 +306,7 @@ extension EditorFactory {
     
     
     class func generateAnimationFor (
-        targetID: String,
+        _ targetID: String,
         index: Int) -> CTAAnimation {
             
             let ani = CTAAnimation(targetID: targetID, animationName: (index % 2 == 0) ? CTAAnimationName.MoveIn.rawValue : CTAAnimationName.MoveOut.rawValue)
@@ -315,7 +315,7 @@ extension EditorFactory {
     }
     
     class func generateTextContainer(
-        pageWidth: Double,
+        _ pageWidth: Double,
         pageHeigh: Double,
         text: String,
         attributes: CTATextAttributes,
@@ -342,7 +342,7 @@ extension EditorFactory {
     }
     
     class func generateImageContainer(
-        pageWidth: Double,
+        _ pageWidth: Double,
         pageHeigh: Double,
         imageSize: CGSize,
         imgName: String,
@@ -364,7 +364,7 @@ extension EditorFactory {
             )
     }
     
-    class func demoString(fontsize: CGFloat) -> NSAttributedString
+    class func demoString(_ fontsize: CGFloat) -> NSAttributedString
     {
         // Create the attributed string
         let demoString = NSMutableAttributedString(string:"for old are you ?\nWhat should i do for you ?")
@@ -376,18 +376,18 @@ extension EditorFactory {
         let demoStringParaStyle1 = NSMutableParagraphStyle()
         demoStringParaStyle1.lineSpacing = 1.0
         demoStringParaStyle1.tabStops = [
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 28.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 56.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 84.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 112.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 140.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 168.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 196.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 224.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 252.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 280.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 308.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 336.000000, options: [:]), ]
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 28.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 56.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 84.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 112.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 140.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 168.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 196.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 224.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 252.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 280.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 308.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 336.000000, options: [:]), ]
         
         
         // Create the attributes and add them to the string
@@ -409,18 +409,18 @@ extension EditorFactory {
         let demoStringParaStyle1 = NSMutableParagraphStyle()
         demoStringParaStyle1.lineSpacing = 1.0
         demoStringParaStyle1.tabStops = [
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 28.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 56.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 84.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 112.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 140.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 168.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 196.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 224.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 252.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 280.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 308.000000, options: [:]),
-            NSTextTab(textAlignment: NSTextAlignment.Left, location: 336.000000, options: [:]), ]
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 28.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 56.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 84.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 112.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 140.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 168.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 196.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 224.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 252.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 280.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 308.000000, options: [:]),
+            NSTextTab(textAlignment: NSTextAlignment.left, location: 336.000000, options: [:]), ]
         
         
         // Create the attributes and add them to the string

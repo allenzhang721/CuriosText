@@ -10,7 +10,7 @@ import UIKit
 
 protocol CTAVerticalItemCollectionViewCellDelegate: class {
     
-    func itemCellSuperActived(cell: CTAVerticalItemCollectionViewCell) -> Bool
+    func itemCellSuperActived(_ cell: CTAVerticalItemCollectionViewCell) -> Bool
     
 }
 

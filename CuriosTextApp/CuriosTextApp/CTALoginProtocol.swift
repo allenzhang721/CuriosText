@@ -9,26 +9,26 @@
 import Foundation
 
 protocol CTALoginProtocol{
-    func showLoginView(isPopupSelf:Bool)
-    func loginComplete(userModel:CTAUserModel?)
+    func showLoginView(_ isPopupSelf:Bool)
+    func loginComplete(_ userModel:CTAUserModel?)
 }
 
 extension CTALoginProtocol where Self: UIViewController{
     
-    func showLoginView(isPopupSelf:Bool){
+    func showLoginView(_ isPopupSelf:Bool){
         if isPopupSelf{
-            NSNotificationCenter.defaultCenter().postNotificationName("showLoginView", object: self)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "showLoginView"), object: self)
         }else {
-            NSNotificationCenter.defaultCenter().postNotificationName("showLoginView", object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "showLoginView"), object: nil)
         }
     }
     
-    func loginComplete(userModel:CTAUserModel?){
+    func loginComplete(_ userModel:CTAUserModel?){
         if let user = userModel{
             CTAUserManager.save(user)
-            NSNotificationCenter.defaultCenter().postNotificationName("loginComplete", object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "loginComplete"), object: nil)
         }
-        self.navigationController?.dismissViewControllerAnimated(true, completion: { () -> Void in
+        self.navigationController?.dismiss(animated: true, completion: { () -> Void in
         })
     }
 }

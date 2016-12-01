@@ -16,24 +16,24 @@ protocol CTAPhoneProtocol: CTAPublishCellProtocol, CTASystemLanguageProtocol, CT
     var areaCodeLabel:UILabel{get}
     func initPhoneView()
     func getCurrentContryModel() -> CountryZone?
-    func changeCountryLabelByModel(selectedModel:CountryZone?)
-    func countryNameClick(sender: UIPanGestureRecognizer)
-    func changeChinaPhone(phone:NSString, isDelete:Bool) -> String
+    func changeCountryLabelByModel(_ selectedModel:CountryZone?)
+    func countryNameClick(_ sender: UIPanGestureRecognizer)
+    func changeChinaPhone(_ phone:NSString, isDelete:Bool) -> String
 }
 
 extension CTAPhoneProtocol where Self: UIViewController{
     func initPhoneView(){
-        let bouns = UIScreen.mainScreen().bounds
+        let bouns = UIScreen.main.bounds
 
         self.countryNameLabel.frame = CGRect.init(x: 128*self.getHorRate(), y: 182*self.getVerRate(), width: 230*self.getHorRate(), height: 25)
-        self.countryNameLabel.font = UIFont.systemFontOfSize(16)
+        self.countryNameLabel.font = UIFont.systemFont(ofSize: 16)
         self.countryNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
-        self.countryNameLabel.userInteractionEnabled = true
+        self.countryNameLabel.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: "countryNameClick:")
         self.countryNameLabel.addGestureRecognizer(tap)
         self.view.addSubview(self.countryNameLabel)
         let countryLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.countryNameLabel.frame.origin.y, width: 82, height: 25))
-        countryLabel.font = UIFont.systemFontOfSize(16)
+        countryLabel.font = UIFont.systemFont(ofSize: 16)
         countryLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         countryLabel.text = NSLocalizedString("CountryLabel", comment: "")
         self.view.addSubview(countryLabel)
@@ -48,14 +48,14 @@ extension CTAPhoneProtocol where Self: UIViewController{
         self.phoneTextinput.frame = CGRect.init(x: 128*self.getHorRate(), y: self.countryNameLabel.frame.origin.y+38, width: 230*self.getHorRate(), height: 50)
         self.phoneTextinput.placeholder = NSLocalizedString("PhonePlaceholder", comment: "")
         self.view.addSubview(self.phoneTextinput)
-        self.phoneTextinput.keyboardType = .NumberPad
-        self.phoneTextinput.clearButtonMode = .WhileEditing
+        self.phoneTextinput.keyboardType = .numberPad
+        self.phoneTextinput.clearButtonMode = .whileEditing
         textLine = UIImageView.init(frame: CGRect.init(x: 125*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+49, width: 230*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "space-line")
         self.view.addSubview(textLine)
         
         self.areaCodeLabel.frame = CGRect.init(x: 27*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+12, width: 50, height: 25)
-        self.areaCodeLabel.font = UIFont.systemFontOfSize(16)
+        self.areaCodeLabel.font = UIFont.systemFont(ofSize: 16)
         self.areaCodeLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.areaCodeLabel)
         textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+49, width: 90*self.getHorRate(), height: 1))
@@ -66,14 +66,14 @@ extension CTAPhoneProtocol where Self: UIViewController{
     func getCurrentContryModel() -> CountryZone?{
         
         var model:CountryZone?
-        let local = NSLocale.autoupdatingCurrentLocale()
-        if let countryCode = local.objectForKey(NSLocaleCountryCode) as? String,
+        let local = Locale.autoupdatingCurrent
+        if let countryCode = (local as NSLocale).object(forKey: NSLocale.Key.countryCode) as? String,
             let areaCode = defaultCodes[countryCode]{
                 model = self.getCountryModelByCode(areaCode)
         }
         if model == nil {
             let language = self.getCurrentLanguage()
-            if language.containsString("zh-Hans") || language.containsString("zh-Hans"){
+            if language.contains("zh-Hans") || language.contains("zh-Hans"){
                 model = self.getCountryModelByCode("86")
             }else if language == "zh-HK"{
                 model = self.getCountryModelByCode("852")
@@ -84,7 +84,7 @@ extension CTAPhoneProtocol where Self: UIViewController{
         return model;
     }
 
-    func getCountryModelByCode(code:String) -> CountryZone?{
+    func getCountryModelByCode(_ code:String) -> CountryZone?{
         let allCountryLocale = LocaleHelper.allCountriesFromLocalFile()
         for (_, array) in allCountryLocale {
             for i in 0..<array.count{
@@ -97,7 +97,7 @@ extension CTAPhoneProtocol where Self: UIViewController{
         return nil
     }
     
-    func changeCountryLabelByModel(selectedModel:CountryZone?){
+    func changeCountryLabelByModel(_ selectedModel:CountryZone?){
         if selectedModel != nil {
             self.countryNameLabel.text = selectedModel!.displayName
             self.areaCodeLabel.text = "+"+selectedModel!.zoneCode
@@ -108,7 +108,7 @@ extension CTAPhoneProtocol where Self: UIViewController{
         self.areaCodeLabel.sizeToFit()
     }
     
-    func changeChinaPhone(phone:NSString, isDelete:Bool) -> String{
+    func changeChinaPhone(_ phone:NSString, isDelete:Bool) -> String{
         let count = phone.length
         var newString:String = phone as String
         if !isDelete {
@@ -119,30 +119,30 @@ extension CTAPhoneProtocol where Self: UIViewController{
                 let newText = (phone as String) + " "
                 newString = newText
             }else if count == 13 {
-                let nilStr = phone.substringWithRange(NSMakeRange(3, 1))
+                let nilStr = phone.substring(with: NSMakeRange(3, 1))
                 if nilStr == " " {
-                    let newStr = phone.substringWithRange(NSMakeRange(0, 3))+phone.substringWithRange(NSMakeRange(4, 4))+phone.substringWithRange(NSMakeRange(9, 4))
+                    let newStr = phone.substring(with: NSMakeRange(0, 3))+phone.substring(with: NSMakeRange(4, 4))+phone.substring(with: NSMakeRange(9, 4))
                     newString = newStr
                 }
             }
         }else {
             if count == 12 {
-                let nilStr = phone.substringWithRange(NSMakeRange(8, 1))
+                let nilStr = phone.substring(with: NSMakeRange(8, 1))
                 if nilStr != " " {
-                    let newStr = phone.substringWithRange(NSMakeRange(0, 3))+" "+phone.substringWithRange(NSMakeRange(3, 4))+" "+phone.substringWithRange(NSMakeRange(7, 4))+" "
+                    let newStr = phone.substring(with: NSMakeRange(0, 3))+" "+phone.substring(with: NSMakeRange(3, 4))+" "+phone.substring(with: NSMakeRange(7, 4))+" "
                     newString = newStr
                 }
             }
             if count  == 10 {
-                let nilStr = phone.substringWithRange(NSMakeRange(8, 1))
+                let nilStr = phone.substring(with: NSMakeRange(8, 1))
                 if nilStr == " " {
-                    let newStr = phone.substringWithRange(NSMakeRange(0, 8))+" "
+                    let newStr = phone.substring(with: NSMakeRange(0, 8))+" "
                     newString = newStr
                 }
             } else if count == 5 {
-                let nilStr = phone.substringWithRange(NSMakeRange(3, 1))
+                let nilStr = phone.substring(with: NSMakeRange(3, 1))
                 if nilStr == " " {
-                    let newStr = phone.substringWithRange(NSMakeRange(0, 3))+" "
+                    let newStr = phone.substring(with: NSMakeRange(0, 3))+" "
                     newString = newStr
                 }
             }
@@ -153,7 +153,7 @@ extension CTAPhoneProtocol where Self: UIViewController{
 
 protocol CTATextInputProtocol{
     func resignView()
-    func resignHandler(sender: UIGestureRecognizer)
+    func resignHandler(_ sender: UIGestureRecognizer)
 }
 
 extension CTATextInputProtocol where Self: UIViewController{
@@ -166,13 +166,13 @@ extension CTATextInputProtocol where Self: UIViewController{
         }
     }
     
-    func resignHandler(sender: UIGestureRecognizer){
+    func resignHandler(_ sender: UIGestureRecognizer){
         var isHave:Bool = false
         let subViews = self.view.subviews
         for i in 0..<subViews.count{
             let view = subViews[i]
-            let pt = sender.locationInView(view)
-            if view.pointInside(pt, withEvent: nil){
+            let pt = sender.location(in: view)
+            if view.point(inside: pt, with: nil){
                 isHave = true
             }
         }

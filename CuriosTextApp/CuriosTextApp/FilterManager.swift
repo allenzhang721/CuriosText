@@ -12,7 +12,7 @@ let defaultFiltersName = ["Origin","Clarendon","Juno","Ludwig","Lark","Valencia"
 
 class FilterManager {
     
-    private(set) var filters: [FilterItem] = []
+    fileprivate(set) var filters: [FilterItem] = []
     
     func loadDefaultFilters() {
         filters = defaultFiltersName.map{FilterItem(name: $0, data: nil)}
@@ -29,7 +29,7 @@ class FilterManager {
             if name.isEmpty {
                 return nil
             } else {
-                if let index = defaultFiltersName.indexOf(name) {
+                if let index = defaultFiltersName.index(of: name) {
                     return filters[index]
                 } else {
                     return nil
@@ -44,7 +44,7 @@ class FilterManager {
         if filters.count <= 0 {
             return 0
         } else {
-            return defaultFiltersName.indexOf(name) ?? 0
+            return defaultFiltersName.index(of: name) ?? 0
         }
     }
     

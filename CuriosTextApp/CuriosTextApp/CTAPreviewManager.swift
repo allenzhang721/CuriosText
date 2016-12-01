@@ -31,7 +31,7 @@ final class CTAPreviewManager {
 
 extension CTAPreviewManager {
     
-    class func splits(array: [CTAAnimationBinder]) -> [[CTAAnimationBinder]] {
+    class func splits(_ array: [CTAAnimationBinder]) -> [[CTAAnimationBinder]] {
         
         let count = array.count
         guard count > 1 else {
@@ -41,7 +41,7 @@ extension CTAPreviewManager {
         var result = [[CTAAnimationBinder]]()
         var began = 0
         
-        for (i, m) in array.enumerate() {
+        for (i, m) in array.enumerated() {
             
             let b = m.config.withFormer
             guard i > 0 else {

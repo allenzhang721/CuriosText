@@ -16,7 +16,7 @@ class CTASelectorFiltersCell: CTASelectorCell {
     var image: UIImage?
     var first = true
     
-    private weak var collectionView: UICollectionView!
+    fileprivate weak var collectionView: UICollectionView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,22 +27,22 @@ class CTASelectorFiltersCell: CTASelectorCell {
         debug_print("\(#file) deinit", context: deinitContext)
     }
     
-    private func setup() {
+    fileprivate func setup() {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 84, height: 84)
         layout.minimumInteritemSpacing = 2
         layout.minimumLineSpacing = 2
         layout.sectionInset = UIEdgeInsets(top: 2, left: 20, bottom: 2, right: 20)
-        layout.scrollDirection = .Horizontal
+        layout.scrollDirection = .horizontal
         let view = UICollectionView(frame: bounds, collectionViewLayout: layout)
-        view.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "FilterPreviewCell")
+        view.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "FilterPreviewCell")
         contentView.addSubview(view)
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = UIColor.white
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
-        view.topAnchor.constraintEqualToAnchor(topAnchor).active = true
-        view.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
-        view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
+        view.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        view.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        view.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        view.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         
         view.dataSource = self
         view.delegate = self
@@ -53,8 +53,8 @@ class CTASelectorFiltersCell: CTASelectorCell {
         if first {
             first = false
             let index = dataSource?.selectorBeganFilter(self) ?? 0
-            dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                self?.collectionView.selectItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
+            DispatchQueue.main.async(execute: { [weak self] in
+                self?.collectionView.selectItem(at: IndexPath(item: index, section: 0), animated: false, scrollPosition: .centeredHorizontally)
             })
         } else {
             reloadData()
@@ -62,21 +62,21 @@ class CTASelectorFiltersCell: CTASelectorCell {
     }
     
     //TODO: Reload Data with preview image -- Emiaostein, 6/30/16, 17:38
-    func update(image: UIImage?) {
+    func update(_ image: UIImage?) {
         self.image = image
         filterManager?.cleanImage()
         reloadData()
     }
     
-    private func reloadData() {
-        let selected = collectionView.indexPathsForSelectedItems()?.first?.item
+    fileprivate func reloadData() {
+        let selected = collectionView.indexPathsForSelectedItems?.first?.item
         collectionView.reloadData()
         if let s = selected {
-            collectionView.selectItemAtIndexPath(NSIndexPath(forItem: s, inSection: 0), animated: false, scrollPosition: .None)
+            collectionView.selectItem(at: IndexPath(item: s, section: 0), animated: false, scrollPosition: UICollectionViewScrollPosition())
         }
     }
     
-    override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
+    override func addTarget(_ target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
         
         self.target = target
         self.action = action
@@ -89,26 +89,26 @@ class CTASelectorFiltersCell: CTASelectorCell {
 
 extension CTASelectorFiltersCell: UICollectionViewDataSource {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return filterManager?.filters.count ?? 0
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("FilterPreviewCell", forIndexPath: indexPath)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterPreviewCell", for: indexPath)
         
         if (cell.contentView.viewWithTag(1000) as? UIImageView) == nil {
             let imgView = UIImageView(frame: cell.contentView.bounds)
             imgView.tag = 1000
             imgView.clipsToBounds = true
-            imgView.contentMode = .ScaleAspectFill
+            imgView.contentMode = .scaleAspectFill
             cell.contentView.addSubview(imgView)
         }
         
         if cell.selectedBackgroundView == nil {
             let v = UIView(frame: cell.bounds)
-            v.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
+            v.backgroundColor = UIColor.white.withAlphaComponent(0.5)
             cell.selectedBackgroundView = v
-            cell.bringSubviewToFront(cell.selectedBackgroundView!)
+            cell.bringSubview(toFront: cell.selectedBackgroundView!)
         }
         
         if let imgView = cell.contentView.viewWithTag(1000) as? UIImageView, let filter = filterManager?.filters[indexPath.item] {
@@ -122,7 +122,7 @@ extension CTASelectorFiltersCell: UICollectionViewDataSource {
                     if let image = image {
                         filter.createImage(from: image, complation: {[weak cell, weak filter] (img) in
                             
-                            dispatch_async(dispatch_get_main_queue(), {
+                            DispatchQueue.main.async(execute: {
                                 if cell?.restorationIdentifier == ID {
                                     filter?.data = nil
                                     (cell?.viewWithTag(1000) as! UIImageView).image = img
@@ -132,12 +132,12 @@ extension CTASelectorFiltersCell: UICollectionViewDataSource {
                         })
                     }
                 } else {
-                    let bundle = NSBundle.mainBundle().bundleURL
+                    let bundle = Bundle.main.bundleURL
                     if let image = image {
                         let ID = filter.assetIdentifier
                         cell.restorationIdentifier = ID
                        filter.createData(fromColorDirAt: bundle, filtering: image, complation: { [weak cell, weak filter] (filteredIamge) in
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                             if cell?.restorationIdentifier == ID {
                                 filter?.data = nil
                                 (cell?.viewWithTag(1000) as! UIImageView).image = filteredIamge
@@ -155,13 +155,13 @@ extension CTASelectorFiltersCell: UICollectionViewDataSource {
 
 extension CTASelectorFiltersCell: UICollectionViewDelegate {
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if let filter = filterManager?.filters[indexPath.item] {
             let name = filter.name
             
-            if let target = target, action = action {
-                target.performSelector(action, withObject: name)
+            if let target = target, let action = action {
+                target.perform(action, with: name)
             }
         }
     }
@@ -169,23 +169,23 @@ extension CTASelectorFiltersCell: UICollectionViewDelegate {
 
 extension CTASelectorFiltersCell: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let s = CGFloat(2) // insets
         let n = CGFloat(1) // column or row
         let l = (bounds.height - s * 2 - s * (n - 1)) / n
         return CGSize(width: l, height: l)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let s = CGFloat(2)
         return UIEdgeInsets(top: s, left: s, bottom: s, right: s)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }
 }

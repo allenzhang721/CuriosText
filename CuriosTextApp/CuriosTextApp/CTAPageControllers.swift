@@ -35,22 +35,22 @@ class CTAPageControllers: NSObject, UIPageViewControllerDataSource {
         return vcs
     }()
     
-    func indexOfController(viewController: UIViewController) -> Int? {
-        return controllers.indexOf(viewController)
+    func indexOfController(_ viewController: UIViewController) -> Int? {
+        return controllers.index(of: viewController)
     }
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
-        guard let index = indexOfController(viewController) where index > 0 else {
+        guard let index = indexOfController(viewController), index > 0 else {
             return nil
         }
         
         return controllers[index - 1]
     }
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
-        guard let index = indexOfController(viewController) where index < controllers.count - 1 else {
+        guard let index = indexOfController(viewController), index < controllers.count - 1 else {
             return nil
         }
         

@@ -12,11 +12,11 @@ class ContainerView: UIView {
 
     var iD: String = ""
     
-    func addID(id: String) {
+    func addID(_ id: String) {
         self.iD = id
     }
     
-    func updateContents(contents: AnyObject, contentSize size: CGSize, drawInsets inset: CGPoint) {
+    func updateContents(_ contents: AnyObject, contentSize size: CGSize, drawInsets inset: CGPoint) {
         
     }
 

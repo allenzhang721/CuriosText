@@ -13,8 +13,8 @@ private let touchScale: CGFloat = 0.8
 @IBDesignable
 class CTACameraCaptureButton: UIControl {
     
-    private let outCircleLayer = CAShapeLayer()
-    private let innerCircleLayer = CAShapeLayer()
+    fileprivate let outCircleLayer = CAShapeLayer()
+    fileprivate let innerCircleLayer = CAShapeLayer()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,22 +30,22 @@ class CTACameraCaptureButton: UIControl {
         setup()
     }
     
-    private func setup() {
+    fileprivate func setup() {
         
         outCircleLayer.frame = bounds
         let lineWidth: CGFloat = 8
-        let outPath = UIBezierPath(ovalInRect: UIEdgeInsetsInsetRect(bounds, UIEdgeInsets(top: lineWidth, left: lineWidth, bottom:lineWidth, right: lineWidth)))
+        let outPath = UIBezierPath(ovalIn: UIEdgeInsetsInsetRect(bounds, UIEdgeInsets(top: lineWidth, left: lineWidth, bottom:lineWidth, right: lineWidth)))
         outPath.lineWidth = lineWidth
-        outCircleLayer.path = outPath.CGPath
-        outCircleLayer.strokeColor = UIColor.redColor().CGColor
-        outCircleLayer.fillColor = UIColor.whiteColor().CGColor
+        outCircleLayer.path = outPath.cgPath
+        outCircleLayer.strokeColor = UIColor.red.cgColor
+        outCircleLayer.fillColor = UIColor.white.cgColor
         layer.addSublayer(outCircleLayer)
         
         let inset: CGFloat = 10
         innerCircleLayer.frame = bounds
-        let innerPath = UIBezierPath(ovalInRect: UIEdgeInsetsInsetRect(bounds, UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)))
-        innerCircleLayer.path = innerPath.CGPath
-        innerCircleLayer.fillColor = UIColor.redColor().CGColor
+        let innerPath = UIBezierPath(ovalIn: UIEdgeInsetsInsetRect(bounds, UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)))
+        innerCircleLayer.path = innerPath.cgPath
+        innerCircleLayer.fillColor = UIColor.red.cgColor
         layer.addSublayer(innerCircleLayer)
     }
     
@@ -58,17 +58,17 @@ class CTACameraCaptureButton: UIControl {
     
     
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesBegan(touches, withEvent: event)
-        UIView.animateWithDuration(0.1) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        UIView.animate(withDuration: 0.1, animations: {
             self.innerCircleLayer.transform = CATransform3DMakeScale(touchScale, touchScale, 1)
-        }
+        }) 
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesEnded(touches, withEvent: event)
-        UIView.animateWithDuration(0.1) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        UIView.animate(withDuration: 0.1, animations: {
             self.innerCircleLayer.transform = CATransform3DMakeScale(1, 1, 1)
-        }
+        }) 
     }
 }

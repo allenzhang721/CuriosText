@@ -9,18 +9,18 @@
 import Foundation
 
 protocol ResultConvertable {
-  typealias Result
-  static func converFromData(data: NSData!) -> (Result?, NSError?)
+  associatedtype Result
+  static func converFromData(_ data: Data!) -> (Result?, NSError?)
 }
 
-extension NSData: ResultConvertable {
+extension Data: ResultConvertable {
   
-  typealias Result = NSData
-  static func converFromData(data: NSData!) -> (Result?, NSError?) {
+  typealias Result = Data
+  static func converFromData(_ data: Data!) -> (Result?, NSError?) {
 
     var error: NSError? = nil
     if data == nil {
-      error = NSError(domain: BlackCatErrorDomain, code: BlackCatError.InvalidURL.rawValue, userInfo: nil)
+      error = NSError(domain: BlackCatErrorDomain, code: BlackCatError.invalidURL.rawValue, userInfo: nil)
     }
     return (data, error)
   }
@@ -28,12 +28,12 @@ extension NSData: ResultConvertable {
 
 extension Dictionary: ResultConvertable {
   typealias Result = Dictionary<NSObject, AnyObject>
-  static func converFromData(data: NSData!) -> (Result?, NSError?) {
+  static func converFromData(_ data: Data!) -> (Result?, NSError?) {
 
-    if let dic = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)) as? [NSObject: AnyObject] {
-      return (dic, nil)
+    if let dic = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions(rawValue: 0)) as? [AnyHashable: Any] {
+      return (dic as Dictionary.Result?, nil)
     } else {
-      let error = NSError(domain: BlackCatErrorDomain, code: BlackCatError.InvalidURL.rawValue, userInfo: nil)
+      let error = NSError(domain: BlackCatErrorDomain, code: BlackCatError.invalidURL.rawValue, userInfo: nil)
       return (nil, error)
     }
   }
@@ -41,12 +41,12 @@ extension Dictionary: ResultConvertable {
 
 extension Array: ResultConvertable {
   typealias Result = Array<Dictionary<NSObject, AnyObject>>
-  static func converFromData(data: NSData!) -> (Result?, NSError?) {
+  static func converFromData(_ data: Data!) -> (Result?, NSError?) {
     
-    if let arr = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)) as? [[NSObject: AnyObject]] {
-      return (arr, nil)
+    if let arr = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions(rawValue: 0)) as? [[AnyHashable: Any]] {
+      return (arr as Array.Result?, nil)
     } else {
-      let error = NSError(domain: BlackCatErrorDomain, code: BlackCatError.InvalidURL.rawValue, userInfo: nil)
+      let error = NSError(domain: BlackCatErrorDomain, code: BlackCatError.invalidURL.rawValue, userInfo: nil)
       return (nil, error)
     }
   }

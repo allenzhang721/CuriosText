@@ -10,21 +10,21 @@ import Foundation
 
 protocol CTAAnimationPlayNodeManagerDataSource: class {
     
-    func numberOfNodesForNodeManager(manager: CTAAnimationPlayNodeManager) -> Int
-    func nodeManager(manager: CTAAnimationPlayNodeManager, animationControllersForNodeAtIndex index: Int) -> [CTAAnimationController]
+    func numberOfNodesForNodeManager(_ manager: CTAAnimationPlayNodeManager) -> Int
+    func nodeManager(_ manager: CTAAnimationPlayNodeManager, animationControllersForNodeAtIndex index: Int) -> [CTAAnimationController]
 }
 
 final class CTAAnimationPlayNodeManager {
     
-    private class  CTAAnimationPlayNode: CTAAnimationControllerDelegate {
+    fileprivate class  CTAAnimationPlayNode: CTAAnimationControllerDelegate {
 
         var aniControllers = [CTAAnimationController]()
         var endControllerID: String!
         var nextNode: CTAAnimationPlayNode?
         var index: Int
         
-        private(set) var playing: Bool = false
-        private var pausing: Bool = true
+        fileprivate(set) var playing: Bool = false
+        fileprivate var pausing: Bool = true
         
         var stoped: Bool {
             return !playing
@@ -121,7 +121,7 @@ final class CTAAnimationPlayNodeManager {
             }
         }
         
-        func controllerAnimationDidFinished(con: CTAAnimationController) {
+        func controllerAnimationDidFinished(_ con: CTAAnimationController) {
             
             if con.iD == endControllerID {
                 playing = false
@@ -132,7 +132,7 @@ final class CTAAnimationPlayNodeManager {
     }
     
     weak var dataSource: CTAAnimationPlayNodeManagerDataSource?
-    private var nodes = [Int: CTAAnimationPlayNode]()
+    fileprivate var nodes = [Int: CTAAnimationPlayNode]()
     
     var playing: Bool {
         guard nodes.count > 0 else {

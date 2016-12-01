@@ -24,34 +24,34 @@ class CTAUploadAction: CTAUploadProtocol {
         return _instance!;
     }
     
-    func uploadStart(uploadModel:CTAUploadModel){
+    func uploadStart(_ uploadModel:CTAUploadModel){
         
     }
     
-    func uploadProgress(uploadModel:CTAUploadModel, progress:Float){
+    func uploadProgress(_ uploadModel:CTAUploadModel, progress:Float){
         uploadModel.uploadProgress = progress;
         self.uploadActionProgress(uploadModel)
     }
     
-    func uploadComplete(uploadModel:CTAUploadModel){
+    func uploadComplete(_ uploadModel:CTAUploadModel){
         uploadModel.uploadProgress = 1;
         uploadModel.uploadComplete = true
         self.uploadActionComplete(uploadModel)
     }
     
-    func uploadError(uploadModel:CTAUploadModel, error:ErrorType){
+    func uploadError(_ uploadModel:CTAUploadModel, error:Error){
         uploadModel.uploadComplete = false
         self.uploadActionError(uploadModel, error: error)
     }
     
-    func uploadActionProgress(uploadModel: CTAUploadModel) {
+    func uploadActionProgress(_ uploadModel: CTAUploadModel) {
         let uploadActionModel:CTAUploadActionModel? = self.getUploadActionModel(uploadModel)
         if uploadActionModel != nil {
             self.progressAction(uploadActionModel!)
         }
     }
     
-    func uploadActionComplete(uploadModel: CTAUploadModel){
+    func uploadActionComplete(_ uploadModel: CTAUploadModel){
         let uploadActionModel:CTAUploadActionModel? = self.getUploadActionModel(uploadModel)
         if uploadActionModel != nil {
             if self.checkPublishUploadComplete(uploadActionModel!) {
@@ -62,14 +62,14 @@ class CTAUploadAction: CTAUploadProtocol {
         }
     }
     
-    func uploadActionError(uploadModel: CTAUploadModel, error: ErrorType){
+    func uploadActionError(_ uploadModel: CTAUploadModel, error: Error){
         let uploadActionModel:CTAUploadActionModel? = self.getUploadActionModel(uploadModel)
         if uploadActionModel != nil {
             self.completeAction(uploadActionModel!, uploadInfo: CTAUploadInfo.init(result: false, uploadID:uploadActionModel!.uploadID , errorType: error))
         }
     }
     
-    func completeAction(uploadActionModel:CTAUploadActionModel, uploadInfo:CTAUploadInfo) {
+    func completeAction(_ uploadActionModel:CTAUploadActionModel, uploadInfo:CTAUploadInfo) {
         uploadActionModel.complete(uploadInfo)
         var index:Int = -1
         for i in 0..<self.uploadQueue.count {
@@ -80,11 +80,11 @@ class CTAUploadAction: CTAUploadProtocol {
             }
         }
         if index != -1{
-            self.uploadQueue.removeAtIndex(index)
+            self.uploadQueue.remove(at: index)
         }
     }
     
-    func progressAction(publishUploadModel:CTAUploadActionModel) {
+    func progressAction(_ publishUploadModel:CTAUploadActionModel) {
         let uploadArray = publishUploadModel.uploadArray
         let count:Int = uploadArray.count
         let rate:Float = 1/Float(count);
@@ -96,7 +96,7 @@ class CTAUploadAction: CTAUploadProtocol {
         publishUploadModel.progress(CTAUploadProgressInfo.init(uploadID: publishUploadModel.uploadID, progress: progress))
     }
     
-    func getUploadActionModel(uploadModel: CTAUploadModel) -> CTAUploadActionModel?{
+    func getUploadActionModel(_ uploadModel: CTAUploadModel) -> CTAUploadActionModel?{
         for i in 0..<self.uploadQueue.count {
             let uploadActionModel:CTAUploadActionModel = self.uploadQueue[i]
             let uploadArray = uploadActionModel.uploadArray
@@ -110,7 +110,7 @@ class CTAUploadAction: CTAUploadProtocol {
         return nil
     }
     
-    func checkPublishUploadComplete(uploadActionModel:CTAUploadActionModel) -> Bool {
+    func checkPublishUploadComplete(_ uploadActionModel:CTAUploadActionModel) -> Bool {
         let uploadArray = uploadActionModel.uploadArray
         for i in 0..<uploadArray.count {
             let model:CTAUploadModel = uploadArray[i]
@@ -129,7 +129,7 @@ class CTAUploadAction: CTAUploadProtocol {
      - parameter progressHandle:
      - parameter completeHandle:
      */
-    func uploadFileArray(uploadID:String, uploadArray:Array<CTAUploadModel>, progress progressHandle:(CTAUploadProgressInfo!) -> Void, complete completeHandle:(CTAUploadInfo!) -> Void){
+    func uploadFileArray(_ uploadID:String, uploadArray:Array<CTAUploadModel>, progress progressHandle:@escaping (CTAUploadProgressInfo!) -> Void, complete completeHandle:@escaping (CTAUploadInfo!) -> Void){
         for i in 0..<uploadArray.count {
             let uploadMode:CTAUploadModel = uploadArray[i]
             uploadMode.uploadID = uploadID
@@ -139,7 +139,7 @@ class CTAUploadAction: CTAUploadProtocol {
         CTAUploadController.getInstance().uploadFileArray(uploadArray)
     }
     
-    func uploadFile(uploadID:String, uploadModel:CTAUploadModel, progress progressHandle:(CTAUploadProgressInfo!) -> Void, complete completeHandle:(CTAUploadInfo!) -> Void){
+    func uploadFile(_ uploadID:String, uploadModel:CTAUploadModel, progress progressHandle:@escaping (CTAUploadProgressInfo!) -> Void, complete completeHandle:@escaping (CTAUploadInfo!) -> Void){
         
         uploadModel.uploadID = uploadID
         var uploadArray:Array<CTAUploadModel> = []
@@ -154,10 +154,10 @@ class CTAUploadInfo {
     
     let result:Bool
     let uploadID:String
-    var errorType:ErrorType?
+    var errorType:Error?
     var data:AnyObject?
     
-    init(result:Bool, uploadID:String, errorType:ErrorType? = nil, data:AnyObject? = nil){
+    init(result:Bool, uploadID:String, errorType:Error? = nil, data:AnyObject? = nil){
         self.result    = result
         self.uploadID  = uploadID
         self.errorType = errorType
@@ -181,7 +181,7 @@ class CTAUploadActionModel {
     let progress: (CTAUploadProgressInfo!) -> Void
     let complete: (CTAUploadInfo!) -> Void
 
-    init(uploadID:String, uploadArray:Array<CTAUploadModel>, progress:(CTAUploadProgressInfo!) -> Void, complete:(CTAUploadInfo!) -> Void){
+    init(uploadID:String, uploadArray:Array<CTAUploadModel>, progress:@escaping (CTAUploadProgressInfo!) -> Void, complete:@escaping (CTAUploadInfo!) -> Void){
         self.uploadID    = uploadID;
         self.uploadArray = uploadArray;
         self.progress    = progress;

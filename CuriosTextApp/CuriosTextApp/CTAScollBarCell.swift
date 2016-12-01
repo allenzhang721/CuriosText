@@ -8,12 +8,12 @@
 
 import UIKit
 
-let activedColor = UIColor.redColor()
-let deactivedColor = UIColor.lightGrayColor()
+let activedColor = UIColor.red
+let deactivedColor = UIColor.lightGray
 
 class CTAScollBarCell: UICollectionViewCell {
     
-    private var actived: Bool = false
+    fileprivate var actived: Bool = false
     var barItemView: CTABarItemView!
     
     override func awakeFromNib() {
@@ -22,15 +22,15 @@ class CTAScollBarCell: UICollectionViewCell {
         contentView.addSubview(barItemView)
         
         barItemView.translatesAutoresizingMaskIntoConstraints = false
-        barItemView.widthAnchor.constraintEqualToAnchor(widthAnchor).active = true
-        barItemView.heightAnchor.constraintEqualToAnchor(heightAnchor, constant: -16).active = true
-        barItemView.centerXAnchor.constraintEqualToAnchor(centerXAnchor).active = true
-        barItemView.centerYAnchor.constraintEqualToAnchor(centerYAnchor).active = true
+        barItemView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        barItemView.heightAnchor.constraint(equalTo: heightAnchor, constant: -16).isActive = true
+        barItemView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        barItemView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
     
-    override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         
-        super.applyLayoutAttributes(layoutAttributes)
+        super.apply(layoutAttributes)
         
         guard let layoutAttributes = layoutAttributes as? CollectionViewAttributes else {
             return

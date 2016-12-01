@@ -16,27 +16,27 @@ class CTATemplateViewController: UIViewController {
     var doneHandler: (() -> ())?
     var cancelHandler: (() -> ())?
     
-    private var previewView: AniPlayCanvasView!
-    private var listVC: CTATempateListViewController!
+    fileprivate var previewView: AniPlayCanvasView!
+    fileprivate var listVC: CTATempateListViewController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    private func setup() {
+    fileprivate func setup() {
         
         // create previewView
         createPreView()
     }
     
-    private func createPreView() {
-        if let canvas = canvas where previewView == nil {
-            let screenSize = UIScreen.mainScreen().bounds.size
+    fileprivate func createPreView() {
+        if let canvas = canvas, previewView == nil {
+            let screenSize = UIScreen.main.bounds.size
             let previewView = AniPlayCanvasView(frame: CGRect(origin: CGPoint.zero, size: canvas.size))
             let scale = min(screenSize.width / canvas.size.width, screenSize.width / canvas.size.height)
             previewView.center = CGPoint(x: screenSize.width / 2.0, y: screenSize.width / 2.0 + 44)
-            previewView.transform = CGAffineTransformMakeScale(scale, scale)
-            previewView.backgroundColor = UIColor.whiteColor()
+            previewView.transform = CGAffineTransform(scaleX: scale, y: scale)
+            previewView.backgroundColor = UIColor.white
             previewView.completedBlock = {[weak self] in
             }
             previewView.dataSource = canvas
@@ -47,12 +47,12 @@ class CTATemplateViewController: UIViewController {
         }
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        switch segue.destinationViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.destination {
         case let vc as CTATempateListViewController:
             listVC = vc
             listVC.selectedHandler = { data in

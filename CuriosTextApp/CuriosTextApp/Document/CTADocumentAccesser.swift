@@ -10,6 +10,6 @@ import Foundation
 
 protocol CTADocumentAccesser: class {
     
-    var pageData: NSData { get }
-    func retrivedPageData(data: NSData?)
+    var pageData: Data { get }
+    func retrivedPageData(_ data: Data?)
 }

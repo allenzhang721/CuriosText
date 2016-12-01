@@ -13,11 +13,11 @@ class FunctionWrapper<T> {
     init(f: T) { self.method = f }
 }
 
-private let mainBoundleName = NSBundle.mainBundle().infoDictionary?["CFBundleName"] as? String ?? "CuriosTextApp"
+private let mainBoundleName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "CuriosTextApp"
 
 class Moduler {
 
-    class func target(targetName: String, performAction actionName: String, paras: AnyObject?, inBundle name: String = mainBoundleName) -> Unmanaged<AnyObject>? {
+    class func target(_ targetName: String, performAction actionName: String, paras: AnyObject?, inBundle name: String = mainBoundleName) -> Unmanaged<AnyObject>? {
         
         let bundle = name
         let target = targetName
@@ -27,8 +27,8 @@ class Moduler {
         
 //        let object = aClass.self.init()
         
-        if aClass.respondsToSelector(action) {
-            return aClass.performSelector(action, withObject: paras)
+        if aClass.responds(to: action) {
+            return aClass.perform(action, with: paras)
         } else {
             print("Module '\(aClass)' not respond to selector '\(action)'")
         }

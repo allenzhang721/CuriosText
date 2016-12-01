@@ -13,12 +13,12 @@ import UIKit
 protocol CTASelectorAnimationCellDelegate: class {
     
     
-    func animationCellWillDeleteAnimation(cell: CTASelectorAnimationCell, completedBlock:(() -> ())?)
-    func animationCell(cell: CTASelectorAnimationCell, WillAppendAnimation ani: CTAAnimationName, completedBlock:(() -> ())?)
-    func animationCell(cell: CTASelectorAnimationCell, didChangedToAniamtion ani: CTAAnimationName)
-    func animationCell(cell: CTASelectorAnimationCell, durationDidChanged duration: CGFloat)
-    func animationCell(cell: CTASelectorAnimationCell, delayDidChanged delay: CGFloat)
-    func animationCellAnimationPlayWillBegan(cell: CTASelectorAnimationCell)
+    func animationCellWillDeleteAnimation(_ cell: CTASelectorAnimationCell, completedBlock:(() -> ())?)
+    func animationCell(_ cell: CTASelectorAnimationCell, WillAppendAnimation ani: CTAAnimationName, completedBlock:(() -> ())?)
+    func animationCell(_ cell: CTASelectorAnimationCell, didChangedToAniamtion ani: CTAAnimationName)
+    func animationCell(_ cell: CTASelectorAnimationCell, durationDidChanged duration: CGFloat)
+    func animationCell(_ cell: CTASelectorAnimationCell, delayDidChanged delay: CGFloat)
+    func animationCellAnimationPlayWillBegan(_ cell: CTASelectorAnimationCell)
 }
 
 class CTASelectorAnimationCell: CTASelectorCell {
@@ -40,20 +40,20 @@ class CTASelectorAnimationCell: CTASelectorCell {
         setup()
     }
     
-    private func setup() {
+    fileprivate func setup() {
         
         tabView = CTATabView(frame: bounds)
-        tabView.backgroundColor = UIColor.whiteColor()
+        tabView.backgroundColor = UIColor.white
         tabView.dataSource = self
         tabView.delegate = self
         contentView.addSubview(tabView)
         
         // Constraints
         tabView.translatesAutoresizingMaskIntoConstraints = false
-        tabView.topAnchor.constraintEqualToAnchor(contentView.topAnchor).active = true
-        tabView.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor).active = true
-        tabView.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor).active = true
-        tabView.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor).active = true
+        tabView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        tabView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        tabView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        tabView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
         
         // play View
         playView = CTAGradientButtonView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
@@ -63,10 +63,10 @@ class CTASelectorAnimationCell: CTASelectorCell {
         playView.image = CTAStyleKit.imageOfAnimationplay
         contentView.addSubview(playView)
         playView.translatesAutoresizingMaskIntoConstraints = false
-        playView.topAnchor.constraintEqualToAnchor(contentView.topAnchor).active = true
-        playView.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor).active = true
-        playView.widthAnchor.constraintEqualToConstant(44).active = true
-        playView.heightAnchor.constraintEqualToConstant(44).active = true
+        playView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        playView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        playView.widthAnchor.constraint(equalToConstant: 44).isActive = true
+        playView.heightAnchor.constraint(equalToConstant: 44).isActive = true
         
         
     }
@@ -83,24 +83,24 @@ class CTASelectorAnimationCell: CTASelectorCell {
 
 extension CTASelectorAnimationCell: CTATabViewDataSource {
     
-    func numberOfTabItemsInTabView(view: CTATabView) -> Int {
+    func numberOfTabItemsInTabView(_ view: CTATabView) -> Int {
         
 //        let id = animation?.targetiD
         return animation != nil ? 3 : 1
     }
     
-    func beganOfIndexPath(view: CTATabView) -> NSIndexPath {
+    func beganOfIndexPath(_ view: CTATabView) -> IndexPath {
         
-        if let animation = animation, let index = CTAAnimationName.names.indexOf(animation.animationName) {
+        if let animation = animation, let index = CTAAnimationName.names.index(of: animation.animationName) {
             playView.alpha = 1.0
-            return NSIndexPath(forItem: index, inSection: 0)
+            return IndexPath(item: index, section: 0)
         } else {
             playView.alpha = 0.0
-            return NSIndexPath(forItem: 0, inSection: 0)
+            return IndexPath(item: 0, section: 0)
         }
     }
     
-    func tabViewBeganValue(view: CTATabView,atIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tabViewBeganValue(_ view: CTATabView,atIndexPath indexPath: IndexPath) -> CGFloat {
         
         guard let animation = animation else {
             return 0
@@ -119,7 +119,7 @@ extension CTASelectorAnimationCell: CTATabViewDataSource {
 
 extension CTASelectorAnimationCell: CTATabViewDelegate {
     
-    func tabView(view: CTATabView, didSelectedIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
+    func tabView(_ view: CTATabView, didSelectedIndexPath indexPath: IndexPath, oldIndexPath: IndexPath?) {
         
         if oldIndexPath == nil && indexPath.item == 0 {
             return
@@ -131,11 +131,11 @@ extension CTASelectorAnimationCell: CTATabViewDelegate {
                 
             case (let i, 0) where i > 0:
                 
-                dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                DispatchQueue.main.async(execute: { [weak self] in
                     self?.delegate?.animationCell(self!, WillAppendAnimation: CTAAnimationName.names[i]) {
                         debug_print("animation after add will reload", context: animationChangedContext)
-                        self?.tabView.tabCollectionView.reloadSections(NSIndexSet(index: 0))
-                        UIView.animateWithDuration(0.3, animations: { 
+                        self?.tabView.tabCollectionView.reloadSections(IndexSet(integer: 0))
+                        UIView.animate(withDuration: 0.3, animations: { 
                             self?.playView.alpha = 1.0
                         })
                     }
@@ -144,19 +144,19 @@ extension CTASelectorAnimationCell: CTATabViewDelegate {
                 
             case (0, let i) where i > 0:
                 
-                dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                DispatchQueue.main.async(execute: { [weak self] in
                     self?.delegate?.animationCellWillDeleteAnimation(self!) {
                         
                         debug_print("animation after delete will reload", context: animationChangedContext)
-                        self?.tabView.tabCollectionView.reloadSections(NSIndexSet(index: 0))
-                        UIView.animateWithDuration(0.3, animations: {
+                        self?.tabView.tabCollectionView.reloadSections(IndexSet(integer: 0))
+                        UIView.animate(withDuration: 0.3, animations: {
                             self?.playView.alpha = 0.0
                         })
                     }
                 })
                 
             case (let i, let j) where i > 0 && j > 0:
-                dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                DispatchQueue.main.async(execute: { [weak self] in
                     self?.delegate?.animationCell(self!, didChangedToAniamtion: CTAAnimationName.names[i])
                 })
                 
@@ -167,7 +167,7 @@ extension CTASelectorAnimationCell: CTATabViewDelegate {
         }
     }
     
-    func tabView(view: CTATabView, valueDidChanged value: CGFloat, indexPath: NSIndexPath) {
+    func tabView(_ view: CTATabView, valueDidChanged value: CGFloat, indexPath: IndexPath) {
         
         switch indexPath.item {
         case 1:

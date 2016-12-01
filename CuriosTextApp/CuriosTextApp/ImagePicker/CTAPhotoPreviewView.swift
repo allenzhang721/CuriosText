@@ -14,7 +14,7 @@ class CTAPhotoPreviewView: UIView {
     
     var templateImage: UIImage?
     
-    private var scaleMax: Bool = true
+    fileprivate var scaleMax: Bool = true
     
     var image: UIImage? {
         get { return imageView.image }
@@ -29,9 +29,9 @@ class CTAPhotoPreviewView: UIView {
         return CGRect(x: 0, y: bounds.maxY - 44.0, width: bounds.width, height: 44.0)
     }
     let templateImageView = UIImageView()
-    private let imageView = UIImageView()
-    private let scrollView = UIScrollView()
-    private var tap: UITapGestureRecognizer!
+    fileprivate let imageView = UIImageView()
+    fileprivate let scrollView = UIScrollView()
+    fileprivate var tap: UITapGestureRecognizer!
     
     deinit {
         debug_print("\(#file) deinit", context: deinitContext)
@@ -50,7 +50,7 @@ class CTAPhotoPreviewView: UIView {
 
 // MARK: - Styles
 extension CTAPhotoPreviewView {
-    private func setup() {
+    fileprivate func setup() {
         setupViews()
         setupStyle()
         setupGesture()
@@ -60,31 +60,31 @@ extension CTAPhotoPreviewView {
         addSubview(scrollView)
         scrollView.decelerationRate = UIScrollViewDecelerationRateFast
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.leadingAnchor.constraintEqualToAnchor(leadingAnchor, constant: 0).active = true
-        scrollView.bottomAnchor.constraintEqualToAnchor(bottomAnchor, constant: 0).active = true
-        scrollView.trailingAnchor.constraintEqualToAnchor(trailingAnchor, constant: 0).active = true
-        scrollView.topAnchor.constraintEqualToAnchor(topAnchor, constant: 0).active = true
+        scrollView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
+        scrollView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
         scrollView.delegate = self
         
         scrollView.addSubview(imageView)
         
         addSubview(templateImageView)
         templateImageView.translatesAutoresizingMaskIntoConstraints = false
-        templateImageView.leadingAnchor.constraintEqualToAnchor(leadingAnchor, constant: 0).active = true
-        templateImageView.bottomAnchor.constraintEqualToAnchor(bottomAnchor, constant: 0).active = true
-        templateImageView.trailingAnchor.constraintEqualToAnchor(trailingAnchor, constant: 0).active = true
-        templateImageView.topAnchor.constraintEqualToAnchor(topAnchor, constant: 0).active = true
+        templateImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
+        templateImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        templateImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
+        templateImageView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
         templateImageView.image = templateImage
     }
     
     func setupStyle() {
-        backgroundColor = UIColor.whiteColor()
-        scrollView.backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.white
+        scrollView.backgroundColor = UIColor.clear
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         
         layer.borderWidth = 2
-        layer.borderColor = UIColor.whiteColor().CGColor
+        layer.borderColor = UIColor.white.cgColor
     }
     
     func setupGesture() {
@@ -102,7 +102,7 @@ extension CTAPhotoPreviewView {
 // MARK: - Actions
 extension CTAPhotoPreviewView {
     
-    func tap(sender: UITapGestureRecognizer) {
+    func tap(_ sender: UITapGestureRecognizer) {
         changeScale()
     }
 }
@@ -111,13 +111,13 @@ extension CTAPhotoPreviewView {
 // MARK: - Logics
 extension CTAPhotoPreviewView {
     
-    private func loadImage(image: UIImage?) {
+    fileprivate func loadImage(_ image: UIImage?) {
         if let image = image {loadRealImage(image)} else {loadEmptyImage()}
         
 //        updateImgViewPosition()
     }
     
-    private func loadRealImage(image: UIImage) {
+    fileprivate func loadRealImage(_ image: UIImage) {
         let imgSize = image.size
         let size = scrollView.bounds.size
         let minScale = min(size.width / imgSize.width, size.height / imgSize.height)
@@ -139,14 +139,14 @@ extension CTAPhotoPreviewView {
         scrollView.contentOffset = CGPoint(x: offsetx, y: offsetY)
     }
     
-    private func loadEmptyImage() {
+    fileprivate func loadEmptyImage() {
         imageView.image = nil
         imageView.bounds.size = CGSize.zero
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 1.0
     }
     
-    private func updateImgViewPosition() {
+    fileprivate func updateImgViewPosition() {
         let contentSize = scrollView.contentSize
         let boundSize = scrollView.bounds.size
         let centerX = (contentSize.width - boundSize.width) / 2.0
@@ -160,7 +160,7 @@ extension CTAPhotoPreviewView {
 //        imageView.center = CGPoint(x: centerX, y: centerY)
     }
     
-    private func imageDisplayRect() -> CGRect {
+    fileprivate func imageDisplayRect() -> CGRect {
         if imageView.image == nil {
             return CGRect.zero
         }
@@ -208,20 +208,20 @@ extension CTAPhotoPreviewView {
 
 // MARK: - Delegate 
 extension CTAPhotoPreviewView: UIScrollViewDelegate {
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
     
-    func scrollViewWillBeginZooming(scrollView: UIScrollView, withView view: UIView?) {
+    func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
         
     }
     
-    func scrollViewDidZoom(scrollView: UIScrollView) {
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
         print("Did Zoom")
         updateImgViewPosition()
     }
     
-    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
         print("End Zoom")
 //        updateImgViewPosition()
         scaleMax = scale == scrollView.maximumZoomScale ? true : false
@@ -230,10 +230,10 @@ extension CTAPhotoPreviewView: UIScrollViewDelegate {
 }
 
 extension CTAPhotoPreviewView: UIGestureRecognizerDelegate {
-    override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if gestureRecognizer == tap {
-            let location = gestureRecognizer.locationInView(self)
-            if CGRectContainsPoint(ignoreRect, location) {
+            let location = gestureRecognizer.location(in: self)
+            if ignoreRect.contains(location) {
                 return false
             } else {
                 return true

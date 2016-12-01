@@ -9,8 +9,8 @@
 import UIKit
 
 enum AniCanvasAccessResult {
-    case Success(Int, Container)
-    case Failture
+    case success(Int, Container)
+    case failture
 }
 
 class AniCanvas: NSObject {
@@ -28,23 +28,23 @@ class AniCanvas: NSObject {
         self.canvas = canvas
     }
     
-    func accessContainerBy(ID: String) -> AniCanvasAccessResult {
-        if let i = (canvas.containers.indexOf{$0.identifier == ID}) {
-            return AniCanvasAccessResult.Success(i, canvas.containers[i])
+    func accessContainerBy(_ ID: String) -> AniCanvasAccessResult {
+        if let i = (canvas.containers.index{$0.identifier == ID}) {
+            return AniCanvasAccessResult.success(i, canvas.containers[i])
         } else {
-            return AniCanvasAccessResult.Failture
+            return AniCanvasAccessResult.failture
         }
     }
     
-    func aniCanvasByAnimationAt(index: Int) -> AniCanvas {
+    func aniCanvasByAnimationAt(_ index: Int) -> AniCanvas {
         
         let filtedCanvas = canvas.canvasWithAnimationAt(index)
         let nextAniCanvas = AniCanvas(canvas: filtedCanvas)
         return nextAniCanvas
     }
     
-    func aniCanvasByAnimationWith(AniID: String) -> AniCanvas {
-        guard let index = (canvas.animations.indexOf{ $0.ID == AniID }) else {
+    func aniCanvasByAnimationWith(_ AniID: String) -> AniCanvas {
+        guard let index = (canvas.animations.index{ $0.ID == AniID }) else {
             return self
         }
         
@@ -56,7 +56,7 @@ class AniCanvas: NSObject {
 
 extension Canvas {
     
-    private func canvasWithAnimationAt(index: Int) -> Canvas {
+    fileprivate func canvasWithAnimationAt(_ index: Int) -> Canvas {
         guard animations.count > 0 && 0 <= index && index < animations.count else {
             print("The Animation Index is Invalid.")
             return self
@@ -68,7 +68,7 @@ extension Canvas {
         var notDisplayContainerID = [String]()
         
         // 0..<Index Animations
-        let preAnimations = animations[0..<index].reverse()
+        let preAnimations = animations[0..<index].reversed()
         var firstTargetIDs = [String]()
         var firstTargetAnis = [Animation]()
         for ani in preAnimations {
@@ -117,14 +117,14 @@ extension Canvas {
 
 extension AniCanvas: UICollectionViewDataSource {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return containers.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath)
         -> UICollectionViewCell {
             
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(canvasItemIdentifier, forIndexPath: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: canvasItemIdentifier, for: indexPath)
                 as! ContainerCell
             
 //                        cell.backgroundColor = UIColor.redColor()
@@ -137,7 +137,7 @@ extension AniCanvas: UICollectionViewDataSource {
 
 extension AniCanvas: CanvasLayoutDataSource {
     
-    func layerAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> Layerable? {
+    func layerAttributesForItemAtIndexPath(_ indexPath: IndexPath) -> Layerable? {
         if indexPath.item < containers.count {
             return containers[indexPath.item]
         } else {
@@ -148,11 +148,11 @@ extension AniCanvas: CanvasLayoutDataSource {
 
 extension AniCanvas: AniPlayCanvasViewDataSource {
     
-    func animationsForAniPlayCanvasView(view: AniPlayCanvasView) -> [Animation]? {
+    func animationsForAniPlayCanvasView(_ view: AniPlayCanvasView) -> [Animation]? {
         
         return canvas.animations
     }
-    func containerItemForAniPlayCanvasView(view: AniPlayCanvasView, containerID: String) -> AniCanvasAccessResult {
+    func containerItemForAniPlayCanvasView(_ view: AniPlayCanvasView, containerID: String) -> AniCanvasAccessResult {
         return accessContainerBy(containerID)
     }
 }

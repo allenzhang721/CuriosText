@@ -16,14 +16,14 @@ import UIKit
 //    }
 //}
 
-public class CTAColorPickerNodeView: UIControl {
+open class CTAColorPickerNodeView: UIControl {
     
-    private(set) var selectedColor: UIColor?
-    private var colors = [UIColor]()
-    private var colorHexs = [String]()
-    private var colorLayers = [CAShapeLayer]()
-    private var indicatorLayer = CAShapeLayer()
-    private var selectedLayer: CAShapeLayer?
+    fileprivate(set) var selectedColor: UIColor?
+    fileprivate var colors = [UIColor]()
+    fileprivate var colorHexs = [String]()
+    fileprivate var colorLayers = [CAShapeLayer]()
+    fileprivate var indicatorLayer = CAShapeLayer()
+    fileprivate var selectedLayer: CAShapeLayer?
     
 //    func hex(color: UIColor) -> String {
 //        let r = color.toHex()
@@ -35,9 +35,9 @@ public class CTAColorPickerNodeView: UIControl {
         self.colors = colors
         for c in colors {
             let l = CAShapeLayer()
-            l.fillColor = c.CGColor
+            l.fillColor = c.cgColor
             l.lineWidth = 0.5
-            l.strokeColor = UIColor.lightGrayColor().CGColor
+            l.strokeColor = UIColor.lightGray.cgColor
             layer.addSublayer(l)
             colorLayers.append(l)
         }
@@ -46,10 +46,10 @@ public class CTAColorPickerNodeView: UIControl {
         self.colorHexs = hexs
         
         indicatorLayer.lineWidth = 2
-        indicatorLayer.fillColor = UIColor.clearColor().CGColor
+        indicatorLayer.fillColor = UIColor.clear.cgColor
         indicatorLayer.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
-        indicatorLayer.strokeColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1.000).CGColor
-        indicatorLayer.path = selectedPath(frame: CGRect(x: 0, y: 0, width: 15, height: 15)).CGPath
+        indicatorLayer.strokeColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1.000).cgColor
+        indicatorLayer.path = selectedPath(frame: CGRect(x: 0, y: 0, width: 15, height: 15)).cgPath
         layer.addSublayer(indicatorLayer)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
@@ -60,9 +60,9 @@ public class CTAColorPickerNodeView: UIControl {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func changedToColor(color: UIColor?) {
+    func changedToColor(_ color: UIColor?) {
         
-        if let c = color, let index = colorHexs.indexOf(c.toHex().0) {
+        if let c = color, let index = colorHexs.index(of: c.toHex().0) {
             selectedColor = colors[index]
             selectedLayer = colorLayers[index]
             changedIndicator(colorLayers[index].position, hidden: false)
@@ -73,45 +73,45 @@ public class CTAColorPickerNodeView: UIControl {
         }
     }
     
-    func changeColors(colors: [UIColor]) {
+    func changeColors(_ colors: [UIColor]) {
         self.colors = colors
-        for (i, c) in colors.enumerate() {
+        for (i, c) in colors.enumerated() {
             let l = colorLayers[i]
-            l.fillColor = c.CGColor
+            l.fillColor = c.cgColor
         }
         
         let hexs = colors.map{$0.toHex().0}
         self.colorHexs = hexs
     }
     
-    func changedIndicator(position: CGPoint, hidden: Bool) {
+    func changedIndicator(_ position: CGPoint, hidden: Bool) {
         
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         indicatorLayer.position = position
-        indicatorLayer.hidden = hidden
+        indicatorLayer.isHidden = hidden
         CATransaction.commit()
     }
     
-    @objc private func tap(sender: UITapGestureRecognizer) {
-        let location = sender.locationInView(self)
+    @objc fileprivate func tap(_ sender: UITapGestureRecognizer) {
+        let location = sender.location(in: self)
         
-        for (i, l) in colorLayers.enumerate() {
-            if CGRectContainsPoint(l.frame, location) {
-                if let selectedLayer = selectedLayer where selectedLayer == l {
+        for (i, l) in colorLayers.enumerated() {
+            if l.frame.contains(location) {
+                if let selectedLayer = selectedLayer, selectedLayer == l {
                     
                     
                 } else {
                     selectedColor = colors[i]
                     selectedLayer = l
                     changedToColor(colors[i])
-                    sendActionsForControlEvents(.TouchUpInside)
+                    sendActions(for: .touchUpInside)
                 }
             }
         }
     }
     
-    override public func layoutSubviews() {
+    override open func layoutSubviews() {
         
         let lineSpacing = CGFloat(0)
         let itemSpacing = CGFloat(2)
@@ -133,8 +133,8 @@ public class CTAColorPickerNodeView: UIControl {
         let pathX = (itemWidth - pathSide) / 2.0
         let pathY = (itemHeight - pathSide) / 2.0
         
-        for (i, l) in colorLayers.enumerate() {
-            let path = UIBezierPath(ovalInRect: CGRect(x: pathX, y: pathY, width: pathSide, height: pathSide))
+        for (i, l) in colorLayers.enumerated() {
+            let path = UIBezierPath(ovalIn: CGRect(x: pathX, y: pathY, width: pathSide, height: pathSide))
             if i < first {
                 let x = rect.minX + firstLineLeft + itemSpacing * CGFloat(i) + itemWidth * CGFloat(i)
                 let y = rect.minY
@@ -144,22 +144,22 @@ public class CTAColorPickerNodeView: UIControl {
                 let y = rect.minY + itemHeight + lineSpacing
                 l.frame = CGRect(x: x, y: y, width: itemWidth, height: itemHeight)
             }
-            l.path = path.CGPath
+            l.path = path.cgPath
         }
         
         changedToColor(selectedColor)
     }
     
-    func selectedPath(frame frame: CGRect = CGRectMake(0, 0, 20, 20)) -> UIBezierPath {
+    func selectedPath(frame: CGRect = CGRect(x: 0, y: 0, width: 20, height: 20)) -> UIBezierPath {
         
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
-        bezierPath.moveToPoint(CGPointMake(frame.minX + 0.00000 * frame.width, frame.minY + 0.48333 * frame.height))
-        bezierPath.addCurveToPoint(CGPointMake(frame.minX + 0.33333 * frame.width, frame.minY + 0.83333 * frame.height), controlPoint1: CGPointMake(frame.minX + 0.33333 * frame.width, frame.minY + 0.83333 * frame.height), controlPoint2: CGPointMake(frame.minX + 0.33333 * frame.width, frame.minY + 0.83333 * frame.height))
-        bezierPath.addLineToPoint(CGPointMake(frame.minX + 1.00000 * frame.width, frame.minY + 0.13333 * frame.height))
-        bezierPath.lineCapStyle = .Round;
+        bezierPath.move(to: CGPoint(x: frame.minX + 0.00000 * frame.width, y: frame.minY + 0.48333 * frame.height))
+        bezierPath.addCurve(to: CGPoint(x: frame.minX + 0.33333 * frame.width, y: frame.minY + 0.83333 * frame.height), controlPoint1: CGPoint(x: frame.minX + 0.33333 * frame.width, y: frame.minY + 0.83333 * frame.height), controlPoint2: CGPoint(x: frame.minX + 0.33333 * frame.width, y: frame.minY + 0.83333 * frame.height))
+        bezierPath.addLine(to: CGPoint(x: frame.minX + 1.00000 * frame.width, y: frame.minY + 0.13333 * frame.height))
+        bezierPath.lineCapStyle = .round;
         
-        bezierPath.lineJoinStyle = .Round;
+        bezierPath.lineJoinStyle = .round;
         
         bezierPath.lineWidth = 2
         

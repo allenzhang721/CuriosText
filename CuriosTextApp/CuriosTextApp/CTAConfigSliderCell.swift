@@ -37,14 +37,14 @@ class CTAConfigSliderCell: CTAConfigCell {
     
     func setup() {
         
-        slider = CTASliderView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)), attribute: CTASliderAttributes(showMinorLine: false, seniorRatio: 0.7))
-        slider.addTarget(self, action: #selector(CTAConfigSliderCell.sliderValueChanged(_:)), forControlEvents: .ValueChanged)
+        slider = CTASliderView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: 44)), attribute: CTASliderAttributes(showMinorLine: false, seniorRatio: 0.7))
+        slider.addTarget(self, action: #selector(CTAConfigSliderCell.sliderValueChanged(_:)), for: .valueChanged)
         slider.maxiumValue = 3
         slider.minumValue = 0
         
         contentView.addSubview(slider)
         
-        hudLabel.textAlignment = .Center
+        hudLabel.textAlignment = .center
         hudLabel.textColor = CTAStyleKit.selectedColor
         contentView.addSubview(hudLabel)
     }
@@ -56,7 +56,7 @@ class CTAConfigSliderCell: CTAConfigCell {
         hudLabel.frame = CGRect(x: bounds.maxX - 60, y: 0, width: 60, height: bounds.height)
     }
     
-    func sliderValueChanged(sender: CTASliderView) {
+    func sliderValueChanged(_ sender: CTASliderView) {
         
         let realValue = min(slider.maxiumValue, max(sender.value, slider.minumValue))
         valueDidChangedBlock?(realValue)

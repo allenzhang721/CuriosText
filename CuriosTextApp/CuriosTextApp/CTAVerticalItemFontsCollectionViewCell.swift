@@ -31,12 +31,12 @@ class CTAVerticalItemFontsCollectionViewCell: CTAVerticalItemCollectionViewCell 
         
         view = UILabel(frame: bounds)
         contentView.addSubview(view)
-        view.textAlignment = .Center
+        view.textAlignment = .center
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.centerXAnchor.constraintEqualToAnchor(centerXAnchor).active = true
-        view.centerYAnchor.constraintEqualToAnchor(centerYAnchor).active = true
-        view.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
-        view.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
+        view.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        view.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        view.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        view.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
     }
     
     override func update() {
@@ -69,9 +69,9 @@ class CTAVerticalItemFontsCollectionViewCell: CTAVerticalItemCollectionViewCell 
         
     }
     
-    override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         
-        super.applyLayoutAttributes(layoutAttributes)
+        super.apply(layoutAttributes)
         
         guard let layoutAttributes = layoutAttributes as? CollectionViewAttributes else {
             return
@@ -81,7 +81,7 @@ class CTAVerticalItemFontsCollectionViewCell: CTAVerticalItemCollectionViewCell 
         
         if actived != layoutAttributes.actived {
             actived = layoutAttributes.actived
-            UIView.transitionWithView(self, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {[weak self] () -> Void in
+            UIView.transition(with: self, duration: 0.3, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {[weak self] () -> Void in
                 
                 if let sr = self {
                     sr.update()

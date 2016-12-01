@@ -27,11 +27,11 @@ let animationChangedContext = PrintContext(shouldPrint: false, context: "animati
 let deinitContext = PrintContext(shouldPrint: true, context: "deinit")
 
 // other swift flags : -D DEBUG
-public func debug_print<T>(value: T,file: String = #file, line: Int = #line ,function: String = #function, context: PrintContext = defaultContext) {
+public func debug_print<T>(_ value: T,file: String = #file, line: Int = #line ,function: String = #function, context: PrintContext = defaultContext) {
     
     #if DEBUG
     if context.shouldPrint {
-        print("<\(((file as NSString).lastPathComponent as NSString).stringByDeletingPathExtension) : \(line)>: \(function)")
+        print("<\(((file as NSString).lastPathComponent as NSString).deletingPathExtension) : \(line)>: \(function)")
         print(value)
         print("-------\n")
     }

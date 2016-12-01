@@ -40,12 +40,12 @@ final class CTAColorsManger {
         
         var c = [String: ContiguousArray<CTAColorItem>]()
 
-        for (asection, catagory) in colorsCatagory.enumerate() {
+        for (asection, catagory) in colorsCatagory.enumerated() {
             
             var items = ContiguousArray<CTAColorItem>()
             
             for i in 0..<9 {
-              let color =  CTAStyleKit.performSelector(Selector("\(catagory)\(i)")).takeUnretainedValue() as! UIColor
+              let color =  CTAStyleKit.perform(Selector("\(catagory)\(i)")).takeUnretainedValue() as! UIColor
                 let item = CTAColorItem(color: color)
                 items.append(item)
             }
@@ -56,15 +56,15 @@ final class CTAColorsManger {
         return c
     }()
     
-    class func updateSection(section: Int, withItem newItem: Int) {
+    class func updateSection(_ section: Int, withItem newItem: Int) {
         
-        if let indexSection = (indexPaths.indexOf{ $0.section == section }) {
+        if let indexSection = (indexPaths.index{ $0.section == section }) {
             
             indexPaths[indexSection] = CTAIndexPath(section: section, item: newItem)
         }
     }
     
-    class func itemAtSection(section: Int) -> Int? {
+    class func itemAtSection(_ section: Int) -> Int? {
         
         guard section < colorsCatagory.count else {
             return nil
@@ -79,21 +79,21 @@ final class CTAColorsManger {
         
     }
     
-    class func colorAtIndexPath(indexPath: NSIndexPath) -> CTAColorItem? {
+    class func colorAtIndexPath(_ indexPath: IndexPath) -> CTAColorItem? {
         let key = CTAColorsManger.colorsCatagory[indexPath.section]
         let color = CTAColorsManger.colors[key]![indexPath.item]
         return color
     }
     
-    class func indexPathOfColor(colorHex: String) -> NSIndexPath? {
+    class func indexPathOfColor(_ colorHex: String) -> IndexPath? {
         
-        for (section,catagory) in colorsCatagory.enumerate() {
+        for (section,catagory) in colorsCatagory.enumerated() {
             
             let items = colors[catagory]!
             
-            for (i, item) in items.enumerate() {
+            for (i, item) in items.enumerated() {
                 if item.colorHex == colorHex {
-                    return NSIndexPath(forItem: i, inSection: section)
+                    return IndexPath(item: i, section: section)
                 }
             }
         }

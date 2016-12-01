@@ -14,26 +14,26 @@ final class CTASelectorColorsCell: CTASelectorCell {
     
 //    private var view: CTAColorPickerView!
     
-    private var view: CTAColorPickerNodeCollectionView!
+    fileprivate var view: CTAColorPickerNodeCollectionView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setup()
     }
     
-    private func setup() {
+    fileprivate func setup() {
         
         clipsToBounds = false
 //        backgroundColor = UIColor.clearColor()
-        view = CTAColorPickerNodeCollectionView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)))
+        view = CTAColorPickerNodeCollectionView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: 88)))
 //        view.backgroundColor = UIColor.clearColor()
         contentView.addSubview(view)
 //        view.backgroundColor = CTAStyleKit.intoDreams1
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
-        view.topAnchor.constraintEqualToAnchor(topAnchor).active = true
-        view.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
-        view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
+        view.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        view.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        view.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        view.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         
 //        view.dataSource = self
 //        view.delegate = self
@@ -69,21 +69,21 @@ final class CTASelectorColorsCell: CTASelectorCell {
         view.willBeganDisplay()
     }
     
-    override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
+    override func addTarget(_ target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
         
-        view.addTarget(target, action: action, forControlEvents: controlEvents)
+        view.addTarget(target, action: action, for: controlEvents)
     }
     
     override func removeAllTarget() {
         
-        for target in view.allTargets() {
+        for target in view.allTargets {
             
-            guard let actions = view.actionsForTarget(target, forControlEvent: view.allControlEvents()) else {
+            guard let actions = view.actions(forTarget: target, forControlEvent: view.allControlEvents) else {
                 continue
             }
             
             for action in actions {
-                view.removeTarget(target, action: Selector(action), forControlEvents: view.allControlEvents())
+                view.removeTarget(target, action: Selector(action), for: view.allControlEvents)
             }
         }
     }

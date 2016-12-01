@@ -20,34 +20,34 @@ class CTANoticeDomain: CTABaseDomain {
         return _instance!
     }
     
-    func unReadNoticeCount(userID:String, compelecationBlock: (CTADomainInfo!) -> Void){
+    func unReadNoticeCount(_ userID:String, compelecationBlock: @escaping (CTADomainInfo!) -> Void){
         CTAUnreadNoticeCountRequest(userID: userID).startWithCompletionBlockWithSuccess { (response) in
             switch response.result{
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
                 if result {
-                    let count = json[key(.NoticeCount)].int ?? 0;
+                    let count = json[key(.noticeCount)].int ?? 0;
                     compelecationBlock(CTADomainInfo(result: true, successType: count))
                 }else {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func noticeList(userID:String, start:Int, size:Int, compelecationBlock: (CTADomainListInfo!) -> Void){
+    func noticeList(_ userID:String, start:Int, size:Int, compelecationBlock: @escaping (CTADomainListInfo!) -> Void){
         CTANoticeListRequest(userID: userID, start: start, size: size).startWithCompletionBlockWithSuccess { (response) in
             switch response.result{
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
                 if result {
-                    let listArray = json[key(.List)].array;
+                    let listArray = json[key(.list)].array;
                     var noticeArray: Array<CTANoticeModel> = [];
                     if listArray != nil{
                         for i in 0..<listArray!.count {
@@ -60,16 +60,16 @@ class CTANoticeDomain: CTABaseDomain {
                 }else {
                     compelecationBlock(CTADomainListInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func deleteNotice(noticeID:String, compelecationBlock: (CTADomainInfo!) -> Void){
+    func deleteNotice(_ noticeID:String, compelecationBlock: @escaping (CTADomainInfo!) -> Void){
         CTADeleteNoticeRequest(noticeID: noticeID).startWithCompletionBlockWithSuccess { (response) in
             switch response.result{
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -78,16 +78,16 @@ class CTANoticeDomain: CTABaseDomain {
                 }else {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestNoticeError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func clearNotices(userID:String, compelecationBlock: (CTADomainInfo!) -> Void){
+    func clearNotices(_ userID:String, compelecationBlock: @escaping (CTADomainInfo!) -> Void){
         CTAClearNoticesRequest(userID: userID).startWithCompletionBlockWithSuccess { (response) in
             switch response.result{
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -96,17 +96,17 @@ class CTANoticeDomain: CTABaseDomain {
                 }else {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
 
         }
     }
     
-    func setNoticesReaded(userID:String, compelecationBlock: (CTADomainInfo!) -> Void){
+    func setNoticesReaded(_ userID:String, compelecationBlock: @escaping (CTADomainInfo!) -> Void){
         CTASetNoticesReadedRequest(userID: userID).startWithCompletionBlockWithSuccess { (response) in
             switch response.result{
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -115,8 +115,8 @@ class CTANoticeDomain: CTABaseDomain {
                 }else {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }

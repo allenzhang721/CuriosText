@@ -21,7 +21,7 @@ final class CTAPreviewCanvasController {
     
     
 
-    class func configPreviewView(view: CTAPreviewView, container: ContainerVMProtocol, animationBinder: CTAAnimationBinder?, publishID: String, loadAnimation: Bool = false) {
+    class func configPreviewView(_ view: CTAPreviewView, container: ContainerVMProtocol, animationBinder: CTAAnimationBinder?, publishID: String, loadAnimation: Bool = false) {
         
         view.clearViews()
         
@@ -33,7 +33,7 @@ final class CTAPreviewCanvasController {
 //        configPreviewView(view, container: container, publishID: publishID)
     }
     
-    class func configPreviewView(view: CTAPreviewView, container: ContainerVMProtocol, publishID: String, cache: CTACache?, needLoadContents: Bool = true) {
+    class func configPreviewView(_ view: CTAPreviewView, container: ContainerVMProtocol, publishID: String, cache: CTACache?, needLoadContents: Bool = true) {
         
         
 //        debug_print(container.type, context: aniContext)
@@ -44,7 +44,7 @@ final class CTAPreviewCanvasController {
         
         switch container.type {
             
-        case .Text:
+        case .text:
             let inset = container.inset
             let size = container.size
             let text = (container as! TextContainerVMProtocol).textElement?.attributeString
@@ -57,7 +57,7 @@ final class CTAPreviewCanvasController {
             
             view.appendView(textView)
             
-        case .Image:
+        case .image:
 //            let inset = container.inset
             let size = container.size
 //            let imageName = (container as! ImageContainerVMProtocol).imageElement?.resourceName
@@ -80,13 +80,13 @@ final class CTAPreviewCanvasController {
     
     
     
-    func configPreviewView(view: CTAPreviewView, container: ContainerVMProtocol, animationBinder: CTAAnimationBinder) {
+    func configPreviewView(_ view: CTAPreviewView, container: ContainerVMProtocol, animationBinder: CTAAnimationBinder) {
         
         
     }
     
     
-    func generateAnimationPlays(ani: [CTAAnimationBinder]) {
+    func generateAnimationPlays(_ ani: [CTAAnimationBinder]) {
         
 
         
@@ -95,7 +95,7 @@ final class CTAPreviewCanvasController {
         
     }
     
-    class func splits(array: [CTAAnimationBinder]) -> [[CTAAnimationBinder]] {
+    class func splits(_ array: [CTAAnimationBinder]) -> [[CTAAnimationBinder]] {
         
         let count = array.count
         guard count > 1 else {
@@ -105,7 +105,7 @@ final class CTAPreviewCanvasController {
         var result = [[CTAAnimationBinder]]()
         var began = 0
         
-        for (i, b) in array.enumerate() {
+        for (i, b) in array.enumerated() {
             
             guard i > 0 else {
                 continue

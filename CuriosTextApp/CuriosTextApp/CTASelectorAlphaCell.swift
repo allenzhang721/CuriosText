@@ -43,7 +43,7 @@ class CTASelectorAlphaCell: CTASelectorCell {
         sliderView.minumValue = 0.0
         sliderView.maxiumValue = 1.0
         addSubview(sliderView)
-        hudLabel.textAlignment = .Center
+        hudLabel.textAlignment = .center
         hudLabel.textColor = CTAStyleKit.selectedColor
         addSubview(hudLabel)
     }
@@ -67,27 +67,27 @@ class CTASelectorAlphaCell: CTASelectorCell {
         text = "\(Int(max(0, min(1, scale)) * 100))%"
     }
     
-    override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
+    override func addTarget(_ target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
         
-        sliderView.addTarget(target, action: action, forControlEvents: controlEvents)
-        sliderView.addTarget(self, action: #selector(CTASelectorAlphaCell.valueChanged(_:)), forControlEvents: controlEvents)
+        sliderView.addTarget(target, action: action, for: controlEvents)
+        sliderView.addTarget(self, action: #selector(CTASelectorAlphaCell.valueChanged(_:)), for: controlEvents)
     }
     
     override func removeAllTarget() {
         
-        for target in sliderView.allTargets() {
+        for target in sliderView.allTargets {
             
-            guard let actions = sliderView.actionsForTarget(target, forControlEvent: sliderView.allControlEvents()) else {
+            guard let actions = sliderView.actions(forTarget: target, forControlEvent: sliderView.allControlEvents) else {
                 continue
             }
             
             for action in actions {
-                sliderView.removeTarget(target, action: Selector(action), forControlEvents: sliderView.allControlEvents())
+                sliderView.removeTarget(target, action: Selector(action), for: sliderView.allControlEvents)
             }
         }
     }
     
-    func valueChanged(sender: AnyObject) {
+    func valueChanged(_ sender: AnyObject) {
         
         text = "\(Int(max(0, min(1, sliderView.value)) * 100))%"
     }

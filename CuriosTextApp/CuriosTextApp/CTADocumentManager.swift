@@ -15,25 +15,25 @@ class CTADocumentManager {
         return CTADocumentManager.openedDocument?.fileURL.lastPathComponent
     }
     
-    class func generateDocumentURL(fileRootURL: NSURL) -> NSURL {
+    class func generateDocumentURL(_ fileRootURL: URL) -> URL {
         
         let publishID = CTAIDGenerator.generateID()
-        let fileURL = fileRootURL.URLByAppendingPathComponent(publishID)
+        let fileURL = fileRootURL.appendingPathComponent(publishID)
         return fileURL
     }
     
-    class func createNewDocumentAt(docUrl: NSURL, page:CTAPage?, completedBlock:((Bool) -> Void)?) {
+    class func createNewDocumentAt(_ docUrl: URL, page:CTAPage?, completedBlock:((Bool) -> Void)?) {
         
         let doc = CTADocument(fileURL: docUrl, page: page)
-        doc.saveToURL(docUrl, forSaveOperation: .ForCreating) { (success) -> Void in
+        doc.save(to: docUrl, for: .forCreating) { (success) -> Void in
             completedBlock?(success)
         }
     }
     
-    class func openDocument(docUrl: NSURL, completedBlock:((Bool) -> Void)?) {
+    class func openDocument(_ docUrl: URL, completedBlock:((Bool) -> Void)?) {
         
         let doc = CTADocument(fileURL: docUrl, page: nil)
-        doc.openWithCompletionHandler { (success) -> Void in
+        doc.open { (success) -> Void in
             
             if success {
                 openedDocument = doc
@@ -43,13 +43,13 @@ class CTADocumentManager {
         }
     }
     
-    class func closeDoucment(completedBlock:((Bool) -> Void)?) {
+    class func closeDoucment(_ completedBlock:((Bool) -> Void)?) {
         
         guard let openedDocument = openedDocument else {
             return
         }
         
-        openedDocument.closeWithCompletionHandler { (success) -> Void in
+        openedDocument.close { (success) -> Void in
             
             if success {
                 self.openedDocument = nil
@@ -59,26 +59,26 @@ class CTADocumentManager {
         }
     }
     
-    class func saveDoucment(completedBlock:((Bool) -> Void)?) {
+    class func saveDoucment(_ completedBlock:((Bool) -> Void)?) {
         
         guard let openedDocument = openedDocument else {
             completedBlock?(false)
             return
         }
         
-        openedDocument.saveToURL(openedDocument.fileURL, forSaveOperation: .ForOverwriting) { (success) in
+        openedDocument.save(to: openedDocument.fileURL, for: .forOverwriting) { (success) in
             if success {
                 
-                let urls = try! NSFileManager.defaultManager().contentsOfDirectoryAtURL(openedDocument.fileURL, includingPropertiesForKeys: nil, options: NSDirectoryEnumerationOptions(rawValue: 0))
+                let urls = try! FileManager.default.contentsOfDirectory(at: openedDocument.fileURL, includingPropertiesForKeys: nil, options: FileManager.DirectoryEnumerationOptions(rawValue: 0))
                 
                 for u in urls {
                     
                     debug_print(u, context: previewConttext)
                     
-                    if let data = NSData(contentsOfURL: u), let apage = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
+                    if let data = try? Data(contentsOf: u), let apage = NSKeyedUnarchiver.unarchiveObject(with: data) as? CTAPage {
                         
                         for c in apage.containers {
-                            if c.type == .Text {
+                            if c.type == .text {
                                 debug_print("didSavedData = \(c.textElement?.texts)", context: previewConttext)
                                 //                    debugPrint(c.textElement?.texts, context: previewConttext)
                             }
@@ -91,7 +91,7 @@ class CTADocumentManager {
             
             
             for c in openedDocument.page!.containers {
-                if c.type == .Text {
+                if c.type == .text {
                     debug_print("saved page = \(c.textElement?.texts)", context: previewConttext)
 //                    debugPrint(c.textElement?.texts, context: previewConttext)
                 }
@@ -105,12 +105,12 @@ class CTADocumentManager {
 
 extension CTADocumentManager {
     
-    class func uploadFiles(progressBlock:((String, Float) -> Void)?, completedBlock:((Bool, String, String) -> Void)?) { // success?, publishID, 'publishID' + 'Page'
+    class func uploadFiles(_ progressBlock:((String, Float) -> Void)?, completedBlock:((Bool, String, String) -> Void)?) { // success?, publishID, 'publishID' + 'Page'
         
         guard let openedDocument = openedDocument else {
             return
         }
-        let publishID = openedDocument.fileURL.lastPathComponent!
+        let publishID = openedDocument.fileURL.lastPathComponent
         let result = openedDocument.filePaths()
         let files = result.1
         let publishPath = result.0

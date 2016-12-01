@@ -11,7 +11,7 @@ import pop
 
 class CTAHeartAnimationView: UIView {
     
-    private let heartLayer = CAShapeLayer()
+    fileprivate let heartLayer = CAShapeLayer()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,9 +28,9 @@ class CTAHeartAnimationView: UIView {
 //        playLikeAnimation()
 //    }
     
-    private func setup() {
+    fileprivate func setup() {
         layer.addSublayer(heartLayer)
-        heartLayer.fillColor = UIColor.redColor().CGColor
+        heartLayer.fillColor = UIColor.red.cgColor
     }
     
 //    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -49,45 +49,45 @@ class CTAHeartAnimationView: UIView {
         heartLayer.frame = CGRect(origin: layerOrigin, size: layerSize)
     }
     
-    func playLikeAnimation(completed:(() -> ())?) {
+    func playLikeAnimation(_ completed:(() -> ())?) {
         
         heartLayer.pop_removeAllAnimations()
  
         let scallY = POPSpringAnimation(propertyNamed: kPOPLayerScaleX)
-        scallY.fromValue = 0.5
-        scallY.toValue = 1.0
-        scallY.springBounciness = 20
+        scallY?.fromValue = 0.5
+        scallY?.toValue = 1.0
+        scallY?.springBounciness = 20
         
         let tranY = POPSpringAnimation(propertyNamed: kPOPLayerPositionY)
-        tranY.fromValue = bounds.height / 2.0 * 1.5
-        tranY.toValue = bounds.height / 2.0
-        tranY.springBounciness = 20
+        tranY?.fromValue = bounds.height / 2.0 * 1.5
+        tranY?.toValue = bounds.height / 2.0
+        tranY?.springBounciness = 20
 
         let opacity = POPBasicAnimation(propertyNamed: kPOPLayerOpacity)
-        opacity.fromValue = 0
-        opacity.toValue = 1
+        opacity?.fromValue = 0
+        opacity?.toValue = 1
 
-        layer.pop_addAnimation(scallY, forKey: "scaleX")
-        heartLayer.pop_addAnimation(tranY, forKey: "TranY")
-        heartLayer.pop_addAnimation(opacity, forKey: "Opacity")
+        layer.pop_add(scallY, forKey: "scaleX")
+        heartLayer.pop_add(tranY, forKey: "TranY")
+        heartLayer.pop_add(opacity, forKey: "Opacity")
         
-        scallY.completionBlock = {[weak self] (ani, finished) in
+        scallY?.completionBlock = {[weak self] (ani, finished) in
             
-            if let sf = self where finished {
+            if let sf = self, finished {
                 sf.dismissAnimation(completed)
             }
         }
     }
     
-    func dismissAnimation(completed: (() -> ())?) {
+    func dismissAnimation(_ completed: (() -> ())?) {
         
         heartLayer.pop_removeAllAnimations()
         let opacity = POPBasicAnimation(propertyNamed: kPOPLayerOpacity)
-        opacity.fromValue = 1
-        opacity.toValue = 0
-        heartLayer.pop_addAnimation(opacity, forKey: "Opacity")
+        opacity?.fromValue = 1
+        opacity?.toValue = 0
+        heartLayer.pop_add(opacity, forKey: "Opacity")
         
-        opacity.completionBlock = {[weak self] (ani, finished) in
+        opacity?.completionBlock = {[weak self] (ani, finished) in
             if finished {
                 completed?()
                 self?.removeFromSuperview()
@@ -110,26 +110,26 @@ class CTAHeartAnimationView: UIView {
 
     
     
-    private func heartPath(frame frame: CGRect = CGRectMake(0, 0, 85, 78)) -> CGPath {
+    fileprivate func heartPath(frame: CGRect = CGRect(x: 0, y: 0, width: 85, height: 78)) -> CGPath {
         //// Color Declarations
         let color = UIColor(red: 1.000, green: 0.000, blue: 0.000, alpha: 1.000)
         
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
-        bezierPath.moveToPoint(CGPointMake(frame.minX + 0.49530 * frame.width, frame.minY + 0.08463 * frame.height))
-        bezierPath.addLineToPoint(CGPointMake(frame.minX + 0.49789 * frame.width, frame.minY + 0.08743 * frame.height))
-        bezierPath.addCurveToPoint(CGPointMake(frame.minX + 0.91208 * frame.width, frame.minY + 0.08743 * frame.height), controlPoint1: CGPointMake(frame.minX + 0.61227 * frame.width, frame.minY + -0.03769 * frame.height), controlPoint2: CGPointMake(frame.minX + 0.79771 * frame.width, frame.minY + -0.03769 * frame.height))
-        bezierPath.addCurveToPoint(CGPointMake(frame.minX + 0.91208 * frame.width, frame.minY + 0.54053 * frame.height), controlPoint1: CGPointMake(frame.minX + 1.02646 * frame.width, frame.minY + 0.21255 * frame.height), controlPoint2: CGPointMake(frame.minX + 1.02646 * frame.width, frame.minY + 0.41541 * frame.height))
-        bezierPath.addLineToPoint(CGPointMake(frame.minX + 0.49789 * frame.width, frame.minY + 0.99363 * frame.height))
-        bezierPath.addLineToPoint(CGPointMake(frame.minX + 0.08370 * frame.width, frame.minY + 0.54053 * frame.height))
-        bezierPath.addCurveToPoint(CGPointMake(frame.minX + 0.00064 * frame.width, frame.minY + 0.27030 * frame.height), controlPoint1: CGPointMake(frame.minX + 0.01633 * frame.width, frame.minY + 0.46684 * frame.height), controlPoint2: CGPointMake(frame.minX + -0.01136 * frame.width, frame.minY + 0.36617 * frame.height))
-        bezierPath.addLineToPoint(CGPointMake(frame.minX + 0.00095 * frame.width, frame.minY + 0.26789 * frame.height))
-        bezierPath.addCurveToPoint(CGPointMake(frame.minX + 0.08370 * frame.width, frame.minY + 0.08743 * frame.height), controlPoint1: CGPointMake(frame.minX + 0.00968 * frame.width, frame.minY + 0.20186 * frame.height), controlPoint2: CGPointMake(frame.minX + 0.03726 * frame.width, frame.minY + 0.13824 * frame.height))
-        bezierPath.addCurveToPoint(CGPointMake(frame.minX + 0.49530 * frame.width, frame.minY + 0.08463 * frame.height), controlPoint1: CGPointMake(frame.minX + 0.19721 * frame.width, frame.minY + -0.03675 * frame.height), controlPoint2: CGPointMake(frame.minX + 0.38073 * frame.width, frame.minY + -0.03768 * frame.height))
-        bezierPath.closePath()
+        bezierPath.move(to: CGPoint(x: frame.minX + 0.49530 * frame.width, y: frame.minY + 0.08463 * frame.height))
+        bezierPath.addLine(to: CGPoint(x: frame.minX + 0.49789 * frame.width, y: frame.minY + 0.08743 * frame.height))
+        bezierPath.addCurve(to: CGPoint(x: frame.minX + 0.91208 * frame.width, y: frame.minY + 0.08743 * frame.height), controlPoint1: CGPoint(x: frame.minX + 0.61227 * frame.width, y: frame.minY + -0.03769 * frame.height), controlPoint2: CGPoint(x: frame.minX + 0.79771 * frame.width, y: frame.minY + -0.03769 * frame.height))
+        bezierPath.addCurve(to: CGPoint(x: frame.minX + 0.91208 * frame.width, y: frame.minY + 0.54053 * frame.height), controlPoint1: CGPoint(x: frame.minX + 1.02646 * frame.width, y: frame.minY + 0.21255 * frame.height), controlPoint2: CGPoint(x: frame.minX + 1.02646 * frame.width, y: frame.minY + 0.41541 * frame.height))
+        bezierPath.addLine(to: CGPoint(x: frame.minX + 0.49789 * frame.width, y: frame.minY + 0.99363 * frame.height))
+        bezierPath.addLine(to: CGPoint(x: frame.minX + 0.08370 * frame.width, y: frame.minY + 0.54053 * frame.height))
+        bezierPath.addCurve(to: CGPoint(x: frame.minX + 0.00064 * frame.width, y: frame.minY + 0.27030 * frame.height), controlPoint1: CGPoint(x: frame.minX + 0.01633 * frame.width, y: frame.minY + 0.46684 * frame.height), controlPoint2: CGPoint(x: frame.minX + -0.01136 * frame.width, y: frame.minY + 0.36617 * frame.height))
+        bezierPath.addLine(to: CGPoint(x: frame.minX + 0.00095 * frame.width, y: frame.minY + 0.26789 * frame.height))
+        bezierPath.addCurve(to: CGPoint(x: frame.minX + 0.08370 * frame.width, y: frame.minY + 0.08743 * frame.height), controlPoint1: CGPoint(x: frame.minX + 0.00968 * frame.width, y: frame.minY + 0.20186 * frame.height), controlPoint2: CGPoint(x: frame.minX + 0.03726 * frame.width, y: frame.minY + 0.13824 * frame.height))
+        bezierPath.addCurve(to: CGPoint(x: frame.minX + 0.49530 * frame.width, y: frame.minY + 0.08463 * frame.height), controlPoint1: CGPoint(x: frame.minX + 0.19721 * frame.width, y: frame.minY + -0.03675 * frame.height), controlPoint2: CGPoint(x: frame.minX + 0.38073 * frame.width, y: frame.minY + -0.03768 * frame.height))
+        bezierPath.close()
 //        color.setFill()
 //        bezierPath.fill()
         
-        return bezierPath.CGPath
+        return bezierPath.cgPath
     }
 }

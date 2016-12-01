@@ -80,7 +80,7 @@ final class CTATextAttributes:NSObject, NSCoding {
     var textColorAlpha = 1.0
     var textKern = 0.0
     var textlineSpacing = 0.0
-    var textAligiment = NSTextAlignment.Left
+    var textAligiment = NSTextAlignment.left
     var textShadowOn = false
     var textShadowOffset = CGPoint.zero
     var textShadowBlurRadius = 0.0
@@ -96,12 +96,12 @@ final class CTATextAttributes:NSObject, NSCoding {
         let family = fontFamily
         let name = fontName
         let size = fontSize
-        let scaleMatrix = NSValue(CGAffineTransform: CGAffineTransformMakeScale(CGFloat(fontScale), CGFloat(fontScale)))
+        let scaleMatrix = NSValue(cgAffineTransform: CGAffineTransform(scaleX: CGFloat(fontScale), y: CGFloat(fontScale)))
         
         let fontAttributes: [String: AnyObject] = [
-            UIFontDescriptorFamilyAttribute: family,
-            UIFontDescriptorNameAttribute: name,
-            UIFontDescriptorSizeAttribute: size,
+            UIFontDescriptorFamilyAttribute: family as AnyObject,
+            UIFontDescriptorNameAttribute: name as AnyObject,
+            UIFontDescriptorSizeAttribute: size as AnyObject,
             UIFontDescriptorMatrixAttribute: scaleMatrix,
         ]
         
@@ -118,25 +118,25 @@ final class CTATextAttributes:NSObject, NSCoding {
             return p
         }()
         
-        let textColor = UIColor(hexString: textColorHex, alpha: Float(textColorAlpha)) ?? UIColor.blackColor()
+        let textColor = UIColor(hexString: textColorHex, alpha: Float(textColorAlpha)) ?? UIColor.black
 
         var attribe = [
             NSFontAttributeName: font,
             NSParagraphStyleAttributeName: paragraphStyle,
             NSForegroundColorAttributeName: textColor,
-            NSKernAttributeName: NSNumber(double: textKern),
+            NSKernAttributeName: NSNumber(value: textKern as Double),
         ]
         
         if needStroke {
             let strokeColorHex = textColorHex == "#000000" ? "#FFFFFF" : "#000000"
-            let strokeColor = UIColor(hexString: strokeColorHex) ?? UIColor.redColor()
-            attribe[NSStrokeWidthAttributeName] = textStrokeWidth
+            let strokeColor = UIColor(hexString: strokeColorHex) ?? UIColor.red
+            attribe[NSStrokeWidthAttributeName] = textStrokeWidth as NSObject?
             attribe[NSStrokeColorAttributeName] = strokeColor
         }
         
         if needShadow {
             let shadow = NSShadow()
-            let shadowColor = UIColor(hexString: textShadowColorHex) ?? UIColor.blueColor()
+            let shadowColor = UIColor(hexString: textShadowColorHex) ?? UIColor.blue
             shadow.shadowBlurRadius = 0.0
             shadow.shadowColor = shadowColor
             shadow.shadowOffset = CGSize(width: 1, height: 1)
@@ -146,17 +146,17 @@ final class CTATextAttributes:NSObject, NSCoding {
         return attribe
     }
     
-    func fontWithFontFamily(family: String, fontName name: String) -> UIFont {
+    func fontWithFontFamily(_ family: String, fontName name: String) -> UIFont {
         
         let afamily = family
         let aname = name
         let size = fontSize
-        let scaleMatrix = NSValue(CGAffineTransform: CGAffineTransformMakeScale(CGFloat(fontScale), CGFloat(fontScale)))
+        let scaleMatrix = NSValue(cgAffineTransform: CGAffineTransform(scaleX: CGFloat(fontScale), y: CGFloat(fontScale)))
         
         let fontAttributes: [String: AnyObject] = [
-            UIFontDescriptorFamilyAttribute: afamily,
-            UIFontDescriptorNameAttribute: aname,
-            UIFontDescriptorSizeAttribute: size,
+            UIFontDescriptorFamilyAttribute: afamily as AnyObject,
+            UIFontDescriptorNameAttribute: aname as AnyObject,
+            UIFontDescriptorSizeAttribute: size as AnyObject,
             UIFontDescriptorMatrixAttribute: scaleMatrix,
         ]
         
@@ -165,17 +165,17 @@ final class CTATextAttributes:NSObject, NSCoding {
         
     }
     
-    func fontWithFontScale(scale: CGFloat) -> UIFont {
+    func fontWithFontScale(_ scale: CGFloat) -> UIFont {
         
         let family = fontFamily
         let name = fontName
         let size = fontSize
-        let scaleMatrix = NSValue(CGAffineTransform: CGAffineTransformMakeScale(scale, scale))
+        let scaleMatrix = NSValue(cgAffineTransform: CGAffineTransform(scaleX: scale, y: scale))
         
         let fontAttributes: [String: AnyObject] = [
-            UIFontDescriptorFamilyAttribute: family,
-            UIFontDescriptorNameAttribute: name,
-            UIFontDescriptorSizeAttribute: size,
+            UIFontDescriptorFamilyAttribute: family as AnyObject,
+            UIFontDescriptorNameAttribute: name as AnyObject,
+            UIFontDescriptorSizeAttribute: size as AnyObject,
             UIFontDescriptorMatrixAttribute: scaleMatrix,
         ]
         
@@ -183,7 +183,7 @@ final class CTATextAttributes:NSObject, NSCoding {
         return UIFont(descriptor: fontdes, size: -1)
     }
     
-    func textAttributesWithFontScale(scale: CGFloat) -> [String: AnyObject] {
+    func textAttributesWithFontScale(_ scale: CGFloat) -> [String: AnyObject] {
         
         let afont = fontWithFontScale(scale)
         let paragraphStyle: NSParagraphStyle = {
@@ -195,18 +195,18 @@ final class CTATextAttributes:NSObject, NSCoding {
         
         let textColor: UIColor = {
             
-            return UIColor.whiteColor()
+            return UIColor.white
         }()
         
         return [
             NSFontAttributeName: afont,
             NSParagraphStyleAttributeName: paragraphStyle,
             NSForegroundColorAttributeName: textColor,
-            NSKernAttributeName: NSNumber(double: textKern)
+            NSKernAttributeName: NSNumber(value: textKern as Double)
         ]
     }
     
-    func textAttributesWithFontScaleWithFontFamily(family: String, fontName name: String) -> [String: AnyObject] {
+    func textAttributesWithFontScaleWithFontFamily(_ family: String, fontName name: String) -> [String: AnyObject] {
         
         let afont = fontWithFontFamily(family, fontName: name)
         let paragraphStyle: NSParagraphStyle = {
@@ -218,19 +218,19 @@ final class CTATextAttributes:NSObject, NSCoding {
         
         let textColor: UIColor = {
             
-            return UIColor.whiteColor()
+            return UIColor.white
         }()
         
         return [
             NSFontAttributeName: afont,
             NSParagraphStyleAttributeName: paragraphStyle,
             NSForegroundColorAttributeName: textColor,
-            NSKernAttributeName: NSNumber(double: textKern)
+            NSKernAttributeName: NSNumber(value: textKern as Double)
         ]
         
     }
     
-    func textAttributesWithTextAlignment(alignment: NSTextAlignment) -> [String: AnyObject] {
+    func textAttributesWithTextAlignment(_ alignment: NSTextAlignment) -> [String: AnyObject] {
         
         let afont = font
         let paragraphStyle: NSParagraphStyle = {
@@ -242,14 +242,14 @@ final class CTATextAttributes:NSObject, NSCoding {
         
         let textColor: UIColor = {
             
-            return UIColor.whiteColor()
+            return UIColor.white
         }()
         
         return [
             NSFontAttributeName: afont,
             NSParagraphStyleAttributeName: paragraphStyle,
             NSForegroundColorAttributeName: textColor,
-            NSKernAttributeName: NSNumber(double: textKern)
+            NSKernAttributeName: NSNumber(value: textKern as Double)
         ]
         
     }
@@ -258,7 +258,7 @@ final class CTATextAttributes:NSObject, NSCoding {
 //        
 //    }
     
-    func textAttributesWithLineSpacing(lineSpacing: CGFloat, textSpacing: CGFloat) -> [String: AnyObject] {
+    func textAttributesWithLineSpacing(_ lineSpacing: CGFloat, textSpacing: CGFloat) -> [String: AnyObject] {
         
         let afont = font
         let paragraphStyle: NSParagraphStyle = {
@@ -270,18 +270,18 @@ final class CTATextAttributes:NSObject, NSCoding {
         
         let textColor: UIColor = {
             
-            return UIColor.whiteColor()
+            return UIColor.white
         }()
         
         return [
             NSFontAttributeName: afont,
             NSParagraphStyleAttributeName: paragraphStyle,
             NSForegroundColorAttributeName: textColor,
-            NSKernAttributeName: NSNumber(float: Float(textSpacing))
+            NSKernAttributeName: NSNumber(value: Float(textSpacing) as Float)
         ]
     }
     
-    func textAttributesWithColor(color: UIColor) -> [String: AnyObject] {
+    func textAttributesWithColor(_ color: UIColor) -> [String: AnyObject] {
         
         let afont = font
         let paragraphStyle: NSParagraphStyle = {
@@ -295,19 +295,19 @@ final class CTATextAttributes:NSObject, NSCoding {
             NSFontAttributeName: afont,
             NSParagraphStyleAttributeName: paragraphStyle,
             NSForegroundColorAttributeName: color,
-            NSKernAttributeName: NSNumber(float: Float(textKern))
+            NSKernAttributeName: NSNumber(value: Float(textKern) as Float)
         ]
         
         if needStroke {
             let strokeColorHex = textColorHex == "#000000" ? "#FFFFFF" : "#000000"
-            let strokeColor = UIColor(hexString: strokeColorHex) ?? UIColor.redColor()
-            attribte[NSStrokeWidthAttributeName] = textStrokeWidth
+            let strokeColor = UIColor(hexString: strokeColorHex) ?? UIColor.red
+            attribte[NSStrokeWidthAttributeName] = textStrokeWidth as NSObject?
             attribte[NSStrokeColorAttributeName] = strokeColor
         }
         
         if needShadow {
             let shadow = NSShadow()
-            let shadowColor = UIColor(hexString: textShadowColorHex) ?? UIColor.blueColor()
+            let shadowColor = UIColor(hexString: textShadowColorHex) ?? UIColor.blue
             shadow.shadowBlurRadius = 0.0
             shadow.shadowColor = shadowColor
             shadow.shadowOffset = CGSize(width: 1, height: 1)
@@ -318,42 +318,42 @@ final class CTATextAttributes:NSObject, NSCoding {
     }
     
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(fontFamily, forKey: TextAttributeName.fontFamily)
-        aCoder.encodeObject(fontName, forKey: TextAttributeName.fontName)
-        aCoder.encodeDouble(fontSize, forKey: TextAttributeName.fontSize)
-        aCoder.encodeDouble(fontScale, forKey: TextAttributeName.fontMatrixScale)
-        aCoder.encodeObject(textColorHex, forKey: TextAttributeName.ForegroundColor)
-        aCoder.encodeDouble(textColorAlpha, forKey: TextAttributeName.ForegroundColorA)
-        aCoder.encodeDouble(textKern, forKey: TextAttributeName.kern)
-        aCoder.encodeDouble(textlineSpacing, forKey: TextAttributeName.paragraphLineSpacing)
-        aCoder.encodeInteger(textAligiment.rawValue, forKey: TextAttributeName.paragraphAlignment)
-        aCoder.encodeBool(textShadowOn, forKey: TextAttributeName.shadowOn)
-        aCoder.encodeCGPoint(textShadowOffset, forKey: TextAttributeName.shadowOffset)
-        aCoder.encodeDouble(textShadowBlurRadius, forKey: TextAttributeName.shadowBlurRadius)
-        aCoder.encodeObject(textShadowColorHex, forKey: TextAttributeName.shadowColor)
-        aCoder.encodeDouble(textShadowColorAplha, forKey: TextAttributeName.shadowColorA)
-        aCoder.encodeBool(needShadow, forKey: TextAttributeName.needShadow)
-        aCoder.encodeBool(needStroke, forKey: TextAttributeName.needStroke)
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(fontFamily, forKey: TextAttributeName.fontFamily)
+        aCoder.encode(fontName, forKey: TextAttributeName.fontName)
+        aCoder.encode(fontSize, forKey: TextAttributeName.fontSize)
+        aCoder.encode(fontScale, forKey: TextAttributeName.fontMatrixScale)
+        aCoder.encode(textColorHex, forKey: TextAttributeName.ForegroundColor)
+        aCoder.encode(textColorAlpha, forKey: TextAttributeName.ForegroundColorA)
+        aCoder.encode(textKern, forKey: TextAttributeName.kern)
+        aCoder.encode(textlineSpacing, forKey: TextAttributeName.paragraphLineSpacing)
+        aCoder.encode(textAligiment.rawValue, forKey: TextAttributeName.paragraphAlignment)
+        aCoder.encode(textShadowOn, forKey: TextAttributeName.shadowOn)
+        aCoder.encode(textShadowOffset, forKey: TextAttributeName.shadowOffset)
+        aCoder.encode(textShadowBlurRadius, forKey: TextAttributeName.shadowBlurRadius)
+        aCoder.encode(textShadowColorHex, forKey: TextAttributeName.shadowColor)
+        aCoder.encode(textShadowColorAplha, forKey: TextAttributeName.shadowColorA)
+        aCoder.encode(needShadow, forKey: TextAttributeName.needShadow)
+        aCoder.encode(needStroke, forKey: TextAttributeName.needStroke)
     }
     
     init?(coder aDecoder: NSCoder) {
-        fontFamily = aDecoder.decodeObjectForKey(TextAttributeName.fontFamily) as! String
-        fontName = aDecoder.decodeObjectForKey(TextAttributeName.fontName) as! String
-        fontSize = aDecoder.decodeDoubleForKey(TextAttributeName.fontSize)
-        fontScale = aDecoder.decodeDoubleForKey(TextAttributeName.fontMatrixScale)
-        textColorHex = aDecoder.decodeObjectForKey(TextAttributeName.ForegroundColor) as! String
-        textColorAlpha = aDecoder.decodeDoubleForKey(TextAttributeName.ForegroundColorA)
-        textKern = aDecoder.decodeDoubleForKey(TextAttributeName.kern)
-        textlineSpacing = aDecoder.decodeDoubleForKey(TextAttributeName.paragraphLineSpacing)
-        textAligiment = NSTextAlignment(rawValue: aDecoder.decodeIntegerForKey(TextAttributeName.paragraphAlignment))!
-        textShadowOn = aDecoder.decodeBoolForKey(TextAttributeName.shadowOn)
-        textShadowOffset = aDecoder.decodeCGPointForKey(TextAttributeName.shadowOffset)
-        textShadowBlurRadius = aDecoder.decodeDoubleForKey(TextAttributeName.shadowBlurRadius)
-        textShadowColorHex = aDecoder.decodeObjectForKey(TextAttributeName.shadowColor) as! String
-        textShadowColorAplha = aDecoder.decodeDoubleForKey(TextAttributeName.shadowColorA)
-        needShadow = aDecoder.decodeBoolForKey(TextAttributeName.needShadow) ?? false
-        needStroke = aDecoder.decodeBoolForKey(TextAttributeName.needStroke) ?? false
+        fontFamily = aDecoder.decodeObject(forKey: TextAttributeName.fontFamily) as! String
+        fontName = aDecoder.decodeObject(forKey: TextAttributeName.fontName) as! String
+        fontSize = aDecoder.decodeDouble(forKey: TextAttributeName.fontSize)
+        fontScale = aDecoder.decodeDouble(forKey: TextAttributeName.fontMatrixScale)
+        textColorHex = aDecoder.decodeObject(forKey: TextAttributeName.ForegroundColor) as! String
+        textColorAlpha = aDecoder.decodeDouble(forKey: TextAttributeName.ForegroundColorA)
+        textKern = aDecoder.decodeDouble(forKey: TextAttributeName.kern)
+        textlineSpacing = aDecoder.decodeDouble(forKey: TextAttributeName.paragraphLineSpacing)
+        textAligiment = NSTextAlignment(rawValue: aDecoder.decodeInteger(forKey: TextAttributeName.paragraphAlignment))!
+        textShadowOn = aDecoder.decodeBool(forKey: TextAttributeName.shadowOn)
+        textShadowOffset = aDecoder.decodeCGPoint(forKey: TextAttributeName.shadowOffset)
+        textShadowBlurRadius = aDecoder.decodeDouble(forKey: TextAttributeName.shadowBlurRadius)
+        textShadowColorHex = aDecoder.decodeObject(forKey: TextAttributeName.shadowColor) as! String
+        textShadowColorAplha = aDecoder.decodeDouble(forKey: TextAttributeName.shadowColorA)
+        needShadow = aDecoder.decodeBool(forKey: TextAttributeName.needShadow) ?? false
+        needStroke = aDecoder.decodeBool(forKey: TextAttributeName.needStroke) ?? false
     }
     
     override init() {
@@ -363,8 +363,8 @@ final class CTATextAttributes:NSObject, NSCoding {
 
 final class CTATextElement: NSObject, CTAElement {
     
-    private struct SerialKeys {
-        static private let prefix = "com.botai.curiosText.TextElment."
+    fileprivate struct SerialKeys {
+        static fileprivate let prefix = "com.botai.curiosText.TextElment."
         static let x = prefix + "x"
         static let y = prefix + "y"
         static let width = prefix + "width"
@@ -378,7 +378,7 @@ final class CTATextElement: NSObject, CTAElement {
     //    private(set) var y = 0.0
     //    private(set) var width = 0.0
     //    private(set) var height = 0.0
-    private(set) var text = ""
+    fileprivate(set) var text = ""
     
     var attributes = CTATextAttributes()
     
@@ -387,17 +387,17 @@ final class CTATextElement: NSObject, CTAElement {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        text = aDecoder.decodeObjectForKey(SerialKeys.text) as! String
-        attributes = aDecoder.decodeObjectForKey(SerialKeys.attributes) as! CTATextAttributes
+        text = aDecoder.decodeObject(forKey: SerialKeys.text) as! String
+        attributes = aDecoder.decodeObject(forKey: SerialKeys.attributes) as! CTATextAttributes
         //        x = aDecoder.decodeDoubleForKey(SerialKeys.x)
         //        y = aDecoder.decodeDoubleForKey(SerialKeys.y)
         //        width = aDecoder.decodeDoubleForKey(SerialKeys.width)
         //        height = aDecoder.decodeDoubleForKey(SerialKeys.height)
     }
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(text, forKey: SerialKeys.text)
-        aCoder.encodeObject(attributes, forKey: SerialKeys.attributes)
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(text, forKey: SerialKeys.text)
+        aCoder.encode(attributes, forKey: SerialKeys.attributes)
         //        aCoder.encodeDouble(x, forKey: SerialKeys.x)
         //        aCoder.encodeDouble(y, forKey: SerialKeys.y)
         //        aCoder.encodeDouble(width, forKey: SerialKeys.width)
@@ -437,7 +437,7 @@ final class CTATextElement: NSObject, CTAElement {
         return inset
     }
     
-    func resultWithText(text: String, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize) {
+    func resultWithText(_ text: String, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize) {
         
         let inset = insets
         let str = attributeStringWithText(text)
@@ -449,7 +449,7 @@ final class CTATextElement: NSObject, CTAElement {
         manager.addTextContainer(container)
         storage.addLayoutManager(manager)
         container.lineFragmentPadding = 0
-        let textSize = manager.usedRectForTextContainer(container).size
+        let textSize = manager.usedRect(for: container).size
         
 //        let textSize = str.boundingRectWithSize(constraintSize, options: .UsesLineFragmentOrigin, context: nil).size
         let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
@@ -458,7 +458,7 @@ final class CTATextElement: NSObject, CTAElement {
     }
     
     
-    func resultWithScale(scale: CGFloat, preScale: CGFloat, containerSize: CGSize, constraintSzie: CGSize) -> (inset: CGPoint, size: CGSize) {
+    func resultWithScale(_ scale: CGFloat, preScale: CGFloat, containerSize: CGSize, constraintSzie: CGSize) -> (inset: CGPoint, size: CGSize) {
         
         let inset = insets
         let str = attributeStringWithFontScale(scale)
@@ -470,14 +470,14 @@ final class CTATextElement: NSObject, CTAElement {
         manager.addTextContainer(container)
         storage.addLayoutManager(manager)
         container.lineFragmentPadding = 0
-        let textSize = manager.usedRectForTextContainer(container).size
+        let textSize = manager.usedRect(for: container).size
 
         let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
         
         return (inset, size)
     }
     
-    func resultWithFontFamily(family: String, fontName name: String, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize) {
+    func resultWithFontFamily(_ family: String, fontName name: String, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize) {
         
         let inset = insets
         let str = attributeStringWithFontScale(scale)
@@ -489,14 +489,14 @@ final class CTATextElement: NSObject, CTAElement {
         manager.addTextContainer(container)
         storage.addLayoutManager(manager)
         container.lineFragmentPadding = 0
-        let textSize = manager.usedRectForTextContainer(container).size
+        let textSize = manager.usedRect(for: container).size
         
         let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
         
         return (inset, size)
     }
     
-    func resultWithLineSpacing(lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize) {
+    func resultWithLineSpacing(_ lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize) {
         
         let inset = insets
         let str = attributeStringWithLineSpacing(lineSpacing, textSpacing: textSpacing)
@@ -508,7 +508,7 @@ final class CTATextElement: NSObject, CTAElement {
         manager.addTextContainer(container)
         storage.addLayoutManager(manager)
         container.lineFragmentPadding = 0
-        let textSize = manager.usedRectForTextContainer(container).size
+        let textSize = manager.usedRect(for: container).size
         
 //        let textSize = str.boundingRectWithSize(constraintSize, options: .UsesLineFragmentOrigin, context: nil).size
         let size = CGSize(width: textSize.width + inset.x * 2 + shadowOffset.x + shadowBlurRadius, height: textSize.height + inset.y * 2 + shadowOffset.y + shadowBlurRadius)
@@ -538,7 +538,7 @@ extension CTATextElement: TextModifiable {
     var texts: String {
      
         get {
-            return text.isEmpty ? LocalStrings.EditTextPlaceHolder.description : text
+            return text.isEmpty ? LocalStrings.editTextPlaceHolder.description : text
         }
         
         set {
@@ -659,27 +659,27 @@ extension CTATextElement: TextModifiable {
     
     
     
-    func attributeStringWithText(atext: String) -> NSAttributedString {
+    func attributeStringWithText(_ atext: String) -> NSAttributedString {
         
         return NSAttributedString(string: atext, attributes: attributes.textAttributes)
     }
     
-    func attributeStringWithFontScale(scale: CGFloat) -> NSAttributedString {
+    func attributeStringWithFontScale(_ scale: CGFloat) -> NSAttributedString {
         
         return NSAttributedString(string: texts, attributes: attributes.textAttributesWithFontScale(scale))
     }
     
-    func attributeStringWithFontFamily(family: String, fontName name: String) -> NSAttributedString {
+    func attributeStringWithFontFamily(_ family: String, fontName name: String) -> NSAttributedString {
         
         return NSAttributedString(string: texts, attributes: attributes.textAttributesWithFontScaleWithFontFamily(family, fontName: name))
     }
     
-    func attributeStringWithAlignment(alignment: NSTextAlignment) -> NSAttributedString {
+    func attributeStringWithAlignment(_ alignment: NSTextAlignment) -> NSAttributedString {
         
         return NSAttributedString(string: texts, attributes: attributes.textAttributesWithTextAlignment(alignment))
     }
     
-    func attributeStringWithLineSpacing(lineSpacing: CGFloat, textSpacing: CGFloat) -> NSAttributedString {
+    func attributeStringWithLineSpacing(_ lineSpacing: CGFloat, textSpacing: CGFloat) -> NSAttributedString {
         
         return NSAttributedString(string: texts, attributes: attributes.textAttributesWithLineSpacing(lineSpacing, textSpacing: textSpacing))
     }

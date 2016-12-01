@@ -12,9 +12,9 @@ class CTACanvasCell: UICollectionViewCell {
     
     var contentInset = CGPoint.zero
     
-    override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         
-        super.applyLayoutAttributes(layoutAttributes)
+        super.apply(layoutAttributes)
         
         guard let layoutAttributes = layoutAttributes as? ContainerLayoutAttributes else {
             return

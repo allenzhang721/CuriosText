@@ -3,118 +3,155 @@ import UIKit
 import PromiseKit
 import Kingfisher
 
-public class CTAImageCache {
-    
-    let name: String
-    let image: UIImage
-    
-    init(name: String, image: UIImage) {
-        self.name = name
-        self.image = image
-    }
+open class CTAImageCache {
+  
+  let name: String
+  let image: UIImage
+  
+  init(name: String, image: UIImage) {
+    self.name = name
+    self.image = image
+  }
 }
 
-public class CTACache {
+open class CTACache {
+  
+  let cache = NSCache<AnyObject, AnyObject>()
+  open var cacheFinished = false
+  open var cacheDidFinishedHandler: ((Bool) -> ())?
+  
+  func save(_ object: AnyObject, forKey key: String) {
+    cache.setObject(object, forKey: key as AnyObject)
+  }
+  
+  open func saveImage(_ image: UIImage, forKey key: String) {
+    save(image, forKey: key)
+  }
+  
+  open func saveText(_ text: NSAttributedString, forKey key: String) {
+    save(text, forKey: key)
+  }
+  
+  func objectForKey(_ key: String) -> AnyObject? {
+    return cache.object(forKey: key as AnyObject)
+  }
+  
+  open func imageForKey(_ key: String) -> UIImage? {
+    return cache.object(forKey: key as AnyObject) as? UIImage
+  }
+  
+  open func textForKey(_ key: String) -> NSAttributedString? {
+    return cache.object(forKey: key as AnyObject) as? NSAttributedString
+  }
+  
+  //    public func saveImageCache(c: CTAImageCache, forKey key: String) {
+  //        save(c, forKey: key)
+  //    }
+  //
+  //    public func imageCacheForKey(key: String) -> CTAImageCache? {
+  //        return cache.objectForKey(key) as? CTAImageCache
+  //    }
+  
+  open func cleanALLObject() {
+    cacheFinished = false
+    cache.removeAllObjects()
     
-    let cache = NSCache()
-    public var cacheFinished = false
-    public var cacheDidFinishedHandler: ((Bool) -> ())?
+  }
+  
+  open func saveAsyncImagesForKeys(_ keys: [String], baseURL: URL, f: (URL, String) -> Promise<AResult<CTAImageCache>> ,completedHandler:((Bool) -> ())?) {
     
-    func save(object: AnyObject, forKey key: String) {
-        cache.setObject(object, forKey: key)
+    var promises = [Promise<AResult<CTAImageCache>>]()
+    for (_, k) in keys.enumerated() {
+      let pro = f(baseURL, k)
+      promises.append(pro)
     }
     
-    public func saveImage(image: UIImage, forKey key: String) {
-        save(image, forKey: key)
-    }
-    
-    public func saveText(text: NSAttributedString, forKey key: String) {
-        save(text, forKey: key)
-    }
-    
-    func objectForKey(key: String) -> AnyObject? {
-        return cache.objectForKey(key)
-    }
-    
-    public func imageForKey(key: String) -> UIImage? {
-        return cache.objectForKey(key) as? UIImage
-    }
-    
-    public func textForKey(key: String) -> NSAttributedString? {
-        return cache.objectForKey(key) as? NSAttributedString
-    }
-    
-//    public func saveImageCache(c: CTAImageCache, forKey key: String) {
-//        save(c, forKey: key)
-//    }
-//    
-//    public func imageCacheForKey(key: String) -> CTAImageCache? {
-//        return cache.objectForKey(key) as? CTAImageCache
-//    }
-    
-    public func cleanALLObject() {
-        cacheFinished = false
-        cache.removeAllObjects()
-        
-    }
-    
-    public func saveAsyncImagesForKeys(keys: [String], baseURL: NSURL, f: (NSURL, String) -> Promise<Result<CTAImageCache>> ,completedHandler:((Bool) -> ())?) {
-        
-        var promises = [Promise<Result<CTAImageCache>>]()
-        for (_, k) in keys.enumerate() {
-           let pro = f(baseURL, k)
-            promises.append(pro)
+    when(resolved: promises).then {[weak self] (results: [Result<AResult<CTAImageCache>>]) -> () in
+      guard let sf = self else { return }
+      
+      for r in results {
+        switch r {
+        case .fulfilled(let res):
+          switch res {
+          case .success(let imgCache):
+            let image = imgCache.image
+            let key = imgCache.name
+            sf.saveImage(image, forKey: key)
+          default:
+            ()
+          }
+          
+        default:
+          ()
+          
         }
-        
-        when(promises).then {[weak self] (results) -> () in
-            guard let strongSelf = self else {
-                return
-            }
-            
-            for r in results {
-                switch r {
-                case .Success(let imageCache):
-                    let image = imageCache.image
-                    let key = imageCache.name
-                    strongSelf.saveImage(image, forKey: key)
-                default:
-                    ()
-                }
-            }
-            
-            dispatch_async(dispatch_get_main_queue(), {
-                strongSelf.cacheFinished = true
-                completedHandler?(true)
-                strongSelf.cacheDidFinishedHandler?(true)
-            })
-        }
+      }
+      
+      DispatchQueue.main.async {
+        sf.cacheFinished = true
+        completedHandler?(true)
+        sf.cacheDidFinishedHandler?(true)
+      }
+      
     }
     
-    public init() {
-        
-    }
     
-    func dealloc() {
-        cache.removeAllObjects()
-    }
+    //      when(resolved:promises).then {[weak self] (results) -> () in
+    //            guard let strongSelf = self else {
+    //                return
+    //            }
+    //
+    //            for r in results {
+    //                switch r {
+    //                case .success(let imageCache):
+    //                    let image = imageCache.image
+    //                    let key = imageCache.name
+    //                    strongSelf.saveImage(image, forKey: key)
+    //                default:
+    //                    ()
+    //                }
+    //            }
+    //
+    ////            dispatch_async(dispatch_get_main_queue(), {
+    ////                strongSelf.cacheFinished = true
+    ////                completedHandler?(true)
+    ////                strongSelf.cacheDidFinishedHandler?(true)
+    ////            })
+    //
+    //          DispatchQueue.main.async {
+    //            strongSelf.cacheFinished = true
+    //            completedHandler?(true)
+    //            strongSelf.cacheDidFinishedHandler?(true)
+    //          }
+    //
+    //        }
+  }
+  
+  public init() {
+    
+  }
+  
+  func dealloc() {
+    cache.removeAllObjects()
+  }
 }
 
-func downloadImage(baseURL: NSURL, imageName: String) -> Promise<Result<CTAImageCache>> {
+func downloadImage(_ baseURL: NSURL, imageName: String) -> Promise<AResult<CTAImageCache>> {
+  
+  let imageURL = baseURL.appendingPathComponent(imageName)
+  return Promise { fullfill, reject in
     
-    let imageURL = baseURL.URLByAppendingPathComponent(imageName)
-    return Promise { fullfill, reject in
-        
-        KingfisherManager.sharedManager.retrieveImageWithURL(imageURL, optionsInfo: nil, progressBlock: nil, completionHandler: { (image, error, cacheType, imageURL) in
-            
-            if let image = image {
-                let cache = CTAImageCache(name: imageName, image: image)
-                fullfill(Result.Success(cache))
-            } else {
-                fullfill(Result.Failure())
-            }
-        })
-        
-    }
+    KingfisherManager.shared.retrieveImage(with: imageURL!, options: nil, progressBlock: nil, completionHandler: { (image, error, cacheType, imageURL) in
+      
+      if let image = image {
+        let cache = CTAImageCache(name: imageName, image: image)
+        fullfill(AResult.success(cache))
+      } else {
+        fullfill(AResult.failure())
+      }
+    })
+    
+  }
 }
 
 

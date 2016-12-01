@@ -62,7 +62,7 @@ class ContentTextCell: ContentCell {
         setup()
     }
     
-    private func setup() {
+    fileprivate func setup() {
         contentView.addSubview(textLayer)
 //        textLayer.backgroundColor = UIColor.yellowColor()
     }
@@ -72,7 +72,7 @@ class ContentTextCell: ContentCell {
         
         let widthRatio: CGFloat
         let heightRatio: CGFloat
-        if let familyName = (text?.attribute(NSFontAttributeName, atIndex: 0, effectiveRange: nil) as? UIFont)?.familyName, let fontFix = CTAFontsManager.familiyFixRectRatio[familyName] {
+        if let familyName = (text?.attribute(NSFontAttributeName, at: 0, effectiveRange: nil) as? UIFont)?.familyName, let fontFix = CTAFontsManager.familiyFixRectRatio[familyName] {
            widthRatio = fontFix["width"] ?? 0
             heightRatio = fontFix["height"] ?? 0
         } else {

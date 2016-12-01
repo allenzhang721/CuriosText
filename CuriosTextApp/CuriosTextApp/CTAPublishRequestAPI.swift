@@ -29,21 +29,21 @@ class CTACreatePublishRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.CreatePublish.description;
+        return CTARequestUrl.createPublish.description;
     }
     
     override func parameter() -> String {
         
         let dic:Dictionary<String, AnyObject> = [
-            key(.PublishID)     : publishID,
-            key(.UserID)        : userID,
-            key(.Title)         : title,
-            key(.PublishDesc)   : publishDesc,
-            key(.PublishIconURL): publishIconURL,
-            key(.PreviewIconURL): previewIconURL,
-            key(.PublishURL)    : publishURL
+            key(.publishID)     : publishID as AnyObject,
+            key(.userID)        : userID as AnyObject,
+            key(.title)         : title as AnyObject,
+            key(.publishDesc)   : publishDesc as AnyObject,
+            key(.publishIconURL): publishIconURL as AnyObject,
+            key(.previewIconURL): previewIconURL as AnyObject,
+            key(.publishURL)    : publishURL as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTACreatePublishRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTACreatePublishRequest");
     }
 }
 
@@ -57,15 +57,15 @@ class CTADeletePublishRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.DeletePublish.description;
+        return CTARequestUrl.deletePublish.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.PublishID): publishID,
-            key(.UserID)   : userID
+            key(.publishID): publishID as AnyObject,
+            key(.userID)   : userID as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTADeletePublishRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTADeletePublishRequest");
     }
 }
 
@@ -83,17 +83,17 @@ class CTAUserPublishListRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UserPublishList.description;
+        return CTARequestUrl.userPublishList.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)  : userID,
-            key(.BeUserID): beUserID,
-            key(.Start)   : start,
-            key(.Size)    : size
+            key(.userID)  : userID as AnyObject,
+            key(.beUserID): beUserID as AnyObject,
+            key(.start)   : start as AnyObject,
+            key(.size)    : size as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAUserPublishListRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUserPublishListRequest");
     }
 }
 
@@ -111,17 +111,17 @@ class CTAUserLikePublishListRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UserLikePublishList.description;
+        return CTARequestUrl.userLikePublishList.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)  : userID,
-            key(.BeUserID): beUserID,
-            key(.Start)   : start,
-            key(.Size)    : size
+            key(.userID)  : userID as AnyObject,
+            key(.beUserID): beUserID as AnyObject,
+            key(.start)   : start as AnyObject,
+            key(.size)    : size as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAUserLikePublishListRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUserLikePublishListRequest");
     }
 }
 
@@ -139,17 +139,17 @@ class CTAUserRebuildPublishListRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UserRebuildPublishList.description;
+        return CTARequestUrl.userRebuildPublishList.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)  : userID,
-            key(.BeUserID): beUserID,
-            key(.Start)   : start,
-            key(.Size)    : size
+            key(.userID)  : userID as AnyObject,
+            key(.beUserID): beUserID as AnyObject,
+            key(.start)   : start as AnyObject,
+            key(.size)    : size as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAUserRebuildPublishListRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUserRebuildPublishListRequest");
     }
 }
 
@@ -167,17 +167,17 @@ class CTAUserFollowPublishListRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UserFollowPublishList.description;
+        return CTARequestUrl.userFollowPublishList.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)  : userID,
-            key(.BeUserID): beUserID,
-            key(.Start)   : start,
-            key(.Size)    : size
+            key(.userID)  : userID as AnyObject,
+            key(.beUserID): beUserID as AnyObject,
+            key(.start)   : start as AnyObject,
+            key(.size)    : size as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAUserFollowPublishListRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUserFollowPublishListRequest");
     }
 }
 
@@ -193,16 +193,16 @@ class CTANewPublishListRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.NewPubulishList.description;
+        return CTARequestUrl.newPubulishList.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)  : userID,
-            key(.Start)   : start,
-            key(.Size)    : size
+            key(.userID)  : userID as AnyObject,
+            key(.start)   : start as AnyObject,
+            key(.size)    : size as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTANewPublishListRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTANewPublishListRequest");
     }
 }
 
@@ -218,16 +218,16 @@ class CTAHotPublishListRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.HotPublishList.description;
+        return CTARequestUrl.hotPublishList.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)  : userID,
-            key(.Start)   : start,
-            key(.Size)    : size
+            key(.userID)  : userID as AnyObject,
+            key(.start)   : start as AnyObject,
+            key(.size)    : size as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAHotPublishListRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAHotPublishListRequest");
     }
 }
 
@@ -239,14 +239,14 @@ class CTASetHotPublishRequest: CTABaseRequest{
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.SetHotPublish.description;
+        return CTARequestUrl.setHotPublish.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.PublishID)  : publishID
+            key(.publishID)  : publishID as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTASetHotPublishRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTASetHotPublishRequest");
     }
 }
 
@@ -260,15 +260,15 @@ class CTALikePublishRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.LikePublish.description;
+        return CTARequestUrl.likePublish.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)  : userID,
-            key(.PublishID)   : publishID
+            key(.userID)  : userID as AnyObject,
+            key(.publishID)   : publishID as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTALikePublishRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTALikePublishRequest");
     }
 }
 
@@ -282,15 +282,15 @@ class CTAUnLikePublishRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UnLikePublish.description;
+        return CTARequestUrl.unLikePublish.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)  : userID,
-            key(.PublishID)   : publishID
+            key(.userID)  : userID as AnyObject,
+            key(.publishID)   : publishID as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAUnLikePublishRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUnLikePublishRequest");
     }
 }
 
@@ -304,15 +304,15 @@ class CTARebuildPublishRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.RebuildPublish.description;
+        return CTARequestUrl.rebuildPublish.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)  : userID,
-            key(.PublishID)   : publishID
+            key(.userID)  : userID as AnyObject,
+            key(.publishID)   : publishID as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTARebuildPublishRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTARebuildPublishRequest");
     }
 }
 
@@ -328,16 +328,16 @@ class CTASharePublishRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.SharePublish.description;
+        return CTARequestUrl.sharePublish.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)       : userID,
-            key(.PublishID)    : publishID,
-            key(.SharePlatform): sharePlatform
+            key(.userID)       : userID as AnyObject,
+            key(.publishID)    : publishID as AnyObject,
+            key(.sharePlatform): sharePlatform as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTASharePublishRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTASharePublishRequest");
     }
 }
 
@@ -355,17 +355,17 @@ class CTAReportPublishRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.ReportPublish.description;
+        return CTARequestUrl.reportPublish.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)       : userID,
-            key(.PublishID)    : publishID,
-            key(.ReportType)   : reportType,
-            key(.ReportMessage): reportMessage
+            key(.userID)       : userID as AnyObject,
+            key(.publishID)    : publishID as AnyObject,
+            key(.reportType)   : reportType as AnyObject,
+            key(.reportMessage): reportMessage as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAReportPublishRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAReportPublishRequest");
     }
 }
 
@@ -379,15 +379,15 @@ class CTAPublishDetailRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.PublishDetail.description;
+        return CTARequestUrl.publishDetail.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)       : userID,
-            key(.PublishID)    : publishID
+            key(.userID)       : userID as AnyObject,
+            key(.publishID)    : publishID as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAPublishDetailRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAPublishDetailRequest");
     }
 }
 
@@ -405,16 +405,16 @@ class CTAPublishLikeUserListRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.PublishLikeUserList.description;
+        return CTARequestUrl.publishLikeUserList.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)       : userID,
-            key(.PublishID)    : publishID,
-            key(.Start)        : start,
-            key(.Size)         : size
+            key(.userID)       : userID as AnyObject,
+            key(.publishID)    : publishID as AnyObject,
+            key(.start)        : start as AnyObject,
+            key(.size)         : size as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAPublishLikeUserList");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAPublishLikeUserList");
     }
 }

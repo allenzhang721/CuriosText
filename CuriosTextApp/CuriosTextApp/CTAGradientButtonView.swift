@@ -12,13 +12,13 @@ class CTAGradientButtonView: UIView {
 
     var image: UIImage? {
         set {
-            dispatch_async(dispatch_get_main_queue()) { 
-                self.addButton.setImage(newValue, forState: .Normal)
+            DispatchQueue.main.async { 
+                self.addButton.setImage(newValue, for: UIControlState())
             }
         }
         
         get {
-           return addButton.imageForState(.Normal)
+           return addButton.image(for: UIControlState())
         }
         
     }
@@ -36,20 +36,20 @@ class CTAGradientButtonView: UIView {
         setup()
     }
     
-    private func setup() {
+    fileprivate func setup() {
         addSubview(addButton)
         addButton.translatesAutoresizingMaskIntoConstraints = false
         
-        addButton.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
-        addButton.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
-        addButton.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
-        addButton.topAnchor.constraintEqualToAnchor(topAnchor).active = true
+        addButton.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        addButton.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        addButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        addButton.topAnchor.constraint(equalTo: topAnchor).isActive = true
         
-        addButton.setImage(CTAStyleKit.imageOfAddInEditor, forState: .Normal)
-        addButton.addTarget(self, action: #selector(CTAGradientButtonView.addClick(_:)), forControlEvents: .TouchUpInside)
+        addButton.setImage(CTAStyleKit.imageOfAddInEditor, for: UIControlState())
+        addButton.addTarget(self, action: #selector(CTAGradientButtonView.addClick(_:)), for: .touchUpInside)
     }
     
-    func addClick(sender: AnyObject) {
+    func addClick(_ sender: AnyObject) {
         
         didClickHandler?()
     }
@@ -57,7 +57,7 @@ class CTAGradientButtonView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         if needGradient {
-        backgroundColor = UIColor.init(patternImage: CTAStyleKit.imageOfGradientInEditor(frame: bounds))
+        backgroundColor = UIColor.init(patternImage: CTAStyleKit.imageOfGradientInEditor(imageSize: bounds.size))
         }
     }
 }

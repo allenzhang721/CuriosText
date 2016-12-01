@@ -9,18 +9,18 @@
 import Foundation
 import UIKit
 
-private let queue = dispatch_queue_create("com.botai.curiosText.Filter.Queue", DISPATCH_QUEUE_CONCURRENT)
+private let queue = DispatchQueue(label: "com.botai.curiosText.Filter.Queue", attributes: DispatchQueue.Attributes.concurrent)
 
 class FilterItem: NSObject {
     let name: String
-    var data: NSData?
-    private(set) var assetIdentifier: String
-    private(set) var image: UIImage?
+    var data: Data?
+    fileprivate(set) var assetIdentifier: String
+    fileprivate(set) var image: UIImage?
     
-    init(name: String, data: NSData?) {
+    init(name: String, data: Data?) {
         self.name = name
         self.data = data
-        self.assetIdentifier = NSUUID().UUIDString.characters.split("-").map{String($0)}.reduce("", combine:{$0+$1})
+        self.assetIdentifier = UUID().uuidString.characters.split(separator: "-").map{String($0)}.reduce("", {$0+$1})
     }
     
 //    required init?(coder aDecoder: NSCoder) {
@@ -45,41 +45,41 @@ class FilterItem: NSObject {
     
     func createImage(from img: UIImage, complation:((UIImage) -> ())?) {
         let ciimage = CIImage(image: img)
-        dispatch_async(queue) { [weak self] in
+        queue.async { [weak self] in
             guard let sf = self, let data = sf.data else {return}
             let img2 = Filter()
                 .colorLUT(colorTableData: data, dimension: 64)
                 .start(byImage: ciimage!)
                 .tocgImage()
-            dispatch_async(dispatch_get_main_queue(), {[weak self] in
+            DispatchQueue.main.async(execute: {[weak self] in
                 guard let sf = self else {return}
                 
-                sf.image = UIImage(CGImage: img2)
+                sf.image = UIImage(cgImage: img2)
                 complation?(sf.image!)
                 sf.data = nil
             })
         }
     }
     
-    func createData(fromColorDirAt url: NSURL, filtering image: UIImage? = nil, complation:((UIImage) -> ())?) {
+    func createData(fromColorDirAt url: URL, filtering image: UIImage? = nil, complation:((UIImage) -> ())?) {
         
-        dispatch_async(queue) { [weak self] in
+        queue.async { [weak self] in
             guard let sf = self else {return}
-            let cacheURL = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).first!
-            let dataCache = cacheURL.URLByAppendingPathComponent("\(sf.name)")
-            if NSFileManager.defaultManager().fileExistsAtPath(dataCache.path!) {
+            let cacheURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+            let dataCache = cacheURL.appendingPathComponent("\(sf.name)")
+            if FileManager.default.fileExists(atPath: dataCache.path) {
                 if let image = image {
-                    let data = NSData(contentsOfURL: dataCache)
+                    let data = try? Data(contentsOf: dataCache)
                     sf.data = data
                     sf.createImage(from: image, complation: complation)
                 }
                 
             } else {
-                let imgURL = url.URLByAppendingPathComponent("\(sf.name).JPG")
-                if let img = UIImage(contentsOfFile: imgURL.path!)?.CGImage, data = Filter.colorLUTData(byImage: img, dimensiton: 64) {
-                    data.writeToURL(dataCache, atomically: true)
+                let imgURL = url.appendingPathComponent("\(sf.name).JPG")
+                if let img = UIImage(contentsOfFile: imgURL.path)?.cgImage, let data = Filter.colorLUTData(byImage: img, dimensiton: 64) {
+                    try? data.write(to: dataCache, options: [.atomic])
                     if let image = image {
-                        sf.data = data
+                        sf.data = data as Data
                         sf.createImage(from: image, complation: complation)
                     }
                 }

@@ -41,11 +41,11 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
         // Do any additional setup after loading the view.
         self.initView()
         
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
         self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if !self.isNoFresh{
             if self.isDisMis {
@@ -57,10 +57,10 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
                 self.collectionView.reloadData()
             }
         }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshView(_:)), name: "refreshSelf", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshView(_:)), name: NSNotification.Name(rawValue: "refreshSelf"), object: nil)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if !self.isNoFresh{
             if self.isDisMis {
@@ -71,11 +71,11 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
         self.isNoFresh = true
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.isDisMis = true
         self.hideLoadingView()
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "refreshSelf", object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "refreshSelf"), object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -100,17 +100,17 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
     }
     
     func initHeader(){
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         
         self.headerView = UIView(frame: CGRect(x: 0, y: self.headerY, width: bounds.width, height: 64-self.headerY))
         self.headerView.backgroundColor = CTAStyleKit.commonBackgroundColor
         self.view.addSubview(self.headerView)
         
         let homeLabel = UILabel(frame: CGRect(x: 0, y: 28-self.headerY, width: bounds.width, height: 28))
-        homeLabel.font = UIFont.boldSystemFontOfSize(18)
+        homeLabel.font = UIFont.boldSystemFont(ofSize: 18)
         homeLabel.textColor = CTAStyleKit.normalColor
         homeLabel.text = NSLocalizedString("RecommendLabel", comment: "")
-        homeLabel.textAlignment = .Center
+        homeLabel.textAlignment = .center
         self.headerView.addSubview(homeLabel)
         let textLine = UIImageView(frame: CGRect(x: 0, y: 63-self.headerY, width: bounds.width, height: 1))
         textLine.image = UIImage(named: "space-line")
@@ -119,7 +119,7 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
     }
     
     func initCollectionView(){
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         let rect:CGRect = CGRect(x: 0, y: 46, width: bounds.width, height: bounds.height-46)
         let space:CGFloat = self.getCellSpace()
         self.collectionLayout = UICollectionViewFlowLayout()
@@ -131,26 +131,26 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
         self.collectionView = UICollectionView(frame: rect, collectionViewLayout: self.collectionLayout)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        self.collectionView.registerClass(CTAPublishesCell.self, forCellWithReuseIdentifier: "ctaPublishesCell")
+        self.collectionView.register(CTAPublishesCell.self, forCellWithReuseIdentifier: "ctaPublishesCell")
         self.collectionView.backgroundColor = CTAStyleKit.commonBackgroundColor
         self.view.addSubview(self.collectionView!);
         
         let freshIcon1:UIImage = UIImage(named: "fresh-icon-1")!
         
         self.headerFresh = MJRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(loadFirstData))
-        self.headerFresh.setImages([freshIcon1], forState: .Idle)
-        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Pulling)
-        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Refreshing)
+        self.headerFresh.setImages([freshIcon1], for: .idle)
+        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, for: .pulling)
+        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, for: .refreshing)
         
-        self.headerFresh.lastUpdatedTimeLabel?.hidden = true
-        self.headerFresh.stateLabel?.hidden = true
+        self.headerFresh.lastUpdatedTimeLabel?.isHidden = true
+        self.headerFresh.stateLabel?.isHidden = true
         self.collectionView.mj_header = self.headerFresh
         
         self.footerFresh = MJRefreshAutoGifFooter(refreshingTarget: self, refreshingAction: #selector(loadLastData))
-        self.footerFresh.refreshingTitleHidden = true
-        self.footerFresh.setTitle("", forState: .Idle)
-        self.footerFresh.setTitle("", forState: .NoMoreData)
-        self.footerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Refreshing)
+        self.footerFresh.isRefreshingTitleHidden = true
+        self.footerFresh.setTitle("", for: .idle)
+        self.footerFresh.setTitle("", for: .noMoreData)
+        self.footerFresh.setImages(self.getLoadingImages(), duration:1.0, for: .refreshing)
         self.collectionView.mj_footer = footerFresh;
     }
     
@@ -196,7 +196,7 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
         self.collectionView.frame.origin.y = 46
     }
     
-    func refreshView(noti: NSNotification){
+    func refreshView(_ noti: Notification){
         if self.collectionView.contentOffset.y > self.scrollTop{
             self.collectionView.setContentOffset(CGPoint(x: 0, y: self.scrollTop), animated: true)
         }else {
@@ -209,7 +209,7 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
         self.previousScrollViewYOffset = self.scrollTop
     }
     
-    func loadUserPublishes(start:Int, size:Int = 30){
+    func loadUserPublishes(_ start:Int, size:Int = 30){
         if self.isLoading{
             self.freshComplete();
             return
@@ -222,7 +222,7 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
         }
     }
     
-    func loadPublishesComplete(info: CTADomainListInfo, size:Int){
+    func loadPublishesComplete(_ info: CTADomainListInfo, size:Int){
         self.isLoading = false
         if info.result{
             let modelArray = info.modelArray;
@@ -242,8 +242,8 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
                                 }else {
                                     let index = self.getPublishIndex(newmodel.publishID, publishArray: self.publishModelArray)
                                     if index != -1{
-                                        self.publishModelArray.insert(newmodel, atIndex: index)
-                                        self.publishModelArray.removeAtIndex(index+1)
+                                        self.publishModelArray.insert(newmodel, at: index)
+                                        self.publishModelArray.remove(at: index+1)
                                     }
                                 }
                             }
@@ -284,7 +284,7 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
         self.freshComplete();
     }
     
-    func loadMoreModelArray(modelArray:Array<AnyObject>){
+    func loadMoreModelArray(_ modelArray:Array<AnyObject>){
         for i in 0..<modelArray.count{
             let publishModel = modelArray[i] as! CTAPublishModel
             if !self.checkPublishModelIsHave(publishModel, publishArray: self.publishModelArray){
@@ -307,12 +307,12 @@ class RecommandViewController: UIViewController, CTAPublishCellProtocol, CTAPubl
 }
 
 extension RecommandViewController: UICollectionViewDelegate, UICollectionViewDataSource{
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return self.publishModelArray.count;
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
-        let publishesCell:CTAPublishesCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("ctaPublishesCell", forIndexPath: indexPath) as! CTAPublishesCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
+        let publishesCell:CTAPublishesCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "ctaPublishesCell", for: indexPath) as! CTAPublishesCell
         let index = indexPath.row
         if index < self.publishModelArray.count{
             let publihshModel = self.publishModelArray[index]
@@ -327,23 +327,23 @@ extension RecommandViewController: UICollectionViewDelegate, UICollectionViewDat
         return publishesCell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
-        let publishesCell = self.collectionView.cellForItemAtIndexPath(indexPath)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+        let publishesCell = self.collectionView.cellForItem(at: indexPath)
         let index = indexPath.row
         self.selectedPublishID = ""
         if index < self.publishModelArray.count && index > -1{
             self.selectedPublishID = self.publishModelArray[index].publishID
         }
         if self.selectedPublishID != "" {
-            let bounds = UIScreen.mainScreen().bounds
+            let bounds = UIScreen.main.bounds
             var cellFrame:CGRect!
             var transitionView:UIView!
             if publishesCell != nil {
                 cellFrame = publishesCell!.frame
-                let zorePt = publishesCell!.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+                let zorePt = publishesCell!.convert(CGPoint(x: 0, y: 0), to: self.view)
                 cellFrame.origin.y = zorePt.y
                 cellFrame.origin.x = zorePt.x
-                transitionView = publishesCell!.snapshotViewAfterScreenUpdates(false)
+                transitionView = publishesCell!.snapshotView(afterScreenUpdates: false)
             }else {
                 cellFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
                 transitionView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
@@ -362,14 +362,14 @@ extension RecommandViewController: UICollectionViewDelegate, UICollectionViewDat
             let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self, type: detailType)
             let navi = UINavigationController(rootViewController: vc)
             navi.transitioningDelegate = ani
-            navi.modalPresentationStyle = .Custom
-            self.presentViewController(navi, animated: true, completion: {
+            navi.modalPresentationStyle = .custom
+            self.present(navi, animated: true, completion: {
             })
         }
     }
     
     //scroll view hide tool bar
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let toolBarViewframe = self.headerView.frame
         let collectViewFrame = self.collectionView.frame
         let size  = toolBarViewframe.height
@@ -389,11 +389,11 @@ extension RecommandViewController: UICollectionViewDelegate, UICollectionViewDat
         self.previousScrollViewYOffset = scrollOffset
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         self.stoppedScrolling()
     }
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             self.stoppedScrolling()
         }
@@ -409,7 +409,7 @@ extension RecommandViewController: UICollectionViewDelegate, UICollectionViewDat
         }
     }
     
-    func updateBarButtonsAlpha(alpha:CGFloat){
+    func updateBarButtonsAlpha(_ alpha:CGFloat){
         let subViews = self.headerView.subviews
         for i in 0..<subViews.count{
             let subView = subViews[i]
@@ -417,13 +417,13 @@ extension RecommandViewController: UICollectionViewDelegate, UICollectionViewDat
         }
     }
     
-    func animationNavBarTo(y:CGFloat){
-        UIView.animateWithDuration(0.1) { () -> Void in
+    func animationNavBarTo(_ y:CGFloat){
+        UIView.animate(withDuration: 0.1, animations: { () -> Void in
             self.changeColloetionNavBar(y)
-        }
+        }) 
     }
     
-    func changeColloetionNavBar(y:CGFloat){
+    func changeColloetionNavBar(_ y:CGFloat){
         var toolBarViewframe = self.headerView.frame
         var collectViewFrame = self.collectionView.frame
         toolBarViewframe.origin.y = y
@@ -453,19 +453,19 @@ extension RecommandViewController: CTALoadingProtocol{
 extension RecommandViewController: PublishDetailViewDelegate{
     
     func transitionComplete() {
-        let cells = self.collectionView.visibleCells()
+        let cells = self.collectionView.visibleCells
         for i in 0..<cells.count{
             let cell = cells[i]
             cell.alpha = 1
         }
     }
     
-    func getPublishCell(selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect?{
+    func getPublishCell(_ selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect?{
         let cellFrame:CGRect = self.saveNewPublishArray(selectedID, publishArray: publishArray)
         return cellFrame;
     }
     
-    func saveNewPublishArray(selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect{
+    func saveNewPublishArray(_ selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect{
         var isChange:Bool = false
         if publishArray.count == self.publishModelArray.count {
             for i in 0..<publishArray.count{
@@ -477,8 +477,8 @@ extension RecommandViewController: PublishDetailViewDelegate{
                 }else {
                     let index = self.getPublishIndex(newModel.publishID, publishArray: self.publishModelArray)
                     if index != -1{
-                        self.publishModelArray.insert(newModel, atIndex: index)
-                        self.publishModelArray.removeAtIndex(index+1)
+                        self.publishModelArray.insert(newModel, at: index)
+                        self.publishModelArray.remove(at: index+1)
                     }
                 }
             }

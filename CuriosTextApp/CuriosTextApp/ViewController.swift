@@ -31,9 +31,9 @@ class ViewController: UIViewController{
         CTAUpTokenDomain.getInstance().uploadFilePath { (info) -> Void in
             if info.result {
                 let dic = info.modelDic
-                let publishFilePath = dic![key(.PublishFilePath)]
-                let userFilePath = dic![key(.UserFilePath)]
-                let resourceFilePath = dic![key(.ResourceFilePath)]
+                let publishFilePath = dic![key(.publishFilePath)]
+                let userFilePath = dic![key(.userFilePath)]
+                let resourceFilePath = dic![key(.resourceFilePath)]
                 CTAFilePath.publishFilePath  = publishFilePath!
                 CTAFilePath.userFilePath     = userFilePath!
                 CTAFilePath.resourceFilePath = resourceFilePath!
@@ -55,14 +55,14 @@ class ViewController: UIViewController{
         }
         
         self.getUserNotice()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.showLoginView(_:)), name: "showLoginView", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.loginComplete(_:)), name: "loginComplete", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.addPublishFile(_:)), name: "addPublishFile", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.showLoginView(_:)), name: NSNotification.Name(rawValue: "showLoginView"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.loginComplete(_:)), name: NSNotification.Name(rawValue: "loginComplete"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.addPublishFile(_:)), name: NSNotification.Name(rawValue: "addPublishFile"), object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.addViewInRoot(_:)), name: "addViewInRoot", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.popupViewControllerInRoot(_:)), name: "popupViewControllerInRoot", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.addViewInRoot(_:)), name: NSNotification.Name(rawValue: "addViewInRoot"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.popupViewControllerInRoot(_:)), name: NSNotification.Name(rawValue: "popupViewControllerInRoot"), object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.setNoticeReaded(_:)), name: "setNoticeReaded", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.setNoticeReaded(_:)), name: NSNotification.Name(rawValue: "setNoticeReaded"), object: nil)
         
         let _ = CTASettingViewController()
         let _ = UIStoryboard(name: "Comment", bundle: nil).instantiateInitialViewController() as! CommentViewController
@@ -80,12 +80,12 @@ class ViewController: UIViewController{
         }
     }
     
-    func addViewInRoot(noti: NSNotification){
+    func addViewInRoot(_ noti: Notification){
         let popView = noti.object as! UIView
         self.view.addSubview(popView)
     }
     
-    func popupViewControllerInRoot(noti: NSNotification){
+    func popupViewControllerInRoot(_ noti: Notification){
         
 //        slf.presentViewController(editNaviVC, animated: true, completion: { () -> Void in
 //        })
@@ -100,26 +100,26 @@ class ViewController: UIViewController{
         self.popupEditView(popView, rootView: rootVIew)
     }
     
-    func showLoginView(noti: NSNotification){
+    func showLoginView(_ noti: Notification){
         let loginView = noti.object as? UIViewController
         self.showLoginHandler(loginView)
     }
     
-    func loginComplete(noti: NSNotification){
+    func loginComplete(_ noti: Notification){
         self.getUserNotice()
     }
     
-    func showLoginHandler(rootView:UIViewController?){
+    func showLoginHandler(_ rootView:UIViewController?){
         let login = CTALoginViewController.getInstance()
         login.isChangeContry = true
         let navigationController = UINavigationController(rootViewController: login)
-        navigationController.navigationBarHidden = true
+        navigationController.isNavigationBarHidden = true
         if rootView != nil {
-            rootView?.self.presentViewController(navigationController, animated: true, completion: {
+            rootView?.self.present(navigationController, animated: true, completion: {
                 self.mainTabBarController.selectedIndex = self.mainDefaultSelected
             })
         }else {
-            self.presentViewController(navigationController, animated: true, completion: {
+            self.present(navigationController, animated: true, completion: {
                 self.mainTabBarController.selectedIndex = self.mainDefaultSelected
             })
         }
@@ -130,7 +130,7 @@ class ViewController: UIViewController{
         self.mainTabBarController.tabBar.items![2].badgeValue = nil
     }
     
-    func addPublishFile(noti: NSNotification){
+    func addPublishFile(_ noti: Notification){
         if CTAUserManager.isLogin{
             self.showEditView()
         }else {
@@ -139,9 +139,9 @@ class ViewController: UIViewController{
     }
     
     func showEditView(){
-        self.view.userInteractionEnabled = false
+        self.view.isUserInteractionEnabled = false
         let page = EditorFactory.generateRandomPage()
-        let documentURL = try! NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
+        let documentURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         let fileUrl = CTADocumentManager.generateDocumentURL(documentURL)
         CTADocumentManager.createNewDocumentAt(fileUrl, page: page) { (success) -> Void in
             
@@ -150,7 +150,7 @@ class ViewController: UIViewController{
                     
                     if let openDocument = CTADocumentManager.openedDocument {
                         
-                        let editNaviVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("EditorNavigationController") as! UINavigationController
+                        let editNaviVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewController(withIdentifier: "EditorNavigationController") as! UINavigationController
                         
                         let editVC = editNaviVC.topViewController as! EditViewController
                         
@@ -163,15 +163,15 @@ class ViewController: UIViewController{
         }
     }
     
-    func popupEditView(editeView:UIViewController, rootView:UIViewController){
-        rootView.view.userInteractionEnabled = false
+    func popupEditView(_ editeView:UIViewController, rootView:UIViewController){
+        rootView.view.isUserInteractionEnabled = false
         let ani = CTAEditorTransition.getInstance()
-        let bgView = UIScreen.mainScreen().snapshotViewAfterScreenUpdates(false)
+        let bgView = UIScreen.main.snapshotView(afterScreenUpdates: false)
         ani.rootView = bgView
         editeView.transitioningDelegate = ani
-        editeView.modalPresentationStyle = .Custom
-        rootView.presentViewController(editeView, animated: true) {
-            rootView.view.userInteractionEnabled = true
+        editeView.modalPresentationStyle = .custom
+        rootView.present(editeView, animated: true) {
+            rootView.view.isUserInteractionEnabled = true
         }
     }
     
@@ -186,7 +186,7 @@ class ViewController: UIViewController{
         }
     }
     
-    func setNoticeReaded(noti: NSNotification){
+    func setNoticeReaded(_ noti: Notification){
         self.mainTabBarController.tabBar.items![2].badgeValue = nil
     }
     
@@ -205,7 +205,7 @@ class ViewController: UIViewController{
                         }
                         self.mainTabBarController.tabBar.items![2].badgeValue = noticeText
                         self.repositionBadge()
-                        NSNotificationCenter.defaultCenter().postNotificationName("haveNewNotice", object: nil)
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: "haveNewNotice"), object: nil)
                     }else {
                         self.mainTabBarController.tabBar.items![2].badgeValue = nil
                     }
@@ -229,13 +229,13 @@ class ViewController: UIViewController{
 }
 
 extension ViewController: CTAEditViewControllerDelegate{
-    func EditControllerDidPublished(viewController: EditViewController){
-        NSNotificationCenter.defaultCenter().postNotificationName("publishEditFile", object: nil)
+    func EditControllerDidPublished(_ viewController: EditViewController){
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "publishEditFile"), object: nil)
     }
 }
 
 extension ViewController: UITabBarControllerDelegate{
-    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool{
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool{
         var isSelf:Bool = false
         if let selectedView = self.mainTabBarController.selectedViewController{
             if selectedView.isEqual(viewController){
@@ -247,7 +247,7 @@ extension ViewController: UITabBarControllerDelegate{
             isSelf = false
         }
         if isSelf{
-            NSNotificationCenter.defaultCenter().postNotificationName("refreshSelf", object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "refreshSelf"), object: nil)
             return false
         }else {
             let index = self.mainTabBarController.selectedIndex

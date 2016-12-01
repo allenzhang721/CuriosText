@@ -11,11 +11,11 @@ import Foundation
 class CTAIDGenerator {
     
     class func generateID() -> String {
-        return NSUUID().UUIDString.characters.split("-").map{String($0)}.reduce("") {$0 + $1}
+        return UUID().uuidString.characters.split(separator: "-").map{String($0)}.reduce("") {$0 + $1}
     }
     
     class func fileID() -> String{
-        let id = NSUUID().UUIDString.characters.split("-").map{String($0)}.reduce("") {$0 + $1}
-        return id.substringToIndex(id.startIndex.advancedBy(5))
+        let id = UUID().uuidString.characters.split(separator: "-").map{String($0)}.reduce("") {$0 + $1}
+        return id.substring(to: id.characters.index(id.startIndex, offsetBy: 5))
     }
 }

@@ -31,7 +31,7 @@ enum CTAAnimationName: String {
     case FadeInOrder = "FADE_IN_ORDER"
     case FadeOutOrder = "FADE_OUT_ORDER"
     
-    static func nameByInt(i: Int) -> String {
+    static func nameByInt(_ i: Int) -> String {
         switch i {
         case 1:
             return CTAAnimationName.MoveIn.rawValue
@@ -72,9 +72,9 @@ enum CTAAnimationName: String {
     
     func shouldVisalbeBeforeBegan() -> Bool {
         switch self {
-        case .MoveIn, .MoveInLeft, .ScaleIn, IrisIn, .CurlIn, .FadeIn, .FadeInOrder, .OrbitalIn:
+        case .MoveIn, .MoveInLeft, .ScaleIn, .IrisIn, .CurlIn, .FadeIn, .FadeInOrder, .OrbitalIn:
             return false
-        case .MoveOut, .MoveOutLeft,.ScaleOut, IrisOut, .CurlOut, .FadeOut, .FadeOutOrder, .OrbitalOut:
+        case .MoveOut, .MoveOutLeft,.ScaleOut, .IrisOut, .CurlOut, .FadeOut, .FadeOutOrder, .OrbitalOut:
             return true
         case .None:
             return true
@@ -83,9 +83,9 @@ enum CTAAnimationName: String {
     
     func shouldVisableAfterEnd() -> Bool {
         switch self {
-        case .MoveIn, .MoveInLeft,.ScaleIn, IrisIn, .CurlIn, .FadeIn, .FadeInOrder, .OrbitalIn:
+        case .MoveIn, .MoveInLeft,.ScaleIn, .IrisIn, .CurlIn, .FadeIn, .FadeInOrder, .OrbitalIn:
             return true
-        case .MoveOut, .MoveOutLeft, .ScaleOut, IrisOut, .CurlOut, .FadeOut, .FadeOutOrder, .OrbitalOut:
+        case .MoveOut, .MoveOutLeft, .ScaleOut, .IrisOut, .CurlOut, .FadeOut, .FadeOutOrder, .OrbitalOut:
             return false
         case .None:
             return true
@@ -119,7 +119,7 @@ enum CTAAnimationName: String {
     }
     
     var description: String {
-        return LocalStrings.AniType(self.toType()).description
+        return LocalStrings.aniType(self.toType()).description
     }
 }
 
@@ -133,7 +133,7 @@ protocol CTAAnimationBinder {
 
 extension CTAAnimationBinder {
     
-    mutating func updateAnimationName(a: CTAAnimationName) {
+    mutating func updateAnimationName(_ a: CTAAnimationName) {
         name = a
     }
     

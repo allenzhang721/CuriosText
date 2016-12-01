@@ -17,7 +17,7 @@ final class CTANoticeModel: CTABaseModel {
     let publishIconURL:String;
     let previewIconURL:String;
     let noticeMessage:String;
-    let noticeDate:NSDate;
+    let noticeDate:Date;
     let noticeReaded:Int;
     let noticeType:Int;  // 0 follow   1  like    2 comment
     let noticeTypeID:Int
@@ -33,35 +33,35 @@ final class CTANoticeModel: CTABaseModel {
         self.publishIconURL = publishIconURL;
         self.previewIconURL = previewIconURL;
         if noticeDate == ""{
-            self.noticeDate = NSDate()
+            self.noticeDate = Date()
         }else {
-            let formatter = NSDateFormatter()
+            let formatter = DateFormatter()
             formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
-            if let date = formatter.dateFromString(noticeDate){
+            if let date = formatter.date(from: noticeDate){
                 self.noticeDate = date
             }else {
-                self.noticeDate = NSDate()
+                self.noticeDate = Date()
             }
         }
     }
     
-    static func generateFrom(json: JSON) -> CTANoticeModel{
+    static func generateFrom(_ json: JSON) -> CTANoticeModel{
         
-        let noticeID:String            = json[key(.NoticeID)].string ?? "";
-        let userID:String              = json[key(.UserID)].string ?? "";
-        let nickName:String            = json[key(.NickName)].string ?? "";
-        let userDesc:String            = json[key(.UserDesc)].string ?? "";
-        let userIconURL:String         = json[key(.UserIconURL)].string ?? "";
-        let sex:Int                    = json[key(.Sex)].int ?? 0;
-        let relationType:Int           = json[key(.RelationType)].int ?? 0;
-        let noticeMessage:String       = json[key(.NoticeMessage)].string ?? "";
-        let noticeDate:String          = json[key(.NoticeDate)].string ?? "";
-        let noticeReaded:Int           = json[key(.NoticeReaded)].int ?? 0;
-        let noticeType:Int             = json[key(.NoticeType)].int ?? 0;
-        let noticeTypeID:Int           = json[key(.NoticeTypeID)].int ?? 0;
-        let publishID:String           = json[key(.PublishID)].string ?? "";
-        let publishIconURL:String      = json[key(.PublishIconURL)].string ?? "";
-        let previewIconURL:String      = json[key(.PreviewIconURL)].string ?? "";
+        let noticeID:String            = json[key(.noticeID)].string ?? "";
+        let userID:String              = json[key(.userID)].string ?? "";
+        let nickName:String            = json[key(.nickName)].string ?? "";
+        let userDesc:String            = json[key(.userDesc)].string ?? "";
+        let userIconURL:String         = json[key(.userIconURL)].string ?? "";
+        let sex:Int                    = json[key(.sex)].int ?? 0;
+        let relationType:Int           = json[key(.relationType)].int ?? 0;
+        let noticeMessage:String       = json[key(.noticeMessage)].string ?? "";
+        let noticeDate:String          = json[key(.noticeDate)].string ?? "";
+        let noticeReaded:Int           = json[key(.noticeReaded)].int ?? 0;
+        let noticeType:Int             = json[key(.noticeType)].int ?? 0;
+        let noticeTypeID:Int           = json[key(.noticeTypeID)].int ?? 0;
+        let publishID:String           = json[key(.publishID)].string ?? "";
+        let publishIconURL:String      = json[key(.publishIconURL)].string ?? "";
+        let previewIconURL:String      = json[key(.previewIconURL)].string ?? "";
         return CTANoticeModel(noticeID: noticeID, userID: userID, nikeName: nickName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, relationType: relationType, noticeDate: noticeDate, noticeMessage: noticeMessage, noticeReaded: noticeReaded, noticeType: noticeType, noticeTypeID: noticeTypeID, publishID: publishID, publishIconURL: publishIconURL, previewIconURL: previewIconURL)
     }
     
@@ -69,24 +69,24 @@ final class CTANoticeModel: CTABaseModel {
         
     }
     
-    func getData() -> [String: AnyObject]{
-        let formatter = NSDateFormatter()
+    func getData() -> [String: Any]{
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
         return [
-            key(.NoticeID):self.noticeID,
-            key(.UserID):self.userModel.userID,
-            key(.NickName):self.userModel.nickName,
-            key(.UserDesc):self.userModel.userDesc,
-            key(.UserIconURL):self.userModel.userIconURL,
-            key(.Sex):self.userModel.sex,
-            key(.NoticeMessage)  :self.noticeMessage,
-            key(.NoticeReaded)  :self.noticeReaded,
-            key(.NoticeType)  :self.noticeType,
-            key(.NoticeTypeID)  :self.noticeTypeID,
-            key(.NoticeDate)  :formatter.stringFromDate(self.noticeDate),
-            key(.PublishID)  :self.publishID,
-            key(.PublishIconURL)  :self.publishIconURL,
-            key(.PreviewIconURL)  :self.previewIconURL
+            key(.noticeID):self.noticeID as AnyObject,
+            key(.userID):self.userModel.userID as AnyObject,
+            key(.nickName):self.userModel.nickName as AnyObject,
+            key(.userDesc):self.userModel.userDesc as AnyObject,
+            key(.userIconURL):self.userModel.userIconURL as AnyObject,
+            key(.sex):self.userModel.sex as AnyObject,
+            key(.noticeMessage)  :self.noticeMessage as AnyObject,
+            key(.noticeReaded)  :self.noticeReaded as AnyObject,
+            key(.noticeType)  :self.noticeType as AnyObject,
+            key(.noticeTypeID)  :self.noticeTypeID as AnyObject,
+            key(.noticeDate)  :formatter.string(from: self.noticeDate) as AnyObject,
+            key(.publishID)  :self.publishID as AnyObject,
+            key(.publishIconURL)  :self.publishIconURL as AnyObject,
+            key(.previewIconURL)  :self.previewIconURL
         ]
     }
 

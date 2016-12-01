@@ -11,9 +11,9 @@ import UIKit
 
 private let registedFonts: [String] = {
     var fonts = [String]()
-    let families = UIFont.familyNames()
+    let families = UIFont.familyNames
     for family in families {
-        let ff = UIFont.fontNamesForFamilyName(family)
+        let ff = UIFont.fontNames(forFamilyName: family)
         for f in ff {
             fonts.append(f)
         }
@@ -22,8 +22,8 @@ private let registedFonts: [String] = {
 }()
 
 enum AniNodeFinderResult {
-    case Success(Int, Container)
-    case NotFound
+    case success(Int, Container)
+    case notFound
 }
 
 class AniNode {
@@ -31,15 +31,15 @@ class AniNode {
     let animations: [Animation]?
     var nextNode: AniNode?
     
-    private var containers: [NSIndexPath: AniContainer] = [:]
+    fileprivate var containers: [IndexPath: AniContainer] = [:]
     
     init(animations: [Animation]? = nil) {
         self.animations = animations
     }
     
-    func startWith(canvasSize: CGSize, finder:(containerID: String) -> AniNodeFinderResult) -> (duration: Float, containers: [NSIndexPath: AniContainer]) {
+    func startWith(_ canvasSize: CGSize, finder:(_ containerID: String) -> AniNodeFinderResult) -> (duration: Float, containers: [IndexPath: AniContainer]) {
         
-        guard let animations = animations where animations.count > 0 else {
+        guard let animations = animations, animations.count > 0 else {
             return (0, [:])
         }
         
@@ -48,10 +48,10 @@ class AniNode {
 
         for a in animations {
             
-            switch finder(containerID: a.targetID) {
-            case .Success(let i , let c):
+            switch finder(a.targetID) {
+            case .success(let i , let c):
                 if let type = CTAAnimationType(rawValue: a.descriptor.type) {
-                    containers[NSIndexPath(forItem: i, inSection: 0)] = generateContaienrBy(canvasSize, addBeganTime: 0, type: type, descriptor: a.descriptor, c: c)
+                    containers[IndexPath(item: i, section: 0)] = generateContaienrBy(canvasSize, addBeganTime: 0, type: type, descriptor: a.descriptor, c: c)
                     let currentDuration = a.descriptor.config.duration + a.descriptor.config.delay
                     duration = max(currentDuration, duration)
                 }
@@ -64,12 +64,12 @@ class AniNode {
         return (duration, containers)
     }
     
-    func generateContaienrBy(canvasSize: CGSize, addBeganTime: Float, type: CTAAnimationType, descriptor: Descriptor, c: Container) -> AniContainer {
+    func generateContaienrBy(_ canvasSize: CGSize, addBeganTime: Float, type: CTAAnimationType, descriptor: Descriptor, c: Container) -> AniContainer {
 
         let nc = containersBy(c, spliteType: TextSpliter.defaultSpliteBy(type))
         let indexPaths = nc.1
         let count = nc.0.contents.count
-        let sectionCount = indexPaths.sort{$0.section > $1.section}.first!.section + 1
+        let sectionCount = indexPaths.sorted{$0.section > $1.section}.first!.section + 1
         
         var rowCountInSection = [Int: Int]()
         for i in 0..<sectionCount {
@@ -79,7 +79,7 @@ class AniNode {
         
         let randomIndexs = (0..<count).map{$0}
         var anis = [Int: AniDescriptor]()
-        for (i, content) in nc.0.contents.enumerate() {
+        for (i, content) in nc.0.contents.enumerated() {
             
             let row = indexPaths[i].row
             let section = indexPaths[i].section
@@ -99,22 +99,22 @@ class AniNode {
     
     
     
-    private func containersBy(container: Container, spliteType type: (TextSpliter.TextLineSpliteType, TextSpliter.TextSpliteType)) -> (Container, [NSIndexPath]) {
+    fileprivate func containersBy(_ container: Container, spliteType type: (TextSpliter.TextLineSpliteType, TextSpliter.TextSpliteType)) -> (Container, [IndexPath]) {
         let source = container.contents.first!.source
         
         var width = container.width
         var registedNames = [String]()
         
-        if let font = source.attribute?[NSFontAttributeName] as? UIFont where CTAFontsManager.registedFontNames().contains(font.fontName) {
+        if let font = source.attribute?[NSFontAttributeName] as? UIFont, CTAFontsManager.registedFontNames().contains(font.fontName) {
             
         } else {
             width += 100
         }
         
-        let r = TextSpliter.spliteText(source.texts, withAttributes: source.attribute, inConstraintSize: CGSize(width: CGFloat(width), height: CGFloat.max), bySpliteType:type)
+        let r = TextSpliter.spliteText(source.texts, withAttributes: source.attribute, inConstraintSize: CGSize(width: CGFloat(width), height: CGFloat.greatestFiniteMagnitude), bySpliteType:type)
         let units = r.0
         let size = r.1
-        let indexPaths = units.map{NSIndexPath(forItem: $0.row, inSection: $0.section)}
+        let indexPaths = units.map{IndexPath(item: $0.row, section: $0.section)}
         
         var contents = [Content]()
         

@@ -19,7 +19,7 @@ enum CTAContainerFeatureType: String {
 
 final class CTAContainer: NSObject, NSCoding {
     
-    private struct SerialKeys {
+    fileprivate struct SerialKeys {
         static let x = "x"
         static let y = "y"
         static let width = "width"
@@ -43,27 +43,27 @@ final class CTAContainer: NSObject, NSCoding {
     let iD: String
     
     required init?(coder aDecoder: NSCoder) {
-        x = aDecoder.decodeDoubleForKey(SerialKeys.x)
-        y = aDecoder.decodeDoubleForKey(SerialKeys.y)
-        width = aDecoder.decodeDoubleForKey(SerialKeys.width)
-        height = aDecoder.decodeDoubleForKey(SerialKeys.height)
-        rotation = aDecoder.decodeDoubleForKey(SerialKeys.rotation)
-        alpha = aDecoder.decodeDoubleForKey(SerialKeys.alpha)
-        contentScale = aDecoder.decodeDoubleForKey(SerialKeys.scale)
-        element = aDecoder.decodeObjectForKey(SerialKeys.element) as? CTAElement
-        iD = aDecoder.decodeObjectForKey(SerialKeys.iD) as! String
+        x = aDecoder.decodeDouble(forKey: SerialKeys.x)
+        y = aDecoder.decodeDouble(forKey: SerialKeys.y)
+        width = aDecoder.decodeDouble(forKey: SerialKeys.width)
+        height = aDecoder.decodeDouble(forKey: SerialKeys.height)
+        rotation = aDecoder.decodeDouble(forKey: SerialKeys.rotation)
+        alpha = aDecoder.decodeDouble(forKey: SerialKeys.alpha)
+        contentScale = aDecoder.decodeDouble(forKey: SerialKeys.scale)
+        element = aDecoder.decodeObject(forKey: SerialKeys.element) as? CTAElement
+        iD = aDecoder.decodeObject(forKey: SerialKeys.iD) as! String
     }
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeDouble(x, forKey: SerialKeys.x)
-        aCoder.encodeDouble(y, forKey: SerialKeys.y)
-        aCoder.encodeDouble(width, forKey: SerialKeys.width)
-        aCoder.encodeDouble(height, forKey: SerialKeys.height)
-        aCoder.encodeDouble(rotation, forKey: SerialKeys.rotation)
-        aCoder.encodeDouble(alpha, forKey: SerialKeys.alpha)
-        aCoder.encodeDouble(contentScale, forKey: SerialKeys.scale)
-        aCoder.encodeObject(element, forKey: SerialKeys.element)
-        aCoder.encodeObject(iD, forKey: SerialKeys.iD)
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(x, forKey: SerialKeys.x)
+        aCoder.encode(y, forKey: SerialKeys.y)
+        aCoder.encode(width, forKey: SerialKeys.width)
+        aCoder.encode(height, forKey: SerialKeys.height)
+        aCoder.encode(rotation, forKey: SerialKeys.rotation)
+        aCoder.encode(alpha, forKey: SerialKeys.alpha)
+        aCoder.encode(contentScale, forKey: SerialKeys.scale)
+        aCoder.encode(element, forKey: SerialKeys.element)
+        aCoder.encode(iD, forKey: SerialKeys.iD)
     }
     
     init(x: Double, y: Double, width: Double, height: Double, rotation: Double, alpha: Double, scale: Double, inset: CGPoint, element: CTAElement?) {

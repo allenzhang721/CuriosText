@@ -10,9 +10,9 @@ import Foundation
 
 final class CTAPage:NSObject, NSCoding {
     
-    let containerQueue = dispatch_queue_create("com.botai.CuriosText.pageUpdateQueue", DISPATCH_QUEUE_SERIAL)
+    let containerQueue = DispatchQueue(label: "com.botai.CuriosText.pageUpdateQueue", attributes: [])
     
-    private struct SerialKeys {
+    fileprivate struct SerialKeys {
         static let width = "width"
         static let height = "height"
         static let backgroundColor = "backgroundColor"
@@ -21,30 +21,30 @@ final class CTAPage:NSObject, NSCoding {
         static let filterName = "filterName"
     }
     
-    private(set) var backgroundColor = "FFFFFF"
-    private(set) var width = 414.0
-    private(set) var height = 414.0
-    private(set) var containers = [CTAContainer]()
-    private(set) var animatoins = [CTAAnimation]()
-    private(set) var filterName = ""
+    fileprivate(set) var backgroundColor = "FFFFFF"
+    fileprivate(set) var width = 414.0
+    fileprivate(set) var height = 414.0
+    fileprivate(set) var containers = [CTAContainer]()
+    fileprivate(set) var animatoins = [CTAAnimation]()
+    fileprivate(set) var filterName = ""
     
     
     required init?(coder aDecoder: NSCoder) {
-        width = aDecoder.decodeDoubleForKey(SerialKeys.width)
-        height = aDecoder.decodeDoubleForKey(SerialKeys.height)
-        containers = aDecoder.decodeObjectForKey(SerialKeys.containers) as! [CTAContainer]
-        animatoins = aDecoder.decodeObjectForKey(SerialKeys.animations) as! [CTAAnimation]
-        backgroundColor = aDecoder.decodeObjectForKey(SerialKeys.backgroundColor) as? String ?? "FFFFFF"
-        filterName = aDecoder.decodeObjectForKey(SerialKeys.filterName) as? String ?? ""
+        width = aDecoder.decodeDouble(forKey: SerialKeys.width)
+        height = aDecoder.decodeDouble(forKey: SerialKeys.height)
+        containers = aDecoder.decodeObject(forKey: SerialKeys.containers) as! [CTAContainer]
+        animatoins = aDecoder.decodeObject(forKey: SerialKeys.animations) as! [CTAAnimation]
+        backgroundColor = aDecoder.decodeObject(forKey: SerialKeys.backgroundColor) as? String ?? "FFFFFF"
+        filterName = aDecoder.decodeObject(forKey: SerialKeys.filterName) as? String ?? ""
     }
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeDouble(width, forKey: SerialKeys.width)
-        aCoder.encodeDouble(height, forKey: SerialKeys.height)
-        aCoder.encodeObject(backgroundColor, forKey: SerialKeys.backgroundColor)
-        aCoder.encodeObject(containers, forKey: SerialKeys.containers)
-        aCoder.encodeObject(animatoins, forKey: SerialKeys.animations)
-        aCoder.encodeObject(filterName, forKey: SerialKeys.filterName)
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(width, forKey: SerialKeys.width)
+        aCoder.encode(height, forKey: SerialKeys.height)
+        aCoder.encode(backgroundColor, forKey: SerialKeys.backgroundColor)
+        aCoder.encode(containers, forKey: SerialKeys.containers)
+        aCoder.encode(animatoins, forKey: SerialKeys.animations)
+        aCoder.encode(filterName, forKey: SerialKeys.filterName)
     }
     
     init(containers: [CTAContainer], anis: [CTAAnimation] = [], background: String = "FFFFFF", filterName: String = "") {
@@ -65,30 +65,30 @@ final class CTAPage:NSObject, NSCoding {
         return container
     }
     
-    func changeFilterName(s: String) {
+    func changeFilterName(_ s: String) {
         filterName = s
     }
     
-    func changeBackColor(hex: String) {
+    func changeBackColor(_ hex: String) {
         backgroundColor = hex
     }
     
-    func append(container: CTAContainer) {
+    func append(_ container: CTAContainer) {
 //        dispatch_sync(containerQueue) {
             containers.append(container)
 //        }
     }
     
-    func insert(container: CTAContainer, atIndex index: Int = 0) {
+    func insert(_ container: CTAContainer, atIndex index: Int = 0) {
 //        dispatch_sync(containerQueue) {
-            containers.insert(container, atIndex: index)
+            containers.insert(container, at: index)
 //        }
     }
     
-    func removeAt(index: Int) {
+    func removeAt(_ index: Int) {
 //        dispatch_sync(containerQueue) {
         
-            let container = self.containers.removeAtIndex(index)
+            let container = self.containers.remove(at: index)
             let anis = self.animatoins.filter{container.iD != $0.targetiD}
             self.animatoins = anis
 //        }
@@ -102,11 +102,11 @@ final class CTAPage:NSObject, NSCoding {
     
     func replaceBy(template temp: CTAPage) {
         if containers.count > 1 {
-            containers.removeRange(1..<containers.count)
+            containers.removeSubrange(1..<containers.count)
         }
         
 //        backgroundColor = temp.backgroundColor
-        containers.appendContentsOf(temp.containers)
+        containers.append(contentsOf: temp.containers)
         animatoins = temp.animatoins
     }
     
@@ -115,20 +115,20 @@ final class CTAPage:NSObject, NSCoding {
         self.animatoins = anis
     }
     
-    func removeAnimationAtIndex(i: Int, completedHandler:(() -> ())?) {
+    func removeAnimationAtIndex(_ i: Int, completedHandler:(() -> ())?) {
 //        dispatch_sync(containerQueue) {
         
-            dispatch_async(dispatch_get_main_queue(), {
-                self.animatoins.removeAtIndex(i)
+            DispatchQueue.main.async(execute: {
+                self.animatoins.remove(at: i)
                 completedHandler?()
             })
 //        }
     }
     
-    func appendAnimation(a: CTAAnimation, completedHandler:(() -> ())?) {
+    func appendAnimation(_ a: CTAAnimation, completedHandler:(() -> ())?) {
         
 //        dispatch_sync(containerQueue) {
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.animatoins.append(a)
                 completedHandler?()
             })
@@ -139,8 +139,8 @@ final class CTAPage:NSObject, NSCoding {
 extension CTAPage {
     
     func removeLastImageContainer() {
-            if let container = self.containers.first as? ImageContainerVMProtocol where container.type == .Image {
-                let container = self.containers.removeAtIndex(0)
+            if let container = self.containers.first as? ImageContainerVMProtocol, container.type == .image {
+                let container = self.containers.remove(at: 0)
                 let anis = self.animatoins.filter{container.iD != $0.targetiD}
                 self.animatoins = anis
             }
@@ -148,7 +148,7 @@ extension CTAPage {
     
     func cleanEmptyContainers() -> CTAPage {
         
-        let c = containers.filter{ $0.type != .Text ? true : !($0.textElement!.isEmpty) }
+        let c = containers.filter{ $0.type != .text ? true : !($0.textElement!.isEmpty) }
         let ids = c.map{$0.iD}
         let a = animatoins.filter{ids.contains($0.targetiD)}
         

@@ -12,19 +12,19 @@ final class CTAPresenter: CTADocumentAccesser {
     
     var page = CTAPage(containers: [CTAContainer]())
     
-    internal var pageData: NSData {
-        return NSKeyedArchiver.archivedDataWithRootObject(page)
+    internal var pageData: Data {
+        return NSKeyedArchiver.archivedData(withRootObject: page)
     }
     
-    internal func retrivedPageData(data: NSData?) {
+    internal func retrivedPageData(_ data: Data?) {
         
-        guard let data = data, let page = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage else {
+        guard let data = data, let page = NSKeyedUnarchiver.unarchiveObject(with: data) as? CTAPage else {
             return
         }
         updatePage(page)
     }
     
-    func updatePage(page: CTAPage) {
+    func updatePage(_ page: CTAPage) {
         self.page = page
     }
     

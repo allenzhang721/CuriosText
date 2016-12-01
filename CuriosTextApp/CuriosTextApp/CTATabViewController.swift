@@ -10,14 +10,14 @@ import UIKit
 
 protocol CTATabViewControllerDataSource: class {
     
-    func tabViewControllerNumberOfItems(viewController: CTATabViewController) -> Int
-    func tabViewController(viewController: CTATabViewController, tabItemAtIndexPath indexPath: NSIndexPath) -> CTABarItem
+    func tabViewControllerNumberOfItems(_ viewController: CTATabViewController) -> Int
+    func tabViewController(_ viewController: CTATabViewController, tabItemAtIndexPath indexPath: IndexPath) -> CTABarItem
 
 }
 
 protocol CTATabViewControllerDelegate: class {
     
-    func tabViewController(ViewController: CTATabViewController, didChangedToIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?)
+    func tabViewController(_ ViewController: CTATabViewController, didChangedToIndexPath indexPath: IndexPath, oldIndexPath: IndexPath?)
 }
 
 class CTATabViewController: UIViewController {
@@ -40,7 +40,7 @@ class CTATabViewController: UIViewController {
         collectionView.delegate = self
         
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
-        layout.scrollDirection = .Horizontal
+        layout.scrollDirection = .horizontal
         layout.delegate = self
         
         view.backgroundColor = CTAStyleKit.commonBackgroundColor
@@ -57,7 +57,7 @@ class CTATabViewController: UIViewController {
 
 extension CTATabViewController: UICollectionViewDataSource {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         guard let dataSource = dataSource else {
             return 0
@@ -66,9 +66,9 @@ extension CTATabViewController: UICollectionViewDataSource {
         return dataSource.tabViewControllerNumberOfItems(self)
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TabCell", forIndexPath: indexPath) as! CTAScollBarCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TabCell", for: indexPath) as! CTAScollBarCell
         
         if let dataSource = dataSource {
             cell.barItemView.setItem(dataSource.tabViewController(self, tabItemAtIndexPath: indexPath))
@@ -80,9 +80,9 @@ extension CTATabViewController: UICollectionViewDataSource {
 
 extension CTATabViewController: UICollectionViewDelegate {
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if let att = collectionView.layoutAttributesForItemAtIndexPath(indexPath) {
+        if let att = collectionView.layoutAttributesForItem(at: indexPath) {
 //            tapping = true
             let center = att.center
             let offset = CGPoint(x: center.x - collectionView.bounds.width / 2.0, y: 0)
@@ -98,9 +98,9 @@ extension CTATabViewController: UICollectionViewDelegate {
 extension CTATabViewController: LineFlowLayoutDelegate {
     
     func didChangeTo(
-        collectionView: UICollectionView,
-        itemAtIndexPath indexPath: NSIndexPath,
-        oldIndexPath: NSIndexPath?) {
+        _ collectionView: UICollectionView,
+        itemAtIndexPath indexPath: IndexPath,
+        oldIndexPath: IndexPath?) {
         
         
 //        print("will change")

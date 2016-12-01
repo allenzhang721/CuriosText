@@ -12,14 +12,14 @@ import Photos
 class CTAPhotoAlbumListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    private var allPhotos: PHFetchResult?
-    private var albums: PHFetchResult?
-    private var albumAssets = [PHFetchResult]()
-    private let imageFetcher = PHCachingImageManager()
+    fileprivate var allPhotos: PHFetchResult<PHAsset>?
+    fileprivate var albums: PHFetchResult<PHAssetCollection>?
+    fileprivate var albumAssets = [PHFetchResult<AnyObject>]()
+    fileprivate let imageFetcher = PHCachingImageManager()
     
     let allPhotoTitle = NSLocalizedString("AllPhotos", comment: "")
     
-    var didSelectedHandler: ((PHFetchResult?, String) -> ())?
+    var didSelectedHandler: ((PHFetchResult<AnyObject>?, String) -> ())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,23 +29,23 @@ class CTAPhotoAlbumListViewController: UIViewController {
         allPhotos.sortDescriptors = [dateSortDescritor]
         
         // 2. fetch result and collection
-        let result = PHAsset.fetchAssetsWithOptions(allPhotos)
+        let result = PHAsset.fetchAssets(with: allPhotos)
         
         
         self.allPhotos = result
-        albumAssets.append(self.allPhotos!)
+        albumAssets.append(self.allPhotos! as! PHFetchResult<AnyObject>)
         let options = PHFetchOptions()
         options.predicate = NSPredicate(format: "estimatedAssetCount > 0")
-        albums = PHAssetCollection.fetchAssetCollectionsWithType(.Album, subtype: .AlbumRegular, options: options)
+        albums = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumRegular, options: options)
         
         if let albums = albums {
             for a in 0..<albums.count {
                 if let album = albums[a] as? PHAssetCollection {
                     let options = PHFetchOptions()
                     //                    options.fetchLimit = 1
-                    let assetResult = PHAsset.fetchAssetsInAssetCollection(album, options: options)
+                    let assetResult = PHAsset.fetchAssets(in: album, options: options)
                     if assetResult.count > 0 {
-                        albumAssets.append(assetResult)
+                        albumAssets.append(assetResult as! PHFetchResult<AnyObject>)
                     }
                 }
             }
@@ -56,14 +56,14 @@ class CTAPhotoAlbumListViewController: UIViewController {
 // MARK: - TableViewDataSource
 extension CTAPhotoAlbumListViewController: UITableViewDataSource {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return albumAssets.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath
-        indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt
+        indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("PhotoAlbumListCell")! as UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoAlbumListCell")! as UITableViewCell
 
         if let coverImageView = cell.contentView.viewWithTag(1000) as? UIImageView {
             
@@ -73,9 +73,9 @@ extension CTAPhotoAlbumListViewController: UITableViewDataSource {
                         objc_setAssociatedObject(cell, &assetID, id, .OBJC_ASSOCIATION_COPY_NONATOMIC)
                         
                         coverImageView.image = nil
-                        imageFetcher.requestImageForAsset(asset, targetSize: CGSize(width: 120, height: 120), contentMode: .AspectFill, options: nil, resultHandler: { (image, dic) in
+                        imageFetcher.requestImage(for: asset, targetSize: CGSize(width: 120, height: 120), contentMode: .aspectFill, options: nil, resultHandler: { (image, dic) in
                             
-                            if let nextAssetID = objc_getAssociatedObject(cell, &assetID) as? String where nextAssetID == id {
+                            if let nextAssetID = objc_getAssociatedObject(cell, &assetID) as? String, nextAssetID == id {
                                 
                                 coverImageView.image = image
                             }
@@ -86,7 +86,7 @@ extension CTAPhotoAlbumListViewController: UITableViewDataSource {
         }
         
         if let titleLabel = cell.contentView.viewWithTag(2000) as? UILabel {
-                let t = indexPath.row == 0 ? allPhotoTitle : (albums?[indexPath.row - 1] as? PHAssetCollection)?.localizedTitle
+                let t = indexPath.row == 0 ? allPhotoTitle : albums?[indexPath.row - 1].localizedTitle
             titleLabel.text = t
             
         }
@@ -101,12 +101,12 @@ extension CTAPhotoAlbumListViewController: UITableViewDataSource {
 
 extension CTAPhotoAlbumListViewController: UITableViewDelegate {
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         
         let assets = albumAssets[indexPath.item]
-        let t = indexPath.row == 0 ? allPhotoTitle : (albums?[indexPath.row - 1] as? PHAssetCollection)?.localizedTitle
+        let t = indexPath.row == 0 ? allPhotoTitle : albums?[indexPath.row - 1].localizedTitle
         didSelectedHandler?(assets, t!)
     }
 }

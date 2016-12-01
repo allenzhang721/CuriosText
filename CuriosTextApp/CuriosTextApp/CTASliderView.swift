@@ -11,13 +11,13 @@ protocol ValueTuneable {
 public struct CTASliderAttributes {
     
     public enum CTASliderLineAlignment {
-        case Top, Center, Bottom
+        case top, center, bottom
     }
     
     public enum CTASliderCalibrationCount: Int {
-        case Normal = 100
-        case Middle = 200
-        case Long = 300
+        case normal = 100
+        case middle = 200
+        case long = 300
     }
     
     public let seniorlineLengthRatio: CGFloat  // the Ratio is base on view.bounds.height
@@ -25,11 +25,11 @@ public struct CTASliderAttributes {
     public let lineWidth: CGFloat = 2
     public let lineSpacing: CGFloat = 20
     
-    public let lineAlignment: CTASliderLineAlignment = .Bottom
-    public let calibrationCount: CTASliderCalibrationCount = .Normal
+    public let lineAlignment: CTASliderLineAlignment = .bottom
+    public let calibrationCount: CTASliderCalibrationCount = .normal
     
-    public let lineColor = UIColor.lightGrayColor()
-    public let indicatorColor = UIColor.redColor()
+    public let lineColor = UIColor.lightGray
+    public let indicatorColor = UIColor.red
     
     public var indicatorWidth: CGFloat {
         return lineSpacing
@@ -43,24 +43,24 @@ public struct CTASliderAttributes {
     }
 }
 
-public class CTASliderView: UIControl, ValueTuneable {
+open class CTASliderView: UIControl, ValueTuneable {
     
     var targetValues = [CGFloat]()
     
-    private var leftValue: CGFloat = 0.5
-    private var rightValue: CGFloat = 2.5
-    private var currentValue: CGFloat = 0.0
+    fileprivate var leftValue: CGFloat = 0.5
+    fileprivate var rightValue: CGFloat = 2.5
+    fileprivate var currentValue: CGFloat = 0.0
     
-    private var calibrationUnit: CGFloat = 1.0
+    fileprivate var calibrationUnit: CGFloat = 1.0
     
-    private let indicatorLayer = CAShapeLayer()
-    private let calibrationLayer = CAShapeLayer()
-    private let containerLayer = CALayer()
-    private let scrollView = UIScrollView()
+    fileprivate let indicatorLayer = CAShapeLayer()
+    fileprivate let calibrationLayer = CAShapeLayer()
+    fileprivate let containerLayer = CALayer()
+    fileprivate let scrollView = UIScrollView()
     
-    private(set) var attributes = CTASliderAttributes()
+    fileprivate(set) var attributes = CTASliderAttributes()
     
-    public var maxiumValue: CGFloat {
+    open var maxiumValue: CGFloat {
         get {
             return rightValue
         }
@@ -73,7 +73,7 @@ public class CTASliderView: UIControl, ValueTuneable {
         }
     }
     
-    public var minumValue: CGFloat {
+    open var minumValue: CGFloat {
         get {
             return leftValue
         }
@@ -86,7 +86,7 @@ public class CTASliderView: UIControl, ValueTuneable {
         }
     }
     
-    public var value: CGFloat {
+    open var value: CGFloat {
         get {
             return currentValue
         }
@@ -112,17 +112,17 @@ public class CTASliderView: UIControl, ValueTuneable {
     }
     
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         layout()
     }
     
-    private func setup() {
-        indicatorLayer.contentsScale = UIScreen.mainScreen().scale
-        indicatorLayer.fillColor = attributes.indicatorColor.CGColor
-        calibrationLayer.contentsScale = UIScreen.mainScreen().scale
-        containerLayer.contentsScale = UIScreen.mainScreen().scale
-        containerLayer.backgroundColor = attributes.lineColor.CGColor
+    fileprivate func setup() {
+        indicatorLayer.contentsScale = UIScreen.main.scale
+        indicatorLayer.fillColor = attributes.indicatorColor.cgColor
+        calibrationLayer.contentsScale = UIScreen.main.scale
+        containerLayer.contentsScale = UIScreen.main.scale
+        containerLayer.backgroundColor = attributes.lineColor.cgColor
         
         containerLayer.addSublayer(indicatorLayer)
         containerLayer.mask = calibrationLayer
@@ -135,7 +135,7 @@ public class CTASliderView: UIControl, ValueTuneable {
         addSubview(scrollView)
     }
     
-    private func layout() {
+    fileprivate func layout() {
         
         containerLayer.frame = bounds
         indicatorLayer.frame = containerLayer.bounds
@@ -154,10 +154,10 @@ public class CTASliderView: UIControl, ValueTuneable {
         calibrationLayer.frame = CGRect(origin: CGPoint.zero, size: contentSize)
         
         let calibrationPath = CTASliderView.calibrationPath(bounds, attributes: attributes)
-        calibrationLayer.path = calibrationPath.CGPath
+        calibrationLayer.path = calibrationPath.cgPath
         
         let indicatorPath = CTASliderView.indicatorPath(bounds, attributes: attributes)
-        indicatorLayer.path = indicatorPath.CGPath
+        indicatorLayer.path = indicatorPath.cgPath
         
         let nextUnit = (rightValue - leftValue) / w
         
@@ -168,14 +168,14 @@ public class CTASliderView: UIControl, ValueTuneable {
         updateOffsetByValue(value)
     }
     
-    private func updateCalibarationOffset(offset: CGFloat) {
+    fileprivate func updateCalibarationOffset(_ offset: CGFloat) {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         calibrationLayer.frame.origin.x = -offset
         CATransaction.commit()
     }
     
-    private func updateOffsetByValue(v: CGFloat) {
+    fileprivate func updateOffsetByValue(_ v: CGFloat) {
         
         let offset = (v - leftValue) / calibrationUnit
         updateCalibarationOffset(offset)
@@ -186,9 +186,9 @@ public class CTASliderView: UIControl, ValueTuneable {
 // MARK: - UIScrollView Delegate
 extension CTASliderView: UIScrollViewDelegate {
     
-    public func scrollViewDidScroll(scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        guard scrollView.tracking || scrollView.dragging || scrollView.decelerating else {
+        guard scrollView.isTracking || scrollView.isDragging || scrollView.isDecelerating else {
             return
         }
         
@@ -210,7 +210,7 @@ extension CTASliderView: UIScrollViewDelegate {
         //if fabs(nextScale * 100.0 - oldScale * 100.0) > 0.1
         if fabs(targetValue * 1000.0 - currentValue * 1000.0) > 0.1 {
             currentValue = targetValue
-            sendActionsForControlEvents(.ValueChanged)
+            sendActions(for: .valueChanged)
             //        print(currentValue)
             updateCalibarationOffset(offset.x)
         }
@@ -220,7 +220,7 @@ extension CTASliderView: UIScrollViewDelegate {
 
 extension CTASliderView {
     
-    public class func indicatorPath(bounds: CGRect, attributes: CTASliderAttributes) -> UIBezierPath {
+    public class func indicatorPath(_ bounds: CGRect, attributes: CTASliderAttributes) -> UIBezierPath {
         
         let w = attributes.lineSpacing
         let h = bounds.height
@@ -236,7 +236,7 @@ extension CTASliderView {
         )
     }
     
-    public class func calibrationPath(rect: CGRect, attributes: CTASliderAttributes) -> UIBezierPath {
+    public class func calibrationPath(_ rect: CGRect, attributes: CTASliderAttributes) -> UIBezierPath {
         
         let path = UIBezierPath()
         
@@ -270,15 +270,15 @@ extension CTASliderView {
         let minorY: CGFloat
         
         switch alignment {
-        case .Top:
+        case .top:
             seniorY = topInset
             minorY = topInset
             
-        case .Center:
+        case .center:
             seniorY = topInset + realRectHeight * (1 - sr) / 2.0
             minorY = topInset + realRectHeight * (1 - mr) / 2.0
             
-        case .Bottom:
+        case .bottom:
             seniorY = topInset + (realRectHeight - seniorLength)
             minorY = topInset + (realRectHeight - minorLength)
         }
@@ -303,12 +303,12 @@ extension CTASliderView {
             let br = CGPoint(x: maxX, y: maxY)  // bottom right
             let bl = CGPoint(x: minX, y: maxY)  // bottom left
             
-            path.moveToPoint(tl)
-            path.addLineToPoint(tr)
-            path.addLineToPoint(br)
-            path.addLineToPoint(bl)
-            path.addLineToPoint(tl)
-            path.closePath()
+            path.move(to: tl)
+            path.addLine(to: tr)
+            path.addLine(to: br)
+            path.addLine(to: bl)
+            path.addLine(to: tl)
+            path.close()
         }
         return path
     }

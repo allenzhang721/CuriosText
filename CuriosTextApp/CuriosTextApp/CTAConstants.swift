@@ -8,7 +8,7 @@
 
 import Foundation
 
-func key(key: CTAParameterKey) -> String {
+func key(_ key: CTAParameterKey) -> String {
   return key.description
 }
 
@@ -28,21 +28,21 @@ struct CTAFilePath {
 }
 
 enum CTARequestHost: CustomStringConvertible {
-  case Test, Debug, Production
+  case test, debug, production
   
   var description: String {
     switch self {
-    case .Test:
+    case .test:
         CTAFilePath.userFilePath = "http://7wy3u8.com2.z0.glb.qiniucdn.com/"
         CTAFilePath.publishFilePath = "http://7wy3u8.com2.z0.glb.qiniucdn.com/"
         CTAFilePath.resourceFilePath = "https://o6kzay0ng.qnssl.com/"
         return "http://182.92.150.178/CuriosTextServices" 
-    case .Debug:
+    case .debug:
         CTAFilePath.userFilePath = "http://7wy3u8.com2.z0.glb.qiniucdn.com/"
         CTAFilePath.publishFilePath = "http://7wy3u8.com2.z0.glb.qiniucdn.com/"
         CTAFilePath.resourceFilePath = "https://o6kzay0ng.qnssl.com/"
         return "http://192.168.1.103:8080/CuriosTextServices"
-    case .Production:
+    case .production:
         CTAFilePath.userFilePath = "https://dn-tu-curiosapp.qbox.me/"
         CTAFilePath.publishFilePath = "https://dn-tp-curiosapp.qbox.me/"
         CTAFilePath.resourceFilePath = "https://o6kzay0ng.qnssl.com/"
@@ -52,289 +52,289 @@ enum CTARequestHost: CustomStringConvertible {
 }
 
 enum CTARequestUrl: CustomStringConvertible {
-  case Login
-  case PhoneRegister, WeixinRegister, WeiboRegister
-  case UpdateUserInfo, UpdateUserNickname, UpdateUserDesc, UpdateUserIconURL, UpdateUserAddress, UpdateUserSex
-  case CheckUserExist, BindingPhone, BindingWeixinID, UnbindingWeixinID, BingingWeiboID, UnbindingWeiboID
-  case CheckPassword, UpdatePassword, ResetPassword, UserDetail
+  case login
+  case phoneRegister, weixinRegister, weiboRegister
+  case updateUserInfo, updateUserNickname, updateUserDesc, updateUserIconURL, updateUserAddress, updateUserSex
+  case checkUserExist, bindingPhone, bindingWeixinID, unbindingWeixinID, bingingWeiboID, unbindingWeiboID
+  case checkPassword, updatePassword, resetPassword, userDetail
     
-  case CreatePublish, DeletePublish, PublishDetail
-  case UserPublishList, UserLikePublishList, UserRebuildPublishList, UserFollowPublishList, NewPubulishList, HotPublishList, SetHotPublish, PublishLikeUserList
-  case LikePublish, UnLikePublish, RebuildPublish, SharePublish, ReportPublish
-  case FollowUser, UnFollowUser, BlockUser, UnBlockUser, UserFollowList, UserBeFollowList
-  case UserUpToken, PublishUpToken, UploadFilePath, ResourceUpToken
-  case AddPublishComment, DeletePublishComment, PublishCommentList
-  case UnReadNoticeCount, NoticeList, DeleteNotice, ClearNotices, SetNoticesReaded
+  case createPublish, deletePublish, publishDetail
+  case userPublishList, userLikePublishList, userRebuildPublishList, userFollowPublishList, newPubulishList, hotPublishList, setHotPublish, publishLikeUserList
+  case likePublish, unLikePublish, rebuildPublish, sharePublish, reportPublish
+  case followUser, unFollowUser, blockUser, unBlockUser, userFollowList, userBeFollowList
+  case userUpToken, publishUpToken, uploadFilePath, resourceUpToken
+  case addPublishComment, deletePublishComment, publishCommentList
+  case unReadNoticeCount, noticeList, deleteNotice, clearNotices, setNoticesReaded
   
   var description: String {
     switch self {
-    case .Login:
+    case .login:
         return "/user/login"
-    case .PhoneRegister:
+    case .phoneRegister:
       return "/user/register"
-    case .WeixinRegister:
+    case .weixinRegister:
         return "/user/weixinRegister"
-    case .WeiboRegister:
+    case .weiboRegister:
         return "/user/weiboRegister"
-    case .UpdateUserInfo:
+    case .updateUserInfo:
         return "/user/updateUserInfo"
-    case .UpdateUserNickname:
+    case .updateUserNickname:
         return "/user/updateUserNickname"
-    case .UpdateUserDesc:
+    case .updateUserDesc:
         return "/user/updateUserDesc"
-    case .UpdateUserIconURL:
+    case .updateUserIconURL:
         return "/user/updateUserIconURL"
-    case .UpdateUserAddress:
+    case .updateUserAddress:
         return "/user/updateUserAddress"
-    case .UpdateUserSex:
+    case .updateUserSex:
         return "/user/updateUserSex"
-    case .CheckUserExist:
+    case .checkUserExist:
         return "/user/checkUserExist"
-    case .BindingPhone:
+    case .bindingPhone:
         return "/user/bindingPhone"
-    case .BindingWeixinID:
+    case .bindingWeixinID:
         return "/user/bindingWeixinID"
-    case .UnbindingWeixinID:
+    case .unbindingWeixinID:
         return "/user/unbindingWeixinID"
-    case .BingingWeiboID:
+    case .bingingWeiboID:
         return "/user/bindingWeiboID"
-    case .UnbindingWeiboID:
+    case .unbindingWeiboID:
         return "/user/unbindingWeiboID"
-    case .CheckPassword:
+    case .checkPassword:
         return "/user/checkPassword"
-    case .UpdatePassword:
+    case .updatePassword:
         return "/user/updatePassword"
-    case .ResetPassword:
+    case .resetPassword:
         return "/user/resetPassword"
-    case .UserDetail:
+    case .userDetail:
         return "/user/userDetail"
-    case .CreatePublish:
+    case .createPublish:
         return "/publish/createPublishFile"
-    case .DeletePublish:
+    case .deletePublish:
         return "/publish/deletePublishFile"
-    case .PublishDetail:
+    case .publishDetail:
         return "/publish/publishFileDetail"
-    case .UserPublishList:
+    case .userPublishList:
         return "/publish/userPublishList"
-    case .UserLikePublishList:
+    case .userLikePublishList:
         return "/publish/userLikePublishList"
-    case .UserRebuildPublishList:
+    case .userRebuildPublishList:
         return "/publish/userRebuildPublishList"
-    case .UserFollowPublishList:
+    case .userFollowPublishList:
         return "/publish/userFollowPublishList"
-    case .NewPubulishList:
+    case .newPubulishList:
         return "/publish/newPublishList"
-    case .HotPublishList:
+    case .hotPublishList:
         return "/publish/hotPublishList"
-    case .SetHotPublish:
+    case .setHotPublish:
         return "/publish/setHotPublish"
-    case .PublishLikeUserList:
+    case .publishLikeUserList:
         return "/publish/publishLikeUserList"
-    case .LikePublish:
+    case .likePublish:
         return "/publish/likePublish"
-    case .UnLikePublish:
+    case .unLikePublish:
         return "/publish/unLikePublish"
-    case .RebuildPublish:
+    case .rebuildPublish:
         return "/publish/rebuildPublish"
-    case .SharePublish:
+    case .sharePublish:
         return "/publish/sharePublish"
-    case .ReportPublish:
+    case .reportPublish:
         return "/publish/reportPublish"
-    case .FollowUser:
+    case .followUser:
         return "/relation/followUser"
-    case .UnFollowUser:
+    case .unFollowUser:
         return "/relation/unFollowUser"
-    case .BlockUser:
+    case .blockUser:
         return "/relation/blockUser"
-    case .UnBlockUser:
+    case .unBlockUser:
         return "/relation/unBlockUser"
-    case .UserFollowList:
+    case .userFollowList:
         return "/relation/userFollowList"
-    case .UserBeFollowList:
+    case .userBeFollowList:
         return "/relation/userBeFollowList"
-    case .UserUpToken:
+    case .userUpToken:
         return "/upload/userUpToken"
-    case .PublishUpToken:
+    case .publishUpToken:
         return "/upload/publishUpToken"
-    case .UploadFilePath:
+    case .uploadFilePath:
         return "/upload/uploadFilePath"
-    case .ResourceUpToken:
+    case .resourceUpToken:
         return "/upload/resourceUpToken"
-    case .AddPublishComment:
+    case .addPublishComment:
         return "/comment/addPublishComment"
-    case .DeletePublishComment:
+    case .deletePublishComment:
         return "/comment/deletePublishComment"
-    case .PublishCommentList:
+    case .publishCommentList:
         return "/comment/publishCommentList"
-    case .UnReadNoticeCount:
+    case .unReadNoticeCount:
         return "/notice/unReadNoticeCount"
-    case .NoticeList:
+    case .noticeList:
         return "/notice/noticeList"
-    case .DeleteNotice:
+    case .deleteNotice:
         return "/notice/deleteNotice"
-    case .ClearNotices:
+    case .clearNotices:
         return "/notice/clearUserNotices"
-    case .SetNoticesReaded:
+    case .setNoticesReaded:
         return "/notice/setNoticesReaded"
     }
   }
 }
 
 enum CTAParameterKey: CustomStringConvertible {
-  case Data
-  case UserID, UserType, NickName, UserDesc, UserIconURL, Sex, Email, Phone, AreaCode, Password, WeixinID, WeiboID, Country, Province, City, NewPassword
-  case BeUserID, Start, Size, SharePlatform, List, ReportType, ReportMessage
-  case PublishID, Title, PublishDesc, PublishIconURL, PreviewIconURL, PublishURL, PublishDate
-  case RelationType, RelationUserID, FollowCount, BeFollowCount, PublishCount
-  case PublishFilePath, UserFilePath, ResourceFilePath
-  case UpToken, UpTokenKey
-  case ShareCount, RebuildCount, LikeCount, LikeStatus, CommentCount
-  case Openid, Headimgurl, WechatName
-  case WeiBoUserID, WeiBoID, Avatarhd, Gender, WeiboName, WeiboDesc
-  case CommentMessage, CommentID, BeCommentedNickName, BeCommentedUserID, BeCommentUserDesc, BeCommentUserIconURL, BeCommentSex, CommentDate
-  case NoticeID, NoticeMessage, NoticeDate, NoticeReaded, NoticeType, NoticeTypeID, NoticeCount
+  case data
+  case userID, userType, nickName, userDesc, userIconURL, sex, email, phone, areaCode, password, weixinID, weiboID, country, province, city, newPassword
+  case beUserID, start, size, sharePlatform, list, reportType, reportMessage
+  case publishID, title, publishDesc, publishIconURL, previewIconURL, publishURL, publishDate
+  case relationType, relationUserID, followCount, beFollowCount, publishCount
+  case publishFilePath, userFilePath, resourceFilePath
+  case upToken, upTokenKey
+  case shareCount, rebuildCount, likeCount, likeStatus, commentCount
+  case openid, headimgurl, wechatName
+  case weiBoUserID, weiBoID, avatarhd, gender, weiboName, weiboDesc
+  case commentMessage, commentID, beCommentedNickName, beCommentedUserID, beCommentUserDesc, beCommentUserIconURL, beCommentSex, commentDate
+  case noticeID, noticeMessage, noticeDate, noticeReaded, noticeType, noticeTypeID, noticeCount
     
   var description: String {
     switch self {
-    case .Data:
+    case .data:
       return "data"
-    case .UserID:
+    case .userID:
         return "userID"
-    case .UserType:
+    case .userType:
         return "userType"
-    case .NickName:
+    case .nickName:
         return "nickName"
-    case .UserDesc:
+    case .userDesc:
         return "userDesc"
-    case .UserIconURL:
+    case .userIconURL:
         return "userIconURL"
-    case .Sex:
+    case .sex:
         return "sex"
-    case .Email:
+    case .email:
         return "email"
-    case .Phone:
+    case .phone:
       return "phone"
-    case .AreaCode:
+    case .areaCode:
       return "areaCode"
-    case .Password:
+    case .password:
       return "password"
-    case .WeixinID:
+    case .weixinID:
         return "weixinID"
-    case .WeiboID:
+    case .weiboID:
         return "weiboID"
-    case .Country:
+    case .country:
         return "country"
-    case .Province:
+    case .province:
         return "province"
-    case .City:
+    case .city:
         return "city"
-    case .NewPassword:
+    case .newPassword:
         return "newPassword"
-    case .BeUserID:
+    case .beUserID:
         return "beUserID"
-    case .Start:
+    case .start:
         return "start"
-    case .Size:
+    case .size:
         return "size"
-    case .SharePlatform:
+    case .sharePlatform:
         return "sharePlatform"
-    case .ReportType:
+    case .reportType:
         return "reportType"
-    case .ReportMessage:
+    case .reportMessage:
         return "reportMessage"
-    case .List:
+    case .list:
         return "list"
-    case .PublishID:
+    case .publishID:
         return "publishID"
-    case .Title:
+    case .title:
         return "title"
-    case .PublishDesc:
+    case .publishDesc:
         return "publishDesc"
-    case .PublishIconURL:
+    case .publishIconURL:
         return "publishIconURL"
-    case .PreviewIconURL:
+    case .previewIconURL:
         return "previewIconURL"
-    case .PublishURL:
+    case .publishURL:
         return "publishURL"
-    case .PublishDate:
+    case .publishDate:
         return "publishDate"
-    case .RelationType:
+    case .relationType:
         return "relationType"
-    case .RelationUserID:
+    case .relationUserID:
         return "relationUserID"
-    case .FollowCount:
+    case .followCount:
         return "followCount"
-    case .BeFollowCount:
+    case .beFollowCount:
         return "beFollowCount"
-    case .PublishCount:
+    case .publishCount:
         return "publishCount"
-    case .PublishFilePath:
+    case .publishFilePath:
         return "publishFilePath"
-    case .UserFilePath:
+    case .userFilePath:
         return "userFilePath"
-    case .ResourceFilePath:
+    case .resourceFilePath:
         return "resourceFilePath"
-    case .UpToken:
+    case .upToken:
         return "upToken"
-    case .UpTokenKey:
+    case .upTokenKey:
         return "upTokenKey"
-    case .ShareCount:
+    case .shareCount:
         return "shareCount"
-    case .RebuildCount:
+    case .rebuildCount:
         return "rebuildCount"
-    case .LikeCount:
+    case .likeCount:
         return "likeCount"
-    case .LikeStatus:
+    case .likeStatus:
         return "likeStatus"
-    case .CommentCount:
+    case .commentCount:
         return "commentCount"
-    case .Openid:
+    case .openid:
         return "openid"
-    case .Headimgurl:
+    case .headimgurl:
         return "headimgurl"
-    case .WechatName:
+    case .wechatName:
         return "nickname"
-    case .WeiBoUserID:
+    case .weiBoUserID:
         return "userID"
-    case .WeiBoID:
+    case .weiBoID:
         return "id"
-    case .Avatarhd:
+    case .avatarhd:
         return "avatar_hd"
-    case .Gender:
+    case .gender:
         return "gender"
-    case .WeiboName:
+    case .weiboName:
         return "screen_name"
-    case .WeiboDesc:
+    case .weiboDesc:
         return "description"
-    case .CommentMessage:
+    case .commentMessage:
         return "commentMessage"
-    case .CommentID:
+    case .commentID:
         return "commentID"
-    case .BeCommentedUserID:
+    case .beCommentedUserID:
         return "beCommentedUserID"
-    case .BeCommentedNickName:
+    case .beCommentedNickName:
         return "beCommentedNickName"
-    case .BeCommentUserDesc:
+    case .beCommentUserDesc:
         return "beCommentedUserDesc"
-    case .BeCommentUserIconURL:
+    case .beCommentUserIconURL:
         return "beCommentedUserIconURL"
-    case .BeCommentSex:
+    case .beCommentSex:
         return "beCommentedSex"
-    case .CommentDate:
+    case .commentDate:
         return "commentDate"
-    case .NoticeID:
+    case .noticeID:
         return "noticeID"
-    case .NoticeMessage:
+    case .noticeMessage:
         return "noticeMessage"
-    case .NoticeDate:
+    case .noticeDate:
         return "noticeDate"
-    case .NoticeReaded:
+    case .noticeReaded:
         return "noticeReaded"
-    case .NoticeType:
+    case .noticeType:
         return "noticeType"
-    case .NoticeTypeID:
+    case .noticeTypeID:
         return "noticeTypeID"
-    case .NoticeCount:
+    case .noticeCount:
         return "count"
     }
   }

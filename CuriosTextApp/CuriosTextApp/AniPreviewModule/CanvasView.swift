@@ -7,16 +7,40 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 let canvasItemIdentifier = "com.emiaostein.containerIdentifier"
 class CanvasView: UIView {
     
-    weak var dataSource: protocol<UICollectionViewDataSource, CanvasLayoutDataSource>?
+    weak var dataSource: (UICollectionViewDataSource & CanvasLayoutDataSource)?
     weak var delegate: UICollectionViewDelegate? {
         didSet { collectionView.delegate = delegate }
     }
-    private let collectionView: UICollectionView
-    private var layout: CanvasLayout {
+    fileprivate let collectionView: UICollectionView
+    fileprivate var layout: CanvasLayout {
         return collectionView.collectionViewLayout as! CanvasLayout
     }
     
@@ -27,23 +51,23 @@ class CanvasView: UIView {
     
     override init(frame: CGRect) {
         let layout = CanvasLayout()
-        collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         super.init(frame: frame)
         setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
         let layout = CanvasLayout()
-        collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         super.init(coder: aDecoder)
         setup()
     }
     
-    private func setup() {
-        backgroundColor = UIColor.clearColor()
-        collectionView.backgroundColor = UIColor.clearColor()
-        collectionView.registerClass(ContainerCell.self, forCellWithReuseIdentifier: canvasItemIdentifier)
-        userInteractionEnabled = false
+    fileprivate func setup() {
+        backgroundColor = UIColor.clear
+        collectionView.backgroundColor = UIColor.clear
+        collectionView.register(ContainerCell.self, forCellWithReuseIdentifier: canvasItemIdentifier)
+        isUserInteractionEnabled = false
 //        layer.addSublayer(collectionView.layer)
 //        addSubview(collectionView)  //use to debug
     }
@@ -58,14 +82,14 @@ class CanvasView: UIView {
 
 extension CanvasView {
     
-    func reloadData(completed:(() -> ())?) {
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
-            guard let sf = self where sf.collectionView.dataSource?.collectionView(sf.collectionView, numberOfItemsInSection: 0) > 0 else {return}
+    func reloadData(_ completed:(() -> ())?) {
+        DispatchQueue.main.async { [weak self] in
+            guard let sf = self, sf.collectionView.dataSource?.collectionView(sf.collectionView, numberOfItemsInSection: 0) > 0 else {return}
             CATransaction.begin()
             CATransaction.setDisableActions(true)
 //            sf.collectionView.reloadData()
             
-            sf.collectionView.reloadSections(NSIndexSet(index: 0))
+            sf.collectionView.reloadSections(IndexSet(integer: 0))
             CATransaction.commit()
         
             completed?()
@@ -75,12 +99,12 @@ extension CanvasView {
 
 extension CanvasView {
     
-    func containerCellAt(indexPath: NSIndexPath) -> ContainerCell? {
-       return collectionView.cellForItemAtIndexPath(indexPath) as? ContainerCell
+    func containerCellAt(_ indexPath: IndexPath) -> ContainerCell? {
+       return collectionView.cellForItem(at: indexPath) as? ContainerCell
     }
     
     func removeAllAnimations() {
-        let cells = collectionView.visibleCells() as! [ContainerCell]
+        let cells = collectionView.visibleCells as! [ContainerCell]
         for c in cells {
             c.layer.removeAllAnimations()
             c.layer.mask?.removeAllAnimations()

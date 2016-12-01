@@ -77,14 +77,14 @@ enum CTAAnimationType: String {
     case OrbitalIn = "ORBITAL_IN", OrbitalOut = "ORBITAL_OUT"
     
     enum AnimationMaskShapeType {
-        case Rect
-        case Oval
+        case rect
+        case oval
     }
     
     enum AnimationMaskType {
-        case None
-        case Normal(AnimationMaskShapeType)
-        case Gradient(AnimationMaskShapeType)
+        case none
+        case normal(AnimationMaskShapeType)
+        case gradient(AnimationMaskShapeType)
     }
     
     func displayAtEnd() -> Bool {
@@ -100,7 +100,7 @@ enum CTAAnimationType: String {
         switch self  {
         case .MoveIn, .MoveInLeft, .ScaleIn, .IrisIn, .CurlIn, .FadeIn, .FadeInOrder,.OrbitalIn:
             return false
-        case.Unknown, .MoveOut, .MoveOutLeft, .ScaleOut, IrisOut, .CurlOut, .FadeOut, .FadeOutOrder,.OrbitalOut:
+        case.Unknown, .MoveOut, .MoveOutLeft, .ScaleOut, .IrisOut, .CurlOut, .FadeOut, .FadeOutOrder,.OrbitalOut:
             return true
         }
     }
@@ -108,11 +108,11 @@ enum CTAAnimationType: String {
     func needMask() -> AnimationMaskType {
         switch self {
         case .Unknown, .MoveIn, .MoveInLeft, .MoveOut, .MoveOutLeft, .CurlIn, .CurlOut, .FadeIn, .FadeOut, .FadeInOrder, .FadeOutOrder, .OrbitalIn, .OrbitalOut:
-            return .None
+            return .none
         case .ScaleIn, .ScaleOut:
-            return .Gradient(.Rect)
+            return .gradient(.rect)
         case .IrisIn, .IrisOut:
-            return .Normal(.Oval)
+            return .normal(.oval)
         }
     }
     

@@ -35,11 +35,11 @@ extension AniContainer: Layerable {
 
 extension AniContainer: UICollectionViewDataSource {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return contents.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath)
         -> UICollectionViewCell {
             
             let source = contents[indexPath.item].content.source
@@ -47,17 +47,17 @@ extension AniContainer: UICollectionViewDataSource {
             switch source.sourceType {
             case .Text:
                 
-                let acell = collectionView.dequeueReusableCellWithReuseIdentifier(containerItemIdentifier + source.sourceType.rawValue, forIndexPath: indexPath) as! ContentTextCell
+                let acell = collectionView.dequeueReusableCell(withReuseIdentifier: containerItemIdentifier + source.sourceType.rawValue, for: indexPath) as! ContentTextCell
                 acell.text = NSAttributedString(string: source.texts, attributes: source.attribute)
                 cell = acell
                 
             case .Image:
-                let acell = collectionView.dequeueReusableCellWithReuseIdentifier(containerItemIdentifier + source.sourceType.rawValue, forIndexPath: indexPath) as! ContentImageCell
+                let acell = collectionView.dequeueReusableCell(withReuseIdentifier: containerItemIdentifier + source.sourceType.rawValue, for: indexPath) as! ContentImageCell
                 if let retriver = imageRetriver {
                     let imageName = source.ImageName
                     let r = { (name: String, Image: UIImage?) in
                         if name == imageName {
-                            dispatch_async(dispatch_get_main_queue(), { 
+                            DispatchQueue.main.async(execute: { 
                                 acell.image = Image
                             })
                         }
@@ -75,7 +75,7 @@ extension AniContainer: UICollectionViewDataSource {
 
 extension AniContainer: ContainerLayoutDataSource {
     
-    func layerAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> Layerable? {
+    func layerAttributesForItemAtIndexPath(_ indexPath: IndexPath) -> Layerable? {
         if indexPath.item < contents.count {
             return contents[indexPath.item]
         } else {
@@ -86,7 +86,7 @@ extension AniContainer: ContainerLayoutDataSource {
 
 extension AniContainer: UICollectionViewDelegate {
     
-    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
 //        cell.backgroundColor = UIColor.lightGrayColor()
 //        cell.contentView.backgroundColor = UIColor.lightGrayColor()

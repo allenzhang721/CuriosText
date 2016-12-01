@@ -23,14 +23,14 @@ extension TextSpliter {
      }
      */
     
-    class func defaultSpliteBy(type: CTAAnimationType) -> (TextSpliter.TextLineSpliteType, TextSpliter.TextSpliteType) {
+    class func defaultSpliteBy(_ type: CTAAnimationType) -> (TextSpliter.TextLineSpliteType, TextSpliter.TextSpliteType) {
         
         switch type {
         case .MoveIn, .MoveOut,.MoveInLeft, .MoveOutLeft, .CurlIn, .CurlOut, .FadeIn, .FadeOut, .FadeInOrder, .FadeOutOrder, .OrbitalIn, .OrbitalOut:
-            return (TextLineSpliteType.ByLine, TextSpliteType.ByCharacter)
+            return (TextLineSpliteType.byLine, TextSpliteType.byCharacter)
             
         default:
-            return (TextLineSpliteType.AllatOnce, TextSpliteType.ByObject)
+            return (TextLineSpliteType.allatOnce, TextSpliteType.byObject)
         }
     }
     

@@ -20,21 +20,21 @@ class CTASelectorRotatorCell: CTASelectorCell {
         
         set {
             view.radian = newValue
-            hudLabel.text = "\(Int(ceil((radian % CGFloat(2 * M_PI)) / CGFloat(M_PI) * 180)))º"
+            hudLabel.text = "\(Int(ceil((radian.truncatingRemainder(dividingBy: CGFloat(2 * M_PI))) / CGFloat(M_PI) * 180)))º"
         }
     }
     
     override init(frame: CGRect) {
-        self.view = CTARotatorView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)))
+        self.view = CTARotatorView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: 88)))
         super.init(frame: frame)
         contentView.addSubview(view)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.view = CTARotatorView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width, height: 88)))
+        self.view = CTARotatorView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: 88)))
         super.init(coder: aDecoder)
         contentView.addSubview(view)
-        hudLabel.textAlignment = .Right
+        hudLabel.textAlignment = .right
         hudLabel.textColor = CTAStyleKit.selectedColor
         hudLabel.showGradient = false
         contentView.addSubview(hudLabel)
@@ -60,34 +60,34 @@ class CTASelectorRotatorCell: CTASelectorCell {
         hudLabel.text = "\(Int(ceil(view.radian / CGFloat(M_PI) * 180)))º"
     }
     
-    override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
+    override func addTarget(_ target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
         
-        view.addTarget(target, action: action, forControlEvents: controlEvents)
-        view.addTarget(self, action: "valueChanged:", forControlEvents: controlEvents)
+        view.addTarget(target, action: action, for: controlEvents)
+        view.addTarget(self, action: #selector(CTASelectorRotatorCell.valueChanged(_:)), for: controlEvents)
     }
     
     override func removeAllTarget() {
         
-        for target in view.allTargets() {
+        for target in view.allTargets {
             
-            guard let actions = view.actionsForTarget(target, forControlEvent: view.allControlEvents()) else {
+            guard let actions = view.actions(forTarget: target, forControlEvent: view.allControlEvents) else {
                 continue
             }
             
             for action in actions {
-                view.removeTarget(target, action: Selector(action), forControlEvents: view.allControlEvents())
+                view.removeTarget(target, action: Selector(action), for: view.allControlEvents)
             }
         }
     }
     
-    func valueChanged(sender: AnyObject) {
+    func valueChanged(_ sender: AnyObject) {
         let radian: CGFloat
         if view.radian < 0 {
-            radian = CGFloat(2 * M_PI) - fabs(view.radian) % CGFloat(2 * M_PI)
+            radian = CGFloat(2 * M_PI) - fabs(view.radian).truncatingRemainder(dividingBy: CGFloat(2 * M_PI))
         } else {
             radian = view.radian
         }
         
-        hudLabel.text = "\(Int(ceil((radian % CGFloat(2 * M_PI)) / CGFloat(M_PI) * 180)))º"
+        hudLabel.text = "\(Int(ceil((radian.truncatingRemainder(dividingBy: CGFloat(2 * M_PI))) / CGFloat(M_PI) * 180)))º"
     }
 }

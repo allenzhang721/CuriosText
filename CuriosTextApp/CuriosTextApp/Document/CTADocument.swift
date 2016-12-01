@@ -11,24 +11,24 @@ import UIKit
 
 class CTADocument: UIDocument {
     
-    private struct WrapperKey {
+    fileprivate struct WrapperKey {
         static let resource = "resource" // resource directory
         static let page = "page" // page file
     }
     
     var page: CTAPage?
     
-    private var rootWrapper: NSFileWrapper!
-    private var resWrapper: NSFileWrapper!
+    fileprivate var rootWrapper: FileWrapper!
+    fileprivate var resWrapper: FileWrapper!
     
-    private var cacheFileName: String?
+    fileprivate var cacheFileName: String?
     
-    var root: NSFileWrapper {
-        rootWrapper = rootWrapper ?? NSFileWrapper(directoryWithFileWrappers: [String : NSFileWrapper]())
+    var root: FileWrapper {
+        rootWrapper = rootWrapper ?? FileWrapper(directoryWithFileWrappers: [String : FileWrapper]())
         return rootWrapper
     }
     
-    var res: NSFileWrapper {
+    var res: FileWrapper {
         
         if resWrapper == nil {
             
@@ -38,7 +38,7 @@ class CTADocument: UIDocument {
                 return resWrapper
             } else {
                 
-                resWrapper = NSFileWrapper(directoryWithFileWrappers: [String : NSFileWrapper]())
+                resWrapper = FileWrapper(directoryWithFileWrappers: [String : FileWrapper]())
                 resWrapper.preferredFilename = WrapperKey.resource
                 return resWrapper
             }
@@ -52,28 +52,28 @@ class CTADocument: UIDocument {
         return ""
     }
     
-    var cacheImagePath: NSURL {
-        let fileManager = NSFileManager.defaultManager()
-        let cache = fileManager.URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).first!
+    var cacheImagePath: URL {
+        let fileManager = FileManager.default
+        let cache = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first!
         return cache
     }
     
-    var imagePath: NSURL {
-        return fileURL.URLByAppendingPathComponent(WrapperKey.resource)
+    var imagePath: URL {
+        return fileURL.appendingPathComponent(WrapperKey.resource)
     }
     
     var documentName: String {
-        return fileURL.lastPathComponent!
+        return fileURL.lastPathComponent
     }
     
-    init(fileURL url: NSURL, page: CTAPage?) {
+    init(fileURL url: URL, page: CTAPage?) {
         self.page = page ?? CTAPage(containers: [])
         super.init(fileURL: url)
     }
     
-    override func loadFromContents(contents: AnyObject, ofType typeName: String?) throws {
+    override func load(fromContents contents: Any, ofType typeName: String?) throws {
         
-        guard let contents = contents as? NSFileWrapper where contents.directory else {
+        guard let contents = contents as? FileWrapper, contents.isDirectory else {
             throw NSError(domain: NSCocoaErrorDomain , code: 100, userInfo: nil)
         }
         
@@ -83,7 +83,7 @@ class CTADocument: UIDocument {
         let data = root.fileWrappers?[WrapperKey.page]?.regularFileContents
 //        page?.retrivedPageData(root.fileWrappers?[WrapperKey.page]?.regularFileContents)
         
-        page = NSKeyedUnarchiver.unarchiveObjectWithData(data!) as? CTAPage
+        page = NSKeyedUnarchiver.unarchiveObject(with: data!) as? CTAPage
     }
     
     /*
@@ -93,12 +93,12 @@ class CTADocument: UIDocument {
     
     If you return nil, you should also return an error object in outError.
     */
-    override func contentsForType(typeName: String) throws -> AnyObject {
+    override func contents(forType typeName: String) throws -> Any {
         
 //        if root.fileWrappers?[WrapperKey.page] == nil {
         let cleanPage = page!.cleanEmptyContainers()
-        let pageData = NSKeyedArchiver.archivedDataWithRootObject(cleanPage)
-        let pageWrapper = NSFileWrapper(regularFileWithContents: pageData)
+        let pageData = NSKeyedArchiver.archivedData(withRootObject: cleanPage)
+        let pageWrapper = FileWrapper(regularFileWithContents: pageData)
         if let prePage = root.fileWrappers?[WrapperKey.page] {
             root.removeFileWrapper(prePage)
         }
@@ -111,47 +111,47 @@ class CTADocument: UIDocument {
     
     func replaceOriginResourceIfNeed() {
         
-        if let name = cacheFileName, data = cacheResourceBy(name) {
+        if let name = cacheFileName, let data = cacheResourceBy(name) {
             storeResource(data, withName: name)
         }
     }
     
-    func storeResource(data: NSData, withName name: String) -> String {
+    func storeResource(_ data: Data, withName name: String) -> String {
         
         if let file = res.fileWrappers?[name] {
             res.removeFileWrapper(file)
         }
-        let resWrap = NSFileWrapper(regularFileWithContents: data)
+        let resWrap = FileWrapper(regularFileWithContents: data)
         resWrap.preferredFilename = name
         return res.addFileWrapper(resWrap)
     }
     
-    func storeCacheResource(data: NSData, withName name: String) {
+    func storeCacheResource(_ data: Data, withName name: String) {
         
-        let fileManager = NSFileManager.defaultManager()
-        let cache = fileManager.URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).first!
-        let cacheFile = cache.URLByAppendingPathComponent(name)
-        if fileManager.fileExistsAtPath(cacheFile.path!) {
+        let fileManager = FileManager.default
+        let cache = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first!
+        let cacheFile = cache.appendingPathComponent(name)
+        if fileManager.fileExists(atPath: cacheFile.path) {
             do {
-                try fileManager.removeItemAtURL(cacheFile)
+                try fileManager.removeItem(at: cacheFile)
                 cacheFileName = name
-                data.writeToURL(cacheFile, atomically: false)
+                try? data.write(to: cacheFile, options: [])
             } catch {
                 print("Store Cache Resource fail")
             }
         } else {
             cacheFileName = name
-            data.writeToURL(cacheFile, atomically: false)
+            try? data.write(to: cacheFile, options: [])
         }
     }
 
     // get
-    func resourceBy(name: String) -> NSData? {
+    func resourceBy(_ name: String) -> Data? {
         
         return resWrapper.fileWrappers?[name]?.regularFileContents
     }
     
-    func resourceImageBy(name: String) -> UIImage? {
+    func resourceImageBy(_ name: String) -> UIImage? {
         if let data = resourceBy(name) {
             return UIImage(data: data)
         } else {
@@ -160,7 +160,7 @@ class CTADocument: UIDocument {
         
     }
     
-    func imageBy(name: String) -> UIImage? {
+    func imageBy(_ name: String) -> UIImage? {
         
         if let data = cacheResourceBy(name) {
             return UIImage(data: data)
@@ -170,13 +170,13 @@ class CTADocument: UIDocument {
         
     }
 
-    func cacheResourceBy(name: String) -> NSData? {
+    func cacheResourceBy(_ name: String) -> Data? {
         
-        let fileManager = NSFileManager.defaultManager()
-        let cache = fileManager.URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).first!
-        let cacheFile = cache.URLByAppendingPathComponent(name)
-        if fileManager.fileExistsAtPath(cacheFile.path!) {
-            return NSData(contentsOfURL: cacheFile)
+        let fileManager = FileManager.default
+        let cache = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first!
+        let cacheFile = cache.appendingPathComponent(name)
+        if fileManager.fileExists(atPath: cacheFile.path) {
+            return (try? Data(contentsOf: cacheFile))
         } else {
             return resourceBy(name)
         }
@@ -193,23 +193,23 @@ extension CTADocument {
         
     var filePaths = [String: String]()
         let url = fileURL
-        let publishID = fileURL.lastPathComponent!
-        let pageUrl = url.URLByAppendingPathComponent(WrapperKey.page)
-        let resDirUrl = url.URLByAppendingPathComponent(WrapperKey.resource)
+        let publishID = fileURL.lastPathComponent
+        let pageUrl = url.appendingPathComponent(WrapperKey.page)
+        let resDirUrl = url.appendingPathComponent(WrapperKey.resource)
     
         let pagePath = publishID + "/" + WrapperKey.page
         
         
-        filePaths[pagePath] = pageUrl.path!
+        filePaths[pagePath] = pageUrl.path
         
         if let resourceFileWrappers = res.fileWrappers {
             
             for r in resourceFileWrappers.values {
-                if let fileName = r.filename where r.regularFile {
-                    let resUrl = resDirUrl.URLByAppendingPathComponent(fileName)
+                if let fileName = r.filename, r.isRegularFile {
+                    let resUrl = resDirUrl.appendingPathComponent(fileName)
                     let resPath = publishID + "/" + fileName
                     
-                    filePaths[resPath] = resUrl.path!
+                    filePaths[resPath] = resUrl.path
                 }
             }
         }

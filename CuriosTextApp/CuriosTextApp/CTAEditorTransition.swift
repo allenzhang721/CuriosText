@@ -23,13 +23,13 @@ class CTAEditorTransition: NSObject, UIViewControllerTransitioningDelegate {
         return _instance!
     }
     
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning?
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning?
     {
         isPersent = true
         return self
     }
     
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         isPersent = false
         return self
     }
@@ -37,7 +37,7 @@ class CTAEditorTransition: NSObject, UIViewControllerTransitioningDelegate {
 
 extension CTAEditorTransition: UIViewControllerAnimatedTransitioning{
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval{
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval{
         if isPersent{
             return 0.3
         }else {
@@ -45,11 +45,11 @@ extension CTAEditorTransition: UIViewControllerAnimatedTransitioning{
         }
     }
     
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning){
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning){
         if isPersent{
-            if let toView = transitionContext.viewForKey(UITransitionContextToViewKey){
-                let view = transitionContext.containerView()!
-                let bounds = UIScreen.mainScreen().bounds
+            if let toView = transitionContext.view(forKey: UITransitionContextViewKey.to){
+                let view = transitionContext.containerView
+                let bounds = UIScreen.main.bounds
                 toView.frame = CGRect.init(x: 0, y: 0, width: bounds.width, height: bounds.height)
                 if self.rootView != nil {
                     let bgView = UIView(frame: bounds)
@@ -58,10 +58,10 @@ extension CTAEditorTransition: UIViewControllerAnimatedTransitioning{
                     view.addSubview(toView)
                     self.rootView!.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height)
                     view.addSubview(self.rootView!)
-                    toView.transform = CGAffineTransformMakeScale(0.95, 0.95)
-                    UIView.animateWithDuration(0.3, animations: {
+                    toView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+                    UIView.animate(withDuration: 0.3, animations: {
                         self.rootView!.frame.origin.y = bounds.height
-                        toView.transform = CGAffineTransformMakeScale(1, 1)
+                        toView.transform = CGAffineTransform(scaleX: 1, y: 1)
                         }, completion: { (_) in
                             self.rootView?.removeFromSuperview()
                             bgView.removeFromSuperview()
@@ -70,7 +70,7 @@ extension CTAEditorTransition: UIViewControllerAnimatedTransitioning{
                 }else {
                     view.addSubview(toView)
                     toView.alpha = 0
-                    UIView.animateWithDuration(0.3, animations: {
+                    UIView.animate(withDuration: 0.3, animations: {
                         toView.alpha = 1
                         }, completion: { (_) in
                             transitionContext.completeTransition(true)
@@ -79,9 +79,9 @@ extension CTAEditorTransition: UIViewControllerAnimatedTransitioning{
             }
         }
         if !isPersent{
-            if let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey){
-                let view = transitionContext.containerView()!
-                let bounds = UIScreen.mainScreen().bounds
+            if let fromView = transitionContext.view(forKey: UITransitionContextViewKey.from){
+                let view = transitionContext.containerView
+                let bounds = UIScreen.main.bounds
                 fromView.frame = CGRect.init(x: 0, y: 0, width: bounds.width, height: bounds.height)
                 if self.rootView != nil {
                     let bgView = UIView(frame: bounds)
@@ -90,10 +90,10 @@ extension CTAEditorTransition: UIViewControllerAnimatedTransitioning{
                     
                     self.rootView!.frame = CGRect(x: 0, y: bounds.height, width: bounds.width, height: bounds.height)
                     view.addSubview(self.rootView!)
-                    fromView.transform = CGAffineTransformMakeScale(1, 1)
-                    UIView.animateWithDuration(0.3, animations: {
+                    fromView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                    UIView.animate(withDuration: 0.3, animations: {
                         self.rootView!.frame.origin.y = 0
-                        fromView.transform = CGAffineTransformMakeScale(0.95, 0.95)
+                        fromView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
                         }, completion: { (_) in
                             self.rootView?.removeFromSuperview()
                             self.rootView = nil
@@ -102,7 +102,7 @@ extension CTAEditorTransition: UIViewControllerAnimatedTransitioning{
                     })
                 }else {
                     fromView.alpha = 1
-                    UIView.animateWithDuration(0.3, animations: {
+                    UIView.animate(withDuration: 0.3, animations: {
                         fromView.alpha = 0
                         }, completion: { (_) in
                             fromView.removeFromSuperview()

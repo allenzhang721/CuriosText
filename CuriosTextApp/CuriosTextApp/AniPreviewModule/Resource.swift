@@ -27,9 +27,9 @@ protocol SourceImage: ContentSource {
 
 struct Source {
     
-    private let type: String
-    private let text: String
-    private let attributes: [String: AnyObject]?
+    fileprivate let type: String
+    fileprivate let text: String
+    fileprivate let attributes: [String: AnyObject]?
     init?(_ info: [String: AnyObject]) {
         guard let type = info["type"] as? String else { return nil }
         guard let text = info["text"] as? String else { return nil }

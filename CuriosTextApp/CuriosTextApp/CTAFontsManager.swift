@@ -12,7 +12,7 @@ import UIKit
 class CTAFontsManager {
     
     static var indexPaths = [CTAIndexPath]()
-    private static var validFamilies = [String]()
+    fileprivate static var validFamilies = [String]()
     static var familiyDisplayNameDic = [String: String]()
     static var familiyFixRectRatio = [String: [String: CGFloat]]()  // [familyName: [width: 0.1, height: 0.1]]
     
@@ -39,7 +39,7 @@ class CTAFontsManager {
         FontManager.cleanFontFamilyList()
     }
     
-    class func customFamilyDisplayNameBy(familyName: String) -> String? {
+    class func customFamilyDisplayNameBy(_ familyName: String) -> String? {
         guard let displayName = CTAFontsManager.familiyDisplayNameDic[familyName] else { return nil }
         
         return displayName
@@ -67,19 +67,19 @@ class CTAFontsManager {
         return name
     }
     
-    class func fontNamesWithFamily(family: String) -> [String]? {
-        return UIFont.fontNamesForFamilyName(family)
+    class func fontNamesWithFamily(_ family: String) -> [String]? {
+        return UIFont.fontNames(forFamilyName: family)
     }
     
-    class func indexPathForFamily(family: String, fontName: String) -> NSIndexPath? {
+    class func indexPathForFamily(_ family: String, fontName: String) -> IndexPath? {
         
-        guard let familyIndex = CTAFontsManager.families.indexOf(family), let nameIndex = fontNamesWithFamily(family)?.indexOf(fontName) else {
+        guard let familyIndex = CTAFontsManager.families.index(of: family), let nameIndex = fontNamesWithFamily(family)?.index(of: fontName) else {
             return nil
         }
-        return NSIndexPath(forItem: nameIndex, inSection: familyIndex)
+        return IndexPath(item: nameIndex, section: familyIndex)
     }
     
-    class func familyAndFontNameWith(indexPath: NSIndexPath) -> (String?, String?) {
+    class func familyAndFontNameWith(_ indexPath: IndexPath) -> (String?, String?) {
         
         guard indexPath.section < CTAFontsManager.families.count  else {
             return (nil, nil)
@@ -95,15 +95,15 @@ class CTAFontsManager {
         return (family, font)
     }
     
-    class func updateSection(section: Int, withItem newItem: Int) {
+    class func updateSection(_ section: Int, withItem newItem: Int) {
         
-        if let indexSection = (indexPaths.indexOf{ $0.section == section }) {
+        if let indexSection = (indexPaths.index{ $0.section == section }) {
             
             indexPaths[indexSection] = CTAIndexPath(section: section, item: newItem)
         }
     }
     
-    class func itemAtSection(section: Int) -> Int? {
+    class func itemAtSection(_ section: Int) -> Int? {
         
         guard section < CTAFontsManager.families.count else {
             return nil
@@ -118,7 +118,7 @@ class CTAFontsManager {
         
     }
     
-    class func registerFontAt(fileUrl: NSURL) {
+    class func registerFontAt(_ fileUrl: URL) {
         
         FontManager.registerFontAt(fileUrl)
     }
@@ -132,14 +132,14 @@ class CTAFontsManager {
      let size: String
      let version: String
      */
-    class func registerFontWith(familyName: String, fullName: String, postscriptName: String, copyRight: String, style: String, size: String, version: String) {
+    class func registerFontWith(_ familyName: String, fullName: String, postscriptName: String, copyRight: String, style: String, size: String, version: String) {
         
         let info = FontInfo(familyName: familyName, fullName: fullName, postscriptName: postscriptName, copyRight: copyRight, style: style, size: size, version: version)
         
         FontManager.registerFontWith(info)
     }
     
-    class func unregisterFontWith(familyName: String, fullName: String, postscriptName: String, copyRight: String, style: String, size: String, version: String) {
+    class func unregisterFontWith(_ familyName: String, fullName: String, postscriptName: String, copyRight: String, style: String, size: String, version: String) {
         
         let info = FontInfo(familyName: familyName, fullName: fullName, postscriptName: postscriptName, copyRight: copyRight, style: style, size: size, version: version)
         
@@ -148,7 +148,7 @@ class CTAFontsManager {
     
     class func reloadData() {
         
-        let vf = UIFont.familyNames()
+        let vf = UIFont.familyNames
         let fs = FontManager.registeredFamilies()
         let valf = fs.filter{ vf.contains($0) }
         validFamilies = valf
@@ -157,15 +157,15 @@ class CTAFontsManager {
     class func registerFonts() -> [String] {
         
         let fontsName = "Fonts"
-        let path = NSBundle.mainBundle().bundleURL
-        let url = path.URLByAppendingPathComponent(fontsName)
-        let fontUrls = try! NSFileManager.defaultManager().contentsOfDirectoryAtURL(url, includingPropertiesForKeys: nil, options: NSDirectoryEnumerationOptions.init(rawValue: 0))
+        let path = Bundle.main.bundleURL
+        let url = path.appendingPathComponent(fontsName)
+        let fontUrls = try! FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: FileManager.DirectoryEnumerationOptions.init(rawValue: 0))
         
         let urls = fontUrls.filter{ $0.pathExtension == "ttf" }
         
-        let beforeFamilyName = UIFont.familyNames()
-        if CTFontManagerRegisterFontsForURLs(urls, .Process, nil) {
-            let newFamilyName = UIFont.familyNames().filter{ !beforeFamilyName.contains($0) }
+        let beforeFamilyName = UIFont.familyNames
+        if CTFontManagerRegisterFontsForURLs(urls as CFArray, .process, nil) {
+            let newFamilyName = UIFont.familyNames.filter{ !beforeFamilyName.contains($0) }
             
             return newFamilyName
         } else {

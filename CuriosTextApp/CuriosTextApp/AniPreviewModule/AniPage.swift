@@ -21,7 +21,7 @@ extension PageVMProtocol {
         let containers = self.containerVMs.map { (containerVM) -> Container in
             
             switch containerVM.type {
-            case .Text:
+            case .text:
                return (containerVM as! TextContainerVMProtocol).toContainer()
             default:
                 return (containerVM as! ImageContainerVMProtocol).toContainer()
@@ -45,9 +45,9 @@ extension CTAAnimationBinder {
         
         let delivery: String
         switch self.config.generateStrategy.paragraphDelivery {
-        case .AllAtOnce:
+        case .allAtOnce:
             delivery = "ALL_AT_ONCE"
-        case .Paragraph:
+        case .paragraph:
             delivery = "BY_LINE"
         }
         
@@ -55,9 +55,9 @@ extension CTAAnimationBinder {
         let deliveryTo = -1
         let textDelivery: String
         switch self.config.generateStrategy.textDelivery {
-        case .Object:
+        case .object:
             textDelivery = "BY_OBJECT"
-        case .Character, .Word:
+        case .character, .word:
             textDelivery = "BY_CHARACTER"
         }
         let textDeliveryFrom = "FORWORD"

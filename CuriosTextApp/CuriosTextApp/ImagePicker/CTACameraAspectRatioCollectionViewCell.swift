@@ -11,8 +11,8 @@ import UIKit
 class CTACameraAspectRatioCollectionViewCell: UICollectionViewCell {
     
     
-    private var actived: Bool = false
-    private var label: UILabel!
+    fileprivate var actived: Bool = false
+    fileprivate var label: UILabel!
     var text: String? {
         get {
             return label.text
@@ -33,26 +33,26 @@ class CTACameraAspectRatioCollectionViewCell: UICollectionViewCell {
         setup()
     }
     
-    private func setup() {
+    fileprivate func setup() {
         
         label = UILabel(frame: bounds)
-        label.textAlignment = .Center
+        label.textAlignment = .center
         label.text = "^_^"
-        label.textColor = UIColor.lightGrayColor()
+        label.textColor = UIColor.lightGray
         label.adjustsFontSizeToFitWidth = true
-        label.font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize())
+        label.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
         contentView.addSubview(label)
         
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.topAnchor.constraintEqualToAnchor(contentView.topAnchor).active = true
-        label.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor).active = true
-        label.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor).active = true
-        label.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor).active = true
+        label.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
     }
     
-    override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         
-        super.applyLayoutAttributes(layoutAttributes)
+        super.apply(layoutAttributes)
         
         guard let layoutAttributes = layoutAttributes as? CTAActiveCollectionViewAttributes else {
             return
@@ -60,7 +60,7 @@ class CTACameraAspectRatioCollectionViewCell: UICollectionViewCell {
         
         if actived != layoutAttributes.actived {
             actived = layoutAttributes.actived
-            label.textColor = actived ? .redColor() : .lightGrayColor()
+            label.textColor = actived ? .red : .lightGray
 //            UIView.transitionWithView(self, duration: 0.1, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {[weak self] () -> Void in
 //                
 //                if let sr = self {

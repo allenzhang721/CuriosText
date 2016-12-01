@@ -26,20 +26,20 @@ protocol CanvasViewControllerDelegate: class {
     // WillSelect
     // DidSelect
     // DidUpdateValueAtIndexPath
-    func canvasViewController(viewCOntroller: CTACanvasViewController, didSelectedIndexPath indexPath: NSIndexPath)
+    func canvasViewController(_ viewCOntroller: CTACanvasViewController, didSelectedIndexPath indexPath: IndexPath)
     
-    func canvasViewControllerWillDeleted(viewController: CTACanvasViewController)
+    func canvasViewControllerWillDeleted(_ viewController: CTACanvasViewController)
 //    func canvasViewController
     
-    func canvasViewControllerWillShowNeedShadowAndNeedStroke(viewController: CTACanvasViewController) -> (shadow: Bool, stroke: Bool)?
+    func canvasViewControllerWillShowNeedShadowAndNeedStroke(_ viewController: CTACanvasViewController) -> (shadow: Bool, stroke: Bool)?
     
-    func canvasViewControllerWillChanged(needShadow: Bool, needStroke: Bool)
+    func canvasViewControllerWillChanged(_ needShadow: Bool, needStroke: Bool)
 }
 
 protocol CanvasViewControllerDataSource: class {
     
-    func canvasViewControllerNumberOfContainers(viewcontroller: CTACanvasViewController) -> Int
-    func canvasViewControllerContainerAtIndexPath(indexPath: NSIndexPath) -> ContainerVMProtocol
+    func canvasViewControllerNumberOfContainers(_ viewcontroller: CTACanvasViewController) -> Int
+    func canvasViewControllerContainerAtIndexPath(_ indexPath: IndexPath) -> ContainerVMProtocol
 }
 
 
@@ -53,7 +53,7 @@ final class CTACanvasViewController: UIViewController {
     
     weak var delegate: CanvasViewControllerDelegate?
     weak var dataSource: CanvasViewControllerDataSource!
-    private var collectionView: UICollectionView!
+    fileprivate var collectionView: UICollectionView!
     var scale: CGFloat = 1.0
     weak var document: CTADocument? 
     
@@ -79,7 +79,7 @@ final class CTACanvasViewController: UIViewController {
         collectionView.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY)
     }
     
-    override func canBecomeFirstResponder() -> Bool {
+    override var canBecomeFirstResponder : Bool {
         return true
     }
     
@@ -99,13 +99,13 @@ extension CTACanvasViewController {
         let defaultSide: CGFloat = 414.0
         collectionView = UICollectionView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: defaultSide, height: defaultSide)), collectionViewLayout: canvasLayout)
         scale = min(view.bounds.width / defaultSide, view.bounds.height / defaultSide)
-        collectionView.transform = CGAffineTransformMakeScale(scale, scale)
+        collectionView.transform = CGAffineTransform(scaleX: scale, y: scale)
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        collectionView.registerClass(CTACanvasTextCell.self, forCellWithReuseIdentifier: "TextCell")
-        collectionView.registerClass(CTACanvasImageCell.self, forCellWithReuseIdentifier: "ImageCell")
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        collectionView.register(CTACanvasTextCell.self, forCellWithReuseIdentifier: "TextCell")
+        collectionView.register(CTACanvasImageCell.self, forCellWithReuseIdentifier: "ImageCell")
         view.layer.addSublayer(collectionView.layer)
         
         // overLay
@@ -113,30 +113,30 @@ extension CTACanvasViewController {
     }
     
     func setupGestures() {
-        let tap = UITapGestureRecognizer(target: self, action: "tap:")
+        let tap = UITapGestureRecognizer(target: self, action: #selector(CTACanvasViewController.tap(_:)))
         view.addGestureRecognizer(tap)
     }
     
     func setupStyles() {
-        selectedOverlayLayer.fillColor = UIColor.clearColor().CGColor
-        selectedOverlayLayer.strokeColor = UIColor.yellowColor().CGColor
+        selectedOverlayLayer.fillColor = UIColor.clear.cgColor
+        selectedOverlayLayer.strokeColor = UIColor.yellow.cgColor
     }
     
     func setupRegisterNotifiction() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CTACanvasViewController.menuWillHidden(_:)), name:
-            UIMenuControllerWillHideMenuNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(CTACanvasViewController.menuWillHidden(_:)), name:
+            NSNotification.Name.UIMenuControllerWillHideMenu, object: nil)
     }
     
-    func changeBackgroundColor(color: UIColor) {
+    func changeBackgroundColor(_ color: UIColor) {
         collectionView.backgroundColor = color
     }
     
     func removeNotification() {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
-    func setSelectedItemAt(indexPath i: NSIndexPath) {
-        collectionView.selectItemAtIndexPath(i, animated: false, scrollPosition: .None)
+    func setSelectedItemAt(indexPath i: IndexPath) {
+        collectionView.selectItem(at: i, animated: false, scrollPosition: UICollectionViewScrollPosition())
     }
 }
 
@@ -145,8 +145,8 @@ extension CTACanvasViewController {
 
 // MARK: - Actions
 extension CTACanvasViewController {
-    func tap(sender: UITapGestureRecognizer) {
-        let location = sender.locationInView(collectionView)
+    func tap(_ sender: UITapGestureRecognizer) {
+        let location = sender.location(in: collectionView)
         guard let index = indexPathAtPoint(location) else { return }
         
         showOverlayAndSelectedAt(index)
@@ -156,38 +156,38 @@ extension CTACanvasViewController {
 // MARK: - Logic
 extension CTACanvasViewController {
     
-    func menuShowAt(indexPath: NSIndexPath) {
+    func menuShowAt(_ indexPath: IndexPath) {
         self.becomeFirstResponder()
         
-        let atrributes = collectionView.layoutAttributesForItemAtIndexPath(indexPath)!
+        let atrributes = collectionView.layoutAttributesForItem(at: indexPath)!
         let needShadowAndStroke = delegate?.canvasViewControllerWillShowNeedShadowAndNeedStroke(self)
         
         var menus = [UIMenuItem]()
         
-        let deleteMenu = UIMenuItem(title: LocalStrings.Delete.description, action: #selector(CTACanvasViewController.deleteItem(_:)))
+        let deleteMenu = UIMenuItem(title: LocalStrings.delete.description, action: #selector(CTACanvasViewController.deleteItem(_:)))
         menus += [deleteMenu]
         if let needShadowAndStroke = needShadowAndStroke {
-            let shadowMenu = UIMenuItem(title: needShadowAndStroke.shadow ? LocalStrings.CloseShadow.description : LocalStrings.OpenShadow.description, action: #selector(CTACanvasViewController.changeShadow(_:)))
-            let strokeMenu = UIMenuItem(title: needShadowAndStroke.stroke ? LocalStrings.CloseOutline.description : LocalStrings.OpenOutline.description, action: #selector(CTACanvasViewController.changeStroke(_:)))
+            let shadowMenu = UIMenuItem(title: needShadowAndStroke.shadow ? LocalStrings.closeShadow.description : LocalStrings.openShadow.description, action: #selector(CTACanvasViewController.changeShadow(_:)))
+            let strokeMenu = UIMenuItem(title: needShadowAndStroke.stroke ? LocalStrings.closeOutline.description : LocalStrings.openOutline.description, action: #selector(CTACanvasViewController.changeStroke(_:)))
             menus += [shadowMenu, strokeMenu]
         }
         
-        UIMenuController.sharedMenuController().menuItems = menus
+        UIMenuController.shared.menuItems = menus
         let point = CGPoint(x: atrributes.center.x, y: atrributes.center.y - atrributes.bounds.height / 2.0)
-        UIMenuController.sharedMenuController().setTargetRect(CGRect(origin: point, size: CGSize.zero), inView: collectionView)
-        UIMenuController.sharedMenuController().setMenuVisible(true, animated: true)
+        UIMenuController.shared.setTargetRect(CGRect(origin: point, size: CGSize.zero), in: collectionView)
+        UIMenuController.shared.setMenuVisible(true, animated: true)
     }
     
-    func menuWillHidden(sender: NSNotification) {
+    func menuWillHidden(_ sender: Notification) {
         overlayHidden()
     }
     
-    func overlayShowWith(attribute: OverlayAttributes) {
+    func overlayShowWith(_ attribute: OverlayAttributes) {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         selectedOverlayLayer.opacity = 0.0
         let path = UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: attribute.size))
-        selectedOverlayLayer.path = path.CGPath
+        selectedOverlayLayer.path = path.cgPath
         
         selectedOverlayLayer.bounds.size = attribute.size
         selectedOverlayLayer.position = attribute.postioin
@@ -196,42 +196,42 @@ extension CTACanvasViewController {
         
         CATransaction.commit()
         
-        UIView.animateWithDuration(0.3) { [weak self] in
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.selectedOverlayLayer.opacity = 1.0
-        }
+        }) 
     }
     
     func overlayHidden() {
-        UIView.animateWithDuration(0.3) { [weak self] in
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.selectedOverlayLayer.opacity = 0.0
-        }
+        }) 
     }
     
     // MARK: - Items
-    func indexPathAtPoint(point: CGPoint) -> NSIndexPath? {
-        let indexPaths = quickSort(collectionView.indexPathsForVisibleItems()) {$0.item > $1.item}
+    func indexPathAtPoint(_ point: CGPoint) -> IndexPath? {
+        let indexPaths = quickSort(collectionView.indexPathsForVisibleItems as [NSIndexPath]) {$0.item > $1.item}
         
         guard indexPaths.count > 0 else { return nil }
         
         for indexPath in indexPaths {
-            let cell = collectionView.cellForItemAtIndexPath(indexPath)!
-            let onCellPoint = collectionView.convertPoint(point, toView: cell)
-            if cell.pointInside(onCellPoint, withEvent: nil) {
-                return indexPath
+            let cell = collectionView.cellForItem(at: indexPath as IndexPath)!
+            let onCellPoint = collectionView.convert(point, to: cell)
+            if cell.point(inside: onCellPoint, with: nil) {
+                return indexPath as IndexPath
             }
         }
         return nil
     }
     
-    func quickSort<T: NSIndexPath>(items: [T], @noescape by compare: (T, T) -> Bool) -> [T] {
+    func quickSort<T: NSIndexPath>(_ items: [T], by compare: (T, T) -> Bool) -> [T] {
         guard items.count > 1 else {
             return items
         }
         var items = items
         
-        func partition(inout items: [T], left: Int, right: Int, @noescape by compare: (T, T) -> Bool) -> Int {
+        func partition(_ items: inout [T], left: Int, right: Int, by compare: (T, T) -> Bool) -> Int {
             let random = left + Int(arc4random_uniform(UInt32(right-left)))
             let key = items[random]
             (items[left], items[random]) = (items[random], items[left])
@@ -247,7 +247,7 @@ extension CTACanvasViewController {
             (items[left], items[j]) = (items[j], items[left])
             return j
         }
-        func quickSortIter(inout items: [T], left: Int, right: Int, @noescape by compare: (T, T) -> Bool) {
+        func quickSortIter(_ items: inout [T], left: Int, right: Int, by compare: (T, T) -> Bool) {
             if left < right {
                 let middle = partition(&items, left: left, right: right, by: compare)
                 quickSortIter(&items, left: left, right: middle-1, by: compare)
@@ -259,56 +259,56 @@ extension CTACanvasViewController {
         return items
     }
     
-    func deleteItem(sender: AnyObject) {
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+    func deleteItem(_ sender: AnyObject) {
+        DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.delegate?.canvasViewControllerWillDeleted(strongSelf)
         }
     }
     
-    func changeShadow(sender: AnyObject) {
+    func changeShadow(_ sender: AnyObject) {
         if let needShadowAndStroke = delegate?.canvasViewControllerWillShowNeedShadowAndNeedStroke(self) {
             delegate?.canvasViewControllerWillChanged(!needShadowAndStroke.shadow, needStroke: needShadowAndStroke.stroke)
         }
         
     }
     
-    func changeStroke(sender: AnyObject) {
+    func changeStroke(_ sender: AnyObject) {
         if let needShadowAndStroke = delegate?.canvasViewControllerWillShowNeedShadowAndNeedStroke(self) {
             delegate?.canvasViewControllerWillChanged(needShadowAndStroke.shadow, needStroke: !needShadowAndStroke.stroke)
         }
     }
     
-    func insertAt(indexPath: NSIndexPath) {
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+    func insertAt(_ indexPath: IndexPath) {
+        DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
-            strongSelf.collectionView.insertItemsAtIndexPaths([indexPath])
+            strongSelf.collectionView.insertItems(at: [indexPath])
         }
     }
     
-    func removeAt(indexPath: NSIndexPath) {
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+    func removeAt(_ indexPath: IndexPath) {
+        DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
-            strongSelf.collectionView.deleteItemsAtIndexPaths([indexPath])
+            strongSelf.collectionView.deleteItems(at: [indexPath])
         }
         
     }
     
-    func reloadSection(completion: (() -> ())? = nil) {
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+    func reloadSection(_ completion: (() -> ())? = nil) {
+        DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
             CATransaction.begin()
             CATransaction.setDisableActions(true)
-            strongSelf.collectionView.reloadSections(NSIndexSet(index: 0))
+            strongSelf.collectionView.reloadSections(IndexSet(integer: 0))
             CATransaction.commit()
             completion?()
         }
     }
     
-    func showOverlayAndSelectedAt(index: NSIndexPath) {
+    func showOverlayAndSelectedAt(_ index: IndexPath) {
         
-        if let selectedIndexPath = collectionView.indexPathsForSelectedItems()?.first {
-            if index.compare(selectedIndexPath) != .OrderedSame {
+        if let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first {
+            if (index as NSIndexPath).compare(selectedIndexPath) != .orderedSame {
                 debug_print("has selected")
                 selectAt(index)
             }
@@ -316,13 +316,13 @@ extension CTACanvasViewController {
             selectAt(index)
         }
 
-        dispatch_async(dispatch_get_main_queue()) {[weak self] in
+        DispatchQueue.main.async {[weak self] in
             if index.item > 0 {
                 guard let sf = self else {return}
                 
-                let attributes = sf.collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(index)!
+                let attributes = sf.collectionView.collectionViewLayout.layoutAttributesForItem(at: index)!
                 let size = attributes.size
-                let position = sf.collectionView.convertPoint(attributes.center, toView: sf.view)
+                let position = sf.collectionView.convert(attributes.center, to: sf.view)
                 let transform = attributes.transform
                 
                 let attr = OverlayAttributes(postioin: position, size: size, transform: transform)
@@ -333,21 +333,21 @@ extension CTACanvasViewController {
         }
     }
     
-    func selectAt(indexPath: NSIndexPath) {
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+    func selectAt(_ indexPath: IndexPath) {
+        DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
             
-            strongSelf.collectionView.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+            strongSelf.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionViewScrollPosition())
             strongSelf.delegate?.canvasViewController(strongSelf, didSelectedIndexPath: indexPath)
             
             let context = UICollectionViewFlowLayoutInvalidationContext()
-            context.invalidateItemsAtIndexPaths([indexPath])
-            strongSelf.collectionView.collectionViewLayout.invalidateLayoutWithContext(context)
+            context.invalidateItems(at: [indexPath])
+            strongSelf.collectionView.collectionViewLayout.invalidateLayout(with: context)
         }
     }
     
-    func updateAt(indexPath: NSIndexPath, updateContents: Bool = false) {
-        let cell = collectionView.cellForItemAtIndexPath(indexPath)
+    func updateAt(_ indexPath: IndexPath, updateContents: Bool = false) {
+        let cell = collectionView.cellForItem(at: indexPath)
         let container = dataSource.canvasViewControllerContainerAtIndexPath(indexPath)
         let position = container.center
         if cell == nil {
@@ -357,23 +357,23 @@ extension CTACanvasViewController {
                 
                 let size = CGSize(width: container.size.width, height: container.size.height)
                 let rect = CGRect(origin: CGPoint.zero, size: size)
-                let r = CGRectApplyAffineTransform(rect, CGAffineTransformMakeRotation(-(CGFloat(container.radius))))
-                frame = CGRect(x: position.x - CGRectGetWidth(r) / 2.0 , y: position.y - CGRectGetHeight(r) / 2.0, width: CGRectGetWidth(r), height: CGRectGetHeight(r))
+                let r = rect.applying(CGAffineTransform(rotationAngle: -(CGFloat(container.radius))))
+                frame = CGRect(x: position.x - r.width / 2.0 , y: position.y - r.height / 2.0, width: r.width, height: r.height)
             } else {
                 let size = CGSize(width: container.size.width, height: container.size.height)
                 let origin = CGPoint(x: position.x - CGFloat(size.width) / 2.0, y: position.y - CGFloat(size.height) / 2.0)
                 frame = CGRect(origin: origin, size: size)
             }
             
-            if CGRectIntersectsRect(collectionView.bounds, frame) {
-                collectionView.reloadItemsAtIndexPaths([indexPath])
-                collectionView.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+            if collectionView.bounds.intersects(frame) {
+                collectionView.reloadItems(at: [indexPath])
+                collectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionViewScrollPosition())
             }
             
         } else {
             let context = UICollectionViewFlowLayoutInvalidationContext()
-            context.invalidateItemsAtIndexPaths([indexPath])
-            collectionView.collectionViewLayout.invalidateLayoutWithContext(context)
+            context.invalidateItems(at: [indexPath])
+            collectionView.collectionViewLayout.invalidateLayout(with: context)
             
             if updateContents {
                 
@@ -400,22 +400,22 @@ extension CTACanvasViewController {
 // MARK: - UICollectionViewDataSource and Delegate
 extension CTACanvasViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return dataSource.canvasViewControllerNumberOfContainers(self)
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         switch containerAt(indexPath) {
             
-        case let textContainer as TextContainerVMProtocol where textContainer.type == .Text:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TextCell", forIndexPath: indexPath) as! CTACanvasTextCell
+        case let textContainer as TextContainerVMProtocol where textContainer.type == .text:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TextCell", for: indexPath) as! CTACanvasTextCell
             cell.textView.attributedText = textContainer.textElement!.attributeString
             return cell
             
-        case let imageContainer as ImageContainerVMProtocol where imageContainer.type == .Image:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ImageCell", forIndexPath: indexPath) as! CTACanvasImageCell
+        case let imageContainer as ImageContainerVMProtocol where imageContainer.type == .image:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! CTACanvasImageCell
             if let data = document?.cacheResourceBy(imageContainer.imageElement!.resourceName) {
                 
                 debug_print(imageContainer.imageElement!.resourceName)
@@ -426,7 +426,7 @@ extension CTACanvasViewController: UICollectionViewDelegate, UICollectionViewDat
             return cell
             
         default:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
             return cell
         }
     }
@@ -435,32 +435,32 @@ extension CTACanvasViewController: UICollectionViewDelegate, UICollectionViewDat
 
 extension CTACanvasViewController: CanvasDelegateLayout {
     
-    func containerAt(indexPath: NSIndexPath) -> ContainerVMProtocol {
+    func containerAt(_ indexPath: IndexPath) -> ContainerVMProtocol {
         return dataSource.canvasViewControllerContainerAtIndexPath(indexPath)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let size = containerAt(indexPath).size
         
         return CGSize(width: size.width, height: size.height)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, rotationForItemAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, rotationForItemAtIndexPath indexPath: IndexPath) -> CGFloat {
         return CGFloat(containerAt(indexPath).radius)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, positionForItemAtIndexPath indexPath: NSIndexPath) -> CGPoint {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, positionForItemAtIndexPath indexPath: IndexPath) -> CGPoint {
         
         return containerAt(indexPath).center
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, alphaForItemAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, alphaForItemAtIndexPath indexPath: IndexPath) -> CGFloat {
         let c = containerAt(indexPath).alphaValue
         return c
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, contentInsetForItemAtIndexPath indexPath: NSIndexPath) -> CGPoint {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, contentInsetForItemAtIndexPath indexPath: IndexPath) -> CGPoint {
         return containerAt(indexPath).inset
     }
 }

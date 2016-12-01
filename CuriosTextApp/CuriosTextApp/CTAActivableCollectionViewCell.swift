@@ -10,15 +10,15 @@ import UIKit
 
 class CTAActivableCollectionViewCell: UICollectionViewCell {
     
-    private var actived: Bool = false
+    fileprivate var actived: Bool = false
     
-    func didActived(actived: Bool) {
+    func didActived(_ actived: Bool) {
         
     }
     
-    override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         
-        super.applyLayoutAttributes(layoutAttributes)
+        super.apply(layoutAttributes)
         
         guard let layoutAttributes = layoutAttributes as? CollectionViewAttributes else {
             return

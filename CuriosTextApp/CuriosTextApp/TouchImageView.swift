@@ -12,7 +12,7 @@ class TouchImageView: UIImageView {
     
     var tapHandler: (() -> ())?
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         tapHandler?()
     }
     

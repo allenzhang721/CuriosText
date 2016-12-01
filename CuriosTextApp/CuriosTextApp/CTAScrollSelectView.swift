@@ -10,8 +10,8 @@ import UIKit
 
 class CTAScrollSelectView: UIControl {
 
-    private var collectionView: UICollectionView!
-    var indexPath: NSIndexPath?
+    fileprivate var collectionView: UICollectionView!
+    var indexPath: IndexPath?
     
     init(frame: CGRect, direction: UICollectionViewScrollDirection) {
         super.init(frame: frame)
@@ -22,20 +22,20 @@ class CTAScrollSelectView: UIControl {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup(direction: UICollectionViewScrollDirection) {
+    func setup(_ direction: UICollectionViewScrollDirection) {
         let lineLayout = CTALineFlowLayout()
         lineLayout.delegate = self
         lineLayout.scrollDirection = direction
         collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height), collectionViewLayout: lineLayout)
-        collectionView.backgroundColor = UIColor.whiteColor()
-        collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "FontFamilyCell")
+        collectionView.backgroundColor = UIColor.white
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "FontFamilyCell")
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
 //        collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         collectionView.dataSource = self
         addSubview(collectionView)
         
-        let tap = UITapGestureRecognizer(target: self, action: "tap:")
+        let tap = UITapGestureRecognizer(target: self, action: #selector(CTAScrollSelectView.tap(_:)))
         addGestureRecognizer(tap)
     }
     
@@ -44,44 +44,44 @@ class CTAScrollSelectView: UIControl {
         collectionView.frame = bounds
     }
     
-    func tap(sender: UITapGestureRecognizer) {
+    func tap(_ sender: UITapGestureRecognizer) {
         
-        sendActionsForControlEvents(.ValueChanged)
+        sendActions(for: .valueChanged)
     }
 
 }
 
 extension CTAScrollSelectView: UICollectionViewDataSource {
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         
         return 10
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("FontFamilyCell", forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FontFamilyCell", for: indexPath)
         
-        cell.backgroundColor = UIColor.blackColor()
+        cell.backgroundColor = UIColor.black
         return cell
     }
 }
 
 extension CTAScrollSelectView: LineFlowLayoutDelegate {
     
-    func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
+    func didChangeTo(_ collectionView: UICollectionView, itemAtIndexPath indexPath: IndexPath, oldIndexPath: IndexPath?) {
         
         self.indexPath = indexPath
-        let cell = collectionView.cellForItemAtIndexPath(indexPath)
-        cell?.backgroundColor = UIColor.blackColor()
-        if let oldIndexPath = oldIndexPath, let oldCell = collectionView.cellForItemAtIndexPath(oldIndexPath) {
-            oldCell.backgroundColor = UIColor.blackColor()
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.backgroundColor = UIColor.black
+        if let oldIndexPath = oldIndexPath, let oldCell = collectionView.cellForItem(at: oldIndexPath) {
+            oldCell.backgroundColor = UIColor.black
         }
-        sendActionsForControlEvents(.ValueChanged)
+        sendActions(for: .valueChanged)
     }
 }

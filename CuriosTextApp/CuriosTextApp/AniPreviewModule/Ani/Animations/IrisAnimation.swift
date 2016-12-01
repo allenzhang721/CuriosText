@@ -10,7 +10,7 @@ import Foundation
 
 extension AniFactory {
     
-    class func iris(appear: Bool, canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, descriptor: Descriptor, beganTime: Float) -> AniDescriptor {
+    class func iris(_ appear: Bool, canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, descriptor: Descriptor, beganTime: Float) -> AniDescriptor {
         
         let duration = descriptor.config.duration
         let time = duration * 0.6
@@ -20,7 +20,7 @@ extension AniFactory {
         let key1 = "mask.fillColor"
         
 //        if appear {
-        
+      
         let bt = [ // beganTime
             key1: CFTimeInterval(b),
             "mask.transform": CFTimeInterval(b)]
@@ -32,19 +32,19 @@ extension AniFactory {
         let beganScale: CGFloat = appear ? 0.0 : 1.0
         let endScale: CGFloat = appear ? 1.0 : 0.0
         let vs: [String: [AnyObject]] = [
-            key1: [UIColor.blackColor().CGColor, UIColor.blackColor().CGColor],
+            key1: [UIColor.black.cgColor, UIColor.black.cgColor],
             "mask.transform": [
-                NSValue(CATransform3D: CATransform3DMakeScale(beganScale, beganScale, 1)),
-                NSValue(CATransform3D: CATransform3DMakeScale(endScale, endScale, 1)),
+                NSValue(caTransform3D: CATransform3DMakeScale(beganScale, beganScale, 1)),
+                NSValue(caTransform3D: CATransform3DMakeScale(endScale, endScale, 1)),
                 
             ],
         ]
         
-        let beganKeyTime = 0
-        let endKeyTime = 1
+      let beganKeyTime: Float = 0
+      let endKeyTime: Float = 1
         let ks: [String: [NSNumber]] = [
-            key1: [beganTime, endKeyTime],
-            "mask.transform": [beganKeyTime, endKeyTime]]
+          key1: [NSNumber(floatLiteral: Double(beganTime)), NSNumber(floatLiteral: Double(endKeyTime))],
+            "mask.transform": [NSNumber(value: beganTime), NSNumber(value: endKeyTime)]]
         
         
         

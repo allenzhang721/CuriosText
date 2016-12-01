@@ -10,24 +10,24 @@ import UIKit
 
 final class CTASelectorFontCell: CTASelectorCell {
     
-    private var view: CTAPickerView!
+    fileprivate var view: CTAPickerView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setup()
     }
     
-    private func setup() {
-        view = CTAPickerView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.mainScreen().bounds.width - 40, height: 88)), showCount: 2)
+    fileprivate func setup() {
+        view = CTAPickerView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width - 40, height: 88)), showCount: 2)
         view.collectionView.clipsToBounds = false
 //        view.collectionView.backgroundColor = UIColor.yellowColor()
         contentView.addSubview(view)
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = UIColor.white
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.leadingAnchor.constraintEqualToAnchor(leadingAnchor, constant: 20).active = true
-        view.topAnchor.constraintEqualToAnchor(topAnchor).active = true
-        view.trailingAnchor.constraintEqualToAnchor(trailingAnchor, constant: -20).active = true
-        view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
+        view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
+        view.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
+        view.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         
         view.dataSource = self
         view.delegate = self
@@ -51,7 +51,7 @@ final class CTASelectorFontCell: CTASelectorCell {
     
     override func willBeDisplayed() {
         if let indexPath = dataSource?.selectorBeganFontIndexPath(self) {
-            dispatch_async(dispatch_get_main_queue(), {[weak self] in
+            DispatchQueue.main.async(execute: {[weak self] in
                 self?.view.updateTo(indexPath)
                 })
         }
@@ -61,18 +61,18 @@ final class CTASelectorFontCell: CTASelectorCell {
         view.didEndDisplay()
     }
     
-    override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
-        view.addTarget(target, action: action, forControlEvents: controlEvents)
+    override func addTarget(_ target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
+        view.addTarget(target, action: action, for: controlEvents)
     }
     
     override func removeAllTarget() {
-        for target in view.allTargets() {
-            guard let actions = view.actionsForTarget(target, forControlEvent: view.allControlEvents()) else {
+        for target in view.allTargets {
+            guard let actions = view.actions(forTarget: target, forControlEvent: view.allControlEvents) else {
                 continue
             }
             
             for action in actions {
-                view.removeTarget(target, action: Selector(action), forControlEvents: view.allControlEvents())
+                view.removeTarget(target, action: Selector(action), for: view.allControlEvents)
             }
         }
     }
@@ -80,15 +80,15 @@ final class CTASelectorFontCell: CTASelectorCell {
 
 extension CTASelectorFontCell: CTAPickerViewDataSource {
     
-    func pickViewRegisterItemCellClass(view: CTAPickerView) -> (AnyClass?, String) {
+    func pickViewRegisterItemCellClass(_ view: CTAPickerView) -> (AnyClass?, String) {
         return (CTAVerticalItemFontsCollectionViewCell.self, "SelectorFontItemCell")
     }
     
-    func numberOfSectionsInCollectionView(view: CTAPickerView) -> Int {
+    func numberOfSectionsInCollectionView(_ view: CTAPickerView) -> Int {
         return CTAFontsManager.families.count
     }
     
-    func pickView(view: CTAPickerView, numberOfItemsAtSection section: Int) -> Int {
+    func pickView(_ view: CTAPickerView, numberOfItemsAtSection section: Int) -> Int {
         let afamily = CTAFontsManager.families[section]
         
         guard let fonts  = CTAFontsManager.fontNamesWithFamily(afamily) else {
@@ -97,7 +97,7 @@ extension CTASelectorFontCell: CTAPickerViewDataSource {
         return fonts.count
     }
     
-    func pickView(view: CTAPickerView, indexAtSection section: Int) -> Int {
+    func pickView(_ view: CTAPickerView, indexAtSection section: Int) -> Int {
         
         guard let index = CTAFontsManager.itemAtSection(section) else {
             return 0
@@ -106,11 +106,11 @@ extension CTASelectorFontCell: CTAPickerViewDataSource {
         return index
     }
     
-    func pickView(view: CTAPickerView, configItemCell itemCell: CTAVerticalItemCollectionViewCell, itemAtSection section: Int, ItemAtIndex index: Int) {
+    func pickView(_ view: CTAPickerView, configItemCell itemCell: CTAVerticalItemCollectionViewCell, itemAtSection section: Int, ItemAtIndex index: Int) {
         if let itemCell = itemCell as? CTAVerticalItemFontsCollectionViewCell {
-            let res = CTAFontsManager.familyAndFontNameWith(NSIndexPath(forItem: index, inSection: section))
+            let res = CTAFontsManager.familyAndFontNameWith(IndexPath(item: index, section: section))
             
-            guard let family = res.0, fontName = res.1, let font = UIFont(name: fontName, size: 17) else {
+            guard let family = res.0, let fontName = res.1, let font = UIFont(name: fontName, size: 17) else {
                 return
             }
             
@@ -134,13 +134,13 @@ extension CTASelectorFontCell: CTAPickerViewDataSource {
 
 extension CTASelectorFontCell: CTAPickerViewDelegate {
     
-    func pickView(view: CTAPickerView, itemDidChangedToIndexPath indexPath: NSIndexPath) {
+    func pickView(_ view: CTAPickerView, itemDidChangedToIndexPath indexPath: IndexPath) {
         
         debug_print("color cell will began at \(indexPath)", context: colorContext)
         CTAFontsManager.updateSection(indexPath.section, withItem: indexPath.item)
     }
     
-    func pickView(view: CTAPickerView, sectionDidChangedToIndexPath indexPath: NSIndexPath) {
+    func pickView(_ view: CTAPickerView, sectionDidChangedToIndexPath indexPath: IndexPath) {
         
     }
     

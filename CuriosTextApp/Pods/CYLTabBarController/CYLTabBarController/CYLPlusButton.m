@@ -1,8 +1,8 @@
 //
 //  CYLPlusButton.m
-//  CYLCustomTabBarDemo
+//  CYLTabBarController
 //
-//  Created by 微博@iOS程序犭袁 ( http://weibo.com/luohanchenyilong/ ) on 10/20/15.
+//  v1.6.5 Created by 微博@iOS程序犭袁 ( http://weibo.com/luohanchenyilong/ ) on 10/20/15.
 //  Copyright © 2015 https://github.com/ChenYilong . All rights reserved.
 //
 
@@ -18,7 +18,7 @@ UIViewController *CYLPlusChildViewController = nil;
 #pragma mark -
 #pragma mark - public Methods
 
-+ (void)registerSubclass {
++ (void)registerPlusButton {
     if (![self conformsToProtocol:@protocol(CYLPlusButtonSubclassing)]) {
         return;
     }
@@ -36,6 +36,13 @@ UIViewController *CYLPlusChildViewController = nil;
         }
     }
 }
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
++ (void)registerSubclass {
+    [self registerPlusButton];
+}
+#pragma clang diagnostic pop
 
 - (void)plusChildViewControllerButtonClicked:(UIButton<CYLPlusButtonSubclassing> *)sender {
     sender.selected = YES;
@@ -58,6 +65,5 @@ UIViewController *CYLPlusChildViewController = nil;
     }];
     [plusButton addTarget:plusButton action:@selector(plusChildViewControllerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 }
-
 
 @end

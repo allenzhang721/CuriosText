@@ -15,22 +15,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     
     var window: UIWindow?
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         self.loadFilters()
-        
         self.setup()
         SVProgressHUD.setMinimumDismissTimeInterval(1)
-        SVProgressHUD.setDefaultMaskType(.Clear)
-        SVProgressHUD.setDefaultStyle(.Custom)
+        SVProgressHUD.setDefaultMaskType(.clear)
+        SVProgressHUD.setDefaultStyle(.custom)
         SVProgressHUD.setForegroundColor(CTAStyleKit.selectedColor)
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        SVProgressHUD.setBackgroundColor(UIColor.white)
         
         return true
     }
     
     func loadFilters() {
-        let bundle = NSBundle.mainBundle().bundleURL
+        let bundle = Bundle.main.bundleURL
         let manager = FilterManager()
         manager.loadDefaultFilters()
         manager.filters.forEach{$0.createData(fromColorDirAt: bundle, complation: nil)}
@@ -42,19 +41,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         self.registerSystemFonts()
         self.familiesDisplayNames()
         self.familiesFixRatio()
-        ImageCache.defaultCache.maxMemoryCost = 100 * 1024 * 1024 // Allen: 80 MB
+        ImageCache.default.maxMemoryCost = UInt(100 * 1024 * 1024) // Allen: 80 MB
         // Override point for customization after application launch.
         #if DEBUG
-            CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.Test.description
+            CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.test.description
         #else
-            CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.Production.description
+            CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.production.description
         #endif
         
         WXApi.registerApp(CTAConfigs.weChat.appID)
         WeiboSDK.registerApp(CTAConfigs.weibo.appID)
-        CTASocialManager.register(.WeChat, appID: CTAConfigs.weChat.appID, appKey: CTAConfigs.weChat.appKey)
-        CTASocialManager.register(.Weibo, appID: CTAConfigs.weibo.appID, appKey: CTAConfigs.weibo.appKey)
-        CTASocialManager.register(.SMS, appID: CTAConfigs.SMS.appID, appKey: CTAConfigs.SMS.appKey) // http://dashboard.mob.com/#/sms/index
+        CTASocialManager.register(.weChat, appID: CTAConfigs.weChat.appID, appKey: CTAConfigs.weChat.appKey)
+        CTASocialManager.register(.weibo, appID: CTAConfigs.weibo.appID, appKey: CTAConfigs.weibo.appKey)
+        CTASocialManager.register(.sms, appID: CTAConfigs.SMS.appID, appKey: CTAConfigs.SMS.appKey) // http://dashboard.mob.com/#/sms/index
     }
     
     func cleanFontCache() {
@@ -64,14 +63,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     
     func registerLocalFonts() {
         let fontsName = "Fonts"
-        let path = NSBundle.mainBundle().bundleURL
-        let fontsDirUrl = path.URLByAppendingPathComponent(fontsName)
+        let path = Bundle.main.bundleURL
+        let fontsDirUrl = path.appendingPathComponent(fontsName)
         let jsonName = "fonts.json"
-        let jsonFileURL = fontsDirUrl.URLByAppendingPathComponent(jsonName)
-        let data = NSData(contentsOfURL: jsonFileURL)!
-        let fileNames = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)) as! [String]
+        let jsonFileURL = fontsDirUrl.appendingPathComponent(jsonName)
+        let data = try! Data(contentsOf: jsonFileURL)
+        let fileNames = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions(rawValue: 0)) as! [String]
         for name in fileNames {
-            let fontFileUrl = fontsDirUrl.URLByAppendingPathComponent(name)
+            let fontFileUrl = fontsDirUrl.appendingPathComponent(name)
             CTAFontsManager.registerFontAt(fontFileUrl)
         }
         CTAFontsManager.reloadData()
@@ -91,10 +90,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         
         let familiesName = ["Times New Roman", "American Typewriter", "Snell Roundhand", "Chalkduster"]
         for fa in familiesName {
-            let fonts = UIFont.fontNamesForFamilyName(fa)
+            let fonts = UIFont.fontNames(forFamilyName: fa)
             for f in fonts {
                 if let font = UIFont(name: f, size: 17) {
-                    let desc = font.fontDescriptor()
+                    let desc = font.fontDescriptor
                     let fullName = f
                     let postName = desc.postscriptName
                     let style = CTFontCopyName(font, kCTFontStyleNameKey)?.toString() ?? ""
@@ -111,12 +110,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     func familiesDisplayNames() {
         
         let fontsName = "Fonts"
-        let path = NSBundle.mainBundle().bundleURL
-        let fontsDirUrl = path.URLByAppendingPathComponent(fontsName)
+        let path = Bundle.main.bundleURL
+        let fontsDirUrl = path.appendingPathComponent(fontsName)
         let jsonName = "familyDisplayNames.json"
-        let jsonFileURL = fontsDirUrl.URLByAppendingPathComponent(jsonName)
-        let data = NSData(contentsOfURL: jsonFileURL)!
-        let fileNames = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)) as! [String: String]
+        let jsonFileURL = fontsDirUrl.appendingPathComponent(jsonName)
+        let data = try! Data(contentsOf: jsonFileURL)
+        let fileNames = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions(rawValue: 0)) as! [String: String]
         
         CTAFontsManager.familiyDisplayNameDic = fileNames
     }
@@ -124,17 +123,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     func familiesFixRatio() {
         
         let fontsName = "Fonts"
-        let path = NSBundle.mainBundle().bundleURL
-        let fontsDirUrl = path.URLByAppendingPathComponent(fontsName)
+        let path = Bundle.main.bundleURL
+        let fontsDirUrl = path.appendingPathComponent(fontsName)
         let jsonName = "familyFixRatios.json"
-        let jsonFileURL = fontsDirUrl.URLByAppendingPathComponent(jsonName)
-        let data = NSData(contentsOfURL: jsonFileURL)!
-        let fixRatio = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)) as! [String: [String: CGFloat]]
+        let jsonFileURL = fontsDirUrl.appendingPathComponent(jsonName)
+        let data = try! Data(contentsOf: jsonFileURL)
+        let fixRatio = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions(rawValue: 0)) as! [String: [String: CGFloat]]
         
         CTAFontsManager.familiyFixRectRatio = fixRatio
     }
     
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         
         if CTASocialManager.handleOpenURL(url) {
             return true
@@ -142,29 +141,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         return false
     }
     
-    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
-        return WXApi.handleOpenURL(url, delegate: self)
+    func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
+        return WXApi.handleOpen(url, delegate: self)
     }
     
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
     
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
     
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
     
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
     
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 }

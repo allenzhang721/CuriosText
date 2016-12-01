@@ -17,7 +17,7 @@ class CTAUploadModel {
     var isUploading:Bool = false;
     var uploadProgress:Float = 0.0;
     var uploadComplete:Bool = false;
-    var fileData:NSData?
+    var fileData:Data?
     let isUploadData:Bool
     
     init(key:String, token:String, filePath:String){
@@ -28,7 +28,7 @@ class CTAUploadModel {
         self.isUploadData = false;
     }
     
-    init(key:String, token:String, fileData:NSData){
+    init(key:String, token:String, fileData:Data){
         self.key          = key;
         self.token        = token;
         self.fileData     = fileData;

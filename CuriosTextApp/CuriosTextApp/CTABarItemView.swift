@@ -27,9 +27,9 @@ class CTABarItem: NSObject {
 
 class CTABarItemView: UIView {
     
-    private var item: CTABarItem?
-    private var imageView: UIImageView!
-    private var titleLabel: UILabel!
+    fileprivate var item: CTABarItem?
+    fileprivate var imageView: UIImageView!
+    fileprivate var titleLabel: UILabel!
     var selected: Bool = false
     
     init(frame: CGRect, item: CTABarItem?) {
@@ -42,14 +42,14 @@ class CTABarItemView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setup() {
+    fileprivate func setup() {
         
         imageView = UIImageView()
         titleLabel = UILabel()
         
-        imageView.contentMode = .ScaleAspectFit
-        titleLabel.font = UIFont.systemFontOfSize(12)
-        titleLabel.textAlignment = .Center
+        imageView.contentMode = .scaleAspectFit
+        titleLabel.font = UIFont.systemFont(ofSize: 12)
+        titleLabel.textAlignment = .center
         titleLabel.minimumScaleFactor = 0.5
         titleLabel.adjustsFontSizeToFitWidth = true
         
@@ -66,18 +66,18 @@ class CTABarItemView: UIView {
         imageView.image = CTAStyleKit.imageOfSpacingBarItemNormal
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.centerXAnchor.constraintEqualToAnchor(centerXAnchor).active = true
-        imageView.topAnchor.constraintEqualToAnchor(topAnchor).active = true
-        imageView.widthAnchor.constraintEqualToConstant(22).active = true
-        imageView.heightAnchor.constraintEqualToConstant(22).active = true
+        imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        imageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 22).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 22).isActive = true
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.topAnchor.constraintEqualToAnchor(imageView.bottomAnchor, constant: 2).active = true
-        titleLabel.widthAnchor.constraintEqualToConstant(40).active = true
-        titleLabel.centerXAnchor.constraintEqualToAnchor(centerXAnchor).active = true
+        titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 2).isActive = true
+        titleLabel.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
     
-    func setSelected(selected: Bool, animated: Bool = true) {
+    func setSelected(_ selected: Bool, animated: Bool = true) {
         
         if self.selected == !selected {
             self.selected = selected
@@ -88,14 +88,14 @@ class CTABarItemView: UIView {
             
             if animated {
                 
-                UIView.transitionWithView(self, duration: 0.3, options: .BeginFromCurrentState, animations: {[weak self] () -> Void in
+                UIView.transition(with: self, duration: 0.3, options: .beginFromCurrentState, animations: {[weak self] () -> Void in
                     
                     if let strongSelf = self {
                         let imageView = strongSelf.imageView
                         let titleLabel = strongSelf.titleLabel
                         let sel = strongSelf.selected
-                        imageView.image =  sel ? aitem.selectedImage : aitem.normalImage
-                        titleLabel.textColor = sel ? aitem.selectedColor : aitem.normalColor
+                        imageView?.image =  sel ? aitem.selectedImage : aitem.normalImage
+                        titleLabel?.textColor = sel ? aitem.selectedColor : aitem.normalColor
                     }
                     
                     }, completion: nil)
@@ -108,7 +108,7 @@ class CTABarItemView: UIView {
         }
     }
     
-    func setItem(nextItem: CTABarItem) {
+    func setItem(_ nextItem: CTABarItem) {
         
         guard item != nextItem else {
             return

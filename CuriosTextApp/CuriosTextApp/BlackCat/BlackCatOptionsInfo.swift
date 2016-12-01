@@ -21,7 +21,7 @@ Key for BlackCatOptionsInfo
 - Downloader:  Key for downloader to use. The value for this key should be an DataDownloader object. BlackCat will use this downloader to download the data.
 */
 public enum BlackCatOptionsInfoKey {
-  case Options
-  case TargetCache
-  case Downloader
+  case options
+  case targetCache
+  case downloader
 }

@@ -13,19 +13,19 @@ class InputViewController: UIViewController {
     
     var resizeHandler: ((CGSize) -> ())?
     var sendHandler:((String) -> ())?
-    var inputting: Bool {return textView.isFirstResponder()}
+    var inputting: Bool {return textView.isFirstResponder}
     
     @IBOutlet weak var lowBoundConstraint: NSLayoutConstraint!
     @IBOutlet weak var upBoundConstraint: NSLayoutConstraint!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var placeholderLabel: UILabel!
     
-    private var preCount = 0
+    fileprivate var preCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textView.layer.borderColor = CTAStyleKit.labelShowColor.CGColor
-        textView.addObserver(self, forKeyPath: "contentSize", options: .New, context: &contexts)
+        textView.layer.borderColor = CTAStyleKit.labelShowColor.cgColor
+        textView.addObserver(self, forKeyPath: "contentSize", options: .new, context: &contexts)
         textView.textContainerInset.left = 12
         textView.textContainerInset.right = 8
     }
@@ -34,15 +34,15 @@ class InputViewController: UIViewController {
         textView.removeObserver(self, forKeyPath: "contentSize", context: &contexts)
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         if context == &contexts {
-            if  let newvalue = (change?[NSKeyValueChangeNewKey] as? NSValue)?.CGSizeValue() where !textView.dragging {
+            if  let newvalue = (change?[NSKeyValueChangeKey.newKey] as? NSValue)?.cgSizeValue, !textView.isDragging {
                 let h = max(min(newvalue.height, 70), 33)
                 resizeHandler?(CGSize(width: view.bounds.width, height: h + 12))
             }
         } else {
-            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
     
@@ -56,17 +56,17 @@ class InputViewController: UIViewController {
         textView.center = view.center
         
         if textView.contentSize.height >= 70 {
-            textView.scrollEnabled = true
+            textView.isScrollEnabled = true
             let selectedRange = textView.selectedRange
             textView.scrollRangeToVisible(selectedRange)
         } else {
-            textView.scrollEnabled = false
+            textView.isScrollEnabled = false
         }
     }
     
     func beganEdit() {
         textView.text = ""
-        placeholderLabel.hidden = false
+        placeholderLabel.isHidden = false
         textView.becomeFirstResponder()
     }
     
@@ -74,26 +74,26 @@ class InputViewController: UIViewController {
         textView.resignFirstResponder()
     }
     
-    func changePlaceholder(text: String) {
+    func changePlaceholder(_ text: String) {
         placeholderLabel.text = text
     }
 }
 
 extension InputViewController: UITextViewDelegate {
     
-    func textViewDidEndEditing(textView: UITextView) {
+    func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.characters.count <= 0 {
-            placeholderLabel.text = LocalStrings.PublishComment.description
+            placeholderLabel.text = LocalStrings.publishComment.description
         }
     }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             textView.resignFirstResponder()
             sendHandler?(textView.text)
             textView.text = ""
-            placeholderLabel.text = LocalStrings.PublishComment.description
-            placeholderLabel.hidden = false
+            placeholderLabel.text = LocalStrings.publishComment.description
+            placeholderLabel.isHidden = false
             return false
         }
         
@@ -105,16 +105,16 @@ extension InputViewController: UITextViewDelegate {
             
             if notEqual {
                 let manager = textView.layoutManager
-                let glyrange = manager.glyphRangeForCharacterRange(range, actualCharacterRange: nil)
-                let selectedRect = manager.boundingRectForGlyphRange(glyrange, inTextContainer: textView.textContainer)
+                let glyrange = manager.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
+                let selectedRect = manager.boundingRect(forGlyphRange: glyrange, in: textView.textContainer)
                 
                 let estimateHeight = selectedRect.height * CGFloat(replaceCount) / CGFloat(selectedCount)
                 let nexth = textView.contentSize.height - selectedRect.height + estimateHeight
                 
                 if nexth > 70 {
-                    textView.scrollEnabled = false
+                    textView.isScrollEnabled = false
                 } else {
-                    textView.scrollEnabled = false
+                    textView.isScrollEnabled = false
                 }
             }
         }
@@ -122,7 +122,7 @@ extension InputViewController: UITextViewDelegate {
         return true
     }
     
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         let count = textView.text.characters.count
         let h = textView.contentSize.height
         let he = textView.bounds.height
@@ -130,18 +130,18 @@ extension InputViewController: UITextViewDelegate {
         let low = lowBoundConstraint.constant
         let minus = count < preCount
         
-        placeholderLabel.hidden = (count > 0)
+        placeholderLabel.isHidden = (count > 0)
         
         if h > up {
-            textView.scrollEnabled = true
+            textView.isScrollEnabled = true
         } else if h == up {
-            textView.scrollEnabled = minus ? false : true
+            textView.isScrollEnabled = minus ? false : true
         } else if h < up && h > low {
-            textView.scrollEnabled = false
+            textView.isScrollEnabled = false
         } else if h < low {
-            textView.scrollEnabled = false
+            textView.isScrollEnabled = false
         } else {
-            textView.scrollEnabled = false
+            textView.isScrollEnabled = false
         }
         
         preCount = count

@@ -10,7 +10,7 @@ import Foundation
 import PromiseKit
 import Kingfisher
 
-func asyncImage(imagePicker: ((UIImage) -> ()) -> (), position: CGPoint, rotation: CGFloat, size: CGSize, alpha: CGFloat) -> Promise<Drawable> {
+func asyncImage(_ imagePicker: ((UIImage) -> ()) -> (), position: CGPoint, rotation: CGFloat, size: CGSize, alpha: CGFloat) -> Promise<Drawable> {
     
     return Promise { fullfill, reject in
         imagePicker { image in
@@ -20,9 +20,9 @@ func asyncImage(imagePicker: ((UIImage) -> ()) -> (), position: CGPoint, rotatio
     }
 }
 
-func retriveImageBy(imgeID: String, baseURL: NSURL, imageAccess:((String) -> UIImage?)? = nil ,local: Bool) -> ((UIImage) -> ()) -> () {
+func retriveImageBy(_ imgeID: String, baseURL: URL, imageAccess:((String) -> UIImage?)? = nil ,local: Bool) -> ((UIImage) -> ()) -> () {
     
-    func finished(f: (UIImage) -> ()) {
+    func finished(_ f: @escaping (UIImage) -> ()) {
         if local {
             if let imageAccess = imageAccess, let image = imageAccess(imgeID) {
                 f(image)
@@ -31,9 +31,9 @@ func retriveImageBy(imgeID: String, baseURL: NSURL, imageAccess:((String) -> UII
             }
             
         } else {
-            let imageURL = baseURL.URLByAppendingPathComponent(imgeID)
+            let imageURL = baseURL.appendingPathComponent(imgeID)
 //            let imageURL = NSURL(string: "https://d13yacurqjgara.cloudfront.net/users/458522/screenshots/2561596/untitled-1_1x.jpg")!
-            KingfisherManager.sharedManager.retrieveImageWithURL(imageURL, optionsInfo: nil, progressBlock: nil, completionHandler: { (image, error, cacheType, imageURL) in
+          KingfisherManager.shared.retrieveImage(with: imageURL, options: nil, progressBlock: nil, completionHandler: { (image, error, cacheType, imageURL) in
                 
                 if let image = image {
                     f(image)
@@ -44,11 +44,11 @@ func retriveImageBy(imgeID: String, baseURL: NSURL, imageAccess:((String) -> UII
         }  
     }
     
-    return finished
+    return finished as! ((UIImage) -> ()) -> ()
     
 }
 
-func drawPageWithNoImage(page: CTAPage, containImage: Bool = true) -> UIImage? {
+func drawPageWithNoImage(_ page: CTAPage, containImage: Bool = true) -> UIImage? {
     let count = page.containers.count
     guard (containImage && count > 1) || (!containImage && count >= 1) else {return nil}
     if containImage {
@@ -66,7 +66,7 @@ func drawPageWithNoImage(page: CTAPage, containImage: Bool = true) -> UIImage? {
                 return TextDrawing(position: position, size: size, rotation: rotation, alpha: alpha, attributeString: attributeText)
     }
     
-    UIGraphicsBeginImageContextWithOptions(page.size, false, UIScreen.mainScreen().scale)
+    UIGraphicsBeginImageContextWithOptions(page.size, false, UIScreen.main.scale)
     
 //     back ground
 //    let path = UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: page.size))
@@ -99,7 +99,7 @@ func drawPageWithNoImage(page: CTAPage, containImage: Bool = true) -> UIImage? {
             return TextDrawing(position: position, size: size, rotation: rotation, alpha: textContainer.alphaValue, attributeString: attributeText)
         }
         
-        UIGraphicsBeginImageContextWithOptions(page.size, false, UIScreen.mainScreen().scale)
+        UIGraphicsBeginImageContextWithOptions(page.size, false, UIScreen.main.scale)
         
 //         back ground
 //            let path = UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: page.size))
@@ -120,9 +120,9 @@ func drawPageWithNoImage(page: CTAPage, containImage: Bool = true) -> UIImage? {
     }
 }
 
-func draw(page: CTAPage, atBegan: Bool, filterWithVisible: Bool = true, baseURL: NSURL, imageAccess:((String) -> UIImage?)? = nil ,local: Bool, completedHandler:(Result<UIImage>) -> ()) {
+func draws(_ page: CTAPage, atBegan: Bool, filterWithVisible: Bool = true, baseURL: URL, imageAccess:((String) -> UIImage?)? = nil ,local: Bool, completedHandler:@escaping (AResult<UIImage>) -> ()) {
     
-    let animations = atBegan ? page.animatoins : page.animatoins.reverse()
+    let animations = atBegan ? page.animatoins : page.animatoins.reversed()
     let needContainers = filterWithVisible ? page.containers
         .filter { container -> Bool in
             
@@ -140,14 +140,14 @@ func draw(page: CTAPage, atBegan: Bool, filterWithVisible: Bool = true, baseURL:
         let size = container.size
         let alpha = container.alphaValue
         
-        if let textContainer = container as? TextContainerVMProtocol where container.type == .Text {
+        if let textContainer = container as? TextContainerVMProtocol, container.type == .text {
             let attributeText = textContainer.textElement!.attributeString
             
             return Promise { fullfill, reject in
                 let textDraw = TextDrawing(position: position, size: size, rotation: rotation, alpha: alpha, attributeString: attributeText)
                 fullfill(textDraw)
             }
-        } else if let imageContainer = container as? ImageContainerVMProtocol where container.type == .Image {
+        } else if let imageContainer = container as? ImageContainerVMProtocol, container.type == .image {
             let imageName = imageContainer.imageElement!.resourceName
             let alpha = container.alphaValue
             return asyncImage(retriveImageBy(imageName, baseURL: baseURL, imageAccess: imageAccess ,local: local), position: position, rotation: rotation, size: size, alpha: alpha)

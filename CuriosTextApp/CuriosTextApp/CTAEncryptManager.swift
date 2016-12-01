@@ -10,7 +10,7 @@ import Foundation
 
 class CTAEncryptManager {
     
-    class func hash256(string: String) -> String {
+    class func hash256(_ string: String) -> String {
         
        return AESCrypt.hash256(string)
     }

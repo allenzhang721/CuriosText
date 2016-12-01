@@ -10,17 +10,17 @@ import Foundation
 import Alamofire
 
 enum CTARequestMethod {
-  case POST
+  case post
 }
 
 enum CTARequestSerializerType {
-  case JSON // or HTTP
+  case json // or HTTP
 }
 
 protocol CTARequestDelegate: NSObjectProtocol {
   
-  func requestDidFinished(request: CTABaseRequest)
-  func requestFailed(request: CTABaseRequest)
+  func requestDidFinished(_ request: CTABaseRequest)
+  func requestFailed(_ request: CTABaseRequest)
 }
 
 
@@ -39,12 +39,12 @@ class CTABaseRequest {
     CTANetworkAgent.shareInstance.cancelRequest(self)
   }
   
-  func startWithCompletionBlockWithSuccess(completionBlock: ((CTARequestResponse<AnyObject, NSError>) -> Void)?) {
+  func startWithCompletionBlockWithSuccess(_ completionBlock: ((CTARequestResponse<AnyObject, NSError>) -> Void)?) {
     self.completionBlock = completionBlock
     start()
   }
   
-  func setCompletionBlockWithSuccess(completionBlock: ((CTARequestResponse<AnyObject, NSError>) -> Void)?) {
+  func setCompletionBlockWithSuccess(_ completionBlock: ((CTARequestResponse<AnyObject, NSError>) -> Void)?) {
       self.completionBlock = completionBlock
   }
   
@@ -64,28 +64,28 @@ class CTABaseRequest {
   }
   
   func requestMethod() -> CTARequestMethod {
-    return .POST
+    return .post
   }
   
   func requestSerializerType() -> CTARequestSerializerType {
-    return .JSON
+    return .json
   }
   
   func requestParameters() -> [String: AnyObject]? {
     let para = parameter()
     
-    return [key(.Data): para]
+    return [key(.data): para as AnyObject]
   }
     
   func parameter() ->String{
    return "";
   }
     
-  func getParameterString(dic: AnyObject, errorMessage:String) ->String{
+  func getParameterString(_ dic: AnyObject, errorMessage:String) ->String{
     do {
-        let data = try NSJSONSerialization.dataWithJSONObject(dic, options: NSJSONWritingOptions(rawValue: 0))
+        let data = try JSONSerialization.data(withJSONObject: dic, options: JSONSerialization.WritingOptions(rawValue: 0))
             
-        return NSString(data: data, encoding: NSUTF8StringEncoding) as! String
+        return NSString(data: data, encoding: String.Encoding.utf8.rawValue) as! String
             
     } catch let error {
             

@@ -16,7 +16,7 @@ private struct Actions {
 
 extension Moduler {
     
-    class func module_templateVC(changed: (() -> ())?, dismiss: (() -> ())?, cancel: (() -> ())?, done: (() -> ())?) -> UIViewController? {
+    class func module_templateVC(_ changed: (() -> ())?, dismiss: (() -> ())?, cancel: (() -> ())?, done: (() -> ())?) -> UIViewController? {
         var paras: [String: AnyObject] = [:]
 
         if let h = changed {
@@ -32,20 +32,20 @@ extension Moduler {
             paras["doneHandler"] = FunctionWrapper(f: h)
         }
         
-        let vc = Moduler.target(moduleName, performAction: Actions().templateVC, paras: paras)?.takeUnretainedValue() as? UIViewController
+        let vc = Moduler.target(moduleName, performAction: Actions().templateVC, paras: paras as AnyObject?)?.takeUnretainedValue() as? UIViewController
         
         return vc
     }
     
     
-    class func module_templateListVC(selectedHandler: ((pageData: NSData?, origin: Bool) -> ())?) -> UIViewController? {
+    class func module_templateListVC(_ selectedHandler: ((_ pageData: Data?, _ origin: Bool) -> ())?) -> UIViewController? {
         var paras: [String: AnyObject] = [:]
         
         if let s = selectedHandler {
             paras["selectedHandler"] = FunctionWrapper(f: s)
         }
         
-        let vc = Moduler.target(moduleName, performAction: Actions().templateListVC, paras: paras)?.takeUnretainedValue() as? UIViewController
+        let vc = Moduler.target(moduleName, performAction: Actions().templateListVC, paras: paras as AnyObject?)?.takeUnretainedValue() as? UIViewController
         
         return vc
     }

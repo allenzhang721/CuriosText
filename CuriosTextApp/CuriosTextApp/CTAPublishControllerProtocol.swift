@@ -15,13 +15,13 @@ protocol CTAPublishControllerProtocol: CTAEditViewControllerDelegate, CTAShareVi
     var userModel:CTAUserModel?{get}
     var previewView:CTAPublishPreviewView?{get}
     
-    func getViewFromRect(smallRect:CGRect, viewRect:CGRect) -> CGRect
+    func getViewFromRect(_ smallRect:CGRect, viewRect:CGRect) -> CGRect
     func likersHandelr()
     func likersRect() -> CGRect?
-    func likeHandler(justLike:Bool)
-    func setLikeButtonStyle(publichModel:CTAPublishModel?)
-    func moreSelectionHandler(isSelf:Bool, isPopup:Bool)
-    func rebuildHandler(isPopup:Bool)
+    func likeHandler(_ justLike:Bool)
+    func setLikeButtonStyle(_ publichModel:CTAPublishModel?)
+    func moreSelectionHandler(_ isSelf:Bool, isPopup:Bool)
+    func rebuildHandler(_ isPopup:Bool)
     func commentHandler()
     func commentRect() -> CGRect?
 }
@@ -34,16 +34,16 @@ extension CTAPublishControllerProtocol where Self: UIViewController{
         let navi = UINavigationController(rootViewController: vc)
         let ani = CTAScaleTransition.getInstance()
         if let rect = self.likersRect() {
-            let bound = UIScreen.mainScreen().bounds
+            let bound = UIScreen.main.bounds
             ani.fromRect = self.getViewFromRect(rect, viewRect: bound)
         }
         navi.transitioningDelegate = ani
-        navi.modalPresentationStyle = .Custom
-        self.presentViewController(navi, animated: true, completion: {
+        navi.modalPresentationStyle = .custom
+        self.present(navi, animated: true, completion: {
         })
     }
     
-    func getViewFromRect(smallRect:CGRect, viewRect:CGRect) -> CGRect{
+    func getViewFromRect(_ smallRect:CGRect, viewRect:CGRect) -> CGRect{
         let smallW = smallRect.width
         let smallH = smallRect.height
         let viewW = viewRect.width
@@ -62,7 +62,7 @@ extension CTAPublishControllerProtocol where Self: UIViewController{
         return newRect
     }
     
-    func likeHandler(justLike:Bool){
+    func likeHandler(_ justLike:Bool){
         let userID = self.userModel == nil ? "" : self.userModel!.userID
         if self.publishModel != nil {
             if self.publishModel!.likeStatus == 0{
@@ -96,21 +96,21 @@ extension CTAPublishControllerProtocol where Self: UIViewController{
         let navi = UINavigationController(rootViewController: vc)
         let ani = CTAScaleTransition.getInstance()
         if let rect = self.commentRect() {
-            let bound = UIScreen.mainScreen().bounds
+            let bound = UIScreen.main.bounds
             ani.fromRect = self.getViewFromRect(rect, viewRect: bound)
         }
         navi.transitioningDelegate = ani
-        navi.modalPresentationStyle = .Custom
-        self.presentViewController(navi, animated: true, completion: {
+        navi.modalPresentationStyle = .custom
+        self.present(navi, animated: true, completion: {
         })
     }
     
-    func moreSelectionHandler(isSelf:Bool, isPopup:Bool){
+    func moreSelectionHandler(_ isSelf:Bool, isPopup:Bool){
         let shareView = CTAShareView.getInstance()
         if isPopup{
             self.view.addSubview(shareView)
         }else {
-            NSNotificationCenter.defaultCenter().postNotificationName("addViewInRoot", object: shareView)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "addViewInRoot"), object: shareView)
         }
         shareView.delegate = self
         if isSelf{
@@ -121,28 +121,28 @@ extension CTAPublishControllerProtocol where Self: UIViewController{
         shareView.showViewHandler()
     }
     
-    func rebuildHandler(isPopup:Bool) {
+    func rebuildHandler(_ isPopup:Bool) {
         if let model = self.publishModel{
             self.rebuildHandlerWith(model, isPopup: isPopup)
         }
     }
     
-    func rebuildHandlerWith(publishModel: CTAPublishModel? = nil, isPopup:Bool? = nil){
+    func rebuildHandlerWith(_ publishModel: CTAPublishModel? = nil, isPopup:Bool? = nil){
         if let publishModel = publishModel, let isPopup = isPopup {
             
             let purl = CTAFilePath.publishFilePath
             let url = purl + publishModel.publishURL
 
-            BlackCatManager.sharedManager.retrieveDataWithURL(NSURL(string: url)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self] (data, error, cacheType, URL) in
+            BlackCatManager.sharedManager.retrieveDataWithURL(URL(string: url)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self] (data, error, cacheType, URL) in
                 
                 if let slf = self {
                     if let data = data,
-                        let apage = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
+                        let apage = NSKeyedUnarchiver.unarchiveObject(with: data) as? CTAPage {
                         apage.removeLastImageContainer()
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                             
                             let page = apage
-                            let documentURL = try! NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
+                            let documentURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
                             let fileUrl = CTADocumentManager.generateDocumentURL(documentURL)
                             CTADocumentManager.createNewDocumentAt(fileUrl, page: page) { (success) -> Void in
                                 
@@ -151,7 +151,7 @@ extension CTAPublishControllerProtocol where Self: UIViewController{
                                         
                                         if let openDocument = CTADocumentManager.openedDocument {
                                             
-                                            let editNaviVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewControllerWithIdentifier("EditorNavigationController") as! UINavigationController
+                                            let editNaviVC = UIStoryboard(name: "Editor", bundle: nil).instantiateViewController(withIdentifier: "EditorNavigationController") as! UINavigationController
                                             
                                             let editVC = editNaviVC.topViewController as! EditViewController
                                             
@@ -164,9 +164,9 @@ extension CTAPublishControllerProtocol where Self: UIViewController{
                                                 }
                                             })
                                             if isPopup{
-                                                NSNotificationCenter.defaultCenter().postNotificationName("popupViewControllerInRoot", object: [editNaviVC, slf])
+                                                NotificationCenter.default.post(name: Notification.Name(rawValue: "popupViewControllerInRoot"), object: [editNaviVC, slf])
                                             }else {
-                                                NSNotificationCenter.defaultCenter().postNotificationName("popupViewControllerInRoot", object: [editNaviVC])
+                                                NotificationCenter.default.post(name: Notification.Name(rawValue: "popupViewControllerInRoot"), object: [editNaviVC])
                                             }
                                         }
                                     })
@@ -183,8 +183,8 @@ extension CTAPublishControllerProtocol where Self: UIViewController{
 
 extension CTAPublishControllerProtocol{
     
-    func EditControllerDidPublished(viewController: EditViewController){
-        NSNotificationCenter.defaultCenter().postNotificationName("publishEditFile", object: nil)
+    func EditControllerDidPublished(_ viewController: EditViewController){
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "publishEditFile"), object: nil)
     }
 }
 
@@ -192,19 +192,19 @@ extension CTAPublishControllerProtocol{
     
     func weChatShareHandler(){
         if self.previewView != nil {
-            if CTASocialManager.isAppInstaller(.WeChat){
+            if CTASocialManager.isAppInstaller(.weChat){
                 if let page = self.previewView!.getPage(){
                     let publishID = self.publishModel!.publishID
                     self.exportGIF(publishID, page: page, gifType: .Small, viewController: self as! UIViewController, completedHandler: { (fileURL, thumbImg) in
                         let message =  WXMediaMessage()
                         UIGraphicsBeginImageContext(CGSize(width: 160, height: 160))
-                        thumbImg.drawInRect(CGRect(origin: CGPoint.zero, size: CGSize(width: 160, height: 160)))
+                        thumbImg.draw(in: CGRect(origin: CGPoint.zero, size: CGSize(width: 160, height: 160)))
                         let img = UIGraphicsGetImageFromCurrentImageContext()
                         UIGraphicsEndImageContext()
                         message.setThumbImage(img)
                         
                         let ext =  WXEmoticonObject()
-                        let data = NSData(contentsOfURL: fileURL)
+                        let data = try? Data(contentsOf: fileURL)
                         ext.emoticonData = data
                         message.mediaObject = ext
                         
@@ -212,7 +212,7 @@ extension CTAPublishControllerProtocol{
                         req.bText = false
                         req.message = message
                         req.scene = 0
-                        let result = WXApi.sendReq(req)
+                        let result = WXApi.send(req)
                         if result {
                             let userID = self.userModel == nil ? "" : self.userModel!.userID
                             CTAPublishDomain.getInstance().sharePublish(userID, publishID: self.publishModel!.publishID, sharePlatform: 0, compelecationBlock: { (_) -> Void in
@@ -221,7 +221,7 @@ extension CTAPublishControllerProtocol{
                                 }
                             })
                         }else {
-                            SVProgressHUD.showErrorWithStatus(NSLocalizedString("ShareErrorLabel", comment: ""))
+                            SVProgressHUD.showError(withStatus: NSLocalizedString("ShareErrorLabel", comment: ""))
                         }
                     })
                 }else {
@@ -229,13 +229,13 @@ extension CTAPublishControllerProtocol{
                         if let image = img{
                             let thumb = compressImage(image, maxWidth: image.size.width/2)
                             let message = CTASocialManager.Message
-                                .WeChat(
-                                    .Session(
+                                .weChat(
+                                    .session(
                                         info: (
                                             title: "",
                                             description: "",
                                             thumbnail: thumb,
-                                            media: .Image(img!)
+                                            media: .image(img!)
                                         )
                                     )
                             )
@@ -248,7 +248,7 @@ extension CTAPublishControllerProtocol{
                                         }
                                     })
                                 }else {
-                                    SVProgressHUD.showErrorWithStatus(NSLocalizedString("ShareErrorLabel", comment: ""))
+                                    SVProgressHUD.showError(withStatus: NSLocalizedString("ShareErrorLabel", comment: ""))
                                 }
                             }
                         }
@@ -262,18 +262,18 @@ extension CTAPublishControllerProtocol{
     
     func momentsShareHandler(){
         if self.previewView != nil {
-            if CTASocialManager.isAppInstaller(.WeChat){
+            if CTASocialManager.isAppInstaller(.weChat){
                 self.previewView!.getPublishImg({ (img) -> () in
                     if let image = img{
                         let thumb = compressImage(image, maxWidth: image.size.width/2)
                         let message = CTASocialManager.Message
-                            .WeChat(
-                                .Timeline(
+                            .weChat(
+                                .timeline(
                                     info: (
                                         title: "",
                                         description: "",
                                         thumbnail: thumb,
-                                        media: .Image(img!)
+                                        media: .image(img!)
                                     )
                                 )
                         )
@@ -286,7 +286,7 @@ extension CTAPublishControllerProtocol{
                                     }
                                 })
                             }else {
-                                SVProgressHUD.showErrorWithStatus(NSLocalizedString("ShareErrorLabel", comment: ""))
+                                SVProgressHUD.showError(withStatus: NSLocalizedString("ShareErrorLabel", comment: ""))
                             }
                         }
                     }
@@ -299,17 +299,17 @@ extension CTAPublishControllerProtocol{
     
     func weiBoShareHandler() {
         if self.previewView != nil {
-            if CTASocialManager.isAppInstaller(.Weibo){
-                if let userID = CTAUserManager.user?.userID where !userID.isEmpty, let token = CTASocialManager.needOAuthOrGetTokenByUserID(userID) {
+            if CTASocialManager.isAppInstaller(.weibo){
+                if let userID = CTAUserManager.user?.userID, !userID.isEmpty, let token = CTASocialManager.needOAuthOrGetTokenByUserID(userID) {
                     self.shareWeiboWithToken(token)
                 } else {
-                    if let userID = CTAUserManager.user?.userID where !userID.isEmpty {
+                    if let userID = CTAUserManager.user?.userID, !userID.isEmpty {
                         CTASocialManager.reOAuthWeiboGetAccessToken(userID, completed: { [weak self] (token, weiboID) in
                             guard let sf = self else { return }
                             if let token = token {
-                                let time: NSTimeInterval = 1.0
-                                let delay = dispatch_time(DISPATCH_TIME_NOW,Int64(time * Double(NSEC_PER_SEC)))
-                                dispatch_after(delay, dispatch_get_main_queue()) {
+                                let time: TimeInterval = 1.0
+                                let delay = DispatchTime.now() + Double(Int64(time * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                                DispatchQueue.main.asyncAfter(deadline: delay) {
                                     sf.shareWeiboWithToken(token)
                                 }
                             }
@@ -324,8 +324,8 @@ extension CTAPublishControllerProtocol{
         }
     }
     
-    private func shareWeiboWithToken(token: String) {
-        if CTASocialManager.isAppInstaller(.Weibo){
+    fileprivate func shareWeiboWithToken(_ token: String) {
+        if CTASocialManager.isAppInstaller(.weibo){
             if let page = self.previewView!.getPage(){
                 let publishID = self.publishModel!.publishID
                 self.exportGIF(publishID, page: page, gifType: .Big, viewController: self as! UIViewController, completedHandler: { [weak self] (fileURL, thumbImg) in
@@ -340,7 +340,7 @@ extension CTAPublishControllerProtocol{
                         imageObject.imageData = imageData
                         var shareURL = CTAShareConfig.shareURL
                         shareURL = shareURL+"?sto=weibo&sfrom=message"
-                        if let info = NSBundle.mainBundle().infoDictionary {
+                        if let info = Bundle.main.infoDictionary {
                             let appVersion = info["CFBundleShortVersionString"] as! String
                             shareURL = shareURL+"&v="+appVersion
                         }
@@ -354,14 +354,14 @@ extension CTAPublishControllerProtocol{
                         
                         let weiboMessage = text+" "+shareURL
                         let accessToken = token
-                        SVProgressHUD.setDefaultMaskType(.Clear)
-                        SVProgressHUD.showWithStatus(NSLocalizedString("SendProgressLabel", comment: ""))
+                        SVProgressHUD.setDefaultMaskType(.clear)
+                        SVProgressHUD.show(withStatus: NSLocalizedString("SendProgressLabel", comment: ""))
                         WBHttpRequest(forShareAStatus: weiboMessage, contatinsAPicture: imageObject, orPictureUrl: nil, withAccessToken: accessToken, andOtherProperties: nil, queue: nil, withCompletionHandler: { [weak weiboShare] (request, object, error) in
                             guard let w = weiboShare else { return }
                             if error == nil {
-                                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("ShareSuccessLabel", comment: ""))
-                                dispatch_async(dispatch_get_main_queue(), {
-                                    vc.dismissViewControllerAnimated(true, completion: nil)
+                                SVProgressHUD.showSuccess(withStatus: NSLocalizedString("ShareSuccessLabel", comment: ""))
+                                DispatchQueue.main.async(execute: {
+                                    vc.dismiss(animated: true, completion: nil)
                                 })
                                 if let sl = self{
                                     let userID = sl.userModel == nil ? "" : sl.userModel!.userID
@@ -373,8 +373,8 @@ extension CTAPublishControllerProtocol{
                                 }
                             } else {
                                 print(error)
-                                SVProgressHUD.showErrorWithStatus(NSLocalizedString("ShareErrorLabel", comment: ""))
-                                dispatch_async(dispatch_get_main_queue(), {
+                                SVProgressHUD.showError(withStatus: NSLocalizedString("ShareErrorLabel", comment: ""))
+                                DispatchQueue.main.async(execute: {
                                     w.sending = false
                                 })
                             }
@@ -385,12 +385,12 @@ extension CTAPublishControllerProtocol{
                     
                     weiboShare.dismissHandler = {
                         SVProgressHUD.dismiss()
-                        dispatch_async(dispatch_get_main_queue(), {
-                            vc.dismissViewControllerAnimated(true, completion: nil)
+                        DispatchQueue.main.async(execute: {
+                            vc.dismiss(animated: true, completion: nil)
                         })
                     }
                     
-                    vc.presentViewController(weiboShare, animated: true, completion: nil)
+                    vc.present(weiboShare, animated: true, completion: nil)
                 })
             }
         }else {
@@ -410,15 +410,15 @@ extension CTAPublishControllerProtocol{
         if self.previewView != nil {
             self.previewView!.getPublishImg{ (img) -> () in
                 if img != nil {
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    DispatchQueue.main.async(execute: { () -> Void in
                         photo_saveImageToLibrary(img!,finishedHandler: { (status) -> () in
                             
                             switch status {
-                            case .Success:
-                                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("SavePhotoSuccess", comment: ""))
-                            case .Authorized(let alert):
-                                (self as! UIViewController).presentViewController(alert, animated: true, completion: nil)
-                            case .Failture:
+                            case .success:
+                                SVProgressHUD.showSuccess(withStatus: NSLocalizedString("SavePhotoSuccess", comment: ""))
+                            case .authorized(let alert):
+                                (self as! UIViewController).present(alert, animated: true, completion: nil)
+                            case .failture:
                                 ()
                             }
                             
@@ -432,16 +432,16 @@ extension CTAPublishControllerProtocol{
     func reportHandler(){
         var alertArray:Array<[String: AnyObject]> = []
         
-        alertArray.append(["title": LocalStrings.Porn.description])
-        alertArray.append(["title": LocalStrings.Scam.description])
+        alertArray.append(["title": LocalStrings.porn.description as AnyObject])
+        alertArray.append(["title": LocalStrings.scam.description as AnyObject])
         //alertArray.append(LocalStrings.Sensitive.description)
-        self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
+        self.showSheetAlert(nil, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.cancel.description) { (index) -> Void in
             if index != -1{
                 let reportType = index + 1
                 let userID = self.userModel == nil ? "" : self.userModel!.userID
                 CTAPublishDomain.getInstance().reportPublish(userID, publishID: self.publishModel!.publishID, reportType: reportType, reportMessage: "", compelecationBlock: { (_) -> Void in
                 })
-                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("ReportSuccess", comment: ""))
+                SVProgressHUD.showSuccess(withStatus: NSLocalizedString("ReportSuccess", comment: ""))
             }
         }
     }
@@ -458,7 +458,7 @@ extension CTAPublishControllerProtocol{
                         if listInfo.result {
                             let newToken = listInfo.modelArray![0] as! CTAUpTokenModel
                             let filePath = fileURL.path
-                            let uploadModel = CTAUploadModel(key: publishResouceKey, token: newToken.upToken, filePath: filePath!)
+                            let uploadModel = CTAUploadModel(key: publishResouceKey, token: newToken.upToken, filePath: filePath)
                             CTAUploadAction.getInstance().uploadFile(publishID, uploadModel: uploadModel, progress: { (_) -> Void in
                                 }, complete: { (info) -> Void in
                                     if info.result{
@@ -466,11 +466,11 @@ extension CTAPublishControllerProtocol{
                                         self.showSingleAlert(filePath, alertMessage: "", compelecationBlock: { () -> Void in
                                         })
                                     }else {
-                                        SVProgressHUD.showErrorWithStatus("Failed")
+                                        SVProgressHUD.showError(withStatus: "Failed")
                                     }
                             })
                         }else {
-                            SVProgressHUD.showErrorWithStatus("Failed")
+                            SVProgressHUD.showError(withStatus: "Failed")
                         }
                     }
                 })
@@ -482,9 +482,9 @@ extension CTAPublishControllerProtocol{
         let publishID = self.publishModel!.publishID
         CTAPublishDomain.getInstance().setPublishHot(publishID) { (info) in
             if info.result{
-                SVProgressHUD.showSuccessWithStatus("Success")
+                SVProgressHUD.showSuccess(withStatus: "Success")
             }else {
-                SVProgressHUD.showErrorWithStatus("Failed")
+                SVProgressHUD.showError(withStatus: "Failed")
             }
         }
     }
@@ -492,32 +492,32 @@ extension CTAPublishControllerProtocol{
 
 extension CTAPublishControllerProtocol{
     
-    func getUserListDismisRect(type:UserListType) -> CGRect?{
+    func getUserListDismisRect(_ type:UserListType) -> CGRect?{
         if let rect = self.likersRect(){
-            let bound = UIScreen.mainScreen().bounds
+            let bound = UIScreen.main.bounds
             return self.getViewFromRect(rect, viewRect: bound)
         }else {
             return nil
         }
     }
     
-    func disUserListMisComplete(type:UserListType){
+    func disUserListMisComplete(_ type:UserListType){
         
     }
 }
 
 extension CTAPublishControllerProtocol{
     
-    func getCommentDismisRect(publishID:String) -> CGRect?{
+    func getCommentDismisRect(_ publishID:String) -> CGRect?{
         if let rect = self.commentRect(){
-            let bound = UIScreen.mainScreen().bounds
+            let bound = UIScreen.main.bounds
             return self.getViewFromRect(rect, viewRect: bound)
         }else {
             return nil
         }
     }
     
-    func disCommentMisComplete(publishID:String){
+    func disCommentMisComplete(_ publishID:String){
         
     }
 }

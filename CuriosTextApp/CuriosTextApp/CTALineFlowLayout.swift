@@ -12,15 +12,15 @@ class CollectionViewAttributes: UICollectionViewLayoutAttributes {
     
     var actived: Bool = false
     
-    override func isEqual(object: AnyObject?) -> Bool {
+    override func isEqual(_ object: Any?) -> Bool {
         guard let object = object as? CollectionViewAttributes else {
             return false
         }
         return super.isEqual(object) && actived == object.actived
     }
     
-    override func copyWithZone(zone: NSZone) -> AnyObject {
-        let copy = super.copyWithZone(zone) as! CollectionViewAttributes
+    override func copy(with zone: NSZone?) -> Any {
+        let copy = super.copy(with: zone) as! CollectionViewAttributes
         copy.actived = actived
         return copy
     }
@@ -28,27 +28,27 @@ class CollectionViewAttributes: UICollectionViewLayoutAttributes {
 
 protocol LineFlowLayoutDelegate: class {
     
-    func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?)
+    func didChangeTo(_ collectionView: UICollectionView, itemAtIndexPath indexPath: IndexPath, oldIndexPath: IndexPath?)
 }
 
 final class CTALineFlowLayout: UICollectionViewFlowLayout {
     
     var showCount: Int = 2
     weak var delegate: LineFlowLayoutDelegate?
-    private var didLayout = false
-    private var currentIndexPath: NSIndexPath?
+    fileprivate var didLayout = false
+    fileprivate var currentIndexPath: IndexPath?
     
-    override class func layoutAttributesClass() -> AnyClass {
+    override class var layoutAttributesClass : AnyClass {
         return CollectionViewAttributes.self
     }
     
-    override func collectionViewContentSize() -> CGSize {
-        let size = super.collectionViewContentSize()
+    override var collectionViewContentSize : CGSize {
+        let size = super.collectionViewContentSize
         return size
     }
     
-    override func prepareLayout() {
-        guard let collectionView = collectionView where !didLayout else {
+    override func prepare() {
+        guard let collectionView = collectionView, !didLayout else {
             return
         }
         
@@ -57,7 +57,7 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
         minimumInteritemSpacing = 0
         
         switch scrollDirection {
-        case .Horizontal:
+        case .horizontal:
             let colSize = collectionView.bounds.size
             itemSize =
                 CGSize(
@@ -74,7 +74,7 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
                     bottom: bottom,
                     right: right)
             
-        case .Vertical:
+        case .vertical:
             let colSize = collectionView.bounds.size
             itemSize =
                 CGSize(
@@ -94,32 +94,32 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
         }
     }
     
-    override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         
         return true
     }
     
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
-        guard let collectionView = collectionView, let attributes = super.layoutAttributesForElementsInRect(rect) as? [CollectionViewAttributes] else {
+        guard let collectionView = collectionView, let attributes = super.layoutAttributesForElements(in: rect) as? [CollectionViewAttributes] else {
             return nil
         }
         
         switch scrollDirection {
-        case .Horizontal:
+        case .horizontal:
             
             let visualRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
             let activeDistance: CGFloat = itemSize.width / 2.0
             
             for attribute in attributes {
-                if CGRectIntersectsRect(attribute.frame, rect) {
-                    let distance = fabs((attribute.center.x - CGRectGetMidX(visualRect)))
+                if attribute.frame.intersects(rect) {
+                    let distance = fabs((attribute.center.x - visualRect.midX))
                     if distance < activeDistance {
                         if currentIndexPath != attribute.indexPath {
                             
                             // TODO: May be this ? -- EMIAOSTEIN, 29/04/16, 13:33
                             if let currentIndexPath = currentIndexPath {
-                                let cu = NSIndexPath(forItem: currentIndexPath.item, inSection: currentIndexPath.section)
+                                let cu = IndexPath(item: currentIndexPath.item, section: currentIndexPath.section)
                                 delegate?.didChangeTo(collectionView, itemAtIndexPath: attribute.indexPath, oldIndexPath: cu)
                             }
                             currentIndexPath = attribute.indexPath
@@ -131,14 +131,14 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
                 }
             }
             
-        case .Vertical:
+        case .vertical:
             
             let visualRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
             let activeDistance: CGFloat = itemSize.height / 2.0
             
             for attribute in attributes {
-                if CGRectIntersectsRect(attribute.frame, rect) {
-                    let distance = fabs((attribute.center.y - CGRectGetMidY(visualRect)))
+                if attribute.frame.intersects(rect) {
+                    let distance = fabs((attribute.center.y - visualRect.midY))
                     if distance < activeDistance {
                         if currentIndexPath != attribute.indexPath {
                             if currentIndexPath != nil {
@@ -156,23 +156,23 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
         return attributes
     }
     
-    override func targetContentOffsetForProposedContentOffset(proposedContentOffset: CGPoint) -> CGPoint {
+    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
         
         guard let collectionView = collectionView else {
             return proposedContentOffset
         }
         
         switch scrollDirection {
-        case .Horizontal:
+        case .horizontal:
             
-            var adjustOffset = CGFloat.max
+            var adjustOffset = CGFloat.greatestFiniteMagnitude
             let visualCenter =
             CGPoint(
-                x: proposedContentOffset.x + CGRectGetWidth(collectionView.bounds) / 2.0,
-                y: proposedContentOffset.y + CGRectGetHeight(collectionView.bounds) / 2.0)
+                x: proposedContentOffset.x + collectionView.bounds.width / 2.0,
+                y: proposedContentOffset.y + collectionView.bounds.height / 2.0)
             let targetRect = CGRect(origin: proposedContentOffset, size: collectionView.bounds.size)
             
-            guard let attributes = layoutAttributesForElementsInRect(targetRect) else {
+            guard let attributes = layoutAttributesForElements(in: targetRect) else {
                 return proposedContentOffset
             }
             
@@ -185,15 +185,15 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
             }
             return CGPoint(x: proposedContentOffset.x + adjustOffset, y: proposedContentOffset.y)
             
-        case .Vertical:
+        case .vertical:
             
-            var adjustOffset = CGFloat.max
+            var adjustOffset = CGFloat.greatestFiniteMagnitude
             let visualCenter = CGPoint(
-                x: proposedContentOffset.x + CGRectGetWidth(collectionView.bounds) / 2.0,
-                y: proposedContentOffset.y + CGRectGetHeight(collectionView.bounds) / 2.0)
+                x: proposedContentOffset.x + collectionView.bounds.width / 2.0,
+                y: proposedContentOffset.y + collectionView.bounds.height / 2.0)
             let targetRect = CGRect(origin: proposedContentOffset, size: collectionView.bounds.size)
             
-            guard let attributes = layoutAttributesForElementsInRect(targetRect) else {
+            guard let attributes = layoutAttributesForElements(in: targetRect) else {
                 return proposedContentOffset
             }
             
@@ -209,8 +209,8 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
     }
     
     
-    override func targetContentOffsetForProposedContentOffset(
-        proposedContentOffset: CGPoint,
+    override func targetContentOffset(
+        forProposedContentOffset proposedContentOffset: CGPoint,
         withScrollingVelocity velocity: CGPoint)
         -> CGPoint {
             guard let collectionView = collectionView else {
@@ -218,15 +218,15 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
             }
             
             switch scrollDirection {
-            case .Horizontal:
+            case .horizontal:
                 
-                var adjustOffset = CGFloat.max
+                var adjustOffset = CGFloat.greatestFiniteMagnitude
                 let visualCenter = CGPoint(
-                    x: proposedContentOffset.x + CGRectGetWidth(collectionView.bounds) / 2.0,
-                    y: proposedContentOffset.y + CGRectGetHeight(collectionView.bounds) / 2.0)
+                    x: proposedContentOffset.x + collectionView.bounds.width / 2.0,
+                    y: proposedContentOffset.y + collectionView.bounds.height / 2.0)
                 let targetRect = CGRect(origin: proposedContentOffset, size: collectionView.bounds.size)
                 
-                guard let attributes = layoutAttributesForElementsInRect(targetRect) else {
+                guard let attributes = layoutAttributesForElements(in: targetRect) else {
                     return proposedContentOffset
                 }
                 
@@ -243,15 +243,15 @@ final class CTALineFlowLayout: UICollectionViewFlowLayout {
                 return point
                 
                 
-            case .Vertical:
+            case .vertical:
                 
-                var adjustOffset = CGFloat.max
+                var adjustOffset = CGFloat.greatestFiniteMagnitude
                 let visualCenter = CGPoint(
-                    x: proposedContentOffset.x + CGRectGetWidth(collectionView.bounds) / 2.0,
-                    y: proposedContentOffset.y + CGRectGetHeight(collectionView.bounds) / 2.0)
+                    x: proposedContentOffset.x + collectionView.bounds.width / 2.0,
+                    y: proposedContentOffset.y + collectionView.bounds.height / 2.0)
                 let targetRect = CGRect(origin: proposedContentOffset, size: collectionView.bounds.size)
                 
-                guard let attributes = layoutAttributesForElementsInRect(targetRect) else {
+                guard let attributes = layoutAttributesForElements(in: targetRect) else {
                     return proposedContentOffset
                 }
                 

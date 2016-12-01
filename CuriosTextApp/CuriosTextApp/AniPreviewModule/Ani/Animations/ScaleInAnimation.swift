@@ -11,7 +11,7 @@ import UIKit
 
 extension AniFactory {
     
-    class func scaleIn(canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, descriptor: Descriptor, beganTime: Float) -> AniDescriptor {
+    class func scaleIn(_ canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, descriptor: Descriptor, beganTime: Float) -> AniDescriptor {
         
         let duration = descriptor.config.duration
         let time = duration * 0.6
@@ -30,14 +30,14 @@ extension AniFactory {
             "mask.colors": CFTimeInterval(time / 2.0)]
         
         let vs: [String: [AnyObject]] = [
-            "opacity": [0.0, 1.0],
+            "opacity": [0.0 as AnyObject, 1.0 as AnyObject],
             "transform": [
-                NSValue(CATransform3D: CATransform3DMakeScale(0.5, 0.5, 1)),
-                NSValue(CATransform3D: CATransform3DMakeScale(1.0, 1.0, 1)),
+                NSValue(caTransform3D: CATransform3DMakeScale(0.5, 0.5, 1)),
+                NSValue(caTransform3D: CATransform3DMakeScale(1.0, 1.0, 1)),
             ],
             "mask.colors": [
-                [UIColor.blackColor().CGColor, UIColor.blackColor().CGColor, UIColor.clearColor().CGColor, UIColor.clearColor().CGColor],
-                [UIColor.blackColor().CGColor, UIColor.blackColor().CGColor, UIColor.blackColor().CGColor, UIColor.blackColor().CGColor]
+                [UIColor.black.cgColor, UIColor.black.cgColor, UIColor.clear.cgColor, UIColor.clear.cgColor] as AnyObject,
+                [UIColor.black.cgColor, UIColor.black.cgColor, UIColor.black.cgColor, UIColor.black.cgColor] as AnyObject
             ]
         ]
         

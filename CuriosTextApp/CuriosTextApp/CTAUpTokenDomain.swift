@@ -20,47 +20,47 @@ class CTAUpTokenDomain: CTABaseDomain {
         return _instance!
     }
     
-    func uploadFilePath(compelecationBlock: (CTADomainListInfo!) -> Void)  {
+    func uploadFilePath(_ compelecationBlock: @escaping (CTADomainListInfo!) -> Void)  {
         
         CTAUploadFileRequest().startWithCompletionBlockWithSuccess { (response) -> Void in
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let result = self.checkJsonResult(json)
                 if result {
-                    let publishFilePath = json[key(.PublishFilePath)].string ?? ""
-                    let userFilePath = json[key(.UserFilePath)].string ?? ""
-                    let resourceFilePath = json[key(.ResourceFilePath)].string ?? ""
+                    let publishFilePath = json[key(.publishFilePath)].string ?? ""
+                    let userFilePath = json[key(.userFilePath)].string ?? ""
+                    let resourceFilePath = json[key(.resourceFilePath)].string ?? ""
                     let dic:Dictionary<String, String> = [
-                        key(.PublishFilePath) : publishFilePath,
-                        key(.UserFilePath)    : userFilePath,
-                        key(.ResourceFilePath): resourceFilePath
+                        key(.publishFilePath) : publishFilePath,
+                        key(.userFilePath)    : userFilePath,
+                        key(.resourceFilePath): resourceFilePath
                     ];
                     compelecationBlock(CTADomainListInfo(result: true, modelDic: dic, successType: 0))
                 } else {
-                   compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+                   compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func userUpToken(list:Array<CTAUpTokenModel>, compelecationBlock: (CTADomainListInfo!) -> Void)  {
+    func userUpToken(_ list:Array<CTAUpTokenModel>, compelecationBlock: @escaping (CTADomainListInfo!) -> Void)  {
         
         CTAUserUpTokenRequest(list: list).startWithCompletionBlockWithSuccess { (response) -> Void in
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let result = self.checkJsonResult(json)
                 if result {
                     let upTokenArray: Array<CTAUpTokenModel> = self.uptokenListResult(json)
                     compelecationBlock(CTADomainListInfo(result: true, modelArray: upTokenArray, successType: 0))
                 } else {
-                    compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+                    compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
@@ -71,46 +71,46 @@ class CTAUpTokenDomain: CTABaseDomain {
      - parameter list:
      - parameter compelecationBlock:  
      */
-    func publishUpToken(list:Array<CTAUpTokenModel>, compelecationBlock: (CTADomainListInfo!) -> Void)  {
+    func publishUpToken(_ list:Array<CTAUpTokenModel>, compelecationBlock: @escaping (CTADomainListInfo!) -> Void)  {
         
         CTAPublishUpTokenRequest(list: list).startWithCompletionBlockWithSuccess { (response) -> Void in
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let result = self.checkJsonResult(json)
                 if result {
                     let upTokenArray: Array<CTAUpTokenModel> = self.uptokenListResult(json)
                     compelecationBlock(CTADomainListInfo(result: true, modelArray: upTokenArray, successType: 0))
                 } else {
-                    compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+                    compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func resourceUpToken(list:Array<CTAUpTokenModel>, compelecationBlock: (CTADomainListInfo!) -> Void)  {
+    func resourceUpToken(_ list:Array<CTAUpTokenModel>, compelecationBlock: @escaping (CTADomainListInfo!) -> Void)  {
         
         CTAResourceUpTokenRequest(list: list).startWithCompletionBlockWithSuccess { (response) in
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let result = self.checkJsonResult(json)
                 if result {
                     let upTokenArray: Array<CTAUpTokenModel> = self.uptokenListResult(json)
                     compelecationBlock(CTADomainListInfo(result: true, modelArray: upTokenArray, successType: 0))
                 } else {
-                    compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+                    compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func uptokenListResult(json:JSON) -> Array<CTAUpTokenModel>{
-        let listArray = json[key(.List)].array;
+    func uptokenListResult(_ json:JSON) -> Array<CTAUpTokenModel>{
+        let listArray = json[key(.list)].array;
         var upTokenArray: Array<CTAUpTokenModel> = [];
         if listArray != nil{
             for i in 0..<listArray!.count {

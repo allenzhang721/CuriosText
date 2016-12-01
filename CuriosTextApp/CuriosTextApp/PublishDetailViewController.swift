@@ -59,21 +59,21 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         // Do any additional setup after loading the view.
         self.initView()
         
-        self.navigationController?.navigationBarHidden = true
-        self.view.backgroundColor = UIColor.clearColor()
+        self.navigationController?.isNavigationBarHidden = true
+        self.view.backgroundColor = UIColor.clear
         self.loadLocalUserModel()
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return self.isHideBar
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.loadPublishCell(false)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.isHideBar = true
         self.setNeedsStatusBarAppearanceUpdate()
@@ -124,7 +124,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         self.resetViewCells(true)
     }
     
-    func loadPublishCell(isReload:Bool){
+    func loadPublishCell(_ isReload:Bool){
         if !self.isLoadedAll && self.type != .Single{
             let selectedIndex = self.getPublishIndexByID(self.selectedPublishID)
             if selectedIndex > self.publishArray.count - 3 {
@@ -138,7 +138,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         self.resetViewCells(isReload)
     }
     
-    func resetViewCells(isReload:Bool){
+    func resetViewCells(_ isReload:Bool){
         let bounds = self.view.bounds
         let selectedPublish = self.getPublishModelByID(self.selectedPublishID)
         let seletedIndex = self.getPublishIndexByID(self.selectedPublishID)
@@ -230,21 +230,21 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         }else {
             toRect = CGRect(x: 0, y: 0, width: 0, height: 0)
         }
-        let bgView  = self.backgroundView.snapshotViewAfterScreenUpdates(false)
-        let colView = self.controllerView.snapshotViewAfterScreenUpdates(false)
-        colView.frame.origin.y = self.controllerView.frame.origin.y
-        colView.frame.origin.x = self.controllerView.frame.origin.x
-        bgView.addSubview(colView)
+        let bgView  = self.backgroundView.snapshotView(afterScreenUpdates: false)
+        let colView = self.controllerView.snapshotView(afterScreenUpdates: false)
+        colView?.frame.origin.y = self.controllerView.frame.origin.y
+        colView?.frame.origin.x = self.controllerView.frame.origin.x
+        bgView?.addSubview(colView!)
         
         let fromRect = self.currentPreviewCell.frame
         let ani = CTAScaleTransition.getInstance()
-        ani.transitionView = self.currentPreviewCell.snapshotViewAfterScreenUpdates(false)
+        ani.transitionView = self.currentPreviewCell.snapshotView(afterScreenUpdates: false)
         ani.transitionAlpha = self.backgroundView.alpha
         ani.transitionBackView = bgView
         ani.fromRect = fromRect
         ani.toRect = toRect
         ani.alphaView = alphaView
-        self.dismissViewControllerAnimated(true) {
+        self.dismiss(animated: true) {
             if self.delegate != nil{
                 self.delegate!.transitionComplete()
                 self.delegate = nil
@@ -252,7 +252,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         }
     }
     
-    func getPublishModelByID(publishID:String) -> CTAPublishModel?{
+    func getPublishModelByID(_ publishID:String) -> CTAPublishModel?{
         for i in 0..<self.publishArray.count {
             let publishModel = self.publishArray[i]
             if publishModel.publishID == publishID{
@@ -262,7 +262,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         return nil
     }
     
-    func getPublishIndexByID(publishID:String) -> Int{
+    func getPublishIndexByID(_ publishID:String) -> Int{
         for i in 0..<self.publishArray.count {
             let publishModel = self.publishArray[i]
             if publishModel.publishID == publishID{
@@ -272,12 +272,12 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         return -1
     }
     
-    func getViewRect(publish:CTAPublishModel?) -> CGSize{
+    func getViewRect(_ publish:CTAPublishModel?) -> CGSize{
         let rect = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.width)
         return rect;
     }
     
-    func viewBackHandler(sender: UIPanGestureRecognizer) {
+    func viewBackHandler(_ sender: UIPanGestureRecognizer) {
         if self.panDirection == .None{
             delay(0.2, task: {
                 if !self.isDoubleClick {
@@ -288,7 +288,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         }
     }
     
-    func doubleTapHandler(sender: UIPanGestureRecognizer) {
+    func doubleTapHandler(_ sender: UIPanGestureRecognizer) {
         if self.panDirection == .None{
             self.isDoubleClick = true
             if self.loginUser != nil {
@@ -297,13 +297,13 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         }
     }
     
-    func viewPanHandler(sender: UIPanGestureRecognizer) {
+    func viewPanHandler(_ sender: UIPanGestureRecognizer) {
         switch sender.state {
-        case .Began:
-            self.beganLocation = sender.locationInView(view)
+        case .began:
+            self.beganLocation = sender.location(in: view)
             self.panDirection = .None
-        case .Changed:
-            let newLocation = sender.locationInView(view)
+        case .changed:
+            let newLocation = sender.location(in: view)
             if self.panDirection == .None {
                 if abs(newLocation.x - self.beganLocation!.x)*5 > abs(newLocation.y - self.beganLocation!.y){
                     self.currentRect = self.currentPreviewCell.frame
@@ -329,9 +329,9 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
             }else if self.panDirection == .Ver{
                 self.viewVerPanHandler(newLocation)
             }
-        case .Ended, .Cancelled, .Failed:
-            let velocity = sender.velocityInView(view)
-            let newLocation = sender.locationInView(view)
+        case .ended, .cancelled, .failed:
+            let velocity = sender.velocity(in: view)
+            let newLocation = sender.location(in: view)
             if self.panDirection == .Hor{
                 if velocity.x > 500 || velocity.x < -500{
                     self.horPanAnimation(velocity.x)
@@ -352,7 +352,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         }
     }
     
-    func viewHorPanHandler(newLocation:CGPoint){
+    func viewHorPanHandler(_ newLocation:CGPoint){
         let publishIndex = self.getPublishIndexByID(self.selectedPublishID)
         let xRate = newLocation.x - beganLocation.x
         if self.lastLocation == nil {
@@ -375,7 +375,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         self.lastLocation = newLocation
     }
     
-    func changCellsCenter(xChange:CGFloat, yChange:CGFloat){
+    func changCellsCenter(_ xChange:CGFloat, yChange:CGFloat){
         if self.previousPreviewCell != nil {
             self.previousPreviewCell!.center = CGPoint(x: self.previousPreviewCell!.center.x + xChange, y: self.previousPreviewCell!.center.y + yChange)
         }
@@ -387,18 +387,18 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         self.currentPreviewCell.center = CGPoint(x: self.currentPreviewCell.center.x + xChange, y: self.currentPreviewCell.center.y + yChange)
     }
     
-    func horPanAnimation(xRate:CGFloat){
-        let maxW = UIScreen.mainScreen().bounds.width
+    func horPanAnimation(_ xRate:CGFloat){
+        let maxW = UIScreen.main.bounds.width
         let maxX = maxW + self.currentRect!.width/2 + 5
         let minX = 0 - self.currentRect!.width/2 - 5
         let publishIndex = self.getPublishIndexByID(self.selectedPublishID)
         if  xRate > 0 {
             if publishIndex > 0{
                 let xChange = maxX - self.currentPreviewCell.center.x
-                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                UIView.animate(withDuration: 0.2, animations: { () -> Void in
                     self.changCellsCenter(xChange, yChange: 0)
                     }, completion: { (_) -> Void in
-                        self.horPanComplete(.Previous, isChange: true)
+                        self.horPanComplete(.previous, isChange: true)
                 })
             }else {
                 self.horPanResetAnimation(xRate)
@@ -406,10 +406,10 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         }else {
             if publishIndex < self.publishArray.count-1{
                 let xChange = minX - self.currentPreviewCell.center.x
-                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                UIView.animate(withDuration: 0.2, animations: { () -> Void in
                     self.changCellsCenter(xChange, yChange: 0)
                     }, completion: { (_) -> Void in
-                        self.horPanComplete(.Next, isChange: true)
+                        self.horPanComplete(.next, isChange: true)
                 })
             }else {
                 self.horPanResetAnimation(xRate)
@@ -417,8 +417,8 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         }
     }
     
-    func viewHorComplete(newLocation:CGPoint){
-        let maxX = UIScreen.mainScreen().bounds.width
+    func viewHorComplete(_ newLocation:CGPoint){
+        let maxX = UIScreen.main.bounds.width
         let xRate = newLocation.x - beganLocation.x
         if abs(xRate) >= maxX/2 {
             self.horPanAnimation(xRate)
@@ -427,34 +427,34 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         }
     }
     
-    func horPanResetAnimation(xRate:CGFloat){
+    func horPanResetAnimation(_ xRate:CGFloat){
         if self.currentCenter != nil {
             let xChange = self.currentCenter!.x - self.currentPreviewCell.center.x
             let yChange = self.currentCenter!.y - self.currentPreviewCell.center.y
-            UIView.animateWithDuration(0.2, animations: { () -> Void in
+            UIView.animate(withDuration: 0.2, animations: { () -> Void in
                 self.changCellsCenter(xChange, yChange: yChange)
                 }, completion: { (_) -> Void in
                     if xRate > 0 {
-                        self.horPanComplete(.Previous, isChange: false)
+                        self.horPanComplete(.previous, isChange: false)
                     }else {
-                        self.horPanComplete(.Next, isChange: false)
+                        self.horPanComplete(.next, isChange: false)
                     }
             })
         }
     }
     
-    func horPanComplete(dir:CTAPanHorDirection, isChange:Bool){
+    func horPanComplete(_ dir:CTAPanHorDirection, isChange:Bool){
         self.lastLocation = nil
         self.currentCenter = nil
         if isChange {
             self.currentPreviewCell.stopAnimation()
-            if dir == .Next{
+            if dir == .next{
                 let currentFull = self.currentPreviewCell
                 self.currentPreviewCell = self.nextPreviewCell
                 self.nextPreviewCell = self.previousPreviewCell
                 self.previousPreviewCell = currentFull
                 self.selectedPublishID = self.currentPreviewCell.publishModel!.publishID
-            }else if dir == .Previous{
+            }else if dir == .previous{
                 let currentFull = self.currentPreviewCell
                 self.currentPreviewCell = self.previousPreviewCell
                 self.previousPreviewCell = self.nextPreviewCell
@@ -467,8 +467,8 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         }
     }
     
-    func viewVerPanHandler(newLocation:CGPoint){
-        let maxY = UIScreen.mainScreen().bounds.height/2
+    func viewVerPanHandler(_ newLocation:CGPoint){
+        let maxY = UIScreen.main.bounds.height/2
         let yRate = newLocation.y - self.beganLocation.y
         if self.lastLocation == nil {
             self.lastLocation = self.beganLocation
@@ -486,16 +486,16 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         }
         let wChange = (1 - self.cellRect!.width / self.currentRect!.width) * percent
         let hChange = (1 - self.cellRect!.height / self.currentRect!.height) * percent
-        self.currentPreviewCell.transform = CGAffineTransformMakeScale(1 - wChange, 1 - hChange)
+        self.currentPreviewCell.transform = CGAffineTransform(scaleX: 1 - wChange, y: 1 - hChange)
         self.currentPreviewCell.center = center
         self.backgroundView.alpha =  1 - percent
         self.lastLocation = newLocation
     }
     
     func hideControllerView(){
-        UIView.animateWithDuration(0.1) { 
+        UIView.animate(withDuration: 0.1, animations: { 
             self.controllerView.alpha = 0
-        }
+        }) 
     }
     
     func verPanAnimation(){
@@ -503,7 +503,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         self.verPanComlete()
     }
     
-    func viewVerComplete(newLocation:CGPoint){
+    func viewVerComplete(_ newLocation:CGPoint){
         let xRate = newLocation.y - beganLocation.y
         if abs(xRate) >= 10 {
             self.verPanAnimation()
@@ -512,12 +512,12 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         }
     }
     
-    func verPanResetAnimation(yRate:CGFloat){
+    func verPanResetAnimation(_ yRate:CGFloat){
         self.isHideBar = true
         self.setNeedsStatusBarAppearanceUpdate()
         if self.currentCenter != nil {
-            UIView.animateWithDuration(0.2, animations: { () -> Void in
-                self.currentPreviewCell.transform = CGAffineTransformMakeScale(1, 1)
+            UIView.animate(withDuration: 0.2, animations: { () -> Void in
+                self.currentPreviewCell.transform = CGAffineTransform(scaleX: 1, y: 1)
                 if self.currentCenter != nil {
                     self.currentPreviewCell.center = self.currentCenter!
                 }else {
@@ -542,7 +542,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
     }
     
     
-    func loadPublishes(start:Int, size:Int = 20){
+    func loadPublishes(_ start:Int, size:Int = 20){
         if self.isLoading{
             return
         }
@@ -575,7 +575,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         }
     }
     
-    func loadPublishesComplete(info: CTADomainListInfo, size:Int){
+    func loadPublishesComplete(_ info: CTADomainListInfo, size:Int){
         self.isLoading = false
         if info.result{
             let modelArray = info.modelArray;
@@ -595,8 +595,8 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
                                 }else {
                                     let index = self.getPublishIndex(newmodel.publishID, publishArray: self.publishArray)
                                     if index != -1{
-                                        self.publishArray.insert(newmodel, atIndex: index)
-                                        self.publishArray.removeAtIndex(index+1)
+                                        self.publishArray.insert(newmodel, at: index)
+                                        self.publishArray.remove(at: index+1)
                                     }
                                 }
                             }
@@ -631,7 +631,7 @@ class PublishDetailViewController: UIViewController, CTAPublishModelProtocol, CT
         }
     }
     
-    func loadMoreModelArray(modelArray:Array<AnyObject>){
+    func loadMoreModelArray(_ modelArray:Array<AnyObject>){
         for i in 0..<modelArray.count{
             let publishModel = modelArray[i] as! CTAPublishModel
             if !self.checkPublishModelIsHave(publishModel, publishArray: self.publishArray){
@@ -655,16 +655,16 @@ extension PublishDetailViewController: CTAPublishControllerProtocol{
         return self.currentPreviewCell
     }
     
-    func setLikeButtonStyle(publichModel:CTAPublishModel?){
+    func setLikeButtonStyle(_ publichModel:CTAPublishModel?){
         self.changeLikeStatus(publichModel)
     }
     
-    func changeLikeStatus(publichModel:CTAPublishModel?){
+    func changeLikeStatus(_ publichModel:CTAPublishModel?){
         self.controllerView.publishModel = publichModel
         self.controllerView.changeLikeStatus()
         if let model = publichModel{
             if model.likeStatus == 1{
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     let heartView = CTAHeartAnimationView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 100, height: 100)))
                     heartView.center = self.currentPreviewCell.center
                     self.view.addSubview(heartView)
@@ -676,32 +676,32 @@ extension PublishDetailViewController: CTAPublishControllerProtocol{
     }
     
     func likersRect() -> CGRect? {
-        let point = self.controllerView.likeCountView.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+        let point = self.controllerView.likeCountView.convert(CGPoint(x: 0, y: 0), to: self.view)
         let frame = self.controllerView.likeCountView.frame
         let rect:CGRect = CGRect(x: point.x, y: point.y, width: frame.width, height: frame.height)
         return rect
     }
     
     func commentRect() -> CGRect? {
-        let point = self.controllerView.commentView.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+        let point = self.controllerView.commentView.convert(CGPoint(x: 0, y: 0), to: self.view)
         let frame = self.controllerView.commentView.frame
         let rect:CGRect = CGRect(x: point.x, y: point.y, width: frame.width, height: frame.height)
         return rect
     }
     
-    func disCommentMisComplete(publishID: String) {
+    func disCommentMisComplete(_ publishID: String) {
         self.updatePublishByID(publishID)
     }
     
-    func updatePublishByID(publishID:String){
+    func updatePublishByID(_ publishID:String){
         let userID = self.loginUser == nil ? "" : self.loginUser!.userID
         CTAPublishDomain.getInstance().publishDetai(userID, publishID: publishID) { (info) in
             if info.result {
                 if let publishModel = info.baseModel as? CTAPublishModel {
                     let index = self.getPublishIndex(publishModel.publishID, publishArray: self.publishArray)
                     if index != -1{
-                        self.publishArray.insert(publishModel, atIndex: index)
-                        self.publishArray.removeAtIndex(index+1)
+                        self.publishArray.insert(publishModel, at: index)
+                        self.publishArray.remove(at: index+1)
                         if let currentPublishID = self.currentPreviewCell.publishModel?.publishID{
                             if publishModel.publishID == currentPublishID{
                                 self.controllerView.publishModel = publishModel
@@ -716,17 +716,17 @@ extension PublishDetailViewController: CTAPublishControllerProtocol{
     
     func deleteHandler(){
         if let publish = self.currentPreviewCell.publishModel{
-            self.showSelectedAlert(NSLocalizedString("AlertTitleDeleteFile", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.DeleteFile.description, cancelAlertLabel: LocalStrings.Cancel.description, compelecationBlock: { (result) -> Void in
+            self.showSelectedAlert(NSLocalizedString("AlertTitleDeleteFile", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.deleteFile.description, cancelAlertLabel: LocalStrings.cancel.description, compelecationBlock: { (result) -> Void in
                 if result{
-                    SVProgressHUD.setDefaultMaskType(.Clear)
-                    SVProgressHUD.showWithStatus(NSLocalizedString("DeleteProgressLabel", comment: ""))
+                    SVProgressHUD.setDefaultMaskType(.clear)
+                    SVProgressHUD.show(withStatus: NSLocalizedString("DeleteProgressLabel", comment: ""))
                     let userID = self.loginUser == nil ? "" : self.loginUser!.userID
                     CTAPublishDomain.getInstance().deletePublishFile(publish.publishID, userID: userID, compelecationBlock: { (info) -> Void in
                         SVProgressHUD.dismiss()
                         if info.result{
                             let selectedIndex = self.getPublishIndexByID(self.selectedPublishID)
                             self.currentPreviewCell.alpha = 1
-                            UIView.animateWithDuration(0.2, animations: { () -> Void in
+                            UIView.animate(withDuration: 0.2, animations: { () -> Void in
                                 self.currentPreviewCell.alpha = 0
                                 }, completion: { (_) -> Void in
                                     if self.publishArray.count > 1{
@@ -737,9 +737,9 @@ extension PublishDetailViewController: CTAPublishControllerProtocol{
                                         }else {
                                             self.horPanAnimation(1)
                                         }
-                                        self.publishArray.removeAtIndex(selectedIndex)
+                                        self.publishArray.remove(at: selectedIndex)
                                     }else {
-                                        self.publishArray.removeAtIndex(selectedIndex)
+                                        self.publishArray.remove(at: selectedIndex)
                                         self.closeHandler()
                                     }
                             })
@@ -816,7 +816,7 @@ extension PublishDetailViewController: CTAPublishControllerDelegate{
         self.closeHandler()
     }
     
-    func pushUserPublish(publish:CTAPublishModel?){
+    func pushUserPublish(_ publish:CTAPublishModel?){
         let viewUserModel = publish?.userModel
         let userPublish = UserViewController()
         userPublish.viewUser = viewUserModel
@@ -826,7 +826,7 @@ extension PublishDetailViewController: CTAPublishControllerDelegate{
 
 protocol PublishDetailViewDelegate: AnyObject{
     
-    func getPublishCell(selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect?;
+    func getPublishCell(_ selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect?;
     
     func transitionComplete()
 }

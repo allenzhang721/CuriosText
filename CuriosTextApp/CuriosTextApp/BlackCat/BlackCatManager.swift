@@ -8,24 +8,26 @@
 
 import Foundation
 
-public typealias DownloadProgressBlock = ((receivedSize: Int64, totalSize: Int64) -> ())
-public typealias CompletionHandler = ((data: NSData?, error: NSError?, cacheType: CacheType, URL: NSURL?) -> ())
+public typealias DownloadProgressBlock = ((_ receivedSize: Int64, _ totalSize: Int64) -> ())
+public typealias CompletionHandler = ((_ data: Data?, _ error: NSError?, _ cacheType: CacheType, _ URL: URL?) -> ())
 
 /**
 *  RetrieveImageTask represents a task of image retrieving process.
 *  It contains an async task of getting image from disk and from network.
 */
-public class RetrieveDataTask {
+open class RetrieveDataTask {
   
-  var diskRetrieveTask: RetrieveDataDiskTask?
+  var diskRetrieveTask: DispatchWorkItem?
   var downloadTask: RetrieveDataDownloadTask?
   
   /**
   Cancel current task. If this task does not begin or already done, do nothing.
   */
-  public func cancel() {
+  open func cancel() {
     if let diskRetrieveTask = diskRetrieveTask {
-      dispatch_block_cancel(diskRetrieveTask)
+//      dispatch_block_cancel(diskRetrieveTask)
+      diskRetrieveTask.cancel()
+//      DispatchWorkItem
     }
     
     if let downloadTask = downloadTask {
@@ -42,31 +44,31 @@ private let instance = BlackCatManager()
 /**
 *  Main manager class of BlackCat
 */
-public class BlackCatManager {
+open class BlackCatManager {
   
   /**
   *	Options to control some downloader and cache behaviors.
   */
-  public typealias Options = (forceRefresh: Bool, lowPriority: Bool, cacheMemoryOnly: Bool, queue: dispatch_queue_t!)
+  public typealias Options = (forceRefresh: Bool, lowPriority: Bool, cacheMemoryOnly: Bool, queue: DispatchQueue)
   
   /// A preset option tuple with all value set to `false`.
-  public static let OptionsNone: Options = {
-    return (forceRefresh: false, lowPriority: false, cacheMemoryOnly: false, queue: dispatch_get_main_queue())
+  open static let OptionsNone: Options = {
+    return (forceRefresh: false, lowPriority: false, cacheMemoryOnly: false, queue: DispatchQueue.main)
     }()
   
   /// The default set of options to be used by the manager to control some downloader and cache behaviors.
-  public static var DefaultOptions: Options = OptionsNone
+  open static var DefaultOptions: Options = OptionsNone
   
   /// Shared manager used by the extensions across BlackCat.
-  public class var sharedManager: BlackCatManager {
+  open class var sharedManager: BlackCatManager {
     return instance
   }
   
   /// Cache used by this manager
-  public var cache: DataCache
+  open var cache: DataCache
   
   /// Downloader used by this manager
-  public var downloader: DataDownloader
+  open var downloader: DataDownloader
   
   /**
   Default init method
@@ -91,15 +93,15 @@ public class BlackCatManager {
   
   :returns: A `RetrieveImageTask` task object. You can use this object to cancel the task.
   */
-  public func retrieveDataWithURL(URL: NSURL,
+  open func retrieveDataWithURL(_ URL: Foundation.URL,
     optionsInfo: BlackCatOptionsInfo?,
     progressBlock: DownloadProgressBlock?,
     completionHandler: CompletionHandler?) -> RetrieveDataTask
   {
-    func parseOptionsInfo(optionsInfo: BlackCatOptionsInfo?) -> (Options, DataCache, DataDownloader) {
+    func parseOptionsInfo(_ optionsInfo: BlackCatOptionsInfo?) -> (Options, DataCache, DataDownloader) {
       let options: Options
-      if let optionsInOptionsInfo = optionsInfo?[.Options] as? BlackCatOptions {
-        let queue = (optionsInOptionsInfo == .BackgroundCallback) ? dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) : BlackCatManager.DefaultOptions.queue
+      if let optionsInOptionsInfo = optionsInfo?[.options] as? BlackCatOptions {
+        let queue = (optionsInOptionsInfo == .BackgroundCallback) ? DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default) : BlackCatManager.DefaultOptions.queue
         options = (forceRefresh: (optionsInOptionsInfo == .ForceRefresh),
           lowPriority: (optionsInOptionsInfo == .LowPriority),
           cacheMemoryOnly: (optionsInOptionsInfo == .CacheMemoryOnly),
@@ -108,8 +110,8 @@ public class BlackCatManager {
         options = BlackCatManager.DefaultOptions
       }
       
-      let targetCache = optionsInfo?[.TargetCache] as? DataCache ?? self.cache
-      let usedDownloader = optionsInfo?[.Downloader] as? DataDownloader ?? self.downloader
+      let targetCache = optionsInfo?[.targetCache] as? DataCache ?? self.cache
+      let usedDownloader = optionsInfo?[.downloader] as? DataDownloader ?? self.downloader
       
       return (options, targetCache, usedDownloader)
     }
@@ -135,11 +137,11 @@ public class BlackCatManager {
         let diskTaskCompletionHandler: CompletionHandler = { (data, error, cacheType, URL) -> () in
           // Break retain cycle created inside diskTask closure below
           task.diskRetrieveTask = nil
-          completionHandler?(data: data, error: error, cacheType: cacheType, URL: URL)
+          completionHandler?(data, error, cacheType, URL)
         }
         let diskTask = targetCache.retrieveDataForKey(key, options: options, completionHandler: { (data, cacheType) -> () in
           if data != nil {
-            diskTaskCompletionHandler(data: data, error: nil, cacheType:cacheType, URL: URL)
+            diskTaskCompletionHandler(data, nil, cacheType!, URL)
           } else {
             self.downloadAndCacheDataWithURL(URL,
               forKey: key,
@@ -158,7 +160,7 @@ public class BlackCatManager {
     return task
   }
   
-  func downloadAndCacheDataWithURL(URL: NSURL,
+  func downloadAndCacheDataWithURL(_ URL: Foundation.URL,
     forKey key: String,
     retrieveDataTask: RetrieveDataTask,
     progressBlock: DownloadProgressBlock?,
@@ -168,15 +170,15 @@ public class BlackCatManager {
     downloader: DataDownloader)
   {
     downloader.downloadDataWithURL(URL, retrieveImageTask: retrieveDataTask, options: options, progressBlock: { (receivedSize, totalSize) -> () in
-      progressBlock?(receivedSize: receivedSize, totalSize: totalSize)
+      progressBlock?(receivedSize, totalSize)
       return
       }) { (aData, error, imageURL) -> () in
         
-        if let error = error where error.code == BlackCatError.NotModified.rawValue {
+        if let error = error, error.code == BlackCatError.notModified.rawValue {
           // Not modified. Try to find the image from cache.
           // (The image should be in cache. It should be ensured by the framework users.)
           targetCache.retrieveDataForKey(key, options: options, completionHandler: { (cacheImage, cacheType) -> () in
-            completionHandler?(data: cacheImage, error: nil, cacheType: cacheType, URL: URL)
+            completionHandler?(cacheImage, nil, cacheType!, URL)
             
           })
           return
@@ -186,7 +188,7 @@ public class BlackCatManager {
           targetCache.storeData(data, forKey: key, toDisk: !options.cacheMemoryOnly, completionHandler: nil)
         }
         
-        completionHandler?(data: aData, error: error, cacheType: .None, URL: URL)
+        completionHandler?(aData, error, .none, URL)
     }
   }
 }

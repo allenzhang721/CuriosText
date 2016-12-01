@@ -9,7 +9,7 @@
 import Foundation
 extension BlackCatManager {
     
-    func retriveDataForURL(urlString:String, completedHandler: ((NSData?) -> ())?) {
+    func retriveDataForURL(_ urlString:String, completedHandler: ((Data?) -> ())?) {
         
         let key = urlString
         let targetCache = self.cache
@@ -17,7 +17,7 @@ extension BlackCatManager {
         completedHandler?(data)
     }
     
-    func storeData(data: NSData, byURL urlString:String, completedHandler:((Bool) -> ())?) {
+    func storeData(_ data: Data, byURL urlString:String, completedHandler:((Bool) -> ())?) {
         let key = urlString
 //        let key = url.absoluteString
         let targetCache = self.cache

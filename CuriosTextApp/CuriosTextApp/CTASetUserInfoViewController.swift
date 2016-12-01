@@ -9,7 +9,7 @@
 import UIKit
 
 enum CTASetUserInfoType{
-    case NickName, Desc
+    case nickName, desc
 }
 
 class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CTALoadingProtocol, CTAAlertProtocol{
@@ -17,7 +17,7 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
     var loadingImageView:UIImageView? = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40))
     
     var setUser:CTAUserModel?
-    var setType:CTASetUserInfoType = .NickName
+    var setType:CTASetUserInfoType = .nickName
     
     var setInfoLabel:UILabel!
     
@@ -30,7 +30,7 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
     
     var saveButton:UIButton!
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
@@ -42,12 +42,12 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.reloadView()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.resetView()
         self.setUser = nil
@@ -70,23 +70,23 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
     */
     
     func initView(){
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: 64))
         headerView.backgroundColor = CTAStyleKit.commonBackgroundColor
         self.view.addSubview(headerView)
         
         self.setInfoLabel = UILabel.init(frame: CGRect.init(x: 0, y: 28, width: bounds.width, height: 28))
-        self.setInfoLabel.font = UIFont.boldSystemFontOfSize(18)
+        self.setInfoLabel.font = UIFont.boldSystemFont(ofSize: 18)
         self.setInfoLabel.textColor = CTAStyleKit.normalColor
         self.setInfoLabel.text = NSLocalizedString("SettingLabel", comment: "")
-        self.setInfoLabel.textAlignment = .Center
+        self.setInfoLabel.textAlignment = .center
         headerView.addSubview(self.setInfoLabel)
         
         let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 22, width: 40, height: 40))
-        backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
-        backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
-        backButton.addTarget(self, action: #selector(CTASetUserInfoViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
+        backButton.setImage(UIImage(named: "back-button"), for: UIControlState())
+        backButton.setImage(UIImage(named: "back-selected-button"), for: .highlighted)
+        backButton.addTarget(self, action: #selector(CTASetUserInfoViewController.backButtonClick(_:)), for: .touchUpInside)
         headerView.addSubview(backButton)
         
         var textLine = UIImageView.init(frame: CGRect.init(x: 0, y: 63, width: bounds.width, height: 1))
@@ -97,11 +97,11 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         self.view.addSubview(self.nickNameView)
         self.userNickNameTextInput = UITextField.init(frame: CGRect.init(x:27*self.getHorRate(), y: 12, width: 280*self.getHorRate(), height: 50))
         self.userNickNameTextInput.center = CGPoint.init(x: bounds.width/2, y: 37)
-        self.userNickNameTextInput.font = UIFont.systemFontOfSize(16)
+        self.userNickNameTextInput.font = UIFont.systemFont(ofSize: 16)
         self.userNickNameTextInput.placeholder = NSLocalizedString("UserNamePlaceholder", comment: "")
         self.userNickNameTextInput.delegate = self
-        self.userNickNameTextInput.clearButtonMode = .Always
-        self.userNickNameTextInput.returnKeyType = .Done
+        self.userNickNameTextInput.clearButtonMode = .always
+        self.userNickNameTextInput.returnKeyType = .done
         self.nickNameView.addSubview(self.userNickNameTextInput)
         textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userNickNameTextInput.frame.origin.y + 49, width: 290*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "space-line")
@@ -113,11 +113,11 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         self.view.addSubview(self.descView)
         self.userDescTextView = UITextView.init(frame: CGRect.init(x: 27*self.getHorRate(), y: 12, width: 280*self.getHorRate(), height: 50))
         self.userDescTextView.center = CGPoint.init(x: bounds.width/2, y: 37)
-        self.userDescTextView.font = UIFont.systemFontOfSize(16)
-        self.userDescTextView.scrollEnabled = false
+        self.userDescTextView.font = UIFont.systemFont(ofSize: 16)
+        self.userDescTextView.isScrollEnabled = false
         self.userDescTextView.backgroundColor = CTAStyleKit.commonBackgroundColor
         self.userDescTextView.delegate = self
-        self.userDescTextView.textAlignment = .Left
+        self.userDescTextView.textAlignment = .left
         self.descView.addSubview(userDescTextView)
         self.descTextLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.userDescTextView.frame.origin.y + 49, width: 290*self.getHorRate(), height: 1))
         self.descTextLine.image = UIImage(named: "space-line")
@@ -126,42 +126,42 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         
         
         self.saveButton = UIButton.init(frame: CGRect.init(x: (bounds.width - 40)/2, y: 120, width: 40, height: 28))
-        self.saveButton.setTitle(NSLocalizedString("SaveButtonLabel", comment: ""), forState: .Normal)
-        self.saveButton.setTitleColor(CTAStyleKit.selectedColor, forState: .Normal)
-        self.saveButton.setTitleColor(CTAStyleKit.disableColor, forState: .Disabled)
-        self.saveButton.titleLabel?.font = UIFont.systemFontOfSize(20)
+        self.saveButton.setTitle(NSLocalizedString("SaveButtonLabel", comment: ""), for: UIControlState())
+        self.saveButton.setTitleColor(CTAStyleKit.selectedColor, for: UIControlState())
+        self.saveButton.setTitleColor(CTAStyleKit.normalColor, for: .disabled)
+        self.saveButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         self.saveButton.sizeToFit()
         self.saveButton.frame.origin.x = (bounds.width - self.saveButton.frame.width)/2
-        self.saveButton.addTarget(self, action: #selector(CTASetUserInfoViewController.saveButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.saveButton.addTarget(self, action: #selector(CTASetUserInfoViewController.saveButtonClick(_:)), for: .touchUpInside)
         self.view.addSubview(self.saveButton)
     }
     
     func reloadView(){
         self.resetView()
         switch self.setType{
-        case .NickName:
+        case .nickName:
             self.reloadNikeNameView()
-        case .Desc:
+        case .desc:
             self.reloadDescView()
         }
     }
     
     func resetView(){
         self.setInfoLabel.text = ""
-        self.nickNameView.hidden = true
-        self.descView.hidden = true
-        self.saveButton.enabled = false
+        self.nickNameView.isHidden = true
+        self.descView.isHidden = true
+        self.saveButton.isEnabled = false
         switch self.setType{
-        case .NickName:
+        case .nickName:
             self.resetNikeNameView()
-        case .Desc:
+        case .desc:
             self.resetDescView()
         }
     }
     
     func reloadNikeNameView(){
         self.setInfoLabel.text = NSLocalizedString("UserNickNameLabel", comment: "")
-        self.nickNameView.hidden = false
+        self.nickNameView.isHidden = false
         if self.setUser == nil {
             self.userNickNameTextInput.text = ""
         }else {
@@ -169,12 +169,12 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         }
         self.saveButton.frame.origin.y = self.userNickNameTextInput.frame.origin.y + 134
         self.userNickNameTextInput.becomeFirstResponder()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CTASetUserInfoViewController.textFieldEditChange(_:)), name: "UITextFieldTextDidChangeNotification", object: self.userNickNameTextInput)
+        NotificationCenter.default.addObserver(self, selector: #selector(CTASetUserInfoViewController.textFieldEditChange(_:)), name: NSNotification.Name(rawValue: "UITextFieldTextDidChangeNotification"), object: self.userNickNameTextInput)
     }
     
     func reloadDescView(){
         self.setInfoLabel.text = NSLocalizedString("UserDesc", comment: "")
-        self.descView.hidden = false
+        self.descView.isHidden = false
         if self.setUser == nil {
             self.userDescTextView.text = ""
         }else {
@@ -196,7 +196,7 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
     
     func resetNikeNameView(){
         self.userNickNameTextInput.text = ""
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "UITextFieldTextDidChangeNotification", object: self.userNickNameTextInput)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "UITextFieldTextDidChangeNotification"), object: self.userNickNameTextInput)
     }
     
     func resetDescView(){
@@ -211,23 +211,23 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         self.saveButton.frame.origin.y = self.descTextLine.frame.origin.y + 64
     }
     
-    func backButtonClick(sender: UIButton){
+    func backButtonClick(_ sender: UIButton){
         self.backHandler()
     }
     
     func backHandler(){
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
-    func saveButtonClick(sender: UIButton){
+    func saveButtonClick(_ sender: UIButton){
         self.saveHandler()
     }
     
     func saveHandler(){
         switch self.setType{
-        case .NickName:
+        case .nickName:
             self.saveNickNameHandler()
-        case .Desc:
+        case .desc:
             self.saveDescHandler()
         }
     }
@@ -286,15 +286,15 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
 
 extension CTASetUserInfoViewController: UITextFieldDelegate{
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool{
         textField.resignFirstResponder()
-        if self.saveButton.enabled {
+        if self.saveButton.isEnabled {
             self.saveHandler()
         }
         return true
     }
     
-    func textFieldEditChange(noti: NSNotification) {
+    func textFieldEditChange(_ noti: Notification) {
         let textField = noti.object as! UITextField
         self.checkTextField(textField)
         textField.sizeToFit()
@@ -302,13 +302,13 @@ extension CTASetUserInfoViewController: UITextFieldDelegate{
         textField.frame.size.height = 50
         let text = textField.text
         if text == self.setUser!.nickName {
-            self.saveButton.enabled = false
+            self.saveButton.isEnabled = false
         }else {
-            self.saveButton.enabled = true
+            self.saveButton.isEnabled = true
         }
     }
     
-    func checkTextField(textField: UITextField) -> Bool{
+    func checkTextField(_ textField: UITextField) -> Bool{
         textField.sizeToFit()
         let viewText = textField.text
         let textStr = NSString(string: viewText!)
@@ -327,10 +327,10 @@ extension CTASetUserInfoViewController: UITextFieldDelegate{
         }
         if needReset {
             let range = textField.selectedTextRange
-            let newText = textStr.substringToIndex(textStr.length - 1)
+            let newText = textStr.substring(to: textStr.length - 1)
             let newStr = NSString(string: newText)
             textField.text = newText
-            let rageLength = textField.offsetFromPosition(textField.beginningOfDocument, toPosition: range!.start)
+            let rageLength = textField.offset(from: textField.beginningOfDocument, to: range!.start)
             if rageLength < newStr.length{
                 textField.selectedTextRange = range
             }
@@ -343,18 +343,18 @@ extension CTASetUserInfoViewController: UITextFieldDelegate{
 
 extension CTASetUserInfoViewController: UITextViewDelegate{
     
-    func textViewDidChange(textView: UITextView){
+    func textViewDidChange(_ textView: UITextView){
         self.checkTextView(textView)
         self.setDescView()
         let viewText = textView.text
         if viewText == self.setUser!.userDesc {
-            self.saveButton.enabled = false
+            self.saveButton.isEnabled = false
         }else {
-            self.saveButton.enabled = true
+            self.saveButton.isEnabled = true
         }
     }
     
-    func checkTextView(textView: UITextView) -> Bool{
+    func checkTextView(_ textView: UITextView) -> Bool{
         textView.sizeToFit()
         let viewText = textView.text
         let textStr = NSString(string: viewText!)
@@ -370,7 +370,7 @@ extension CTASetUserInfoViewController: UITextViewDelegate{
             needReset = true
         }
         if needReset {
-            let newStr = textStr.substringToIndex(textStr.length - 1)
+            let newStr = textStr.substring(to: textStr.length - 1)
             let newText = newStr as String
             textView.text = newText
             return self.checkTextView(textView)
@@ -382,7 +382,7 @@ extension CTASetUserInfoViewController: UITextViewDelegate{
 
 extension CTASetUserInfoViewController: UIGestureRecognizerDelegate{
     
-    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
     

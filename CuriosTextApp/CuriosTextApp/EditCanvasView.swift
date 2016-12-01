@@ -10,13 +10,13 @@ import UIKit
 
 protocol CanvasViewDataSource: class {
     
-    func numberOfcontainerInCanvasView(canvas: EditCanvasView) -> Int
-    func canvasView(canvas: EditCanvasView, containerAtIndex index: Int) -> ContainerView
+    func numberOfcontainerInCanvasView(_ canvas: EditCanvasView) -> Int
+    func canvasView(_ canvas: EditCanvasView, containerAtIndex index: Int) -> ContainerView
 }
 
 protocol CanvasViewDelegate: class {
     
-    func canvasView(canvas: EditCanvasView, didSelectedContainerAtIndex index: Int)
+    func canvasView(_ canvas: EditCanvasView, didSelectedContainerAtIndex index: Int)
 }
 
 class EditCanvasView: UIView {
@@ -24,8 +24,8 @@ class EditCanvasView: UIView {
     weak var dataSource: CanvasViewDataSource?
     weak var delegate: CanvasViewDelegate?
     
-    private(set) var selectedContainerIndexs = [Int]()
-    private var containerViews = [ContainerView]()
+    fileprivate(set) var selectedContainerIndexs = [Int]()
+    fileprivate var containerViews = [ContainerView]()
     var elementCount: Int {
         return containerViews.count
     }
@@ -40,16 +40,16 @@ class EditCanvasView: UIView {
             selectedContainerIndexs = []
         }
         
-        guard let count = dataSource?.numberOfcontainerInCanvasView(self) where count > 0 else {
+        guard let count = dataSource?.numberOfcontainerInCanvasView(self), count > 0 else {
             return
         }
         
         setupContainers(count)
     }
     
-    private func setupContainers(count: Int) {
+    fileprivate func setupContainers(_ count: Int) {
         
-        guard let dataSource = dataSource where count > 0 else {
+        guard let dataSource = dataSource, count > 0 else {
             return
         }
         for index in 0..<count {
@@ -59,7 +59,7 @@ class EditCanvasView: UIView {
         }
     }
     
-    func containerViewAt(index: Int) -> ContainerView? {
+    func containerViewAt(_ index: Int) -> ContainerView? {
         return containerViews[index]
     }
 }
@@ -67,13 +67,13 @@ class EditCanvasView: UIView {
 // MARK: - Gestures
 extension EditCanvasView {
     
-    func tap(sender: UITapGestureRecognizer) {
+    func tap(_ sender: UITapGestureRecognizer) {
         
         
         var index = -1
-        for (i, view) in containerViews.reverse().enumerate() {
-            let point = sender.locationInView(view)
-            if view.layer.containsPoint(point) {
+        for (i, view) in containerViews.reversed().enumerated() {
+            let point = sender.location(in: view)
+            if view.layer.contains(point) {
                 index = elementCount - 1 - i
                 break
             }

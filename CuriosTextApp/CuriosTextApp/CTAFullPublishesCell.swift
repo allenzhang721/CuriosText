@@ -11,9 +11,9 @@ import Kingfisher
 
 class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
-    private var page: CTAPage?
+    fileprivate var page: CTAPage?
     
-    private var canvas: AniCanvas?
+    fileprivate var canvas: AniCanvas?
     
     var publishModel:CTAPublishModel?{
         didSet{
@@ -63,13 +63,13 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
         self.addImageShadow(self)
     }
     
-    func setViewColor(color:UIColor){
+    func setViewColor(_ color:UIColor){
         if self.cellColorView == nil {
             let cellBoud = CGRect(x: -1, y: -1, width: self.bounds.width+2, height: self.bounds.height+2)
             self.cellColorView = UIView(frame: cellBoud)
             self.cropImageRound(self.cellColorView!)
             self.addSubview(self.cellColorView!)
-            self.bringSubviewToFront(self.cellColorView!)
+            self.bringSubview(toFront: self.cellColorView!)
         }
         self.cellColorView?.backgroundColor = color
     }
@@ -82,9 +82,9 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     }
     
     func reloadCell(){
-        self.bringSubviewToFront(self.cellImageView)
+        self.bringSubview(toFront: self.cellImageView)
         if self.cellColorView != nil {
-            self.bringSubviewToFront(self.cellColorView!)
+            self.bringSubview(toFront: self.cellColorView!)
         }
         if publishModel != nil {
             var defaultImg = self.getDefaultIcon(self.bounds)
@@ -103,8 +103,8 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                 }
             }
             let imagePath = CTAFilePath.publishFilePath+previewIconURL
-            let imageURL = NSURL(string: imagePath)!
-            self.cellImageView.kf_setImageWithURL(imageURL, placeholderImage: defaultImg, optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in
+            let imageURL = URL(string: imagePath)!
+            self.cellImageView.kf.setImage(with: imageURL, placeholder: defaultImg, options: [.transition(ImageTransition.fade(1))]) { (image, error, cacheType, imageURL) -> () in
                 if error != nil {
                     self.cellImageView.image = defaultImg
                 }else{
@@ -147,28 +147,28 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
                 self.isLoadComplete = false
                 let purl = CTAFilePath.publishFilePath
                 let url = purl + publishModel!.publishURL
-                self.bringSubviewToFront(self.cellImageView)
+                self.bringSubview(toFront: self.cellImageView)
                 if self.cellColorView != nil {
-                    self.bringSubviewToFront(self.cellColorView!)
+                    self.bringSubview(toFront: self.cellColorView!)
                 }
                 self.isLoading = true
                 self.loadAgainHandler = nil
-                BlackCatManager.sharedManager.retrieveDataWithURL(NSURL(string: url)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self](data, error, cacheType, URL) -> () in
+                BlackCatManager.sharedManager.retrieveDataWithURL(URL(string: url)!, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self](data, error, cacheType, URL) -> () in
                     if let strongSelf = self {
                         if let data = data,
-                            let page = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? CTAPage {
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            let page = NSKeyedUnarchiver.unarchiveObject(with: data) as? CTAPage {
+                            DispatchQueue.main.async(execute: { () -> Void in
                                 if let publishModel = strongSelf.publishModel {
                                     strongSelf.page = page
                                     let acanvas = page.toAniCanvas()
                                     strongSelf.canvas = acanvas
                                     // get Image
-                                    let url = NSURL(string: CTAFilePath.publishFilePath + publishModel.publishID)!
+                                    let url = Foundation.URL(string: CTAFilePath.publishFilePath + publishModel.publishID)!
                                     for c in acanvas.containers {
-                                        if let content = c.contents.first where content.type == .Image {
+                                        if let content = c.contents.first, content.type == .Image {
                                             let imageName = content.content.source.ImageName
-                                            let imageURL = url.URLByAppendingPathComponent(imageName)
-                                            KingfisherManager.sharedManager.retrieveImageWithURL(imageURL, optionsInfo: nil, progressBlock: nil, completionHandler: {[weak self] (image, error, cacheType, imageURL) in
+                                            let imageURL = url.appendingPathComponent(imageName)
+                                            KingfisherManager.shared.retrieveImage(with: imageURL, options: nil, progressBlock: nil, completionHandler: {[weak self] (image, error, cacheType, imageURL) in
                                                 guard let sf = self else { return }
                                                 if error != nil {
                                                     sf.readyFailed()
@@ -194,34 +194,34 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     }
     
     //  -- EMIAOSTEIN, 10/04/16, 11:54
-    func readyPreView(canvas: AniCanvas, publishModel: CTAPublishModel, completed:() -> ()) {
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+    func readyPreView(_ canvas: AniCanvas, publishModel: CTAPublishModel, completed:@escaping () -> ()) {
+        DispatchQueue.main.async { [weak self] in
             guard let sf = self else {return}
             if sf.previewView == nil {
                 let previewView = AniPlayCanvasView(frame: CGRect(origin: CGPoint.zero, size: canvas.size))
                 let scale = min(sf.bounds.size.width / canvas.size.width, sf.bounds.size.height / canvas.size.height)
                 previewView.center = CGPoint(x: sf.bounds.midX, y: sf.bounds.midY)
-                previewView.transform = CGAffineTransformMakeScale(scale, scale)
+                previewView.transform = CGAffineTransform(scaleX: scale, y: scale)
                 
                 previewView.completedBlock = {[weak self] in
                     self?.playComplete()
                 }
                 sf.addSubview(previewView)
-                sf.sendSubviewToBack(previewView)
+                sf.sendSubview(toBack: previewView)
                 sf.previewView = previewView
                 sf.cropImageRound(previewView)
-                sf.bringSubviewToFront(sf.cellImageView)
+                sf.bringSubview(toFront: sf.cellImageView)
                 if sf.cellColorView != nil {
-                    sf.bringSubviewToFront(sf.cellColorView!)
+                    sf.bringSubview(toFront: sf.cellColorView!)
                 }
             }
             
             let previewView = sf.previewView
-            previewView.backgroundColor = UIColor(hexString: canvas.canvas.backgroundColor)
-            previewView.dataSource = canvas
-            previewView.changeDataSource()
-            previewView.aniDataSource = canvas
-            previewView.reloadData { [weak self] in
+            previewView?.backgroundColor = UIColor(hexString: canvas.canvas.backgroundColor)
+            previewView?.dataSource = canvas
+            previewView?.changeDataSource()
+            previewView?.aniDataSource = canvas
+            previewView?.reloadData { [weak self] in
                 if let sf = self {
                     sf.previewView.ready()
                     completed()
@@ -232,14 +232,14 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
     func readyCompleted() -> () {
         self.isLoading = false
-        dispatch_async(dispatch_get_main_queue(), {[weak self] in
+        DispatchQueue.main.async(execute: {[weak self] in
             guard let strongSelf = self else { return }
-            strongSelf.bringSubviewToFront(strongSelf.previewView)
+            strongSelf.bringSubview(toFront: strongSelf.previewView)
             if strongSelf.cellColorView != nil {
-                strongSelf.bringSubviewToFront(strongSelf.cellColorView!)
+                strongSelf.bringSubview(toFront: strongSelf.cellColorView!)
             }
             strongSelf.previewView.alpha = 0
-            UIView.animateWithDuration(0.2, animations: { 
+            UIView.animate(withDuration: 0.2, animations: { 
                 strongSelf.previewView.alpha = 1
             })
             strongSelf.isLoadComplete = true
@@ -255,12 +255,12 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
     
     func readyFailed() -> (){
         self.isLoading = false
-        dispatch_async(dispatch_get_main_queue(), {[weak self] in
+        DispatchQueue.main.async(execute: {[weak self] in
             guard let strongSelf = self else { return }
             strongSelf.isLoadComplete = false
-            strongSelf.bringSubviewToFront(strongSelf.cellImageView)
+            strongSelf.bringSubview(toFront: strongSelf.cellImageView)
             if strongSelf.cellColorView != nil {
-                strongSelf.bringSubviewToFront(strongSelf.cellColorView!)
+                strongSelf.bringSubview(toFront: strongSelf.cellColorView!)
             }
             if strongSelf.loadErrorCount < 3{
                 strongSelf.loadErrorCount += 1
@@ -297,10 +297,9 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
         if self.isLoadComplete{
             self.isPlaying = false
             self.isPause = false
-            let time: NSTimeInterval = NSTimeInterval(1.0)
-            let delay = dispatch_time(DISPATCH_TIME_NOW,
-                                      Int64(time * Double(NSEC_PER_SEC)))
-            dispatch_after(delay, dispatch_get_main_queue()) { [weak self] in
+            let time: TimeInterval = TimeInterval(1.0)
+            let delay = DispatchTime.now() + Double(Int64(time * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
                 self?.playAnimation()
             }
         }
@@ -329,30 +328,31 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
         }
     }
     
-    func getEndImg(completionHandler: ((img: UIImage?) -> ())){
+    func getEndImg(_ completionHandler: @escaping ((_ img: UIImage?) -> ())){
         if self.isLoadComplete{
             if self.publishModel != nil {
-                let url = NSURL(string: CTAFilePath.publishFilePath + self.publishModel!.publishID)
-                draw(self.page!, atBegan: false, baseURL: url!, local: false) { (response) -> () in
+                let url = URL(string: CTAFilePath.publishFilePath + self.publishModel!.publishID)
+              draws(self.page!, atBegan: false, baseURL: url!, local: false) { (response) -> () in
                     switch response {
-                    case .Success(let image):
-                        completionHandler(img: image)
+                    case .success(let image):
+                        completionHandler(image)
                     default:
                         let defaultImg = self.getDefaultIcon(self.bounds)
-                        completionHandler(img: defaultImg)
+                        completionHandler(defaultImg)
                     }
                 }
+              
             }else {
                 let defaultImg = self.getDefaultIcon(self.bounds)
-                completionHandler(img: defaultImg)
+                completionHandler(defaultImg)
             }
         }else {
             if self.imgLoaded{
                 let img = self.cellImageView.image
-                completionHandler(img: img)
+                completionHandler(img)
             }else {
                 let defaultImg = self.getDefaultIcon(self.bounds)
-                completionHandler(img: defaultImg)
+                completionHandler(defaultImg)
             }
         }
     }
@@ -372,7 +372,7 @@ class CTAFullPublishesCell: UIView, CTAImageControllerProtocol {
 
 extension CTAFullPublishesCell: CTAPreviewCanvasViewDataSource {
     
-    func canvasViewWithPage(view: CTAPreviewCanvasView) -> PageVMProtocol? {
+    func canvasViewWithPage(_ view: CTAPreviewCanvasView) -> PageVMProtocol? {
         
         return page
     }

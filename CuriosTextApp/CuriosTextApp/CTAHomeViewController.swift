@@ -34,11 +34,11 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     
     var isDisMis:Bool = true
     var isLoadLocal:Bool = false
-    var loadDataCompleteFuc:((CTADomainListInfo!)->Void)?
+    var loadDataCompleteFuc:((CTADomainListInfo)->Void)?
     
     var beganLocation: CGPoint! = CGPoint(x: 0, y: 0)
     var panDirection:CTAPanDirection = .None
-    var panHorDirection:CTAPanHorDirection = .None
+    var panHorDirection:CTAPanHorDirection = .none
     
     var loadMoreChangeView:Bool = false
     
@@ -55,7 +55,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.initView()
         self.view.backgroundColor = CTAStyleKit.lightGrayBackgroundColor
         if !self.isAddOber{
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CTAHomeViewController.addNewPublish(_:)), name: "publishEditFile", object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(CTAHomeViewController.addNewPublish(_:)), name: NSNotification.Name(rawValue: "publishEditFile"), object: nil)
             self.isAddOber = true
         }
     }
@@ -66,16 +66,16 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if self.isDisMis{
             self.reloadView()
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CTAHomeViewController.reloadViewHandler(_:)), name: "loginComplete", object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(CTAHomeViewController.reloadViewHandler(_:)), name: NSNotification.Name(rawValue: "loginComplete"), object: nil)
 
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if self.isDisMis{
             self.viewAppearBegin()
@@ -83,12 +83,12 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.isDisMis = false
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.loginUser = nil
         self.isDisMis = true
         self.hideLoadingView()
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginComplete", object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "loginComplete"), object: nil)
     }
 
     /*
@@ -102,13 +102,13 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     */
     
     func initView(){
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         let fullSize = self.getCellSize()
         self.horSpace = 10*self.getHorRate()
         self.verSpace = 5*self.getHorRate()
         self.handView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: bounds.width, height: fullSize.height+(self.verSpace*3 + 6)))
         self.handView.center = CGPoint.init(x: bounds.width/2, y: bounds.height/2)
-        self.handView.backgroundColor = UIColor.clearColor()
+        self.handView.backgroundColor = UIColor.clear
         let pan = UIPanGestureRecognizer(target: self, action: #selector(CTAHomeViewController.viewPanHandler(_:)))
         pan.minimumNumberOfTouches = 1
         pan.maximumNumberOfTouches = 1
@@ -144,51 +144,51 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.shadeView.frame.size.width = fullSize.width  - self.horSpace*6
         self.handView.addSubview(self.shadeView)
         addCellShadow(self.shadeView)
-        self.shadeView.superview?.sendSubviewToBack(self.shadeView)
+        self.shadeView.superview?.sendSubview(toBack: self.shadeView)
         self.setCellsPosition()
         
         let userButton = UIButton.init(frame: CGRect.init(x: bounds.size.width - 45, y: 2, width: 40, height: 40))
-        userButton.setImage(UIImage.init(named: "userview-button"), forState: .Normal)
-        userButton.setImage(UIImage.init(named: "userview-selected-button"), forState: .Highlighted)
-        userButton.addTarget(self, action: #selector(CTAHomeViewController.userButtonClick(_:)), forControlEvents: .TouchUpInside)
+        userButton.setImage(UIImage.init(named: "userview-button"), for: UIControlState())
+        userButton.setImage(UIImage.init(named: "userview-selected-button"), for: .highlighted)
+        userButton.addTarget(self, action: #selector(CTAHomeViewController.userButtonClick(_:)), for: .touchUpInside)
         self.view.addSubview(userButton)
         self.initPublishSubView(self.handView.frame, horRate: self.getHorRate())
-        self.likeButton.addTarget(self, action: #selector(CTAHomeViewController.likeButtonClick(_:)), forControlEvents: .TouchUpInside)
-        self.moreButton.addTarget(self, action: #selector(CTAHomeViewController.moreButtonClick(_:)), forControlEvents: .TouchUpInside)
-        self.rebuildButton.addTarget(self, action: #selector(CTAHomeViewController.rebuildButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.likeButton.addTarget(self, action: #selector(CTAHomeViewController.likeButtonClick(_:)), for: .touchUpInside)
+        self.moreButton.addTarget(self, action: #selector(CTAHomeViewController.moreButtonClick(_:)), for: .touchUpInside)
+        self.rebuildButton.addTarget(self, action: #selector(CTAHomeViewController.rebuildButtonClick(_:)), for: .touchUpInside)
         let iconTap = UITapGestureRecognizer(target: self, action: #selector(CTAHomeViewController.userIconClick(_:)))
         self.userIconImage.addGestureRecognizer(iconTap)
-        self.publishDateLabel.hidden = true
+        self.publishDateLabel.isHidden = true
     }
     
     func setCellsPosition(){
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         let fullSize = self.getCellSize()
         var rateW  = (fullSize.width  - self.horSpace*4)/fullSize.width
         var rateH = (fullSize.height - self.horSpace*4)/fullSize.height
         self.nextMoreCell.center = CGPoint.init(x: bounds.width/2, y: (self.horSpace+self.verSpace)*2+fullSize.height/2)
-        self.nextMoreCell.transform = CGAffineTransformMakeScale(rateW, rateH)
+        self.nextMoreCell.transform = CGAffineTransform(scaleX: rateW, y: rateH)
         self.nextMoreCell.setViewColor(UIColor.init(red: 194/255, green: 194/255, blue: 194/255, alpha: 1))
         self.nextMoreCell.alpha = 1
         
         rateW  = (fullSize.width  - self.horSpace*2)/fullSize.width
         rateH = (fullSize.height - self.horSpace*2)/fullSize.height
         self.nextFullCell.center = CGPoint.init(x: bounds.width/2, y: self.horSpace+self.verSpace+fullSize.height/2)
-        self.nextFullCell.transform = CGAffineTransformMakeScale(rateW, rateH)
+        self.nextFullCell.transform = CGAffineTransform(scaleX: rateW, y: rateH)
         self.nextFullCell.setViewColor(UIColor.init(red: 180/255, green: 180/255, blue: 180/255, alpha: 1))
         self.nextFullCell.alpha = 1
         
         rateW  = 1
         rateH = 1
         self.currentFullCell.center = CGPoint.init(x: bounds.width/2, y: fullSize.height/2)
-        self.currentFullCell.transform = CGAffineTransformMakeScale(rateW, rateH)
+        self.currentFullCell.transform = CGAffineTransform(scaleX: rateW, y: rateH)
         self.currentFullCell.removeViewColor()
         self.currentFullCell.alpha = 1
         
         rateW  = 1
         rateH = 1
         self.preFullCell.center = CGPoint.init(x: bounds.width*3/2, y: fullSize.height*3/2)
-        self.preFullCell.transform = CGAffineTransformMakeScale(rateW, rateH)
+        self.preFullCell.transform = CGAffineTransform(scaleX: rateW, y: rateH)
         self.preFullCell.removeViewColor()
         self.preFullCell.alpha = 1
         
@@ -226,11 +226,11 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         }
     }
     
-    func addNewPublish(noti: NSNotification){
+    func addNewPublish(_ noti: Notification){
         self.isAddNew = true
     }
     
-    func reloadViewHandler(noti: NSNotification){
+    func reloadViewHandler(_ noti: Notification){
         self.getLoginUser()
         self.viewUserID = (self.loginUser == nil) ? "-1" : self.loginUser!.userID
         self.loadNewCellData()
@@ -269,21 +269,21 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     
     func resetView(){
         self.changeDetailUser()
-        self.nextFullCell.hidden = true
+        self.nextFullCell.isHidden = true
         self.nextFullCell.publishModel = nil
-        self.nextMoreCell.hidden = true
+        self.nextMoreCell.isHidden = true
         self.nextMoreCell.publishModel = nil
         self.currentFullCell.publishModel = nil
         self.preFullCell.publishModel = nil
         self.changeViewButtonStatus(false)
     }
     
-    func changeViewButtonStatus(isEnable:Bool){
+    func changeViewButtonStatus(_ isEnable:Bool){
         let subViews = self.view.subviews
         for i in 0..<subViews.count{
             let subView = subViews[i]
             if subView is UIButton{
-                (subView as! UIButton).enabled = isEnable
+                (subView as! UIButton).isEnabled = isEnable
             }
         }
     }
@@ -295,7 +295,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.loadNewPublishes(0)
     }
     
-    func firstLoadComplete(info:CTADomainListInfo!){
+    func firstLoadComplete(_ info:CTADomainListInfo!){
         self.hideLoadingView()
         self.changeViewButtonStatus(true)
         if info.result {
@@ -316,7 +316,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.loadNewPublishes(0)
     }
     
-    func loadNewComplete(info:CTADomainListInfo!){
+    func loadNewComplete(_ info:CTADomainListInfo!){
         self.resetFirstLoadView({ () -> Void in
             self.hideLoadingView()
         })
@@ -336,13 +336,13 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         }
     }
 
-    func loadMoreCellData(isChangeView:Bool){
+    func loadMoreCellData(_ isChangeView:Bool){
         self.loadMoreChangeView = isChangeView
         self.loadDataCompleteFuc = self.loadMoreComplete
         self.loadNewPublishes(self.publishModelArray.count)
     }
     
-    func loadMoreComplete(info:CTADomainListInfo!){
+    func loadMoreComplete(_ info:CTADomainListInfo!){
         if info.result {
             let modelArray = info.modelArray
             self.loadMoreModelArray(modelArray!)
@@ -353,7 +353,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
     }
     
     
-    func loadFirstModelArray(modelArray:Array<AnyObject>) -> Bool{
+    func loadFirstModelArray(_ modelArray:Array<AnyObject>) -> Bool{
         var isChange = false
         if modelArray.count > 0{
             if self.publishModelArray.count > 0{
@@ -365,8 +365,8 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                     }else {
                         let index = self.getPublishIndex(newmodel.publishID, publishArray: self.publishModelArray)
                         if index != -1{
-                            self.publishModelArray.insert(newmodel, atIndex: index)
-                            self.publishModelArray.removeAtIndex(index+1)
+                            self.publishModelArray.insert(newmodel, at: index)
+                            self.publishModelArray.remove(at: index+1)
                         }
                     }
                 }
@@ -400,7 +400,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         }
     }
     
-    func loadMoreModelArray(modelArray:Array<AnyObject>){
+    func loadMoreModelArray(_ modelArray:Array<AnyObject>){
         for i in 0..<modelArray.count{
             let publishModel = modelArray[i] as! CTAPublishModel
             if !self.checkPublishModelIsHave(publishModel.publishID, publishArray: self.publishModelArray){
@@ -408,14 +408,14 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             }else {
                 let index = self.getPublishIndex(publishModel.publishID, publishArray: self.publishModelArray)
                 if index != -1 {
-                    self.publishModelArray.removeAtIndex(index)
+                    self.publishModelArray.remove(at: index)
                     self.publishModelArray.append(publishModel)
                 }
             }
         }
     }
     
-    func getPublishIndex(publishID:String, publishArray:Array<CTAPublishModel>) -> Int{
+    func getPublishIndex(_ publishID:String, publishArray:Array<CTAPublishModel>) -> Int{
         for i in 0..<publishArray.count{
             let oldPublihModel = publishArray[i]
             if oldPublihModel.publishID == publishID{
@@ -425,7 +425,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         return -1
     }
     
-    func checkPublishModelIsHave(publishID:String, publishArray:Array<CTAPublishModel>) -> Bool{
+    func checkPublishModelIsHave(_ publishID:String, publishArray:Array<CTAPublishModel>) -> Bool{
         for i in 0..<publishArray.count{
             let oldPublihModel = publishArray[i]
             if oldPublihModel.publishID == publishID{
@@ -435,14 +435,14 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         return false
     }
     
-    func loadDataError(error:ErrorType?){
+    func loadDataError(_ error:Error?){
         if error != nil {
             if error is CTAInternetError {
                 self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                 })
             }else {
                 let error = error as! CTAPublishListError
-                if error == .DataIsEmpty{
+                if error == .dataIsEmpty{
                     self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                     })
                 }else {
@@ -458,8 +458,8 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         if self.currentPublishIndex < self.publishModelArray.count && self.currentPublishIndex > -1{
             let currentModel = self.publishModelArray[self.currentPublishIndex]
             self.changePublishView(currentModel)
-            self.currentFullCell.superview?.bringSubviewToFront(self.currentFullCell)
-            self.currentFullCell.hidden = false
+            self.currentFullCell.superview?.bringSubview(toFront: self.currentFullCell)
+            self.currentFullCell.isHidden = false
             if self.currentFullCell.publishModel != nil && self.currentFullCell.publishModel!.publishID == currentModel.publishID{
                 self.currentFullCell.playAnimation()
             }else {
@@ -468,8 +468,8 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             }
             self.setLikeButtonStyle()
             
-            self.preFullCell.superview?.bringSubviewToFront(self.preFullCell)
-            self.preFullCell.hidden = false
+            self.preFullCell.superview?.bringSubview(toFront: self.preFullCell)
+            self.preFullCell.isHidden = false
             if self.currentPublishIndex > 0 {
                 let preModel = self.publishModelArray[self.currentPublishIndex-1]
                 if self.preFullCell.publishModel != nil && self.preFullCell.publishModel!.publishID == preModel.publishID{
@@ -481,7 +481,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 self.preFullCell.publishModel = nil
             }
             
-            self.nextFullCell.superview?.sendSubviewToBack(self.nextFullCell)
+            self.nextFullCell.superview?.sendSubview(toBack: self.nextFullCell)
             if self.currentPublishIndex < self.publishModelArray.count - 1{
                 let nextModel = self.publishModelArray[self.currentPublishIndex+1]
                 if self.nextFullCell.publishModel != nil && self.nextFullCell.publishModel!.publishID == nextModel.publishID{
@@ -489,15 +489,15 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 }else {
                     self.nextFullCell.publishModel = nextModel
                 }
-                if self.nextFullCell.hidden {
+                if self.nextFullCell.isHidden {
                     self.showCellAnimation(self.nextFullCell)
                 }
             }else {
-                self.nextFullCell.hidden = true
+                self.nextFullCell.isHidden = true
                 self.nextFullCell.publishModel = nil
             }
             
-            self.nextMoreCell.superview?.sendSubviewToBack(self.nextMoreCell)
+            self.nextMoreCell.superview?.sendSubview(toBack: self.nextMoreCell)
             if self.currentPublishIndex < self.publishModelArray.count - 2{
                 let nextMoreModel = self.publishModelArray[self.currentPublishIndex+2]
                 if self.nextMoreCell.publishModel != nil && self.nextMoreCell.publishModel!.publishID == nextMoreModel.publishID{
@@ -505,29 +505,29 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 }else {
                     self.nextMoreCell.publishModel = nextMoreModel
                 }
-                if self.nextMoreCell.hidden == true {
+                if self.nextMoreCell.isHidden == true {
                     self.showCellAnimation(self.nextMoreCell)
                 }
             }else {
-                self.nextMoreCell.hidden = true
+                self.nextMoreCell.isHidden = true
                 self.nextMoreCell.publishModel = nil
             }
-            self.shadeView.superview?.sendSubviewToBack(self.shadeView)
+            self.shadeView.superview?.sendSubview(toBack: self.shadeView)
         }else {
             self.resetView()
         }
     }
     
-    func showCellAnimation(cell:UIView){
+    func showCellAnimation(_ cell:UIView){
         cell.alpha = 0
-        cell.hidden = false
-        UIView.animateWithDuration(0.2) { () -> Void in
+        cell.isHidden = false
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
             cell.alpha = 1
-        }
+        }) 
     }
     
     
-    func loadNewPublishes(startIndex:Int){
+    func loadNewPublishes(_ startIndex:Int){
         let userID = (self.loginUser == nil) ? "" : self.loginUser!.userID
         
         #if DEBUG
@@ -565,23 +565,23 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.savePublishArray(request, modelArray: savePublishModel)
     }
     
-    func viewTapHandler(sender: UITapGestureRecognizer) {
+    func viewTapHandler(_ sender: UITapGestureRecognizer) {
         if self.loginUser != nil && self.currentFullCell.publishModel != nil{
             self.likeHandler(true)
         }
     }
     
-    func viewPanHandler(sender: UIPanGestureRecognizer) {
+    func viewPanHandler(_ sender: UIPanGestureRecognizer) {
         switch sender.state{
-        case .Began:
-            self.beganLocation = sender.locationInView(view)
+        case .began:
+            self.beganLocation = sender.location(in: view)
             self.panDirection = .None
-        case .Changed:
-            let newLocation = sender.locationInView(view)
+        case .changed:
+            let newLocation = sender.location(in: view)
             if self.panDirection == .None {
                 if abs(newLocation.x - self.beganLocation!.x)*5 > abs(newLocation.y - self.beganLocation!.y){
                     self.panDirection = .Hor
-                    self.panHorDirection = .None
+                    self.panHorDirection = .none
                     self.viewHorPanHandler(newLocation)
                 }else {
                     self.panDirection = .Ver
@@ -592,9 +592,9 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             }else if self.panDirection == .Ver{
                 self.viewVerPanHandler(newLocation)
             }
-        case .Ended, .Cancelled, .Failed:
-            let velocity = sender.velocityInView(view)
-            let newLocation = sender.locationInView(view)
+        case .ended, .cancelled, .failed:
+            let velocity = sender.velocity(in: view)
+            let newLocation = sender.location(in: view)
             if self.panDirection == .Hor {
                 if velocity.x > 500 || velocity.x < -500{
                     self.horPanAnimation(velocity.x)
@@ -602,7 +602,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                     self.viewHorComplete(newLocation)
                 }
                 self.beganLocation = CGPoint(x: 0, y: 0)
-                self.panHorDirection = .None
+                self.panHorDirection = .none
             }else if self.panDirection == .Ver {
                 if velocity.y > 500 || velocity.y < -500{
                     self.verPanAnimation(velocity.y)
@@ -616,15 +616,15 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         }
     }
     
-    func viewHorPanHandler(location:CGPoint){
-        let bounds = UIScreen.mainScreen().bounds
+    func viewHorPanHandler(_ location:CGPoint){
+        let bounds = UIScreen.main.bounds
         let fullSize = self.getCellSize()
         let maxX = bounds.width/2 + fullSize.width*2/3
         let maxY = (bounds.width-fullSize.width)
         let maxR:CGFloat = 30.00
         var xChange = location.x - self.beganLocation.x
         if xChange > 0{
-            self.panHorDirection = .Next
+            self.panHorDirection = .next
             var percent = xChange / maxX
             if self.currentPublishIndex > self.publishModelArray.count - 2 {
                 xChange = 0
@@ -633,7 +633,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             let rChange = 0+maxR*percent
             let rChangePI=rChange/360*CGFloat(M_PI)
             let yChange = abs(percent*maxY)
-            self.currentFullCell.transform = CGAffineTransformMakeRotation(rChangePI)
+            self.currentFullCell.transform = CGAffineTransform(rotationAngle: rChangePI)
             self.currentFullCell.center = CGPoint.init(x: bounds.width/2+xChange, y: fullSize.height/2+yChange)
             
             let nextHor = self.horSpace*percent
@@ -641,14 +641,14 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
             self.changeCellSizeBySpace(nextHor, verSpace: nextVer, ischangeCurrent: false)
             self.changeViewColor(percent)
         }else {
-            self.panHorDirection = .Previous
+            self.panHorDirection = .previous
             if self.currentPublishIndex > 0 {
                 xChange = maxX+xChange
                 let percent = xChange / maxX
                 let rChange = 0+maxR*percent
                 let rChangePI=rChange/360*CGFloat(M_PI)
                 let yChange = abs(percent*maxY)
-                self.preFullCell.transform = CGAffineTransformMakeRotation(rChangePI)
+                self.preFullCell.transform = CGAffineTransform(rotationAngle: rChangePI)
                 self.preFullCell.center = CGPoint.init(x: bounds.width/2+xChange, y: fullSize.height/2+yChange)
                 
                 let nextHor = self.horSpace*percent - self.horSpace
@@ -661,66 +661,66 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         }
     }
     
-    func viewVerPanHandler(location:CGPoint){
+    func viewVerPanHandler(_ location:CGPoint){
         let yChange = location.y - self.beganLocation.y
         if yChange > 0{
             self.firstLoadViewMove(yChange/4)
         }
     }
     
-    func viewVerComplete(newLocation:CGPoint){
+    func viewVerComplete(_ newLocation:CGPoint){
         let yRate = newLocation.y - beganLocation.y
         if yRate >= 20{
             self.loadNewCellData()
         }else {
             self.resetFirstLoadView({ () -> Void in
-                self.horPanComplete(.Previous, isChange: false)
+                self.horPanComplete(.previous, isChange: false)
             })
         }
     }
     
-    func verPanAnimation(yRate:CGFloat){
+    func verPanAnimation(_ yRate:CGFloat){
         if yRate > 0{
             self.loadNewCellData()
         }
     }
     
-    func changeViewColor(percent:CGFloat){
+    func changeViewColor(_ percent:CGFloat){
         switch self.panHorDirection{
-        case .Next:
+        case .next:
             self.changeNextViewColor(percent)
-        case .Previous:
+        case .previous:
             self.changePreViewColor(percent)
         default:
             ()
         }
     }
 
-    func changeNextViewColor(percent:CGFloat){
-        if !self.nextFullCell.hidden {
+    func changeNextViewColor(_ percent:CGFloat){
+        if !self.nextFullCell.isHidden {
             self.nextFullCell.setViewColor(UIColor.init(red: 180/255, green: 180/255, blue: 180/255, alpha: 1*(1-percent)))
         }
-        if !self.nextMoreCell.hidden {
+        if !self.nextMoreCell.isHidden {
             let rate = 194 - (194 - 180) * percent
             self.nextMoreCell.setViewColor(UIColor.init(red: rate/255, green: rate/255, blue: rate/255, alpha: 1))
         }
     }
 
-    func changePreViewColor(percent:CGFloat){
-        if !self.currentFullCell.hidden {
+    func changePreViewColor(_ percent:CGFloat){
+        if !self.currentFullCell.isHidden {
             self.currentFullCell.setViewColor(UIColor.init(red: 180/255, green: 180/255, blue: 180/255, alpha: 1*(1-percent)))
         }
-        if !self.nextFullCell.hidden {
+        if !self.nextFullCell.isHidden {
             let rate = 194 - (194 - 180) * percent
             self.nextFullCell.setViewColor(UIColor.init(red: rate/255, green: rate/255, blue: rate/255, alpha: 1))
         }
-        if !self.nextMoreCell.hidden {
+        if !self.nextMoreCell.isHidden {
             self.nextMoreCell.alpha = 1*percent
         }
     }
 
-    func viewHorComplete(newLocation:CGPoint){
-        let maxDir = (UIScreen.mainScreen().bounds.width * 0.7)
+    func viewHorComplete(_ newLocation:CGPoint){
+        let maxDir = (UIScreen.main.bounds.width * 0.7)
         let xRate = newLocation.x - beganLocation.x
         if abs(xRate) >= maxDir/2 {
             self.horPanAnimation(xRate)
@@ -729,27 +729,27 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         }
     }
     
-    func horPanAnimation(xRate:CGFloat){
-        let bounds = UIScreen.mainScreen().bounds
+    func horPanAnimation(_ xRate:CGFloat){
+        let bounds = UIScreen.main.bounds
         let fullSize = self.getCellSize()
         let maxX = bounds.width/2 + fullSize.width*2/3
         let maxY = (bounds.width-fullSize.width)
         let maxR:CGFloat = 30.00
         if xRate > 0{
-            if self.panHorDirection == .Next{
+            if self.panHorDirection == .next{
                 if self.currentPublishIndex < self.publishModelArray.count - 1 {
                     let rChange = 0+maxR
                     let rChangePI=rChange/360*CGFloat(M_PI)
                     
-                    UIView.animateWithDuration(0.2, animations: { () -> Void in
-                        self.currentFullCell.transform = CGAffineTransformMakeRotation(rChangePI)
+                    UIView.animate(withDuration: 0.2, animations: { () -> Void in
+                        self.currentFullCell.transform = CGAffineTransform(rotationAngle: rChangePI)
                         self.currentFullCell.center = CGPoint.init(x: bounds.width/2+maxX, y: fullSize.height/2+maxY)
                         let nextHor = self.horSpace
                         let nextVer = self.verSpace
                         self.changeCellSizeBySpace(nextHor, verSpace: nextVer, ischangeCurrent: false)
                         self.changeViewColor(1)
                         }, completion: { (_) -> Void in
-                            self.horPanComplete(.Next, isChange: true)
+                            self.horPanComplete(.next, isChange: true)
                     })
                 }else {
                     self.horPanResetAnimation(xRate)
@@ -757,19 +757,19 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 }
             }
         }else {
-            if self.panHorDirection == .Previous{
+            if self.panHorDirection == .previous{
                 if self.currentPublishIndex > 0 {
                     let rChange:CGFloat = 0
                     let rChangePI=rChange/360*CGFloat(M_PI)
-                    UIView.animateWithDuration(0.2, animations: { () -> Void in
-                        self.preFullCell.transform = CGAffineTransformMakeRotation(rChangePI)
+                    UIView.animate(withDuration: 0.2, animations: { () -> Void in
+                        self.preFullCell.transform = CGAffineTransform(rotationAngle: rChangePI)
                         self.preFullCell.center = CGPoint.init(x: bounds.width/2, y: fullSize.height/2)
                         let nextHor = 0 - self.horSpace
                         let nextVer = 0 - self.verSpace
                         self.changeCellSizeBySpace(nextHor, verSpace: nextVer, ischangeCurrent: true)
                         self.changeViewColor(0)
                         }, completion: { (_) -> Void in
-                            self.horPanComplete(.Previous, isChange: true)
+                            self.horPanComplete(.previous, isChange: true)
                     })
                 }else {
                     //self.loadNewCellData()
@@ -778,8 +778,8 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         }
     }
     
-    func horPanResetAnimation(xRate:CGFloat){
-        let bounds = UIScreen.mainScreen().bounds
+    func horPanResetAnimation(_ xRate:CGFloat){
+        let bounds = UIScreen.main.bounds
         let fullSize = self.getCellSize()
         let maxX = bounds.width/2 + fullSize.width*2/3
         let maxY = (bounds.width-fullSize.width)
@@ -787,13 +787,13 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         if xRate > 0{
             let rChange:CGFloat = 0.0
             let rChangePI=rChange/360*CGFloat(M_PI)
-            UIView.animateWithDuration(0.2, animations: { () -> Void in
-                self.currentFullCell.transform = CGAffineTransformMakeRotation(rChangePI)
+            UIView.animate(withDuration: 0.2, animations: { () -> Void in
+                self.currentFullCell.transform = CGAffineTransform(rotationAngle: rChangePI)
                 self.currentFullCell.center = CGPoint.init(x: bounds.width/2, y: fullSize.height/2)
                 self.changeCellSizeBySpace(0, verSpace: 0, ischangeCurrent: false)
                 self.changeViewColor(0)
                 }, completion: { (_) -> Void in
-                    self.horPanComplete(.Next, isChange: false)
+                    self.horPanComplete(.next, isChange: false)
             })
         }else {
             if self.currentPublishIndex > 0 {
@@ -801,13 +801,13 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 let rChangePI=rChange/360*CGFloat(M_PI)
                 let yChange = maxY
                 let xChange = maxX
-                UIView.animateWithDuration(0.2, animations: { () -> Void in
-                    self.preFullCell.transform = CGAffineTransformMakeRotation(rChangePI)
+                UIView.animate(withDuration: 0.2, animations: { () -> Void in
+                    self.preFullCell.transform = CGAffineTransform(rotationAngle: rChangePI)
                     self.preFullCell.center = CGPoint.init(x: bounds.width/2+xChange, y: fullSize.height/2+yChange)
                     self.changeCellSizeBySpace(0, verSpace: 0, ischangeCurrent: true)
                     self.changeViewColor(1)
                     }, completion: { (_) -> Void in
-                        self.horPanComplete(.Previous, isChange: false)
+                        self.horPanComplete(.previous, isChange: false)
                 })
             }else {
 //                self.resetFirstLoadView({ () -> Void in
@@ -818,13 +818,13 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         }
     }
     
-    func firstLoadViewMove(yMove:CGFloat){
-        let bounds = UIScreen.mainScreen().bounds
-        if !self.loadingImageView!.isDescendantOfView(self.view){
+    func firstLoadViewMove(_ yMove:CGFloat){
+        let bounds = UIScreen.main.bounds
+        if !self.loadingImageView!.isDescendant(of: self.view){
             self.view.addSubview(self.loadingImageView!)
             self.loadingImageView!.image = UIImage(named: "fresh-icon-1")
             self.loadingImageView!.frame = CGRect.init(x: bounds.width/2-20, y: self.handView.frame.origin.y, width: 40, height: 40)
-            self.view.sendSubviewToBack(self.loadingImageView!)
+            self.view.sendSubview(toBack: self.loadingImageView!)
         }
         var yChange = yMove
         let maxSpace:CGFloat = 40
@@ -834,46 +834,46 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         self.handView.center = CGPoint.init(x: bounds.width/2, y: bounds.height/2+yChange)
     }
     
-    func resetFirstLoadView(completion: (() -> Void)?){
-        let bounds = UIScreen.mainScreen().bounds
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
+    func resetFirstLoadView(_ completion: (() -> Void)?){
+        let bounds = UIScreen.main.bounds
+        UIView.animate(withDuration: 0.3, animations: { () -> Void in
             self.handView.center = CGPoint.init(x: bounds.width/2, y: bounds.height/2)
             }, completion: { (_) -> Void in
                 completion?()
         })
     }
     
-    func changeCellSizeBySpace(horSpace:CGFloat, verSpace:CGFloat, ischangeCurrent:Bool){
-        let bounds = UIScreen.mainScreen().bounds
+    func changeCellSizeBySpace(_ horSpace:CGFloat, verSpace:CGFloat, ischangeCurrent:Bool){
+        let bounds = UIScreen.main.bounds
         let fullSize = self.getCellSize()
         var rateW  = (fullSize.width  - self.horSpace*4 + horSpace*2)/fullSize.width
         var rateH = (fullSize.height - self.horSpace*4 + horSpace*2)/fullSize.height
-        if !self.nextMoreCell.hidden {
+        if !self.nextMoreCell.isHidden {
             let point = self.nextMoreCell.center
             self.nextMoreCell.center = CGPoint.init(x: point.y, y: (point.y - verSpace))
             self.nextMoreCell.center = CGPoint(x: bounds.width/2, y: (self.horSpace+self.verSpace)*2+fullSize.height/2-(horSpace+verSpace))
-            self.nextMoreCell.transform = CGAffineTransformMakeScale(rateW, rateH)
+            self.nextMoreCell.transform = CGAffineTransform(scaleX: rateW, y: rateH)
         }
         rateW  = (fullSize.width  - (self.horSpace-horSpace)*2)/fullSize.width
         rateH = (fullSize.height - (self.horSpace-horSpace)*2)/fullSize.height
-        if !self.nextFullCell.hidden {
+        if !self.nextFullCell.isHidden {
             self.nextFullCell.center = CGPoint(x: bounds.width/2, y: (self.horSpace+self.verSpace)+fullSize.height/2-(horSpace+verSpace))
-            self.nextFullCell.transform = CGAffineTransformMakeScale(rateW, rateH)
+            self.nextFullCell.transform = CGAffineTransform(scaleX: rateW, y: rateH)
         }
         if ischangeCurrent{
             rateW  = (fullSize.width + horSpace*2)/fullSize.width
             rateH = (fullSize.height + horSpace*2)/fullSize.height
-            if !self.currentFullCell.hidden {
+            if !self.currentFullCell.isHidden {
                 self.currentFullCell.center = CGPoint.init(x: bounds.width/2, y: fullSize.height/2-(horSpace+verSpace))
-                self.currentFullCell.transform = CGAffineTransformMakeScale(rateW, rateH)
+                self.currentFullCell.transform = CGAffineTransform(scaleX: rateW, y: rateH)
             }
         }
     }
     
-    func horPanComplete(dir:CTAPanHorDirection, isChange:Bool){
+    func horPanComplete(_ dir:CTAPanHorDirection, isChange:Bool){
         if isChange {
             self.currentFullCell!.stopAnimation()
-            if dir == .Next{
+            if dir == .next{
                 let currentFull = self.currentFullCell
                 self.currentFullCell = self.nextFullCell
                 self.nextFullCell = self.nextMoreCell
@@ -886,7 +886,7 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
                 if self.currentPublishIndex > self.publishModelArray.count-5{
                     self.loadMoreCellData(false)
                 }
-            }else if dir == .Previous{
+            }else if dir == .previous{
                 let currentFull = self.currentFullCell
                 self.currentFullCell = self.preFullCell
                 self.preFullCell = self.nextMoreCell
@@ -904,11 +904,11 @@ class CTAHomeViewController: UIViewController, CTAPublishCellProtocol, CTALoginP
         }
     }
     
-    func userButtonClick(sender: UIButton){
+    func userButtonClick(_ sender: UIButton){
         if self.loginUser == nil {
             self.showLoginView(false)
         }else {
-           NSNotificationCenter.defaultCenter().postNotificationName("changePageView", object: 1)
+           NotificationCenter.default.post(name: Notification.Name(rawValue: "changePageView"), object: 1)
         }
     }
 }
@@ -928,7 +928,7 @@ extension CTAHomeViewController: CTAPublishProtocol{
         return self.currentFullCell
     }
     
-    func likeButtonClick(sender: UIButton){
+    func likeButtonClick(_ sender: UIButton){
         if self.loginUser == nil {
             self.showLoginView(false)
         }else if self.currentFullCell.publishModel != nil{
@@ -936,11 +936,11 @@ extension CTAHomeViewController: CTAPublishProtocol{
         }
     }
     
-    func moreButtonClick(sender: UIButton){
+    func moreButtonClick(_ sender: UIButton){
         self.moreSelectionHandler(false)
     }
     
-    func rebuildButtonClick(sender: UIButton){
+    func rebuildButtonClick(_ sender: UIButton){
         if self.loginUser == nil {
             self.showLoginView(false)
         }else if self.currentFullCell.publishModel != nil{
@@ -948,7 +948,7 @@ extension CTAHomeViewController: CTAPublishProtocol{
         }
     }
     
-    func userIconClick(sender: UIPanGestureRecognizer) {
+    func userIconClick(_ sender: UIPanGestureRecognizer) {
         if self.loginUser == nil {
             self.showLoginView(false)
         }else if let publishModel = self.currentFullCell.publishModel{

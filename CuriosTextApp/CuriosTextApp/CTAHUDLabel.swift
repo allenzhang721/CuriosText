@@ -15,7 +15,7 @@ class CTAHUDLabel: UILabel {
     override func layoutSubviews() {
         super.layoutSubviews()
         if showGradient {
-            backgroundColor = UIColor(patternImage: CTAStyleKit.imageOfGradientInHubLabel(frame: bounds))
+            backgroundColor = UIColor(patternImage: CTAStyleKit.imageOfGradientInHubLabel(imageSize: bounds.size))
         }
     }
 }

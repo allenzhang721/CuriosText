@@ -10,60 +10,60 @@ import UIKit
 
 class TouchTextView: UITextView {
     enum TouchState {
-        case Began, End, Cancel
+        case began, end, cancel
     }
     
     enum ActiveState {
-        case Actived(NSRange), Inactive
+        case actived(NSRange), inactive
     }
     
     var touchHandler: ((TouchTextView, TouchState ,Int) -> ActiveState)?
-    private var overlayView: UIView {
+    fileprivate var overlayView: UIView {
         if let v = viewWithTag(999) {
             return v
         } else {
             let v = UIView()
             v.tag = 999
             v.alpha = 0
-            v.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.5)
+            v.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
             addSubview(v)
             return v
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        guard let point = touches.first?.locationInView(self) else {return}
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let point = touches.first?.location(in: self) else {return}
         let p = CGPoint(x: point.x - textContainerInset.left, y: point.y - textContainerInset.top)
-        let index = layoutManager.characterIndexForPoint(p, inTextContainer: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        let index = layoutManager.characterIndex(for: p, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
         
-        if let state = touchHandler?(self, .Began,index) {
-            if case let .Actived(range) = state {
-                let rect = layoutManager.boundingRectForGlyphRange(range, inTextContainer: textContainer)
+        if let state = touchHandler?(self, .began,index) {
+            if case let .actived(range) = state {
+                let rect = layoutManager.boundingRect(forGlyphRange: range, in: textContainer)
                 overlayView.frame = rect
                 overlayView.alpha = 0
                 overlayView.frame.origin.y += textContainerInset.top
-                UIView.animateWithDuration(0.1){[weak overlayView] in overlayView?.alpha = 1}
+                UIView.animate(withDuration: 0.1, animations: {[weak overlayView] in overlayView?.alpha = 1})
             }
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        UIView.animateWithDuration(0.5){[weak overlayView] in overlayView?.alpha = 0}
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        UIView.animate(withDuration: 0.5, animations: {[weak overlayView] in overlayView?.alpha = 0})
         
-        guard let point = touches.first?.locationInView(self) else {return}
+        guard let point = touches.first?.location(in: self) else {return}
         let p = CGPoint(x: point.x - textContainerInset.left, y: point.y - textContainerInset.top)
-        let index = layoutManager.characterIndexForPoint(p, inTextContainer: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        let index = layoutManager.characterIndex(for: p, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
         
-        touchHandler?(self, .End, index)
+        touchHandler?(self, .end, index)
     }
     
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        UIView.animateWithDuration(0.5){[weak overlayView] in overlayView?.alpha = 0}
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        UIView.animate(withDuration: 0.5, animations: {[weak overlayView] in overlayView?.alpha = 0})
         
-        guard let point = touches?.first?.locationInView(self) else {return}
+        guard let point = touches.first?.location(in: self) else {return}
         let p = CGPoint(x: point.x - textContainerInset.left, y: point.y - textContainerInset.top)
-        let index = layoutManager.characterIndexForPoint(p, inTextContainer: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        let index = layoutManager.characterIndex(for: p, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
         
-        touchHandler?(self, .Cancel, index)
+        touchHandler?(self, .cancel, index)
     }
 }

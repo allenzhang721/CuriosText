@@ -20,12 +20,12 @@ class CTAUserDomain: CTABaseDomain {
         return _instance!
     }
     
-    func login(phone: String, areaCode: String, passwd: String, compelecationBlock: (CTADomainInfo!) -> Void)  {
+    func login(_ phone: String, areaCode: String, passwd: String, compelecationBlock: @escaping (CTADomainInfo!) -> Void)  {
         
         CTALoginRequest(phone: phone, areaCode: areaCode, password: passwd).startWithCompletionBlockWithSuccess { (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                     let json:JSON = JSON(json)
                     let resultIndex = json[CTARequestResultKey.resultIndex].int!
                     let result = self.checkJsonResult(json)
@@ -35,18 +35,18 @@ class CTAUserDomain: CTABaseDomain {
                     } else{
                         compelecationBlock(CTADomainInfo(result: false, errorType: CTAUserLoginError(rawValue: resultIndex)!))
                     }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func phoneRegister(phone: String, areaCode: String, passwd: String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func phoneRegister(_ phone: String, areaCode: String, passwd: String, compelecationBlock: @escaping (CTADomainInfo!) -> Void) {
         
         CTAPhoneRegisterRequest(phone: phone, areaCode: areaCode, password: passwd).startWithCompletionBlockWithSuccess { (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -56,18 +56,18 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTAPhoneRegisterError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func weixinRegister(weixinID:String, nickName:String, sex:Int, country:String, province:String, city:String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func weixinRegister(_ weixinID:String, nickName:String, sex:Int, country:String, province:String, city:String, compelecationBlock: @escaping (CTADomainInfo!) -> Void) {
         
         CTAWeixinRegisterRequest(weixinID: weixinID, nickName: nickName, sex: sex, country: country, province: province, city: city).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -77,18 +77,18 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTAWeixinRegisterError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func weiboRegister(weiboID: String, nickName: String, userDesc:String, sex:Int,compelecationBlock: (CTADomainInfo!) -> Void) {
+    func weiboRegister(_ weiboID: String, nickName: String, userDesc:String, sex:Int,compelecationBlock: @escaping (CTADomainInfo!) -> Void) {
         
         CTAWeiboRegisterRequest(weiboID: weiboID, nickName: nickName, userDesc: userDesc, sex: sex).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -98,18 +98,18 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTAWeiboRegisterError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func updateUserInfo(userModel:CTAUserModel, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func updateUserInfo(_ userModel:CTAUserModel, compelecationBlock: @escaping (CTADomainInfo!) -> Void) {
         
         CTAUpdateUserInfoRequest(userModel: userModel).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -119,18 +119,18 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func updateNickname(userID:String, nickName:String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func updateNickname(_ userID:String, nickName:String, compelecationBlock: @escaping (CTADomainInfo!) -> Void) {
         
         CTAUpdateUserNicknameRequest(userID: userID, nickName: nickName).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -140,18 +140,18 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func updateUserDesc(userID:String, userDesc:String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func updateUserDesc(_ userID:String, userDesc:String, compelecationBlock: @escaping (CTADomainInfo!) -> Void) {
         
         CTAUpdateUserDescRequest(userID: userID, userDesc: userDesc).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -160,18 +160,18 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func updateUserIconURL(userID:String, userIconURL:String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func updateUserIconURL(_ userID:String, userIconURL:String, compelecationBlock: @escaping (CTADomainInfo!) -> Void) {
         
         CTAUpdateUserIconURLRequest(userID: userID, userIconURL: userIconURL).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -180,18 +180,18 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func updateUserAddress(userID:String, country: String, province: String, city: String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func updateUserAddress(_ userID:String, country: String, province: String, city: String, compelecationBlock: @escaping (CTADomainInfo!) -> Void) {
         
         CTAUpdateUserAddressRequest(userID: userID, country: country,  province: province, city: city).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -200,18 +200,18 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func updateUserSex(userID:String, sex: Int, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func updateUserSex(_ userID:String, sex: Int, compelecationBlock: @escaping (CTADomainInfo!) -> Void) {
         
         CTAUpdateUserSexRequest(userID: userID, sex: sex).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -220,16 +220,16 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func checkUserExist(phone:String, areaCode:String, compelecationBlock: (CTADomainInfo!) -> Void){
+    func checkUserExist(_ phone:String, areaCode:String, compelecationBlock: @escaping (CTADomainInfo!) -> Void){
         CTACheckUserExistRequest(phone: phone, areaCode: areaCode).startWithCompletionBlockWithSuccess{ (response) -> Void in
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -238,18 +238,18 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func bindingUserPhone(userID:String, phone: String, areaCode: String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func bindingUserPhone(_ userID:String, phone: String, areaCode: String, compelecationBlock: @escaping (CTADomainInfo!) -> Void) {
         
         CTABindingPhoneRequest(userID: userID, phone: phone, areaCode: areaCode).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -258,18 +258,18 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTABindingUserPhoneError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
 
-    func bindingUserWeixin(userID:String, weixinID: String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func bindingUserWeixin(_ userID:String, weixinID: String, compelecationBlock: @escaping (CTADomainInfo!) -> Void) {
         
         CTABindingWeixinIDRequest(userID: userID, weixinID: weixinID).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -278,18 +278,18 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTABindingUserWeixinError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func unBindingWeixinID(userID:String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func unBindingWeixinID(_ userID:String, compelecationBlock: @escaping (CTADomainInfo!) -> Void) {
         
         CTAUnBindingWeixinIDRequest(userID: userID).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -298,18 +298,18 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func bindingUserWeibo(userID:String, weibo:String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func bindingUserWeibo(_ userID:String, weibo:String, compelecationBlock: @escaping (CTADomainInfo!) -> Void) {
         
         CTABindingWeiboIDRequest(userID: userID, weiboID: weibo).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -318,18 +318,18 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTABindingUserWeiboError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func unBindingWeiboID(userID:String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func unBindingWeiboID(_ userID:String, compelecationBlock: @escaping (CTADomainInfo!) -> Void) {
         
         CTAUnBindingWeiboIDRequest(userID: userID).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -338,18 +338,18 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func checkPassword(userID:String, passwd:String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func checkPassword(_ userID:String, passwd:String, compelecationBlock: @escaping (CTADomainInfo!) -> Void) {
         
         CTACheckPasswordRequest(userID: userID, password: passwd).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -358,18 +358,18 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTACheckPasswordError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func updatePassword(userID:String, newPasswd:String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func updatePassword(_ userID:String, newPasswd:String, compelecationBlock: @escaping (CTADomainInfo!) -> Void) {
         
         CTAUpdatePasswordRequest(userID: userID, newPassword: newPasswd).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -378,18 +378,18 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func resetPassword(phone: String, areaCode: String, newPassword: String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func resetPassword(_ phone: String, areaCode: String, newPassword: String, compelecationBlock: @escaping (CTADomainInfo!) -> Void) {
         
         CTAResetPasswordRequest(phone: phone, areaCode: areaCode, newPassword: newPassword).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -399,18 +399,18 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTAResetPasswordError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func userDetail(userID: String, beUserID: String, compelecationBlock: (CTADomainInfo!) -> Void) {
+    func userDetail(_ userID: String, beUserID: String, compelecationBlock: @escaping (CTADomainInfo!) -> Void) {
         
         CTAUserDetailRequest(userID: userID, beUserID: beUserID).startWithCompletionBlockWithSuccess{ (response) -> Void in
             
             switch response.result {
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -420,8 +420,8 @@ class CTAUserDomain: CTABaseDomain {
                 } else{
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTAUserDetailError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }

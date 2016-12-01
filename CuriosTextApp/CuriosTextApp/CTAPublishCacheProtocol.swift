@@ -10,37 +10,37 @@ import Foundation
 import SwiftyJSON
 
 protocol CTAPublishCacheProtocol{
-    func savePublishArray(baseRequest:CTABaseRequest, modelArray:Array<CTAPublishModel>)
-    func getPublishArray(baseRequest:CTABaseRequest)->Array<CTAPublishModel>?
+    func savePublishArray(_ baseRequest:CTABaseRequest, modelArray:Array<CTAPublishModel>)
+    func getPublishArray(_ baseRequest:CTABaseRequest)->Array<CTAPublishModel>?
     
-    func saveUserDetail(baseRequest:CTABaseRequest, userDetail:CTAViewUserModel)
-    func getUserDetail(baseRequest:CTABaseRequest) -> CTAViewUserModel?
+    func saveUserDetail(_ baseRequest:CTABaseRequest, userDetail:CTAViewUserModel)
+    func getUserDetail(_ baseRequest:CTABaseRequest) -> CTAViewUserModel?
 }
 
 extension CTAPublishCacheProtocol {
     
-    func savePublishArray(baseRequest:CTABaseRequest, modelArray:Array<CTAPublishModel>){
+    func savePublishArray(_ baseRequest:CTABaseRequest, modelArray:Array<CTAPublishModel>){
         let dataURL = self.getRequestURL(baseRequest)
         var dataArray:Array<[String: AnyObject]> = []
         for i in 0..<modelArray.count{
             let model = modelArray[i]
             let modelDic = model.getData()
-            dataArray.append(modelDic)
+            dataArray.append(modelDic as [String : AnyObject])
         }
-        let dir:[String: AnyObject] = ["dataArray":dataArray]
-        let data = try? NSJSONSerialization.dataWithJSONObject(dir, options: NSJSONWritingOptions(rawValue: 0))
+        let dir:[String: AnyObject] = ["dataArray":dataArray as AnyObject]
+        let data = try? JSONSerialization.data(withJSONObject: dir, options: JSONSerialization.WritingOptions(rawValue: 0))
         if data != nil{
             BlackCatManager.init().storeData(data!, byURL: dataURL) { (result) -> () in
             }
         }
     }
     
-    func getPublishArray(baseRequest:CTABaseRequest) -> Array<CTAPublishModel>?{
+    func getPublishArray(_ baseRequest:CTABaseRequest) -> Array<CTAPublishModel>?{
         let dataURL = self.getRequestURL(baseRequest)
         var modelArray:Array<CTAPublishModel>? = nil
         BlackCatManager.init().retriveDataForURL(dataURL) { (data) -> () in
             if data != nil {
-                let dic = try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(rawValue: 0)) as! [String: AnyObject]
+                let dic = try? JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions(rawValue: 0)) as! [String: AnyObject]
                 let json:JSON = JSON(dic!)
                 let dataJson = json["dataArray"].array
                 if dataJson != nil {
@@ -55,22 +55,22 @@ extension CTAPublishCacheProtocol {
         return modelArray
     }
     
-    func saveUserDetail(baseRequest:CTABaseRequest, userDetail:CTAViewUserModel){
+    func saveUserDetail(_ baseRequest:CTABaseRequest, userDetail:CTAViewUserModel){
         let dataURL = self.getRequestURL(baseRequest)
-        let dir:[String: AnyObject] = userDetail.getData()
-        let data = try? NSJSONSerialization.dataWithJSONObject(dir, options: NSJSONWritingOptions(rawValue: 0))
+        let dir:[String: AnyObject] = userDetail.getData() as [String : AnyObject]
+        let data = try? JSONSerialization.data(withJSONObject: dir, options: JSONSerialization.WritingOptions(rawValue: 0))
         if data != nil{
             BlackCatManager.init().storeData(data!, byURL: dataURL) { (result) -> () in
             }
         }
     }
     
-    func getUserDetail(baseRequest:CTABaseRequest) -> CTAViewUserModel?{
+    func getUserDetail(_ baseRequest:CTABaseRequest) -> CTAViewUserModel?{
         let dataURL = self.getRequestURL(baseRequest)
         var model:CTAViewUserModel? = nil
         BlackCatManager.init().retriveDataForURL(dataURL) { (data) -> () in
             if data != nil {
-                let dic = try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(rawValue: 0)) as! [String: AnyObject]
+                let dic = try? JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions(rawValue: 0)) as! [String: AnyObject]
                 let json:JSON = JSON(dic!)
                 if json != nil {
                     model = CTAViewUserModel.generateFrom(json)
@@ -80,7 +80,7 @@ extension CTAPublishCacheProtocol {
         return model
     }
     
-    func getRequestURL(baseRequest:CTABaseRequest) -> String{
+    func getRequestURL(_ baseRequest:CTABaseRequest) -> String{
         let requestUrl = buildRequestUrl(baseRequest)
         let parament = baseRequest.parameter()
         var newParment:String = ""
@@ -93,11 +93,11 @@ extension CTAPublishCacheProtocol {
         return dataURL
     }
     
-    func getDicString(dic: AnyObject, errorMessage:String) ->String{
+    func getDicString(_ dic: AnyObject, errorMessage:String) ->String{
         do {
-            let data = try NSJSONSerialization.dataWithJSONObject(dic, options: NSJSONWritingOptions(rawValue: 0))
+            let data = try JSONSerialization.data(withJSONObject: dic, options: JSONSerialization.WritingOptions(rawValue: 0))
             
-            return NSString(data: data, encoding: NSUTF8StringEncoding) as! String
+            return NSString(data: data, encoding: String.Encoding.utf8.rawValue) as! String
         } catch let error {
             
             print("\(errorMessage) is error, error message \(error)")
@@ -106,7 +106,7 @@ extension CTAPublishCacheProtocol {
         }
     }
     
-    func buildRequestUrl(request: CTABaseRequest) -> String {
+    func buildRequestUrl(_ request: CTABaseRequest) -> String {
         let requestUrl = request.requestUrl()
         
         guard !requestUrl.hasPrefix("http") else {

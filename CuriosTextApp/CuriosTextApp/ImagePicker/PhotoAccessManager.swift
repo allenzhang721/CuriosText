@@ -14,26 +14,26 @@ func photoLibraryAuthorizedStatus() {
     let status = PHPhotoLibrary.authorizationStatus()
     switch status {
         
-    case .Authorized:
+    case .authorized:
         ()
-    case .Denied:
+    case .denied:
         ()
-    case .NotDetermined:
+    case .notDetermined:
         ()
-    case .Restricted:
+    case .restricted:
         ()
     }
     
     PHPhotoLibrary.requestAuthorization { (status) in
         switch status {
             
-        case .Authorized:
+        case .authorized:
             ()
-        case .Denied:
+        case .denied:
             ()
-        case .NotDetermined:
+        case .notDetermined:
             ()
-        case .Restricted:
+        case .restricted:
             ()
         }
     }

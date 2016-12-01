@@ -18,7 +18,7 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
     
     var isLogin:Bool = true
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
@@ -29,12 +29,12 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
         self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.reloadView()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
     }
     
@@ -45,22 +45,22 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
     
     func initView(){
         
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: 64))
         headerView.backgroundColor = CTAStyleKit.commonBackgroundColor
         self.view.addSubview(headerView)
         
         let accountLabel = UILabel.init(frame: CGRect.init(x: 0, y: 28, width: bounds.width, height: 28))
-        accountLabel.font = UIFont.boldSystemFontOfSize(18)
+        accountLabel.font = UIFont.boldSystemFont(ofSize: 18)
         accountLabel.textColor = CTAStyleKit.normalColor
         accountLabel.text = NSLocalizedString("AccountLabel", comment: "")
-        accountLabel.textAlignment = .Center
+        accountLabel.textAlignment = .center
         headerView.addSubview(accountLabel)
         
         let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 22, width: 40, height: 40))
-        backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
-        backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
-        backButton.addTarget(self, action: #selector(CTAAccountSettingViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
+        backButton.setImage(UIImage(named: "back-button"), for: UIControlState())
+        backButton.setImage(UIImage(named: "back-selected-button"), for: .highlighted)
+        backButton.addTarget(self, action: #selector(CTAAccountSettingViewController.backButtonClick(_:)), for: .touchUpInside)
         headerView.addSubview(backButton)
         
         var textLine = UIImageView.init(frame: CGRect.init(x: 0, y: 63, width: bounds.width, height: 1))
@@ -69,7 +69,7 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
         
         let phoneView = UIView(frame: CGRect(x: 0, y: 80, width: bounds.width, height: 40))
         let phoneTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: 9, width: 50, height: 22))
-        phoneTitle.font = UIFont.systemFontOfSize(16)
+        phoneTitle.font = UIFont.systemFont(ofSize: 16)
         phoneTitle.textColor = CTAStyleKit.normalColor
         phoneTitle.text = NSLocalizedString("PhoneLabel", comment: "")
         phoneTitle.sizeToFit()
@@ -81,18 +81,18 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
         textLine.image = UIImage(named: "space-line")
         phoneView.addSubview(textLine)
         self.phoneNumberLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 9, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
-        self.phoneNumberLabel.font = UIFont.systemFontOfSize(16)
+        self.phoneNumberLabel.font = UIFont.systemFont(ofSize: 16)
         self.phoneNumberLabel.textColor = CTAStyleKit.labelShowColor
-        self.phoneNumberLabel.textAlignment = .Right
+        self.phoneNumberLabel.textAlignment = .right
         phoneView.addSubview(self.phoneNumberLabel)
-        phoneView.userInteractionEnabled = true
+        phoneView.isUserInteractionEnabled = true
         let phoneTap = UITapGestureRecognizer(target: self, action: #selector(CTAAccountSettingViewController.phoneViewClick(_:)))
         phoneView.addGestureRecognizer(phoneTap)
         self.view.addSubview(phoneView)
         
         let weChatView = UIView(frame: CGRect(x: 0, y: 120, width: bounds.width, height: 40))
         let weChatTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: 9, width: 50, height: 22))
-        weChatTitle.font = UIFont.systemFontOfSize(16)
+        weChatTitle.font = UIFont.systemFont(ofSize: 16)
         weChatTitle.textColor = CTAStyleKit.normalColor
         weChatTitle.text = NSLocalizedString("WechatLabel", comment: "")
         weChatTitle.sizeToFit()
@@ -104,18 +104,18 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
         textLine.image = UIImage(named: "space-line")
         weChatView.addSubview(textLine)
         self.wechatLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 9, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
-        self.wechatLabel.font = UIFont.systemFontOfSize(16)
+        self.wechatLabel.font = UIFont.systemFont(ofSize: 16)
         self.wechatLabel.textColor = CTAStyleKit.labelShowColor
-        self.wechatLabel.textAlignment = .Right
+        self.wechatLabel.textAlignment = .right
         weChatView.addSubview(self.wechatLabel)
-        weChatView.userInteractionEnabled = true
+        weChatView.isUserInteractionEnabled = true
         let wechatTap = UITapGestureRecognizer(target: self, action: #selector(CTAAccountSettingViewController.wechatViewClick(_:)))
         weChatView.addGestureRecognizer(wechatTap)
         self.view.addSubview(weChatView)
         
         let weiboView = UIView(frame: CGRect(x: 0, y: 160, width: bounds.width, height: 40))
         let weiboTitle = UILabel(frame: CGRect(x: 27*self.getHorRate(), y: 9, width: 50, height: 22))
-        weiboTitle.font = UIFont.systemFontOfSize(16)
+        weiboTitle.font = UIFont.systemFont(ofSize: 16)
         weiboTitle.textColor = CTAStyleKit.normalColor
         weiboTitle.text = NSLocalizedString("WeiboLabel", comment: "")
         weiboTitle.sizeToFit()
@@ -127,11 +127,11 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
         textLine.image = UIImage(named: "space-line")
         weiboView.addSubview(textLine)
         self.weiboLabel = UILabel.init(frame: CGRect.init(x: 128*self.getHorRate(), y: 9, width: bounds.width - 153*self.getHorRate() - 15, height: 22))
-        self.weiboLabel.font = UIFont.systemFontOfSize(16)
+        self.weiboLabel.font = UIFont.systemFont(ofSize: 16)
         self.weiboLabel.textColor = CTAStyleKit.labelShowColor
-        self.weiboLabel.textAlignment = .Right
+        self.weiboLabel.textAlignment = .right
         weiboView.addSubview(self.weiboLabel)
-        weiboView.userInteractionEnabled = true
+        weiboView.isUserInteractionEnabled = true
         let weiboTap = UITapGestureRecognizer(target: self, action: #selector(CTAAccountSettingViewController.weiboViewClick(_:)))
         weiboView.addGestureRecognizer(weiboTap)
         self.view.addSubview(weiboView)
@@ -173,15 +173,15 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
         }
     }
     
-    func backButtonClick(sender: UIButton){
+    func backButtonClick(_ sender: UIButton){
         self.backHandler()
     }
     
     func backHandler(){
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
-    func phoneViewClick(sender: UIPanGestureRecognizer){
+    func phoneViewClick(_ sender: UIPanGestureRecognizer){
         if isLogin {
             let phone = self.loginUser!.phone
             let setMobileView = CTASetMobileNumberViewController.getInstance()
@@ -192,22 +192,22 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
                 setMobileView.setMobileNumberType = .changeMobileNumber
             }
             let navigationController = UINavigationController(rootViewController: setMobileView)
-            navigationController.navigationBarHidden = true
-            self.presentViewController(navigationController, animated: true, completion: {
+            navigationController.isNavigationBarHidden = true
+            self.present(navigationController, animated: true, completion: {
             })
         }
     }
     
-    func wechatViewClick(sender: UIPanGestureRecognizer){
+    func wechatViewClick(_ sender: UIPanGestureRecognizer){
         if isLogin {
             let wechatID = self.loginUser!.weixinID
             let userID = self.loginUser!.userID
             if wechatID == "" {
-                if CTASocialManager.isAppInstaller(.WeChat){
-                    CTASocialManager.OAuth(.WeChat) { (resultDic, urlResponse, error) -> Void in
+                if CTASocialManager.isAppInstaller(.weChat){
+                    CTASocialManager.oauth(.weChat) { (resultDic, urlResponse, error) -> Void in
                         if error == nil {
                             if resultDic != nil {
-                                let weixinID:String = resultDic![key(.Openid)] as! String
+                                let weixinID:String = resultDic![key(.openid)] as! String
                                 SVProgressHUD.show()
                                 CTAUserDomain.getInstance().bindingUserWeixin(userID, weixinID: weixinID, compelecationBlock: { (info) in
                                     SVProgressHUD.dismiss()
@@ -215,29 +215,29 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
                                         self.loginUser!.weixinID = weixinID
                                         CTAUserManager.save(self.loginUser!)
                                         self.reloadWechat()
-                                        SVProgressHUD.showSuccessWithStatus(NSLocalizedString("AlertLinkSuccess", comment: ""))
+                                        SVProgressHUD.showSuccess(withStatus: NSLocalizedString("AlertLinkSuccess", comment: ""))
                                     }else {
                                         if info.errorType is CTAInternetError {
                                             self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                             })
                                         }else {
                                             let error = info.errorType as! CTABindingUserWeixinError
-                                            if error == .UserIDIsEmpty {
+                                            if error == .userIDIsEmpty {
                                                 self.showSingleAlert(NSLocalizedString("AlertTitleUserNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                                 })
-                                            }else if error == .UserIDNotExist {
+                                            }else if error == .userIDNotExist {
                                                 self.showSingleAlert(NSLocalizedString("AlertTitleUserNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                                 })
-                                            }else if error == .WeixinIsEmpty {
+                                            }else if error == .weixinIsEmpty {
                                                 self.showSingleAlert(NSLocalizedString("AlertTitleAccountNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                                 })
-                                            }else if error == .WeixinExist {
+                                            }else if error == .weixinExist {
                                                 self.showSingleAlert(NSLocalizedString("AlertTitleAccountRegistExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                                 })
-                                            }else if error == .NeedContactWithService{
+                                            }else if error == .needContactWithService{
                                                 self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                                 })
-                                            }else if error == .DataIsEmpty{
+                                            }else if error == .dataIsEmpty{
                                                 self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                                 })
                                             }
@@ -263,7 +263,7 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
                 }
             }else {
                 if self.checkUnlinkStyle(){
-                    self.showSelectedAlert(NSLocalizedString("AlertTitleUnlink", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.Yes.description, cancelAlertLabel: LocalStrings.No.description, compelecationBlock: { (result) in
+                    self.showSelectedAlert(NSLocalizedString("AlertTitleUnlink", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.yes.description, cancelAlertLabel: LocalStrings.no.description, compelecationBlock: { (result) in
                         if result{
                             SVProgressHUD.show()
                             CTAUserDomain.getInstance().unBindingWeixinID(userID, compelecationBlock: { (info) in
@@ -272,7 +272,7 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
                                     self.loginUser!.weixinID = ""
                                     CTAUserManager.save(self.loginUser!)
                                     self.reloadWechat()
-                                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("AlertUnLinkSuccess", comment: ""))
+                                    SVProgressHUD.showSuccess(withStatus: NSLocalizedString("AlertUnLinkSuccess", comment: ""))
                                 }else {
                                     self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                     })
@@ -287,13 +287,13 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
         }
     }
     
-    func weiboViewClick(sender: UIPanGestureRecognizer){
+    func weiboViewClick(_ sender: UIPanGestureRecognizer){
         if isLogin {
             let weiboID = self.loginUser!.weiboID
             let userID = self.loginUser!.userID
             if weiboID == "" {
-                if CTASocialManager.isAppInstaller(.Weibo){
-                    CTASocialManager.OAuth(.Weibo){ (OAuthInfo, urlResponse, error) -> Void in
+                if CTASocialManager.isAppInstaller(.weibo){
+                    CTASocialManager.oauth(.weibo){ (OAuthInfo, urlResponse, error) -> Void in
                         if error == nil {
                             if OAuthInfo != nil {
                                 let weiboUID = (OAuthInfo?["uid"] ?? OAuthInfo?["userID"]) as? String
@@ -305,29 +305,29 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
                                         self.loginUser!.weiboID = weiboID!
                                         CTAUserManager.save(self.loginUser!)
                                         self.reloadWeibo()
-                                        SVProgressHUD.showSuccessWithStatus(NSLocalizedString("AlertLinkSuccess", comment: ""))
+                                        SVProgressHUD.showSuccess(withStatus: NSLocalizedString("AlertLinkSuccess", comment: ""))
                                     }else {
                                         if info.errorType is CTAInternetError {
                                             self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                             })
                                         }else {
                                             let error = info.errorType as! CTABindingUserWeiboError
-                                            if error == .UserIDIsEmpty {
+                                            if error == .userIDIsEmpty {
                                                 self.showSingleAlert(NSLocalizedString("AlertTitleUserNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                                 })
-                                            }else if error == .UserIDNotExist {
+                                            }else if error == .userIDNotExist {
                                                 self.showSingleAlert(NSLocalizedString("AlertTitleUserNotExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                                 })
-                                            }else if error == .WeiboIsEmpty {
+                                            }else if error == .weiboIsEmpty {
                                                 self.showSingleAlert(NSLocalizedString("AlertTitleAccountNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                                 })
-                                            }else if error == .WeiboExist {
+                                            }else if error == .weiboExist {
                                                 self.showSingleAlert(NSLocalizedString("AlertTitleAccountRegistExist", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                                 })
-                                            }else if error == .NeedContactWithService{
+                                            }else if error == .needContactWithService{
                                                 self.showSingleAlert(NSLocalizedString("AlertTitleConnectUs", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                                 })
-                                            }else if error == .DataIsEmpty{
+                                            }else if error == .dataIsEmpty{
                                                 self.showSingleAlert(NSLocalizedString("AlertTitleDataNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                                 })
                                             }
@@ -353,7 +353,7 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
                 }
             }else {
                 if self.checkUnlinkStyle(){
-                    self.showSelectedAlert(NSLocalizedString("AlertTitleUnlink", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.Yes.description, cancelAlertLabel: LocalStrings.No.description, compelecationBlock: { (result) in
+                    self.showSelectedAlert(NSLocalizedString("AlertTitleUnlink", comment: ""), alertMessage: "", okAlertLabel: LocalStrings.yes.description, cancelAlertLabel: LocalStrings.no.description, compelecationBlock: { (result) in
                         if result{
                             SVProgressHUD.show()
                             CTAUserDomain.getInstance().unBindingWeiboID(userID, compelecationBlock: { (info) in
@@ -362,7 +362,7 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
                                     self.loginUser!.weiboID = ""
                                     CTAUserManager.save(self.loginUser!)
                                     self.reloadWeibo()
-                                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("AlertUnLinkSuccess", comment: ""))
+                                    SVProgressHUD.showSuccess(withStatus: NSLocalizedString("AlertUnLinkSuccess", comment: ""))
                                 }else {
                                     self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                     })
@@ -406,7 +406,7 @@ class CTAAccountSettingViewController: UIViewController, CTAPublishCellProtocol,
 
 extension CTAAccountSettingViewController: UIGestureRecognizerDelegate{
     
-    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
     

@@ -20,35 +20,35 @@ class CTACommentDomain: CTABaseDomain {
         return _instance!
     }
     
-    func addPublishComment(userID:String, beUserID:String, publishID:String, commentMessage:String, compelecationBlock: (CTADomainInfo!) -> Void){
+    func addPublishComment(_ userID:String, beUserID:String, publishID:String, commentMessage:String, compelecationBlock: @escaping (CTADomainInfo!) -> Void){
         CTAAddCommentRequest(userID: userID, beUserID: beUserID, publishID: publishID, commentMessage: commentMessage).startWithCompletionBlockWithSuccess { (response) in
             switch response.result{
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
                 if result {
-                    let listArray = json[key(.List)].array;
+                    let listArray = json[key(.list)].array;
                     if listArray != nil{
                         let listJson = listArray![0]
                         let commentModel = CTACommentModel.generateFrom(listJson)
                         compelecationBlock(CTADomainInfo(result: true, baseModel: commentModel, successType: resultIndex))
                     }else {
-                       compelecationBlock(CTADomainInfo(result: false, errorType: CTAAddCommentError(rawValue: 9)!))
+                       compelecationBlock(CTADomainInfo(result: false, successType: CTAAddCommentError(rawValue: 9)!.rawValue))
                     }
                 }else {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTAAddCommentError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func deletePublishComment(commentID:String, compelecationBlock: (CTADomainInfo!) -> Void){
+    func deletePublishComment(_ commentID:String, compelecationBlock: @escaping (CTADomainInfo!) -> Void){
         CTADeletePublishCommentRequest(commentID: commentID).startWithCompletionBlockWithSuccess { (response) in
             switch response.result{
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
@@ -57,21 +57,21 @@ class CTACommentDomain: CTABaseDomain {
                 }else {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTADeleteCommentError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }
     
-    func publichCommentList(publishID:String, userID:String, start:Int, size:Int, compelecationBlock: (CTADomainListInfo!) -> Void){
+    func publichCommentList(_ publishID:String, userID:String, start:Int, size:Int, compelecationBlock: @escaping (CTADomainListInfo!) -> Void){
         CTAPublishCommentListRequest(publishID: publishID, userID: userID, start: start, size: size).startWithCompletionBlockWithSuccess { (response) in
             switch response.result{
-            case .Success(let json):
+            case .success(let json):
                 let json:JSON = JSON(json)
                 let resultIndex = json[CTARequestResultKey.resultIndex].int!
                 let result = self.checkJsonResult(json)
                 if result {
-                    let listArray = json[key(.List)].array;
+                    let listArray = json[key(.list)].array;
                     var commentArray: Array<CTACommentModel> = [];
                     if listArray != nil{
                         for i in 0..<listArray!.count {
@@ -84,8 +84,8 @@ class CTACommentDomain: CTABaseDomain {
                 }else {
                     compelecationBlock(CTADomainListInfo(result: false, errorType: CTAPublishError(rawValue: resultIndex)!))
                 }
-            case .Failure( _):
-                compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
+            case .failure( _):
+                compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
             }
         }
     }

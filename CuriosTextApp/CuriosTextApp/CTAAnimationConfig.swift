@@ -22,7 +22,7 @@ class CTAAnimationConfig:NSObject, NSCoding {
         return CTAAnimationConfig(duration: 1.0, delay: 0.0, repeatCount: 0, reverse: false, withFormer: false, loadStrategy: CTAContentLoadStrategy.defautlStrategy, generateStrategy: CTAContentGenerateStrategy.defaultStrategy)
     }
     
-    class func defaultConfigWithDuration(duration: Float) -> CTAAnimationConfig {
+    class func defaultConfigWithDuration(_ duration: Float) -> CTAAnimationConfig {
         return CTAAnimationConfig(duration: duration, delay: 0.0, repeatCount: 0, reverse: false, withFormer: false, loadStrategy: CTAContentLoadStrategy.defautlStrategy, generateStrategy: CTAContentGenerateStrategy.defaultStrategy)
     }
     
@@ -36,7 +36,7 @@ class CTAAnimationConfig:NSObject, NSCoding {
         self.generateStrategy = generateStrategy
     }
     
-    private struct SerialKeys {
+    fileprivate struct SerialKeys {
         static let duration = "duration"
         static let delay = "delay"
         static let repeatCount = "repeatCount"
@@ -50,29 +50,29 @@ class CTAAnimationConfig:NSObject, NSCoding {
     
     required init?(coder aDecoder: NSCoder) {
         
-        self.duration = aDecoder.decodeFloatForKey(SerialKeys.duration)
-        self.delay = aDecoder.decodeFloatForKey(SerialKeys.delay)
-        self.repeatCount = aDecoder.decodeIntegerForKey(SerialKeys.repeatCount)
-        self.reverse = aDecoder.decodeBoolForKey(SerialKeys.reverse)
-        self.withFormer = aDecoder.decodeBoolForKey(SerialKeys.withFormer)
-        let loadAnimationBegan = aDecoder.decodeBoolForKey(SerialKeys.loadStrategy_loadAtAnimationBegan)
-        let removeAniamtionEnd = aDecoder.decodeBoolForKey(SerialKeys.loadStrategy_removeAtAnimationEnd)
+        self.duration = aDecoder.decodeFloat(forKey: SerialKeys.duration)
+        self.delay = aDecoder.decodeFloat(forKey: SerialKeys.delay)
+        self.repeatCount = aDecoder.decodeInteger(forKey: SerialKeys.repeatCount)
+        self.reverse = aDecoder.decodeBool(forKey: SerialKeys.reverse)
+        self.withFormer = aDecoder.decodeBool(forKey: SerialKeys.withFormer)
+        let loadAnimationBegan = aDecoder.decodeBool(forKey: SerialKeys.loadStrategy_loadAtAnimationBegan)
+        let removeAniamtionEnd = aDecoder.decodeBool(forKey: SerialKeys.loadStrategy_removeAtAnimationEnd)
         self.loadStrategy = CTAContentLoadStrategy(loadAtAnimationBegan: loadAnimationBegan, removeAtAnimationEnd: removeAniamtionEnd)
-        let textDelivery = aDecoder.decodeIntegerForKey(SerialKeys.generateStrategy_textDelivery)
-        let paragraphdelivery = aDecoder.decodeIntegerForKey(SerialKeys.generateStrategy_paragraphDelivery)
+        let textDelivery = aDecoder.decodeInteger(forKey: SerialKeys.generateStrategy_textDelivery)
+        let paragraphdelivery = aDecoder.decodeInteger(forKey: SerialKeys.generateStrategy_paragraphDelivery)
         self.generateStrategy = CTAContentGenerateStrategy(textDelivery: CTATextDelivery(rawValue: textDelivery)!, paragraphDelivery: CTAParagraphDelivery(rawValue: paragraphdelivery)!)
     }
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeFloat(duration, forKey: SerialKeys.duration)
-        aCoder.encodeFloat(delay, forKey: SerialKeys.delay)
-        aCoder.encodeInteger(repeatCount, forKey: SerialKeys.repeatCount)
-        aCoder.encodeBool(reverse, forKey: SerialKeys.reverse)
-        aCoder.encodeBool(withFormer, forKey: SerialKeys.withFormer)
-        aCoder.encodeBool(loadStrategy.loadAtAnimationBegan, forKey: SerialKeys.loadStrategy_loadAtAnimationBegan)
-        aCoder.encodeBool(loadStrategy.removeAtAnimationEnd, forKey: SerialKeys.loadStrategy_removeAtAnimationEnd)
-        aCoder.encodeInteger(generateStrategy.textDelivery.rawValue, forKey: SerialKeys.generateStrategy_textDelivery)
-        aCoder.encodeInteger(generateStrategy.paragraphDelivery.rawValue, forKey: SerialKeys.generateStrategy_paragraphDelivery)
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(duration, forKey: SerialKeys.duration)
+        aCoder.encode(delay, forKey: SerialKeys.delay)
+        aCoder.encode(repeatCount, forKey: SerialKeys.repeatCount)
+        aCoder.encode(reverse, forKey: SerialKeys.reverse)
+        aCoder.encode(withFormer, forKey: SerialKeys.withFormer)
+        aCoder.encode(loadStrategy.loadAtAnimationBegan, forKey: SerialKeys.loadStrategy_loadAtAnimationBegan)
+        aCoder.encode(loadStrategy.removeAtAnimationEnd, forKey: SerialKeys.loadStrategy_removeAtAnimationEnd)
+        aCoder.encode(generateStrategy.textDelivery.rawValue, forKey: SerialKeys.generateStrategy_textDelivery)
+        aCoder.encode(generateStrategy.paragraphDelivery.rawValue, forKey: SerialKeys.generateStrategy_paragraphDelivery)
     }
     
     
@@ -93,18 +93,18 @@ struct CTAContentGenerateStrategy {
     let textDelivery: CTATextDelivery
     let paragraphDelivery: CTAParagraphDelivery
     static var defaultStrategy: CTAContentGenerateStrategy {
-        return CTAContentGenerateStrategy(textDelivery: .Object, paragraphDelivery: .AllAtOnce)
+        return CTAContentGenerateStrategy(textDelivery: .object, paragraphDelivery: .allAtOnce)
     }
 }
 
 enum CTATextDelivery: Int {
     
-    case Object, Character, Word
+    case object, character, word
 }
 
 enum CTAParagraphDelivery: Int {
     
-    case AllAtOnce, Paragraph
+    case allAtOnce, paragraph
 }
 
 

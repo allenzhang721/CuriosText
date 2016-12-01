@@ -22,26 +22,26 @@ class AniPreviewCanvasViewController: UIViewController {
         super.viewDidLoad()
         setup()
         
-        fakePauseAllView.userInteractionEnabled = false
+        fakePauseAllView.isUserInteractionEnabled = false
         fakePauseView.needGradient = false
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         aniCanvasView.alpha = 0.0
         aniCanvasView.reloadData { [weak self] in
             guard let sf = self else { return }
-            dispatch_async(dispatch_get_main_queue(), { 
+            DispatchQueue.main.async(execute: { 
                 self?.aniCanvasView.ready()
             })
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+    override func viewDidAppear(_ animated: Bool) {
+        DispatchQueue.main.async { [weak self] in
             guard let sf = self else {return}
             self?.aniCanvasView.alpha = 1.0
             self?.aniCanvasView.play()
@@ -51,10 +51,10 @@ class AniPreviewCanvasViewController: UIViewController {
     
     func setup() {
         aniCanvasView = AniPlayCanvasView(frame: CGRect(origin: CGPoint(x: 0, y: 44), size: canvas.size))
-        aniCanvasView.backgroundColor = UIColor.whiteColor()
+        aniCanvasView.backgroundColor = UIColor.white
         
         for c in canvas.containers {
-            if let content = c.contents.first where content.type == .Image {
+            if let content = c.contents.first, content.type == .Image {
                 c.imageRetriver = imageRetriver
             }
         }
@@ -71,25 +71,25 @@ class AniPreviewCanvasViewController: UIViewController {
 //            self?.aniCanvasView.stop()
         }
         
-        fakePauseView.userInteractionEnabled = false
+        fakePauseView.isUserInteractionEnabled = false
         fakePauseView.image = CTAStyleKit.imageOfAnimationpause
         
         switch playAllInAnimaionView {
         case (true, true):
-            fakePauseAllView.hidden = false
-            fakePauseView.hidden = true
+            fakePauseAllView.isHidden = false
+            fakePauseView.isHidden = true
             
         case (true, false):
-            fakePauseAllView.hidden = false
-            fakePauseView.hidden = true
+            fakePauseAllView.isHidden = false
+            fakePauseView.isHidden = true
             
         case (false, true):
-            fakePauseAllView.hidden = true
-            fakePauseView.hidden = false
+            fakePauseAllView.isHidden = true
+            fakePauseView.isHidden = false
             
         case (false, false):
-            fakePauseAllView.hidden = true
-            fakePauseView.hidden = true
+            fakePauseAllView.isHidden = true
+            fakePauseView.isHidden = true
             
         }
 
@@ -102,13 +102,13 @@ class AniPreviewCanvasViewController: UIViewController {
         
         aniCanvasView.center = targetCenter
 //        aniCanvasView.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY - 46)
-        aniCanvasView.transform = CGAffineTransformMakeScale(scale, scale)
+        aniCanvasView.transform = CGAffineTransform(scaleX: scale, y: scale)
     }
 }
 
 extension AniPreviewCanvasViewController {
-    @IBAction func tap(sender: AnyObject) {
-        dismissViewControllerAnimated(false, completion: nil)
+    @IBAction func tap(_ sender: AnyObject) {
+        self.dismiss(animated: false, completion: nil)
 //        aniCanvasView.pause()
 //        aniCanvasView.stop()
 //        
@@ -116,20 +116,20 @@ extension AniPreviewCanvasViewController {
 //        aniCanvasView.play()
     }
     
-    @IBAction func ready(sender: AnyObject?) {
+    @IBAction func ready(_ sender: AnyObject?) {
         aniCanvasView.ready()
     }
     
-    @IBAction func play(sender: AnyObject) {
+    @IBAction func play(_ sender: AnyObject) {
         aniCanvasView.ready()
         aniCanvasView.play()
     }
     
-    @IBAction func pause(sender: AnyObject) {
+    @IBAction func pause(_ sender: AnyObject) {
         aniCanvasView.pause()
     }
     
-    @IBAction func dismiss(sender: AnyObject?) {
-        dismissViewControllerAnimated(false, completion: nil)
+    @IBAction func dismiss(_ sender: AnyObject?) {
+        self.dismiss(animated: false, completion: nil)
     }
 }

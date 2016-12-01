@@ -10,20 +10,20 @@ import Foundation
 
 protocol ImageContainerVMProtocol: ContainerVMProtocol {
     
-    var imageElement: protocol<CTAElement, ImageModifiable>? {get}
+    var imageElement: (CTAElement & ImageModifiable)? {get}
     
-    func updateWithImageSize(imageSize: CGSize, constraintSize: CGSize)
+    func updateWithImageSize(_ imageSize: CGSize, constraintSize: CGSize)
 }
 
 protocol ImageModifiable: class {
     
-    func resultWithImgSize(originSize: CGSize, scale: CGFloat, containerSize: CGSize, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
+    func resultWithImgSize(_ originSize: CGSize, scale: CGFloat, containerSize: CGSize, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
 }
 
 
 extension CTAContainer: ImageContainerVMProtocol {
     
-    var imageElement: protocol<CTAElement, ImageModifiable>? {
+    var imageElement: (CTAElement & ImageModifiable)? {
         guard let a = element as? CTAImgElement else {
             fatalError("This Contaienr do not contain Text Element")
         }
@@ -31,7 +31,7 @@ extension CTAContainer: ImageContainerVMProtocol {
         return a
     }
     
-    func updateWithImageSize(imageSize: CGSize, constraintSize: CGSize) {
+    func updateWithImageSize(_ imageSize: CGSize, constraintSize: CGSize) {
         
         guard let imgE = imageElement else {
             fatalError("This Contaienr do not contain Text Element")

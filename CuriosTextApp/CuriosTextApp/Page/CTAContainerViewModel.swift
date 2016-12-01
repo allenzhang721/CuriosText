@@ -10,7 +10,7 @@ import Foundation
 
 enum CTAContentsType {
     
-    case Empty, Text, Image
+    case empty, text, image
 }
 
 protocol ContainerVMProtocol: viewPropertiesModifiable, contentsTypeRetrivevable, ContainerIdentifiable {}
@@ -21,7 +21,7 @@ extension ContainerVMProtocol {
         
         switch type {
          // Text Bar Items
-        case .Text:
+        case .text:
             let textTypes: [CTAContainerFeatureType] = [
                 .Animation,
                 .Fonts,
@@ -37,7 +37,7 @@ extension ContainerVMProtocol {
             
             return textTypes
             
-        case .Image:
+        case .image:
             let types: [CTAContainerFeatureType] = [
 //                .Size,
 //                .Rotator
@@ -69,7 +69,7 @@ protocol ViewPropertiesRetrivevale:class {
     var inset: CGPoint { get }
     var alphaValue: CGFloat {get}
     
-    func updateWithScale(ascale: CGFloat, constraintSzie: CGSize)
+    func updateWithScale(_ ascale: CGFloat, constraintSzie: CGSize)
 }
 
 protocol viewPropertiesModifiable: ViewPropertiesRetrivevale {
@@ -94,13 +94,13 @@ extension CTAContainer {
         switch element {
             
         case is CTATextElement:
-            return .Text
+            return .text
             
         case is CTAImgElement:
-            return .Image
+            return .image
             
         default:
-            return .Empty
+            return .empty
         }
     }
 }
@@ -171,7 +171,7 @@ extension CTAContainer: ContainerVMProtocol {
         return contentInset
     }
     
-    func updateWithScale(ascale: CGFloat, constraintSzie: CGSize) {
+    func updateWithScale(_ ascale: CGFloat, constraintSzie: CGSize) {
         let preScale = scale
         scale = ascale
         element!.scale = ascale

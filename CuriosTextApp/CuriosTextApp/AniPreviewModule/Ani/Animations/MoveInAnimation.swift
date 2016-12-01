@@ -11,7 +11,7 @@ import UIKit
 
 extension AniFactory {
     
-    class func moveIn(canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, inSection section: Int, rowAtSection row: Int, sectionCount: Int, rowCountAtSection: Int, descriptor: Descriptor, beganTime: Float, direction: Int = 0) -> AniDescriptor {
+    class func moveIn(_ canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, inSection section: Int, rowAtSection row: Int, sectionCount: Int, rowCountAtSection: Int, descriptor: Descriptor, beganTime: Float, direction: Int = 0) -> AniDescriptor {
         
     let duration = descriptor.config.duration
     let time = duration * 0.6
@@ -59,11 +59,11 @@ extension AniFactory {
         
         let vs: [String: [AnyObject]] = [
             "position": [
-             NSValue(CGPoint: position), NSValue(CGPoint: nextPosition)],
-            "opacity": [1.0, 0.0],
+             NSValue(cgPoint: position), NSValue(cgPoint: nextPosition)],
+            "opacity": [1.0 as AnyObject, 0.0 as AnyObject],
             "transform": [
-                NSValue(CATransform3D: CATransform3DMakeScale(1.0, 1.0, 1)),
-                NSValue(CATransform3D: CATransform3DMakeScale(0.1, 0.1, 1)),
+                NSValue(caTransform3D: CATransform3DMakeScale(1.0, 1.0, 1)),
+                NSValue(caTransform3D: CATransform3DMakeScale(0.1, 0.1, 1)),
             ]
         ]
         

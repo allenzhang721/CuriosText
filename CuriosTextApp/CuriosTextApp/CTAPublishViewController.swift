@@ -15,24 +15,24 @@ class CTAPublishButton: UIButton {
         setNeedsDisplay()
     }
     
-    func drawPublishButtonBorder(size size: CGSize = CGSizeMake(100, 50)) {
+    func drawPublishButtonBorder(size: CGSize = CGSize(width: 100, height: 50)) {
         
         //// Variable Declarations
         let expression: CGFloat = size.height / 2.0
         
         //// Frames
-        let frame = CGRectMake(0, 0, size.width, size.height)
+        let frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         
         
         //// Rectangle Drawing
-        let rectanglePath = UIBezierPath(roundedRect: CGRectMake(frame.minX + 2, frame.minY + 2, frame.width - 4, frame.height - 4), cornerRadius: expression)
-        UIColor.blackColor().setStroke()
+        let rectanglePath = UIBezierPath(roundedRect: CGRect(x: frame.minX + 2, y: frame.minY + 2, width: frame.width - 4, height: frame.height - 4), cornerRadius: expression)
+        UIColor.black.setStroke()
         rectanglePath.lineWidth = 0.5
         rectanglePath.stroke()
     }
     
-    override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
         drawPublishButtonBorder(size: rect.size)
     }
 }
@@ -50,7 +50,7 @@ class CTAPublishViewController: UIViewController {
 //    var imageAccess: ((baseURL: NSURL, imageName: String) -> Promise<Result<CTAImageCache>>)!
     
     
-    private var first = true
+    fileprivate var first = true
     var publishID: String!
     var canvas: AniCanvas!
     var aniCanvasView: AniPlayCanvasView!
@@ -68,11 +68,11 @@ class CTAPublishViewController: UIViewController {
         setupStyles()
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
 
 //        previewView.publishID = publishID
         if first {
@@ -94,7 +94,7 @@ extension CTAPublishViewController {
 //        aniCanvasView.backgroundColor = UIColor.groupTableViewBackgroundColor()
         
         for c in canvas.containers {
-            if let content = c.contents.first where content.type == .Image {
+            if let content = c.contents.first, content.type == .Image {
                 c.imageRetriver = imageRetriver
             }
         }
@@ -110,7 +110,7 @@ extension CTAPublishViewController {
     func setupStyles() {
         aniCanvasView.backgroundColor = UIColor(hexString: canvas.canvas.backgroundColor)
         view.backgroundColor = CTAStyleKit.ediorBackgroundColor
-        publishButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        publishButton.setTitleColor(UIColor.black, for: UIControlState())
     }
     
     override func viewWillLayoutSubviews() {
@@ -118,24 +118,24 @@ extension CTAPublishViewController {
         
         let scale = min(view.bounds.size.width / canvas.size.width, view.bounds.size.height / canvas.size.height)
         aniCanvasView.center = canvasPositionView.center
-        aniCanvasView.transform = CGAffineTransformMakeScale(scale, scale)
+        aniCanvasView.transform = CGAffineTransform(scaleX: scale, y: scale)
     }
 }
 
 // MARK: - Actions
 extension CTAPublishViewController: CTALoadingProtocol {
     
-    @IBAction func publishClick(sender: AnyObject) {
+    @IBAction func publishClick(_ sender: AnyObject) {
 //        showLoadingViewByView(publishButton)
         publish()
     }
     
-    @IBAction func dismiss(sender: AnyObject) {
+    @IBAction func dismiss(_ sender: AnyObject) {
         dismiss()
     }
     
-    @IBAction func makeGIFClick(sender: AnyObject) {
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+    @IBAction func makeGIFClick(_ sender: AnyObject) {
+        DispatchQueue.main.async { [weak self] in
            self?.makeGIF()
         }
     }
@@ -144,52 +144,52 @@ extension CTAPublishViewController: CTALoadingProtocol {
 // MARK: - Logics
 extension CTAPublishViewController {
     
-    private func publish() {
+    fileprivate func publish() {
         publishWillBegan?()
     }
     
-    private func dismiss() {
+    fileprivate func dismiss() {
         publishDismiss?()
     }
     
-    private func ready(sender: AnyObject?) {
+    fileprivate func ready(_ sender: AnyObject?) {
         aniCanvasView.ready()
     }
     
-    private func play() {
+    fileprivate func play() {
         aniCanvasView.play()
     }
     
-    private func makeGIF() {
+    fileprivate func makeGIF() {
         
         let gifCreatorVC = GIFCreateViewController()
         gifCreatorVC.canvas = canvas
         gifCreatorVC.publishID = publishID
-        gifCreatorVC.fakeView = view.snapshotViewAfterScreenUpdates(true)
+        gifCreatorVC.fakeView = view.snapshotView(afterScreenUpdates: true)
         gifCreatorVC.completed = {[weak self] (url, thumburl) in
-            dispatch_async(dispatch_get_main_queue(), { 
+            DispatchQueue.main.async(execute: { 
                 let message =  WXMediaMessage()
-                message.setThumbImage(UIImage(contentsOfFile: thumburl.path!))
+                message.setThumbImage(UIImage(contentsOfFile: thumburl.path))
                 
                 let ext =  WXEmoticonObject()
                 let filePath = url.path
-                ext.emoticonData = NSData(contentsOfFile:filePath!)
+                ext.emoticonData = try? Data(contentsOf: URL(fileURLWithPath: filePath))
                 message.mediaObject = ext
                 
                 let req =  SendMessageToWXReq()
                 req.bText = false
                 req.message = message
                 req.scene = 0
-                WXApi.sendReq(req)
-                dispatch_async(dispatch_get_main_queue(), { 
-                    self?.dismissViewControllerAnimated(false, completion: {
+                WXApi.send(req)
+                DispatchQueue.main.async(execute: { 
+                    self?.dismiss(animated: false, completion: {
                     })
                 })
             })
         }
         
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
-            self?.presentViewController(gifCreatorVC, animated: false, completion: nil)
+        DispatchQueue.main.async { [weak self] in
+            self?.present(gifCreatorVC, animated: false, completion: nil)
         }
         
 //        aniCanvasView.ready()

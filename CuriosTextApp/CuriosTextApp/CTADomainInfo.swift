@@ -12,7 +12,7 @@ struct CTADomainInfo {
     
     let result:Bool
     var baseModel:CTABaseModel?
-    var errorType:ErrorType?
+    var errorType:Error?
     var successType:Int = -1
     
     init(result:Bool, baseModel:CTABaseModel, successType:Int){
@@ -26,7 +26,7 @@ struct CTADomainInfo {
         self.successType = successType
     }
     
-    init(result:Bool, errorType:ErrorType){
+    init(result:Bool, errorType:Error){
         self.result    = result
         self.errorType = errorType
     }

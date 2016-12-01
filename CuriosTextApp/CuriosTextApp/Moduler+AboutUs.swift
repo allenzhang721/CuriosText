@@ -20,7 +20,7 @@ extension Moduler {
        let vc = Moduler
             .target(moduleName,
                     performAction: Actions().aboutVC,
-                    paras: paras)?.takeUnretainedValue() as? UIViewController
+                    paras: paras as AnyObject?)?.takeUnretainedValue() as? UIViewController
         return vc
     }
 }

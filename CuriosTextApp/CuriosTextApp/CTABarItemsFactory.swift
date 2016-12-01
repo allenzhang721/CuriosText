@@ -34,14 +34,14 @@ class CTABarItemsFactory {
             selectedImage: CTAStyleKit.imageOfTemplatesSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: LocalStrings.Templates.description),
+            title: LocalStrings.templates.description),
         
         CTABarItem(
             normalImage: UIImage(named: "filters_Normal")!,
             selectedImage: UIImage(named: "filters_Selected")!,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: LocalStrings.Filters.description),
+            title: LocalStrings.filters.description),
         
 //        CTABarItem(
 //            normalImage: CTAStyleKit.imageOfRotationBarItemNormal,
@@ -60,14 +60,14 @@ class CTABarItemsFactory {
             selectedImage: CTAStyleKit.imageOfAnimationBarItemSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: LocalStrings.Animation.description),
+            title: LocalStrings.animation.description),
     
         CTABarItem(
             normalImage: CTAStyleKit.imageOfFontBarItemNormal,
             selectedImage: CTAStyleKit.imageOfFontBarItemSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: LocalStrings.Font.description),
+            title: LocalStrings.font.description),
         
         
         CTABarItem(
@@ -75,42 +75,42 @@ class CTABarItemsFactory {
             selectedImage: CTAStyleKit.imageOfColorBarItemSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: LocalStrings.Color.description),
+            title: LocalStrings.color.description),
         
         CTABarItem(
             normalImage: UIImage(named:"alpha_Normal")!,
             selectedImage: UIImage(named:"alpha_Selected")!,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: LocalStrings.Alpha.description),
+            title: LocalStrings.alpha.description),
         
         CTABarItem(
             normalImage: CTAStyleKit.imageOfSizeBarItemNormal,
             selectedImage: CTAStyleKit.imageOfSizeBarItemSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: LocalStrings.Size.description),
+            title: LocalStrings.size.description),
         
         CTABarItem(
             normalImage: CTAStyleKit.imageOfRotationBarItemNormal,
             selectedImage: CTAStyleKit.imageOfRotationBarItemSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: LocalStrings.Rotation.description),
+            title: LocalStrings.rotation.description),
         
         CTABarItem(
             normalImage: CTAStyleKit.imageOfSpacingBarItemNormal,
             selectedImage: CTAStyleKit.imageOfSpacingBarItemSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: LocalStrings.Spacing.description),
+            title: LocalStrings.spacing.description),
         
         CTABarItem(
             normalImage: CTAStyleKit.imageOfAlignmentBarItemNormal,
             selectedImage: CTAStyleKit.imageOfAlignmentBarItemSelected,
             normalColor: CTAStyleKit.normalColor,
             selectedColor: CTAStyleKit.selectedColor,
-            title: LocalStrings.Alignment.description),
+            title: LocalStrings.alignment.description),
         
 //        CTABarItem(
 //            normalImage: UIImage(named: "shadow_Normal")!,

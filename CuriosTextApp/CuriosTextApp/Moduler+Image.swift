@@ -10,14 +10,14 @@ import Foundation
 
 extension Moduler {
     
-    class func image_compressTo(size: CGSize, opaque: Bool = true, scale: CGFloat = 0) -> (image: UIImage) -> UIImage {
+    class func image_compressTo(_ size: CGSize, opaque: Bool = true, scale: CGFloat = 0) -> (_ image: UIImage) -> UIImage {
         
-        func compressImage(image: UIImage) -> UIImage {
+        func compressImage(_ image: UIImage) -> UIImage {
             UIGraphicsBeginImageContextWithOptions(size, opaque, scale)
-            image.drawInRect(CGRect(origin: CGPoint.zero, size: size))
+            image.draw(in: CGRect(origin: CGPoint.zero, size: size))
             let compressedImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-            return compressedImage
+            return compressedImage!
         }
         
         return compressImage

@@ -11,7 +11,7 @@ import UIKit
 class LikersAction: NSObject {
 
     
-    class func likerListViewController(paras: [String: AnyObject]) -> UIViewController {
+    class func likerListViewController(_ paras: [String: AnyObject]) -> UIViewController {
         guard let publishID = paras["publishID"] as? String else { fatalError() }
         
         let vc = UserListViewController()

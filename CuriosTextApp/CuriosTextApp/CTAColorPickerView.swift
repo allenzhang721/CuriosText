@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CTAColorPickerProtocol{
-    func changeColor(color:UIColor)
+    func changeColor(_ color:UIColor)
 }
 
 let sliderWidth:CGFloat = 44.00
@@ -95,8 +95,8 @@ class CTAColorPickerView: UIControl{
         
         self.currentColorView = CTAColorShadowCell(frame: CGRect(x: (self.colorCellsView.frame.width - self.cellViewWidth*1.5)/2, y: self.lineHeight + (self.colorCellsView.frame.height - self.cellViewHeight*1.5)/2, width: self.cellViewWidth*1.5, height: self.cellViewHeight*1.5))
         self.addSubview(self.currentColorView)
-        self.currentColorView.layer.shadowPath = UIBezierPath(roundedRect: self.currentColorView.bounds, cornerRadius: 0).CGPath
-        self.currentColorView.layer.shadowColor = UIColor.blackColor().CGColor
+        self.currentColorView.layer.shadowPath = UIBezierPath(roundedRect: self.currentColorView.bounds, cornerRadius: 0).cgPath
+        self.currentColorView.layer.shadowColor = UIColor.black.cgColor
         self.currentColorView.layer.shadowOffset = CGSize(width: 2, height: 2)
         self.currentColorView.layer.shadowOpacity = 1
         self.currentColorView.layer.shadowRadius = 13
@@ -129,8 +129,8 @@ class CTAColorPickerView: UIControl{
         self.colorSlider.maximumValue = self.bounds.width
         self.colorSlider.value = 0.0
         self.colorSlider.valueColor = self.currentPureColor()
-        self.colorSlider.addTarget(self, action: #selector(CTAColorPickerView.slideMouseDown(_:)), forControlEvents: .TouchDown)
-        self.colorSlider.addTarget(self, action: #selector(CTAColorPickerView.slideMouseUp(_:)), forControlEvents: .TouchUpInside)
+        self.colorSlider.addTarget(self, action: #selector(CTAColorPickerView.slideMouseDown(_:)), for: .touchDown)
+        self.colorSlider.addTarget(self, action: #selector(CTAColorPickerView.slideMouseUp(_:)), for: .touchUpInside)
         
         self.setCellsColorPosition()
         self.gradientArray = self.getGrandientColor(self.currentPureColor())
@@ -140,7 +140,7 @@ class CTAColorPickerView: UIControl{
         self.addGestureRecognizer(pan)
     }
     
-    func getGrandientColor(currentColor:UIColor) -> Array<Array<CTAPixelColor>>{
+    func getGrandientColor(_ currentColor:UIColor) -> Array<Array<CTAPixelColor>>{
         var colorArray:Array<Array<CTAPixelColor>> = []
         let curToGayArray = lineGradientColorArray(self.colorVerCount, colors: [currentColor, UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1),])
         let curToGayCount = curToGayArray.count
@@ -180,7 +180,7 @@ class CTAColorPickerView: UIControl{
             self.canReChange = false
             self.selectedColor = changeColor
             self.canReChange = true
-            sendActionsForControlEvents(.ValueChanged)
+            sendActions(for: .valueChanged)
             if self.delegate != nil {
                 self.delegate!.changeColor(changeColor)
             }
@@ -227,13 +227,13 @@ class CTAColorPickerView: UIControl{
         }
     }
     
-    func viewPanHandler(sender: UIPanGestureRecognizer) {
+    func viewPanHandler(_ sender: UIPanGestureRecognizer) {
         switch sender.state{
-        case .Began:
+        case .began:
             if self.adisplayLink != nil{
-                self.adisplayLink?.paused = true
+                self.adisplayLink?.isPaused = true
             }
-            self.beganLocation = sender.locationInView(self)
+            self.beganLocation = sender.location(in: self)
             self.panLocation = self.beganLocation
             if !self.isChageSlide{
                 let slideFrame = self.colorSlider.frame
@@ -244,20 +244,20 @@ class CTAColorPickerView: UIControl{
                     self.changeSlideStatus(false)
                 }
             }
-        case .Changed:
-            let newLocation = sender.locationInView(self)
+        case .changed:
+            let newLocation = sender.location(in: self)
             if self.isChageSlide{
                 self.changeSlidePosition(newLocation)
             }else {
                 self.changeColorCellPosition(newLocation)
             }
-        case .Ended, .Cancelled, .Failed:
+        case .ended, .cancelled, .failed:
             if self.isChageSlide{
                 self.changeSlideStatus(false)
             }else {
-                self.sliderLocation = sender.locationInView(self)
+                self.sliderLocation = sender.location(in: self)
                 self.panLocation = self.sliderLocation
-                let velocity = sender.velocityInView(self)
+                let velocity = sender.velocity(in: self)
                 let magnitude:CGFloat = sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y))
                 let slideMult = magnitude / 200;
                 let slideFactor = 0.15 * slideMult;
@@ -283,9 +283,9 @@ class CTAColorPickerView: UIControl{
                 self.sliderAniIndex = 0
                 if self.adisplayLink == nil {
                     self.adisplayLink = CADisplayLink(target: self,selector: #selector(CTAColorPickerView.sliderAniFrame))
-                    self.adisplayLink?.addToRunLoop(NSRunLoop.currentRunLoop(),forMode: NSRunLoopCommonModes)
+                    self.adisplayLink?.add(to: RunLoop.current,forMode: RunLoopMode.commonModes)
                 }
-                self.adisplayLink?.paused = false
+                self.adisplayLink?.isPaused = false
             }
         default:
             ()
@@ -310,34 +310,34 @@ class CTAColorPickerView: UIControl{
             self.changeColorCellPosition(newPosition)
             sliderAniIndex = sliderAniIndex + 1
         }else {
-            self.adisplayLink?.paused = true
+            self.adisplayLink?.isPaused = true
         }
     }
     
-    func easeOutFuc(t:CGFloat, d:CGFloat, b:CGFloat, c:CGFloat) ->CGFloat{
+    func easeOutFuc(_ t:CGFloat, d:CGFloat, b:CGFloat, c:CGFloat) ->CGFloat{
         let t1=t/d-1
         return c*(t1*t1*t1+1)+b
     }
     
-    func slideMouseDown(sender: UIButton){
+    func slideMouseDown(_ sender: UIButton){
         self.changeSlideStatus(true)
     }
     
-    func slideMouseUp(sender: UIButton){
+    func slideMouseUp(_ sender: UIButton){
         self.changeSlideStatus(false)
     }
     
-    func changeSlideStatus(flag:Bool){
+    func changeSlideStatus(_ flag:Bool){
         if flag{
             self.isChageSlide = true
-            self.colorSlider.transform = CGAffineTransformMakeScale(1.2, 1.2)
+            self.colorSlider.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
         }else {
             self.isChageSlide = false
-            self.colorSlider.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            self.colorSlider.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         }
     }
     
-    func changeSlidePosition(newLocation:CGPoint){
+    func changeSlidePosition(_ newLocation:CGPoint){
         let maxSlider = self.bounds.width - thumbWidth/2
         let minSlider = thumbWidth/2
         let xChange = newLocation.x - self.panLocation.x
@@ -368,7 +368,7 @@ class CTAColorPickerView: UIControl{
         return UIColor(red: pureColor.red, green: pureColor.green, blue: pureColor.blue, alpha: pureColor.alpha)
     }
     
-    func changeColorCellPosition(newLocation:CGPoint){
+    func changeColorCellPosition(_ newLocation:CGPoint){
         let xChange = newLocation.x - self.panLocation.x
         let yChange = newLocation.y - self.panLocation.y
         let maxW = self.frame.size.width
@@ -392,7 +392,7 @@ class CTAColorPickerView: UIControl{
     
     func changeCenterView(){
         let centerPoint = CGPoint(x: self.centerRect.origin.x + self.centerRect.size.width, y: self.centerRect.origin.y + self.centerRect.size.height)
-        self.centerLength = CGFloat.max
+        self.centerLength = CGFloat.greatestFiniteMagnitude
         var centerView:CTAColorPickerCell?
         for i in 0..<self.colorViewsArray.count {
             let view = self.colorViewsArray[i]
@@ -414,7 +414,7 @@ class CTAColorPickerView: UIControl{
         }
     }
     
-    func changeCellsPosition(newCenter:CTAColorPickerCell){
+    func changeCellsPosition(_ newCenter:CTAColorPickerCell){
         if self.choseCell != nil {
             let xRate = self.choseCell!.positionX - newCenter.positionX
             let yRate = self.choseCell!.positionY - newCenter.positionY
@@ -453,7 +453,7 @@ class CTAColorPickerView: UIControl{
             var sliderValue:Int = 0
             var choseX:Int = 0
             var choseY:Int = 0
-            var colorDValue:CGFloat = CGFloat.max
+            var colorDValue:CGFloat = CGFloat.greatestFiniteMagnitude
             let count = self.pureColorArray.count
             for i in 0..<count{
                 let pureColor = self.pureColorArray[i]
@@ -469,7 +469,7 @@ class CTAColorPickerView: UIControl{
             selectedPureColor = self.pureColorArray[sliderValue]
             let pureUIColor = UIColor(red: selectedPureColor.red, green: selectedPureColor.green, blue: selectedPureColor.blue, alpha: selectedPureColor.alpha)
             let grandientArray = self.getGrandientColor(pureUIColor)
-            colorDValue = CGFloat.max
+            colorDValue = CGFloat.greatestFiniteMagnitude
             var isBreak = false
             for j in 0..<grandientArray.count{
                 let lineColorArray = grandientArray[j]
@@ -511,7 +511,7 @@ class CTAColorPickerView: UIControl{
         }
     }
     
-    func rateInTwoColor(oneColor:CTAPixelColor, twoColor:CTAPixelColor)->CGFloat{
+    func rateInTwoColor(_ oneColor:CTAPixelColor, twoColor:CTAPixelColor)->CGFloat{
         let red1 = oneColor.red
         let green1 = oneColor.green
         let blue1 = oneColor.blue
@@ -523,7 +523,7 @@ class CTAColorPickerView: UIControl{
         return abs(red1 - red2)+abs(green1 - green2)+abs(blue1 - blue2)
     }
     
-    func getPureColorByColor(pixelColor:CTAPixelColor)->CTAPixelColor{
+    func getPureColorByColor(_ pixelColor:CTAPixelColor)->CTAPixelColor{
         let red = pixelColor.red
         let green = pixelColor.green
         let blue = pixelColor.blue
@@ -559,7 +559,7 @@ class CTAColorPickerView: UIControl{
         return resultColor!
     }
     
-    func getColorNumber(max:CGFloat, mid:CGFloat, min:CGFloat)->(CGFloat, CGFloat, CGFloat){
+    func getColorNumber(_ max:CGFloat, mid:CGFloat, min:CGFloat)->(CGFloat, CGFloat, CGFloat){
         let rate = 1 / max
         let changeMax = max*rate
         var changeMid = mid*rate
@@ -598,7 +598,7 @@ class CTAColorSliderView:UIButton{
     func initView(){
         self.slideView = UIView(frame: CGRect(x: (self.bounds.width - thumbWidth)/2, y: (self.bounds.height - thumbWidth)/2, width: thumbWidth, height: thumbWidth))
         self.addSubview(self.slideView)
-        self.slideView.contentMode = .ScaleAspectFill
+        self.slideView.contentMode = .scaleAspectFill
         self.slideView.layer.cornerRadius = thumbWidth/2
         self.slideView.layer.masksToBounds = true
         self.slideViewButton = UIButton(frame: self.bounds)
@@ -606,21 +606,21 @@ class CTAColorSliderView:UIButton{
         self.slideViewButton.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
         self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.0)
         
-        self.slideViewButton.addTarget(self, action: #selector(CTAColorSliderView.buttonMouseDown(_:)), forControlEvents: .TouchDown)
-        self.slideViewButton.addTarget(self, action: #selector(CTAColorSliderView.buttonMouseUp(_:)), forControlEvents: .TouchUpInside)
+        self.slideViewButton.addTarget(self, action: #selector(CTAColorSliderView.buttonMouseDown(_:)), for: .touchDown)
+        self.slideViewButton.addTarget(self, action: #selector(CTAColorSliderView.buttonMouseUp(_:)), for: .touchUpInside)
     }
     
-    func buttonMouseDown(sender: UIButton){
-        self.sendActionsForControlEvents(.TouchDown)
+    func buttonMouseDown(_ sender: UIButton){
+        self.sendActions(for: .touchDown)
     }
     
-    func buttonMouseUp(sender: UIButton){
-        self.sendActionsForControlEvents(.TouchUpInside)
+    func buttonMouseUp(_ sender: UIButton){
+        self.sendActions(for: .touchUpInside)
     }
     
     func changeColor(){
         if self.valueColor == nil {
-            self.slideView.backgroundColor = UIColor.whiteColor()
+            self.slideView.backgroundColor = UIColor.white
         }else {
             self.slideView.backgroundColor = self.valueColor
         }
@@ -635,7 +635,7 @@ class CTAColorPickerCell: UIView {
             if color != nil {
                 self.backgroundColor = UIColor(red: color!.red, green: color!.green, blue: color!.blue, alpha: color!.alpha)
             }else {
-                self.backgroundColor = UIColor.blackColor()
+                self.backgroundColor = UIColor.black
             }
         }
     }
@@ -661,7 +661,7 @@ class CTAColorShadowCell: UIView {
             if color != nil {
                 self.colorView.backgroundColor = UIColor(red: color!.red, green: color!.green, blue: color!.blue, alpha: color!.alpha)
             }else {
-                self.colorView.backgroundColor = UIColor.blackColor()
+                self.colorView.backgroundColor = UIColor.black
             }
         }
     }
@@ -672,7 +672,7 @@ class CTAColorShadowCell: UIView {
         super.init(frame: frame)
         self.colorView = UIView(frame: CGRect(x: 2, y: 2, width: frame.size.width-4, height: frame.size.height-4))
         self.addSubview(self.colorView)
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.white
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -696,7 +696,7 @@ public struct CTAPixelColor {
         return UInt32(alpha.toColorUInt8()) | UInt32(red.toColorUInt8()) << 8 | UInt32(green.toColorUInt8()) << 16 | UInt32(blue.toColorUInt8()) << 24
     }
     
-    func averageWith(color: CTAPixelColor, w: CGFloat) -> CTAPixelColor {
+    func averageWith(_ color: CTAPixelColor, w: CGFloat) -> CTAPixelColor {
         let average = {(a: CGFloat, b: CGFloat, w: CGFloat) -> CGFloat in
             return a + w * (b - a)
         }
@@ -709,25 +709,25 @@ public struct CTAPixelColor {
     }
 }
 
-public func changeUIColorToPixelColor(color:UIColor) -> CTAPixelColor{
-    let cgColor = color.CGColor
-    let n = CGColorGetNumberOfComponents(cgColor)
-    let coms = CGColorGetComponents(cgColor)
+public func changeUIColorToPixelColor(_ color:UIColor) -> CTAPixelColor{
+    let cgColor = color.cgColor
+    let n = cgColor.numberOfComponents
+    let coms = cgColor.components
     if n >= 4 {
-        let r = coms[0]
-        let g = coms[1]
-        let b = coms[2]
-        let a = coms[3]
-        let color = CTAPixelColor(red: r, green: g, blue: b, alpha: a)
+        let r = coms?[0]
+        let g = coms?[1]
+        let b = coms?[2]
+        let a = coms?[3]
+        let color = CTAPixelColor(red: r!, green: g!, blue: b!, alpha: a!)
         return color
     } else {
-        let x = coms[0]
-        let a = coms[1]
-        return CTAPixelColor(red: x, green: x, blue: x, alpha: a)
+        let x = coms?[0]
+        let a = coms?[1]
+        return CTAPixelColor(red: x!, green: x!, blue: x!, alpha: a!)
     }
 }
 
-public func lineGradientColorArray(gradientCount:Int, colors: [UIColor]) -> [CTAPixelColor] {
+public func lineGradientColorArray(_ gradientCount:Int, colors: [UIColor]) -> [CTAPixelColor] {
     let colorCount = colors.count
     if colorCount <= 0 {
         return []
@@ -750,7 +750,7 @@ public func lineGradientColorArray(gradientCount:Int, colors: [UIColor]) -> [CTA
     }
 }
 
-public func lineGradientImage(size: CGSize, pixelColors: [CTAPixelColor]) -> UIImage {
+public func lineGradientImage(_ size: CGSize, pixelColors: [CTAPixelColor]) -> UIImage {
     let colorCount = pixelColors.count
     if colorCount <= 0 {
         return UIImage()
@@ -770,15 +770,15 @@ public func lineGradientImage(size: CGSize, pixelColors: [CTAPixelColor]) -> UII
                 let i = Int(t)
                 let middleColor = pixelColors[i]
                 var colorUint = middleColor.toInt32()
-                data.appendBytes(&colorUint, length: bytePerPixel)
+                data.append(&colorUint, length: bytePerPixel)
             }
         }
         let colorSpace = CGColorSpaceCreateDeviceRGB();
-        let bitmapInfo =  CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedFirst.rawValue)
+        let bitmapInfo =  CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedFirst.rawValue)
         
-        let ctx = CGBitmapContextCreate(data.mutableBytes, w, h, bitPerComponent,
-                                        bytePerRow, colorSpace, bitmapInfo.rawValue)
-        let img = CGBitmapContextCreateImage(ctx)!
-        return UIImage(CGImage: img)
+        let ctx = CGContext(data: data.mutableBytes, width: w, height: h, bitsPerComponent: bitPerComponent,
+                                        bytesPerRow: bytePerRow, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)
+        let img = ctx?.makeImage()!
+        return UIImage(cgImage: img!)
     }
 }

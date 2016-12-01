@@ -15,7 +15,7 @@ private class Comment {
     var date: String {
         return DateString(model.commentData)
     }
-    var author: (ID: String, nickName: String, icon: NSURL) {
+    var author: (ID: String, nickName: String, icon: URL) {
         let id = model.userModel.userID
         let nick = model.userModel.nickName
         let icon = iconURL
@@ -45,21 +45,21 @@ private class Comment {
         return model.beCommentUserModel
     }
     
-    private let model: CTACommentModel
-    private let iconURL: NSURL
-    private let rendedMessage: (NSAttributedString, NSRange)
+    fileprivate let model: CTACommentModel
+    fileprivate let iconURL: URL
+    fileprivate let rendedMessage: (NSAttributedString, NSRange)
     
     init(model: CTACommentModel) {
         self.model = model
         let someoneNickname = model.beCommentUserModel?.nickName
         let message = model.commentMessage
         self.rendedMessage = comment(withUser: someoneNickname, message: message)
-        self.iconURL = NSURL(string: CTAFilePath.userFilePath + model.userModel.userIconURL)!
+        self.iconURL = URL(string: CTAFilePath.userFilePath + model.userModel.userIconURL)!
     }
 }
 
 private extension CTACommentModel {
-    class func toComment(model: CTACommentModel) -> Comment {
+    class func toComment(_ model: CTACommentModel) -> Comment {
         return Comment(model: model)
     }
 }
@@ -94,17 +94,17 @@ class CommentViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var bgView: UIView!
     
-    private weak var inputVC: InputViewController!
-    private var comments = [Comment]()
-    private let keyborad = KeyboardMan()
-    private var tempIndex = -1
+    fileprivate weak var inputVC: InputViewController!
+    fileprivate var comments = [Comment]()
+    fileprivate let keyborad = KeyboardMan()
+    fileprivate var tempIndex = -1
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
 //        if tableView.tableFooterView == nil {
@@ -113,7 +113,7 @@ class CommentViewController: UIViewController {
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if !self.notFresh {
             self.comments = []
@@ -123,8 +123,8 @@ class CommentViewController: UIViewController {
         self.notFresh = true
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        switch segue.destinationViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.destination {
         case let input as InputViewController:
             inputVC = input
         default:
@@ -132,44 +132,44 @@ class CommentViewController: UIViewController {
         }
     }
     
-    private func setup() {
+    fileprivate func setup() {
         setupView()
         setupKeyboard()
         setupTableView()
     }
     
-    private func setupTableView(){
+    fileprivate func setupTableView(){
         self.headerFresh = MJRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(loadFirstData))
         
         let freshIcon1:UIImage = UIImage(named: "fresh-icon-1")!
-        self.headerFresh.setImages([freshIcon1], forState: .Idle)
-        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Pulling)
-        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Refreshing)
+        self.headerFresh.setImages([freshIcon1], for: .idle)
+        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, for: .pulling)
+        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, for: .refreshing)
         
-        self.headerFresh.lastUpdatedTimeLabel?.hidden = true
-        self.headerFresh.stateLabel?.hidden = true
+        self.headerFresh.lastUpdatedTimeLabel?.isHidden = true
+        self.headerFresh.stateLabel?.isHidden = true
         self.tableView.mj_header = self.headerFresh
         
         self.footerFresh = MJRefreshAutoGifFooter(refreshingTarget: self, refreshingAction: #selector(loadLastData))
-        self.footerFresh.refreshingTitleHidden = true
-        self.footerFresh.setTitle("", forState: .Idle)
-        self.footerFresh.setTitle("", forState: .NoMoreData)
-        self.footerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Refreshing)
+        self.footerFresh.isRefreshingTitleHidden = true
+        self.footerFresh.setTitle("", for: .idle)
+        self.footerFresh.setTitle("", for: .noMoreData)
+        self.footerFresh.setImages(self.getLoadingImages(), duration:1.0, for: .refreshing)
         self.tableView.mj_footer = footerFresh;
     }
     
-    private func setupView() {
+    fileprivate func setupView() {
         
         titleLabel.text = title
         titleLabel.textColor = CTAStyleKit.normalColor
         
-        navigationController?.navigationBarHidden = true
+        navigationController?.isNavigationBarHidden = true
         
         tableView.estimatedRowHeight = 60
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         inputVC.resizeHandler = {[weak self, inputContainerView , heightConstraint] size in
-            if heightConstraint.constant != size.height {
+            if heightConstraint?.constant != size.height {
                 heightConstraint?.constant = size.height
                 self?.tableView.contentInset.bottom = (size.height - 44)
                 inputContainerView?.layoutIfNeeded()
@@ -195,7 +195,7 @@ class CommentViewController: UIViewController {
         self.setupData(self.comments.count)
     }
     
-    private func setupData(start:Int, size:Int = 30) {
+    fileprivate func setupData(_ start:Int, size:Int = 30) {
         if self.isLoading{
             self.freshComplete();
             return
@@ -218,13 +218,13 @@ class CommentViewController: UIViewController {
         }
     }
 
-    private func setupKeyboard() {
+    fileprivate func setupKeyboard() {
         
         keyborad.animateWhenKeyboardAppear = {[weak self, bottomConstraint, view, tableView] (appearPostIndex: Int, keyboardHeight: CGFloat, keyboardHeightIncrement: CGFloat) -> Void in
-            if let i = self?.tempIndex where i != -1 {
+            if let i = self?.tempIndex, i != -1 {
                 self?.tempIndex = -1
                 tableView?.contentInset.bottom = keyboardHeight
-                tableView?.scrollToRowAtIndexPath(NSIndexPath(forItem: i, inSection: 0), atScrollPosition: .Bottom, animated: true)
+                tableView?.scrollToRow(at: IndexPath(item: i, section: 0), at: .bottom, animated: true)
             }
             
             bottomConstraint?.constant = keyboardHeight
@@ -232,13 +232,13 @@ class CommentViewController: UIViewController {
         }
         
         keyborad.animateWhenKeyboardDisappear = { [weak bottomConstraint, view, tableView, inputContainerView] keyboardHeight in
-            tableView.contentInset.bottom = inputContainerView!.bounds.height - 44
+            tableView?.contentInset.bottom = inputContainerView!.bounds.height - 44
             bottomConstraint?.constant = 0
             view?.layoutIfNeeded()
         }
     }
     
-    @IBAction func closed(sender: AnyObject) {
+    @IBAction func closed(_ sender: AnyObject) {
         //FIXME:  正确方法应该是向上丢  -- Emiaostein, 7/13/16, 18:10
         self.closeHandler()
     }
@@ -248,13 +248,13 @@ class CommentViewController: UIViewController {
         if self.delegate != nil {
             toRect = self.delegate!.getCommentDismisRect(self.publishID)
         }
-        let view = self.bgView.snapshotViewAfterScreenUpdates(false)
-        view.frame.origin.y = self.bgView.frame.origin.y
+        let view = self.bgView.snapshotView(afterScreenUpdates: false)
+        view?.frame.origin.y = self.bgView.frame.origin.y
         let ani = CTAScaleTransition.getInstance()
         ani.toRect = toRect
         ani.transitionAlpha = 0.4
         ani.transitionView = view
-        self.dismissViewControllerAnimated(true) {
+        self.dismiss(animated: true) {
             if self.delegate != nil {
                 self.delegate!.disCommentMisComplete(self.publishID)
                 self.delegate = nil
@@ -262,22 +262,22 @@ class CommentViewController: UIViewController {
         }
     }
     
-    func commentFeedBack(sucess: Bool) {
-        dispatch_async(dispatch_get_main_queue()) {
-            sucess ? SVProgressHUD.showSuccessWithStatus(LocalStrings.CommentSuccess.description) : SVProgressHUD.showErrorWithStatus(LocalStrings.CommentFail.description)
+    func commentFeedBack(_ sucess: Bool) {
+        DispatchQueue.main.async {
+            sucess ? SVProgressHUD.showSuccess(withStatus: LocalStrings.commentSuccess.description) : SVProgressHUD.showError(withStatus: LocalStrings.commentFail.description)
         }
     }
 }
 
 extension CommentViewController {
     
-    private func configComment(at i: Int) {
+    fileprivate func configComment(at i: Int) {
         let comment = comments[i]
         let authorID = comment.author.ID
         myID == authorID ? deleteMessage(at: i) : commentMessage(at: i)
     }
     
-    private func commentMessage(at i: Int) {
+    fileprivate func commentMessage(at i: Int) {
         let comment = comments[i]
         let sid = comment.author.ID
         inputVC.changePlaceholder("@\(comment.author.nickName)")
@@ -289,32 +289,32 @@ extension CommentViewController {
             inputVC.beganEdit()
     }
     
-    private func commentPublisher() {
+    fileprivate func commentPublisher() {
         inputVC.sendHandler = {[weak self] text in
             self?.comment(to: "", text: text)
         }
     }
     
-    private func deleteMessage(at i: Int) {
+    fileprivate func deleteMessage(at i: Int) {
         let commentID = comments[i].ID
         
-        let delete = UIAlertAction(title: LocalStrings.Delete.description, style: .Destructive) { [weak self] (action) in
+        let delete = UIAlertAction(title: LocalStrings.delete.description, style: .destructive) { [weak self] (action) in
             CTACommentDomain.getInstance().deletePublishComment(commentID) { (info) in
-                dispatch_async(dispatch_get_main_queue()) {[weak self] in
-                    self?.comments.removeAtIndex(i)
-                    self?.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: i, inSection: 0)], withRowAnimation: .Left)
+                DispatchQueue.main.async {[weak self] in
+                    self?.comments.remove(at: i)
+                    self?.tableView.deleteRows(at: [IndexPath(item: i, section: 0)], with: .left)
                 }
             }
         }
         
-        let cancel = UIAlertAction(title: LocalStrings.Cancel.description, style: .Cancel, handler: nil)
-        let alert = UIAlertController(title: LocalStrings.Attension.description, message: nil, preferredStyle: .ActionSheet)
+        let cancel = UIAlertAction(title: LocalStrings.cancel.description, style: .cancel, handler: nil)
+        let alert = UIAlertController(title: LocalStrings.attension.description, message: nil, preferredStyle: .actionSheet)
         alert.addAction(delete)
         alert.addAction(cancel)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
-    private func showUserInfo(by userModel: CTAViewUserModel) {
+    fileprivate func showUserInfo(by userModel: CTAViewUserModel) {
         if let navigationController = navigationController {
             let userPublish = UserViewController()
             userPublish.viewUser = userModel
@@ -322,17 +322,17 @@ extension CommentViewController {
         }
     }
     
-    private func comment(to someoneID: String, text: String) {
+    fileprivate func comment(to someoneID: String, text: String) {
         let pid = publishID
         let iid = myID
         let sid = someoneID
-        CTACommentDomain.getInstance().addPublishComment(iid, beUserID: sid, publishID: pid, commentMessage: text) {[weak self] (info) in
+        CTACommentDomain.getInstance().addPublishComment(iid!, beUserID: sid, publishID: pid!, commentMessage: text) {[weak self] (info) in
             if let model = (info.baseModel as? CTACommentModel) {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     let comment = CTACommentModel.toComment(model)
 //                    self?.commentFeedBack(true)
-                    self?.comments.insert(comment, atIndex: 0)
-                    self?.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)], withRowAnimation: .Right)
+                    self?.comments.insert(comment, at: 0)
+                    self?.tableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .right)
                     
                 })
             } else {
@@ -341,7 +341,7 @@ extension CommentViewController {
         }
     }
     
-    private func loadCommentsComplete(loadComments: [Comment], size:Int){
+    fileprivate func loadCommentsComplete(_ loadComments: [Comment], size:Int){
         if loadComments.count < size {
             self.isLoadedAll = true
         }
@@ -387,19 +387,19 @@ extension CommentViewController {
         self.freshComplete()
     }
     
-    private func loadMoreModelArray(modelArray:[Comment]){
+    fileprivate func loadMoreModelArray(_ modelArray:[Comment]){
         for i in 0..<modelArray.count{
             let model = modelArray[i]
             if !self.checkModelIsHave(model, array: self.comments){
                 self.comments.append(model)
             }
         }
-        dispatch_async(dispatch_get_main_queue(), {[weak self] in
+        DispatchQueue.main.async(execute: {[weak self] in
             self?.tableView.reloadData()
         })
     }
     
-    private func checkModelIsHave(model:Comment, array:Array<Comment>) -> Bool{
+    fileprivate func checkModelIsHave(_ model:Comment, array:Array<Comment>) -> Bool{
         for i in 0..<array.count{
             let oldModel = array[i]
             if oldModel.ID == model.ID {
@@ -426,16 +426,16 @@ extension CommentViewController {
         
     }
     
-    func viewPanHandler(sender: UIPanGestureRecognizer) {
+    func viewPanHandler(_ sender: UIPanGestureRecognizer) {
         switch sender.state {
-        case .Began:
-            self.beganLocation = sender.locationInView(view)
-        case .Changed:
-            let newLocation = sender.locationInView(view)
+        case .began:
+            self.beganLocation = sender.location(in: view)
+        case .changed:
+            let newLocation = sender.location(in: view)
             self.viewVerPanHandler(newLocation)
-        case .Ended, .Cancelled, .Failed:
-            let velocity = sender.velocityInView(view)
-            let newLocation = sender.locationInView(view)
+        case .ended, .cancelled, .failed:
+            let velocity = sender.velocity(in: view)
+            let newLocation = sender.location(in: view)
             if velocity.y > 500 || velocity.y < -500{
                 self.closeHandler()
             }else {
@@ -446,7 +446,7 @@ extension CommentViewController {
         }
     }
     
-    func viewVerPanHandler(newLocation:CGPoint){
+    func viewVerPanHandler(_ newLocation:CGPoint){
         if self.lastLocation == nil {
             self.lastLocation = self.beganLocation
         }
@@ -455,12 +455,12 @@ extension CommentViewController {
         self.lastLocation = newLocation
     }
     
-    func viewVerComplete(newLocation:CGPoint){
+    func viewVerComplete(_ newLocation:CGPoint){
         let xRate = newLocation.y - self.beganLocation!.y
         if abs(xRate) >= DragDownHeight {
             self.closeHandler()
         }else {
-            UIView.animateWithDuration(0.2, animations: {
+            UIView.animate(withDuration: 0.2, animations: {
                 self.bgView.frame.origin.y = 0
                 }, completion: { (_) in
             })
@@ -469,12 +469,12 @@ extension CommentViewController {
 }
 
 extension CommentViewController: UITableViewDataSource {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return comments.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell")!
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell")!
         
         let com = comments[indexPath.item]
         if let textView = cell.contentView.viewWithTag(1000) as? TouchTextView {
@@ -483,30 +483,30 @@ extension CommentViewController: UITableViewDataSource {
             textView.textContainerInset.top = 0
             textView.attributedText = com.message
             textView.touchHandler = {[weak self, weak cell ,weak textView, weak tableView] (tv, state,index) -> TouchTextView.ActiveState in
-                guard let cell = cell, i = self?.tableView.indexPathForCell(cell) else {return TouchTextView.ActiveState.Inactive}
+                guard let cell = cell, let i = self?.tableView.indexPath(for: cell) else {return TouchTextView.ActiveState.inactive}
                 if tv == textView, let comment = self?.comments[i.item] {
                     if let someone = comment.someone {
                         let range = someone.range
                         if (range.location <= index && index < range.location + range.length) {
-                            if state == .End {
+                            if state == .end {
                                 self?.showUserInfo(by: comment.beUserModel!)
                             }
-                            return TouchTextView.ActiveState.Actived(range)
+                            return TouchTextView.ActiveState.actived(range)
                         } else {
-                            if state == .End {
-                                 tableView?.delegate?.tableView!(tableView!, didSelectRowAtIndexPath: i)
+                            if state == .end {
+                                 tableView?.delegate?.tableView!(tableView!, didSelectRowAt: i)
                             }
-                            return TouchTextView.ActiveState.Inactive
+                            return TouchTextView.ActiveState.inactive
                         }
                         
                     } else {
-                        if state == .End {
-                            tableView?.delegate?.tableView!(tableView!, didSelectRowAtIndexPath: i)
+                        if state == .end {
+                            tableView?.delegate?.tableView!(tableView!, didSelectRowAt: i)
                         }
-                        return TouchTextView.ActiveState.Inactive
+                        return TouchTextView.ActiveState.inactive
                     }
                 } else {
-                    return TouchTextView.ActiveState.Inactive
+                    return TouchTextView.ActiveState.inactive
                 }
             }
         }
@@ -514,7 +514,7 @@ extension CommentViewController: UITableViewDataSource {
         if let nameLabel = cell.contentView.viewWithTag(1001) as? TouchLabel {
             nameLabel.text = com.author.nickName
             nameLabel.tapHandler = { [weak self, cell] in
-                guard let i = self?.tableView.indexPathForCell(cell), comment = self?.comments[i.item] else {return}
+                guard let i = self?.tableView.indexPath(for: cell), let comment = self?.comments[i.item] else {return}
                 self?.showUserInfo(by: comment.userModel)
             }
         }
@@ -526,12 +526,12 @@ extension CommentViewController: UITableViewDataSource {
         if let imgView = cell.contentView.viewWithTag(1003) as? TouchImageView {
             if imgView.layer.mask == nil {
                 let shapeLayer = CAShapeLayer()
-                shapeLayer.path = UIBezierPath(ovalInRect: imgView.bounds).CGPath
+                shapeLayer.path = UIBezierPath(ovalIn: imgView.bounds).cgPath
                 imgView.layer.mask = shapeLayer
             }
-            imgView.kf_setImageWithURL(com.author.icon, placeholderImage: UIImage(named: "default-usericon"))
+          imgView.kf.setImage(with: com.author.icon, placeholder: UIImage(named: "default-usericon"))
             imgView.tapHandler = { [weak self, cell] in
-                guard let i = self?.tableView.indexPathForCell(cell), comment = self?.comments[i.item] else {return}
+                guard let i = self?.tableView.indexPath(for: cell), let comment = self?.comments[i.item] else {return}
                 self?.showUserInfo(by: comment.userModel)
             }
         }
@@ -541,7 +541,7 @@ extension CommentViewController: UITableViewDataSource {
 }
 
 extension CommentViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if inputVC.inputting {
             inputVC.resign()
         } else {
@@ -549,7 +549,7 @@ extension CommentViewController: UITableViewDelegate {
         }
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offY = self.tableView.contentOffset.y
         let scrollDiff = offY - self.previousScrollViewYOffset
         if scrollDiff < 0 {
@@ -571,11 +571,11 @@ extension CommentViewController: UITableViewDelegate {
         self.previousScrollViewYOffset = self.tableView.contentOffset.y
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         self.scrollEnd()
     }
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView){
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView){
         if !self.inputVC.inputting {
             let offY = self.tableView.contentOffset.y
             if offY <= self.scrollTop{
@@ -594,7 +594,7 @@ extension CommentViewController: UITableViewDelegate {
         }
     }
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         self.scrollEnd()
     }
     
@@ -607,7 +607,7 @@ extension CommentViewController: UITableViewDelegate {
             if currentY > DragDownHeight{
                 self.closeHandler()
             }else {
-                UIView.animateWithDuration(0.2, animations: {
+                UIView.animate(withDuration: 0.2, animations: {
                     self.bgView.frame.origin.y = 0
                     }, completion: { (_) in
                 })
@@ -630,8 +630,8 @@ private func comment(withUser userName: String?, message: String) -> (NSAttribut
     let c = NSMutableAttributedString(string: name + amessage)
     let nameRange = NSMakeRange(0, n.length)
     let messageRange = NSMakeRange(n.length, m.length)
-    let nameFont = UIFont.boldSystemFontOfSize(14)
-    let messageFont = UIFont.systemFontOfSize(14)
+    let nameFont = UIFont.boldSystemFont(ofSize: 14)
+    let messageFont = UIFont.systemFont(ofSize: 14)
     let nameColor = UIColor(red:0.08, green:0.20, blue:0.37, alpha:1.00)
     let messageColor = UIColor(red:0, green:0, blue:0, alpha:1.00)
     //
@@ -644,6 +644,6 @@ private func comment(withUser userName: String?, message: String) -> (NSAttribut
 }
 
 protocol CommentViewDelegate: AnyObject {
-    func getCommentDismisRect(publishID:String) -> CGRect?
-    func disCommentMisComplete(publishID:String)
+    func getCommentDismisRect(_ publishID:String) -> CGRect?
+    func disCommentMisComplete(_ publishID:String)
 }

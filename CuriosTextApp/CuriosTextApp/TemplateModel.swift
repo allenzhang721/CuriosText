@@ -39,6 +39,6 @@ struct TemplateModel {
             "thumbImgPath":""
         ]
         
-        return TemplateModel(para)!
+        return TemplateModel(para as [String : AnyObject])!
     }
 }

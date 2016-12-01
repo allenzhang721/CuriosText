@@ -15,14 +15,14 @@ private enum Actions: String {
 
 extension Moduler {
 
-    static func module_userList(userID:String, type:UserListType, delegate:UserListViewDelegate?) -> UIViewController {
+    static func module_userList(_ userID:String, type:UserListType, delegate:UserListViewDelegate?) -> UIViewController {
         
         var paras: [String: AnyObject] = [:]
-        paras["userID"] = userID
-        paras["type"] = String(type)
+        paras["userID"] = userID as AnyObject?
+        paras["type"] = type as AnyObject
         paras["delegate"] = delegate
         
-        let vc = Moduler.target(moduleName, performAction: Actions.New.rawValue, paras: paras)?.takeUnretainedValue() as! UIViewController
+        let vc = Moduler.target(moduleName, performAction: Actions.New.rawValue, paras: paras as AnyObject?)?.takeUnretainedValue() as! UIViewController
         
         return vc
     }

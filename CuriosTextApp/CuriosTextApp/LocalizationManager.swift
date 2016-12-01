@@ -11,137 +11,137 @@ import Foundation
 enum LocalStrings: CustomStringConvertible {
 
     // Common
-    case Cancel, Done, Delete, Attension
+    case cancel, done, delete, attension
     
     // Notification
-    case NotificationTitle, Stared, Clear, DeleteComment, NeedClearAll
+    case notificationTitle, stared, clear, deleteComment, needClearAll
     
     // Image Picker
-    case Camera, Photo, AllowPhotoTitle, AllowPhotoMessage
+    case camera, photo, allowPhotoTitle, allowPhotoMessage
     
     // Comment
-    case PublishComment, Comment, CommentSuccess, CommentFail
+    case publishComment, comment, commentSuccess, commentFail
     
     // Editor
-    case Publish , EditTextPlaceHolder, EditorDismissMessage
+    case publish , editTextPlaceHolder, editorDismissMessage
     
     // Publish
-    case PublishFailure
+    case publishFailure
     
     // Edior Tab
-    case Size, Rotation, Font, Spacing, Alignment, Color, Animation, AnimationType, AnimationDuration, AnimationDelay, Templates, Filters, Shadow, Outline, OpenShadow, CloseShadow, OpenOutline, CloseOutline, Alpha
+    case size, rotation, font, spacing, alignment, color, animation, animationType, animationDuration, animationDelay, templates, filters, shadow, outline, openShadow, closeShadow, openOutline, closeOutline, alpha
     
     //Animations
-    case AniType(CTAAnimationType)
+    case aniType(CTAAnimationType)
     
     //Alert 
-    case OK, Yes, No, Resend, TakePhoto, ChoosePhoto, Back, Wait, Setting, PhotoTitle
+    case ok, yes, no, resend, takePhoto, choosePhoto, back, wait, setting, photoTitle
     
     //Report
-    case Porn, Scam, Sensitive
+    case porn, scam, sensitive
     
     //Share
-    case DeleteFile, Wechat, Moments, Weibo, CopyLink, SaveLocal, Report, UploadFile, AddToHot
+    case deleteFile, wechat, moments, weibo, copyLink, saveLocal, report, uploadFile, addToHot
     
     var description: String {
         
         switch self {
             // Common
-        case .Cancel:
+        case .cancel:
             return NSLocalizedString("Cancel", comment: "")
-        case .Done:
+        case .done:
             return NSLocalizedString("Done", comment: "")
-        case .Delete:
+        case .delete:
             return NSLocalizedString("Delete", comment: "")
-        case .Attension:
+        case .attension:
             return NSLocalizedString("Attension", comment: "")
             
         // Notification
-        case NotificationTitle:
+        case .notificationTitle:
             return NSLocalizedString("NotificationTitle", comment: "")
-        case .Stared:
+        case .stared:
             return NSLocalizedString("StartedFollowingYou", comment: "")
-        case .DeleteComment:
+        case .deleteComment:
             return NSLocalizedString("DeleteComment", comment: "")
-        case .Clear:
+        case .clear:
             return NSLocalizedString("Clear", comment: "")
-        case .NeedClearAll:
+        case .needClearAll:
             return NSLocalizedString("ClearAll", comment: "")
             
             // Image Picker
-        case .Camera:
+        case .camera:
             return NSLocalizedString("Camera", comment: "")
-        case .Photo:
+        case .photo:
             return NSLocalizedString("Photo", comment: "")
-        case .AllowPhotoTitle:
+        case .allowPhotoTitle:
             return NSLocalizedString("AllPhotoLibraryTitle", comment: "")
-        case .AllowPhotoMessage:
+        case .allowPhotoMessage:
             return NSLocalizedString("AllPhotoLibraryMessage", comment: "")
             
             // Comment
-        case .PublishComment:
+        case .publishComment:
             return NSLocalizedString("PublishComment", comment: "")
-        case .Comment:
+        case .comment:
             return NSLocalizedString("Comment", comment: "")
-        case .CommentSuccess:
+        case .commentSuccess:
             return NSLocalizedString("CommentSuccess", comment: "")
-        case .CommentFail:
+        case .commentFail:
             return NSLocalizedString("CommentFail", comment: "")
             
             // Editor
-        case .Publish:
+        case .publish:
             return NSLocalizedString("Publish", comment: "")
-        case .EditTextPlaceHolder:
+        case .editTextPlaceHolder:
             return NSLocalizedString("EditTextPlaceHolder", comment: "")
-        case .EditorDismissMessage:
+        case .editorDismissMessage:
             return NSLocalizedString("EditorDismissMessage", comment: "")
-        case .Templates:
+        case .templates:
             return NSLocalizedString("Templates", comment: "")
-        case .Filters:
+        case .filters:
             return NSLocalizedString("Filters", comment: "")
-        case .Shadow:
+        case .shadow:
             return NSLocalizedString("Shadow", comment: "")
-        case .Outline:
+        case .outline:
             return NSLocalizedString("Outline", comment: "")
-        case .OpenShadow:
+        case .openShadow:
             return NSLocalizedString("OpenShadow", comment: "")
-        case .OpenOutline:
+        case .openOutline:
             return NSLocalizedString("OpenOutline", comment: "")
-        case .CloseShadow:
+        case .closeShadow:
             return NSLocalizedString("CloseShadow", comment: "")
-        case .CloseOutline:
+        case .closeOutline:
             return NSLocalizedString("CloseOutline", comment: "")
-        case .Alpha:
+        case .alpha:
             return NSLocalizedString("Alpha", comment: "")
             
             // Publish
-        case .PublishFailure:
+        case .publishFailure:
             return NSLocalizedString("PublishFailure", comment: "")
             
             // Edior Tab
-        case .Size:
+        case .size:
             return NSLocalizedString("Size", comment: "")
-        case .Rotation:
+        case .rotation:
             return NSLocalizedString("Rotation", comment: "")
-        case .Font:
+        case .font:
             return NSLocalizedString("Font", comment: "")
-        case .Spacing:
+        case .spacing:
             return NSLocalizedString("Spacing", comment: "")
-        case .Alignment:
+        case .alignment:
             return NSLocalizedString("Alignment", comment: "")
-        case .Color:
+        case .color:
             return NSLocalizedString("Color", comment: "")
-        case .Animation:
+        case .animation:
             return NSLocalizedString("Animation", comment: "")
-        case .AnimationType:
+        case .animationType:
             return NSLocalizedString("AnimationType", comment: "")
-        case .AnimationDuration:
+        case .animationDuration:
             return NSLocalizedString("AnimationDuration", comment: "")
-        case .AnimationDelay:
+        case .animationDelay:
             return NSLocalizedString("AnimationDelay", comment: "")
             
             // Animation
-        case .AniType(let type):
+        case .aniType(let type):
             return NSLocalizedString(type.rawValue, comment: "")
 //        case .None:
 //            return NSLocalizedString("None", comment: "")
@@ -154,52 +154,52 @@ enum LocalStrings: CustomStringConvertible {
 //        case .ScaleOut:
 //            return NSLocalizedString("ScaleOut", comment: "")
             // Alert
-        case .OK:
+        case .ok:
             return NSLocalizedString("AlertOkLabel", comment: "")
-        case .Yes:
+        case .yes:
             return NSLocalizedString("AlertYesLabel", comment: "")
-        case .No:
+        case .no:
             return NSLocalizedString("AlertNoLabel", comment: "")
-        case .Resend:
+        case .resend:
             return NSLocalizedString("AlertResendLabel", comment: "")
-        case .TakePhoto:
+        case .takePhoto:
             return NSLocalizedString("AlertTakePhotoLabel", comment: "")
-        case .ChoosePhoto:
+        case .choosePhoto:
             return NSLocalizedString("AlertChoosePhoteLabel", comment: "")
-        case .Back:
+        case .back:
             return NSLocalizedString("AlertBackLabel", comment: "")
-        case .Wait:
+        case .wait:
             return NSLocalizedString("AlertWaitLabel", comment: "")
-        case .Setting:
+        case .setting:
             return NSLocalizedString("AlertSettingLabel", comment: "")
-        case .PhotoTitle:
+        case .photoTitle:
             return NSLocalizedString("AlertChangePhotoTitle", comment: "")
             //Report
-        case .Porn:
+        case .porn:
             return NSLocalizedString("ReportPornLabel", comment: "")
-        case .Scam:
+        case .scam:
             return NSLocalizedString("ReportScamLabel", comment: "")
-        case .Sensitive:
+        case .sensitive:
             return NSLocalizedString("ReportSenLabel", comment: "")
             
             //Share
-        case .DeleteFile:
+        case .deleteFile:
             return NSLocalizedString("DeleteFileLabel", comment: "")
-        case .Wechat:
+        case .wechat:
             return NSLocalizedString("WechatShareLabel", comment: "")
-        case .Moments:
+        case .moments:
             return NSLocalizedString("MomentsShareLabel", comment: "")
-        case .Weibo:
+        case .weibo:
             return NSLocalizedString("WeiboShareLabel", comment: "")
-        case .SaveLocal:
+        case .saveLocal:
             return NSLocalizedString("SaveLocalLabel", comment: "")
-        case .Report:
+        case .report:
             return NSLocalizedString("ReportLabel", comment: "")
-        case .CopyLink:
+        case .copyLink:
             return NSLocalizedString("CopyLinkLabel", comment: "")
-        case .UploadFile:
+        case .uploadFile:
             return NSLocalizedString("UploadFileLabel", comment: "")
-        case .AddToHot:
+        case .addToHot:
             return NSLocalizedString("AddToHotLabel", comment: "")
         }
     }

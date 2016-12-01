@@ -13,7 +13,7 @@ import AVFoundation
 class CTACameraPreviewView: UIView {
     
     enum CTACameraPreviewViewVideoGravity {
-        case Resize, ResizeAspect, ResizeAspectFill
+        case resize, resizeAspect, resizeAspectFill
     }
     
     var session: AVCaptureSession {
@@ -28,30 +28,33 @@ class CTACameraPreviewView: UIView {
     var videoGravity: CTACameraPreviewViewVideoGravity {
         
         get {
-            switch previewLayer.videoGravity {
+          guard let s = previewLayer.videoGravity else {
+            return .resizeAspect
+          }
+            switch s {
             case AVLayerVideoGravityResize:
-                return .Resize
+                return .resize
                 
             case AVLayerVideoGravityResizeAspect:
-                return .ResizeAspect
+                return .resizeAspect
                 
             case AVLayerVideoGravityResizeAspectFill:
-                return .ResizeAspectFill
+                return .resizeAspectFill
                 
             default:
-                return .ResizeAspect
+                return .resizeAspect
             }
         }
         
         set {
             switch newValue {
-            case .Resize:
+            case .resize:
                 previewLayer.videoGravity = AVLayerVideoGravityResize
                 
-            case .ResizeAspect:
+            case .resizeAspect:
                 previewLayer.videoGravity = AVLayerVideoGravityResizeAspect
                 
-            case .ResizeAspectFill:
+            case .resizeAspectFill:
                 previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
             }
         }
@@ -61,7 +64,7 @@ class CTACameraPreviewView: UIView {
         return layer as! AVCaptureVideoPreviewLayer
     }
     
-    override class func layerClass() -> AnyClass {
+    override class var layerClass : AnyClass {
         return AVCaptureVideoPreviewLayer.self
     }
 }

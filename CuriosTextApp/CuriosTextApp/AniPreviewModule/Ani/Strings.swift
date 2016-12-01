@@ -17,7 +17,7 @@ class Text {
         // Declare the fonts
         let font = UIFont(name:"Zapfino", size:24.0)!
         let para = NSMutableParagraphStyle()
-        para.alignment = NSTextAlignment.Center
+        para.alignment = NSTextAlignment.center
         
         let at = [
             NSFontAttributeName: font,
@@ -40,8 +40,8 @@ class Text {
         
         // Declare the paragraph styles
         let simpleStringParaStyle1 = NSMutableParagraphStyle()
-        simpleStringParaStyle1.alignment = NSTextAlignment.Center
-        simpleStringParaStyle1.tabStops = [NSTextTab(textAlignment: NSTextAlignment.Left, location: 28.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 56.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 84.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 112.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 140.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 168.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 196.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 224.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 252.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 280.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 308.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 336.000000, options: [:]), ]
+        simpleStringParaStyle1.alignment = NSTextAlignment.center
+        simpleStringParaStyle1.tabStops = [NSTextTab(textAlignment: NSTextAlignment.left, location: 28.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 56.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 84.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 112.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 140.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 168.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 196.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 224.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 252.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 280.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 308.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 336.000000, options: [:]), ]
         
         
         // Create the attributes and add them to the string
@@ -69,8 +69,8 @@ class Text {
         
         // Declare the paragraph styles
         let interalStringParaStyle1 = NSMutableParagraphStyle()
-        interalStringParaStyle1.alignment = NSTextAlignment.Center
-        interalStringParaStyle1.tabStops = [NSTextTab(textAlignment: NSTextAlignment.Left, location: 28.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 56.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 84.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 112.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 140.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 168.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 196.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 224.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 252.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 280.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 308.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 336.000000, options: [:]), ]
+        interalStringParaStyle1.alignment = NSTextAlignment.center
+        interalStringParaStyle1.tabStops = [NSTextTab(textAlignment: NSTextAlignment.left, location: 28.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 56.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 84.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 112.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 140.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 168.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 196.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 224.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 252.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 280.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 308.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 336.000000, options: [:]), ]
         
         
         // Create the attributes and add them to the string
@@ -84,7 +84,7 @@ class Text {
     func complexString() -> NSAttributedString
     {
         // Create the attributed string
-        var complexString = NSMutableAttributedString(string:"Welcome to Attributed String Creator\n\nSimply paste, write or import any kind of text into this area and the code to make an NSMutableAtrributedString for it will be generated below; along with all of its font, colour and paragraph formatting. \n\nSelect a name for your variable in the top left corner, copy the code into your IDE and assign it.\n\nThanks For Using Attributed String Creator")
+        let complexString = NSMutableAttributedString(string:"Welcome to Attributed String Creator\n\nSimply paste, write or import any kind of text into this area and the code to make an NSMutableAtrributedString for it will be generated below; along with all of its font, colour and paragraph formatting. \n\nSelect a name for your variable in the top left corner, copy the code into your IDE and assign it.\n\nThanks For Using Attributed String Creator")
         
         // Declare the fonts
         let complexStringFont1 = UIFont(name:"AvenirNext-Regular", size:24.0)
@@ -100,9 +100,9 @@ class Text {
         let complexStringColor4 = UIColor(red: 0.060450, green: 0.490443, blue: 0.763762, alpha: 1.000000)
         
         // Declare the paragraph styles
-        var complexStringParaStyle1 = NSMutableParagraphStyle()
-        complexStringParaStyle1.alignment = NSTextAlignment.Right
-        complexStringParaStyle1.tabStops = [NSTextTab(textAlignment: NSTextAlignment.Left, location: 28.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 56.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 84.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 112.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 140.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 168.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 196.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 224.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 252.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 280.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 308.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.Left, location: 336.000000, options: [:]), ]
+        let complexStringParaStyle1 = NSMutableParagraphStyle()
+        complexStringParaStyle1.alignment = NSTextAlignment.right
+        complexStringParaStyle1.tabStops = [NSTextTab(textAlignment: NSTextAlignment.left, location: 28.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 56.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 84.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 112.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 140.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 168.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 196.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 224.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 252.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 280.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 308.000000, options: [:]), NSTextTab(textAlignment: NSTextAlignment.left, location: 336.000000, options: [:]), ]
         
         
         // Create the attributes and add them to the string

@@ -26,14 +26,14 @@ extension CGRect: RectIntegerable {}
 //}
 
 public protocol Integerable {
-    typealias T
+    associatedtype T
     
     func toCeil() -> T
     func toFloor() -> T
 }
 
 public protocol Valueable {
-    typealias T
+    associatedtype T
     
     func toValue() -> T
 }

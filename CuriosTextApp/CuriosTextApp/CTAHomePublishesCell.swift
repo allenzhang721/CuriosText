@@ -134,12 +134,12 @@ class CTAHomePublishesCell: UICollectionViewCell{
         return rect;
     }
     
-    func changeLikeStatus(publichModel:CTAPublishModel?){
+    func changeLikeStatus(_ publichModel:CTAPublishModel?){
         self.controllerView.publishModel = publichModel
         self.controllerView.changeLikeStatus()
         if let model = publichModel{
             if model.likeStatus == 1{
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     let heartView = CTAHeartAnimationView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 100, height: 100)))
                     heartView.center = self.previewView.center
                     self.contentView.addSubview(heartView)
@@ -150,7 +150,7 @@ class CTAHomePublishesCell: UICollectionViewCell{
         }
     }
     
-    func singleTapHandler(sender: UIPanGestureRecognizer) {
+    func singleTapHandler(_ sender: UIPanGestureRecognizer) {
         delay(0.2, task: {
             if !self.isDoubleClick {
                 if self.delegate != nil{
@@ -161,7 +161,7 @@ class CTAHomePublishesCell: UICollectionViewCell{
         })
     }
     
-    func doubleTapHandler(sender: UIPanGestureRecognizer) {
+    func doubleTapHandler(_ sender: UIPanGestureRecognizer) {
         if self.delegate != nil{
             self.isDoubleClick = true
             self.delegate?.cellDoubleTap(self)
@@ -170,15 +170,15 @@ class CTAHomePublishesCell: UICollectionViewCell{
 }
 
 protocol CTAHomePublishesCellDelegate {
-    func cellUserIconTap(cell:CTAHomePublishesCell?)
-    func cellLikeListTap(cell:CTAHomePublishesCell?)
-    func cellLikeHandler(cell:CTAHomePublishesCell?, justLike:Bool)
-    func cellCommentHandler(cell:CTAHomePublishesCell?)
-    func cellRebuildHandler(cell:CTAHomePublishesCell?)
-    func cellMoreHandler(cell:CTAHomePublishesCell?)
+    func cellUserIconTap(_ cell:CTAHomePublishesCell?)
+    func cellLikeListTap(_ cell:CTAHomePublishesCell?)
+    func cellLikeHandler(_ cell:CTAHomePublishesCell?, justLike:Bool)
+    func cellCommentHandler(_ cell:CTAHomePublishesCell?)
+    func cellRebuildHandler(_ cell:CTAHomePublishesCell?)
+    func cellMoreHandler(_ cell:CTAHomePublishesCell?)
     
-    func cellDoubleTap(cell:CTAHomePublishesCell?)
-    func cellSingleTap(cell:CTAHomePublishesCell?)
+    func cellDoubleTap(_ cell:CTAHomePublishesCell?)
+    func cellSingleTap(_ cell:CTAHomePublishesCell?)
 }
 
 extension CTAHomePublishesCell: CTAPublishPreviewViewDelegate{

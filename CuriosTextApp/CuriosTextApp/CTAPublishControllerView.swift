@@ -71,12 +71,12 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
         self.userIconImage.image = UIImage(named: "default-usericon")
         self.iconView.addSubview(self.userIconImage)
         self.userNickNameLabel = UILabel(frame: CGRect(x: 53, y: 17, width: bounds.width - 120, height: 18))
-        self.userNickNameLabel.font = UIFont.boldSystemFontOfSize(13)
+        self.userNickNameLabel.font = UIFont.boldSystemFont(ofSize: 13)
         self.userNickNameLabel.textColor = CTAStyleKit.normalColor
-        self.userNickNameLabel.textAlignment = .Left
+        self.userNickNameLabel.textAlignment = .left
         self.iconView.addSubview(self.userNickNameLabel)
-        self.iconView.backgroundColor = UIColor.clearColor()
-        self.iconView.userInteractionEnabled = true
+        self.iconView.backgroundColor = UIColor.clear
+        self.iconView.isUserInteractionEnabled = true
         let iconTap = UITapGestureRecognizer(target: self, action: #selector(userIconClick(_:)))
         self.iconView.addGestureRecognizer(iconTap)
         
@@ -85,8 +85,8 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
         self.moreButtonImg = UIImageView(frame: CGRect(x: moreW-38, y: 10, width: 30, height: 30))
         self.moreButtonImg.image = UIImage(named: "moreSelection-button");
         self.moreView.addSubview(self.moreButtonImg)
-        self.moreView.backgroundColor = UIColor.clearColor()
-        self.moreView.userInteractionEnabled = true
+        self.moreView.backgroundColor = UIColor.clear
+        self.moreView.isUserInteractionEnabled = true
         let moreButtonTap = UITapGestureRecognizer(target: self, action: #selector(moreButtonClick(_:)))
         self.moreView.addGestureRecognizer(moreButtonTap)
         
@@ -99,8 +99,8 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
         self.likeButtonImg = UIImageView(frame: CGRect(x: 12, y: 10, width: 30, height: 30))
         self.likeButtonImg.image = UIImage(named: "like-button");
         self.likeView.addSubview(self.likeButtonImg)
-        self.likeView.backgroundColor = UIColor.clearColor()
-        self.likeView.userInteractionEnabled = true
+        self.likeView.backgroundColor = UIColor.clear
+        self.likeView.isUserInteractionEnabled = true
         let likeButtonTap = UITapGestureRecognizer(target: self, action: #selector(likeButtonClick(_:)))
         self.likeView.addGestureRecognizer(likeButtonTap)
         
@@ -111,13 +111,13 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
         self.commentButtonImg.image = UIImage(named: "comment-button");
         self.commentView.addSubview(self.commentButtonImg)
         self.commentCountLabel = UILabel(frame: CGRect(x: 30, y: 16, width: 100, height: 18))
-        self.commentCountLabel.font = UIFont.systemFontOfSize(13)
+        self.commentCountLabel.font = UIFont.systemFont(ofSize: 13)
         self.commentCountLabel.textColor = CTAStyleKit.normalColor
-        self.commentCountLabel.textAlignment = .Left
+        self.commentCountLabel.textAlignment = .left
         self.commentView.addSubview(self.commentCountLabel)
-        self.commentView.backgroundColor = UIColor.clearColor()
+        self.commentView.backgroundColor = UIColor.clear
         self.commentCountLabel.text = NSLocalizedString("CommentsLabel", comment: "")
-        self.commentView.userInteractionEnabled = true
+        self.commentView.isUserInteractionEnabled = true
         let commemtButtonTap = UITapGestureRecognizer(target: self, action: #selector(commentButtonClick(_:)))
         self.commentView.addGestureRecognizer(commemtButtonTap)
         
@@ -127,46 +127,46 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
         self.rebuildButtonImg.image = UIImage(named: "rebuild-button");
         self.rebuildView.addSubview(self.rebuildButtonImg)
         self.rebuildLabel = UILabel(frame: CGRect(x: 30, y: 17, width: 60, height: 18))
-        self.rebuildLabel.font = UIFont.systemFontOfSize(13)
+        self.rebuildLabel.font = UIFont.systemFont(ofSize: 13)
         self.rebuildLabel.textColor = CTAStyleKit.normalColor
-        self.rebuildLabel.textAlignment = .Left
+        self.rebuildLabel.textAlignment = .left
         self.rebuildView.addSubview(self.rebuildLabel)
-        self.rebuildView.backgroundColor = UIColor.clearColor()
+        self.rebuildView.backgroundColor = UIColor.clear
         self.rebuildLabel.text = "Ding"
         self.rebuildLabel.sizeToFit()
         self.rebuildView.frame.size.width = self.rebuildButtonImg.frame.width + self.rebuildLabel.frame.width
         self.rebuildView.frame.origin.x = bounds.width - self.rebuildView.frame.size.width - 14
-        self.rebuildView.userInteractionEnabled = true
+        self.rebuildView.isUserInteractionEnabled = true
         let rebuildButtonTap = UITapGestureRecognizer(target: self, action: #selector(rebuildButtonClick(_:)))
         self.rebuildView.addGestureRecognizer(rebuildButtonTap)
         
         
         let lastY = bounds.height - 50
         self.publishTimeLabel = UILabel(frame: CGRect(x: 45, y: lastY + 17, width: bounds.width/2, height: 18))
-        self.publishTimeLabel.font = UIFont.systemFontOfSize(13)
+        self.publishTimeLabel.font = UIFont.systemFont(ofSize: 13)
         self.publishTimeLabel.textColor = CTAStyleKit.labelShowColor
-        self.publishTimeLabel.textAlignment = .Left
+        self.publishTimeLabel.textAlignment = .left
         self.addSubview(self.publishTimeLabel)
         
         
         self.likeCountView = UIView(frame: CGRect(x: 0, y: lastY, width: bounds.width/2, height: 50))
         self.addSubview(self.likeCountView)
-        self.likeCountView.backgroundColor = UIColor.clearColor()
+        self.likeCountView.backgroundColor = UIColor.clear
         self.likeCountImg = UIImageView(frame: CGRect(x: 12, y: 10, width: 30, height: 30))
         self.likeCountImg.image = UIImage(named: "like-count");
         self.likeCountView.addSubview(self.likeCountImg)
         self.publishLikeCountLabel = UILabel(frame: CGRect(x: 53, y: 16, width: bounds.width/2, height: 18))
-        self.publishLikeCountLabel.font = UIFont.systemFontOfSize(13)
+        self.publishLikeCountLabel.font = UIFont.systemFont(ofSize: 13)
         self.publishLikeCountLabel.textColor = CTAStyleKit.normalColor
-        self.publishLikeCountLabel.textAlignment = .Left
+        self.publishLikeCountLabel.textAlignment = .left
         self.likeCountView.addSubview(self.publishLikeCountLabel)
-        self.likeCountView.userInteractionEnabled = true
+        self.likeCountView.isUserInteractionEnabled = true
         let likeCountTap = UITapGestureRecognizer(target: self, action: #selector(likeCountClick(_:)))
         self.likeCountView.addGestureRecognizer(likeCountTap)
         
         self.closeButton = UIButton(frame: CGRect(x: 0, y: 2, width: 40, height: 40))
-        self.closeButton.setImage(UIImage(named: "close-button"), forState: .Normal)
-        self.closeButton.addTarget(self, action: #selector(closeButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.closeButton.setImage(UIImage(named: "close-button"), for: UIControlState())
+        self.closeButton.addTarget(self, action: #selector(closeButtonClick(_:)), for: .touchUpInside)
         self.addSubview(self.closeButton)
     }
     
@@ -193,14 +193,14 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
         
         self.commentCountLabel.text = ""
         self.rebuildLabel.text = "Ding"
-        self.closeButton.hidden = true
+        self.closeButton.isHidden = true
         self.type = .PublishCell
         self.setViewByType()
     }
     
     func setViewByType(){
         if self.type == .PublishCell{
-            self.closeButton.setImage(UIImage(named: "close-button"), forState: .Normal)
+            self.closeButton.setImage(UIImage(named: "close-button"), for: UIControlState())
             self.userNickNameLabel.textColor = CTAStyleKit.normalColor
             self.moreButtonImg.image = UIImage(named: "moreSelection-button")
             self.likeButtonImg.image = UIImage(named: "like-button")
@@ -211,7 +211,7 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
             self.likeCountImg.image = UIImage(named: "like-count")
             self.publishLikeCountLabel.textColor = CTAStyleKit.normalColor
         }else if self.type == .PublishDetail{
-            self.closeButton.setImage(UIImage(named: "close-white-button"), forState: .Normal)
+            self.closeButton.setImage(UIImage(named: "close-white-button"), for: UIControlState())
             self.userNickNameLabel.textColor = CTAStyleKit.commonBackgroundColor
             self.moreButtonImg.image = UIImage(named: "moreSelection-white-button")
             self.likeButtonImg.image = UIImage(named: "like-white-button")
@@ -224,7 +224,7 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
         }
     }
     
-    func setNikeNameLabel(text:String){
+    func setNikeNameLabel(_ text:String){
         self.userNickNameLabel.text = text
         if self.type == .PublishCell{
             self.userIconImage.frame = CGRect(x: 11, y: 10, width: 32, height: 32);
@@ -252,23 +252,23 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
 //        }
     }
     
-    func setTimeLabel(text:String){
+    func setTimeLabel(_ text:String){
         let bounds = self.frame
         self.publishTimeLabel.text = text
         self.publishTimeLabel.sizeToFit()
         self.publishTimeLabel.frame.origin.x = bounds.width - self.publishTimeLabel.frame.width - 14
-        UIView.transitionWithView(self.publishTimeLabel, duration: 0.1, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
+        UIView.transition(with: self.publishTimeLabel, duration: 0.1, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
             self.publishTimeLabel.text = text
         }) { (_) in
         }
     }
     
-    func setUserIcon(iconPath:String){
-        UIView.transitionWithView(self.userIconImage, duration: 0.1, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
+    func setUserIcon(_ iconPath:String){
+        UIView.transition(with: self.userIconImage, duration: 0.1, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
             let defaultImg = UIImage.init(named: "default-usericon")
             let imagePath = CTAFilePath.userFilePath+iconPath
-            let imageURL = NSURL(string: imagePath)!
-            self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: defaultImg, optionsInfo: [.Transition(ImageTransition.Fade(1))]){ (image, error, cacheType, imageURL) -> () in
+            let imageURL = URL(string: imagePath)!
+            self.userIconImage.kf.setImage(with: imageURL, placeholder: defaultImg, options: [.transition(ImageTransition.fade(1))]){ (image, error, cacheType, imageURL) -> () in
                 if error != nil {
                     self.userIconImage.image = defaultImg
                 }
@@ -280,7 +280,7 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
     
     func setPublishLikeCount(){
         let likeCount = self.publishModel!.likeCount
-        UIView.transitionWithView(self.publishLikeCountLabel, duration: 0.1, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
+        UIView.transition(with: self.publishLikeCountLabel, duration: 0.1, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
             if likeCount != 0{
                 self.publishLikeCountLabel.text = self.changeCountToAllString(likeCount)+"  "+NSLocalizedString("LikesLabel", comment: "")
             }else {
@@ -294,7 +294,7 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
     
     func setCommentButtonCount(){
         let commentCount = self.publishModel!.commentCount
-        UIView.transitionWithView(self.commentCountLabel, duration: 0.1, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
+        UIView.transition(with: self.commentCountLabel, duration: 0.1, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
             if commentCount != 0{
                 self.commentCountLabel.text = self.changeCountToString(commentCount)
             }else {
@@ -321,27 +321,27 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
     }
     
     func playLikeAnimation(){
-        self.likeButtonImg.transform = CGAffineTransformMakeScale(0.6, 0.6)
-        UIView.animateWithDuration(0.2) { 
-            self.likeButtonImg.transform = CGAffineTransformMakeScale(1, 1)
-        }
+        self.likeButtonImg.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+        UIView.animate(withDuration: 0.2, animations: { 
+            self.likeButtonImg.transform = CGAffineTransform(scaleX: 1, y: 1)
+        }) 
     }
     
     func setCloseButtonStyle(){
         if self.type == .PublishCell{
-            self.closeButton.hidden = true
+            self.closeButton.isHidden = true
         }else if self.type == .PublishDetail{
-            self.closeButton.hidden = false
+            self.closeButton.isHidden = false
         }
     }
     
-    func userIconClick(sender: UIPanGestureRecognizer) {
+    func userIconClick(_ sender: UIPanGestureRecognizer) {
         if self.delegate != nil{
             self.delegate?.controlUserIconTap()
         }
     }
     
-    func likeCountClick(sender: UIPanGestureRecognizer) {
+    func likeCountClick(_ sender: UIPanGestureRecognizer) {
         let likeCount = self.publishModel!.likeCount
         if likeCount != 0{
             if self.delegate != nil{
@@ -354,31 +354,31 @@ class CTAPublishControllerView: UIView, CTAImageControllerProtocol, CTAPublishMo
         }
     }
     
-    func likeButtonClick(sender: UIPanGestureRecognizer) {
+    func likeButtonClick(_ sender: UIPanGestureRecognizer) {
         if self.delegate != nil{
             self.delegate?.controlLikeHandler()
         }
     }
     
-    func commentButtonClick(sender: UIPanGestureRecognizer) {
+    func commentButtonClick(_ sender: UIPanGestureRecognizer) {
         if self.delegate != nil{
             self.delegate?.controlCommentHandler()
         }
     }
     
-    func rebuildButtonClick(sender: UIPanGestureRecognizer) {
+    func rebuildButtonClick(_ sender: UIPanGestureRecognizer) {
         if self.delegate != nil{
             self.delegate?.controlRebuildHandler()
         }
     }
     
-    func moreButtonClick(sender: UIPanGestureRecognizer) {
+    func moreButtonClick(_ sender: UIPanGestureRecognizer) {
         if self.delegate != nil{
             self.delegate?.controlMoreHandler()
         }
     }
     
-    func closeButtonClick(sender: UIButton){
+    func closeButtonClick(_ sender: UIButton){
         if self.delegate != nil{
             self.delegate?.controlCloseHandler()
         }

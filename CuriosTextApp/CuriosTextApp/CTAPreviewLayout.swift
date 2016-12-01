@@ -10,16 +10,16 @@ import UIKit
 
 protocol CTAPreviewLayoutDataSource: class {
     
-    func layout(layout: CTAPreviewLayout, layoutAttributesAtIndexPath indexPath: NSIndexPath) -> ContainerVMProtocol?
+    func layout(_ layout: CTAPreviewLayout, layoutAttributesAtIndexPath indexPath: IndexPath) -> ContainerVMProtocol?
 }
 
 class CTAPreviewLayout: UICollectionViewFlowLayout {
     
     weak var dataSource: CTAPreviewLayoutDataSource?
     
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
-        guard let layoutAttributes = super.layoutAttributesForElementsInRect(rect) else {
+        guard let layoutAttributes = super.layoutAttributesForElements(in: rect) else {
             return nil
         }
         
@@ -35,7 +35,7 @@ class CTAPreviewLayout: UICollectionViewFlowLayout {
                 attribute.size = container.size
                 attribute.center = container.center
                 attribute.zIndex = indexPath.item
-                attribute.transform = CGAffineTransformMakeRotation(container.radius)
+                attribute.transform = CGAffineTransform(rotationAngle: container.radius)
             }
         }
         

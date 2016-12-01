@@ -11,9 +11,9 @@ import Foundation
 /**
 *  Options to control EMBlackCat behaviors.
 */
-public struct BlackCatOptions : OptionSetType {
+public struct BlackCatOptions : OptionSet {
   public typealias RawValue = UInt
-  private var value: UInt = 0
+  fileprivate var value: UInt = 0
   init(_ value: UInt) { self.value = value }
   
   /**
@@ -40,7 +40,7 @@ public struct BlackCatOptions : OptionSetType {
   /// Raw value of the option.
   public var rawValue: UInt { return self.value }
   
-  static func fromMask(raw: UInt) -> BlackCatOptions { return self.init(raw) }
+  static func fromMask(_ raw: UInt) -> BlackCatOptions { return self.init(raw) }
   
   /// None options. EMBlackCat will keep its default behavior.
   public static var None: BlackCatOptions { return self.init(0) }

@@ -34,7 +34,7 @@ class CTACanvasTextCell: CTACanvasCell {
         super.layoutSubviews()
         textView.insets = contentInset
 //        CGRect(x: 0 - contentInset.x, y: 0 - contentInset.y, width: bounds.size.width + 2 * contentInset.x, height: bounds.size.height + 2 * contentInset.y)
-        textView.bounds.size = CGSize(width: CGRectGetWidth(contentView.bounds) + 2 * contentInset.x , height: CGRectGetHeight(contentView.bounds) + 2 * contentInset.y)
+        textView.bounds.size = CGSize(width: contentView.bounds.width + 2 * contentInset.x , height: contentView.bounds.height + 2 * contentInset.y)
         textView.center = contentView.center
     }
 }

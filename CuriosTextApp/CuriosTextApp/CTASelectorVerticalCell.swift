@@ -9,15 +9,15 @@
 import UIKit
 
 protocol CTASelectorVerticalCellDataSource: class {
-    func verticalCellRegisterItemCellClass(cell: CTASelectorVerticalCell) -> (AnyClass?, String)
-    func verticalCell(cell: CTASelectorVerticalCell, numberOfItemsInSection section: Int) -> Int
-    func verticalCellBeganIndex(cell: CTASelectorVerticalCell) -> Int
+    func verticalCellRegisterItemCellClass(_ cell: CTASelectorVerticalCell) -> (AnyClass?, String)
+    func verticalCell(_ cell: CTASelectorVerticalCell, numberOfItemsInSection section: Int) -> Int
+    func verticalCellBeganIndex(_ cell: CTASelectorVerticalCell) -> Int
 }
 
 protocol CTASelectorVerticalCellDelegate: class {
-    func verticalCell(cell: CTASelectorVerticalCell, configItemCell itemCell: CTAVerticalItemCollectionViewCell, itemCellForItemAtIndexPath indexPath: NSIndexPath)
+    func verticalCell(_ cell: CTASelectorVerticalCell, configItemCell itemCell: CTAVerticalItemCollectionViewCell, itemCellForItemAtIndexPath indexPath: IndexPath)
     
-    func verticalCell(cell: CTASelectorVerticalCell, didChangetoItemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?)
+    func verticalCell(_ cell: CTASelectorVerticalCell, didChangetoItemAtIndexPath indexPath: IndexPath, oldIndexPath: IndexPath?)
 }
 
 final class CTASelectorVerticalCell: CTASelectorCell {
@@ -47,32 +47,32 @@ final class CTASelectorVerticalCell: CTASelectorCell {
         setup()
     }
     
-    func updateTo(item: Int) {
+    func updateTo(_ item: Int) {
         
-        let indexPath = NSIndexPath(forItem: item, inSection: 0)
-        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredVertically, animated: false)
+        let indexPath = IndexPath(item: item, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
     }
     
     override func didEndDiplayed() {
 //        actived = false
     }
     
-    private func setup() {
+    fileprivate func setup() {
         
         let layout = CTALineFlowLayout()
-        layout.scrollDirection = .Vertical
+        layout.scrollDirection = .vertical
         collectionView = UICollectionView(frame: bounds, collectionViewLayout: layout)
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
-        collectionView.backgroundColor = UIColor.whiteColor()
+        collectionView.backgroundColor = UIColor.white
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         contentView.addSubview(collectionView)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
-        collectionView.topAnchor.constraintEqualToAnchor(topAnchor).active = true
-        collectionView.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
-        collectionView.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
+        collectionView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        collectionView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         
         collectionView.dataSource = self
         layout.delegate = self
@@ -82,10 +82,10 @@ final class CTASelectorVerticalCell: CTASelectorCell {
         
         if let cellClass = verticalDataSource?.verticalCellRegisterItemCellClass(self) {
             cellIdentifier = cellClass.1
-            collectionView.registerClass(cellClass.0, forCellWithReuseIdentifier: cellIdentifier)
+            collectionView.register(cellClass.0, forCellWithReuseIdentifier: cellIdentifier)
         } else {
             cellIdentifier = "VerticalEmptyCell"
-            collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
+            collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
         }
     }
     
@@ -94,7 +94,7 @@ final class CTASelectorVerticalCell: CTASelectorCell {
         
         if let index = verticalDataSource?.verticalCellBeganIndex(self) {
             debug_print("verticalCell reloadData and will scroll to item = \(index)", context: colorContext)
-            dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
+            DispatchQueue.main.async(execute: { [weak self] () -> Void in
                 if let sf = self {
                     
                     sf.load(index)
@@ -104,18 +104,18 @@ final class CTASelectorVerticalCell: CTASelectorCell {
         }
     }
     
-    private func load(index: Int) {
+    fileprivate func load(_ index: Int) {
         
         let items = collectionView(collectionView, numberOfItemsInSection: 0)
         let next = min(index, items - 1)
         
-        collectionView?.scrollToItemAtIndexPath(NSIndexPath(forItem: next, inSection: 0), atScrollPosition: .CenteredVertically, animated: false)
+        collectionView?.scrollToItem(at: IndexPath(item: next, section: 0), at: .centeredVertically, animated: false)
         
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+        DispatchQueue.main.async { [weak self] in
             if let sf = self {
                 sf.alpha = sf.actived ? 1.0 : 0.8
                 
-                if let cells = sf.collectionView.visibleCells() as? [CTAVerticalItemCollectionViewCell] {
+                if let cells = sf.collectionView.visibleCells as? [CTAVerticalItemCollectionViewCell] {
                     
                     for cell in cells {
                         cell.update()
@@ -132,9 +132,9 @@ final class CTASelectorVerticalCell: CTASelectorCell {
     }
     
     // 没有产生 boundsChange，就不会调用
-    override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         
-        super.applyLayoutAttributes(layoutAttributes)
+        super.apply(layoutAttributes)
         
         guard let layoutAttributes = layoutAttributes as? CollectionViewAttributes else {
             return
@@ -149,12 +149,12 @@ final class CTASelectorVerticalCell: CTASelectorCell {
         if actived != layoutAttributes.actived {
             actived = layoutAttributes.actived
             
-            dispatch_async(dispatch_get_main_queue(), {[weak self] in
+            DispatchQueue.main.async(execute: {[weak self] in
                 
                 if let sf = self {
                     sf.alpha = sf.actived ? 1.0 : 0.8
                     
-                    if let cells = sf.collectionView.visibleCells() as? [CTAVerticalItemCollectionViewCell] {
+                    if let cells = sf.collectionView.visibleCells as? [CTAVerticalItemCollectionViewCell] {
                         
                         for cell in cells {
                             cell.update()
@@ -182,7 +182,7 @@ final class CTASelectorVerticalCell: CTASelectorCell {
 
 extension CTASelectorVerticalCell: UICollectionViewDataSource {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         guard let verticalDataSource = verticalDataSource else {
             return 5
@@ -193,11 +193,11 @@ extension CTASelectorVerticalCell: UICollectionViewDataSource {
         return items
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell: UICollectionViewCell
         
-        if let aCell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: indexPath) as? CTAVerticalItemCollectionViewCell {
+        if let aCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? CTAVerticalItemCollectionViewCell {
             cell = aCell
             
             aCell.delegate = self
@@ -207,7 +207,7 @@ extension CTASelectorVerticalCell: UICollectionViewDataSource {
             }
             
         } else {
-            cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: indexPath)
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath)
         }
         
         return cell
@@ -216,7 +216,7 @@ extension CTASelectorVerticalCell: UICollectionViewDataSource {
 
 extension CTASelectorVerticalCell: CTAVerticalItemCollectionViewCellDelegate {
     
-    func itemCellSuperActived(cell: CTAVerticalItemCollectionViewCell) -> Bool {
+    func itemCellSuperActived(_ cell: CTAVerticalItemCollectionViewCell) -> Bool {
         return actived
     }
 }
@@ -224,10 +224,10 @@ extension CTASelectorVerticalCell: CTAVerticalItemCollectionViewCellDelegate {
 
 extension CTASelectorVerticalCell: LineFlowLayoutDelegate {
     
-    func didChangeTo(collectionView: UICollectionView, itemAtIndexPath indexPath: NSIndexPath, oldIndexPath: NSIndexPath?) {
+    func didChangeTo(_ collectionView: UICollectionView, itemAtIndexPath indexPath: IndexPath, oldIndexPath: IndexPath?) {
         
         item = indexPath.item
-        guard let verticalDelegate = verticalDelegate, let _ = oldIndexPath where actived == true else {
+        guard let verticalDelegate = verticalDelegate, let _ = oldIndexPath, actived == true else {
             return
         }
  

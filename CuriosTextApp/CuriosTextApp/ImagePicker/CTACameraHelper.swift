@@ -12,26 +12,26 @@ import AVFoundation
 final class CTADevicesHelper {
     
     enum CTADeviceType: CustomStringConvertible {
-        case Video
+        case video
         var description: String {
             switch self {
-            case .Video:
+            case .video:
                 return AVMediaTypeVideo
             }
         }
     }
     
     static var defaultDevice: AVCaptureDevice? {
-        return deviceWithType(.Video, preferringPosition: .Back)
+        return deviceWithType(.video, preferringPosition: .back)
     }
     
     static var frontDevice: AVCaptureDevice? {
-        return deviceWithType(.Video, preferringPosition: .Front)
+        return deviceWithType(.video, preferringPosition: .front)
     }
     
-    class func deviceWithType(type: CTADeviceType, preferringPosition position: AVCaptureDevicePosition) -> AVCaptureDevice? {
+    class func deviceWithType(_ type: CTADeviceType, preferringPosition position: AVCaptureDevicePosition) -> AVCaptureDevice? {
         
-        let devices = AVCaptureDevice.devicesWithMediaType(type.description) as! [AVCaptureDevice]
+        let devices = AVCaptureDevice.devices(withMediaType: type.description) as! [AVCaptureDevice]
         var captureDevice = devices.first
         
         for d in devices {

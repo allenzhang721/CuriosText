@@ -11,13 +11,13 @@ import UIKit
 
 class TextSpliter {
     enum TextLineSpliteType {
-        case AllatOnce
-        case ByLine
+        case allatOnce
+        case byLine
     }
     
     enum TextSpliteType {
-        case ByObject
-        case ByCharacter
+        case byObject
+        case byCharacter
     }
     
     struct TextUnit {
@@ -31,12 +31,12 @@ class TextSpliter {
         let row: Int
     }
     
-    class func spliteAttributeText(text: NSAttributedString, inConstraintSize size: CGSize) -> [TextUnit] {
+    class func spliteAttributeText(_ text: NSAttributedString, inConstraintSize size: CGSize) -> [TextUnit] {
         
         return []
     }
     
-    class func spliteText(text: String, withAttributes attributes: [String: AnyObject]?, inConstraintSize size: CGSize, bySpliteType type: (TextLineSpliteType, TextSpliteType) = (.AllatOnce, .ByObject)) -> ([TextUnit], CGSize, Int) { // units, size, sectionCount, []
+    class func spliteText(_ text: String, withAttributes attributes: [String: AnyObject]?, inConstraintSize size: CGSize, bySpliteType type: (TextLineSpliteType, TextSpliteType) = (.allatOnce, .byObject)) -> ([TextUnit], CGSize, Int) { // units, size, sectionCount, []
         
         let constraintSize = size
         let storage = NSTextStorage(string: text, attributes: attributes)
@@ -53,9 +53,9 @@ class TextSpliter {
         var units = [TextUnit]()
         
         switch type {
-        case (.AllatOnce, .ByObject):
+        case (.allatOnce, .byObject):
             
-            let usedRect = manager.usedRectForTextContainer(container)
+            let usedRect = manager.usedRect(for: container)
             
             
 //            let r = manager.characterRangeForGlyphRange(glyphRange, actualGlyphRange: nil)
@@ -95,13 +95,13 @@ class TextSpliter {
 //                units.append(unit)
 //            })
             
-        case (.AllatOnce, .ByCharacter):
+        case (.allatOnce, .byCharacter):
             
             //            var section = 0
             //            var row = 0
             let text = text as NSString
-            let usedRect = manager.usedRectForTextContainer(container)
-            manager.enumerateLineFragmentsForGlyphRange(NSMakeRange(0, glyphCount), usingBlock: { (alineFragmentRect, usedlineFragmentRect, container, glyphRange, stop) in
+            let usedRect = manager.usedRect(for: container)
+            manager.enumerateLineFragments(forGlyphRange: NSMakeRange(0, glyphCount), using: { (alineFragmentRect, usedlineFragmentRect, container, glyphRange, stop) in
                 
                 let location = glyphRange.location
                 let length = glyphRange.length
@@ -116,14 +116,14 @@ class TextSpliter {
                     let r = NSMakeRange(l, 1)
                     
                     var p = r
-                    let characterRange = manager.characterRangeForGlyphRange(r, actualGlyphRange: &p)
+                    let characterRange = manager.characterRange(forGlyphRange: r, actualGlyphRange: &p)
                     
                     if characterRange.length > 0 {
                         nextLocation = l + characterRange.length
                     }
                     //                    let start = text.startIndex.advancedBy(p.location)
                     //                    let end = text.startIndex.advancedBy(p.location + p.length)
-                    let t = (text as NSString).substringWithRange(p)
+                    let t = (text as NSString).substring(with: p)
                     
                     if t == " " || t == "\n" {
                         continue
@@ -131,7 +131,7 @@ class TextSpliter {
                     
                     let lf = alineFragmentRect
                     let ulf = usedlineFragmentRect
-                    let ur = manager.boundingRectForGlyphRange(r, inTextContainer: container)
+                    let ur = manager.boundingRect(forGlyphRange: r, in: container)
                     
                     let cs = CGSize(width: constraintSize.width, height: usedRect.height)
                     let unit = TextUnit(text: t, attriubtes: attributes, usedRect: ur, lineFragmentRect: lf, usedLineFragmentRect: ulf, constraintSize: cs, section: 0, row: l)
@@ -147,17 +147,17 @@ class TextSpliter {
             })
             
             
-        case (.ByLine, .ByObject):
+        case (.byLine, .byObject):
             
             var section = 0
             let row = 0
-            let usedRect = manager.usedRectForTextContainer(container)
-            manager.enumerateLineFragmentsForGlyphRange(NSMakeRange(0, glyphCount), usingBlock: { (alineFragmentRect, usedlineFragmentRect, container, glyphRange, stop) in
+            let usedRect = manager.usedRect(for: container)
+            manager.enumerateLineFragments(forGlyphRange: NSMakeRange(0, glyphCount), using: { (alineFragmentRect, usedlineFragmentRect, container, glyphRange, stop) in
                 
-                let r = manager.characterRangeForGlyphRange(glyphRange, actualGlyphRange: nil)
+                let r = manager.characterRange(forGlyphRange: glyphRange, actualGlyphRange: nil)
                 //                let start = text.startIndex.advancedBy(r.location)
                 //                let end = text.startIndex.advancedBy(r.location + r.length)
-                let t = (text as NSString).substringWithRange(r)
+                let t = (text as NSString).substring(with: r)
                 
                 if t == " " || t == "\n" {
                     return
@@ -176,13 +176,13 @@ class TextSpliter {
                 sectionCount += 1
             })
             
-        case (.ByLine, .ByCharacter):
+        case (.byLine, .byCharacter):
             
             var section = 0
             var row = 0
             let text = text as NSString
-            let usedRect = manager.usedRectForTextContainer(container)
-            manager.enumerateLineFragmentsForGlyphRange(NSMakeRange(0, glyphCount), usingBlock: { (alineFragmentRect, usedlineFragmentRect, container, glyphRange, stop) in
+            let usedRect = manager.usedRect(for: container)
+            manager.enumerateLineFragments(forGlyphRange: NSMakeRange(0, glyphCount), using: { (alineFragmentRect, usedlineFragmentRect, container, glyphRange, stop) in
                 
                 let location = glyphRange.location
                 let length = glyphRange.length
@@ -197,14 +197,14 @@ class TextSpliter {
                     let r = NSMakeRange(l, 1)
                     
                     var p = r
-                    let characterRange = manager.characterRangeForGlyphRange(r, actualGlyphRange: &p)
+                    let characterRange = manager.characterRange(forGlyphRange: r, actualGlyphRange: &p)
                     
                     if characterRange.length > 0 {
                         nextLocation = l + characterRange.length
                     }
                     //                    let start = text.startIndex.advancedBy(p.location)
                     //                    let end = text.startIndex.advancedBy(p.location + p.length)
-                    let t = (text as NSString).substringWithRange(p)
+                    let t = (text as NSString).substring(with: p)
                     
                     if t == " " || t == "\n" {
                         continue
@@ -212,7 +212,7 @@ class TextSpliter {
                     
                     let lf = alineFragmentRect
                     let ulf = usedlineFragmentRect
-                    let ur = manager.boundingRectForGlyphRange(r, inTextContainer: container)
+                    let ur = manager.boundingRect(forGlyphRange: r, in: container)
                     
                     let cs = CGSize(width: constraintSize.width, height: usedRect.height)
                     let unit = TextUnit(text: t, attriubtes: attributes, usedRect: ur, lineFragmentRect: lf, usedLineFragmentRect: ulf, constraintSize: cs, section: section, row: row)

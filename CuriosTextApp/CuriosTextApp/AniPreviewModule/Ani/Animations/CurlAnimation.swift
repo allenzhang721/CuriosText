@@ -11,7 +11,7 @@ import UIKit
 
 extension AniFactory {
     
-    class func curl(appear: Bool, canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, descriptor: Descriptor, beganTime: Float) -> AniDescriptor {
+    class func curl(_ appear: Bool, canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, descriptor: Descriptor, beganTime: Float) -> AniDescriptor {
         
         let duration = descriptor.config.duration
         let time = duration * 0.6
@@ -54,26 +54,26 @@ extension AniFactory {
         let endPosition = appear ? contentPostion : tranlsPosition
         
         let beganTransform = !appear ?
-            NSValue(CATransform3D: CATransform3DIdentity) :
-            NSValue(CATransform3D: CATransform3DMakeRotation(CGFloat(M_PI), 0.5, 1, 0))
+            NSValue(caTransform3D: CATransform3DIdentity) :
+            NSValue(caTransform3D: CATransform3DMakeRotation(CGFloat(M_PI), 0.5, 1, 0))
         
         let endTransform = !appear ?
-            NSValue(CATransform3D: CATransform3DMakeRotation(CGFloat(M_PI), 0.5, 1, 0)) :
-            NSValue(CATransform3D: CATransform3DIdentity)
+            NSValue(caTransform3D: CATransform3DMakeRotation(CGFloat(M_PI), 0.5, 1, 0)) :
+            NSValue(caTransform3D: CATransform3DIdentity)
 
         let vs: [String: [AnyObject]] = [
             "position": [
-                NSValue(CGPoint: position), NSValue(CGPoint: endPosition)],
-            "opacity": [1.0, 1.0],
+                NSValue(cgPoint: position), NSValue(cgPoint: endPosition)],
+            "opacity": [1.0 as AnyObject, 1.0 as AnyObject],
             "transform": [
                 beganTransform, endTransform
             ]
         ]
         let keyTime = [0, 1]
         let ks: [String: [NSNumber]] = [
-            "position": keyTime,
-            "opacity": keyTime,
-            "transform": keyTime]
+            "position": keyTime as Array<NSNumber>,
+            "opacity": keyTime as Array<NSNumber>,
+            "transform": keyTime as Array<NSNumber>]
         
         return AniDescriptor(type: "CURL_\(appear ? "IN" : "OUT")", beganTimes: bt, durations: ds, values: vs, keyTimes: ks)
     }

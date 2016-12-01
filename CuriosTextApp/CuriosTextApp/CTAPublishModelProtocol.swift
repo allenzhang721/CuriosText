@@ -8,7 +8,7 @@
 
 import Foundation
 
-func DateString(date:NSDate) -> String{
+func DateString(_ date:Date) -> String{
     var time = date.timeIntervalSinceNow
     if time < 0{
         time = 0-time
@@ -44,17 +44,17 @@ func DateString(date:NSDate) -> String{
 }
 
 protocol CTAPublishModelProtocol: CTASystemLanguageProtocol{
-    func getPublishIndex(publishID:String, publishArray:Array<CTAPublishModel>) -> Int
-    func checkPublishModelIsHave(publish:CTAPublishModel, publishArray:Array<CTAPublishModel>) -> Bool
-    func resetPublishModel(publish:CTAPublishModel, newPublish:CTAPublishModel) -> CTAPublishModel
-    func removePublishModelByID(publishID:String, publishArray:Array<CTAPublishModel>) -> Array<CTAPublishModel>
-    func changeCountToString(count:Int) -> String
-    func changeCountToAllString(count:Int) -> String
+    func getPublishIndex(_ publishID:String, publishArray:Array<CTAPublishModel>) -> Int
+    func checkPublishModelIsHave(_ publish:CTAPublishModel, publishArray:Array<CTAPublishModel>) -> Bool
+    func resetPublishModel(_ publish:CTAPublishModel, newPublish:CTAPublishModel) -> CTAPublishModel
+    func removePublishModelByID(_ publishID:String, publishArray:Array<CTAPublishModel>) -> Array<CTAPublishModel>
+    func changeCountToString(_ count:Int) -> String
+    func changeCountToAllString(_ count:Int) -> String
 }
 
 extension CTAPublishModelProtocol{
     
-    func getPublishIndex(publishID:String, publishArray:Array<CTAPublishModel>) -> Int{
+    func getPublishIndex(_ publishID:String, publishArray:Array<CTAPublishModel>) -> Int{
         for i in 0..<publishArray.count{
             let oldPublihModel = publishArray[i]
             if oldPublihModel.publishID == publishID{
@@ -64,7 +64,7 @@ extension CTAPublishModelProtocol{
         return -1
     }
     
-    func checkPublishModelIsHave(publish:CTAPublishModel, publishArray:Array<CTAPublishModel>) -> Bool{
+    func checkPublishModelIsHave(_ publish:CTAPublishModel, publishArray:Array<CTAPublishModel>) -> Bool{
         for i in 0..<publishArray.count{
             let oldPublihModel = publishArray[i]
             if oldPublihModel.publishID == publish.publishID {
@@ -74,7 +74,7 @@ extension CTAPublishModelProtocol{
         return false
     }
     
-    func resetPublishModel(publish:CTAPublishModel, newPublish:CTAPublishModel) -> CTAPublishModel{
+    func resetPublishModel(_ publish:CTAPublishModel, newPublish:CTAPublishModel) -> CTAPublishModel{
         publish.commentCount = newPublish.commentCount
         publish.likeCount = newPublish.likeCount
         publish.shareCount = newPublish.shareCount
@@ -83,19 +83,19 @@ extension CTAPublishModelProtocol{
         return publish
     }
     
-    func removePublishModelByID(publishID:String, publishArray:Array<CTAPublishModel>) -> Array<CTAPublishModel>{
+    func removePublishModelByID(_ publishID:String, publishArray:Array<CTAPublishModel>) -> Array<CTAPublishModel>{
         var newArray = publishArray
         for i in 0..<newArray.count{
             let oldPublihModel = newArray[i]
             if oldPublihModel.publishID == publishID {
-                newArray.removeAtIndex(i)
+                newArray.remove(at: i)
                 break
             }
         }
         return newArray
     }
     
-    func changeCountToString(count:Int) -> String{
+    func changeCountToString(_ count:Int) -> String{
         var countString:String = ""
         let language = self.getCurrentLanguage()
         if language == "zh-Hant-US" || language == "zh-Hans-US" || language == "zh-HK" {
@@ -170,12 +170,12 @@ extension CTAPublishModelProtocol{
         return countString
     }
     
-    func changeCountToAllString(count:Int) -> String{
+    func changeCountToAllString(_ count:Int) -> String{
         let countString:String = self.getCountThStr(count)
         return countString
     }
     
-    func getCountThStr(count:Int) -> String{
+    func getCountThStr(_ count:Int) -> String{
         var countString:String = ""
         let remainder = Int(count % 1000)
         let divided   = Int(count / 1000)

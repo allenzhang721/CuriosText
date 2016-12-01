@@ -17,7 +17,7 @@ class CTARotatorView: UIControl {
     var currentValue: CGFloat = 0
     var targetRadians = [0.0, 0.5 * CGFloat(M_PI), CGFloat(M_PI), 1.5 * CGFloat(M_PI), 2.0 * CGFloat(M_PI)]
     
-    private var validRadian: CGFloat = 0.0
+    fileprivate var validRadian: CGFloat = 0.0
     var radianUnit: CGFloat {
         
         return (maximumRadian - minimumRadian) / validRadian
@@ -35,9 +35,9 @@ class CTARotatorView: UIControl {
         }
     }
     
-   private let nodeLayer = CAShapeLayer()
-   private let redNodeLayer = CAShapeLayer()
-   private let scrollView = UIScrollView()
+   fileprivate let nodeLayer = CAShapeLayer()
+   fileprivate let redNodeLayer = CAShapeLayer()
+   fileprivate let scrollView = UIScrollView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -60,15 +60,15 @@ class CTARotatorView: UIControl {
         scrollView.delegate = self
         
         scrollView.showsHorizontalScrollIndicator = false
-        nodeLayer.contentsScale = UIScreen.mainScreen().scale
-        redNodeLayer.contentsScale = UIScreen.mainScreen().scale
+        nodeLayer.contentsScale = UIScreen.main.scale
+        redNodeLayer.contentsScale = UIScreen.main.scale
         
         scrollView.frame = bounds
         scrollView.contentSize = CGSize(width: validRadian + bounds.width, height: bounds.height)
     }
     
     
-    func updateRotator(radian: CGFloat) {
+    func updateRotator(_ radian: CGFloat) {
         
         let offsetx = (radian - minimumRadian) / radianUnit
 //        .contentOffset =
@@ -82,15 +82,15 @@ class CTARotatorView: UIControl {
 
 extension CTARotatorView: UIScrollViewDelegate {
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         let offset = scrollView.contentOffset.x
         let nextRadian: CGFloat = {
             let r = offset * radianUnit + minimumRadian
             if r < 0 {
-                return 2.0 * CGFloat(M_PI) - (fabs(r) % (2.0 * CGFloat(M_PI)))
+                return 2.0 * CGFloat(M_PI) - (fabs(r).truncatingRemainder(dividingBy: (2.0 * CGFloat(M_PI))))
             } else if r >= 2.0 * CGFloat(M_PI) {
-                return r % (2.0 * CGFloat(M_PI))
+                return r.truncatingRemainder(dividingBy: (2.0 * CGFloat(M_PI)))
             } else {
                 return r
             }
@@ -119,14 +119,14 @@ extension CTARotatorView: UIScrollViewDelegate {
             nodeLayer.transform = CATransform3DMakeRotation(currentValue, 0, 0, 1)
             CATransaction.commit()
             
-            sendActionsForControlEvents(.ValueChanged)
+            sendActions(for: .valueChanged)
         }
     }
 }
 
 extension CTARotatorView {
     
-    private func rotatorSize(bounds: CGRect) -> CGSize {
+    fileprivate func rotatorSize(_ bounds: CGRect) -> CGSize {
         
         let m = bounds.height / 2
         let n = bounds.width / 2
@@ -134,7 +134,7 @@ extension CTARotatorView {
         return CGSize(width: Int(r)*3, height: Int(r)*3)
     }
     
-    private func setupNodeLayer(bounds: CGRect) {
+    fileprivate func setupNodeLayer(_ bounds: CGRect) {
         
         let largeNodeRadius: CGFloat = 10.0
         let largeNodeCount = 4
@@ -146,34 +146,34 @@ extension CTARotatorView {
         let r = min(layerSize.width, layerSize.height) / 2.0 - largeNodeRadius / 2.0
         let center = CGPoint(x: layerSize.width / 2.0, y: layerSize.height / 2.0)
         
-        nodeLayer.contentsScale = UIScreen.mainScreen().scale
+        nodeLayer.contentsScale = UIScreen.main.scale
         nodeLayer.bounds.size = layerSize
         nodeLayer.position = CGPoint(x: bounds.width / 2.0, y: -(layerSize.height / 2.0 - bounds.height / 3.0 * 2.0))
         let grayNodePath = nodePath(center, r: r, count: normallNodeCount, nodeRadius: normallNodeRadius)
-        nodeLayer.path = grayNodePath.CGPath
-        nodeLayer.fillColor = UIColor.grayColor().CGColor
+        nodeLayer.path = grayNodePath.cgPath
+        nodeLayer.fillColor = UIColor.gray.cgColor
         
         //        let redNodeLayer = CAShapeLayer()
-        redNodeLayer.contentsScale = UIScreen.mainScreen().scale
+        redNodeLayer.contentsScale = UIScreen.main.scale
         redNodeLayer.frame = nodeLayer.bounds
         let redNodePath = nodePath(center, r: r, count: largeNodeCount, nodeRadius: largeNodeRadius)
-        redNodeLayer.path = redNodePath.CGPath
-        redNodeLayer.fillColor = UIColor.redColor().CGColor
+        redNodeLayer.path = redNodePath.cgPath
+        redNodeLayer.fillColor = UIColor.red.cgColor
         
     }
     
-    private func nodePath(center: CGPoint, r: CGFloat, count: Int, nodeRadius: CGFloat) -> UIBezierPath {
+    fileprivate func nodePath(_ center: CGPoint, r: CGFloat, count: Int, nodeRadius: CGFloat) -> UIBezierPath {
         
         let path = UIBezierPath()
         
-        func drawNode(frame: CGRect, ovalPath: UIBezierPath) {
+        func drawNode(_ frame: CGRect, ovalPath: UIBezierPath) {
             //// Oval Drawing
-            ovalPath.moveToPoint(CGPointMake(frame.minX + 1.00000 * frame.width, frame.minY + 0.50000 * frame.height))
-            ovalPath.addCurveToPoint(CGPointMake(frame.minX + 0.50000 * frame.width, frame.minY + 0.00000 * frame.height), controlPoint1: CGPointMake(frame.minX + 1.00000 * frame.width, frame.minY + 0.22386 * frame.height), controlPoint2: CGPointMake(frame.minX + 0.77614 * frame.width, frame.minY + 0.00000 * frame.height))
-            ovalPath.addCurveToPoint(CGPointMake(frame.minX + 0.00000 * frame.width, frame.minY + 0.50000 * frame.height), controlPoint1: CGPointMake(frame.minX + 0.22386 * frame.width, frame.minY + 0.00000 * frame.height), controlPoint2: CGPointMake(frame.minX + 0.00000 * frame.width, frame.minY + 0.22386 * frame.height))
-            ovalPath.addCurveToPoint(CGPointMake(frame.minX + 0.50000 * frame.width, frame.minY + 1.00000 * frame.height), controlPoint1: CGPointMake(frame.minX + 0.00000 * frame.width, frame.minY + 0.77614 * frame.height), controlPoint2: CGPointMake(frame.minX + 0.22386 * frame.width, frame.minY + 1.00000 * frame.height))
-            ovalPath.addCurveToPoint(CGPointMake(frame.minX + 1.00000 * frame.width, frame.minY + 0.50000 * frame.height), controlPoint1: CGPointMake(frame.minX + 0.77614 * frame.width, frame.minY + 1.00000 * frame.height), controlPoint2: CGPointMake(frame.minX + 1.00000 * frame.width, frame.minY + 0.77614 * frame.height))
-            ovalPath.closePath()
+            ovalPath.move(to: CGPoint(x: frame.minX + 1.00000 * frame.width, y: frame.minY + 0.50000 * frame.height))
+            ovalPath.addCurve(to: CGPoint(x: frame.minX + 0.50000 * frame.width, y: frame.minY + 0.00000 * frame.height), controlPoint1: CGPoint(x: frame.minX + 1.00000 * frame.width, y: frame.minY + 0.22386 * frame.height), controlPoint2: CGPoint(x: frame.minX + 0.77614 * frame.width, y: frame.minY + 0.00000 * frame.height))
+            ovalPath.addCurve(to: CGPoint(x: frame.minX + 0.00000 * frame.width, y: frame.minY + 0.50000 * frame.height), controlPoint1: CGPoint(x: frame.minX + 0.22386 * frame.width, y: frame.minY + 0.00000 * frame.height), controlPoint2: CGPoint(x: frame.minX + 0.00000 * frame.width, y: frame.minY + 0.22386 * frame.height))
+            ovalPath.addCurve(to: CGPoint(x: frame.minX + 0.50000 * frame.width, y: frame.minY + 1.00000 * frame.height), controlPoint1: CGPoint(x: frame.minX + 0.00000 * frame.width, y: frame.minY + 0.77614 * frame.height), controlPoint2: CGPoint(x: frame.minX + 0.22386 * frame.width, y: frame.minY + 1.00000 * frame.height))
+            ovalPath.addCurve(to: CGPoint(x: frame.minX + 1.00000 * frame.width, y: frame.minY + 0.50000 * frame.height), controlPoint1: CGPoint(x: frame.minX + 0.77614 * frame.width, y: frame.minY + 1.00000 * frame.height), controlPoint2: CGPoint(x: frame.minX + 1.00000 * frame.width, y: frame.minY + 0.77614 * frame.height))
+            ovalPath.close()
             //        UIColor.redColor().setFill()
             //        path.fill()
             

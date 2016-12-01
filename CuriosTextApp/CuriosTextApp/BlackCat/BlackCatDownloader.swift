@@ -12,10 +12,10 @@ import Foundation
 public typealias DataDownloaderProgressBlock = DownloadProgressBlock
 
 /// Completion block of downloader.
-public typealias DataDownloaderCompletionHandler = ((data: NSData?, error: NSError?, URL: NSURL?) -> ())
+public typealias DataDownloaderCompletionHandler = ((_ data: Data?, _ error: NSError?, _ URL: URL?) -> ())
 
 /// Download task.
-public typealias RetrieveDataDownloadTask = NSURLSessionDataTask
+public typealias RetrieveDataDownloadTask = URLSessionDataTask
 
 private let defaultDownloaderName = "default"
 private let downloaderBarrierName = "com.emiaostein.BlackCat.DataDownloader.Barrier."
@@ -31,9 +31,9 @@ The error code.
 - InvalidURL: The URL is invalid.
 */
 public enum BlackCatError: Int {
-  case BadData = 10000
-  case NotModified = 10001
-  case InvalidURL = 20000
+  case badData = 10000
+  case notModified = 10001
+  case invalidURL = 20000
 }
 
 /**
@@ -48,13 +48,13 @@ public enum BlackCatError: Int {
   :param: URL        URL of the original request URL.
   :param: response   The response object of the downloading process.
   */
-  optional func dataDownloader(downloader: DataDownloader, didDownloadData data: NSData, forURL URL: NSURL, withResponse response: NSURLResponse)
+  @objc optional func dataDownloader(_ downloader: DataDownloader, didDownloadData data: Data, forURL URL: URL, withResponse response: URLResponse)
 }
 
 /**
 *	`ImageDownloader` represents a downloading manager for requesting the image with a URL from server.
 */
-public class DataDownloader: NSObject {
+open class DataDownloader: NSObject {
   
   class DataFetchLoad {
     var callbacks = [CallbackPair]()
@@ -66,28 +66,28 @@ public class DataDownloader: NSObject {
   // MARK: - Public property
   
   /// This closure will be applied to the image download request before it being sent. You can modify the request for some customizing purpose, like adding auth token to the header or do a url mapping.
-  public var requestModifier: (NSMutableURLRequest -> Void)?
+  open var requestModifier: ((URLRequest) -> Void)?
   
   /// The duration before the download is timeout. Default is 15 seconds.
-  public var downloadTimeout: NSTimeInterval = 15.0
+  open var downloadTimeout: TimeInterval = 15.0
   
   /// A set of trusted hosts when receiving server trust challenges. A challenge with host name contained in this set will be ignored. You can use this set to specify the self-signed site.
-  public var trustedHosts: Set<String>?
+  open var trustedHosts: Set<String>?
   
   /// Delegate of this `ImageDownloader` object. See `ImageDownloaderDelegate` protocol for more.
-  public weak var delegate: DataDownloaderDelegate?
+  open weak var delegate: DataDownloaderDelegate?
   
   // MARK: - Internal property
-  let barrierQueue: dispatch_queue_t
-  let processQueue: dispatch_queue_t
+  let barrierQueue: DispatchQueue
+  let processQueue: DispatchQueue
   
   typealias CallbackPair = (progressBlock: DataDownloaderProgressBlock?, completionHander: DataDownloaderCompletionHandler?)
   
-  var fetchLoads = [NSURL: DataFetchLoad]()
+  var fetchLoads = [URL: DataFetchLoad]()
   
   // MARK: - Public method
   /// The default downloader.
-  public class var defaultDownloader: DataDownloader {
+  open class var defaultDownloader: DataDownloader {
     return instance
   }
   
@@ -103,13 +103,13 @@ public class DataDownloader: NSObject {
       fatalError("[BlackCat] You should specify a name for the downloader. A downloader with empty name is not permitted.")
     }
     
-    barrierQueue = dispatch_queue_create(downloaderBarrierName + name, DISPATCH_QUEUE_CONCURRENT)
-    processQueue = dispatch_queue_create(imageProcessQueueName + name, DISPATCH_QUEUE_CONCURRENT)
+    barrierQueue = DispatchQueue(label: downloaderBarrierName + name, attributes: DispatchQueue.Attributes.concurrent)
+    processQueue = DispatchQueue(label: imageProcessQueueName + name, attributes: DispatchQueue.Attributes.concurrent)
   }
   
-  func fetchLoadForKey(key: NSURL) -> DataFetchLoad? {
+  func fetchLoadForKey(_ key: URL) -> DataFetchLoad? {
     var fetchLoad: DataFetchLoad?
-    dispatch_sync(barrierQueue, { () -> Void in
+    barrierQueue.sync(execute: { () -> Void in
       fetchLoad = self.fetchLoads[key]
     })
     return fetchLoad
@@ -125,7 +125,7 @@ public extension DataDownloader {
   :param: progressBlock     Called when the download progress updated.
   :param: completionHandler Called when the download progress finishes.
   */
-  public func downloadImageWithURL(URL: NSURL,
+  public func downloadImageWithURL(_ URL: Foundation.URL,
     progressBlock: DataDownloaderProgressBlock?,
     completionHandler: DataDownloaderCompletionHandler?)
   {
@@ -140,7 +140,7 @@ public extension DataDownloader {
   :param: progressBlock     Called when the download progress updated.
   :param: completionHandler Called when the download progress finishes.
   */
-  public func downloadDataWithURL(URL: NSURL,
+  public func downloadDataWithURL(_ URL: Foundation.URL,
     options: BlackCatManager.Options,
     progressBlock: DataDownloaderProgressBlock?,
     completionHandler: DataDownloaderCompletionHandler?)
@@ -152,7 +152,7 @@ public extension DataDownloader {
       completionHandler: completionHandler)
   }
   
-  internal func downloadDataWithURL(URL: NSURL,
+  internal func downloadDataWithURL(_ URL: Foundation.URL,
     retrieveImageTask: RetrieveDataTask?,
     options: BlackCatManager.Options,
     progressBlock: DataDownloaderProgressBlock?,
@@ -161,21 +161,26 @@ public extension DataDownloader {
     let timeout = self.downloadTimeout == 0.0 ? 15.0 : self.downloadTimeout
     
     // We need to set the URL as the load key. So before setup progress, we need to ask the `requestModifier` for a final URL.
-    let request = NSMutableURLRequest(URL: URL, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: timeout)
-    request.HTTPShouldUsePipelining = true
+//    let request = NSMutableURLRequest(url: URL, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: timeout)
+    var request = URLRequest(url: URL, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: timeout)
+    request.httpShouldUsePipelining = true
     
     self.requestModifier?(request)
     
     // There is a possiblility that request modifier changed the url to `nil`
-    if request.URL == nil {
-      completionHandler?(data: nil, error: NSError(domain: BlackCatErrorDomain, code: BlackCatError.InvalidURL.rawValue, userInfo: nil), URL: nil)
+    if request.url == nil {
+      completionHandler?(nil, NSError(domain: BlackCatErrorDomain, code: BlackCatError.invalidURL.rawValue, userInfo: nil), nil)
       return
     }
     
-    setupProgressBlock(progressBlock, completionHandler: completionHandler, forURL: request.URL!) {(session, fetchLoad) -> Void in
-      let task = session.dataTaskWithRequest(request)
+    setupProgressBlock(progressBlock, completionHandler: completionHandler, forURL: request.url!) {(session, fetchLoad) -> Void in
       
-      task.priority = options.lowPriority ? NSURLSessionTaskPriorityLow : NSURLSessionTaskPriorityDefault
+      let task = session.dataTask(with: request) as URLSessionDataTask
+//      session.da
+//      session.dataTask(with: <#T##URLRequest#>)
+//      session.dataTask(with: request)
+      
+      task.priority = options.lowPriority ? URLSessionTask.lowPriority : URLSessionTask.defaultPriority
       task.resume()
       
       retrieveImageTask?.downloadTask = task
@@ -183,9 +188,9 @@ public extension DataDownloader {
   }
   
   // A single key may have multiple callbacks. Only download once.
-  internal func setupProgressBlock(progressBlock: DataDownloaderProgressBlock?, completionHandler: DataDownloaderCompletionHandler?, forURL URL: NSURL, started: ((NSURLSession, DataFetchLoad) -> Void)) {
+  internal func setupProgressBlock(_ progressBlock: DataDownloaderProgressBlock?, completionHandler: DataDownloaderCompletionHandler?, forURL URL: Foundation.URL, started: ((Foundation.URLSession, DataFetchLoad) -> Void)) {
     
-    dispatch_barrier_sync(barrierQueue, { () -> Void in
+    barrierQueue.sync(flags: .barrier, execute: { () -> Void in
       
       var create = false
       var loadObjectForURL = self.fetchLoads[URL]
@@ -199,55 +204,55 @@ public extension DataDownloader {
       self.fetchLoads[URL] = loadObjectForURL!
       
       if create {
-        let session = NSURLSession(configuration: NSURLSessionConfiguration.ephemeralSessionConfiguration(), delegate: self, delegateQueue:NSOperationQueue.mainQueue())
+        let session = Foundation.URLSession(configuration: URLSessionConfiguration.ephemeral, delegate: self, delegateQueue:OperationQueue.main)
         started(session, loadObjectForURL!)
       }
     })
   }
   
-  func cleanForURL(URL: NSURL) {
-    dispatch_barrier_sync(barrierQueue, { () -> Void in
-      self.fetchLoads.removeValueForKey(URL)
+  func cleanForURL(_ URL: Foundation.URL) {
+    barrierQueue.sync(flags: .barrier, execute: { () -> Void in
+      self.fetchLoads.removeValue(forKey: URL)
       return
     })
   }
 }
 
 // MARK: - NSURLSessionTaskDelegate
-extension DataDownloader: NSURLSessionDataDelegate {
+extension DataDownloader: URLSessionDataDelegate {
   /**
   This method is exposed since the compiler requests. Do not call it.
   */
-  public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveResponse response: NSURLResponse, completionHandler: (NSURLSessionResponseDisposition) -> Void) {
+  public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
     
-    if let URL = dataTask.originalRequest?.URL, callbackPairs = fetchLoadForKey(URL)?.callbacks {
+    if let URL = dataTask.originalRequest?.url, let callbackPairs = fetchLoadForKey(URL)?.callbacks {
       for callbackPair in callbackPairs {
-        callbackPair.progressBlock?(receivedSize: 0, totalSize: response.expectedContentLength)
+        callbackPair.progressBlock?(0, response.expectedContentLength)
       }
     }
-    completionHandler(NSURLSessionResponseDisposition.Allow)
+    completionHandler(Foundation.URLSession.ResponseDisposition.allow)
   }
   
   /**
   This method is exposed since the compiler requests. Do not call it.
   */
-  public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
+  public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
     
-    if let URL = dataTask.originalRequest?.URL, fetchLoad = fetchLoadForKey(URL) {
-      fetchLoad.responseData.appendData(data)
+    if let URL = dataTask.originalRequest?.url, let fetchLoad = fetchLoadForKey(URL) {
+      fetchLoad.responseData.append(data)
       for callbackPair in fetchLoad.callbacks {
-        callbackPair.progressBlock?(receivedSize: Int64(fetchLoad.responseData.length), totalSize: dataTask.response!.expectedContentLength)
+        callbackPair.progressBlock?(Int64(fetchLoad.responseData.length), dataTask.response!.expectedContentLength)
       }
     }
   }
   
-  private func callbackWithData(data: NSData?, error: NSError?, URL: NSURL) {
+  fileprivate func callbackWithData(_ data: Data?, error: NSError?, URL: Foundation.URL) {
     if let callbackPairs = fetchLoadForKey(URL)?.callbacks {
       
       self.cleanForURL(URL)
       
       for callbackPair in callbackPairs {
-        callbackPair.completionHander?(data: data, error: error, URL: URL)
+        callbackPair.completionHander?(data, error, URL)
       }
     }
   }
@@ -255,39 +260,39 @@ extension DataDownloader: NSURLSessionDataDelegate {
   /**
   This method is exposed since the compiler requests. Do not call it.
   */
-  public func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+  public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
     
-    if let URL = task.originalRequest?.URL {
+    if let URL = task.originalRequest?.url {
       if let error = error { // Error happened
-        callbackWithData(nil, error: error, URL: URL)
+        callbackWithData(nil, error: error as NSError?, URL: URL)
       } else { //Download finished without error
         
         // We are on main queue when receiving this.
-        dispatch_async(processQueue, { () -> Void in
+        processQueue.async(execute: { () -> Void in
           
           if let fetchLoad = self.fetchLoadForKey(URL) {
             let data = fetchLoad.responseData
             if data.length > 0 {
-              self.delegate?.dataDownloader?(self, didDownloadData: data, forURL: URL, withResponse: task.response!)
+              self.delegate?.dataDownloader?(self, didDownloadData: data as Data, forURL: URL, withResponse: task.response!)
               
 //              if fetchLoad.shouldDecode {
 //                self.callbackWithImage(image.kf_decodedImage(scale: fetchLoad.scale), error: nil, imageURL: URL)
 //              } else {
-                self.callbackWithData(data, error: nil, URL: URL)
+                self.callbackWithData(data as Data, error: nil, URL: URL)
 //              }
               
             } else {
               // If server response is 304 (Not Modified), inform the callback handler with NotModified error.
               // It should be handled to get an image from cache, which is response of a manager object.
-              if let res = task.response as? NSHTTPURLResponse where res.statusCode == 304 {
-                self.callbackWithData(nil, error: NSError(domain: BlackCatErrorDomain, code: BlackCatError.NotModified.rawValue, userInfo: nil), URL: URL)
+              if let res = task.response as? HTTPURLResponse, res.statusCode == 304 {
+                self.callbackWithData(nil, error: NSError(domain: BlackCatErrorDomain, code: BlackCatError.notModified.rawValue, userInfo: nil), URL: URL)
                 return
               }
               
-              self.callbackWithData(nil, error: NSError(domain: BlackCatErrorDomain, code: BlackCatError.BadData.rawValue, userInfo: nil), URL: URL)
+              self.callbackWithData(nil, error: NSError(domain: BlackCatErrorDomain, code: BlackCatError.badData.rawValue, userInfo: nil), URL: URL)
             }
           } else {
-            self.callbackWithData(nil, error: NSError(domain: BlackCatErrorDomain, code: BlackCatError.BadData.rawValue, userInfo: nil), URL: URL)
+            self.callbackWithData(nil, error: NSError(domain: BlackCatErrorDomain, code: BlackCatError.badData.rawValue, userInfo: nil), URL: URL)
           }
         })
       }
@@ -298,17 +303,17 @@ extension DataDownloader: NSURLSessionDataDelegate {
   This method is exposed since the compiler requests. Do not call it.
   */
     
-    public func URLSession(session: NSURLSession, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
+    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         
         if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
-            if let trustedHosts = trustedHosts where trustedHosts.contains(challenge.protectionSpace.host) {
-                let credential = NSURLCredential(forTrust: challenge.protectionSpace.serverTrust!)
-                completionHandler(.UseCredential, credential)
+            if let trustedHosts = trustedHosts, trustedHosts.contains(challenge.protectionSpace.host) {
+                let credential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+                completionHandler(.useCredential, credential)
                 return
             }
         }
         
-        completionHandler(.PerformDefaultHandling, nil)
+        completionHandler(.performDefaultHandling, nil)
         
     }
     

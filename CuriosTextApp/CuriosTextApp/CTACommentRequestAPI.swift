@@ -23,17 +23,17 @@ class CTAAddCommentRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.AddPublishComment.description;
+        return CTARequestUrl.addPublishComment.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)        : userID,
-            key(.BeUserID)      : beUserID,
-            key(.PublishID)     : publishID,
-            key(.CommentMessage): commentMessage
+            key(.userID)        : userID as AnyObject,
+            key(.beUserID)      : beUserID as AnyObject,
+            key(.publishID)     : publishID as AnyObject,
+            key(.commentMessage): commentMessage as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAAddCommentRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAAddCommentRequest");
     }
 }
 
@@ -46,14 +46,14 @@ class CTADeletePublishCommentRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.DeletePublishComment.description;
+        return CTARequestUrl.deletePublishComment.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.CommentID)        : commentID
+            key(.commentID)        : commentID as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTADeletePublishComment");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTADeletePublishComment");
     }
 }
 
@@ -72,16 +72,16 @@ class CTAPublishCommentListRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.PublishCommentList.description;
+        return CTARequestUrl.publishCommentList.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.PublishID)    : publishID,
-            key(.UserID)       : userID,
-            key(.Start)        : start,
-            key(.Size)         : size
+            key(.publishID)    : publishID as AnyObject,
+            key(.userID)       : userID as AnyObject,
+            key(.start)        : start as AnyObject,
+            key(.size)         : size as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAPublishCommentList");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAPublishCommentList");
     }
 }

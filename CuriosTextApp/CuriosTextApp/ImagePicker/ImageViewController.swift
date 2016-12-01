@@ -22,11 +22,11 @@ class ImageViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
-        if let vc = segue.destinationViewController as? CTAPhotoPickerDelegate {
+        if let vc = segue.destination as? CTAPhotoPickerDelegate {
             vc.pickerDelegate = self
         }
     }
@@ -44,7 +44,7 @@ class ImageViewController: UIViewController {
 
 extension ImageViewController: CTAPhotoPickerProtocol {
     
-    func pickerDidSelectedImage(image: UIImage, backgroundColor: UIColor, identifier: String?) {
+    func pickerDidSelectedImage(_ image: UIImage, backgroundColor: UIColor, identifier: String?) {
         
         imageView.image = image
     }

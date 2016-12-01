@@ -11,8 +11,8 @@ import CYLTabBarController
 
 class PlusButton: CYLPlusButton, CYLPlusButtonSubclassing {
     
-    static func plusButton() -> AnyObject! {
-        let bounds = UIScreen.mainScreen().bounds
+    static func plusButton() -> Any! {
+        let bounds = UIScreen.main.bounds
         let buttonW:CGFloat = 40.00
         let space = (bounds.width - buttonW*4)/10
         let viewW = buttonW+space*2
@@ -21,9 +21,9 @@ class PlusButton: CYLPlusButton, CYLPlusButtonSubclassing {
         
         let button = UIButton(frame: CGRect(x: space, y: 5, width: buttonW, height: buttonW))
         buttonView.addSubview(button)
-        button.setImage(UIImage(named: "add_button"), forState: .Normal)
-        button.setImage(UIImage(named: "add_button_selected"), forState: .Highlighted)
-        button.addTarget(self, action: #selector(addButtonHandler(_:)), forControlEvents: .TouchUpInside)
+        button.setImage(UIImage(named: "add_button"), for: UIControlState())
+        button.setImage(UIImage(named: "add_button_selected"), for: .highlighted)
+        button.addTarget(self, action: #selector(addButtonHandler(_:)), for: .touchUpInside)
         return buttonView
     }
     
@@ -31,7 +31,7 @@ class PlusButton: CYLPlusButton, CYLPlusButtonSubclassing {
         return 2
     }
     
-    static func addButtonHandler(sender: UIButton){
-        NSNotificationCenter.defaultCenter().postNotificationName("addPublishFile", object: nil)
+    static func addButtonHandler(_ sender: UIButton){
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "addPublishFile"), object: nil)
     }
 }

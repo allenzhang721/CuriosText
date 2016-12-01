@@ -10,22 +10,22 @@ import UIKit
 
 protocol CTASelectorDataSource: class {
     
-    func selectorBeganScale(cell: CTASelectorCell) -> CGFloat
-    func selectorBeganRadian(cell: CTASelectorCell) -> CGFloat
+    func selectorBeganScale(_ cell: CTASelectorCell) -> CGFloat
+    func selectorBeganRadian(_ cell: CTASelectorCell) -> CGFloat
 //    func selectorBeganIndexPath(cell: CTASelectorCell) -> NSIndexPath
-    func selectorBeganAlignment(cell: CTASelectorCell) -> NSTextAlignment
-    func selectorBeganNeedShadowAndStroke(cell: CTASelectorCell) -> (Bool, Bool)
-    func selectorBeganSpacing(cell: CTASelectorCell) -> (CGFloat, CGFloat)
-    func selectorBeganFontIndexPath(cell: CTASelectorCell) -> NSIndexPath?
-    func selectorBeganColor(cell: CTASelectorCell) -> UIColor?
-    func selectorBeganAnimation(cell: CTASelectorCell) -> CTAAnimationBinder?
-    func selectorBeganAlpha(cell: CTASelectorCell) -> CGFloat
-    func selectorBeganFilter(cell: CTASelectorCell) -> Int
+    func selectorBeganAlignment(_ cell: CTASelectorCell) -> NSTextAlignment
+    func selectorBeganNeedShadowAndStroke(_ cell: CTASelectorCell) -> (Bool, Bool)
+    func selectorBeganSpacing(_ cell: CTASelectorCell) -> (CGFloat, CGFloat)
+    func selectorBeganFontIndexPath(_ cell: CTASelectorCell) -> IndexPath?
+    func selectorBeganColor(_ cell: CTASelectorCell) -> UIColor?
+    func selectorBeganAnimation(_ cell: CTASelectorCell) -> CTAAnimationBinder?
+    func selectorBeganAlpha(_ cell: CTASelectorCell) -> CGFloat
+    func selectorBeganFilter(_ cell: CTASelectorCell) -> Int
 }
 
 protocol CTASelectorControl: class {
     func retriveBeganValue()
-    func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents)
+    func addTarget(_ target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents)
     func removeAllTarget()
 }
 
@@ -35,7 +35,7 @@ class CTASelectorCell: UICollectionViewCell, CTASelectorControl {
     
     func beganLoad(){}
     func retriveBeganValue(){}
-    func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents){}
+    func addTarget(_ target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents){}
     func removeAllTarget(){}
     
     func willBeDisplayed(){}

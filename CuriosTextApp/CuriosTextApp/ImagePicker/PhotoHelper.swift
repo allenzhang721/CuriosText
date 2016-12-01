@@ -11,36 +11,36 @@ import Photos
 import UIKit
 
 enum PhotoSaveStatus {
-    case Success
-    case Authorized(alert: UIAlertController)
-    case Failture
+    case success
+    case authorized(alert: UIAlertController)
+    case failture
 }
 
-func photo_saveImageToLibrary(image: UIImage ,finishedHandler:((PhotoSaveStatus) -> ())?) {
+func photo_saveImageToLibrary(_ image: UIImage ,finishedHandler:((PhotoSaveStatus) -> ())?) {
     
-    func save(image: UIImage, finishedHandler:((PhotoSaveStatus) -> ())?) {
-        PHPhotoLibrary.sharedPhotoLibrary().performChanges({
-            PHAssetChangeRequest.creationRequestForAssetFromImage(image)
-            }) {finishedHandler?($0.0 ? .Success : .Failture)}
+    func save(_ image: UIImage, finishedHandler:((PhotoSaveStatus) -> ())?) {
+        PHPhotoLibrary.shared().performChanges({
+            PHAssetChangeRequest.creationRequestForAsset(from: image)
+            }) {finishedHandler?($0.0 ? .success : .failture)}
     }
     
     func openSetting() {
         // alert to open setting
-        let cancelTitle = LocalStrings.Cancel.description
-        let cancelAction = UIAlertAction(title: cancelTitle, style: .Cancel, handler: nil)
+        let cancelTitle = LocalStrings.cancel.description
+        let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel, handler: nil)
         
-        let doneTitle = LocalStrings.OK.description
-        let doneAction = UIAlertAction(title: doneTitle, style: .Default) { (action) in
-            UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+        let doneTitle = LocalStrings.ok.description
+        let doneAction = UIAlertAction(title: doneTitle, style: .default) { (action) in
+            UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
         }
         
-        let alertTitle = LocalStrings.AllowPhotoTitle.description
-        let message = LocalStrings.AllowPhotoMessage.description
-        let alert = UIAlertController(title: alertTitle, message: message, preferredStyle: .Alert)
+        let alertTitle = LocalStrings.allowPhotoTitle.description
+        let message = LocalStrings.allowPhotoMessage.description
+        let alert = UIAlertController(title: alertTitle, message: message, preferredStyle: .alert)
         alert.addAction(cancelAction)
         alert.addAction(doneAction)
         
-        finishedHandler?(.Authorized(alert: alert))
+        finishedHandler?(.authorized(alert: alert))
         
 //        viewController.presentViewController(alert, animated: true, completion: nil)
     }
@@ -48,11 +48,11 @@ func photo_saveImageToLibrary(image: UIImage ,finishedHandler:((PhotoSaveStatus)
     func authorize() {
         PHPhotoLibrary.requestAuthorization { (status) in
             switch status {
-            case .Authorized:
+            case .authorized:
                 save(image, finishedHandler: finishedHandler)
                 
             default:
-                finishedHandler?(.Failture)
+                finishedHandler?(.failture)
             }
         }
     }
@@ -60,10 +60,10 @@ func photo_saveImageToLibrary(image: UIImage ,finishedHandler:((PhotoSaveStatus)
     let status = PHPhotoLibrary.authorizationStatus()
     
     switch status {
-    case .Authorized:
+    case .authorized:
         save(image, finishedHandler: finishedHandler)
         
-    case .NotDetermined:
+    case .notDetermined:
         authorize()
         
     default:

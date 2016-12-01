@@ -25,9 +25,9 @@ class CTASelectorTemplatesCell: CTASelectorCell {
     }
     
     
-    private func setup() {
+    fileprivate func setup() {
         
-        func selected(data: NSData?, origin: Bool) {
+        func selected(_ data: Data?, origin: Bool) {
             
         }
         
@@ -35,23 +35,23 @@ class CTASelectorTemplatesCell: CTASelectorCell {
             guard let sf = self, let target = sf.target, let action = sf.action else {return}
             let object: [String: AnyObject]
             if let data = pageData {
-                object = ["data": data, "origin": origin]
+                object = ["data": data as AnyObject, "origin": origin as AnyObject]
             } else {
-                object = ["origin": origin]
+                object = ["origin": origin as AnyObject]
             }
             
-            target.performSelector(action, withObject: object)
+            target.perform(action, with: object)
             
         }) as? CTATempateListViewController {
             print("cell bounds = \(self.bounds)")
             templateListVC.view.frame = self.bounds
             contentView.addSubview(templateListVC.view)
             let view = templateListVC.view
-            view.translatesAutoresizingMaskIntoConstraints = false
-            view.leftAnchor.constraintEqualToAnchor(leftAnchor).active = true
-            view.topAnchor.constraintEqualToAnchor(topAnchor).active = true
-            view.rightAnchor.constraintEqualToAnchor(rightAnchor).active = true
-            view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
+            view?.translatesAutoresizingMaskIntoConstraints = false
+            view?.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+            view?.topAnchor.constraint(equalTo: topAnchor).isActive = true
+            view?.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+            view?.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
             
             templateList = templateListVC
         }
@@ -70,7 +70,7 @@ class CTASelectorTemplatesCell: CTASelectorCell {
     
 //    reti
     
-    override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
+    override func addTarget(_ target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
         
         self.target = target
         self.action = action

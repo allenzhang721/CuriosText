@@ -44,31 +44,31 @@ class CTAUserListCell : UICollectionViewCell, CTAImageControllerProtocol{
         self.userIconImage.image = UIImage(named: "default-usericon")
         iconView.addSubview(self.userIconImage)
         self.userNickNameLabel = UILabel(frame: CGRect(x: 50, y: 14, width: bounds.width-100, height: 18))
-        self.userNickNameLabel.font = UIFont.boldSystemFontOfSize(13)
+        self.userNickNameLabel.font = UIFont.boldSystemFont(ofSize: 13)
         self.userNickNameLabel.textColor = CTAStyleKit.normalColor
-        self.userNickNameLabel.textAlignment = .Left
+        self.userNickNameLabel.textAlignment = .left
         iconView.addSubview(self.userNickNameLabel)
         
         self.userDescLabel = UILabel(frame: CGRect(x: 50, y: 30, width: bounds.width-100, height: 18))
-        self.userDescLabel.font = UIFont.systemFontOfSize(13)
+        self.userDescLabel.font = UIFont.systemFont(ofSize: 13)
         self.userDescLabel.textColor = CTAStyleKit.labelShowColor
-        self.userDescLabel.textAlignment = .Left
+        self.userDescLabel.textAlignment = .left
         iconView.addSubview(self.userDescLabel)
         
-        iconView.backgroundColor = UIColor.clearColor()
-        iconView.userInteractionEnabled = true
+        iconView.backgroundColor = UIColor.clear
+        iconView.isUserInteractionEnabled = true
         let iconTap = UITapGestureRecognizer(target: self, action: #selector(userIconClick(_:)))
         iconView.addGestureRecognizer(iconTap)
         
         
-        let followView = UIView(frame: CGRectMake(bounds.width - 60, 0, 60, 60))
+        let followView = UIView(frame: CGRect(x: bounds.width - 60, y: 0, width: 60, height: 60))
         self.contentView.addSubview(followView)
-        self.followImg = UIImageView(frame: CGRectMake(20,17,30,30))
+        self.followImg = UIImageView(frame: CGRect(x: 20,y: 17,width: 30,height: 30))
         self.followImg.image = UIImage(named: "liker_follow_btn")
         followView.addSubview(self.followImg)
         
-        followView.backgroundColor = UIColor.clearColor()
-        followView.userInteractionEnabled = true
+        followView.backgroundColor = UIColor.clear
+        followView.isUserInteractionEnabled = true
         let imgTap = UITapGestureRecognizer(target: self, action: #selector(followButtonClick(_:)))
         followView.addGestureRecognizer(imgTap)
         
@@ -88,13 +88,13 @@ class CTAUserListCell : UICollectionViewCell, CTAImageControllerProtocol{
         }
     }
     
-    func userIconClick(sender: UIPanGestureRecognizer) {
+    func userIconClick(_ sender: UIPanGestureRecognizer) {
         if self.delegate != nil {
             self.delegate!.cellUserIconTap(self)
         }
     }
     
-    func followButtonClick(sender: UIPanGestureRecognizer){
+    func followButtonClick(_ sender: UIPanGestureRecognizer){
         let relationType:Int = self.viewUser!.relationType
         if relationType == 0 || relationType == 3{
             if self.delegate != nil {
@@ -107,23 +107,23 @@ class CTAUserListCell : UICollectionViewCell, CTAImageControllerProtocol{
         }
     }
     
-    func setUserIcon(iconPath:String){
+    func setUserIcon(_ iconPath:String){
         let imagePath = CTAFilePath.userFilePath+iconPath
-        let imageURL = NSURL(string: imagePath)!
-        self.userIconImage.kf_showIndicatorWhenLoading = true
-        self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: UIImage(named: "default-usericon"), optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in
+        let imageURL = URL(string: imagePath)!
+//        self.userIconImage.kf_showIndicatorWhenLoading = true
+        self.userIconImage.kf.setImage(with: imageURL, placeholder: UIImage(named: "default-usericon"), options: [.transition(ImageTransition.fade(1))]) { (image, error, cacheType, imageURL) -> () in
             if error != nil {
                 self.userIconImage.image = UIImage(named: "default-usericon")
             }
-            self.userIconImage.kf_showIndicatorWhenLoading = false
+//            self.userIconImage.kf_showIndicatorWhenLoading = false
         }
     }
     
-    func setNikeNameLabel(text:String){
+    func setNikeNameLabel(_ text:String){
         self.userNickNameLabel.text = text
     }
     
-    func setDescLabel(text:String){
+    func setDescLabel(_ text:String){
         self.userDescLabel.text = text
         if text == "" {
             self.userNickNameLabel.frame.origin.y = 21
@@ -157,12 +157,12 @@ class CTAUserListCell : UICollectionViewCell, CTAImageControllerProtocol{
         default:
             isHidden = true
         }
-        self.followImg.hidden = isHidden
+        self.followImg.isHidden = isHidden
         self.followImg.image = buttonBg
     }
 }
 
 protocol CTAUserListCellDelegate {
-    func cellUserIconTap(cell:CTAUserListCell?)
-    func followButtonTap(followView:UIView, cell:CTAUserListCell?)
+    func cellUserIconTap(_ cell:CTAUserListCell?)
+    func followButtonTap(_ followView:UIView, cell:CTAUserListCell?)
 }

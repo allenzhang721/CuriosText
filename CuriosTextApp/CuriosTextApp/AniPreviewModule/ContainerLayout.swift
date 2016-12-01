@@ -10,31 +10,31 @@ import UIKit
 
 protocol  ContainerLayoutDataSource: class {
     
-    func layerAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> Layerable?
+    func layerAttributesForItemAtIndexPath(_ indexPath: IndexPath) -> Layerable?
 }
 
 class ContainerLayout: UICollectionViewFlowLayout {
 
     weak var dataSource: ContainerLayoutDataSource?
     
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
-        guard let attributesCollection = super.layoutAttributesForElementsInRect(rect) else {
+        guard let attributesCollection = super.layoutAttributesForElements(in: rect) else {
             return nil
         }
         var nextAs = [UICollectionViewLayoutAttributes]()
         for a in attributesCollection {
             let indexPath = a.indexPath
-            if let nextA = layoutAttributesForItemAtIndexPath(indexPath) {
+            if let nextA = layoutAttributesForItem(at: indexPath) {
                 nextAs.append(nextA)
             }
         }
         return nextAs
     }
     
-    override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         
-        guard let a = super.layoutAttributesForItemAtIndexPath(indexPath) else {
+        guard let a = super.layoutAttributesForItem(at: indexPath) else {
             return nil
         }
         

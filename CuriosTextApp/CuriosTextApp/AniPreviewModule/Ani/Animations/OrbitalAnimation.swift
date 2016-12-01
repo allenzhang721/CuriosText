@@ -11,7 +11,7 @@ import UIKit
 
 extension AniFactory {
     
-    class func orbital(appear: Bool, canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, descriptor: Descriptor, beganTime: Float) -> AniDescriptor {
+    class func orbital(_ appear: Bool, canvasSize: CGSize, container: Container, content: Content, contentsCount: Int, index: Int, descriptor: Descriptor, beganTime: Float) -> AniDescriptor {
         
         let duration = descriptor.config.duration
         let time = duration * 0.7
@@ -57,15 +57,15 @@ extension AniFactory {
         let anchorpoint = CGPoint(x: aX, y: aY)
         
         let vs: [String: [AnyObject]] = [
-            "opacity": opacity,
-            "position": [NSValue(CGPoint: position), NSValue(CGPoint: position)],
-            "anchorPoint": [NSValue(CGPoint: anchorpoint), NSValue(CGPoint: anchorpoint)],
-            "transform.rotation.z": rotation
+            "opacity": opacity as Array<AnyObject>,
+            "position": [NSValue(cgPoint: position), NSValue(cgPoint: position)],
+            "anchorPoint": [NSValue(cgPoint: anchorpoint), NSValue(cgPoint: anchorpoint)],
+            "transform.rotation.z": rotation as Array<AnyObject>
         ]
         let keyTime = [0, 0.25, 0.5, 1]
         let ks: [String: [NSNumber]] = [
-            "opacity": keyTime,
-            "transform.rotation.z": keyTime]
+            "opacity": keyTime as Array<NSNumber>,
+            "transform.rotation.z": keyTime as Array<NSNumber>]
         
         return AniDescriptor(type: "ORBITAL_\(appear ? "IN" : "OUT")", beganTimes: bt, durations: ds, values: vs, keyTimes: ks)
     }

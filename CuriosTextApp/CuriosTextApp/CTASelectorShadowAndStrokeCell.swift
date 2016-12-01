@@ -28,30 +28,30 @@ class CTASelectorShadowAndStrokeCell: CTASelectorCell {
         shadowLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 60, height: 20))
         strokeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 60, height: 20))
         
-        shadowLabel.text = LocalStrings.Shadow.description
-        strokeLabel.text = LocalStrings.Outline.description
-        shadowLabel.font = UIFont.systemFontOfSize(12)
-        strokeLabel.font = UIFont.systemFontOfSize(12)
-        shadowLabel.textAlignment = .Center
-        strokeLabel.textAlignment = .Center
+        shadowLabel.text = LocalStrings.shadow.description
+        strokeLabel.text = LocalStrings.outline.description
+        shadowLabel.font = UIFont.systemFont(ofSize: 12)
+        strokeLabel.font = UIFont.systemFont(ofSize: 12)
+        shadowLabel.textAlignment = .center
+        strokeLabel.textAlignment = .center
         
-        shadowSwitch.addTarget(self, action: #selector(CTASelectorShadowAndStrokeCell.needShadowChanged(_:)), forControlEvents: .ValueChanged)
-        strokeSwitch.addTarget(self, action: Selector("needStrokeChanged:"), forControlEvents: .ValueChanged)
+        shadowSwitch.addTarget(self, action: #selector(CTASelectorShadowAndStrokeCell.needShadowChanged(_:)), for: .valueChanged)
+        strokeSwitch.addTarget(self, action: #selector(CTASelectorShadowAndStrokeCell.needStrokeChanged(_:)), for: .valueChanged)
         contentView.addSubview(shadowSwitch)
         contentView.addSubview(strokeSwitch)
         contentView.addSubview(shadowLabel)
         contentView.addSubview(strokeLabel)
     }
     
-    func needShadowChanged(sender: UISwitch) {
-        if let target = target, action = action {
-            target.performSelector(action, withObject: [sender.on, strokeSwitch.on])
+    func needShadowChanged(_ sender: UISwitch) {
+        if let target = target, let action = action {
+            target.perform(action, with: [sender.isOn, strokeSwitch.isOn])
         }
     }
     
-    func needStrokeChanged(sender: UISwitch) {
-        if let target = target, action = action {
-            target.performSelector(action, withObject: [shadowSwitch.on, sender.on])
+    func needStrokeChanged(_ sender: UISwitch) {
+        if let target = target, let action = action {
+            target.perform(action, with: [shadowSwitch.isOn, sender.isOn])
         }
     }
     
@@ -73,11 +73,11 @@ class CTASelectorShadowAndStrokeCell: CTASelectorCell {
             return
         }
         let began = dataSource.selectorBeganNeedShadowAndStroke(self)
-        shadowSwitch.on = began.0
-        strokeSwitch.on = began.1
+        shadowSwitch.isOn = began.0
+        strokeSwitch.isOn = began.1
     }
     
-    override func addTarget(target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
+    override func addTarget(_ target: AnyObject?, action: Selector, forControlEvents controlEvents: UIControlEvents) {
         self.target = target
         self.action = action
 //        view.addTarget(target, action: action, forControlEvents: controlEvents)

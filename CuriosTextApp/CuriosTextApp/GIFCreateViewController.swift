@@ -21,15 +21,15 @@ class GIFCreateViewController: UIViewController {
     var canvas: AniCanvas!
     var imageRetriver: ((String, (String, UIImage?) -> ()) -> ())?
     var aniCanvasView: AniPlayCanvasView!
-    var progressBlock: ((progress: CGFloat, next: () -> ()) -> ())?
-    var indexs = [Range<Int>]()
+    var progressBlock: ((_ progress: CGFloat, _ next: () -> ()) -> ())?
+    var indexs = [CountableRange<Int>]()
     var currentIndex = 0
     var counts = 0
-    var completed: ((gifURL: NSURL, thumbURL: NSURL) -> ())?
+    var completed: ((_ gifURL: URL, _ thumbURL: URL) -> ())?
     
     var slider: UISlider!
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
@@ -39,7 +39,7 @@ class GIFCreateViewController: UIViewController {
         setupStyles()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
 //            self.aniCanvasView.reloadData { [weak self] in
 //                guard let sf = self else { return }
 //                    aniCanvasView.ready()
@@ -54,16 +54,15 @@ class GIFCreateViewController: UIViewController {
             sf.aniCanvasView.ready()
             
             SVProgressHUD.showProgress(0, status: "\(Int(0 * 100.0))%")
-            let time: NSTimeInterval = 0.3
-            let delay = dispatch_time(DISPATCH_TIME_NOW,
-                Int64(time * Double(NSEC_PER_SEC)))
-            dispatch_after(delay, dispatch_get_main_queue()) {
+            let time: TimeInterval = 0.3
+            let delay = DispatchTime.now() + Double(Int64(time * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: delay) {
                 sf.makeGIFBegan()
             }
         }
     }
     
-    private func next() {
+    fileprivate func next() {
         let index = indexs[currentIndex]
         makeGIF(index)
     }
@@ -73,21 +72,21 @@ class GIFCreateViewController: UIViewController {
         var publishFile = publishID
         switch self.gifType{
         case .Small:
-            publishFile = publishFile+"(320*320)"
+            publishFile = publishFile!+"(320*320)"
         case .Normal:
-            publishFile = publishFile+"(480*480)"
+            publishFile = publishFile!+"(480*480)"
         case .Big:
-            publishFile = publishFile+"(640*640)"
+            publishFile = publishFile!+"(640*640)"
         }
-        let cacheStatus = GIFCreator.beganWith(publishFile, images: [], delays: [], useCache: true)
+        let cacheStatus = GIFCreator.beganWith(publishFile!, images: [], delays: [], useCache: true)
         
         switch cacheStatus {
-        case .Cached(GIFURL: _, thumbURL: _): commit()
+        case .cached(GIFURL: _, thumbURL: _): commit()
         default:
             let result = aniCanvasView.progressBegan()
             
             switch result {
-            case .Next(let duration):
+            case .next(let duration):
                 let FPS = 24
                 counts = Int(CGFloat(FPS) * duration)
                 var c = counts
@@ -114,11 +113,14 @@ class GIFCreateViewController: UIViewController {
         } 
     }
     
-    private func makeGIF(indexs: Range<Int>) {
+    fileprivate func makeGIF(_ indexs: CountableRange<Int>) {
         let count = counts
-        
+
+      let up = indexs.upperBound
+      let down = indexs.lowerBound
+      
 //        var thumbImage: UIImage!
-        for i in indexs {
+        for i in down..<up {
             autoreleasepool {
             let progress = CGFloat(i) / CGFloat(count)
             aniCanvasView.progress =  progress < 1.0 ? progress : 1.0
@@ -132,14 +134,16 @@ class GIFCreateViewController: UIViewController {
                     gifSize = CGSize(width: 640, height: 640)
                 }
                 UIGraphicsBeginImageContext(gifSize)
-                aniCanvasView.drawViewHierarchyInRect(CGRect(origin: CGPoint.zero, size: gifSize), afterScreenUpdates: true)
+                aniCanvasView.drawHierarchy(in: CGRect(origin: CGPoint.zero, size: gifSize), afterScreenUpdates: true)
                 let image = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
                 
                 let img = image//UIImage(data: UIImageJPEGRepresentation(image, 1)!)!
 //                if i == count - 1 { thumbImage = img }
-                let delay = (i == indexs.last && currentIndex == self.indexs.count - 1) ? 1.0 + 1.0 / CGFloat(24) : 1.0 / CGFloat(24)
+                let delay = (i == up && currentIndex == self.indexs.count - 1) ? 1.0 + 1.0 / CGFloat(24) : 1.0 / CGFloat(24)
+              if let img = img {
                 GIFCreator.addImage(img, delay: delay)
+              }
             }
         }
         
@@ -149,7 +153,7 @@ class GIFCreateViewController: UIViewController {
 //                progressBlock(progress: aniCanvasView.progress, next: next)
 //            } else {
                 let aprogress = aniCanvasView.progress
-                UIView.animateWithDuration(1.0, animations: {
+                UIView.animate(withDuration: 1.0, animations: {
                     
                     }, completion: { (finished) in
                         if finished {
@@ -157,10 +161,9 @@ class GIFCreateViewController: UIViewController {
                         }
                 })
             SVProgressHUD.showProgress(Float(aprogress), status: "\(Int(aprogress * 100.0))%")
-            let time: NSTimeInterval = 0.5
-            let delay = dispatch_time(DISPATCH_TIME_NOW,
-                                      Int64(time * Double(NSEC_PER_SEC)))
-            dispatch_after(delay, dispatch_get_main_queue()) {
+            let time: TimeInterval = 0.5
+            let delay = DispatchTime.now() + Double(Int64(time * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: delay) {
                 self.next()
             }
 //            }
@@ -169,32 +172,29 @@ class GIFCreateViewController: UIViewController {
         }
     }
     
-    private func commit() {
+    fileprivate func commit() {
         GIFCreator.commitWith({[weak self] (url, thumburl) in
             SVProgressHUD.showProgress(1, status: "\(Int(1.0 * 100.0))%")
             
             debug_print("gif url = \(url)")
-            let time: NSTimeInterval = 0.3
-            let delay = dispatch_time(DISPATCH_TIME_NOW,
-                Int64(time * Double(NSEC_PER_SEC)))
-            dispatch_after(delay, dispatch_get_main_queue()) {
+            let time: TimeInterval = 0.3
+            let delay = DispatchTime.now() + Double(Int64(time * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: delay) {
                 
-                SVProgressHUD.showSuccessWithStatus(LocalStrings.Done.description)
+                SVProgressHUD.showSuccess(withStatus: LocalStrings.done.description)
             }
             
-            let time3: NSTimeInterval = 0.5
-            let delay3 = dispatch_time(DISPATCH_TIME_NOW,
-                Int64(time3 * Double(NSEC_PER_SEC)))
-            dispatch_after(delay3, dispatch_get_main_queue()) {
+            let time3: TimeInterval = 0.5
+            let delay3 = DispatchTime.now() + Double(Int64(time3 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: delay3) {
                 
                 SVProgressHUD.dismiss()
             }
             
-            let time2: NSTimeInterval = 0.7
-            let delay2 = dispatch_time(DISPATCH_TIME_NOW,
-                Int64(time2 * Double(NSEC_PER_SEC)))
-            dispatch_after(delay2, dispatch_get_main_queue()) {
-                self?.completed?(gifURL: url, thumbURL: thumburl)
+            let time2: TimeInterval = 0.7
+            let delay2 = DispatchTime.now() + Double(Int64(time2 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: delay2) {
+                self?.completed?(url, thumburl)
             }
             })
     }
@@ -223,15 +223,15 @@ extension GIFCreateViewController {
         
     }
     
-    func tap(sender: UITapGestureRecognizer) {
+    func tap(_ sender: UITapGestureRecognizer) {
         makeGIFBegan()
     }
     
-    func sliderChanged(sender: UISlider) {
+    func sliderChanged(_ sender: UISlider) {
         aniCanvasView.progress = CGFloat(sender.value)
         
         if sender.value >= 1.0 {
-            dismissViewControllerAnimated(true, completion: nil)
+            dismiss(animated: true, completion: nil)
         }
     }
     
@@ -244,7 +244,7 @@ extension GIFCreateViewController {
         super.viewWillLayoutSubviews()
         
         let scale = min(view.bounds.size.width / canvas.size.width, view.bounds.size.height / canvas.size.height)
-        aniCanvasView.transform = CGAffineTransformMakeScale(scale, scale)
+        aniCanvasView.transform = CGAffineTransform(scaleX: scale, y: scale)
         aniCanvasView.center = view.center
     }
 }

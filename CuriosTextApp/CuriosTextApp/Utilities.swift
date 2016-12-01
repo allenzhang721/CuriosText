@@ -14,7 +14,7 @@ func gobal_jumpToAppStoreRation() {
     let appID = "1090836500"
     let url = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=\(appID)&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software"
     
-    UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+    UIApplication.shared.openURL(URL(string: url)!)
 }
 
 struct CTAShareConfig {

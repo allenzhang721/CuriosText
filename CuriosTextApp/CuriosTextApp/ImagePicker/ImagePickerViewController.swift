@@ -45,7 +45,7 @@ class ImagePickerViewController: UIViewController {
         }
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 
@@ -57,7 +57,7 @@ class ImagePickerViewController: UIViewController {
 
 extension ImagePickerViewController: CTAPhotoPickerProtocol {
     
-    func pickerDidSelectedImage(image: UIImage, backgroundColor: UIColor, identifier: String?) {
+    func pickerDidSelectedImage(_ image: UIImage, backgroundColor: UIColor, identifier: String?) {
         didSelectedImageHandler?(image, backgroundColor, identifier)
     }
 }

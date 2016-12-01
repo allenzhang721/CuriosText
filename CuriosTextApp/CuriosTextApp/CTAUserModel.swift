@@ -11,6 +11,7 @@ import Locksmith
 import SwiftyJSON
 
 final class CTAUserModel: CTABaseModel {
+
     
     let userID:String;
     let userType:Int;
@@ -45,22 +46,22 @@ final class CTAUserModel: CTABaseModel {
         self.weiboID     = weiboID;
     }
     
-    static func generateFrom(json: JSON) -> CTAUserModel {
+    static func generateFrom(_ json: JSON) -> CTAUserModel {
         
-        let userID:String      = json[key(.UserID)].string ?? "";
-        let userType:Int       = json[key(.UserType)].int ?? 1;
-        let nickName:String    = json[key(.NickName)].string ?? "";
-        let userDesc:String    = json[key(.UserDesc)].string ?? "";
-        let userIconURL:String = json[key(.UserIconURL)].string ?? "";
-        let sex:Int            = json[key(.Sex)].int ?? 0;
-        let email:String       = json[key(.Email)].string ?? "";
-        let phone:String       = json[key(.Phone)].string ?? "";
-        let areaCode:String    = json[key(.AreaCode)].string ?? "";
-        let country:String     = json[key(.Country)].string ?? "";
-        let province:String    = json[key(.Province)].string ?? "";
-        let city:String        = json[key(.City)].string ?? "";
-        let weixinID:String    = json[key(.WeixinID)].string ?? "";
-        let weiboID:String     = json[key(.WeiboID)].string ?? "";
+        let userID:String      = json[key(.userID)].string ?? "";
+        let userType:Int       = json[key(.userType)].int ?? 1;
+        let nickName:String    = json[key(.nickName)].string ?? "";
+        let userDesc:String    = json[key(.userDesc)].string ?? "";
+        let userIconURL:String = json[key(.userIconURL)].string ?? "";
+        let sex:Int            = json[key(.sex)].int ?? 0;
+        let email:String       = json[key(.email)].string ?? "";
+        let phone:String       = json[key(.phone)].string ?? "";
+        let areaCode:String    = json[key(.areaCode)].string ?? "";
+        let country:String     = json[key(.country)].string ?? "";
+        let province:String    = json[key(.province)].string ?? "";
+        let city:String        = json[key(.city)].string ?? "";
+        let weixinID:String    = json[key(.weixinID)].string ?? "";
+        let weiboID:String     = json[key(.weiboID)].string ?? "";
 
         return CTAUserModel.init(userID: userID, userType: userType, nickName: nickName, userDesc: userDesc, userIconURL: userIconURL, sex: sex, email: email, phone: phone, areaCode: areaCode, country: country, province: province, city: city, weixinID: weixinID, weiboID: weiboID)
     }
@@ -75,7 +76,7 @@ final class CTAUserModel: CTABaseModel {
         } catch {}
     }
     
-    func getData() -> [String: AnyObject]{
+    func getData() -> [String: Any]{
         return self.data
     }
 }
@@ -91,22 +92,22 @@ extension CTAUserModel: CreateableSecureStorable, GenericPasswordSecureStorable 
         return userID
     }
     
-    var data: [String: AnyObject] {
+    var data: [String: Any] {
         return [
-            key(.UserID):self.userID,
-            key(.UserType):self.userType,
-            key(.NickName):self.nickName,
-            key(.UserDesc):self.userDesc,
-            key(.UserIconURL):self.userIconURL,
-            key(.Sex):self.sex,
-            key(.Email):self.email,
-            key(.Phone):self.phone,
-            key(.AreaCode):self.areaCode,
-            key(.Country):self.country,
-            key(.Province):self.province,
-            key(.City):self.city,
-            key(.WeixinID):self.weixinID,
-            key(.WeiboID):self.weiboID
+            key(.userID):self.userID as AnyObject,
+            key(.userType):self.userType as AnyObject,
+            key(.nickName):self.nickName,
+            key(.userDesc):self.userDesc,
+            key(.userIconURL):self.userIconURL,
+            key(.sex):self.sex,
+            key(.email):self.email,
+            key(.phone):self.phone,
+            key(.areaCode):self.areaCode,
+            key(.country):self.country,
+            key(.province):self.province,
+            key(.city):self.city,
+            key(.weixinID):self.weixinID,
+            key(.weiboID):self.weiboID
         ]
     }
 }

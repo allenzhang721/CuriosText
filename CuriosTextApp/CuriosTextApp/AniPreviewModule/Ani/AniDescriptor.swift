@@ -18,7 +18,7 @@ struct AniDescriptor {
     let values: [String: [AnyObject]]
     let keyTimes: [String: [NSNumber]]
     
-    func configAnimationOn(layer: CALayer) {
+    func configAnimationOn(_ layer: CALayer) {
         
         let fillMode : String = kCAFillModeBoth
         let c = layer
@@ -29,36 +29,37 @@ struct AniDescriptor {
         
         var maskLayer: CALayer?
         switch needMaskType {
-        case .None:
+        case .none:
             layer.mask = nil
-        case .Normal(let shape):
+        case .normal(let shape):
             switch shape {
-            case .Rect:
+            case .rect:
                 let alayer = CALayer()
                 alayer.frame = layer.bounds
-                alayer.backgroundColor = UIColor.blackColor().CGColor
+                alayer.backgroundColor = UIColor.black.cgColor
                 maskLayer = alayer
-            case .Oval:
+            case .oval:
                 let alayer = CAShapeLayer()
                 let dia = sqrt(pow(layer.bounds.width, 2) + pow(layer.bounds.height, 2))
                 let rect = CGRect(x: 0, y: 0, width: dia, height: dia)
                 alayer.frame = rect
-                alayer.path = UIBezierPath(ovalInRect: rect).CGPath
-                alayer.strokeColor = UIColor.blackColor().CGColor
-                alayer.fillColor = UIColor.clearColor().CGColor
+                alayer.path = UIBezierPath(ovalIn: rect).cgPath
+                alayer.strokeColor = UIColor.black.cgColor
+                alayer.fillColor = UIColor.clear.cgColor
                 maskLayer = alayer
             }
-        case .Gradient(let shape):
+        case .gradient(let shape):
             switch shape {
-            case .Rect:
+            case .rect:
                 let gradientLayer = CAGradientLayer()
-                let h = layer.bounds.height
+//                _ = layer.bounds.height
                 let height = layer.bounds.height * 1.4
                 gradientLayer.frame = UIEdgeInsetsInsetRect(CGRect(origin: CGPoint.zero, size: CGSize(width: layer.bounds.width, height: height)), UIEdgeInsets(top: -layer.bounds.height * 0.2, left: 0, bottom: -layer.bounds.height * 0.2, right: 0))
-                gradientLayer.colors = [UIColor.blackColor().CGColor, UIColor.blackColor().CGColor, UIColor.clearColor().CGColor, UIColor.clearColor().CGColor]
-                gradientLayer.locations = [0, 0.2 / 1.4, 1.2 / 1.4, 1]
+                gradientLayer.colors = [UIColor.black.cgColor, UIColor.black.cgColor, UIColor.clear.cgColor, UIColor.clear.cgColor]
+                
+                gradientLayer.locations = [0, NSNumber(floatLiteral: 0.2 / 1.4), NSNumber(floatLiteral: 1.2 / 1.4), 1]
                 maskLayer = gradientLayer
-            case .Oval:
+            case .oval:
                 ()
 //                let dia = sqrt(pow(layer.bounds.width, 2) + pow(layer.bounds.height, 2))
 //                alayer.frame = CGRect(x: 0, y: 0, width: dia, height: dia)
@@ -81,7 +82,7 @@ struct AniDescriptor {
             let maskGradientKeyPaths = keyPaths.filter{ $0.hasPrefix("mask.") }
             var maskAnims = [CAAnimation]()
             for k in maskGradientKeyPaths {
-                let keyPath = k.componentsSeparatedByString(".").last!
+                let keyPath = k.components(separatedBy: ".").last!
                 let beganTime = beganTimes[k] ?? 0
                 let duration = durations[k] ?? 0.3
                 let value = values[k]
@@ -116,8 +117,8 @@ struct AniDescriptor {
             }
             
             let animGroup = QCMethod.groupAnimations(maskAnims, fillMode:fillMode)
-            animGroup.removedOnCompletion = true
-            mask.addAnimation(animGroup, forKey: "\(type)maskAnimation")
+            animGroup?.isRemovedOnCompletion = true
+            mask.add(animGroup!, forKey: "\(type)maskAnimation")
         }
         
         let layerKeyPaths = keyPaths.filter { !$0.hasPrefix("mask.") }
@@ -151,7 +152,7 @@ struct AniDescriptor {
         }
 
         let animGroup = QCMethod.groupAnimations(anims, fillMode:fillMode)
-        animGroup.removedOnCompletion = true
-        c.addAnimation(animGroup, forKey: "\(type)Animation")
+        animGroup?.isRemovedOnCompletion = true
+        c.add(animGroup!, forKey: "\(type)Animation")
     }
 }

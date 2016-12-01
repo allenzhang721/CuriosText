@@ -17,14 +17,14 @@ class CTAUnreadNoticeCountRequest: CTABaseRequest{
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.UnReadNoticeCount.description;
+        return CTARequestUrl.unReadNoticeCount.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID) : userID
+            key(.userID) : userID as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAUnreadNoticeCount");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAUnreadNoticeCount");
     }
 }
 
@@ -41,16 +41,16 @@ class CTANoticeListRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.NoticeList.description;
+        return CTARequestUrl.noticeList.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)    : userID,
-            key(.Start)     : start,
-            key(.Size)      : size
+            key(.userID)    : userID as AnyObject,
+            key(.start)     : start as AnyObject,
+            key(.size)      : size as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTANoticeList");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTANoticeList");
     }
 }
 
@@ -62,14 +62,14 @@ class CTADeleteNoticeRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.DeleteNotice.description;
+        return CTARequestUrl.deleteNotice.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.NoticeID)        : noticeID
+            key(.noticeID)        : noticeID as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTADeleteNoticeRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTADeleteNoticeRequest");
     }
 }
 
@@ -81,14 +81,14 @@ class CTAClearNoticesRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.ClearNotices.description;
+        return CTARequestUrl.clearNotices.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)        : userID
+            key(.userID)        : userID as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTAClearNoticesRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTAClearNoticesRequest");
     }
 }
 
@@ -100,13 +100,13 @@ class CTASetNoticesReadedRequest: CTABaseRequest {
     }
     
     override func requestUrl() -> String {
-        return CTARequestUrl.SetNoticesReaded.description;
+        return CTARequestUrl.setNoticesReaded.description;
     }
     
     override func parameter() -> String {
         let dic:Dictionary<String, AnyObject> = [
-            key(.UserID)        : userID
+            key(.userID)        : userID as AnyObject
         ];
-        return self.getParameterString(dic, errorMessage: "CTASetNoticesReadedRequest");
+        return self.getParameterString(dic as AnyObject, errorMessage: "CTASetNoticesReadedRequest");
     }
 }

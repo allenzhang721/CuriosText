@@ -32,15 +32,15 @@ class CTACropOverlayView: UIView {
         setup()
     }
     
-    private func setup() {
+    fileprivate func setup() {
         
-        for (i, l) in cornerLayers.enumerate() {
+        for (i, l) in cornerLayers.enumerated() {
             setupLayer(l, left: (i == 0 || i == 3), top: (i == 0 || i == 1))
             layer.addSublayer(l)
         }
     }
     
-    private func setupLayer(l: CAShapeLayer, left: Bool, top: Bool) {
+    fileprivate func setupLayer(_ l: CAShapeLayer, left: Bool, top: Bool) {
         
         setLayersPosition(l, rect: bounds, left: left, top: top)
         
@@ -74,18 +74,18 @@ class CTACropOverlayView: UIView {
             endPoint = CGPoint(x: abounds.minX, y: abounds.minY)
         }
         
-        path.moveToPoint(beganPoint)
-        path.addLineToPoint(middlePoint)
-        path.addLineToPoint(endPoint)
+        path.move(to: beganPoint)
+        path.addLine(to: middlePoint)
+        path.addLine(to: endPoint)
         
         path.lineWidth = 10
         
-        l.path = path.CGPath
-        l.strokeColor = UIColor.whiteColor().CGColor
-        l.fillColor = UIColor.clearColor().CGColor
+        l.path = path.cgPath
+        l.strokeColor = UIColor.white.cgColor
+        l.fillColor = UIColor.clear.cgColor
     }
     
-    private func setLayersPosition(l: CAShapeLayer, rect: CGRect, left: Bool, top: Bool) {
+    fileprivate func setLayersPosition(_ l: CAShapeLayer, rect: CGRect, left: Bool, top: Bool) {
         
         let inset: CGFloat = 10
         let size = CGSize(width: 25, height: 25)
@@ -100,7 +100,7 @@ class CTACropOverlayView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        for (i, l) in cornerLayers.enumerate() {
+        for (i, l) in cornerLayers.enumerated() {
             setLayersPosition(l, rect: bounds, left: (i == 0 || i == 3), top: (i == 0 || i == 1))
         }
     }
@@ -108,7 +108,7 @@ class CTACropOverlayView: UIView {
 
 extension CTACropOverlayView {
     
-    func positionByAspectRatio(ratio: CTAImageCropAspectRatio, animated: Bool) {
+    func positionByAspectRatio(_ ratio: CTAImageCropAspectRatio, animated: Bool) {
         
         let minSize = ratio.minumSize()
         
@@ -123,9 +123,9 @@ extension CTACropOverlayView {
         
         if animated {
             let rect = UIEdgeInsetsInsetRect(bounds, UIEdgeInsets(top: top, left: left, bottom: bottom, right: right))
-            UIView.animateWithDuration( 0.1, animations: { 
+            UIView.animate( withDuration: 0.1, animations: { 
                 
-                for (i, l) in self.cornerLayers.enumerate() {
+                for (i, l) in self.cornerLayers.enumerated() {
                     self.setLayersPosition(l, rect:  rect, left: (i == 0 || i == 3), top: (i == 0 || i == 1))
                 }
             })

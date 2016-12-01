@@ -12,11 +12,11 @@ class ContentTextLayer: UILabel {
     
     var insets: CGPoint = CGPoint.zero
     
-    override func drawTextInRect(rect: CGRect) {
+    override func drawText(in rect: CGRect) {
         
         let context = UIGraphicsGetCurrentContext()
-        CGContextSaveGState(context)
-        CGContextTranslateCTM(context, insets.x, insets.y)
+        context?.saveGState()
+        context?.translateBy(x: insets.x, y: insets.y)
         let arect = CGRect(origin: rect.origin, size: CGSize(width: rect.size.width - insets.x * 2, height: rect.size.height - insets.y * 2))
         
         //        attributedText?.drawInRect(CGRect(origin: rect.origin, size: CGSize(width: rect.size.width - insets.x * 2, height: rect.size.height - insets.y * 2)))
@@ -27,14 +27,14 @@ class ContentTextLayer: UILabel {
             manager.addTextContainer(container)
             storage.addLayoutManager(manager)
             container.lineFragmentPadding = 0
-            manager.drawGlyphsForGlyphRange(manager.glyphRangeForTextContainer(container), atPoint: arect.origin)
+            manager.drawGlyphs(forGlyphRange: manager.glyphRange(for: container), at: arect.origin)
             
         } else {
             
-            super.drawTextInRect(rect)
+            super.drawText(in: rect)
         }
         
-        CGContextRestoreGState(context)
+        context?.restoreGState()
     }
 }
 

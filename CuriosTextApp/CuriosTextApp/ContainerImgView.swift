@@ -12,7 +12,7 @@ class ContainerImgView: ContainerView {
     
     var imageView: UIImageView!
 
-    override func updateContents(contents: AnyObject, contentSize size: CGSize, drawInsets inset: CGPoint) {
+    override func updateContents(_ contents: AnyObject, contentSize size: CGSize, drawInsets inset: CGPoint) {
         
         guard let contents = contents as? UIImage else {
             fatalError("The contents is not Image")

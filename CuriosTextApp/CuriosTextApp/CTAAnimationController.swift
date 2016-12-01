@@ -12,20 +12,20 @@ import pop
 
 protocol CTAAnimationControllerDelegate: class {
     
-    func controllerAnimationDidFinished(con: CTAAnimationController)
+    func controllerAnimationDidFinished(_ con: CTAAnimationController)
 }
 
 class CTAAnimationController: NSObject {
     
     weak var delegate: CTAAnimationControllerDelegate?
-    private var views: [UIView]?
+    fileprivate var views: [UIView]?
     let iD: String
     var binder: CTAAnimationBinder
     weak var preView: CTAPreviewView?
     var container: ContainerVMProtocol
     var canvasSize: CGSize
-    private var playing: Bool = false
-    private var pausing: Bool = true
+    fileprivate var playing: Bool = false
+    fileprivate var pausing: Bool = true
     
     var duration: Float {
         return binder.config.duration + binder.config.delay
@@ -49,12 +49,11 @@ class CTAAnimationController: NSObject {
         playing = true
         pausing = false
         
-        let time: NSTimeInterval = NSTimeInterval(duration)
-        let delay = dispatch_time(DISPATCH_TIME_NOW,
-            Int64(time * Double(NSEC_PER_SEC)))
-        dispatch_after(delay, dispatch_get_main_queue()) { [weak self] in
+        let time: TimeInterval = TimeInterval(duration)
+        let delay = DispatchTime.now() + Double(Int64(time * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
             
-            if let sf = self where sf.playing == true && sf.pausing == false {
+            if let sf = self, sf.playing == true && sf.pausing == false {
                 sf.playing = false
                 sf.pausing = true
                 sf.delegate?.controllerAnimationDidFinished(sf)
@@ -63,7 +62,7 @@ class CTAAnimationController: NSObject {
         
         if let apreView = preView {
             apreView.clearViews()
-            for (i, v) in views!.enumerate() {
+            for (i, v) in views!.enumerated() {
 //                binder.configAnimationFor(v, index: i)
             }
             
@@ -89,9 +88,9 @@ class CTAAnimationController: NSObject {
                 if let keys = v.layer.pop_animationKeys() {
                     debug_print(keys, context: aniContext)
                     for key in keys  {
-                        let animation = v.layer.pop_animationForKey(key as! String) as? POPBasicAnimation
+                        let animation = v.layer.pop_animation(forKey: key as! String) as? POPBasicAnimation
                         debug_print(animation, context: aniContext)
-                        animation?.paused = true
+                        animation?.isPaused = true
                     }
                 }
             }
@@ -112,7 +111,7 @@ class CTAAnimationController: NSObject {
         }
     }
     
-    class func createViews(binder: CTAAnimationBinder, container: ContainerVMProtocol) -> [UIView] {
+    class func createViews(_ binder: CTAAnimationBinder, container: ContainerVMProtocol) -> [UIView] {
         var aviews = [UIView]()
         
         switch container {

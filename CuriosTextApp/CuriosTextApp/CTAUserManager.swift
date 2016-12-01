@@ -15,15 +15,15 @@ class CTAUserManager {
     static let account = "com.botai.curiosText.LatestAccount"
     static let service = "com.botai.curiosText"
     
-    static private(set) var user: CTAUserModel?
+    static fileprivate(set) var user: CTAUserModel?
     static var isLogin: Bool {
         return CTAUserManager.user != nil
     }
     
-    class func save(user: CTAUserModel) -> Bool {
+    class func save(_ user: CTAUserModel) -> Bool {
         
         do {
-            try Locksmith.saveData(user.data, forUserAccount: account, inService: service)
+            try Locksmith.saveData(data: user.data, forUserAccount: account, inService: service)
             CTAUserManager.user = user
             
             return true
@@ -37,7 +37,7 @@ class CTAUserManager {
     
     class func load() -> Bool {
         
-        guard let dic = Locksmith.loadDataForUserAccount(account, inService: service) else {
+        guard let dic = Locksmith.loadDataForUserAccount(userAccount: account, inService: service) else {
             return false
         }
         
@@ -50,7 +50,7 @@ class CTAUserManager {
     class func logout() -> Bool {
         
         do {
-            try Locksmith.deleteDataForUserAccount(account, inService: service)
+            try Locksmith.deleteDataForUserAccount(userAccount: account, inService: service)
             user = nil
             return true
         } catch {

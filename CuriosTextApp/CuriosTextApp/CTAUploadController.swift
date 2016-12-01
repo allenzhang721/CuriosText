@@ -14,7 +14,7 @@ class CTAUploadController {
     init(){
         self.uploadArray = [];
         do {
-            let file:QNFileRecorder = try QNFileRecorder(folder: NSTemporaryDirectory().stringByAppendingString("Curios"))
+            let file:QNFileRecorder = try QNFileRecorder(folder: NSTemporaryDirectory() + "Curios")
             self.uploadManager = QNUploadManager.init(recorder: file)
         } catch {
             self.uploadManager = QNUploadManager()
@@ -36,14 +36,14 @@ class CTAUploadController {
         return _instance!;
     }
     
-    func uploadFile(uploadModel:CTAUploadModel) {
+    func uploadFile(_ uploadModel:CTAUploadModel) {
         if !checkUploadModel(uploadModel) {
             self.uploadArray.append(uploadModel)
         }
         self.uploadAction(uploadModel.uploadID);
     }
     
-    func uploadFileArray(uploadModelArray:Array<CTAUploadModel>){
+    func uploadFileArray(_ uploadModelArray:Array<CTAUploadModel>){
         if uploadModelArray.count > 0{
             for i in 0..<uploadModelArray.count {
                 let uploadModel = uploadModelArray[i]
@@ -56,7 +56,7 @@ class CTAUploadController {
         }
     }
     
-    func getUnUploadModel(uploadID:String = "") -> CTAUploadModel?{
+    func getUnUploadModel(_ uploadID:String = "") -> CTAUploadModel?{
         var uploadModel:CTAUploadModel?
         for i in 0..<self.uploadArray.count {
             let oldModel:CTAUploadModel = self.uploadArray[i]
@@ -75,7 +75,7 @@ class CTAUploadController {
         return uploadModel
     }
     
-    func uploadAction(uploadID:String){
+    func uploadAction(_ uploadID:String){
         if self.getUploadingCount() < 4{
             var uploadModel:CTAUploadModel? = self.getUnUploadModel(uploadID);
             if uploadModel == nil{
@@ -83,20 +83,20 @@ class CTAUploadController {
             }
             if let uploadModel = uploadModel {
                 self.uploadStart(uploadModel.key)
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+                DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: { () -> Void in
                     let option = QNUploadOption(mime: nil, progressHandler: { (fileKey, progress) -> Void in
-                            CTAUploadController.getInstance().uploadProgress(fileKey, progress: progress)
+                            CTAUploadController.getInstance().uploadProgress(fileKey!, progress: progress)
                         }, params: nil, checkCrc: true, cancellationSignal: nil)
                     var ainfo: QNResponseInfo!
                     var afileKey: String!
-                    var aresponse:  [NSObject : AnyObject]?
+                    var aresponse:  [AnyHashable: Any]?
                     if uploadModel.isUploadData {
-                        self.uploadManager.putData(uploadModel.fileData, key: uploadModel.key, token: uploadModel.token, complete: { (info, fileKey, response) -> Void in
+                        self.uploadManager.put(uploadModel.fileData, key: uploadModel.key, token: uploadModel.token, complete: { (info, fileKey, response) -> Void in
                                 ainfo = info
                                 afileKey = fileKey
                                 aresponse = response
                             
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                DispatchQueue.main.async(execute: { () -> Void in
                                     self.uploadCompleted(ainfo, filekey: afileKey, response: aresponse)
                                 })
                             }, option: option)
@@ -106,7 +106,7 @@ class CTAUploadController {
                                 afileKey = fileKey
                                 aresponse = response
                             
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                DispatchQueue.main.async(execute: { () -> Void in
                                     self.uploadCompleted(ainfo, filekey: afileKey, response: aresponse)
                                 })
                             }, option: option)
@@ -116,7 +116,7 @@ class CTAUploadController {
         }
     }
     
-    func uploadStart(fileKey:String){
+    func uploadStart(_ fileKey:String){
         let uploadModel = self.getUploadModelByKey(fileKey)
         if uploadModel != nil {
             uploadModel!.isUploading = true
@@ -126,7 +126,7 @@ class CTAUploadController {
         }
     }
     
-    func uploadProgress(fileKey:String, progress:Float){
+    func uploadProgress(_ fileKey:String, progress:Float){
         let uploadModel = self.getUploadModelByKey(fileKey)
         if uploadModel != nil {
             if let delegate = self.delegate {
@@ -135,11 +135,11 @@ class CTAUploadController {
         }
     }
     
-    func uploadCompleted(info: QNResponseInfo!, filekey: String!, response: [NSObject : AnyObject]?) {
+    func uploadCompleted(_ info: QNResponseInfo!, filekey: String!, response: [AnyHashable: Any]?) {
         let uploadModel = self.getUploadModelByKey(filekey)
         if uploadModel != nil {
             uploadModel!.isUploading = false
-            let isUploadOk = info.ok && response != nil
+            let isUploadOk = info.isOK && response != nil
             if isUploadOk {
                 uploadModel!.uploadComplete = true
                 if let delegate = self.delegate {
@@ -155,7 +155,7 @@ class CTAUploadController {
         }
     }
     
-    func uploadModelComplete(uploadModel:CTAUploadModel) {
+    func uploadModelComplete(_ uploadModel:CTAUploadModel) {
         var index:Int = -1
         for i in 0..<self.uploadArray.count {
             let oldModel:CTAUploadModel = self.uploadArray[i];
@@ -164,7 +164,7 @@ class CTAUploadController {
             }
         }
         if index != -1{
-            self.uploadArray.removeAtIndex(index)
+            self.uploadArray.remove(at: index)
         }
         if self.uploadArray.count == 0{
             self.delegate = nil;
@@ -173,7 +173,7 @@ class CTAUploadController {
         }
     }
     
-    func checkUploadModel(uploadModel:CTAUploadModel) -> Bool{
+    func checkUploadModel(_ uploadModel:CTAUploadModel) -> Bool{
         for i in 0..<self.uploadArray.count {
             let oldModel:CTAUploadModel = self.uploadArray[i];
             if oldModel.key == uploadModel.key {
@@ -183,7 +183,7 @@ class CTAUploadController {
         return false
     }
     
-    func getUploadModelByKey(fileKey:String) -> CTAUploadModel? {
+    func getUploadModelByKey(_ fileKey:String) -> CTAUploadModel? {
         var uploadModel:CTAUploadModel?;
         for i in 0..<self.uploadArray.count {
             let oldModel:CTAUploadModel = self.uploadArray[i]

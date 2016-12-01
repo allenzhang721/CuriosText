@@ -11,35 +11,35 @@ import AVFoundation
 
 class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhotoPickerTemplateable {
     
-    private struct Inner {
-        private let session = AVCaptureSession()
-        private let sessionQueue = dispatch_queue_create("Session.Queue", DISPATCH_QUEUE_SERIAL)
-        private var cameraResult: CTACameraResult = .Authorized
-        private var stillImageOutput: AVCaptureStillImageOutput?
-        private var ratio: CTAImageCropAspectRatio = .Square
-        private var currentDevice: AVCaptureDevice?
-        private var flashType: FlashType = .Off
+    fileprivate struct Inner {
+        fileprivate let session = AVCaptureSession()
+        fileprivate let sessionQueue = DispatchQueue(label: "Session.Queue", attributes: [])
+        fileprivate var cameraResult: CTACameraResult = .authorized
+        fileprivate var stillImageOutput: AVCaptureStillImageOutput?
+        fileprivate var ratio: CTAImageCropAspectRatio = .square
+        fileprivate var currentDevice: AVCaptureDevice?
+        fileprivate var flashType: FlashType = .off
     }
     
     enum CTACameraResult {
-        case Authorized
-        case NotAuthorized, SessionConfigFailed
+        case authorized
+        case notAuthorized, sessionConfigFailed
     }
     
     enum FlashType {
-        case Off
-        case On
-        case Auto
+        case off
+        case on
+        case auto
         
         func next() -> FlashType {
             
             switch self {
-            case .Off:
-                return On
-            case .On:
-                return Auto
-            case .Auto:
-                return Off
+            case .off:
+                return .on
+            case .on:
+                return .auto
+            case .auto:
+                return .off
             }
         }
     }
@@ -47,7 +47,7 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
     weak var pickerDelegate: CTAPhotoPickerProtocol?
     
     var templateImage: UIImage?
-    var backgroundColor: UIColor = UIColor.whiteColor()
+    var backgroundColor: UIColor = UIColor.white
     var backgroundColorHex: String = "FFFFFF"
     var frontCamera = false
     var selectedImageIdentifier: String? = nil
@@ -59,19 +59,19 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
     @IBOutlet weak var cropView: CTACropOverlayView!
     @IBOutlet weak var ratioCollectionView: UICollectionView!
     
-    private var inner = Inner()
+    fileprivate var inner = Inner()
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        let selectedImage = ImagePickerResource.imageOfCameraSelected.imageWithRenderingMode(.AlwaysOriginal)
-        let normalImage = ImagePickerResource.imageOfCamera.imageWithRenderingMode(.AlwaysOriginal)
+        let selectedImage = ImagePickerResource.imageOfCameraSelected.withRenderingMode(.alwaysOriginal)
+        let normalImage = ImagePickerResource.imageOfCamera.withRenderingMode(.alwaysOriginal)
         
-        self.tabBarItem = UITabBarItem(title: LocalStrings.Camera.description, image: normalImage, selectedImage: selectedImage)
+        self.tabBarItem = UITabBarItem(title: LocalStrings.camera.description, image: normalImage, selectedImage: selectedImage)
     }
     
     deinit {
@@ -80,15 +80,15 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        accessView.hidden = true
+        accessView.isHidden = true
         setup()
     }
     
-    private func setupTemplate() {
+    fileprivate func setupTemplate() {
         templateImageView.image = templateImage
     }
     
-    private func setup() {
+    fileprivate func setup() {
         
         ratioCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
         
@@ -103,7 +103,7 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
             }
         }
         
-        cameraView.videoGravity = .ResizeAspectFill
+        cameraView.videoGravity = .resizeAspectFill
         cameraView.clipsToBounds = true
         
         // 1. connect session to previewLayer
@@ -113,35 +113,35 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         // sessioin begin running
-        dispatch_async(inner.sessionQueue) { [weak self] in
+        inner.sessionQueue.async { [weak self] in
             guard let strongSelf = self else {
                 return
             }
             
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 strongSelf.templateImageView.image = strongSelf.templateImage
             })
             
             switch strongSelf.inner.cameraResult {
                 
-            case .Authorized:
-                dispatch_async(dispatch_get_main_queue(), {
+            case .authorized:
+                DispatchQueue.main.async(execute: {
                     strongSelf.inner.session.startRunning()
                 })
                 
             default:
-                dispatch_async(dispatch_get_main_queue(), { 
-                    strongSelf.cameraView.backgroundColor = UIColor.groupTableViewBackgroundColor()
+                DispatchQueue.main.async(execute: { 
+                    strongSelf.cameraView.backgroundColor = UIColor.groupTableViewBackground
                 })
             }
         }
     }
     
-    private func flash(type: FlashType) {
+    fileprivate func flash(_ type: FlashType) {
         
-        guard let device = inner.currentDevice where device.hasFlash && device.hasTorch else {
+        guard let device = inner.currentDevice, device.hasFlash && device.hasTorch else {
             return
         }
         
@@ -150,25 +150,25 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
            try device.lockForConfiguration()
             
             switch type {
-            case .Off:
+            case .off:
 //                device.torchMode = .Off
-                device.flashMode = .Off
-                dispatch_async(dispatch_get_main_queue(), { 
-                    self.flashButton.setImage(UIImage(named: "icon_flashOff"), forState: .Normal)
+                device.flashMode = .off
+                DispatchQueue.main.async(execute: { 
+                    self.flashButton.setImage(UIImage(named: "icon_flashOff"), for: UIControlState())
                 })
                 
-            case .On:
+            case .on:
 //                device.torchMode = .On
-                device.flashMode = .On
-                dispatch_async(dispatch_get_main_queue(), { 
-                    self.flashButton.setImage(UIImage(named: "icon_flashOn"), forState: .Normal)
+                device.flashMode = .on
+                DispatchQueue.main.async(execute: { 
+                    self.flashButton.setImage(UIImage(named: "icon_flashOn"), for: UIControlState())
                 })
                 
-            case .Auto:
+            case .auto:
 //                device.torchMode = .Auto
-                device.flashMode = .Auto
-                dispatch_async(dispatch_get_main_queue(), { 
-                    self.flashButton.setImage(UIImage(named: "icon_flashAuto"), forState: .Normal)  
+                device.flashMode = .auto
+                DispatchQueue.main.async(execute: { 
+                    self.flashButton.setImage(UIImage(named: "icon_flashAuto"), for: UIControlState())  
                 })
             }
             
@@ -179,56 +179,56 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
         }
     }
     
-    private func changeCamera(front: Bool = false) {
+    fileprivate func changeCamera(_ front: Bool = false) {
      
         // 1.1. check camera authorized result
-        switch AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo) {
-        case .Authorized:
-            inner.cameraResult = .Authorized
-            accessView.hidden = true
+        switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
+        case .authorized:
+            inner.cameraResult = .authorized
+            accessView.isHidden = true
             
-        case .NotDetermined:
-            dispatch_suspend(inner.sessionQueue)
-            AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo, completionHandler: { [weak self] (authorized) in
+        case .notDetermined:
+            inner.sessionQueue.suspend()
+            AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo, completionHandler: { [weak self] (authorized) in
                 
                 if authorized {
-                    self?.inner.cameraResult = .Authorized
-                    self?.accessView.hidden = true
+                    self?.inner.cameraResult = .authorized
+                    self?.accessView.isHidden = true
                 } else {
-                    self?.inner.cameraResult = .NotAuthorized
-                    self?.accessView.hidden = false
+                    self?.inner.cameraResult = .notAuthorized
+                    self?.accessView.isHidden = false
                 }
                 if let strongSelf = self {
-                    dispatch_resume(strongSelf.inner.sessionQueue)
+                    strongSelf.inner.sessionQueue.resume()
                 }
                 }
             )
             
         default:
-            inner.cameraResult = .NotAuthorized
-            accessView.hidden = false
+            inner.cameraResult = .notAuthorized
+            accessView.isHidden = false
         }
         
         // config session
-        dispatch_async(inner.sessionQueue) { [weak self] in
-            guard let strongSelf = self where strongSelf.inner.cameraResult == .Authorized else {
+        inner.sessionQueue.async { [weak self] in
+            guard let strongSelf = self, strongSelf.inner.cameraResult == .authorized else {
                 return
             }
             
-            if let oldInputs = strongSelf.inner.session.inputs where oldInputs.count > 0 {
+            if let oldInputs = strongSelf.inner.session.inputs, oldInputs.count > 0 {
                 for i in oldInputs {
                     strongSelf.inner.session.removeInput(i as! AVCaptureInput)
                 }
             }
             
-            if let outputs = strongSelf.inner.session.outputs where outputs.count > 0 {
+            if let outputs = strongSelf.inner.session.outputs, outputs.count > 0 {
                 for i in outputs {
                     strongSelf.inner.session.removeOutput(i as! AVCaptureOutput)
                 }
             }
             
             if front {
-                strongSelf.inner.flashType = .Off
+                strongSelf.inner.flashType = .off
                 strongSelf.flash(strongSelf.inner.flashType)
             }
             
@@ -245,7 +245,7 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
                 strongSelf.inner.session.addInput(deviceInput)
                 strongSelf.inner.currentDevice = videoCapture
             } else {
-                strongSelf.inner.cameraResult = .SessionConfigFailed
+                strongSelf.inner.cameraResult = .sessionConfigFailed
             }
             
             // 3.2. create output and add it to session
@@ -255,7 +255,7 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
                 strongSelf.inner.session.addOutput(stillImageOutput)
                 strongSelf.inner.stillImageOutput = stillImageOutput
             } else {
-                strongSelf.inner.cameraResult = .SessionConfigFailed
+                strongSelf.inner.cameraResult = .sessionConfigFailed
             }
             
             // 3.3. end config session
@@ -267,7 +267,7 @@ class CTACameraViewController: UIViewController, CTAPhotoPickerDelegate, CTAPhot
 // MARK: - Actions
 extension CTACameraViewController {
     
-    @IBAction func changeFlash(sender: AnyObject) {
+    @IBAction func changeFlash(_ sender: AnyObject) {
         
         let t = inner.flashType
         inner.flashType = t.next()
@@ -275,32 +275,32 @@ extension CTACameraViewController {
     }
     
     
-    @IBAction func changedCamera(sender: AnyObject) {
+    @IBAction func changedCamera(_ sender: AnyObject) {
         frontCamera = !frontCamera
         changeCamera(frontCamera)
         
 //        flash()
     }
     
-    @IBAction func accessClick(sender: AnyObject) {
-        UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+    @IBAction func accessClick(_ sender: AnyObject) {
+        UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
     }
     
-    @IBAction func captureClick(sender: AnyObject) {
+    @IBAction func captureClick(_ sender: AnyObject) {
         
-        guard inner.cameraResult == .Authorized else { return }
+        guard inner.cameraResult == .authorized else { return }
         
         captureStillImage {[weak self] (data) in
             if let data = data {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self?.pickerDelegate?.pickerDidSelectedImage(UIImage(data: data)!, backgroundColor: self!.backgroundColor, identifier: nil)
                 })
             }
         }
     }
     
-    @IBAction func dismiss(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func dismiss(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -308,24 +308,24 @@ extension CTACameraViewController {
 extension CTACameraViewController {
     
     // MARK: - Capture Still Image
-    typealias CaptureStillImageCompletedHander = (NSData?) -> ()
+    typealias CaptureStillImageCompletedHander = (Data?) -> ()
     
-    private func captureStillImage(handler: CaptureStillImageCompletedHander?) {
-        dispatch_async(inner.sessionQueue) { [weak self] in
+    fileprivate func captureStillImage(_ handler: CaptureStillImageCompletedHander?) {
+        inner.sessionQueue.async { [weak self] in
             guard let strongSelf = self, let output = self?.inner.stillImageOutput else {
                 handler?(nil)
                 return
             }
             
-            let connection = output.connectionWithMediaType(AVMediaTypeVideo)
+            let connection = output.connection(withMediaType: AVMediaTypeVideo)
             
-            strongSelf.inner.stillImageOutput?.captureStillImageAsynchronouslyFromConnection(connection, completionHandler: {[weak self] (buffer, error) in
+            strongSelf.inner.stillImageOutput?.captureStillImageAsynchronously(from: connection, completionHandler: {[weak self] (buffer, error) in
                 guard let strongSelf = self else {
                     return
                 }
                 if let buffer = buffer {
                     let data = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(buffer)
-                    let image = UIImage(data: data)!.cropImageWith(strongSelf.inner.ratio)
+                    let image = UIImage(data: data!)!.cropImageWith(strongSelf.inner.ratio)
                     handler?(UIImagePNGRepresentation(image))
                 } else {
                     handler?(nil)
@@ -340,7 +340,7 @@ extension CTACameraViewController {
 
 extension UIImage {
     
-    private func cropImageWith(ratio: CTAImageCropAspectRatio) -> UIImage {
+    fileprivate func cropImageWith(_ ratio: CTAImageCropAspectRatio) -> UIImage {
         
         let originSize = size
         let targetSize = CGSize(width: originSize.width, height: originSize.height)
@@ -352,10 +352,10 @@ extension UIImage {
         let drawOrigin = CGPoint(x: -cropOrigin.x, y: -cropOrigin.y)
         
         UIGraphicsBeginImageContext(cropSize)
-        drawInRect(CGRect(origin: drawOrigin, size: originSize))
+        self.draw(in: CGRect(origin: drawOrigin, size: originSize))
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return image
+        return image!
     }
 }
 
@@ -363,14 +363,14 @@ extension UIImage {
 extension CTACameraViewController: UICollectionViewDataSource {
     // MARK: - UICollectionViewDataSource
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return CTAImageCropAspectRatio.defaultRatio.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("AspectRatioCell", forIndexPath: indexPath) as! CTACameraAspectRatioCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AspectRatioCell", for: indexPath) as! CTACameraAspectRatioCollectionViewCell
         
         cell.text = CTAImageCropAspectRatio.defaultRatio[indexPath.item].description
         
@@ -382,9 +382,9 @@ extension CTACameraViewController: UICollectionViewDataSource {
 
 extension CTACameraViewController: UICollectionViewDelegate {
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if let acenter = collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(indexPath)?.center {
+        if let acenter = collectionView.collectionViewLayout.layoutAttributesForItem(at: indexPath)?.center {
             collectionView.setContentOffset(CGPoint(x: acenter.x - collectionView.bounds.width / 2.0, y: 0), animated: true)
         }
     }

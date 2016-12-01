@@ -10,14 +10,14 @@ import Foundation
 
 protocol TextContainerVMProtocol: ContainerVMProtocol {
     
-    var textElement: protocol<CTAElement, TextModifiable>? { get }
+    var textElement: (CTAElement & TextModifiable)? { get }
     
-    func updateWithText(text: String, constraintSize: CGSize)
-    func updateWithFontFamily(family: String, FontName name: String, constraintSize: CGSize)
-    func updateWithTextAlignment(alignment: NSTextAlignment)
-    func updateWithTextSpacing(lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize)
-    func updateWithColor(hex: String, alpha: CGFloat)
-    func updatewithNeedShadow(needShadow: Bool, needStroke: Bool)
+    func updateWithText(_ text: String, constraintSize: CGSize)
+    func updateWithFontFamily(_ family: String, FontName name: String, constraintSize: CGSize)
+    func updateWithTextAlignment(_ alignment: NSTextAlignment)
+    func updateWithTextSpacing(_ lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize)
+    func updateWithColor(_ hex: String, alpha: CGFloat)
+    func updatewithNeedShadow(_ needShadow: Bool, needStroke: Bool)
 }
 
 protocol TextRetrievable: class {
@@ -29,8 +29,8 @@ protocol TextRetrievable: class {
     var shadowOffset: CGPoint { get }
     var shadowBlurRadius: CGFloat { get }
     
-    func attributeStringWithFontScale(scale: CGFloat) -> NSAttributedString
-    func attributeStringWithAlignment(alignment: NSTextAlignment) -> NSAttributedString
+    func attributeStringWithFontScale(_ scale: CGFloat) -> NSAttributedString
+    func attributeStringWithAlignment(_ alignment: NSTextAlignment) -> NSAttributedString
 //    func attributeStringWithNeedShadow(needShadow: Bool, needStroke: Bool) -> NSAttributedString
 }
 
@@ -41,7 +41,7 @@ extension TextRetrievable {
         return CGPoint(x: 50.0 / 17.0 * fontSize * fontScale, y: 0)
     }
     
-    func textSizeWithConstraintSize(size: CGSize) -> CGSize {
+    func textSizeWithConstraintSize(_ size: CGSize) -> CGSize {
         
         
         let constraintSize = size
@@ -51,7 +51,7 @@ extension TextRetrievable {
         manager.addTextContainer(container)
         storage.addLayoutManager(manager)
         container.lineFragmentPadding = 0
-        let textSize = manager.usedRectForTextContainer(container).size
+        let textSize = manager.usedRect(for: container).size
         
         return textSize
 //        return attributeString.boundingRectWithSize(size, options: .UsesLineFragmentOrigin, context: nil).size
@@ -64,7 +64,7 @@ extension TextRetrievable {
         return CGRect(origin: origin, size: size)
     }
     
-    func textResultWithScale(scale: CGFloat, constraintSzie: CGSize) -> (CGPoint, CGSize, CGRect, NSAttributedString) {
+    func textResultWithScale(_ scale: CGFloat, constraintSzie: CGSize) -> (CGPoint, CGSize, CGRect, NSAttributedString) {
         let inset = CGPoint(x: 50.0 / 17.0 * fontSize * scale, y: 0)
         let str = attributeStringWithFontScale(scale)
         
@@ -75,7 +75,7 @@ extension TextRetrievable {
         manager.addTextContainer(container)
         storage.addLayoutManager(manager)
         container.lineFragmentPadding = 0
-        let textSize = manager.usedRectForTextContainer(container).size
+        let textSize = manager.usedRect(for: container).size
         
 //        let textSize = str.boundingRectWithSize(constraintSzie, options: .UsesLineFragmentOrigin, context: nil).size
         let origin = CGPoint(x: 0 - inset.x, y: 0 - inset.y)
@@ -85,7 +85,7 @@ extension TextRetrievable {
         return (inset, textSize, rect, str)
     }
     
-    func textResultWithAlignment(alignment: NSTextAlignment) -> NSAttributedString {
+    func textResultWithAlignment(_ alignment: NSTextAlignment) -> NSAttributedString {
         return attributeStringWithAlignment(alignment)
     }
     
@@ -109,18 +109,18 @@ protocol TextModifiable: TextRetrievable {
     var needShadow: Bool { get set}
     var needStroke: Bool { get set }
     
-    func resultWithText(text: String, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
+    func resultWithText(_ text: String, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
     
-    func resultWithFontFamily(family: String, fontName name: String, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
+    func resultWithFontFamily(_ family: String, fontName name: String, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
     
-    func resultWithLineSpacing(lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
+    func resultWithLineSpacing(_ lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize) -> (inset: CGPoint, size: CGSize)
 }
 
 
 // MARK: - TextModifiable, ViewModifiable
 extension CTAContainer: TextContainerVMProtocol {
     
-    var textElement: protocol<CTAElement, TextModifiable>? {
+    var textElement: (CTAElement & TextModifiable)? {
         guard let te = element as? CTATextElement else {
 //            fatalError("This Contaienr do not contain Text Element")
             return nil
@@ -129,14 +129,14 @@ extension CTAContainer: TextContainerVMProtocol {
         return te
     }
     
-    func updateWithText(text: String, constraintSize: CGSize) {
+    func updateWithText(_ text: String, constraintSize: CGSize) {
         
         guard let textElement = textElement else {
             fatalError("This Contaienr do not contain Text Element")
         }
         
         textElement.texts = text
-        let aText = text.isEmpty ? LocalStrings.EditTextPlaceHolder.description : text
+        let aText = text.isEmpty ? LocalStrings.editTextPlaceHolder.description : text
         let newResult = textElement.resultWithText(aText, constraintSize: constraintSize)
         let contentSize = CGSize(width: ceil(newResult.size.width), height: ceil(newResult.size.height))
         let inset = CGPoint(x: floor(newResult.inset.x), y: newResult.inset.y)
@@ -148,7 +148,7 @@ extension CTAContainer: TextContainerVMProtocol {
         
     }
     
-    func updateWithFontFamily(family: String, FontName name: String, constraintSize: CGSize) {
+    func updateWithFontFamily(_ family: String, FontName name: String, constraintSize: CGSize) {
         
         guard let textElement = textElement else {
             fatalError("This Contaienr do not contain Text Element")
@@ -167,7 +167,7 @@ extension CTAContainer: TextContainerVMProtocol {
         contentInset = inset
     }
     
-    func updateWithTextAlignment(alignment: NSTextAlignment) {
+    func updateWithTextAlignment(_ alignment: NSTextAlignment) {
         guard let textElement = textElement else {
             fatalError("This Contaienr do not contain Text Element")
         }
@@ -176,7 +176,7 @@ extension CTAContainer: TextContainerVMProtocol {
         
     }
     
-    func updateWithTextSpacing(lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize) {
+    func updateWithTextSpacing(_ lineSpacing: CGFloat, textSpacing: CGFloat, constraintSize: CGSize) {
         guard let textElement = textElement else {
             fatalError("This Contaienr do not contain Text Element")
         }
@@ -194,7 +194,7 @@ extension CTAContainer: TextContainerVMProtocol {
         contentInset = inset
     }
     
-    func updateWithColor(hex: String, alpha: CGFloat) {
+    func updateWithColor(_ hex: String, alpha: CGFloat) {
         
         guard let textElement = textElement else {
             fatalError("This Contaienr do not contain Text Element")
@@ -205,7 +205,7 @@ extension CTAContainer: TextContainerVMProtocol {
         
     }
     
-    func updatewithNeedShadow(needShadow: Bool, needStroke: Bool) {
+    func updatewithNeedShadow(_ needShadow: Bool, needStroke: Bool) {
         guard let textElement = textElement else {
             fatalError("This Contaienr do not contain Text Element")
         }

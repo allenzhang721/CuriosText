@@ -10,9 +10,9 @@ import UIKit
 
 class CTASelectorsFlowLayout: UICollectionViewFlowLayout {
     
-    private var needAnimationIndexPaths = [NSIndexPath]()
+    fileprivate var needAnimationIndexPaths = [IndexPath]()
     
-    override func prepareLayout() {
+    override func prepare() {
         
         itemSize = self.collectionView!.bounds.size
         
@@ -20,23 +20,23 @@ class CTASelectorsFlowLayout: UICollectionViewFlowLayout {
 //        scrollDirection = .Vertical
     }
     
-    override func prepareForCollectionViewUpdates(updateItems: [UICollectionViewUpdateItem]) {
+    override func prepare(forCollectionViewUpdates updateItems: [UICollectionViewUpdateItem]) {
         
-        super.prepareForCollectionViewUpdates(updateItems)
+        super.prepare(forCollectionViewUpdates: updateItems)
         
-        var indexPaths = [NSIndexPath]()
+        var indexPaths = [IndexPath]()
         
         for updateItem in updateItems {
             
             switch updateItem.updateAction {
                 
-            case .Insert:
+            case .insert:
                 indexPaths.append(updateItem.indexPathAfterUpdate!)
                 
-            case .Delete:
+            case .delete:
                 indexPaths.append(updateItem.indexPathBeforeUpdate!)
                 
-            case .Move:
+            case .move:
                 indexPaths.append(updateItem.indexPathBeforeUpdate!)
                 indexPaths.append(updateItem.indexPathAfterUpdate!)
                 
@@ -49,27 +49,27 @@ class CTASelectorsFlowLayout: UICollectionViewFlowLayout {
         needAnimationIndexPaths = indexPaths
     }
     
-    override func initialLayoutAttributesForAppearingItemAtIndexPath(itemIndexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
+    override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         
-        let attribute = layoutAttributesForItemAtIndexPath(itemIndexPath)
+        let attribute = layoutAttributesForItem(at: itemIndexPath)
         
-        if let i = needAnimationIndexPaths.indexOf(itemIndexPath) {
+        if let i = needAnimationIndexPaths.index(of: itemIndexPath) {
             
-            attribute?.transform = CGAffineTransformMakeTranslation(0, CGRectGetHeight(collectionView!.bounds))
+            attribute?.transform = CGAffineTransform(translationX: 0, y: collectionView!.bounds.height)
             attribute?.zIndex = Int.max
-            needAnimationIndexPaths.removeAtIndex(i)
+            needAnimationIndexPaths.remove(at: i)
         }
         
         return attribute
     }
     
-    override func finalLayoutAttributesForDisappearingItemAtIndexPath(itemIndexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
+    override func finalLayoutAttributesForDisappearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         
-        let attriubte = layoutAttributesForItemAtIndexPath(itemIndexPath)
+        let attriubte = layoutAttributesForItem(at: itemIndexPath)
         
-        if let i = needAnimationIndexPaths.indexOf(itemIndexPath) {
+        if let i = needAnimationIndexPaths.index(of: itemIndexPath) {
             attriubte?.zIndex = Int.min
-            needAnimationIndexPaths.removeAtIndex(i)
+            needAnimationIndexPaths.remove(at: i)
         }
         
         return attriubte

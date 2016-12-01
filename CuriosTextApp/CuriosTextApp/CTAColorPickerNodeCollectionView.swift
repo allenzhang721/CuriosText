@@ -10,15 +10,15 @@ import UIKit
 
 class CTAColorPickerNodeCollectionView: UIControl {
  
-    private(set) var selectedColor: UIColor?
+    fileprivate(set) var selectedColor: UIColor?
     var collectionView: UICollectionView!
     override init(frame: CGRect) {
         super.init(frame: frame)
         collectionView = UICollectionView(frame: bounds, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
-        collectionView.backgroundColor = UIColor.whiteColor()
+        collectionView.backgroundColor = UIColor.white
         collectionView.dataSource = self
         addSubview(collectionView)
     }
@@ -30,15 +30,15 @@ class CTAColorPickerNodeCollectionView: UIControl {
     func willBeganDisplay() {
         if let color = selectedColor {
             if let indexPath = CTAColorsManger.indexPathOfColor(color.toHex().0) {
-                collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: indexPath.section, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: false)
+                collectionView.scrollToItem(at: IndexPath(item: indexPath.section, section: 0), at: UICollectionViewScrollPosition.centeredHorizontally, animated: false)
             }
         }
     }
     
-    func selectColor(color: UIColor?) {
+    func selectColor(_ color: UIColor?) {
         selectedColor = color
         
-        for cell in collectionView.visibleCells() {
+        for cell in collectionView.visibleCells {
             if let colorPicker = cell.contentView.viewWithTag(1000) as? CTAColorPickerNodeView {
                 colorPicker.changedToColor(selectedColor)
             }
@@ -49,7 +49,7 @@ class CTAColorPickerNodeCollectionView: UIControl {
         super.layoutSubviews()
         collectionView.frame = bounds
         let layout = ColorPickerLayout()
-        layout.scrollDirection = .Horizontal
+        layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         
@@ -60,28 +60,28 @@ class CTAColorPickerNodeCollectionView: UIControl {
         collectionView.contentInset = UIEdgeInsets(top: 0, left: bounds.width * lastRatio / 2.0, bottom: 0, right: bounds.width * lastRatio / 2.0)
     }
     
-    func colorChanged(sender: CTAColorPickerNodeView) {
+    func colorChanged(_ sender: CTAColorPickerNodeView) {
         selectedColor = sender.selectedColor
         
-        for c in collectionView.visibleCells() {
+        for c in collectionView.visibleCells {
             if let colorPickerNodeView = c.viewWithTag(1000) as? CTAColorPickerNodeView {
                 colorPickerNodeView.changedToColor(sender.selectedColor)
             }
         }
         
-        sendActionsForControlEvents(.ValueChanged)
+        sendActions(for: .valueChanged)
     }
 }
 
 extension CTAColorPickerNodeCollectionView: UICollectionViewDataSource {
     
-    internal func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return CTAColorsManger.colorsCatagory.count
     }
     
-    internal func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         
         if cell.contentView.viewWithTag(1000) == nil {
             let colors: [UIColor] = {
@@ -92,11 +92,11 @@ extension CTAColorPickerNodeCollectionView: UICollectionViewDataSource {
                 return c
             }()
             let colorPickNodeView = CTAColorPickerNodeView(frame: cell.bounds, colors: colors)
-            colorPickNodeView.backgroundColor = UIColor.whiteColor()
+            colorPickNodeView.backgroundColor = UIColor.white
             colorPickNodeView.tag = 1000
-            colorPickNodeView.addTarget(self, action: #selector(CTAColorPickerNodeCollectionView.colorChanged(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            colorPickNodeView.addTarget(self, action: #selector(CTAColorPickerNodeCollectionView.colorChanged(_:)), for: UIControlEvents.touchUpInside)
             cell.contentView.addSubview(colorPickNodeView)
-            cell.backgroundColor = UIColor.whiteColor()
+            cell.backgroundColor = UIColor.white
         }
         
         if let colorPickerNodeView = cell.contentView.viewWithTag(1000) as? CTAColorPickerNodeView {
@@ -113,8 +113,8 @@ extension CTAColorPickerNodeCollectionView: UICollectionViewDataSource {
 
 // MARK: ---------- Layout ----------
 private class ColorPickerLayout: UICollectionViewFlowLayout {
-    override func targetContentOffsetForProposedContentOffset(
-        proposedContentOffset: CGPoint,
+    override func targetContentOffset(
+        forProposedContentOffset proposedContentOffset: CGPoint,
         withScrollingVelocity velocity: CGPoint)
         -> CGPoint {
             guard let collectionView = collectionView else {
@@ -122,15 +122,15 @@ private class ColorPickerLayout: UICollectionViewFlowLayout {
             }
             
             switch scrollDirection {
-            case .Horizontal:
+            case .horizontal:
                 
-                var adjustOffset = CGFloat.max
+                var adjustOffset = CGFloat.greatestFiniteMagnitude
                 let visualCenter = CGPoint(
-                    x: proposedContentOffset.x + CGRectGetWidth(collectionView.bounds) / 2.0,
-                    y: proposedContentOffset.y + CGRectGetHeight(collectionView.bounds) / 2.0)
+                    x: proposedContentOffset.x + collectionView.bounds.width / 2.0,
+                    y: proposedContentOffset.y + collectionView.bounds.height / 2.0)
                 let targetRect = CGRect(origin: proposedContentOffset, size: collectionView.bounds.size)
                 
-                guard let attributes = layoutAttributesForElementsInRect(targetRect) else {
+                guard let attributes = layoutAttributesForElements(in: targetRect) else {
                     return proposedContentOffset
                 }
                 
@@ -168,15 +168,15 @@ private class ColorPickerLayout: UICollectionViewFlowLayout {
                 return point
                 
                 
-            case .Vertical:
+            case .vertical:
                 
-                var adjustOffset = CGFloat.max
+                var adjustOffset = CGFloat.greatestFiniteMagnitude
                 let visualCenter = CGPoint(
-                    x: proposedContentOffset.x + CGRectGetWidth(collectionView.bounds) / 2.0,
-                    y: proposedContentOffset.y + CGRectGetHeight(collectionView.bounds) / 2.0)
+                    x: proposedContentOffset.x + collectionView.bounds.width / 2.0,
+                    y: proposedContentOffset.y + collectionView.bounds.height / 2.0)
                 let targetRect = CGRect(origin: proposedContentOffset, size: collectionView.bounds.size)
                 
-                guard let attributes = layoutAttributesForElementsInRect(targetRect) else {
+                guard let attributes = layoutAttributesForElements(in: targetRect) else {
                     return proposedContentOffset
                 }
                 

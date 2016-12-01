@@ -9,6 +9,30 @@
 import UIKit
 import Kingfisher
 import MJRefresh
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 enum CTAPublishType: String {
     case Posts, Likes
@@ -87,19 +111,19 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.initTopView()
         self.initCollectionView();
         self.initViewNavigateBar();
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer!.delegate = self
         self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
         if !self.isAddOber{
             if self.isLoginUser {
-                NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(newPublishHandler(_:)), name: "publishEditFile", object: nil)
+                NotificationCenter.default.addObserver(self, selector: #selector(newPublishHandler(_:)), name: NSNotification.Name(rawValue: "publishEditFile"), object: nil)
             }
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reNewView(_:)), name: "loginComplete", object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(reNewView(_:)), name: NSNotification.Name(rawValue: "loginComplete"), object: nil)
             self.isAddOber = true
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if self.isDisMis {
             self.loadLocalUserModel()
@@ -119,11 +143,11 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
             }
         }
         if self.isLoginUser {
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshView(_:)), name: "refreshSelf", object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(refreshView(_:)), name: NSNotification.Name(rawValue: "refreshSelf"), object: nil)
         }
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if self.isDisMis {
             if self.viewUser != nil {
@@ -142,10 +166,10 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.isDisMis = false
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if self.isLoginUser {
-            NSNotificationCenter.defaultCenter().removeObserver(self, name: "refreshSelf", object: nil)
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "refreshSelf"), object: nil)
         }
         self.isDisMis = true
     }
@@ -155,7 +179,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         // Dispose of any resources that can be recreated.
     }
     
-    func newPublishHandler(noti: NSNotification){
+    func newPublishHandler(_ noti: Notification){
         if self.isLoginUser{
             if self.isDisMis{
                 self.viewUserID = ""
@@ -167,11 +191,11 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         }
     }
     
-    func reNewView(noti: NSNotification){
+    func reNewView(_ noti: Notification){
         self.viewUserID = ""
     }
     
-    func refreshView(noti: NSNotification){
+    func refreshView(_ noti: Notification){
         if self.collectionView.contentOffset.y > self.scrollTop{
             self.collectionView.setContentOffset(CGPoint(x: 0, y: self.scrollTop), animated: true)
         }else {
@@ -237,7 +261,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     }
     
     func initCollectionView(){
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         let space:CGFloat = self.getCellSpace()
         let rect:CGRect = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height)
         self.collectionLayout = CTACollectionViewStickyFlowLayout()
@@ -250,27 +274,27 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.collectionView = UICollectionView(frame: rect, collectionViewLayout: self.collectionLayout)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        self.collectionView.registerClass(CTAPublishesCell.self, forCellWithReuseIdentifier: "ctaPublishesCell")
-        self.collectionView.registerClass(CTAPublishHeaderView.self, forSupplementaryViewOfKind:UICollectionElementKindSectionHeader, withReuseIdentifier: "ctaPublishHeader")
+        self.collectionView.register(CTAPublishesCell.self, forCellWithReuseIdentifier: "ctaPublishesCell")
+        self.collectionView.register(CTAPublishHeaderView.self, forSupplementaryViewOfKind:UICollectionElementKindSectionHeader, withReuseIdentifier: "ctaPublishHeader")
         self.collectionView.backgroundColor = CTAStyleKit.commonBackgroundColor
         self.view.addSubview(self.collectionView!);
         
         let freshIcon1:UIImage = UIImage(named: "fresh-icon-1")!
         
         self.headerFresh = MJRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(UserViewController.beginFresh))
-        self.headerFresh.setImages([freshIcon1], forState: .Idle)
-        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Pulling)
-        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Refreshing)
+        self.headerFresh.setImages([freshIcon1], for: .idle)
+        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, for: .pulling)
+        self.headerFresh.setImages(self.getLoadingImages(), duration:1.0, for: .refreshing)
         
-        self.headerFresh.lastUpdatedTimeLabel?.hidden = true
-        self.headerFresh.stateLabel?.hidden = true
+        self.headerFresh.lastUpdatedTimeLabel?.isHidden = true
+        self.headerFresh.stateLabel?.isHidden = true
         self.collectionView.mj_header = self.headerFresh
         
         self.footerFresh = MJRefreshAutoGifFooter(refreshingTarget: self, refreshingAction: #selector(UserViewController.loadLastData))
-        self.footerFresh.refreshingTitleHidden = true
-        self.footerFresh.setTitle("", forState: .Idle)
-        self.footerFresh.setTitle("", forState: .NoMoreData)
-        self.footerFresh.setImages(self.getLoadingImages(), duration:1.0, forState: .Refreshing)
+        self.footerFresh.isRefreshingTitleHidden = true
+        self.footerFresh.setTitle("", for: .idle)
+        self.footerFresh.setTitle("", for: .noMoreData)
+        self.footerFresh.setImages(self.getLoadingImages(), duration:1.0, for: .refreshing)
         self.collectionView.mj_footer = footerFresh;
     }
     
@@ -283,12 +307,12 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     }
     
     func initTopView(){
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         let maxWidth = bounds.width - 80
         
-        self.topView = UIView(frame: CGRectMake(0, 0, bounds.width, 30))
+        self.topView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: 30))
         self.topView.backgroundColor = CTAStyleKit.commonBackgroundColor
-        self.userInfoView = UIView(frame: CGRectMake(0, 0, bounds.width, 100))
+        self.userInfoView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: 100))
         self.userIconImage = UIImageView(frame: CGRect(x: (bounds.size.width-60)/2, y: 0, width: 60*self.getHorRate(), height: 60*self.getHorRate()));
         self.cropImageCircle(self.userIconImage)
         self.userIconImage.image = UIImage(named: "default-usericon")
@@ -296,46 +320,46 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         
         self.topNikeNameY = self.userIconImage.frame.origin.y + self.userIconImage.frame.height+10
         self.userNicknameLabel = UILabel(frame: CGRect(x: (bounds.size.width-maxWidth)/2, y: self.topNikeNameY, width: maxWidth, height: 28))
-        self.userNicknameLabel.font = UIFont.boldSystemFontOfSize(18)
+        self.userNicknameLabel.font = UIFont.boldSystemFont(ofSize: 18)
         self.userNicknameLabel.textColor = CTAStyleKit.normalColor
-        self.userNicknameLabel.textAlignment = .Center
+        self.userNicknameLabel.textAlignment = .center
         self.topView.addSubview(self.userNicknameLabel)
         
         self.userDescLabel = UILabel(frame: CGRect(x: (bounds.size.width-maxWidth)/2, y: self.userIconImage.frame.origin.y + self.userIconImage.frame.height+45, width: maxWidth, height: 140))
         self.userDescLabel.numberOfLines = 10
-        self.userDescLabel.font = UIFont.systemFontOfSize(13)
+        self.userDescLabel.font = UIFont.systemFont(ofSize: 13)
         
         self.userDescLabel.textColor = CTAStyleKit.labelShowColor
         self.userDescLabel.text = " "
-        self.userDescLabel.textAlignment = .Center
+        self.userDescLabel.textAlignment = .center
         self.userInfoView.addSubview(self.userDescLabel)
         self.topView.addSubview(self.userInfoView)
         
-        self.userFollowView = UIView(frame: CGRectMake(0, 0, bounds.width, 80))
+        self.userFollowView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: 80))
         let lineImageView = UIImageView.init(frame: CGRect.init(x: bounds.width/2, y: 5, width: 1, height: 14))
         lineImageView.image = UIImage.init(named: "follow-line")
         self.userFollowView.addSubview(lineImageView)
-        let followView = UIView(frame: CGRectMake(0, 0, bounds.width/2, 25))
-        followView.backgroundColor = UIColor.clearColor()
+        let followView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width/2, height: 25))
+        followView.backgroundColor = UIColor.clear
         self.followLabel = UILabel()
-        self.followLabel.font = UIFont.systemFontOfSize(13)
+        self.followLabel.font = UIFont.systemFont(ofSize: 13)
         self.followLabel.textColor = CTAStyleKit.labelShowColor
         self.followLabel.text = NSLocalizedString("FollowLabel", comment: "")
         followView.addSubview(followLabel)
         self.followCountLabel = UILabel()
-        self.followCountLabel.font = UIFont.systemFontOfSize(13)
+        self.followCountLabel.font = UIFont.systemFont(ofSize: 13)
         self.followCountLabel.textColor = CTAStyleKit.labelShowColor
         self.followCountLabel.text = "0"
         followView.addSubview(self.followCountLabel)
         self.userFollowView.addSubview(followView)
-        followView.userInteractionEnabled = true
+        followView.isUserInteractionEnabled = true
         let followTap = UITapGestureRecognizer(target: self, action: #selector(followViewClickClick(_:)))
         followView.addGestureRecognizer(followTap)
         
-        let beFollowView = UIView(frame: CGRectMake(bounds.width/2, 0, bounds.width/2, 25))
-        beFollowView.backgroundColor = UIColor.clearColor()
+        let beFollowView = UIView(frame: CGRect(x: bounds.width/2, y: 0, width: bounds.width/2, height: 25))
+        beFollowView.backgroundColor = UIColor.clear
         self.beFollowLabel = UILabel()
-        self.beFollowLabel.font = UIFont.systemFontOfSize(13)
+        self.beFollowLabel.font = UIFont.systemFont(ofSize: 13)
         self.beFollowLabel.textColor = CTAStyleKit.labelShowColor
         self.beFollowLabel.text = NSLocalizedString("BeFollowLabel", comment: "")
         beFollowView.addSubview(beFollowLabel)
@@ -343,38 +367,38 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         beFollowView.addGestureRecognizer(beFollowTap)
         
         self.beFollowCountLabel = UILabel()
-        self.beFollowCountLabel.font = UIFont.systemFontOfSize(13)
+        self.beFollowCountLabel.font = UIFont.systemFont(ofSize: 13)
         self.beFollowCountLabel.textColor = CTAStyleKit.labelShowColor
         self.beFollowCountLabel.text = "0"
         beFollowView.addSubview(self.beFollowCountLabel)
         self.userFollowView.addSubview(beFollowView)
-        self.followButton = UIButton(frame: CGRectMake((bounds.width-90)/2, 35, 90, 30))
-        self.followButton.setBackgroundImage(UIImage(named: "follow_bg"), forState: .Normal)
-        self.followButton.setTitle(NSLocalizedString("FollowButtonLabel", comment: ""), forState: .Normal)
-        self.followButton.setTitleColor(CTAStyleKit.selectedColor, forState: .Normal)
-        self.followButton.titleLabel?.font = UIFont.systemFontOfSize(13)
+        self.followButton = UIButton(frame: CGRect(x: (bounds.width-90)/2, y: 35, width: 90, height: 30))
+        self.followButton.setBackgroundImage(UIImage(named: "follow_bg"), for: UIControlState())
+        self.followButton.setTitle(NSLocalizedString("FollowButtonLabel", comment: ""), for: UIControlState())
+        self.followButton.setTitleColor(CTAStyleKit.selectedColor, for: UIControlState())
+        self.followButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         if self.isLoginUser {
-            self.userFollowView.frame = CGRectMake(0, 0, bounds.width, 35)
+            self.userFollowView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 35)
         }else if self.loginUser != nil && self.loginUser?.userID == self.viewUser?.userID {
-            self.userFollowView.frame = CGRectMake(0, 0, bounds.width, 35)
+            self.userFollowView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 35)
         }else {
             self.userFollowView.addSubview(self.followButton)
-            self.followButton.addTarget(self, action: #selector(followButtonClick(_:)), forControlEvents: .TouchUpInside)
+            self.followButton.addTarget(self, action: #selector(followButtonClick(_:)), for: .touchUpInside)
         }
         self.topView.addSubview(self.userFollowView)
     
         
-        self.userPostButton = UIButton(frame: CGRectMake(0, 0, (bounds.width-20)/2, 40))
+        self.userPostButton = UIButton(frame: CGRect(x: 0, y: 0, width: (bounds.width-20)/2, height: 40))
         self.userPostButton.center = CGPoint(x: bounds.width/4, y: 20)
-        self.userPostButton.titleLabel?.font = UIFont.systemFontOfSize(16)
-        self.userPostButton.setTitle(NSLocalizedString("PostsButtonLabel", comment: ""), forState: .Normal)
-        self.userPostButton.setTitleColor(CTAStyleKit.normalColor, forState: .Normal)
-        self.userLikeButton = UIButton(frame: CGRectMake(0, 0, (bounds.width-20)/2, 40))
+        self.userPostButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        self.userPostButton.setTitle(NSLocalizedString("PostsButtonLabel", comment: ""), for: UIControlState())
+        self.userPostButton.setTitleColor(CTAStyleKit.normalColor, for: UIControlState())
+        self.userLikeButton = UIButton(frame: CGRect(x: 0, y: 0, width: (bounds.width-20)/2, height: 40))
         self.userLikeButton.center = CGPoint(x: bounds.width*3/4, y: 20)
-        self.userLikeButton.titleLabel?.font = UIFont.systemFontOfSize(16)
-        self.userLikeButton.setTitle(NSLocalizedString("LikesButtonLabel", comment: ""), forState: .Normal)
-        self.userLikeButton.setTitleColor(CTAStyleKit.normalColor, forState: .Normal)
-        self.collectionControllerView = UIView(frame: CGRectMake(0, 0, bounds.width, 40))
+        self.userLikeButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        self.userLikeButton.setTitle(NSLocalizedString("LikesButtonLabel", comment: ""), for: UIControlState())
+        self.userLikeButton.setTitleColor(CTAStyleKit.normalColor, for: UIControlState())
+        self.collectionControllerView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: 40))
         self.collectionControllerView.addSubview(self.userPostButton)
         self.collectionControllerView.addSubview(self.userLikeButton)
         
@@ -387,23 +411,23 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.collectionControllerView.addSubview(textLine)
         self.topView.addSubview(self.collectionControllerView)
         
-        self.userPostButton.addTarget(self, action: #selector(postsButtonClick(_:)), forControlEvents: .TouchUpInside)
-        self.userLikeButton.addTarget(self, action: #selector(likesButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.userPostButton.addTarget(self, action: #selector(postsButtonClick(_:)), for: .touchUpInside)
+        self.userLikeButton.addTarget(self, action: #selector(likesButtonClick(_:)), for: .touchUpInside)
     }
     
     func initViewNavigateBar(){
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         self.settingButton = UIButton(frame: CGRect(x: bounds.width - 40, y: 22, width: 40, height: 40))
-        self.settingButton.setImage(UIImage(named: "setting-button"), forState: .Normal)
-        self.settingButton.setImage(UIImage(named: "setting-selected-button"), forState: .Highlighted)
+        self.settingButton.setImage(UIImage(named: "setting-button"), for: UIControlState())
+        self.settingButton.setImage(UIImage(named: "setting-selected-button"), for: .highlighted)
         self.backButton = UIButton(frame: CGRect(x: 0, y: 22, width: 40, height: 40))
-        self.backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
-        self.backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
+        self.backButton.setImage(UIImage(named: "back-button"), for: UIControlState())
+        self.backButton.setImage(UIImage(named: "back-selected-button"), for: .highlighted)
         
         self.view.addSubview(self.settingButton)
         self.view.addSubview(self.backButton)
-        self.settingButton.addTarget(self, action: #selector(UserViewController.settingButtonClick(_:)), forControlEvents: .TouchUpInside)
-        self.backButton.addTarget(self, action: #selector(UserViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
+        self.settingButton.addTarget(self, action: #selector(UserViewController.settingButtonClick(_:)), for: .touchUpInside)
+        self.backButton.addTarget(self, action: #selector(UserViewController.backButtonClick(_:)), for: .touchUpInside)
         
         let timeView = UIView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: 20))
         timeView.backgroundColor = CTAStyleKit.commonBackgroundColor
@@ -412,19 +436,19 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     
     func setNavigateButton(){
         if self.isLoginUser {
-            self.settingButton.hidden = false
-            self.backButton.hidden = true
+            self.settingButton.isHidden = false
+            self.backButton.isHidden = true
         }else {
-            self.settingButton.hidden = true
-            self.backButton.hidden = false
+            self.settingButton.isHidden = true
+            self.backButton.isHidden = false
         }
         self.userNicknameLabel.text = ""
-        self.userIconImage.frame.origin.x = (UIScreen.mainScreen().bounds.width - self.userIconImage.frame.width)/2
+        self.userIconImage.frame.origin.x = (UIScreen.main.bounds.width - self.userIconImage.frame.width)/2
     }
     
     func setUIView(){
         self.setNavigateButton()
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         let maxWidth = bounds.width - 80
         self.userNicknameLabel.text = self.viewUser?.nickName
         self.userDescLabel.text = self.viewUser?.userDesc
@@ -435,24 +459,24 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.setFollowLabelPosition()
     }
     
-    func setUserIcon(iconPath:String){
+    func setUserIcon(_ iconPath:String){
         var defaultImg = UIImage(named: "default-usericon")
         if self.userIconImage.image != nil {
             defaultImg = self.userIconImage.image
         }
         let imagePath = CTAFilePath.userFilePath+iconPath
-        let imageURL = NSURL(string: imagePath)!
-        self.userIconImage.kf_showIndicatorWhenLoading = true
-        self.userIconImage.kf_setImageWithURL(imageURL, placeholderImage: defaultImg, optionsInfo: [.Transition(ImageTransition.Fade(1))]) { (image, error, cacheType, imageURL) -> () in
+        let imageURL = URL(string: imagePath)!
+//        self.userIconImage.kf_showIndicatorWhenLoading = true
+        self.userIconImage.kf.setImage(with: imageURL, placeholder: defaultImg, options: [.transition(ImageTransition.fade(1))]) { (image, error, cacheType, imageURL) -> () in
             if error != nil {
                 self.userIconImage.image = UIImage(named: "default-usericon")
             }
-            self.userIconImage.kf_showIndicatorWhenLoading = false
+//            self.userIconImage.kf_showIndicatorWhenLoading = false
         }
     }
     
     func resetView() {
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         let maxWidth = bounds.width - 80
         self.userNicknameLabel.text = ""
         self.userDescLabel.text = ""
@@ -496,7 +520,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     }
     
     func setFollowLabelPosition(){
-        let bounds = UIScreen.mainScreen().bounds
+        let bounds = UIScreen.main.bounds
         
         self.followCountLabel.sizeToFit()
         self.followCountLabel.frame.origin.x = bounds.width/2 - 14 - self.followCountLabel.frame.width
@@ -518,15 +542,15 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     func changeButtonStatus(){
         switch self.publishType {
         case .Posts:
-            self.userPostButton.setTitleColor(CTAStyleKit.selectedColor, forState: .Normal)
-            self.userLikeButton.setTitleColor(CTAStyleKit.normalColor, forState: .Normal)
+            self.userPostButton.setTitleColor(CTAStyleKit.selectedColor, for: UIControlState())
+            self.userLikeButton.setTitleColor(CTAStyleKit.normalColor, for: UIControlState())
         case .Likes:
-            self.userPostButton.setTitleColor(CTAStyleKit.normalColor, forState: .Normal)
-            self.userLikeButton.setTitleColor(CTAStyleKit.selectedColor, forState: .Normal)
+            self.userPostButton.setTitleColor(CTAStyleKit.normalColor, for: UIControlState())
+            self.userLikeButton.setTitleColor(CTAStyleKit.selectedColor, for: UIControlState())
         }
     }
     
-    func postsButtonClick(sender: UIButton){
+    func postsButtonClick(_ sender: UIButton){
         if self.publishType != .Posts{
             self.publishType = .Posts
             self.changeButtonStatus()
@@ -539,7 +563,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         }
     }
     
-    func likesButtonClick(sender: UIButton){
+    func likesButtonClick(_ sender: UIButton){
         if self.publishType != .Likes{
             self.publishType = .Likes
             self.changeButtonStatus()
@@ -560,7 +584,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.collectionView.contentOffset.y = offY
     }
     
-    func settingButtonClick(sender: UIButton){
+    func settingButtonClick(_ sender: UIButton){
         if self.setting == nil {
             self.setting = CTASettingViewController()
         }
@@ -569,47 +593,47 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.navigationController?.pushViewController(self.setting!, animated: true)
     }
     
-    func backButtonClick(sender: UIButton){
-        self.navigationController?.popViewControllerAnimated(true)
+    func backButtonClick(_ sender: UIButton){
+        self.navigationController?.popViewController(animated: true)
     }
     
-    func followViewClickClick(sender: UIPanGestureRecognizer){
+    func followViewClickClick(_ sender: UIPanGestureRecognizer){
         self.loadUserDetail()
         let userID = self.viewUserID
         let vc = Moduler.module_userList(userID, type: .Followings, delegate: self)
         let navi = UINavigationController(rootViewController: vc)
         let ani = CTAScaleTransition.getInstance()
-        let bound = UIScreen.mainScreen().bounds
+        let bound = UIScreen.main.bounds
         
-        let rectPoint = self.followLabel.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+        let rectPoint = self.followLabel.convert(CGPoint(x: 0, y: 0), to: self.view)
         let labelW = self.followCountLabel.frame.width + self.followLabel.frame.width
         let rect = CGRect(x: rectPoint.x, y: rectPoint.y, width: labelW, height: self.followCountLabel.frame.height)
         ani.fromRect = self.getViewFromRect(rect, viewRect: bound)
         navi.transitioningDelegate = ani
-        navi.modalPresentationStyle = .Custom
-        self.presentViewController(navi, animated: true, completion: {
+        navi.modalPresentationStyle = .custom
+        self.present(navi, animated: true, completion: {
         })
     }
     
-    func beFollowViewClick(ender: UIPanGestureRecognizer){
+    func beFollowViewClick(_ ender: UIPanGestureRecognizer){
         self.loadUserDetail()
         let userID = self.viewUserID
         let vc = Moduler.module_userList(userID, type: .Followers, delegate: self)
         let navi = UINavigationController(rootViewController: vc)
         let ani = CTAScaleTransition.getInstance()
-        let bound = UIScreen.mainScreen().bounds
-        let rectPoint = self.beFollowLabel.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+        let bound = UIScreen.main.bounds
+        let rectPoint = self.beFollowLabel.convert(CGPoint(x: 0, y: 0), to: self.view)
         let labelW = self.beFollowCountLabel.frame.width + self.beFollowLabel.frame.width
         let rect = CGRect(x: rectPoint.x, y: rectPoint.y, width: labelW, height: self.beFollowCountLabel.frame.height)
         ani.fromRect = self.getViewFromRect(rect, viewRect: bound)
         navi.transitioningDelegate = ani
-        navi.modalPresentationStyle = .Custom
-        self.presentViewController(navi, animated: true, completion: {
+        navi.modalPresentationStyle = .custom
+        self.present(navi, animated: true, completion: {
             
         })
     }
     
-    func getViewFromRect(smallRect:CGRect, viewRect:CGRect) -> CGRect{
+    func getViewFromRect(_ smallRect:CGRect, viewRect:CGRect) -> CGRect{
         let smallW = smallRect.width
         let smallH = smallRect.height
         let viewW = viewRect.width
@@ -628,7 +652,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         return newRect
     }
     
-    func followButtonClick(sender: UIButton){
+    func followButtonClick(_ sender: UIButton){
         if self.loginUser != nil{
             if self.viewUser != nil{
                 let relationType:Int = self.viewUser!.relationType
@@ -637,9 +661,9 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
                     self.followUser()
                 case 1, 5:
                     var alertArray:Array<[String: AnyObject]> = []
-                    alertArray.append(["title":NSLocalizedString("UnFollowLabel", comment: ""), "style": "Destructive"])
+                    alertArray.append(["title":NSLocalizedString("UnFollowLabel", comment: "") as AnyObject, "style": "Destructive" as AnyObject])
                     let alertTile = NSLocalizedString("ConfirmUnFollowLabel", comment: "")+self.viewUser!.nickName+"?"
-                    self.showSheetAlert(alertTile, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.Cancel.description) { (index) -> Void in
+                    self.showSheetAlert(alertTile, okAlertArray: alertArray, cancelAlertLabel: LocalStrings.cancel.description) { (index) -> Void in
                         if index != -1{
                             self.unfollowUser()
                         }
@@ -701,7 +725,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
     }
     
     
-    func loadUserPublishes(start:Int, size:Int = 30){
+    func loadUserPublishes(_ start:Int, size:Int = 30){
         if self.isLoading{
             self.freshComplete();
             return
@@ -720,7 +744,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         }
     }
     
-    func loadPublishesComplete(info: CTADomainListInfo, size:Int, publishType:CTAPublishType){
+    func loadPublishesComplete(_ info: CTADomainListInfo, size:Int, publishType:CTAPublishType){
         self.isLoading = false
         if self.publishType != publishType{
             return
@@ -743,8 +767,8 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
                                 }else {
                                     let index = self.getPublishIndex(newmodel.publishID, publishArray: self.publishModelArray)
                                     if index != -1{
-                                        self.publishModelArray.insert(newmodel, atIndex: index)
-                                        self.publishModelArray.removeAtIndex(index+1)
+                                        self.publishModelArray.insert(newmodel, at: index)
+                                        self.publishModelArray.remove(at: index+1)
                                     }
                                 }
                             }
@@ -783,7 +807,7 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
         self.freshComplete();
     }
     
-    func loadMoreModelArray(modelArray:Array<AnyObject>){
+    func loadMoreModelArray(_ modelArray:Array<AnyObject>){
         for i in 0..<modelArray.count{
             let publishModel = modelArray[i] as! CTAPublishModel
             if !self.checkPublishModelIsHave(publishModel, publishArray: self.publishModelArray){
@@ -823,9 +847,9 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
             self.followCountLabel.text = "0"
             self.beFollowCountLabel.text = "0"
             self.setFollowLabelPosition()
-            self.followButton.setBackgroundImage(UIImage(named: "follow_bg"), forState: .Normal)
-            self.followButton.setTitle(NSLocalizedString("FollowButtonLabel", comment: ""), forState: .Normal)
-            self.followButton.setTitleColor(CTAStyleKit.selectedColor, forState: .Normal)
+            self.followButton.setBackgroundImage(UIImage(named: "follow_bg"), for: UIControlState())
+            self.followButton.setTitle(NSLocalizedString("FollowButtonLabel", comment: ""), for: UIControlState())
+            self.followButton.setTitleColor(CTAStyleKit.selectedColor, for: UIControlState())
         }else {
             let followCount = self.viewUser!.followCount
             let beFollowCount = self.viewUser!.beFollowCount
@@ -869,10 +893,10 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
             isHidden = true
             buttonLabel = ""
         }
-        self.followButton.hidden = isHidden
-        self.followButton.setTitle(buttonLabel, forState: .Normal)
-        self.followButton.setBackgroundImage(buttonBg, forState: .Normal)
-        self.followButton.setTitleColor(buttonLabelColor, forState: .Normal)
+        self.followButton.isHidden = isHidden
+        self.followButton.setTitle(buttonLabel, for: UIControlState())
+        self.followButton.setBackgroundImage(buttonBg, for: UIControlState())
+        self.followButton.setTitleColor(buttonLabelColor, for: UIControlState())
     }
     /*
     // MARK: - Navigation
@@ -888,19 +912,19 @@ class UserViewController: UIViewController, CTAImageControllerProtocol, CTAPubli
 extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     
     //collection view delegate
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return self.publishModelArray.count;
     }
     
-    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        let headerView = self.collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "ctaPublishHeader", forIndexPath: indexPath)
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerView = self.collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "ctaPublishHeader", for: indexPath)
         headerView.addSubview(self.topView)
         
         return headerView
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
-        let publishesCell:CTAPublishesCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("ctaPublishesCell", forIndexPath: indexPath) as! CTAPublishesCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
+        let publishesCell:CTAPublishesCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "ctaPublishesCell", for: indexPath) as! CTAPublishesCell
         let index = indexPath.row
         if index < self.publishModelArray.count{
             let publihshModel = self.publishModelArray[index]
@@ -915,23 +939,23 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return publishesCell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
-        let publishesCell = self.collectionView.cellForItemAtIndexPath(indexPath)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+        let publishesCell = self.collectionView.cellForItem(at: indexPath)
         let index = indexPath.row
         self.selectedPublishID = ""
         if index < self.publishModelArray.count && index > -1{
             self.selectedPublishID = self.publishModelArray[index].publishID
         }
         if self.selectedPublishID != "" {
-            let bounds = UIScreen.mainScreen().bounds
+            let bounds = UIScreen.main.bounds
             var cellFrame:CGRect!
             var transitionView:UIView!
             if publishesCell != nil {
                 cellFrame = publishesCell!.frame
-                let zorePt = publishesCell!.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+                let zorePt = publishesCell!.convert(CGPoint(x: 0, y: 0), to: self.view)
                 cellFrame.origin.y = zorePt.y
                 cellFrame.origin.x = zorePt.x
-                transitionView = publishesCell!.snapshotViewAfterScreenUpdates(false)
+                transitionView = publishesCell!.snapshotView(afterScreenUpdates: false)
             }else {
                 cellFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
                 transitionView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
@@ -954,13 +978,13 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let vc = Moduler.module_publishDetail(self.selectedPublishID, publishArray: self.publishModelArray, delegate: self, type: detailType, viewUserID: self.viewUser!.userID)
             let navi = UINavigationController(rootViewController: vc)
             navi.transitioningDelegate = ani
-            navi.modalPresentationStyle = .Custom
-            self.presentViewController(navi, animated: true, completion: {
+            navi.modalPresentationStyle = .custom
+            self.present(navi, animated: true, completion: {
             })
         }
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offY = self.collectionView.contentOffset.y
         if offY > self.collectionLayout.stickyHeight{
             self.collectionLayout.isSticky = true
@@ -972,7 +996,7 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
     }
     
-    func changeHeaderAlpha(offY:CGFloat, totalH:CGFloat){
+    func changeHeaderAlpha(_ offY:CGFloat, totalH:CGFloat){
         let nikeNameYB = self.topNikeNameY + self.userInfoView.frame.origin.y
         let nikeNameYE = totalH + 28
         if offY < 0{
@@ -990,22 +1014,22 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
 extension UserViewController: UIGestureRecognizerDelegate{
     
-    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
 }
 
 extension UserViewController: UserListViewDelegate{
     
-    func getUserListDismisRect(type:UserListType) -> CGRect?{
-        let bound = UIScreen.mainScreen().bounds
+    func getUserListDismisRect(_ type:UserListType) -> CGRect?{
+        let bound = UIScreen.main.bounds
         var rect:CGRect?
         if type == .Followers{
-            let rectPoint = self.beFollowLabel.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+            let rectPoint = self.beFollowLabel.convert(CGPoint(x: 0, y: 0), to: self.view)
             let labelW = self.beFollowCountLabel.frame.width + self.beFollowLabel.frame.width
             rect = CGRect(x: rectPoint.x, y: rectPoint.y, width: labelW, height: self.beFollowCountLabel.frame.height)
         }else if type == .Followings{
-            let rectPoint = self.followLabel.convertPoint(CGPoint(x: 0, y: 0), toView: self.view)
+            let rectPoint = self.followLabel.convert(CGPoint(x: 0, y: 0), to: self.view)
             let labelW = self.followCountLabel.frame.width + self.followLabel.frame.width
             rect = CGRect(x: rectPoint.x, y: rectPoint.y, width: labelW, height: self.followCountLabel.frame.height)
         }
@@ -1016,7 +1040,7 @@ extension UserViewController: UserListViewDelegate{
         }
     }
     
-    func disUserListMisComplete(type:UserListType){
+    func disUserListMisComplete(_ type:UserListType){
         self.isDisMis = true
         self.viewWillAppear(true)
         self.viewDidAppear(true)
@@ -1026,7 +1050,7 @@ extension UserViewController: UserListViewDelegate{
 extension UserViewController: PublishDetailViewDelegate{
 
     func transitionComplete() {
-        let cells = self.collectionView.visibleCells()
+        let cells = self.collectionView.visibleCells
         for i in 0..<cells.count{
             let cell = cells[i]
             cell.alpha = 1
@@ -1036,12 +1060,12 @@ extension UserViewController: PublishDetailViewDelegate{
         self.viewDidAppear(true)
     }
     
-    func getPublishCell(selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect?{
+    func getPublishCell(_ selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect?{
         let cellFrame:CGRect = self.saveNewPublishArray(selectedID, publishArray: publishArray)
         return cellFrame;
     }
     
-    func saveNewPublishArray(selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect{
+    func saveNewPublishArray(_ selectedID:String, publishArray:Array<CTAPublishModel>) -> CGRect{
         var isChange:Bool = false
         if publishArray.count == self.publishModelArray.count {
             for i in 0..<publishArray.count{
@@ -1053,8 +1077,8 @@ extension UserViewController: PublishDetailViewDelegate{
                 }else {
                     let index = self.getPublishIndex(newModel.publishID, publishArray: self.publishModelArray)
                     if index != -1{
-                        self.publishModelArray.insert(newModel, atIndex: index)
-                        self.publishModelArray.removeAtIndex(index+1)
+                        self.publishModelArray.insert(newModel, at: index)
+                        self.publishModelArray.remove(at: index+1)
                     }
                 }
             }
@@ -1108,7 +1132,7 @@ extension UserViewController: PublishDetailViewDelegate{
 class CTAPublishTransitionCell: UIView{
     var publishID:String = "";
     
-    func addCellView(cellView:UIView, cellPublishID:String){
+    func addCellView(_ cellView:UIView, cellPublishID:String){
         self.addSubview(cellView)
         self.publishID = cellPublishID
     }
@@ -1127,15 +1151,15 @@ class CTACollectionViewStickyFlowLayout: UICollectionViewFlowLayout {
     
     var isHold:Bool = false
     
-    override func collectionViewContentSize() -> CGSize{
-        let superSize = super.collectionViewContentSize()
+    override var collectionViewContentSize : CGSize{
+        let superSize = super.collectionViewContentSize
         if self.isHold {
             let offY = self.collectionView?.contentOffset.y
             if offY > 0{
                 let viewFrame = self.collectionView!.frame
                 let maxHeight = viewFrame.height + stickyHeight
                 if superSize.height < maxHeight {
-                    let newSize = CGSizeMake(superSize.width, maxHeight)
+                    let newSize = CGSize(width: superSize.width, height: maxHeight)
                     return newSize
                 }else {
                     return superSize
@@ -1150,57 +1174,57 @@ class CTACollectionViewStickyFlowLayout: UICollectionViewFlowLayout {
         
     }
     
-    override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool{
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool{
         return true
     }
     
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]?{
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]?{
         
-        var answer = super.layoutAttributesForElementsInRect(rect)
+        var answer = super.layoutAttributesForElements(in: rect)
         if self.isSticky{
             let missingSections:NSMutableIndexSet = NSMutableIndexSet()
             for var i in 0..<answer!.count{
                 let layoutAttributes = answer![i]
-                if layoutAttributes.representedElementCategory == .Cell {
-                    missingSections.addIndex(layoutAttributes.indexPath.section)
+                if layoutAttributes.representedElementCategory == .cell {
+                    missingSections.add(layoutAttributes.indexPath.section)
                 }
                 if layoutAttributes.representedElementKind == UICollectionElementKindSectionHeader{
-                    answer?.removeAtIndex(i)
+                    answer?.remove(at: i)
                     i=i-1
                 }
             }
             
             if missingSections.count == 0 {
-                missingSections.addIndex(0)
+                missingSections.add(0)
             }
-            missingSections.enumerateIndexesUsingBlock { (idx, stop) in
-                let indexPath = NSIndexPath(forItem: 0, inSection: idx)
-                let layoutAttributes = self.layoutAttributesForSupplementaryViewOfKind(UICollectionElementKindSectionHeader, atIndexPath: indexPath)
-                answer?.append(layoutAttributes!)
-            }
+          missingSections.enumerate({ (idx, stop) in
+            let indexPath = IndexPath(item: 0, section: idx)
+            let layoutAttributes = self.layoutAttributesForSupplementaryView(ofKind: UICollectionElementKindSectionHeader, at: indexPath)
+            answer?.append(layoutAttributes!)
+          })
         }
         return answer;
     }
     
-    override func layoutAttributesForSupplementaryViewOfKind(elementKind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes?{
-        let attributes = super.layoutAttributesForSupplementaryViewOfKind(elementKind, atIndexPath: indexPath)
+    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes?{
+        let attributes = super.layoutAttributesForSupplementaryView(ofKind: elementKind, at: indexPath)
         if self.isSticky{
             if elementKind == UICollectionElementKindSectionHeader {
                 let cv = self.collectionView!;
                 let contentOffset = cv.contentOffset;
-                var nextHeaderOrigin = CGPointMake(CGFloat(Float.infinity), CGFloat(Float.infinity))
+                var nextHeaderOrigin = CGPoint(x: CGFloat(Float.infinity), y: CGFloat(Float.infinity))
                 
-                if (indexPath.section+1 < cv.numberOfSections()) {
-                    let nextHeaderAttributes =  super.layoutAttributesForSupplementaryViewOfKind(elementKind, atIndexPath: NSIndexPath(forItem: 0, inSection: indexPath.section+1))
+                if (indexPath.section+1 < cv.numberOfSections) {
+                    let nextHeaderAttributes =  super.layoutAttributesForSupplementaryView(ofKind: elementKind, at: IndexPath(item: 0, section: indexPath.section+1))
                     nextHeaderOrigin = nextHeaderAttributes!.frame.origin;
                 }
                 
                 var frame = attributes!.frame;
-                if (self.scrollDirection == .Vertical) {
-                    frame.origin.y = min(max(contentOffset.y, frame.origin.y), nextHeaderOrigin.y - CGRectGetHeight(frame)) - stickyHeight;
+                if (self.scrollDirection == .vertical) {
+                    frame.origin.y = min(max(contentOffset.y, frame.origin.y), nextHeaderOrigin.y - frame.height) - stickyHeight;
                 }
                 else { // UICollectionViewScrollDirectionHorizontal
-                    frame.origin.x = min(max(contentOffset.x, frame.origin.x), nextHeaderOrigin.x - CGRectGetWidth(frame));
+                    frame.origin.x = min(max(contentOffset.x, frame.origin.x), nextHeaderOrigin.x - frame.width);
                 }
                 attributes!.zIndex = 1024;
                 attributes!.frame = frame;
@@ -1209,13 +1233,13 @@ class CTACollectionViewStickyFlowLayout: UICollectionViewFlowLayout {
         return attributes;
     }
     
-    override func initialLayoutAttributesForAppearingSupplementaryElementOfKind(elementKind: String, atIndexPath elementIndexPath: NSIndexPath) -> UICollectionViewLayoutAttributes?{
-        let attributes = self.layoutAttributesForSupplementaryViewOfKind(elementKind, atIndexPath: elementIndexPath)
+    override func initialLayoutAttributesForAppearingSupplementaryElement(ofKind elementKind: String, at elementIndexPath: IndexPath) -> UICollectionViewLayoutAttributes?{
+        let attributes = self.layoutAttributesForSupplementaryView(ofKind: elementKind, at: elementIndexPath)
         return attributes
     }
     
-    override func finalLayoutAttributesForDisappearingSupplementaryElementOfKind(elementKind: String, atIndexPath elementIndexPath: NSIndexPath) -> UICollectionViewLayoutAttributes?{
-        let attributes = self.layoutAttributesForSupplementaryViewOfKind(elementKind, atIndexPath: elementIndexPath)
+    override func finalLayoutAttributesForDisappearingSupplementaryElement(ofKind elementKind: String, at elementIndexPath: IndexPath) -> UICollectionViewLayoutAttributes?{
+        let attributes = self.layoutAttributesForSupplementaryView(ofKind: elementKind, at: elementIndexPath)
         return attributes
     }
 }

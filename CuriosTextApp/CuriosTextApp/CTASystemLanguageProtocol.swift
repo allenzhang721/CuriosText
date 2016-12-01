@@ -15,12 +15,12 @@ protocol CTASystemLanguageProtocol{
 extension CTASystemLanguageProtocol{
     func getCurrentLanguage() -> String{
         let languages:NSArray = self.getSystemLanguages()
-        return languages.objectAtIndex(0) as! String
+        return languages.object(at: 0) as! String
     }
     
     func getSystemLanguages() -> NSArray{
-        let userDefault = NSUserDefaults.standardUserDefaults()
-        let languages:NSArray = userDefault.objectForKey("AppleLanguages") as! NSArray
+        let userDefault = UserDefaults.standard
+        let languages:NSArray = userDefault.object(forKey: "AppleLanguages") as! NSArray
         return languages
     }
 }

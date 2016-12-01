@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol CTACountryDelegate: NSObjectProtocol {
-    func setCountryCode(model:CountryZone)
+    func setCountryCode(_ model:CountryZone)
 }
 
 class CTASearchCountryViewController: UIViewController{
@@ -31,7 +31,7 @@ class CTASearchCountryViewController: UIViewController{
     
     var tableView: UITableView!
     var searchBar : UISearchBar!
-    var selectedIndexPath: NSIndexPath?
+    var selectedIndexPath: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,15 +42,15 @@ class CTASearchCountryViewController: UIViewController{
         self.view.backgroundColor = CTAStyleKit.commonBackgroundColor
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
     }
     
@@ -71,19 +71,19 @@ class CTASearchCountryViewController: UIViewController{
     */
     
     func initView(){
-        let bouns = UIScreen.mainScreen().bounds
+        let bouns = UIScreen.main.bounds
         self.searchArray = self.allCountryLocale
         let searchLabel = UILabel(frame: CGRect(x: 0, y: 28, width: bouns.width, height: 28))
-        searchLabel.font = UIFont.boldSystemFontOfSize(18)
+        searchLabel.font = UIFont.boldSystemFont(ofSize: 18)
         searchLabel.textColor = CTAStyleKit.normalColor
         searchLabel.text = NSLocalizedString("SearchLabel", comment: "")
-        searchLabel.textAlignment = .Center
+        searchLabel.textAlignment = .center
         self.view.addSubview(searchLabel)
         
         let backButton = UIButton(frame: CGRect(x: 0, y: 22, width: 40, height: 40))
-        backButton.setImage(UIImage(named: "back-button"), forState: .Normal)
-        backButton.setImage(UIImage(named: "back-selected-button"), forState: .Highlighted)
-        backButton.addTarget(self, action: #selector(CTASearchCountryViewController.backButtonClick(_:)), forControlEvents: .TouchUpInside)
+        backButton.setImage(UIImage(named: "back-button"), for: UIControlState())
+        backButton.setImage(UIImage(named: "back-selected-button"), for: .highlighted)
+        backButton.addTarget(self, action: #selector(CTASearchCountryViewController.backButtonClick(_:)), for: .touchUpInside)
         self.view.addSubview(backButton)
         
         self.searchBar = UISearchBar(frame: CGRect(x: 0, y: 64, width: bouns.width, height: 50))
@@ -93,16 +93,16 @@ class CTASearchCountryViewController: UIViewController{
         self.tableView = UITableView(frame: CGRect(x: 0, y: 114, width: bouns.width, height: bouns.height - 103))
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.registerClass(CTASearchTabelCell.self, forCellReuseIdentifier: "ctasearchtabelcell")
+        self.tableView.register(CTASearchTabelCell.self, forCellReuseIdentifier: "ctasearchtabelcell")
         self.view.addSubview(self.tableView)
     }
     
-    func backButtonClick(sender: UIButton){
+    func backButtonClick(_ sender: UIButton){
         self.backHandler()
     }
     
     func backHandler(){
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     func resetView(){
@@ -120,14 +120,14 @@ class CTASearchCountryViewController: UIViewController{
 
 extension CTASearchCountryViewController:UITableViewDataSource, UITableViewDelegate{
 
-    func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
-        let keys = Array(self.searchArray.keys).sort(<)
+    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        let keys = Array(self.searchArray.keys).sorted(by: <)
         return keys
     }
     
-    func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String,
-        atIndex index: Int) -> Int {
-        let keys = Array(self.searchArray.keys).sort(<)
+    func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String,
+        at index: Int) -> Int {
+        let keys = Array(self.searchArray.keys).sorted(by: <)
         for i in 0..<keys.count {
             let key = keys[i]
             if key == title{
@@ -137,13 +137,13 @@ extension CTASearchCountryViewController:UITableViewDataSource, UITableViewDeleg
         return 0
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int{
+    func numberOfSections(in tableView: UITableView) -> Int{
         return self.searchArray.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         var dataArray:Array<CountryZone>?
-        let keys = Array(self.searchArray.keys).sort(<)
+        let keys = Array(self.searchArray.keys).sorted(by: <)
         for i in 0..<keys.count {
             if i == section{
                 dataArray = self.searchArray[keys[i]]
@@ -157,9 +157,9 @@ extension CTASearchCountryViewController:UITableViewDataSource, UITableViewDeleg
         }
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
         var dataKey:String = ""
-        let keys = Array(self.searchArray.keys).sort(<)
+        let keys = Array(self.searchArray.keys).sorted(by: <)
         for i in 0..<keys.count {
             if i == section{
                 dataKey = keys[i]
@@ -173,13 +173,13 @@ extension CTASearchCountryViewController:UITableViewDataSource, UITableViewDeleg
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         
-        let publishesCell:CTASearchTabelCell = self.tableView.dequeueReusableCellWithIdentifier("ctasearchtabelcell", forIndexPath: indexPath) as! CTASearchTabelCell
+        let publishesCell:CTASearchTabelCell = self.tableView.dequeueReusableCell(withIdentifier: "ctasearchtabelcell", for: indexPath) as! CTASearchTabelCell
         let section = indexPath.section
         let raw     = indexPath.row
         var dataArray:Array<CountryZone>?
-        let keys = Array(self.searchArray.keys).sort(<)
+        let keys = Array(self.searchArray.keys).sorted(by: <)
         for i in 0..<keys.count {
             if i == section{
                 dataArray = self.searchArray[keys[i]]
@@ -195,18 +195,18 @@ extension CTASearchCountryViewController:UITableViewDataSource, UITableViewDeleg
         return publishesCell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         let section = indexPath.section
         let raw     = indexPath.row
         var dataArray:Array<CountryZone>?
-        let keys = Array(self.searchArray.keys).sort(<)
+        let keys = Array(self.searchArray.keys).sorted(by: <)
         for i in 0..<keys.count {
             if i == section{
                 dataArray = self.searchArray[keys[i]]
                 break
             }
         }
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        self.tableView.deselectRow(at: indexPath, animated: false)
         if dataArray != nil{
             if raw > -1 && raw < dataArray!.count{
                 let model = dataArray![raw]
@@ -215,7 +215,7 @@ extension CTASearchCountryViewController:UITableViewDataSource, UITableViewDeleg
                 }
                 self.selectedDelegate = nil
                 self.resetView()
-                self.navigationController?.popViewControllerAnimated(true)
+                self.navigationController?.popViewController(animated: true)
             }
         }
 
@@ -224,7 +224,7 @@ extension CTASearchCountryViewController:UITableViewDataSource, UITableViewDeleg
 
 extension CTASearchCountryViewController: UISearchBarDelegate{
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String){
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
         if searchText == "" {
             self.searchArray = self.allCountryLocale
         }else {
@@ -232,7 +232,7 @@ extension CTASearchCountryViewController: UISearchBarDelegate{
             for (key, countries) in self.allCountryLocale {
                 var searchCountrys:Array<CountryZone> = []
                 for ctrl in countries{
-                    if ctrl.displayName.lowercaseString.containsString(searchText.lowercaseString){
+                    if ctrl.displayName.lowercased().contains(searchText.lowercased()){
                         searchCountrys.append(ctrl)
                     }
                 }
@@ -244,17 +244,17 @@ extension CTASearchCountryViewController: UISearchBarDelegate{
         self.tableView.reloadData()
     }
     
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar){
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar){
         self.searchBar.showsCancelButton = true
         self.searchBar.frame.origin.y = 20
         self.tableView.frame.origin.y = self.searchBar.frame.origin.y+self.searchBar.frame.height
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar){
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         self.searchBar.resignFirstResponder()
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar){
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar){
         self.resetView()
     }
 }
@@ -282,7 +282,7 @@ class CTASearchTabelCell: UITableViewCell{
         if self.countryNameLabel == nil {
             self.countryNameLabel = UILabel(frame: CGRect(x: 10, y: (self.contentView.frame.height - 25 )/2, width: self.contentView.frame.width, height: 25))
             self.contentView.addSubview(self.countryNameLabel)
-            self.countryNameLabel.font = UIFont.systemFontOfSize(16)
+            self.countryNameLabel.font = UIFont.systemFont(ofSize: 16)
             self.countryNameLabel.textColor = CTAStyleKit.normalColor
         }
         self.countryNameLabel.text = self.countryZone!.displayName
@@ -290,7 +290,7 @@ class CTASearchTabelCell: UITableViewCell{
         if self.countryCodeLabel == nil {
             self.countryCodeLabel = UILabel(frame: CGRect(x: 10, y: (self.contentView.frame.height - 25 )/2, width: self.contentView.frame.width, height: 25))
             self.contentView.addSubview(self.countryCodeLabel)
-            self.countryCodeLabel.font = UIFont.systemFontOfSize(16)
+            self.countryCodeLabel.font = UIFont.systemFont(ofSize: 16)
             self.countryCodeLabel.textColor = CTAStyleKit.normalColor
         }
         self.countryCodeLabel.text = "+"+self.countryZone!.zoneCode
@@ -301,7 +301,7 @@ class CTASearchTabelCell: UITableViewCell{
 
 extension CTASearchCountryViewController: UIGestureRecognizerDelegate{
     
-    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if self.searchBar.frame.origin.y == 20 {
             return false
         }
