@@ -17,7 +17,7 @@ private let mainBoundleName = Bundle.main.infoDictionary?["CFBundleName"] as? St
 
 class Moduler {
 
-    class func target(_ targetName: String, performAction actionName: String, paras: AnyObject?, inBundle name: String = mainBoundleName) -> Unmanaged<AnyObject>? {
+    class func target(_ targetName: String, performAction actionName: String, paras: Any, inBundle name: String = mainBoundleName) -> Unmanaged<AnyObject>? {
         
         let bundle = name
         let target = targetName

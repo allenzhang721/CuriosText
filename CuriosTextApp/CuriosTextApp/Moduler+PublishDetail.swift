@@ -17,14 +17,14 @@ extension Moduler {
     
     static func module_publishDetail(_ selectedPublishID:String, publishArray:Array<CTAPublishModel>, delegate:PublishDetailViewDelegate, type:PublishDetailType, viewUserID:String = "") -> UIViewController {
         
-        var paras: [String: AnyObject] = [:]
-        paras["selectedPublishID"] = selectedPublishID as AnyObject?
-        paras["publishArray"] = publishArray as AnyObject?
+        var paras: [String: Any] = [:]
+        paras["selectedPublishID"] = selectedPublishID
+        paras["publishArray"] = publishArray
         paras["delegate"] = delegate
-        paras["type"] = type as AnyObject
-        paras["viewUserID"] = viewUserID as AnyObject?
+        paras["type"] = type.rawValue
+        paras["viewUserID"] = viewUserID
         
-        let vc = Moduler.target(moduleName, performAction: Actions.New.rawValue, paras: paras as AnyObject?)?.takeUnretainedValue() as! UIViewController
+        let vc = Moduler.target(moduleName, performAction: Actions.New.rawValue, paras: paras)?.takeUnretainedValue() as! UIViewController
         return vc
     }
 }
