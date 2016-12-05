@@ -142,7 +142,7 @@ class EditViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.isHideBar = true
-        self.setNeedsStatusBarAppearanceUpdate()
+      self.setNeedsStatusBarAppearanceUpdate()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -150,11 +150,17 @@ class EditViewController: UIViewController {
         if isFirstAppear {
             isFirstAppear = false
         }
+      
     }
     
     override var prefersStatusBarHidden : Bool {
         return self.isHideBar
+//      return true
     }
+  
+//  func childViewControllerForStatusBarHidden() -> UIViewController? {
+//    return canvasViewController
+//  }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.destination {

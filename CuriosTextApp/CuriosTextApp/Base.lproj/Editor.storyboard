@@ -515,10 +515,10 @@
             </objects>
             <point key="canvasLocation" x="2061.5" y="1072"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Editor Navigation Controller-->
         <scene sceneID="98X-WP-iTj">
             <objects>
-                <navigationController storyboardIdentifier="EditorNavigationController" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="gJw-VA-uNJ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="EditorNavigationController" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="gJw-VA-uNJ" customClass="EditorNavigationController" customModule="CuriosTextApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="y7P-SP-uQo">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

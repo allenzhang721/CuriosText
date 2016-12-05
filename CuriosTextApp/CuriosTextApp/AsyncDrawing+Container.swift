@@ -10,7 +10,7 @@ import Foundation
 import PromiseKit
 import Kingfisher
 
-func asyncImage(_ imagePicker: ((UIImage) -> ()) -> (), position: CGPoint, rotation: CGFloat, size: CGSize, alpha: CGFloat) -> Promise<Drawable> {
+func asyncImage(_ imagePicker: (@escaping (UIImage) -> ()) -> (), position: CGPoint, rotation: CGFloat, size: CGSize, alpha: CGFloat) -> Promise<Drawable> {
     
     return Promise { fullfill, reject in
         imagePicker { image in
@@ -20,9 +20,9 @@ func asyncImage(_ imagePicker: ((UIImage) -> ()) -> (), position: CGPoint, rotat
     }
 }
 
-func retriveImageBy(_ imgeID: String, baseURL: URL, imageAccess:((String) -> UIImage?)? = nil ,local: Bool) -> ((UIImage) -> ()) -> () {
+func retriveImageBy(_ imgeID: String, baseURL: URL, imageAccess:((String) -> UIImage?)? = nil ,local: Bool) -> (@escaping (UIImage) -> ()) -> () {
     
-    func finished(_ f: @escaping (UIImage) -> ()) {
+    func finished(_ f:  @escaping (UIImage) -> ()) {
         if local {
             if let imageAccess = imageAccess, let image = imageAccess(imgeID) {
                 f(image)
@@ -44,7 +44,7 @@ func retriveImageBy(_ imgeID: String, baseURL: URL, imageAccess:((String) -> UII
         }  
     }
     
-    return finished as! ((UIImage) -> ()) -> ()
+    return finished
     
 }
 

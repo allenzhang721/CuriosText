@@ -195,6 +195,7 @@
 		2C929DD71C60962B00F90BF4 /* CTAConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C929DD61C60962B00F90BF4 /* CTAConfig.swift */; };
 		2C9307B51CF2E34600D0E5F6 /* About.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C9307B71CF2E34600D0E5F6 /* About.storyboard */; };
 		2C9374F81CC3983A0002C806 /* OrbitalAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9374F71CC3983A0002C806 /* OrbitalAnimation.swift */; };
+		2C961F291DF5493700B727E6 /* EditorNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C961F281DF5493700B727E6 /* EditorNavigationController.swift */; };
 		2C9706C11C1E6EC200FA2E17 /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */; };
 		2C9706C21C1E6EC200FA2E17 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9706C01C1E6EC200FA2E17 /* SwiftyJSON.framework */; };
 		2C9706C51C1E6EE900FA2E17 /* CTABaseDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9706C41C1E6EE900FA2E17 /* CTABaseDomain.swift */; };
@@ -639,6 +640,7 @@
 		2C9307B91CF2E34900D0E5F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/About.strings; sourceTree = "<group>"; };
 		2C9307BB1CF2E34A00D0E5F6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/About.strings"; sourceTree = "<group>"; };
 		2C9374F71CC3983A0002C806 /* OrbitalAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrbitalAnimation.swift; sourceTree = "<group>"; };
+		2C961F281DF5493700B727E6 /* EditorNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorNavigationController.swift; sourceTree = "<group>"; };
 		2C9706BF1C1E6EC200FA2E17 /* Locksmith.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Locksmith.framework; path = "Pods/../build/Debug-iphoneos/Locksmith.framework"; sourceTree = "<group>"; };
 		2C9706C01C1E6EC200FA2E17 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "Pods/../build/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
 		2C9706C41C1E6EE900FA2E17 /* CTABaseDomain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTABaseDomain.swift; sourceTree = "<group>"; };
@@ -1625,6 +1627,7 @@
 		2CD4DC0B1CA4E26C00790A55 /* m_Editor */ = {
 			isa = PBXGroup;
 			children = (
+				2C961F281DF5493700B727E6 /* EditorNavigationController.swift */,
 				2CD4DC0E1CA4E3B600790A55 /* MainController */,
 				2CD4DC0D1CA4E2A700790A55 /* TextController */,
 				2CD4DC0C1CA4E29300790A55 /* PublishController */,
@@ -2260,6 +2263,7 @@
 				2C1312361C59966C00346804 /* CTAUserManager.swift in Sources */,
 				2CB380B91C4D20E5009A681A /* CTAPreviewCell.swift in Sources */,
 				2C2088621C8C1BC200172B27 /* CTACache.swift in Sources */,
+				2C961F291DF5493700B727E6 /* EditorNavigationController.swift in Sources */,
 				2C9706CB1C1E713A00FA2E17 /* CTABaseModel.swift in Sources */,
 				2C3CAD1A1C21825900D8DE4B /* CTATextElement.swift in Sources */,
 				2C82FF551C4362FA001D927A /* CTASegementControl.swift in Sources */,

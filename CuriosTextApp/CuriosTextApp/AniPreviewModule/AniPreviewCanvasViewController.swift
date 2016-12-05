@@ -109,9 +109,9 @@ class AniPreviewCanvasViewController: UIViewController {
 extension AniPreviewCanvasViewController {
     @IBAction func tap(_ sender: AnyObject) {
         self.dismiss(animated: false, completion: nil)
-//        aniCanvasView.pause()
-//        aniCanvasView.stop()
-//        
+        aniCanvasView.pause()
+        aniCanvasView.stop()
+//
 //        aniCanvasView.ready()
 //        aniCanvasView.play()
     }

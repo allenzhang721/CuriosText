@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CYLTabBarController
 
 class ViewController: UIViewController{
 
@@ -42,7 +43,9 @@ class ViewController: UIViewController{
         CTAUserManager.load()
 
         
-        PlusButton.registerSubclass()
+//        PlusButton.registerSubclass()
+      PlusButton.register()
+//        CYLPlusButton.register()
         self.mainTabBarController = RootAction.rootTabViewController()
         self.mainTabBarController.delegate = self
         
@@ -170,6 +173,7 @@ class ViewController: UIViewController{
         ani.rootView = bgView
         editeView.transitioningDelegate = ani
         editeView.modalPresentationStyle = .custom
+      editeView.modalPresentationCapturesStatusBarAppearance = true
         rootView.present(editeView, animated: true) {
             rootView.view.isUserInteractionEnabled = true
         }
