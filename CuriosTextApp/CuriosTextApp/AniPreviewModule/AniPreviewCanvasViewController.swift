@@ -33,9 +33,14 @@ class AniPreviewCanvasViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         aniCanvasView.alpha = 0.0
         aniCanvasView.reloadData { [weak self] in
+          
             guard let sf = self else { return }
             DispatchQueue.main.async(execute: { 
                 self?.aniCanvasView.ready()
+              
+              self?.aniCanvasView.alpha = 1.0
+              self?.aniCanvasView.play()
+              self?.aniCanvasView.backgroundColor = UIColor(hexString: sf.canvas.canvas.backgroundColor)
             })
         }
     }
@@ -43,9 +48,9 @@ class AniPreviewCanvasViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         DispatchQueue.main.async { [weak self] in
             guard let sf = self else {return}
-            self?.aniCanvasView.alpha = 1.0
-            self?.aniCanvasView.play()
-            self?.aniCanvasView.backgroundColor = UIColor(hexString: sf.canvas.canvas.backgroundColor)
+//            self?.aniCanvasView.alpha = 1.0
+//            self?.aniCanvasView.play()
+//            self?.aniCanvasView.backgroundColor = UIColor(hexString: sf.canvas.canvas.backgroundColor)
         }
     }
     
@@ -108,9 +113,12 @@ class AniPreviewCanvasViewController: UIViewController {
 
 extension AniPreviewCanvasViewController {
     @IBAction func tap(_ sender: AnyObject) {
+      
+      aniCanvasView.pause()
+      aniCanvasView.stop()
+      
         self.dismiss(animated: false, completion: nil)
-        aniCanvasView.pause()
-        aniCanvasView.stop()
+      
 //
 //        aniCanvasView.ready()
 //        aniCanvasView.play()

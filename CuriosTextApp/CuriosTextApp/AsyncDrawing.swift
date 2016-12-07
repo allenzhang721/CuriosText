@@ -61,11 +61,17 @@ func drawing(_ promises: [Promise<Drawable>], size: CGSize, backgroundColor: UIC
     path.fill()
     
     for d in drawables {
-      if let d = d as? TextDrawable {
-        drawingText(d)
-      } else if let d = d as? ImageDrawable {
-        drawingImage(d)
+      switch d {
+      case .fulfilled(let drawable):
+        if let d = drawable as? TextDrawable {
+          drawingText(d)
+        } else if let d = drawable as? ImageDrawable {
+          drawingImage(d)
+        }
+      case .rejected(let _):
+        ()
       }
+      
     }
     
     let image = UIGraphicsGetImageFromCurrentImageContext()
