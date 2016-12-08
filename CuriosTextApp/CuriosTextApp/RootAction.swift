@@ -20,6 +20,7 @@ class RootAction: NSObject {
         let recommand = RecommandViewController()
         let notiCenter = UIStoryboard(name: "NotiCenter", bundle: nil).instantiateInitialViewController() as! NotiCenterViewController
         let user = UserViewController()
+      tabVC.imageInsets = UIEdgeInsets(top: 4.5, left: 0, bottom: -4.5, right: 0)
         let controllers = [home, recommand, notiCenter, user].map { vc -> UINavigationController in
             
             let navi = UINavigationController(rootViewController: vc)
@@ -42,6 +43,8 @@ class RootAction: NSObject {
             ]
         tabVC.tabBarItemsAttributes = attributes
         tabVC.viewControllers = controllers
+//      tabVC.tabBarHeight = 38.0
+      
         return tabVC
     }
     
@@ -57,10 +60,12 @@ class RootAction: NSObject {
         let tabBarItem = UITabBarItem.appearance();
         tabBarItem.setTitleTextAttributes(normalAttrs, for: UIControlState())
         tabBarItem.setTitleTextAttributes(selectedAttrs, for: .selected)
+//      tabBarItem.imageInsets = UIEdgeInsets(top: 4.5, left: 0, bottom: -4.5, right: 0)
 
         let tabBar = UITabBar.appearance()
         tabBar.barTintColor = CTAStyleKit.commonBackgroundColor
-        
+//      tabBar.itemPositioning = .centered
+      
         let navigation = UINavigationBar.appearance();
         let navAttrs:[String:AnyObject] = [
             NSFontAttributeName:UIFont.boldSystemFont(ofSize: 18),

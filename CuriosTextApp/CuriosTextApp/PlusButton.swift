@@ -13,13 +13,13 @@ class PlusButton: CYLPlusButton, CYLPlusButtonSubclassing {
     
     static func plusButton() -> Any! {
         let bounds = UIScreen.main.bounds
-        let buttonW:CGFloat = 40.00
+        let buttonW:CGFloat = 40.0
         let space = (bounds.width - buttonW*4)/10
         let viewW = buttonW+space*2
         
 //        let buttonView = UIView(frame: CGRect(x: 0, y: 0, width: viewW, height: 49))
       
-        let button = PlusButton(frame: CGRect(x: space, y: 0, width: buttonW, height: buttonW))
+        let button = PlusButton(frame: CGRect(x: space, y: -4.5, width: viewW, height: 40))
 //        buttonView.addSubview(button)
 //      button.setTitle("Add", for: .normal)
 //      button.setTitle("Ing", for: .highlighted)
