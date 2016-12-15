@@ -19,7 +19,7 @@ extension Moduler {
         
         var paras: [String: AnyObject] = [:]
         paras["userID"] = userID as AnyObject?
-        paras["type"] = type as AnyObject
+        paras["type"] = type.rawValue as AnyObject
         paras["delegate"] = delegate
         
         let vc = Moduler.target(moduleName, performAction: Actions.New.rawValue, paras: paras as AnyObject?)?.takeUnretainedValue() as! UIViewController
