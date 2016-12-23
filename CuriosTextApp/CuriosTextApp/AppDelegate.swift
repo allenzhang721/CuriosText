@@ -49,6 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         //        NSDictionary *extras = [userInfo valueForKey:@"extras"];
         //        NSString *customizeField1 = [extras valueForKey:@"customizeField1"];
         
+        // 参考：https://docs.jiguang.cn/jpush/client/iOS/ios_api/#_24
         if let userInfo = noti.userInfo {
             print(userInfo)
         }
