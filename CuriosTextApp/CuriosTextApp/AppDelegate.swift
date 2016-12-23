@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import UserNotifications
 import SVProgressHUD
 
 @UIApplicationMain
@@ -16,6 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        registerJPush()
+        setupJPush(launchOptions)
         
         self.loadFilters()
         self.setup()
@@ -26,6 +30,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         SVProgressHUD.setBackgroundColor(UIColor.white)
         
         return true
+    }
+    
+    func registerJPush() {
+        let entity = JPUSHRegisterEntity()
+        entity.types = Int(JPAuthorizationOptions.alert.union(JPAuthorizationOptions.badge).union(JPAuthorizationOptions.sound).rawValue)
+        JPUSHService.register(forRemoteNotificationConfig: entity, delegate: self)
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.networkDidReceiveMessage(noti:)), name: NSNotification.Name.jpfNetworkDidReceiveMessage, object: nil)
+//        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+//        [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidReceiveMessageNotification object:nil];
+    }
+    
+    func networkDidReceiveMessage(noti: Notification) {
+        //        NSDictionary * userInfo = [notification userInfo];
+        //        NSString *content = [userInfo valueForKey:@"content"];
+        //        NSDictionary *extras = [userInfo valueForKey:@"extras"];
+        //        NSString *customizeField1 = [extras valueForKey:@"customizeField1"];
+        
+        if let userInfo = noti.userInfo {
+            print(userInfo)
+        }
+        
+    }
+    
+    func setupJPush(_ launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+        let appKey = "2f694891521f24a9f4cf00b1"
+        JPUSHService.setup(withOption: launchOptions, appKey: appKey, channel: "App Store", apsForProduction: false)
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        //    [JPUSHService registerDeviceToken:deviceToken];
+        print("Did Register")
+        JPUSHService.registerDeviceToken(deviceToken)
     }
     
     func loadFilters() {
@@ -44,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         ImageCache.default.maxMemoryCost = UInt(100 * 1024 * 1024) // Allen: 80 MB
         // Override point for customization after application launch.
         #if DEBUG
-            CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.production.description
+            CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.debug.description
         #else
             CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.production.description
         #endif
@@ -171,6 +209,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
 private extension CFString {
     func toString() -> String {
         return self as String
+    }
+}
+
+extension AppDelegate: JPUSHRegisterDelegate {
+    
+    
+    @available(iOS 10.0, *)
+    func jpushNotificationCenter(_ center: UNUserNotificationCenter!, willPresent notification: UNNotification!, withCompletionHandler completionHandler: ((Int) -> Void)!) {
+        // Required
+        let userInfo = notification.request.content.userInfo
+        if notification.request.trigger is UNPushNotificationTrigger {
+            JPUSHService.handleRemoteNotification(userInfo)
+        }
+        
+        completionHandler(Int(UNNotificationPresentationOptions.alert.rawValue)) // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
+    }
+    
+    @available(iOS 10.0, *)
+    func jpushNotificationCenter(_ center: UNUserNotificationCenter!, didReceive response: UNNotificationResponse!, withCompletionHandler completionHandler: (() -> Void)!) {
+        
+        // Required
+        
+        let userInfo = response.notification.request.content.userInfo
+        if response.notification.request.trigger is UNPushNotificationTrigger {
+            JPUSHService.handleRemoteNotification(userInfo)
+        }
+        
+        completionHandler?() // 系统要求执行这个方法
     }
 }
 

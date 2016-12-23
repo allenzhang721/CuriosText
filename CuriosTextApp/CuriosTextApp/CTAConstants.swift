@@ -41,7 +41,7 @@ enum CTARequestHost: CustomStringConvertible {
         CTAFilePath.userFilePath = "http://7wy3u8.com2.z0.glb.qiniucdn.com/"
         CTAFilePath.publishFilePath = "http://7wy3u8.com2.z0.glb.qiniucdn.com/"
         CTAFilePath.resourceFilePath = "https://o6kzay0ng.qnssl.com/"
-        return "http://192.168.1.103:8080/CuriosTextServices"
+        return "http://192.168.1.102:8080/CuriosTextServices"
     case .production:
         CTAFilePath.userFilePath = "https://dn-tu-curiosapp.qbox.me/"
         CTAFilePath.publishFilePath = "https://dn-tp-curiosapp.qbox.me/"

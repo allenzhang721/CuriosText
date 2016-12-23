@@ -352,8 +352,8 @@ class CTALoginViewController: UIViewController, CTAPhoneProtocol, CTALoadingProt
                                         self.showSingleAlert(NSLocalizedString("AlertTitleInternetError", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                         })
                                     }else {
-                                        let error = info.errorType as! CTAWeixinRegisterError
-                                        if error == .weixinIDIsEmpty {
+                                        let error = info.errorType as! CTAWeiboRegisterError
+                                        if error == .weiboIDIsEmpty {
                                             self.showSingleAlert(NSLocalizedString("AlertTitleWeiboNil", comment: ""), alertMessage: "", compelecationBlock: { () -> Void in
                                             })
                                         }else if error == .dataIsEmpty{

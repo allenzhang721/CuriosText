@@ -21,4 +21,6 @@
 #import <CYLTabBarController/CYLTabBar.h>
 #import <CYLTabBarController/CYLPlusButton.h>
 
+#import "JPUSHService.h"
+
 #endif /* CuriosTextApp_Bridging_Header_h */
