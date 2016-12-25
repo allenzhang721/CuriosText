@@ -15,7 +15,7 @@ class CTAPublishButton: UIButton {
         setNeedsDisplay()
     }
     
-    func drawPublishButtonBorder(size: CGSize = CGSize(width: 100, height: 50)) {
+    func drawPublishButtonBorder(_ size: CGSize = CGSize(width: 100, height: 50)) {
         
         //// Variable Declarations
         let expression: CGFloat = size.height / 2.0
@@ -33,7 +33,7 @@ class CTAPublishButton: UIButton {
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        drawPublishButtonBorder(size: rect.size)
+        drawPublishButtonBorder(rect.size)
     }
 }
 

@@ -49,7 +49,7 @@ open class CTAColorPickerNodeView: UIControl {
         indicatorLayer.fillColor = UIColor.clear.cgColor
         indicatorLayer.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
         indicatorLayer.strokeColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1.000).cgColor
-        indicatorLayer.path = selectedPath(frame: CGRect(x: 0, y: 0, width: 15, height: 15)).cgPath
+        indicatorLayer.path = selectedPath(CGRect(x: 0, y: 0, width: 15, height: 15)).cgPath
         layer.addSublayer(indicatorLayer)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
@@ -150,7 +150,7 @@ open class CTAColorPickerNodeView: UIControl {
         changedToColor(selectedColor)
     }
     
-    func selectedPath(frame: CGRect = CGRect(x: 0, y: 0, width: 20, height: 20)) -> UIBezierPath {
+    func selectedPath(_ frame: CGRect = CGRect(x: 0, y: 0, width: 20, height: 20)) -> UIBezierPath {
         
         //// Bezier Drawing
         let bezierPath = UIBezierPath()

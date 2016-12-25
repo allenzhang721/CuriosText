@@ -13,11 +13,11 @@
 
 import UIKit
 
-public class CTAStyleKit : NSObject {
+open class CTAStyleKit : NSObject {
 
     //// Cache
 
-    private struct Cache {
+    fileprivate struct Cache {
         static let normalColor: UIColor = UIColor(red: 0.631, green: 0.631, blue: 0.631, alpha: 1.000)
         static let selectedColor: UIColor = UIColor(red: 0.937, green: 0.200, blue: 0.290, alpha: 1.000)
         static let labelShowColor: UIColor = UIColor(red: 0.607, green: 0.607, blue: 0.607, alpha: 1.000)
@@ -147,63 +147,63 @@ public class CTAStyleKit : NSObject {
 
     //// Colors
 
-    public dynamic class var normalColor: UIColor { return Cache.normalColor }
-    public dynamic class var selectedColor: UIColor { return Cache.selectedColor }
-    public dynamic class var labelShowColor: UIColor { return Cache.labelShowColor }
-    public dynamic class var disableColor: UIColor { return Cache.disableColor }
-    public dynamic class var ediorBackgroundColor: UIColor { return Cache.ediorBackgroundColor }
-    public dynamic class var commonBackgroundColor: UIColor { return Cache.commonBackgroundColor }
-    public dynamic class var detailBackgroundColor: UIColor { return Cache.detailBackgroundColor }
-    public dynamic class var lightGrayBackgroundColor: UIColor { return Cache.lightGrayBackgroundColor }
-    public dynamic class var one0: UIColor { return Cache.one0 }
-    public dynamic class var one1: UIColor { return Cache.one1 }
-    public dynamic class var one2: UIColor { return Cache.one2 }
-    public dynamic class var one3: UIColor { return Cache.one3 }
-    public dynamic class var one4: UIColor { return Cache.one4 }
-    public dynamic class var one5: UIColor { return Cache.one5 }
-    public dynamic class var one6: UIColor { return Cache.one6 }
-    public dynamic class var one7: UIColor { return Cache.one7 }
-    public dynamic class var one8: UIColor { return Cache.one8 }
-    public dynamic class var two0: UIColor { return Cache.two0 }
-    public dynamic class var two1: UIColor { return Cache.two1 }
-    public dynamic class var two2: UIColor { return Cache.two2 }
-    public dynamic class var two3: UIColor { return Cache.two3 }
-    public dynamic class var two4: UIColor { return Cache.two4 }
-    public dynamic class var two5: UIColor { return Cache.two5 }
-    public dynamic class var two6: UIColor { return Cache.two6 }
-    public dynamic class var two7: UIColor { return Cache.two7 }
-    public dynamic class var two8: UIColor { return Cache.two8 }
-    public dynamic class var three0: UIColor { return Cache.three0 }
-    public dynamic class var three1: UIColor { return Cache.three1 }
-    public dynamic class var three2: UIColor { return Cache.three2 }
-    public dynamic class var three3: UIColor { return Cache.three3 }
-    public dynamic class var three4: UIColor { return Cache.three4 }
-    public dynamic class var three5: UIColor { return Cache.three5 }
-    public dynamic class var three6: UIColor { return Cache.three6 }
-    public dynamic class var three7: UIColor { return Cache.three7 }
-    public dynamic class var three8: UIColor { return Cache.three8 }
-    public dynamic class var four0: UIColor { return Cache.four0 }
-    public dynamic class var four1: UIColor { return Cache.four1 }
-    public dynamic class var four2: UIColor { return Cache.four2 }
-    public dynamic class var four3: UIColor { return Cache.four3 }
-    public dynamic class var four4: UIColor { return Cache.four4 }
-    public dynamic class var four5: UIColor { return Cache.four5 }
-    public dynamic class var four6: UIColor { return Cache.four6 }
-    public dynamic class var four7: UIColor { return Cache.four7 }
-    public dynamic class var four8: UIColor { return Cache.four8 }
-    public dynamic class var five0: UIColor { return Cache.five0 }
-    public dynamic class var five1: UIColor { return Cache.five1 }
-    public dynamic class var five2: UIColor { return Cache.five2 }
-    public dynamic class var five3: UIColor { return Cache.five3 }
-    public dynamic class var five4: UIColor { return Cache.five4 }
-    public dynamic class var five5: UIColor { return Cache.five5 }
-    public dynamic class var five6: UIColor { return Cache.five6 }
-    public dynamic class var five7: UIColor { return Cache.five7 }
-    public dynamic class var five8: UIColor { return Cache.five8 }
+    open dynamic class var normalColor: UIColor { return Cache.normalColor }
+    open dynamic class var selectedColor: UIColor { return Cache.selectedColor }
+    open dynamic class var labelShowColor: UIColor { return Cache.labelShowColor }
+    open dynamic class var disableColor: UIColor { return Cache.disableColor }
+    open dynamic class var ediorBackgroundColor: UIColor { return Cache.ediorBackgroundColor }
+    open dynamic class var commonBackgroundColor: UIColor { return Cache.commonBackgroundColor }
+    open dynamic class var detailBackgroundColor: UIColor { return Cache.detailBackgroundColor }
+    open dynamic class var lightGrayBackgroundColor: UIColor { return Cache.lightGrayBackgroundColor }
+    open dynamic class var one0: UIColor { return Cache.one0 }
+    open dynamic class var one1: UIColor { return Cache.one1 }
+    open dynamic class var one2: UIColor { return Cache.one2 }
+    open dynamic class var one3: UIColor { return Cache.one3 }
+    open dynamic class var one4: UIColor { return Cache.one4 }
+    open dynamic class var one5: UIColor { return Cache.one5 }
+    open dynamic class var one6: UIColor { return Cache.one6 }
+    open dynamic class var one7: UIColor { return Cache.one7 }
+    open dynamic class var one8: UIColor { return Cache.one8 }
+    open dynamic class var two0: UIColor { return Cache.two0 }
+    open dynamic class var two1: UIColor { return Cache.two1 }
+    open dynamic class var two2: UIColor { return Cache.two2 }
+    open dynamic class var two3: UIColor { return Cache.two3 }
+    open dynamic class var two4: UIColor { return Cache.two4 }
+    open dynamic class var two5: UIColor { return Cache.two5 }
+    open dynamic class var two6: UIColor { return Cache.two6 }
+    open dynamic class var two7: UIColor { return Cache.two7 }
+    open dynamic class var two8: UIColor { return Cache.two8 }
+    open dynamic class var three0: UIColor { return Cache.three0 }
+    open dynamic class var three1: UIColor { return Cache.three1 }
+    open dynamic class var three2: UIColor { return Cache.three2 }
+    open dynamic class var three3: UIColor { return Cache.three3 }
+    open dynamic class var three4: UIColor { return Cache.three4 }
+    open dynamic class var three5: UIColor { return Cache.three5 }
+    open dynamic class var three6: UIColor { return Cache.three6 }
+    open dynamic class var three7: UIColor { return Cache.three7 }
+    open dynamic class var three8: UIColor { return Cache.three8 }
+    open dynamic class var four0: UIColor { return Cache.four0 }
+    open dynamic class var four1: UIColor { return Cache.four1 }
+    open dynamic class var four2: UIColor { return Cache.four2 }
+    open dynamic class var four3: UIColor { return Cache.four3 }
+    open dynamic class var four4: UIColor { return Cache.four4 }
+    open dynamic class var four5: UIColor { return Cache.four5 }
+    open dynamic class var four6: UIColor { return Cache.four6 }
+    open dynamic class var four7: UIColor { return Cache.four7 }
+    open dynamic class var four8: UIColor { return Cache.four8 }
+    open dynamic class var five0: UIColor { return Cache.five0 }
+    open dynamic class var five1: UIColor { return Cache.five1 }
+    open dynamic class var five2: UIColor { return Cache.five2 }
+    open dynamic class var five3: UIColor { return Cache.five3 }
+    open dynamic class var five4: UIColor { return Cache.five4 }
+    open dynamic class var five5: UIColor { return Cache.five5 }
+    open dynamic class var five6: UIColor { return Cache.five6 }
+    open dynamic class var five7: UIColor { return Cache.five7 }
+    open dynamic class var five8: UIColor { return Cache.five8 }
 
     //// Drawing Methods
 
-    public dynamic class func drawAlignmentRightSelected() {
+    open dynamic class func drawAlignmentRightSelected() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -241,7 +241,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawAlignmentRightNormal() {
+    open dynamic class func drawAlignmentRightNormal() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -279,7 +279,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawAlignmentLeftSelected() {
+    open dynamic class func drawAlignmentLeftSelected() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -317,7 +317,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawAlignmentLeftNormal() {
+    open dynamic class func drawAlignmentLeftNormal() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -355,7 +355,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawAlignmentCenterSelected() {
+    open dynamic class func drawAlignmentCenterSelected() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -393,7 +393,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawAlignmentCenterNormal() {
+    open dynamic class func drawAlignmentCenterNormal() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -431,7 +431,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawAlignmentJustNormal() {
+    open dynamic class func drawAlignmentJustNormal() {
 
         //// alignment-Just-Normal Drawing
         let alignmentJustNormalPath = UIBezierPath()
@@ -469,7 +469,7 @@ public class CTAStyleKit : NSObject {
         alignmentJustNormalPath.fill()
     }
 
-    public dynamic class func drawAlignmentJustSelected() {
+    open dynamic class func drawAlignmentJustSelected() {
 
         //// Bezier 2 Drawing
         let bezier2Path = UIBezierPath()
@@ -507,7 +507,7 @@ public class CTAStyleKit : NSObject {
         bezier2Path.fill()
     }
 
-    public dynamic class func drawLineSpacingNormal() {
+    open dynamic class func drawLineSpacingNormal() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -541,7 +541,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawLineSpacingSelected() {
+    open dynamic class func drawLineSpacingSelected() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -575,7 +575,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawTextSpacingSelected() {
+    open dynamic class func drawTextSpacingSelected() {
 
         //// Bezier 2 Drawing
         let bezier2Path = UIBezierPath()
@@ -611,7 +611,7 @@ public class CTAStyleKit : NSObject {
         bezier2Path.fill()
     }
 
-    public dynamic class func drawTextSpacingNormal() {
+    open dynamic class func drawTextSpacingNormal() {
 
         //// Bezier 2 Drawing
         let bezier2Path = UIBezierPath()
@@ -647,7 +647,7 @@ public class CTAStyleKit : NSObject {
         bezier2Path.fill()
     }
 
-    public dynamic class func drawAdd() {
+    open dynamic class func drawAdd() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -669,7 +669,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawNode() {
+    open dynamic class func drawNode() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -683,7 +683,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawFontBarItemNormal() {
+    open dynamic class func drawFontBarItemNormal() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -733,7 +733,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawFontBarItemSelected() {
+    open dynamic class func drawFontBarItemSelected() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -783,7 +783,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawSizeBarItemNormal() {
+    open dynamic class func drawSizeBarItemNormal() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -811,7 +811,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawSizeBarItemSelected() {
+    open dynamic class func drawSizeBarItemSelected() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -839,7 +839,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawColorBarItemSelected() {
+    open dynamic class func drawColorBarItemSelected() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -902,7 +902,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawColorBarItemNormal() {
+    open dynamic class func drawColorBarItemNormal() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -965,7 +965,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawRotationBarItemSelected() {
+    open dynamic class func drawRotationBarItemSelected() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -1003,7 +1003,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawRotationBarItemNormal() {
+    open dynamic class func drawRotationBarItemNormal() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -1041,7 +1041,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawAlignmentBarItemNormal() {
+    open dynamic class func drawAlignmentBarItemNormal() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -1073,7 +1073,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawAlignmentBarItemSelected() {
+    open dynamic class func drawAlignmentBarItemSelected() {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -1105,7 +1105,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawSpacingBarItemNormal() {
+    open dynamic class func drawSpacingBarItemNormal() {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
 
@@ -1149,7 +1149,7 @@ public class CTAStyleKit : NSObject {
         context.restoreGState()
     }
 
-    public dynamic class func drawSpacingBarItemSelected() {
+    open dynamic class func drawSpacingBarItemSelected() {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
 
@@ -1193,7 +1193,7 @@ public class CTAStyleKit : NSObject {
         context.restoreGState()
     }
 
-    public dynamic class func drawAnimationBarItemNormal() {
+    open dynamic class func drawAnimationBarItemNormal() {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
 
@@ -1265,7 +1265,7 @@ public class CTAStyleKit : NSObject {
         context.restoreGState()
     }
 
-    public dynamic class func drawAnimationBarItemSelected() {
+    open dynamic class func drawAnimationBarItemSelected() {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
 
@@ -1337,7 +1337,7 @@ public class CTAStyleKit : NSObject {
         context.restoreGState()
     }
 
-    public dynamic class func drawCameraButton() {
+    open dynamic class func drawCameraButton() {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
 
@@ -1447,7 +1447,7 @@ public class CTAStyleKit : NSObject {
         ovalPath.fill()
     }
 
-    public dynamic class func drawAddInEditor() {
+    open dynamic class func drawAddInEditor() {
 
         //// Oval Drawing
         let ovalPath = UIBezierPath(ovalIn: CGRect(x: 1, y: 1, width: 23, height: 23))
@@ -1477,7 +1477,7 @@ public class CTAStyleKit : NSObject {
         bezier2Path.fill()
     }
 
-    public dynamic class func drawGradientInEditor(frame: CGRect = CGRect(x: 0, y: 0, width: 12, height: 10)) {
+    open dynamic class func drawGradientInEditor(_ frame: CGRect = CGRect(x: 0, y: 0, width: 12, height: 10)) {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
 
@@ -1500,7 +1500,7 @@ public class CTAStyleKit : NSObject {
         context.restoreGState()
     }
 
-    public dynamic class func drawGradientInHubLabel(frame: CGRect = CGRect(x: 0, y: 0, width: 12, height: 10)) {
+    open dynamic class func drawGradientInHubLabel(_ frame: CGRect = CGRect(x: 0, y: 0, width: 12, height: 10)) {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
 
@@ -1523,7 +1523,7 @@ public class CTAStyleKit : NSObject {
         context.restoreGState()
     }
 
-    public dynamic class func drawAnimationplay() {
+    open dynamic class func drawAnimationplay() {
 
         //// Oval Drawing
         let ovalPath = UIBezierPath(ovalIn: CGRect(x: 1, y: 1, width: 23, height: 23))
@@ -1548,7 +1548,7 @@ public class CTAStyleKit : NSObject {
         bezierPath.fill()
     }
 
-    public dynamic class func drawAnimationpause() {
+    open dynamic class func drawAnimationpause() {
 
         //// Oval Drawing
         let ovalPath = UIBezierPath(ovalIn: CGRect(x: 1, y: 1, width: 23, height: 23))
@@ -1569,7 +1569,7 @@ public class CTAStyleKit : NSObject {
         rectangle2Path.fill()
     }
 
-    public dynamic class func drawTemplatesNormal() {
+    open dynamic class func drawTemplatesNormal() {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
 
@@ -1729,7 +1729,7 @@ public class CTAStyleKit : NSObject {
         bezier6Path.fill()
     }
 
-    public dynamic class func drawTemplatesSelected() {
+    open dynamic class func drawTemplatesSelected() {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
 
@@ -1891,7 +1891,7 @@ public class CTAStyleKit : NSObject {
         bezier6Path.fill()
     }
 
-    public dynamic class func drawFiltersNormal() {
+    open dynamic class func drawFiltersNormal() {
 
         //// Group 2
         //// Oval Drawing
@@ -1928,7 +1928,7 @@ public class CTAStyleKit : NSObject {
         bezier2Path.fill()
     }
 
-    public dynamic class func drawFiltersSelected() {
+    open dynamic class func drawFiltersSelected() {
 
         //// Group 2
         //// Oval Drawing
@@ -1967,7 +1967,7 @@ public class CTAStyleKit : NSObject {
 
     //// Generated Images
 
-    public dynamic class var imageOfAlignmentRightSelected: UIImage {
+    open dynamic class var imageOfAlignmentRightSelected: UIImage {
         if Cache.imageOfAlignmentRightSelected != nil {
             return Cache.imageOfAlignmentRightSelected!
         }
@@ -1981,7 +1981,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfAlignmentRightSelected!
     }
 
-    public dynamic class var imageOfAlignmentRightNormal: UIImage {
+    open dynamic class var imageOfAlignmentRightNormal: UIImage {
         if Cache.imageOfAlignmentRightNormal != nil {
             return Cache.imageOfAlignmentRightNormal!
         }
@@ -1995,7 +1995,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfAlignmentRightNormal!
     }
 
-    public dynamic class var imageOfAlignmentLeftSelected: UIImage {
+    open dynamic class var imageOfAlignmentLeftSelected: UIImage {
         if Cache.imageOfAlignmentLeftSelected != nil {
             return Cache.imageOfAlignmentLeftSelected!
         }
@@ -2009,7 +2009,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfAlignmentLeftSelected!
     }
 
-    public dynamic class var imageOfAlignmentLeftNormal: UIImage {
+    open dynamic class var imageOfAlignmentLeftNormal: UIImage {
         if Cache.imageOfAlignmentLeftNormal != nil {
             return Cache.imageOfAlignmentLeftNormal!
         }
@@ -2023,7 +2023,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfAlignmentLeftNormal!
     }
 
-    public dynamic class var imageOfAlignmentCenterSelected: UIImage {
+    open dynamic class var imageOfAlignmentCenterSelected: UIImage {
         if Cache.imageOfAlignmentCenterSelected != nil {
             return Cache.imageOfAlignmentCenterSelected!
         }
@@ -2037,7 +2037,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfAlignmentCenterSelected!
     }
 
-    public dynamic class var imageOfAlignmentCenterNormal: UIImage {
+    open dynamic class var imageOfAlignmentCenterNormal: UIImage {
         if Cache.imageOfAlignmentCenterNormal != nil {
             return Cache.imageOfAlignmentCenterNormal!
         }
@@ -2051,7 +2051,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfAlignmentCenterNormal!
     }
 
-    public dynamic class var imageOfAlignmentJustNormal: UIImage {
+    open dynamic class var imageOfAlignmentJustNormal: UIImage {
         if Cache.imageOfAlignmentJustNormal != nil {
             return Cache.imageOfAlignmentJustNormal!
         }
@@ -2065,7 +2065,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfAlignmentJustNormal!
     }
 
-    public dynamic class var imageOfAlignmentJustSelected: UIImage {
+    open dynamic class var imageOfAlignmentJustSelected: UIImage {
         if Cache.imageOfAlignmentJustSelected != nil {
             return Cache.imageOfAlignmentJustSelected!
         }
@@ -2079,7 +2079,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfAlignmentJustSelected!
     }
 
-    public dynamic class var imageOfLineSpacingNormal: UIImage {
+    open dynamic class var imageOfLineSpacingNormal: UIImage {
         if Cache.imageOfLineSpacingNormal != nil {
             return Cache.imageOfLineSpacingNormal!
         }
@@ -2093,7 +2093,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfLineSpacingNormal!
     }
 
-    public dynamic class var imageOfLineSpacingSelected: UIImage {
+    open dynamic class var imageOfLineSpacingSelected: UIImage {
         if Cache.imageOfLineSpacingSelected != nil {
             return Cache.imageOfLineSpacingSelected!
         }
@@ -2107,7 +2107,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfLineSpacingSelected!
     }
 
-    public dynamic class var imageOfTextSpacingSelected: UIImage {
+    open dynamic class var imageOfTextSpacingSelected: UIImage {
         if Cache.imageOfTextSpacingSelected != nil {
             return Cache.imageOfTextSpacingSelected!
         }
@@ -2121,7 +2121,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfTextSpacingSelected!
     }
 
-    public dynamic class var imageOfTextSpacingNormal: UIImage {
+    open dynamic class var imageOfTextSpacingNormal: UIImage {
         if Cache.imageOfTextSpacingNormal != nil {
             return Cache.imageOfTextSpacingNormal!
         }
@@ -2135,7 +2135,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfTextSpacingNormal!
     }
 
-    public dynamic class var imageOfAdd: UIImage {
+    open dynamic class var imageOfAdd: UIImage {
         if Cache.imageOfAdd != nil {
             return Cache.imageOfAdd!
         }
@@ -2149,7 +2149,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfAdd!
     }
 
-    public dynamic class var imageOfNode: UIImage {
+    open dynamic class var imageOfNode: UIImage {
         if Cache.imageOfNode != nil {
             return Cache.imageOfNode!
         }
@@ -2163,7 +2163,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfNode!
     }
 
-    public dynamic class var imageOfFontBarItemNormal: UIImage {
+    open dynamic class var imageOfFontBarItemNormal: UIImage {
         if Cache.imageOfFontBarItemNormal != nil {
             return Cache.imageOfFontBarItemNormal!
         }
@@ -2177,7 +2177,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfFontBarItemNormal!
     }
 
-    public dynamic class var imageOfFontBarItemSelected: UIImage {
+    open dynamic class var imageOfFontBarItemSelected: UIImage {
         if Cache.imageOfFontBarItemSelected != nil {
             return Cache.imageOfFontBarItemSelected!
         }
@@ -2191,7 +2191,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfFontBarItemSelected!
     }
 
-    public dynamic class var imageOfSizeBarItemNormal: UIImage {
+    open dynamic class var imageOfSizeBarItemNormal: UIImage {
         if Cache.imageOfSizeBarItemNormal != nil {
             return Cache.imageOfSizeBarItemNormal!
         }
@@ -2205,7 +2205,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfSizeBarItemNormal!
     }
 
-    public dynamic class var imageOfSizeBarItemSelected: UIImage {
+    open dynamic class var imageOfSizeBarItemSelected: UIImage {
         if Cache.imageOfSizeBarItemSelected != nil {
             return Cache.imageOfSizeBarItemSelected!
         }
@@ -2219,7 +2219,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfSizeBarItemSelected!
     }
 
-    public dynamic class var imageOfColorBarItemSelected: UIImage {
+    open dynamic class var imageOfColorBarItemSelected: UIImage {
         if Cache.imageOfColorBarItemSelected != nil {
             return Cache.imageOfColorBarItemSelected!
         }
@@ -2233,7 +2233,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfColorBarItemSelected!
     }
 
-    public dynamic class var imageOfColorBarItemNormal: UIImage {
+    open dynamic class var imageOfColorBarItemNormal: UIImage {
         if Cache.imageOfColorBarItemNormal != nil {
             return Cache.imageOfColorBarItemNormal!
         }
@@ -2247,7 +2247,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfColorBarItemNormal!
     }
 
-    public dynamic class var imageOfRotationBarItemSelected: UIImage {
+    open dynamic class var imageOfRotationBarItemSelected: UIImage {
         if Cache.imageOfRotationBarItemSelected != nil {
             return Cache.imageOfRotationBarItemSelected!
         }
@@ -2261,7 +2261,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfRotationBarItemSelected!
     }
 
-    public dynamic class var imageOfRotationBarItemNormal: UIImage {
+    open dynamic class var imageOfRotationBarItemNormal: UIImage {
         if Cache.imageOfRotationBarItemNormal != nil {
             return Cache.imageOfRotationBarItemNormal!
         }
@@ -2275,7 +2275,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfRotationBarItemNormal!
     }
 
-    public dynamic class var imageOfAlignmentBarItemNormal: UIImage {
+    open dynamic class var imageOfAlignmentBarItemNormal: UIImage {
         if Cache.imageOfAlignmentBarItemNormal != nil {
             return Cache.imageOfAlignmentBarItemNormal!
         }
@@ -2289,7 +2289,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfAlignmentBarItemNormal!
     }
 
-    public dynamic class var imageOfAlignmentBarItemSelected: UIImage {
+    open dynamic class var imageOfAlignmentBarItemSelected: UIImage {
         if Cache.imageOfAlignmentBarItemSelected != nil {
             return Cache.imageOfAlignmentBarItemSelected!
         }
@@ -2303,7 +2303,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfAlignmentBarItemSelected!
     }
 
-    public dynamic class var imageOfSpacingBarItemNormal: UIImage {
+    open dynamic class var imageOfSpacingBarItemNormal: UIImage {
         if Cache.imageOfSpacingBarItemNormal != nil {
             return Cache.imageOfSpacingBarItemNormal!
         }
@@ -2317,7 +2317,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfSpacingBarItemNormal!
     }
 
-    public dynamic class var imageOfSpacingBarItemSelected: UIImage {
+    open dynamic class var imageOfSpacingBarItemSelected: UIImage {
         if Cache.imageOfSpacingBarItemSelected != nil {
             return Cache.imageOfSpacingBarItemSelected!
         }
@@ -2331,7 +2331,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfSpacingBarItemSelected!
     }
 
-    public dynamic class var imageOfAnimationBarItemNormal: UIImage {
+    open dynamic class var imageOfAnimationBarItemNormal: UIImage {
         if Cache.imageOfAnimationBarItemNormal != nil {
             return Cache.imageOfAnimationBarItemNormal!
         }
@@ -2345,7 +2345,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfAnimationBarItemNormal!
     }
 
-    public dynamic class var imageOfAnimationBarItemSelected: UIImage {
+    open dynamic class var imageOfAnimationBarItemSelected: UIImage {
         if Cache.imageOfAnimationBarItemSelected != nil {
             return Cache.imageOfAnimationBarItemSelected!
         }
@@ -2359,7 +2359,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfAnimationBarItemSelected!
     }
 
-    public dynamic class var imageOfCameraButton: UIImage {
+    open dynamic class var imageOfCameraButton: UIImage {
         if Cache.imageOfCameraButton != nil {
             return Cache.imageOfCameraButton!
         }
@@ -2373,7 +2373,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfCameraButton!
     }
 
-    public dynamic class var imageOfAddInEditor: UIImage {
+    open dynamic class var imageOfAddInEditor: UIImage {
         if Cache.imageOfAddInEditor != nil {
             return Cache.imageOfAddInEditor!
         }
@@ -2387,9 +2387,9 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfAddInEditor!
     }
 
-    public dynamic class func imageOfGradientInEditor(imageSize: CGSize = CGSize(width: 12, height: 10)) -> UIImage {
+    open dynamic class func imageOfGradientInEditor(_ imageSize: CGSize = CGSize(width: 12, height: 10)) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(imageSize, false, 0)
-            CTAStyleKit.drawGradientInEditor(frame: CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.height))
+            CTAStyleKit.drawGradientInEditor(CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.height))
 
         let imageOfGradientInEditor = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
         UIGraphicsEndImageContext()
@@ -2397,9 +2397,9 @@ public class CTAStyleKit : NSObject {
         return imageOfGradientInEditor
     }
 
-    public dynamic class func imageOfGradientInHubLabel(imageSize: CGSize = CGSize(width: 12, height: 10)) -> UIImage {
+    open dynamic class func imageOfGradientInHubLabel(_ imageSize: CGSize = CGSize(width: 12, height: 10)) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(imageSize, false, 0)
-            CTAStyleKit.drawGradientInHubLabel(frame: CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.height))
+            CTAStyleKit.drawGradientInHubLabel(CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.height))
 
         let imageOfGradientInHubLabel = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
         UIGraphicsEndImageContext()
@@ -2407,7 +2407,7 @@ public class CTAStyleKit : NSObject {
         return imageOfGradientInHubLabel
     }
 
-    public dynamic class var imageOfAnimationplay: UIImage {
+    open dynamic class var imageOfAnimationplay: UIImage {
         if Cache.imageOfAnimationplay != nil {
             return Cache.imageOfAnimationplay!
         }
@@ -2421,7 +2421,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfAnimationplay!
     }
 
-    public dynamic class var imageOfAnimationpause: UIImage {
+    open dynamic class var imageOfAnimationpause: UIImage {
         if Cache.imageOfAnimationpause != nil {
             return Cache.imageOfAnimationpause!
         }
@@ -2435,7 +2435,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfAnimationpause!
     }
 
-    public dynamic class var imageOfTemplatesNormal: UIImage {
+    open dynamic class var imageOfTemplatesNormal: UIImage {
         if Cache.imageOfTemplatesNormal != nil {
             return Cache.imageOfTemplatesNormal!
         }
@@ -2449,7 +2449,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfTemplatesNormal!
     }
 
-    public dynamic class var imageOfTemplatesSelected: UIImage {
+    open dynamic class var imageOfTemplatesSelected: UIImage {
         if Cache.imageOfTemplatesSelected != nil {
             return Cache.imageOfTemplatesSelected!
         }
@@ -2463,7 +2463,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfTemplatesSelected!
     }
 
-    public dynamic class var imageOfFiltersNormal: UIImage {
+    open dynamic class var imageOfFiltersNormal: UIImage {
         if Cache.imageOfFiltersNormal != nil {
             return Cache.imageOfFiltersNormal!
         }
@@ -2477,7 +2477,7 @@ public class CTAStyleKit : NSObject {
         return Cache.imageOfFiltersNormal!
     }
 
-    public dynamic class var imageOfFiltersSelected: UIImage {
+    open dynamic class var imageOfFiltersSelected: UIImage {
         if Cache.imageOfFiltersSelected != nil {
             return Cache.imageOfFiltersSelected!
         }

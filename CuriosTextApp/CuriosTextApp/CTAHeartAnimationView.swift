@@ -44,7 +44,7 @@ class CTAHeartAnimationView: UIView {
         let minScale = min(bounds.width / 85.0 , bounds.height / 78.0)
         let layerSize = CGSize(width: 85.0 * minScale, height: 78.0 * minScale)
         let layerOrigin = CGPoint(x: bounds.width / 2.0 - layerSize.width / 2.0, y: bounds.height / 2.0 - layerSize.height / 2.0)
-        let path = heartPath(frame: CGRect(origin: layerOrigin, size: layerSize))
+        let path = heartPath(CGRect(origin: layerOrigin, size: layerSize))
         heartLayer.path = path
         heartLayer.frame = CGRect(origin: layerOrigin, size: layerSize)
     }
@@ -101,7 +101,7 @@ class CTAHeartAnimationView: UIView {
         let minScale = min(bounds.width / 85.0, bounds.height / 78.0)
         let layerSize = CGSize(width: 85.0 * minScale, height: 78.0 * minScale)
         let layerOrigin = CGPoint(x: bounds.midX - layerSize.width / 2.0, y: bounds.minY - layerSize.height / 2.0)
-        let path = heartPath(frame: bounds)
+        let path = heartPath(bounds)
         heartLayer.path = path
         heartLayer.frame = CGRect(origin: layerOrigin, size: layerSize)
         
@@ -110,7 +110,7 @@ class CTAHeartAnimationView: UIView {
 
     
     
-    fileprivate func heartPath(frame: CGRect = CGRect(x: 0, y: 0, width: 85, height: 78)) -> CGPath {
+    fileprivate func heartPath(_ frame: CGRect = CGRect(x: 0, y: 0, width: 85, height: 78)) -> CGPath {
         //// Color Declarations
         let color = UIColor(red: 1.000, green: 0.000, blue: 0.000, alpha: 1.000)
         

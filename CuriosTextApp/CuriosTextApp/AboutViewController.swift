@@ -52,13 +52,13 @@ class AboutViewController: UIViewController {
     
     fileprivate func _versionTag(_ rect: CGRect = CGRect(x: 0, y: 0, width: 41, height: 21), text2: String = "1.0.0") -> UIImage {
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
-        _drawVersionTag(frame3: rect, text2: text2)
+        _drawVersionTag(rect, text2: text2)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image!
     }
     
-    fileprivate func _drawVersionTag(frame3: CGRect = CGRect(x: 0, y: 0, width: 41, height: 21), text2: String = "v1.2.3") {
+    fileprivate func _drawVersionTag(_ frame3: CGRect = CGRect(x: 0, y: 0, width: 41, height: 21), text2: String = "v1.2.3") {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()
         

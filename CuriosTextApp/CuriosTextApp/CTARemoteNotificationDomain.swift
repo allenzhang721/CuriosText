@@ -16,7 +16,7 @@ class CTARemoteNotificationManager {
     }
     
     // 取消特定用户的通知。在退出登录时使用。
-    class func registerAtLogOut(completed: @escaping (_ iResCode: Int32, _ iTags: Set<AnyHashable>?, _ iAlias: String?) -> ()) {
+    class func registerAtLogOut(_ completed: @escaping (_ iResCode: Int32, _ iTags: Set<AnyHashable>?, _ iAlias: String?) -> ()) {
         JPUSHService.setTags(nil, alias: "", fetchCompletionHandle: completed)
     }
     

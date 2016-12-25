@@ -57,7 +57,7 @@ class CTAGradientButtonView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         if needGradient {
-        backgroundColor = UIColor.init(patternImage: CTAStyleKit.imageOfGradientInEditor(imageSize: bounds.size))
+        backgroundColor = UIColor.init(patternImage: CTAStyleKit.imageOfGradientInEditor(bounds.size))
         }
     }
 }
