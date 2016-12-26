@@ -193,6 +193,7 @@ enum CTAParameterKey: CustomStringConvertible {
   case weiBoUserID, weiBoID, avatarhd, gender, weiboName, weiboDesc
   case commentMessage, commentID, beCommentedNickName, beCommentedUserID, beCommentUserDesc, beCommentUserIconURL, beCommentSex, commentDate
   case noticeID, noticeMessage, noticeDate, noticeReaded, noticeType, noticeTypeID, noticeCount
+  case alias
     
   var description: String {
     switch self {
@@ -336,6 +337,8 @@ enum CTAParameterKey: CustomStringConvertible {
         return "noticeTypeID"
     case .noticeCount:
         return "count"
+    case .alias:
+        return "alias"
     }
   }
 }

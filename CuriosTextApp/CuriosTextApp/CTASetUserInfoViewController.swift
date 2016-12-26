@@ -128,7 +128,7 @@ class CTASetUserInfoViewController: UIViewController, CTAPublishCellProtocol, CT
         self.saveButton = UIButton.init(frame: CGRect.init(x: (bounds.width - 40)/2, y: 120, width: 40, height: 28))
         self.saveButton.setTitle(NSLocalizedString("SaveButtonLabel", comment: ""), for: UIControlState())
         self.saveButton.setTitleColor(CTAStyleKit.selectedColor, for: UIControlState())
-        self.saveButton.setTitleColor(CTAStyleKit.normalColor, for: .disabled)
+        self.saveButton.setTitleColor(CTAStyleKit.disableColor, for: .disabled)
         self.saveButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         self.saveButton.sizeToFit()
         self.saveButton.frame.origin.x = (bounds.width - self.saveButton.frame.width)/2

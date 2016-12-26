@@ -27,14 +27,14 @@ extension CTAPhoneProtocol where Self: UIViewController{
 
         self.countryNameLabel.frame = CGRect.init(x: 128*self.getHorRate(), y: 182*self.getVerRate(), width: 230*self.getHorRate(), height: 25)
         self.countryNameLabel.font = UIFont.systemFont(ofSize: 16)
-        self.countryNameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        self.countryNameLabel.textColor = CTAStyleKit.normalColor//UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.countryNameLabel.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: "countryNameClick:")
         self.countryNameLabel.addGestureRecognizer(tap)
         self.view.addSubview(self.countryNameLabel)
         let countryLabel = UILabel.init(frame: CGRect.init(x: 27*self.getHorRate(), y: self.countryNameLabel.frame.origin.y, width: 82, height: 25))
         countryLabel.font = UIFont.systemFont(ofSize: 16)
-        countryLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        countryLabel.textColor = CTAStyleKit.normalColor//UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         countryLabel.text = NSLocalizedString("CountryLabel", comment: "")
         self.view.addSubview(countryLabel)
         let nextImage = UIImageView.init(frame: CGRect.init(x: bouns.width - 25*self.getHorRate() - 11, y: self.countryNameLabel.frame.origin.y+2, width: 11, height: 20))
@@ -56,7 +56,7 @@ extension CTAPhoneProtocol where Self: UIViewController{
         
         self.areaCodeLabel.frame = CGRect.init(x: 27*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+12, width: 50, height: 25)
         self.areaCodeLabel.font = UIFont.systemFont(ofSize: 16)
-        self.areaCodeLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        self.areaCodeLabel.textColor = CTAStyleKit.normalColor//UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         self.view.addSubview(self.areaCodeLabel)
         textLine = UIImageView.init(frame: CGRect.init(x: 25*self.getHorRate(), y: self.phoneTextinput.frame.origin.y+49, width: 90*self.getHorRate(), height: 1))
         textLine.image = UIImage(named: "space-line")

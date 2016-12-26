@@ -38,10 +38,10 @@ class CTAUpTokenDomain: CTABaseDomain {
                     ];
                     compelecationBlock(CTADomainListInfo(result: true, modelDic: dic, successType: 0))
                 } else {
-                   compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                   compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -57,10 +57,10 @@ class CTAUpTokenDomain: CTABaseDomain {
                     let upTokenArray: Array<CTAUpTokenModel> = self.uptokenListResult(json)
                     compelecationBlock(CTADomainListInfo(result: true, modelArray: upTokenArray, successType: 0))
                 } else {
-                    compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                    compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -82,10 +82,10 @@ class CTAUpTokenDomain: CTABaseDomain {
                     let upTokenArray: Array<CTAUpTokenModel> = self.uptokenListResult(json)
                     compelecationBlock(CTADomainListInfo(result: true, modelArray: upTokenArray, successType: 0))
                 } else {
-                    compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                    compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -101,10 +101,10 @@ class CTAUpTokenDomain: CTABaseDomain {
                     let upTokenArray: Array<CTAUpTokenModel> = self.uptokenListResult(json)
                     compelecationBlock(CTADomainListInfo(result: true, modelArray: upTokenArray, successType: 0))
                 } else {
-                    compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                    compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }

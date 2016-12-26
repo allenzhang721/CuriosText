@@ -72,7 +72,8 @@ extension CTAPublishProtocol where Self: UIViewController{
       self.userNicknameLabel.frame.origin.y = publishRect.origin.y - self.userNicknameLabel.frame.size.height
     }
     self.userNicknameLabel.font = UIFont.systemFont(ofSize: 16)
-    self.userNicknameLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+    self.userNicknameLabel.textColor = CTAStyleKit.normalColor
+    //UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
     self.view.addSubview(self.userNicknameLabel)
     
     self.publishDateLabel.frame = CGRect(x: 0, y: 0, width: 100, height: 25)

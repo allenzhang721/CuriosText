@@ -305,7 +305,7 @@ class CTASettingViewController: UIViewController, CTAImageControllerProtocol, CT
         self.logoutButton = UIButton(frame: CGRect(x: (bounds.width - 40)/2, y: self.descLineImg.frame.origin.y + 320, width: 40, height: 28))
         self.logoutButton.setTitle(NSLocalizedString("LogoutButtonLabel", comment: ""), for: UIControlState())
         self.logoutButton.setTitleColor(CTAStyleKit.selectedColor, for: UIControlState())
-        self.logoutButton.setTitleColor(CTAStyleKit.normalColor, for: .disabled)
+        self.logoutButton.setTitleColor(CTAStyleKit.disableColor, for: .disabled)
         self.logoutButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         self.logoutButton.sizeToFit()
         self.logoutButton.frame.origin.x = (bounds.width - self.logoutButton.frame.width)/2

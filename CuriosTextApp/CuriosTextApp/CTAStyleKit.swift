@@ -18,7 +18,7 @@ open class CTAStyleKit : NSObject {
     //// Cache
 
     fileprivate struct Cache {
-        static let normalColor: UIColor = UIColor(red: 0.631, green: 0.631, blue: 0.631, alpha: 1.000)
+        static let normalColor: UIColor = UIColor(red: 0.29, green: 0.29, blue: 0.29, alpha: 1.000)
         static let selectedColor: UIColor = UIColor(red: 0.937, green: 0.200, blue: 0.290, alpha: 1.000)
         static let labelShowColor: UIColor = UIColor(red: 0.607, green: 0.607, blue: 0.607, alpha: 1.000)
         static let disableColor: UIColor = UIColor(red: 0.847, green: 0.847, blue: 0.847, alpha: 1.000)

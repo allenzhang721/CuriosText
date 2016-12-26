@@ -85,7 +85,7 @@ class CTAShareView: UIView{
         self.wechatShareView.addSubview(wechatButton)
         let wechatLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
         wechatLabel.font = UIFont.systemFont(ofSize: 8)
-        wechatLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        wechatLabel.textColor = CTAStyleKit.normalColor//UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         wechatLabel.text = LocalStrings.wechat.description
         wechatLabel.sizeToFit()
         wechatLabel.center = CGPoint.init(x: wechatButton.center.x, y: buttonW+20)
@@ -101,7 +101,7 @@ class CTAShareView: UIView{
         self.momentsShareView.addSubview(momentsButton)
         let momentsLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
         momentsLabel.font = UIFont.systemFont(ofSize: 8)
-        momentsLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        momentsLabel.textColor = CTAStyleKit.normalColor//UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         momentsLabel.text = LocalStrings.moments.description
         momentsLabel.sizeToFit()
         momentsLabel.center = CGPoint.init(x: momentsButton.center.x, y: buttonW+20)
@@ -119,7 +119,7 @@ class CTAShareView: UIView{
         self.weiboShareView.addSubview(weiboButton)
         let weiboLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
         weiboLabel.font = UIFont.systemFont(ofSize: 8)
-        weiboLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        weiboLabel.textColor = CTAStyleKit.normalColor//UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         weiboLabel.text = LocalStrings.weibo.description
         weiboLabel.sizeToFit()
         weiboLabel.center = CGPoint.init(x: weiboButton.center.x, y: buttonW+20)
@@ -137,7 +137,7 @@ class CTAShareView: UIView{
         self.deleteView.addSubview(deleteButton)
         let deleteLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
         deleteLabel.font = UIFont.systemFont(ofSize: 8)
-        deleteLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        deleteLabel.textColor = CTAStyleKit.normalColor//UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         deleteLabel.text = LocalStrings.deleteFile.description
         deleteLabel.sizeToFit()
         deleteLabel.center = CGPoint.init(x: deleteButton.center.x, y: buttonW+20)
@@ -153,7 +153,7 @@ class CTAShareView: UIView{
         self.saveLocolView.addSubview(saveLocalButton)
         let saveLocalLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
         saveLocalLabel.font = UIFont.systemFont(ofSize: 8)
-        saveLocalLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        saveLocalLabel.textColor = CTAStyleKit.normalColor//UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         saveLocalLabel.text = LocalStrings.saveLocal.description
         saveLocalLabel.sizeToFit()
         saveLocalLabel.center = CGPoint.init(x: deleteButton.center.x, y: buttonW+20)
@@ -169,7 +169,7 @@ class CTAShareView: UIView{
         self.reportView.addSubview(reportButton)
         let reportLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
         reportLabel.font = UIFont.systemFont(ofSize: 8)
-        reportLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        reportLabel.textColor = CTAStyleKit.normalColor//UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         reportLabel.text = LocalStrings.report.description
         reportLabel.sizeToFit()
         reportLabel.center = CGPoint.init(x: reportButton.center.x, y: buttonW+20)
@@ -185,7 +185,7 @@ class CTAShareView: UIView{
         self.uploadResourceView.addSubview(uploadButton)
         let uploadLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
         uploadLabel.font = UIFont.systemFont(ofSize: 8)
-        uploadLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        uploadLabel.textColor = CTAStyleKit.normalColor//UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         uploadLabel.text = LocalStrings.uploadFile.description
         uploadLabel.sizeToFit()
         uploadLabel.center = CGPoint.init(x: uploadButton.center.x, y: buttonW+20)
@@ -201,7 +201,7 @@ class CTAShareView: UIView{
         self.addToHotView.addSubview(addToHotButton)
         let addToHotLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 20))
         addToHotLabel.font = UIFont.systemFont(ofSize: 8)
-        addToHotLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        addToHotLabel.textColor = CTAStyleKit.normalColor//UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         addToHotLabel.text = LocalStrings.addToHot.description
         addToHotLabel.sizeToFit()
         addToHotLabel.center = CGPoint.init(x: uploadButton.center.x, y: buttonW+20)

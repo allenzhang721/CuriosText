@@ -18,7 +18,7 @@ public struct PrintContext {
 
 let disablePrint: [PrintContext] = [defaultContext]
 
-let defaultContext = PrintContext(shouldPrint: false, context: "default Print")
+let defaultContext = PrintContext(shouldPrint: true, context: "default Print")
 let fdContext = PrintContext(shouldPrint: false, context: "First Dispaly Font Name")
 let colorContext = PrintContext(shouldPrint: false, context: "First Dispaly Color")
 let aniContext = PrintContext(shouldPrint: false, context: "animation")

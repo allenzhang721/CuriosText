@@ -83,7 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         ImageCache.default.maxMemoryCost = UInt(100 * 1024 * 1024) // Allen: 80 MB
         // Override point for customization after application launch.
         #if DEBUG
-            CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.production.description
+            CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.debug.description
         #else
             CTANetworkConfig.shareInstance.baseUrl = CTARequestHost.production.description
         #endif

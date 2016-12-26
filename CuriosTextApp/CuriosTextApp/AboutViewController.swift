@@ -23,7 +23,7 @@ class AboutViewController: UIViewController {
         let bounds = UIScreen.main.bounds
         let settingLabel = UILabel.init(frame: CGRect.init(x: 0, y: 28, width: bounds.width, height: 28))
         settingLabel.font = UIFont.systemFont(ofSize: 18)
-        settingLabel.textColor = UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
+        settingLabel.textColor = CTAStyleKit.normalColor;//UIColor.init(red: 74/255, green: 74/255, blue: 74/255, alpha: 1.0)
         settingLabel.text = title ??  NSLocalizedString("AboutLabel", comment: "")
         settingLabel.textAlignment = .center
         self.view.addSubview(settingLabel)

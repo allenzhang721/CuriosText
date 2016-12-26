@@ -36,7 +36,7 @@ class CTAUserDomain: CTABaseDomain {
                         compelecationBlock(CTADomainInfo(result: false, errorType: CTAUserLoginError(rawValue: resultIndex)!))
                     }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -57,7 +57,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTAPhoneRegisterError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -78,7 +78,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTAWeixinRegisterError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -99,7 +99,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTAWeiboRegisterError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -120,7 +120,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -141,7 +141,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -161,7 +161,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -181,7 +181,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -201,7 +201,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -221,7 +221,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -239,7 +239,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -259,7 +259,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTABindingUserPhoneError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -279,7 +279,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTABindingUserWeixinError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -299,7 +299,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -319,7 +319,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTABindingUserWeiboError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -339,7 +339,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -359,7 +359,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTACheckPasswordError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -379,7 +379,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -400,7 +400,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTAResetPasswordError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -421,7 +421,7 @@ class CTAUserDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTAUserDetailError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }

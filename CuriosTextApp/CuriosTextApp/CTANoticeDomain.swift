@@ -34,7 +34,7 @@ class CTANoticeDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -61,7 +61,7 @@ class CTANoticeDomain: CTABaseDomain {
                     compelecationBlock(CTADomainListInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -79,7 +79,7 @@ class CTANoticeDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestNoticeError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -97,7 +97,7 @@ class CTANoticeDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
 
         }
@@ -116,7 +116,7 @@ class CTANoticeDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTARequestUserError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }

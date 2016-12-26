@@ -34,13 +34,13 @@ class CTACommentDomain: CTABaseDomain {
                         let commentModel = CTACommentModel.generateFrom(listJson)
                         compelecationBlock(CTADomainInfo(result: true, baseModel: commentModel, successType: resultIndex))
                     }else {
-                       compelecationBlock(CTADomainInfo(result: false, successType: CTAAddCommentError(rawValue: 9)!.rawValue))
+                       compelecationBlock(CTADomainInfo(result: false, errorType: CTAAddCommentError(rawValue: 9)!))
                     }
                 }else {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTAAddCommentError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -58,7 +58,7 @@ class CTACommentDomain: CTABaseDomain {
                     compelecationBlock(CTADomainInfo(result: false, errorType: CTADeleteCommentError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
@@ -85,7 +85,7 @@ class CTACommentDomain: CTABaseDomain {
                     compelecationBlock(CTADomainListInfo(result: false, errorType: CTAPublishError(rawValue: resultIndex)!))
                 }
             case .failure( _):
-                compelecationBlock(CTADomainListInfo(result: false, successType: CTAInternetError(rawValue: 10)!.rawValue))
+                compelecationBlock(CTADomainListInfo(result: false, errorType: CTAInternetError(rawValue: 10)!))
             }
         }
     }
