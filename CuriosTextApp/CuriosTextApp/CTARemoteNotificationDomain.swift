@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class CTARemoteNotificationManager {
     
@@ -19,6 +20,12 @@ class CTARemoteNotificationManager {
     class func registerAtLogOut(_ completed: @escaping (_ iResCode: Int32, _ iTags: Set<AnyHashable>?, _ iAlias: String?) -> ()) {
         JPUSHService.setTags(nil, alias: "", fetchCompletionHandle: completed)
     }
+    
+    class func cleanIconBadge() {
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
+    
+    
     
 //    class func registerWith(tags: Set<String>, alias: String, completed: @escaping (_ iResCode: Int32, _ iTags: Set<AnyHashable>?, _ iAlias: String?) -> ()) {
 //        JPUSHService.setTags(tags, alias: alias, fetchCompletionHandle: completed)

@@ -32,6 +32,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         return true
     }
     
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        print("user info = \(userInfo as! [String: Any])")
+        
+//        if let label = window?.rootViewController?.view.viewWithTag(1000) as? UILabel {
+//            label.text = (userInfo as! [String: Any]).description
+//        }
+        
+        if let userInfo = userInfo as? [String: Any] {
+            handlerNoti(userInfo)
+        }
+        
+    }
+    
+    func handlerNoti(_ userInfo: [String: Any]) {
+        if let viewController = window?.rootViewController as? ViewController, let key = userInfo["action"] as? String, key == "noti" {
+            viewController.getUserNoticeHandler()
+        }
+    }
+    
     func registerJPush() {
         let entity = JPUSHRegisterEntity()
         entity.types = Int(JPAuthorizationOptions.alert.union(JPAuthorizationOptions.badge).union(JPAuthorizationOptions.sound).rawValue)
@@ -224,7 +244,12 @@ extension AppDelegate: JPUSHRegisterDelegate {
             JPUSHService.handleRemoteNotification(userInfo)
         }
         
-        completionHandler(Int(UNNotificationPresentationOptions.alert.rawValue)) // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
+        if let userInfo = userInfo as? [String: Any] {
+            handlerNoti(userInfo)
+        }
+        
+        //Int(UNNotificationPresentationOptions.alert.rawValue)
+        completionHandler(0) // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
     }
     
     @available(iOS 10.0, *)
@@ -237,6 +262,9 @@ extension AppDelegate: JPUSHRegisterDelegate {
             JPUSHService.handleRemoteNotification(userInfo)
         }
         
+        if let userInfo = userInfo as? [String: Any] {
+            handlerNoti(userInfo)
+        }
         completionHandler?() // 系统要求执行这个方法
     }
 }
