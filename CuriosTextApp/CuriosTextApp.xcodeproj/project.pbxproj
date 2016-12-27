@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0129FD928AF239622864CC29 /* Pods_CuriosTextApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEDE6460C0AAFF69C166B977 /* Pods_CuriosTextApp.framework */; };
+		252991631E125C4B007B149B /* CTARemoteNotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252991621E125C4B007B149B /* CTARemoteNotificationModel.swift */; };
 		2C0126A21C7F20030071F9C1 /* CTAActivableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0126A11C7F20030071F9C1 /* CTAActivableCollectionViewCell.swift */; };
 		2C0126A41C7F20C10071F9C1 /* CTAAnimationNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0126A31C7F20C10071F9C1 /* CTAAnimationNameCell.swift */; };
 		2C0404541C3EBB6800A5B017 /* CTACanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0404531C3EBB6800A5B017 /* CTACanvasViewController.swift */; };
@@ -431,6 +432,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		252991621E125C4B007B149B /* CTARemoteNotificationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTARemoteNotificationModel.swift; sourceTree = "<group>"; };
 		2C0126A11C7F20030071F9C1 /* CTAActivableCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAActivableCollectionViewCell.swift; sourceTree = "<group>"; };
 		2C0126A31C7F20C10071F9C1 /* CTAAnimationNameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTAAnimationNameCell.swift; sourceTree = "<group>"; };
 		2C0404531C3EBB6800A5B017 /* CTACanvasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTACanvasViewController.swift; sourceTree = "<group>"; };
@@ -1456,6 +1458,7 @@
 				66ADD74E1C28011B00FD9BAF /* CTAUpTokenModel.swift */,
 				66F4D44F1D24EFA600587A54 /* CTACommentModel.swift */,
 				66F4D4511D24F9A600587A54 /* CTANoticeModel.swift */,
+				252991621E125C4B007B149B /* CTARemoteNotificationModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2015,7 +2018,7 @@
 					2C3B33C51C1176D000738166 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = H7HX4A2DL8;
-						LastSwiftMigration = 0810;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -2028,10 +2031,12 @@
 					};
 					2C3B33D91C1176D000738166 = {
 						CreatedOnToolsVersion = 7.1.1;
+						LastSwiftMigration = 0820;
 						TestTargetID = 2C3B33C51C1176D000738166;
 					};
 					2C3B33E41C1176D000738166 = {
 						CreatedOnToolsVersion = 7.1.1;
+						LastSwiftMigration = 0820;
 						TestTargetID = 2C3B33C51C1176D000738166;
 					};
 				};
@@ -2331,6 +2336,7 @@
 				2C2088621C8C1BC200172B27 /* CTACache.swift in Sources */,
 				2C961F291DF5493700B727E6 /* EditorNavigationController.swift in Sources */,
 				2C9706CB1C1E713A00FA2E17 /* CTABaseModel.swift in Sources */,
+				252991631E125C4B007B149B /* CTARemoteNotificationModel.swift in Sources */,
 				2C3CAD1A1C21825900D8DE4B /* CTATextElement.swift in Sources */,
 				2C82FF551C4362FA001D927A /* CTASegementControl.swift in Sources */,
 				2CD11A9D1CB7545F00A79305 /* CanvasView.swift in Sources */,
@@ -2906,6 +2912,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosTextAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "c5382dfa-5b86-4513-922e-ed753947577f";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CuriosTextApp.app/CuriosTextApp";
 			};
 			name = Debug;
@@ -2925,6 +2932,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosTextAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "c5382dfa-5b86-4513-922e-ed753947577f";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CuriosTextApp.app/CuriosTextApp";
 			};
 			name = Release;
@@ -2937,6 +2945,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosTextAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = CuriosTextApp;
 				USES_XCTRUNNER = YES;
 			};
@@ -2950,6 +2959,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.botai.CuriosTextAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = CuriosTextApp;
 				USES_XCTRUNNER = YES;
 			};

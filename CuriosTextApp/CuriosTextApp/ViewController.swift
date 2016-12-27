@@ -131,6 +131,7 @@ class ViewController: UIViewController{
             self.loadNoticeTask = nil
         }
         self.mainTabBarController.tabBar.items![2].badgeValue = nil
+        CTARemoteNotificationManager.cleanIconBadge()
     }
     
     func addPublishFile(_ noti: Notification){
@@ -192,6 +193,7 @@ class ViewController: UIViewController{
     
     func setNoticeReaded(_ noti: Notification){
         self.mainTabBarController.tabBar.items![2].badgeValue = nil
+        CTARemoteNotificationManager.cleanIconBadge()
     }
     
     func getUserNoticeHandler(){
@@ -210,8 +212,10 @@ class ViewController: UIViewController{
                         self.mainTabBarController.tabBar.items![2].badgeValue = noticeText
                         self.repositionBadge()
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "haveNewNotice"), object: nil)
+                        CTARemoteNotificationManager.setIconBadge(count);
                     }else {
                         self.mainTabBarController.tabBar.items![2].badgeValue = nil
+                        CTARemoteNotificationManager.cleanIconBadge()
                     }
                     self.getUserNoticeComplete()
                 }else {
@@ -222,13 +226,13 @@ class ViewController: UIViewController{
     }
     
     func getUserNoticeComplete(){
-        if self.loadNoticeTask == nil {
-            self.loadNoticeTask = delay(30.0){
-                cancel(self.loadNoticeTask)
-                self.loadNoticeTask = nil
-                self.getUserNotice()
-            }
-        }
+//        if self.loadNoticeTask == nil {
+//            self.loadNoticeTask = delay(30.0){
+//                cancel(self.loadNoticeTask)
+//                self.loadNoticeTask = nil
+//                self.getUserNotice()
+//            }
+//        }
     }
 }
 

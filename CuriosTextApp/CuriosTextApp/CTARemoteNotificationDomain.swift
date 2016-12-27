@@ -23,6 +23,11 @@ class CTARemoteNotificationManager {
     
     class func cleanIconBadge() {
         UIApplication.shared.applicationIconBadgeNumber = 0
+        JPUSHService.resetBadge()
+    }
+    
+    class func setIconBadge(_ badge: Int) {
+        UIApplication.shared.applicationIconBadgeNumber = badge
     }
     
     
